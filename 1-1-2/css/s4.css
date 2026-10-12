@@ -162,7 +162,7 @@
 .cap-box.tone-p .cap-box-head { color: #e2553c; } .cap-box.tone-p .cap-box-letter { background: #fde0d9; }
 .cap-box textarea { min-height: 96px; border-color: #e3e8f2; }
 .cap-down { justify-self: center; color: #7d8bab; }
-.cap-page .k-bar .k-help { margin-top: 0; max-width: 460px; }
+.cap-page .k-head .k-note { display: inline-block; margin-top: 14px; padding: 10px 18px; border-radius: 12px; background: #eaf1ff; color: var(--navy); font-size: .98rem; } /* le rappel avantage / preuve, en encadré sous le sous-titre */
 @media (max-width: 900px) {
   .cap-layout { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .cap-feature { min-height: 0; padding-bottom: 150px; }

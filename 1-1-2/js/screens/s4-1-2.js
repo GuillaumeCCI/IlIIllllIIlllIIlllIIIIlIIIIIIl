@@ -35,6 +35,7 @@
     const last = lines.every((_, n) => n === i || lineDone(n));
     return `<div class="k-page cap-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
+        note: 'Un avantage répond au « pourquoi c’est utile pour lui ? », une preuve au « comment en être sûr ? ».',
         aside: `<div class="cap-progress"><span>Étape ${i + 1} sur ${lines.length}</span><span class="k-dots">${lines.map((_, n) =>
           `<button type="button" class="k-dot ${n === i ? 'is-current' : lineDone(n) ? 'is-done' : ''}" data-act="line" data-index="${n}" aria-label="Caractéristique ${n + 1}"></button>`).join('')}</span></div>` })}
       <form novalidate>
@@ -53,7 +54,6 @@
         </div>
         ${core.errorsBox()}
         ${kit.bar({
-          left: kit.help('Un avantage répond au « pourquoi c’est utile pour lui ? », une preuve au « comment en être sûr ? ».', 'info'),
           right: `${kit.dialogButton('hint', 'Voir un indice', 'secondary', '')}${kit.submit(last ? 'Vérifier mes réponses' : 'Valider et passer à l’étape suivante')}`
         })}
       </form>
