@@ -439,3 +439,4 @@ img.say-glyph { width: 52px; height: auto; margin: 0; }
 @media (max-width: 900px) {
   .drv-row { grid-template-columns: minmax(0, 1fr) 80px 80px; } .drv-verdict { grid-column: 1 / -1; } .drv-head > span:last-child { display: none; }
 }
+.say-page.is-moment .say-quote blockquote img.say-glyph.is-closing { vertical-align: -.05em; }

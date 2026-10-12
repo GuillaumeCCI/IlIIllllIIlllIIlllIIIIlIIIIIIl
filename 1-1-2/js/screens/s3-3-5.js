@@ -41,10 +41,7 @@
         aside: `<div class="say-progress"><span>Réplique ${i + 1} sur ${lines.length}</span>
           <span class="say-dots">${lines.map((_, k) => `<button type="button" class="say-dot ${k === i ? 'is-current' : done(k) ? 'is-done' : ''}" data-act="line" data-index="${k}" aria-label="Réplique ${k + 1}"></button>`).join('')}</span></div>` })}
       <form novalidate>
-        <section class="say-card">
-          <p class="say-label">Prise de parole ${n} <span>/</span> Le commercial dit…</p>
-          <div class="say-quote"><span class="say-glyph" aria-hidden="true">“</span><blockquote>${esc(lines[i].text)}</blockquote></div>
-        </section>
+        ${kit.clientCard(lines[i].text, 'assets/illustrations/clients/client-chignon.webp', `Prise de parole ${n} · Le commercial dit`)}
         <div class="say-choose"><h2>Que fait le vendeur ?</h2></div>
         <div class="say-options" role="radiogroup" aria-label="Que fait le vendeur ?">${choices.map(choice => {
           const [symbol, tone] = SYMBOLS[choice.id] || ['chat', 'coral'];

@@ -33,11 +33,17 @@
    *   { email: { to, subject, lines } }            un e-mail ;
    *   { info, symbol }                une phrase de contexte ;
    *   { facts: [{ symbol, text }], title }         une liste de repères. */
+  const PORTRAITS = ['client-tasse', 'client-cheveux-gris', 'client-chignon', 'client-pull-clair'];
+  const portraitOfPage = () => PORTRAITS[[...root.location.pathname].reduce((sum, ch) => sum + ch.charCodeAt(0), 0) % PORTRAITS.length];
+
   function scene(blocks) {
     const list = Array.isArray(blocks) ? blocks : blocks ? [blocks] : [];
     return list.map(block => {
       if (block.quote) {
-        return `<div class="sc-quote"><span class="sc-avatar">${icon('users', { size: 26 })}<small>${esc(block.speaker || 'Client')}</small></span><p>« ${esc(block.quote)} »</p></div>`;
+        // La réplique seule du client : sa carte illustrée, un portrait par
+        // exercice (toujours le même pour une page donnée).
+        const speaker = block.speaker && !/^(le )?client$/i.test(block.speaker) ? block.speaker : 'Le client vous dit';
+        return kit().clientCard(block.quote, block.portrait || `assets/illustrations/clients/${portraitOfPage()}.webp`, speaker);
       }
       if (block.dialogue) {
         return `<ol class="sc-dialogue">${block.dialogue.map(line => {

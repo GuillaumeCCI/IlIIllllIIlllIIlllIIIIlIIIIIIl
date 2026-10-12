@@ -302,7 +302,7 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
    Le client illustré à gauche, sa réplique à droite entre guillemets
    dessinés. La carte prend la couleur du papier des dessins pour qu'ils
    s'y fondent. */
-#main .client-card { display: grid; grid-template-columns: minmax(200px, 26%) minmax(0, 1fr); align-items: center; margin: 0 0 22px; padding: 0 44px 0 0; overflow: hidden; border-radius: 20px; background: #faf8f3; box-shadow: 0 14px 40px rgb(15 35 78 / 7%); }
+#main .client-card { display: grid; grid-template-columns: minmax(200px, 26%) minmax(0, 1fr); align-items: center; margin: 0 0 22px; padding: 0 44px 0 0; overflow: hidden; border-radius: 20px; background: #fff; box-shadow: 0 14px 40px rgb(15 35 78 / 7%); }
 .client-card-who { align-self: stretch; overflow: hidden; }
 .client-card-who img { display: block; width: 100%; height: 100%; min-height: 170px; max-height: 210px; object-fit: cover; object-position: left center; box-shadow: none !important; }
 .client-card-said { padding: 20px 0 20px 18px; }
@@ -330,3 +330,18 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 .client-card-mark { width: 68px; margin-top: -2px; }
 .client-card-quote blockquote .client-card-mark.is-closing { width: 50px; margin-left: 12px; vertical-align: -.2em; }
 @media (max-width: 760px) { .client-card-quote { grid-template-columns: 46px minmax(0, 1fr); } .client-card-mark { width: 42px; } .client-card-quote blockquote .client-card-mark.is-closing { width: 32px; } }
+/* La carte s'adapte à sa propre largeur : dans une colonne étroite, le
+   portrait passe au-dessus de la réplique. */
+.client-card-box { container-type: inline-size; margin: 0 0 22px; }
+#main .client-card-box .client-card { margin: 0; }
+@container (max-width: 640px) {
+  #main .client-card { grid-template-columns: 1fr; padding: 0 22px; }
+  .client-card-who { margin: 0 -22px; max-height: 170px; }
+  .client-card-who img { min-height: 0; max-height: 170px; object-position: center; }
+  .client-card-said { padding: 14px 0 22px; }
+  .client-card-quote { grid-template-columns: 46px minmax(0, 1fr); }
+  .client-card-mark { width: 42px; } .client-card-quote blockquote .client-card-mark.is-closing { width: 32px; }
+}
+.client-card-end { white-space: nowrap; }
+@container (max-width: 640px) { .client-card-who img { object-fit: contain; object-position: center bottom; height: 170px; } }
+.client-card-quote blockquote .client-card-mark.is-closing { vertical-align: -.05em; }
