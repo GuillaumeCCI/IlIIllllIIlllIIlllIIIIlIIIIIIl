@@ -82,7 +82,7 @@
 .express-stack::before, .express-stack::after { content: ''; position: absolute; left: 30px; right: 30px; height: 20px; border: 1px solid #c9d6f1; border-bottom: 0; border-radius: 12px 12px 0 0; background: #eef4ff; }
 .express-stack::before { top: -22px; left: 60px; right: 60px; }
 .express-stack::after { top: -12px; }
-.express-card { position: relative; z-index: 1; padding: 22px 30px 26px; border: 1px solid #c9d6f1; border-radius: 14px; background: #fff; cursor: var(--cursor-grab, grab); }
+.express-card { position: relative; z-index: 1; padding: 22px 30px 26px; border: 1px solid #c9d6f1; border-radius: 14px; background: #fff; }
 .express-card.is-dragging { opacity: .5; }
 .express-tag { display: inline-block; padding: 6px 16px; border-radius: 20px; background: #eaf1ff; color: var(--accent); font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .express-body { display: flex; align-items: center; gap: 26px; margin-top: 16px; }
@@ -216,8 +216,6 @@
 .express-play .express-zone { border-width: 1.5px; }
 .express-play .express-zone strong { font-size: 1.35rem; }
 .express-question { margin-top: 10px; color: var(--muted); font-size: 1.05rem; }
-.express-tip { display: flex; justify-content: center; align-items: center; gap: 10px; color: var(--muted); }
-.express-tip .icon { color: var(--accent); }
 .express-actions { margin-top: 18px; }
 .express-undo { display: inline-flex; align-items: center; gap: 10px; border: 0; background: none; color: var(--accent); font-size: 1rem; }
 .express-undo:disabled { color: #9aa5bd; cursor: not-allowed; }

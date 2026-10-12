@@ -1,7 +1,7 @@
 /* S4 3.1 · À faire ou à éviter ? Défi express.
  *
  * Six comportements, une carte à la fois : on clique « À faire » ou « À ne
- * pas faire » (ou on glisse la carte), et la suivante apparaît d'elle-même.
+ * pas faire », et la suivante apparaît d'elle-même. La carte ne se glisse pas.
  * Même mécanique de paquet que S2 2.1 : voyez kit.deck*.
  */
 (() => {
@@ -15,29 +15,24 @@
   const zones = content.zones;
   const total = cards.length;
 
-  /* En haut à droite (maquette) : la carte en cours, des points, et le
-   * nombre de cartes restantes. */
-  function progress(index) {
+  /* Au-dessus de la carte, calé sur son bord droit : le nombre de cartes
+   * restantes. */
+  function progress() {
     const done = kit.deckPlaced(total).filter(Boolean).length;
-    return `<div class="express-progress">
-      <div class="express-progress-count"><span>Comportement ${index + 1} sur ${total}</span>
-        <span class="k-dots">${cards.map((_, n) => `<span class="k-dot ${n === index ? 'is-current' : kit.deckPlaced(total)[n] ? 'is-done' : ''}"></span>`).join('')}</span></div>
-      <span class="express-left">${kit.plural(total - done - 1, 'carte restante', 'cartes restantes')}</span>
-    </div>`;
+    return `<div class="express-progress"><span class="express-left">${kit.plural(total - done - 1, 'carte restante', 'cartes restantes')}</span></div>`;
   }
 
   function playScreen(index) {
     const history = ex.value('history');
-    return `<article class="express-card" draggable="true" data-drag="${index}" tabindex="0">
+    return `${progress()}<article class="express-card">
         <span class="express-tag">Carte ${String(index + 1).padStart(2, '0')}</span>
         <div class="express-body"><span class="express-symbol">${icon('document', { size: 44 })}</span>
           <div><p class="express-text">“${esc(cards[index].text)}”</p><p class="express-question">Cette pratique renforce-t-elle la persuasion ?</p></div>
         </div>
       </article>
-      <div class="express-zones">${zones.map(z => `<button type="button" class="express-zone tone-${z.tone}" data-act="place" data-zone="${z.id}" data-drop="${z.id}">
+      <div class="express-zones">${zones.map(z => `<button type="button" class="express-zone tone-${z.tone}" data-act="place" data-zone="${z.id}">
         <span class="express-zone-symbol">${icon(z.tone === 'good' ? 'check' : 'close', { size: 30 })}</span><span class="express-zone-words"><strong>${esc(z.label)}</strong><span>${esc(z.sub)}</span></span><span class="express-go">${icon('chevronRight', { size: 22 })}</span>
       </button>`).join('')}</div>
-      <p class="express-tip">${icon('lightbulb', { size: 20 })}<span>Cliquez sur une réponse pour passer à la carte suivante.</span></p>
       <div class="express-actions">${kit.act('deck-undo', `${icon('arrowLeft', { size: 17 })}<span>Annuler le dernier choix</span>`, 'text-button with-icon express-undo', Array.isArray(history) && history.length ? '' : 'disabled')}</div>`;
   }
 
@@ -47,8 +42,7 @@
     const placed = kit.deckPlaced(total);
     const right = cards.filter((card, i) => placed[i] === card.answer).length;
     return `<div class="k-page express-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: !reviewing && index !== null ? progress(index) : '' })}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle })}
       <form novalidate class="${!reviewing && index !== null ? 'express-play' : ''}">
         ${reviewing ? `<section class="k-panel">${kit.result(right, total, 'cartes bien classées')}${kit.deckReview(cards, zones)}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div></section>`
           : index === null ? `<section class="k-panel"><h2>Relisez votre classement</h2><p class="k-muted">Modifiez une carte si besoin, puis validez.</p>${kit.deckRecap(cards, zones, 'Valider mon classement')}${core.errorsBox()}</section>`
@@ -74,7 +68,6 @@
     'deck-undo': () => { kit.deckUndo(total); kit.commit(); },
     'deck-reopen': el => { kit.deckReopen(total, Number(el.dataset.index)); kit.commit(); }
   });
-  kit.onDrop((id, zone) => { kit.deckPlace(total, zone); kit.commit(); });
 
   ex.mount('s4-3.1', { screen, validate, feedback, compactFeedback: true });
 })();
