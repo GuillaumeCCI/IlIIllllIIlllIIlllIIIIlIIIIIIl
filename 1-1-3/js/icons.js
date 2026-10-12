@@ -37,7 +37,8 @@
     mail: '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m3.8 7 7.1 5.5a2 2 0 0 0 2.2 0L20.2 7"/>',
 
     // ── Information et guidage ─────────────────────────────────────────
-    lightbulb: '<path d="M9.5 17.5h5M10 20.5h4M8 11a4 4 0 1 1 8 0c0 1.7-1 2.6-1.5 3.6-.3.6-.4 1.3-.4 1.9h-4.2c0-.6-.1-1.3-.4-1.9C9 13.6 8 12.7 8 11Z"/>',
+    // Ampoule de la charte : silhouette bleu nuit pleine, détails blancs.
+    lightbulb: '<path fill="currentColor" stroke="none" d="M12 2.2c-4 0-7.2 3.1-7.2 7 0 2.3 1 3.9 2.3 5.2.7.7 1.1 1.5 1.1 2.4v.4h7.6v-.4c0-.9.4-1.7 1.1-2.4 1.3-1.3 2.3-2.9 2.3-5.2 0-3.9-3.2-7-7.2-7Z"/><path fill="currentColor" stroke="none" d="M7.9 16.8h8.2v4.3c0 .7-.5 1.2-1.2 1.2h-.8c-.4.9-1.2 1.5-2.1 1.5s-1.7-.6-2.1-1.5h-.8c-.7 0-1.2-.5-1.2-1.2Z"/><g fill="none" stroke="#fff" stroke-width="1.15" stroke-linecap="round"><path d="M7.6 8.1a5 5 0 0 1 3.3-3.3"/><path d="M10.8 16.6v-5.4a1.35 1.35 0 1 0-1.35 1.35c.55 0 1 .2 1.35.55"/><path d="M13.2 16.6v-5.4a1.35 1.35 0 1 1 1.35 1.35c-.55 0-1 .2-1.35.55"/><path d="M9.6 18.5h4.8M9.6 20.3h4.8"/></g><circle cx="7.15" cy="10" r=".62" fill="#fff" stroke="none"/><path fill="#fff" stroke="none" d="M11 22.2h2a1 1 0 0 1-2 0Z"/>',
     sparkle: '<path d="M12 3.5 13.8 9l5.7 1.8L13.8 13 12 18.5 10.2 13 4.5 10.8 10.2 9z"/>',
     list: '<path d="M8.5 7h11M8.5 12h11M8.5 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01"/>',
     document: '<path d="M14 3.5H7.5a1.5 1.5 0 0 0-1.5 1.5v14a1.5 1.5 0 0 0 1.5 1.5h9a1.5 1.5 0 0 0 1.5-1.5V7.5z"/><path d="M14 3.5v4h4M9 13h6M9 16.5h4"/>',
@@ -119,7 +120,7 @@
     const accessibility = label
       ? `role="img" aria-label="${escapeAttribute(label)}"`
       : 'aria-hidden="true" focusable="false"';
-    return `<svg class="icon ${escapeAttribute(className)}" width="${Number(size)}" height="${Number(size)}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${Number(strokeWidth)}" stroke-linecap="round" stroke-linejoin="round" ${accessibility}>${path}</svg>`;
+    return `<svg class="icon icon-${escapeAttribute(name)} ${escapeAttribute(className)}" width="${Number(size)}" height="${Number(size)}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${Number(strokeWidth)}" stroke-linecap="round" stroke-linejoin="round" ${accessibility}>${path}</svg>`;
   }
 
   const has = name => Object.prototype.hasOwnProperty.call(PATHS, name);
