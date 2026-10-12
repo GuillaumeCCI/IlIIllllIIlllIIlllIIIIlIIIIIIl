@@ -291,3 +291,7 @@ body.has-menu { padding-left: var(--menu-rail); }
 html[data-embed="solo"] .av-menu { display: none !important; }
 html[data-embed="solo"] body.has-menu { padding-left: 0; }
 @media print { .av-menu { display: none !important; } body.has-menu { padding-left: 0; } }
+/* La barre de progression du module entier, dans l'en-tête, est retirée :
+   seule compte la jauge du thème, dans le rail du menu. L'élément reste
+   dans les pages (core.js le met à jour) mais n'est plus affiché. */
+.topbar .overall-progress > * { display: none !important; } /* le conteneur vide garde son margin-left: auto, qui cale les boutons à droite */
