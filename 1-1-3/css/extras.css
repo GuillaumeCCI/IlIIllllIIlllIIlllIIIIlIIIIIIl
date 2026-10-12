@@ -315,3 +315,15 @@ body .topbar, body.is-briefing .topbar { margin: 10px 14px 0; border: 1px solid 
 .topbar .header-button:hover { background: var(--tint); }
 @media (max-width: 720px) { .topbar { margin: 8px 8px 0; } }
 .series-bar { background: transparent; border-bottom: 0; } /* sous l’en-tête en carte, la rangée des séries se pose sur le fond */
+/* Logo CCI en tête de la carte d'en-tête, juste avant le titre. Image
+   recadrée sur le logo (assets/logo-cci.webp, 497 × 96) : sans marge vide,
+   la hauteur fixée ici est celle du logo lui-même. */
+.topbar::before { content: ''; flex: none; width: 207px; height: 40px; background: url('../assets/logo-cci.webp') left center / contain no-repeat; }
+@media (max-width: 720px) {
+  .topbar::before { width: 124px; height: 24px; }
+  .topbar { flex-wrap: nowrap; gap: 6px; }
+  /* Pas de clavier physique sur téléphone : le bouton des commandes clavier part. */
+  .topbar [data-action="keyboard-help"] { display: none !important; }
+  .topbar .header-button { padding: 4px 6px; }
+  .topbar .header-icon { width: 26px; height: 26px; }
+}
