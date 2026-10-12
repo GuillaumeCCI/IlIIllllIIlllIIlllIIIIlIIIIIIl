@@ -42,8 +42,7 @@
         </section>
         ${core.errorsBox()}
         ${kit.bar({
-          left: `<button type="button" class="text-button with-icon" data-act="dialog" data-dialog="hint">${icon('info', { size: 20 })}<span>Voir un indice</span></button>`,
-          right: kit.submit(last ? 'Valider mes transformations' : 'Valider et passer à l’étape suivante')
+          right: `${kit.dialogButton('hint', 'Voir un indice', 'secondary', '')}${kit.submit(last ? 'Valider mes transformations' : 'Valider et passer à l’étape suivante')}`
         })}
       </form>
     </div>`;
