@@ -299,3 +299,5 @@ html[data-embed="solo"] body.has-menu { padding-left: 0; }
    ouvre la barre, sans filet de séparation. */
 .topbar .brand { display: none !important; }
 .topbar .course-label { padding-left: 0; border-left: 0; }
+/* Plus de mention « Brouillon local / Sauvegardé ici » en haut à droite. */
+.topbar .save-status { display: none !important; }
