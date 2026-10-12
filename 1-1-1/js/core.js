@@ -168,6 +168,22 @@
   const quote = (text, label = '') =>
     `<div class="client-quote">${label ? `<span class="quote-label">${esc(label)}</span>` : ''}<span class="quote-mark">${icon('quote', { size: 22 })}</span><p>${esc(text)}</p></div>`;
 
+  /* LA CARTE « CITATION CLIENT » : le client illustré à gauche (portrait,
+   * fond papier), « Le client vous dit », sa réplique entre guillemets
+   * dessinés. `portrait` : chemin de l'image depuis la racine du module.
+   * Styles : extras.css (.client-card). */
+  const clientCard = (text, portrait, label = 'Le client vous dit') => {
+    const clean = String(text).replace(/^s*«s*/, '').replace(/s*»s*$/, '');
+    const art = name => esc(asset(`assets/illustrations/clients/${name}.webp`));
+    return `<section class="client-card">
+      <div class="client-card-who" aria-hidden="true"><img src="${esc(asset(portrait))}" alt="" decoding="async"></div>
+      <div class="client-card-said">
+        <p class="client-card-label">${esc(label)}</p>
+        <div class="client-card-quote"><img class="client-card-mark" src="${art('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${esc(clean)}</blockquote><img class="client-card-mark is-closing" src="${art('guillemet-fermant')}" alt="" aria-hidden="true"></div>
+      </div>
+    </section>`;
+  };
+
   const errorsBox = () => '<div id="form-errors" class="form-errors" role="alert" hidden></div>';
   const feedbackBox = () => '<section id="feedback" class="feedback" tabindex="-1" aria-labelledby="feedback-title" hidden></section>';
 
@@ -498,7 +514,7 @@
     persist, markSaving, toast, openDialog,
     get storageAvailable() { return storageAvailable; },
     button, linkButton, chips, note, callout, pageTitle, panelTitle, step, mission, quote,
-    errorsBox, feedbackBox, hintBlock, illustration, gallery, scene, rubricButton, wireRubric, icon,
+    errorsBox, feedbackBox, hintBlock, clientCard, illustration, gallery, scene, rubricButton, wireRubric, icon,
     renderChrome, renderNav, renderFooterNav, nextUrl, applyBackground,
     wireImageFallbacks, wireDialog, revealActiveNav,
     wireFullscreen, wireScrollAreas, markScrollables, toggleFullscreen, isFullscreen,

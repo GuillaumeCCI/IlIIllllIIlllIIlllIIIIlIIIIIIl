@@ -31,17 +31,14 @@
     const free = options.filter((_, o) => takenBy(o) === -1 || takenBy(o) === i).length;
     return `<div class="k-page say-page is-moment">
       ${kit.head({ title: content.title, subtitle: content.subtitle,
-        aside: `<div class="say-progress"><span>Besoin ${i + 1} sur ${needs.length}</span><span class="say-dots">${needs.map((item, n) =>
-          `<button type="button" class="say-dot ${n === i ? 'is-current' : done(n) ? 'is-done' : ''}" data-act="need" data-index="${n}" aria-label="Besoin ${n + 1} : ${esc(item.tab)}"></button>`).join('')}</span></div>` })}
+        aside: `<div class="say-progress"><span class="say-dots">${needs.map((item, n) =>
+          `<button type="button" class="say-dot ${n === i ? 'is-current' : done(n) ? 'is-done' : ''}" data-act="need" data-index="${n}" aria-label="Besoin ${n + 1} : ${esc(item.tab)}"></button>`).join('')}</span><span>Besoin ${i + 1} sur ${needs.length}</span></div>` })}
       <form novalidate>
         <section class="say-card">
-          <div class="say-who" aria-hidden="true">
-            <svg class="say-spark" viewBox="0 0 40 40"><path d="M24 6l5 9M8 18l11 3M10 33l10-6"/></svg>
-            <span class="say-avatar">${icon('user', { size: 50 })}</span>
-          </div>
+          <div class="say-who" aria-hidden="true"><img class="say-portrait" src="${esc(core.asset('assets/illustrations/s3/say-cliente.webp'))}" alt="" decoding="async"></div>
           <div class="say-said">
             <p class="say-label">Le client vous dit</p>
-            <div class="say-quote"><span class="say-glyph" aria-hidden="true">“</span><blockquote>${esc(needs[i].quote)}</blockquote><span class="say-glyph is-closing" aria-hidden="true">”</span></div>
+            <div class="say-quote"><img class="say-glyph" src="${esc(core.asset('assets/illustrations/s3/say-guillemet-ouvrant.webp'))}" alt="" aria-hidden="true"><blockquote>${esc(needs[i].quote)}</blockquote><img class="say-glyph is-closing" src="${esc(core.asset('assets/illustrations/s3/say-guillemet-fermant.webp'))}" alt="" aria-hidden="true"></div>
           </div>
         </section>
         <div class="say-choose"><h2>Quel argument répond le mieux ?</h2><span class="k-muted">${free} disponible${free > 1 ? 's' : ''} · 2 resteront inutilisés</span></div>

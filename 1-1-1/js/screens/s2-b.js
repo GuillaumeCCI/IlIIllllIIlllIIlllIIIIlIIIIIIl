@@ -19,7 +19,7 @@
     return `<div class="writing-workshop">
       ${core.pageTitle(content.eyebrow, content.title)}
       ${core.mission('Votre mission', content.intro, '', 'target')}
-      ${core.quote(content.mission, 'Le client dit')}
+      ${core.clientCard(content.mission, 'assets/illustrations/clients/client-cheveux-gris.webp')}
       <form class="panel" novalidate>
         <div class="answer-table">
           <div class="answer-table-head">

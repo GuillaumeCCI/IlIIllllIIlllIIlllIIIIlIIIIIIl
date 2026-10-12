@@ -102,6 +102,8 @@ window.ATELIER_S2 = {
     subtitle: 'Choisissez la réponse qui fait avancer l’échange, puis expliquez pourquoi.',
     speaker: 'Client',
     quote: 'Envoyez-moi plutôt une documentation.',
+    // Le client illustré (kit.clientCard), à la place de l'avatar.
+    portrait: 'assets/illustrations/clients/client-tasse.webp',
     listTitle: 'Que répond le commercial ?',
     options: [
       { id: '1', label: 'Réponse 1', text: 'Pas de souci, je vous envoie la doc, bonne journée.',

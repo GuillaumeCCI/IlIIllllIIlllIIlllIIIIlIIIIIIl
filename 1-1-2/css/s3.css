@@ -372,3 +372,31 @@ button.k-step-dot { border: 1px solid #c9d3ea; padding: 0; }
 #main input.ar-slot.is-filled { caret-color: #fff; }
 #main input.ar-slot.is-filled { cursor: var(--cursor-grab, grab); } /* un numéro posé se déplace en le glissant */
 #main input.ar-slot.is-filled:focus { cursor: text; }
+
+/* 3.3 · Le bon argument au bon moment, d'après la maquette : la cliente
+   illustrée occupe la gauche de la carte, guillemets dessinés, trait corail
+   sous « Le client vous dit » et sous la question, progression en pastille
+   (points reliés, puis « Besoin 1 sur 3 »). Les dessins ont un fond papier :
+   la carte prend sa couleur pour qu’ils s’y fondent. */
+.say-page.is-moment .say-card { grid-template-columns: minmax(200px, 26%) minmax(0, 1fr); padding: 0 44px 0 0; overflow: hidden; background: #faf8f3; } /* la couleur du papier des dessins : ils se fondent dans la carte */
+.say-page.is-moment .say-who { border-right: 0; align-self: stretch; overflow: hidden; }
+.say-portrait { width: 100%; height: 100%; min-height: 180px; max-height: 210px; object-fit: cover; object-position: left center; }
+.say-page.is-moment .say-said { padding: 20px 0 20px 18px; }
+.say-page.is-moment .say-quote blockquote { font-size: clamp(1.3rem, 1.9vw, 1.75rem); }
+.say-page.is-moment .say-label::after, .say-page.is-moment .say-choose h2::after { content: ''; display: block; width: 46px; height: 3px; margin-top: 8px; border-radius: 3px; background: var(--coral, #ff936b); }
+.say-page.is-moment .say-choose h2::after { position: static; }
+img.say-glyph { width: 52px; height: auto; margin: 0; }
+.say-page.is-moment img.say-glyph { margin-top: 6px; }
+.say-page.is-moment img.say-glyph.is-closing { width: 56px; margin: 0 0 -28px; }
+.say-page.is-moment .say-progress { display: flex; align-items: center; gap: 18px; padding: 12px 22px; border-radius: 999px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 8%); letter-spacing: .06em; }
+.say-page.is-moment .say-progress > span:last-child { padding-left: 18px; border-left: 1.5px solid #dfe5f1; }
+.say-page.is-moment .say-dots { gap: 26px; }
+.say-page.is-moment .say-dot { position: relative; }
+.say-page.is-moment .say-dot + .say-dot::before { content: ''; position: absolute; right: calc(100% + 4px); top: 50%; width: 18px; height: 2px; background: #c9d6f1; transform: translateY(-50%); }
+@media (max-width: 760px) {
+  .say-page.is-moment .say-card { grid-template-columns: 1fr; padding: 0 20px; }
+  .say-page.is-moment .say-who { display: block; margin: 0 -20px; max-height: 190px; }
+  .say-page.is-moment .say-said { padding: 16px 0 22px; }
+  .say-page.is-moment .k-head { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .say-page.is-moment .say-progress { padding: 10px 18px; gap: 14px; }
+}
