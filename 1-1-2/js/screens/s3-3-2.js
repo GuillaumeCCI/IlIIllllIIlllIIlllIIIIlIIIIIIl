@@ -1,9 +1,10 @@
 /* S3 3.2 · Action → Réaction.
  *
  * Six comportements numérotés, six réactions de client. On glisse chaque
- * pastille vers la réaction qu'elle provoque, ou on clique la pastille puis
- * l'emplacement « N° ». Un numéro ne sert qu'une fois : le reposer ailleurs
- * le retire de son ancien emplacement.
+ * pastille vers la réaction qu'elle provoque, on clique la pastille puis
+ * l'emplacement « N° », ou on tape le numéro dans l'emplacement. Un numéro
+ * ne sert qu'une fois : le reposer ailleurs le retire de son ancien
+ * emplacement.
  */
 (() => {
   'use strict';
@@ -52,7 +53,7 @@
         </section>
         <section class="k-panel">
           <h2 class="ar-title">Réactions probables du client</h2>
-          <p class="k-muted">${reviewing ? 'Le numéro attendu, et l’explication.' : 'Déposez un numéro dans chaque emplacement.'}</p>
+          <p class="k-muted">${reviewing ? 'Le numéro attendu, et l’explication.' : 'Déposez ou tapez un numéro dans chaque emplacement.'}</p>
           <ol class="ar-list">${reactions.map((reaction, i) => {
             const value = list[i];
             if (reviewing) {
@@ -60,7 +61,7 @@
               return `<li class="ar-row ${ok ? 'is-ok' : 'is-ko'}"><span class="ar-letter">${letters[i]}</span><span><strong class="ar-reaction">${esc(reaction.text)}</strong><small class="k-why">${esc(behaviours[reaction.answer - 1])}${reaction.why ? ` ${esc(reaction.why)}` : ''}</small></span><span class="ar-expected ${ok ? 'is-ok' : 'is-ko'}" title="${ok ? 'Votre réponse est juste' : `Vous aviez mis : ${value ?? 'rien'}`}">N° attendu : ${reaction.answer}</span></li>`;
             }
             return `<li class="ar-row"><span class="ar-letter">${letters[i]}</span><span>${esc(reaction.text)}</span>
-              <button type="button" class="ar-slot ${value ? 'is-filled' : ''}" data-drop="${i}" data-act="slot" data-index="${i}" aria-label="Réaction ${letters[i]}${value ? `, numéro ${value}` : ', vide'}">${value || 'N°'}</button>
+              <input type="text" class="ar-slot ${value ? 'is-filled' : ''}" inputmode="numeric" maxlength="1" autocomplete="off" placeholder="N°" value="${value || ''}" data-drop="${i}" data-act="slot" data-index="${i}" aria-label="Réaction ${letters[i]} : numéro du comportement, de 1 à ${behaviours.length}">
             </li>`;
           }).join('')}</ol>
         </section>
@@ -88,11 +89,40 @@
     slot: el => {
       const slot = Number(el.dataset.index);
       const n = picked();
-      if (n !== null) place(n, slot);
-      else if (matches()[slot]) { const list = matches(); list[slot] = null; ex.setValue('match', list); }
-      else { core.toast('Cliquez d’abord une pastille numérotée.'); return; }
+      // Sans pastille choisie, le clic sert juste à placer le curseur pour taper.
+      if (n === null) return;
+      place(n, slot);
       kit.commit();
     }
+  });
+
+  /* La saisie au clavier dans un emplacement : un chiffre de 1 à 6 y place
+   * ce numéro, un champ vidé libère l'emplacement. Le curseur passe ensuite
+   * au prochain emplacement vide. */
+  function focusSlot(index) {
+    const slots = [...document.querySelectorAll('input.ar-slot')];
+    const next = slots.slice(index + 1).concat(slots.slice(0, index + 1)).find(input => !input.value) || slots[index];
+    if (next) next.focus();
+  }
+  document.addEventListener('input', event => {
+    const input = event.target.closest && event.target.closest('input.ar-slot');
+    if (!input) return;
+    const slot = Number(input.dataset.index);
+    const raw = input.value.trim();
+    if (!raw) { const list = matches(); list[slot] = null; ex.setValue('match', list); kit.commit(); focusSlot(slot - 1); return; }
+    const n = Number(raw);
+    if (!Number.isInteger(n) || n < 1 || n > behaviours.length) {
+      input.value = matches()[slot] || '';
+      core.toast(`Tapez un numéro de 1 à ${behaviours.length}.`);
+      return;
+    }
+    place(n, slot);
+    kit.commit();
+    focusSlot(slot);
+  });
+  // Entrée dans un emplacement ne doit pas valider tout l'exercice.
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Enter' && event.target.closest && event.target.closest('input.ar-slot')) event.preventDefault();
   });
   kit.onDrop((id, slot) => { place(Number(id), Number(slot)); kit.commit(); });
   kit.dialogs({ rule: { title: 'La consigne', html: `<p>${esc(content.subtitle)}</p><p>${esc(content.note)}</p><p>${esc(content.rule)}</p>` } });

@@ -38,7 +38,9 @@ button.k-step-dot { border: 1px solid #c9d3ea; padding: 0; }
 .ar-pill.is-used { border-style: dashed; opacity: .45; }
 .ar-pill.is-dragging { opacity: .3; }
 .ar-letter { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--navy); color: #fff; font-weight: 700; }
-.ar-slot { width: 60px; height: 54px; border: 1.5px dashed #9aabd1; border-radius: 8px; background: #fff; color: var(--muted); font-weight: 700; }
+.ar-slot { width: 60px; height: 54px; padding: 0; border: 1.5px dashed #9aabd1; border-radius: 8px; background: #fff; color: var(--navy); font: inherit; font-size: 1.25rem; font-weight: 700; text-align: center; }
+.ar-slot::placeholder { color: var(--muted); font-size: 1rem; opacity: 1; }
+.ar-slot:focus { outline: none; border-style: solid; border-color: var(--accent); box-shadow: 0 0 0 3px rgb(19 75 215 / 18%); }
 .ar-slot:hover, .ar-slot.is-over { border-color: var(--accent); background: #edf3ff; }
 .ar-slot.is-filled { border-style: solid; border-color: var(--accent); background: var(--accent); color: #fff; font-size: 1.3rem; }
 
@@ -363,3 +365,8 @@ button.k-step-dot { border: 1px solid #c9d3ea; padding: 0; }
 .verdict-page .verdict-head .verdict-tab-line { width: 1px; height: 16px; margin: 0 8px; background: #c8d3ec; }
 .verdict-page .verdict-item { padding: 18px 20px; }
 .verdict-page .verdict-item > span:last-child { max-width: 62ch; }
+/* 3.2 · l'emplacement « N° » est un champ : le style général des champs
+   (pleine largeur, marges intérieures) ne doit pas l'élargir. */
+#main input.ar-slot:not(.is-filled):not(:focus) { border: 1.5px dashed #9aabd1; }
+#main input.ar-slot { flex: none; width: 60px; min-width: 0; height: 54px; min-height: 0; margin: 0; padding: 0; line-height: 54px; text-align: center; }
+#main input.ar-slot.is-filled { caret-color: #fff; }
