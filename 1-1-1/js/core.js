@@ -396,11 +396,21 @@
 
   const keyboardHelpVisible = () => keyboardHelpOn;
 
+  /* Icônes de l'en-tête (dessins clavier.svg et plein_ecran.svg) : trait
+   * épais, formes pleines en blanc. Grille 64 × 64. */
+  const headerSvg = body => `<svg class="icon header-icon" width="30" height="30" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`;
+  const HEADER_SVG = {
+    keyboard: headerSvg('<rect x="7" y="15" width="50" height="34" rx="6.4" fill="#fff"/><g fill="currentColor" stroke="none"><circle cx="17" cy="26.5" r="2.15"/><circle cx="25" cy="26.5" r="2.15"/><circle cx="33" cy="26.5" r="2.15"/><circle cx="41" cy="26.5" r="2.15"/><circle cx="49" cy="26.5" r="2.15"/><circle cx="17" cy="38" r="2.25"/><circle cx="49" cy="38" r="2.25"/></g><path d="M27 38H41" stroke-width="4.6"/>'),
+    fullscreen: headerSvg('<path d="M24 10H15Q10 10 10 15V24"/><path d="M40 10H49Q54 10 54 15V24"/><path d="M10 40V49Q10 54 15 54H24"/><path d="M54 40V49Q54 54 49 54H40"/>'),
+    // Quitter le plein écran : les mêmes coins, tournés vers l'intérieur.
+    exitFullscreen: headerSvg('<path d="M24 10V19Q24 24 19 24H10"/><path d="M40 10V19Q40 24 45 24H54"/><path d="M10 40H19Q24 40 24 45V54"/><path d="M54 40H45Q40 40 40 45V54"/>')
+  };
+
   function paintKeyboardHelp() {
     document.body.classList.toggle('show-keyboard-help', keyboardHelpOn);
     const control = $('[data-action="keyboard-help"]');
     if (!control) return;
-    control.innerHTML = icon('keyboard', { size: 19 });
+    control.innerHTML = HEADER_SVG.keyboard;
     control.setAttribute('aria-pressed', String(keyboardHelpOn));
     control.setAttribute('aria-label', keyboardHelpOn
       ? 'Masquer les commandes clavier'
@@ -437,7 +447,7 @@
     const control = $('[data-action="fullscreen"]');
     if (!control) return;
     const on = isFullscreen();
-    control.innerHTML = icon(on ? 'exitFullscreen' : 'fullscreen', { size: 19 });
+    control.innerHTML = on ? HEADER_SVG.exitFullscreen : HEADER_SVG.fullscreen;
     control.setAttribute('aria-pressed', String(on));
     control.setAttribute('aria-label', on ? 'Quitter le plein écran' : 'Passer en plein écran');
     control.title = on ? 'Quitter le plein écran (Échap)' : 'Passer en plein écran';

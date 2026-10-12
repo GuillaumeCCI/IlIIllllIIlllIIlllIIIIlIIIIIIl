@@ -232,10 +232,12 @@
 
   /* ─────────────────────────── Le bouton Sons ─────────────────────────── */
 
-  const SPEAKER = '<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/>';
-  const WAVES = '<path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>';
-  const CROSS = '<path d="m16 9.5 5 5m0-5-5 5"/>';
-  const svg = body => `<svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+  /* Icônes de l'en-tête (dessins sons.svg et musique.svg) : trait épais,
+   * formes pleines en blanc. Grille 64 × 64. */
+  const SPEAKER = '<path fill="#fff" d="M12 25Q12 22 15 22H24L36 12Q40 9 40 14V50Q40 54 36 51L24 41H15Q12 41 12 38Z"/>';
+  const WAVES = '<path d="M47 23C54 29 54 35 47 41"/><path d="M53 15C64 25 64 39 53 49"/>';
+  const CROSS = '<path d="M47 25 59 39M59 25 47 39"/>';
+  const svg = body => `<svg class="icon header-icon" width="30" height="30" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`;
 
   function paint(button) {
     button.innerHTML = `${svg(SPEAKER + (muted ? CROSS : WAVES))}<span class="sound-toggle-label">${muted ? 'Sons coupés' : 'Sons'}</span>`;
@@ -520,6 +522,7 @@
       .av-entrance p { margin: 0; font-size: 1.1rem; line-height: 1.5; color: #58688b; }
       .av-entrance-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 10px; }
       .av-entrance button { display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px; border: 0; border-radius: 999px; background: #134bd7; color: #fff; font: inherit; font-size: 1.1rem; font-weight: 700; cursor: var(--cursor-hand, pointer); box-shadow: 0 8px 22px rgb(19 75 215 / 25%); transition: transform .15s ease, background .15s ease; }
+      .av-entrance button .icon { width: 24px; height: 24px; flex: none; }
       .av-entrance button:hover { background: #0738b4; transform: translateY(-1px); }
       .av-entrance button.is-quiet { background: #fff; color: #134bd7; box-shadow: inset 0 0 0 1.5px #134bd7; }
       .av-entrance button.is-quiet:hover { background: #ecf4ff; }
@@ -555,8 +558,8 @@
     });
   }
 
-  const NOTE = '<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>';
-  const SLASH = '<path d="m3.5 3.5 17 17"/>';
+  const NOTE = '<path d="M25 43V18L52 12V39"/><ellipse fill="#fff" cx="17" cy="46" rx="9.2" ry="8.2" transform="rotate(-23 17 46)"/><ellipse fill="#fff" cx="44" cy="42" rx="9.2" ry="8.2" transform="rotate(-23 44 42)"/>';
+  const SLASH = '<path d="M8 8 56 56"/>';
 
   function paintMusic(button) {
     button.innerHTML = `${svg(NOTE + (musicOff ? SLASH : ''))}<span class="sound-toggle-label">${musicOff ? 'Musique coupée' : 'Musique'}</span>`;
