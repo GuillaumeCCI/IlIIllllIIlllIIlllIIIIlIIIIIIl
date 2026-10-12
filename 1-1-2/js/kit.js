@@ -201,9 +201,9 @@
    * que la précédente a sa réponse (la relecture les montre toutes). */
   function mountChoiceGrid(key, content, { progressive = false } = {}) {
     const items = content.items;
-    // `letterButtons` : les tuiles ne portent que la lettre (C, A, P), la
-    // légende au-dessus en donne le sens.
-    const options = content.legend.map(l => content.letterButtons
+    // Par défaut, les tuiles ne portent que la lettre (C, A, P) : la légende
+    // au-dessus en donne le sens. `letterButtons: false` y remet le mot.
+    const options = content.legend.map(l => content.letterButtons !== false
       ? { id: l.id, label: l.id, tone: l.tone }
       : { id: l.id, label: l.label, badge: l.id, tone: l.tone });
     const answers = items.map(item => item.answer);

@@ -12,7 +12,6 @@ window.ATELIER_S2 = {
     eyebrow: 'Exercice 2.1',
     title: 'Barrage, prétexte ou vraie objection ?',
     subtitle: 'Classez chaque réplique entendue au téléphone.',
-    letterButtons: true,
     legend: [
       { id: 'B', label: 'Barrage du standard', text: 'Fait obstacle à la mise en relation.', tone: 'c' },
       { id: 'P', label: 'Prétexte / Dérobade', text: 'Évite la conversation.', tone: 'p' },

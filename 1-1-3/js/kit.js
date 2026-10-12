@@ -169,12 +169,13 @@
 
   /* Un rappel des catégories, puis une carte par affirmation avec ses
    * boutons de réponse. `content` : eyebrow, title, subtitle, legend,
-   * instruction, items [{ text, answer, why }]. Avec `letterButtons`, les
-   * boutons ne portent que la lettre (B · P · O), la légende disant le reste.
+   * instruction, items [{ text, answer, why }]. Les boutons ne portent que
+   * la lettre (B · P · O), la légende disant le reste ; `letterButtons: false`
+   * y remet le mot.
    * Monte l'exercice. */
   function mountChoiceGrid(key, content) {
     const items = content.items;
-    const options = content.legend.map(l => content.letterButtons
+    const options = content.legend.map(l => content.letterButtons !== false
       ? { id: l.id, label: l.id, tone: l.tone }
       : { id: l.id, label: l.label, badge: l.id, tone: l.tone });
     const answers = items.map(item => item.answer);
