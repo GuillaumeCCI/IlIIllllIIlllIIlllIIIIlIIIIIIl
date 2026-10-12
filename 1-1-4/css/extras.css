@@ -383,3 +383,6 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 /* En-tête : le thème en gras, le nom de l'exercice (le <span>) en normal. */
 .topbar .course-label { font-weight: 800; color: var(--navy); }
 .topbar .course-label span { font-weight: 400; color: var(--muted); }
+/* Tableau à cocher (kit.matrix) : une case vide se voit, en pointillés. */
+#main .k-matrix .k-box:not(.is-checked):not(.is-answer):not(.is-wrong) { border: 1.5px dashed #9aabd1 !important; box-shadow: none !important; background: #fff; }
+#main .k-matrix label:hover .k-box:not(.is-checked) { border-color: var(--accent) !important; }

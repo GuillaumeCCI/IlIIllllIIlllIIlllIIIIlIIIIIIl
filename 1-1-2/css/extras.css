@@ -440,3 +440,17 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
   .client-card-quote { grid-template-columns: 34px minmax(0, 1fr) 30px; }
   .client-card-mark { width: 34px; } .client-card-mark.is-closing { width: 32px; margin-bottom: -18px; }
 }
+/* Tableau à cocher (kit.matrix) : une case vide se voit, en pointillés. */
+#main .k-matrix .k-box:not(.is-checked):not(.is-answer):not(.is-wrong) { border: 1.5px dashed #9aabd1 !important; box-shadow: none !important; background: #fff; }
+#main .k-matrix label:hover .k-box:not(.is-checked) { border-color: var(--accent) !important; }
+.client-card-quote { grid-template-columns: 56px minmax(0, max-content) 46px; justify-content: start; } /* le guillemet fermant suit le texte, même court */
+@media (max-width: 760px) { .client-card-quote { grid-template-columns: 34px minmax(0, max-content) 30px; } }
+/* Le guillemet fermant est dans le texte, collé au dernier mot. */
+.client-card-quote { grid-template-columns: 56px minmax(0, 1fr); }
+.client-card-quote blockquote .client-card-mark.is-closing { display: inline-block; width: 40px; margin: 0 0 0 10px; vertical-align: -.45em; }
+@media (max-width: 760px) { .client-card-quote { grid-template-columns: 34px minmax(0, 1fr); } .client-card-quote blockquote .client-card-mark.is-closing { width: 28px; margin-left: 6px; } }
+/* Guillemets plus présents (dessins recadrés au ras). */
+.client-card-quote { grid-template-columns: 78px minmax(0, 1fr); gap: 10px; }
+.client-card-mark { width: 68px; margin-top: -2px; }
+.client-card-quote blockquote .client-card-mark.is-closing { width: 50px; margin-left: 12px; vertical-align: -.2em; }
+@media (max-width: 760px) { .client-card-quote { grid-template-columns: 46px minmax(0, 1fr); } .client-card-mark { width: 42px; } .client-card-quote blockquote .client-card-mark.is-closing { width: 32px; } }

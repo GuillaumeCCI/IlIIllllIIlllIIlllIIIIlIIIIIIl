@@ -109,7 +109,7 @@
       <div class="client-card-who" aria-hidden="true"><img src="${esc(core().asset(portrait))}" alt="" decoding="async"></div>
       <div class="client-card-said">
         <p class="client-card-label">${esc(label)}</p>
-        <div class="client-card-quote"><img class="client-card-mark" src="${art('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${esc(clean)}</blockquote><img class="client-card-mark is-closing" src="${art('guillemet-fermant')}" alt="" aria-hidden="true"></div>
+        <div class="client-card-quote"><img class="client-card-mark" src="${art('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${esc(clean)}<img class="client-card-mark is-closing" src="${art('guillemet-fermant')}" alt="" aria-hidden="true"></blockquote></div>
       </div>
     </section>`;
   };

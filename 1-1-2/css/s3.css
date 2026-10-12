@@ -378,7 +378,7 @@ button.k-step-dot { border: 1px solid #c9d3ea; padding: 0; }
    sous « Le client vous dit » et sous la question, progression en pastille
    (points reliés, puis « Besoin 1 sur 3 »). Les dessins ont un fond papier :
    la carte prend sa couleur pour qu’ils s’y fondent. */
-.say-page.is-moment .say-card { grid-template-columns: minmax(200px, 26%) minmax(0, 1fr); padding: 0 44px 0 0; overflow: hidden; background: #faf8f3; } /* la couleur du papier des dessins : ils se fondent dans la carte */
+.say-page.is-moment .say-card { grid-template-columns: minmax(200px, 26%) minmax(0, 1fr); padding: 0 44px 0 0; overflow: hidden; background: #fff; } /* fond blanc : la cliente et les guillemets sont détourés */
 .say-page.is-moment .say-who { border-right: 0; align-self: stretch; overflow: hidden; }
 .say-portrait { width: 100%; height: 100%; min-height: 180px; max-height: 210px; object-fit: cover; object-position: left center; }
 .say-page.is-moment .say-said { padding: 20px 0 20px 18px; }
@@ -399,4 +399,43 @@ img.say-glyph { width: 52px; height: auto; margin: 0; }
   .say-page.is-moment .say-said { padding: 16px 0 22px; }
   .say-page.is-moment .k-head { flex-direction: column; align-items: flex-start; gap: 14px; }
   .say-page.is-moment .say-progress { padding: 10px 18px; gap: 14px; }
+}
+.say-page.is-moment .say-quote { grid-template-columns: 56px minmax(0, max-content) 46px; justify-content: start; }
+@media (max-width: 760px) { .say-page.is-moment .say-quote { grid-template-columns: 34px minmax(0, max-content) 30px; } }
+.say-page.is-moment .say-quote { grid-template-columns: 56px minmax(0, 1fr); }
+.say-page.is-moment .say-quote blockquote img.say-glyph.is-closing { display: inline-block; width: 40px; margin: 0 0 0 10px; vertical-align: -.45em; }
+@media (max-width: 760px) { .say-page.is-moment .say-quote { grid-template-columns: 34px minmax(0, 1fr); } .say-page.is-moment .say-quote blockquote img.say-glyph.is-closing { width: 28px; margin-left: 6px; } }
+.say-page.is-moment .say-quote { grid-template-columns: 78px minmax(0, 1fr); gap: 10px; }
+.say-page.is-moment img.say-glyph { width: 68px; margin-top: -2px; }
+.say-page.is-moment .say-quote blockquote img.say-glyph.is-closing { width: 50px; margin-left: 12px; vertical-align: -.2em; }
+@media (max-width: 760px) { .say-page.is-moment .say-quote { grid-template-columns: 46px minmax(0, 1fr); } .say-page.is-moment img.say-glyph { width: 42px; } .say-page.is-moment .say-quote blockquote img.say-glyph.is-closing { width: 32px; } }
+
+/* 3.4 · corrigé du radar de dérive */
+.drv-review { padding: 22px 26px; display: grid; gap: 10px; }
+.drv-row { display: grid; grid-template-columns: minmax(0, 1fr) 130px 130px minmax(220px, 26%); gap: 0; align-items: stretch; border-radius: 14px; background: #fff; box-shadow: 0 4px 14px rgb(20 40 100 / 6%); }
+.drv-head { background: none; box-shadow: none; align-items: end; }
+.drv-head > span:first-child { padding: 0 18px 10px; font-weight: 800; font-size: 1.1rem; color: var(--navy); }
+.drv-col { display: grid; justify-items: center; gap: 2px; padding: 12px 6px; border-radius: 12px 12px 0 0; text-align: center; }
+.drv-col strong { color: var(--navy); } .drv-col small { font-size: .78rem; color: var(--muted); }
+.drv-col .icon { width: 26px; height: 26px; padding: 4px; border-radius: 50%; color: #fff; }
+.drv-col.is-fit { background: #e9f6ee; } .drv-col.is-fit .icon { background: #1f9a62; }
+.drv-col.is-drift { background: #fdeeec; } .drv-col.is-drift .icon { background: #e5604c; }
+.drv-arg { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; align-items: center; padding: 16px 18px; }
+.drv-arg strong { display: block; color: var(--navy); } .drv-arg small { display: block; margin-top: 3px; color: #4f5b82; line-height: 1.45; }
+.drv-n { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; font-weight: 800; }
+.drv-row.is-ok .drv-n { background: #e2f4ea; color: #17794f; } .drv-row.is-ko .drv-n { background: #fde3de; color: #d6452f; }
+.drv-cell { display: grid; place-items: center; border-left: 1px solid #edf0f6; }
+.drv-mark { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid #cdd5e4; border-radius: 50%; }
+.drv-mark.is-right { border: 0; border-radius: 12px; background: #e2f4ea; color: #17794f; }
+.drv-mark.is-wrong { border: 0; border-radius: 12px; background: #fde3de; color: #d6452f; }
+.drv-mark.is-expected { border: 2px dashed #3aa874; color: #17794f; }
+.drv-verdict { margin: 8px; padding: 12px 16px; border-radius: 12px; line-height: 1.4; }
+.drv-verdict strong { display: block; } .drv-verdict.is-ok { background: #e9f6ee; } .drv-verdict.is-ok strong { color: #17794f; }
+.drv-verdict.is-ko { background: #fdeeec; } .drv-verdict.is-ko strong { color: #d6452f; }
+.drv-score { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 10px; padding: 16px 20px; border-left: 3px solid #d5e0f6; }
+.drv-score small { display: block; color: var(--muted); } .drv-score strong { font-size: 2rem; color: var(--navy); }
+.drv-score-symbol { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: #e6eefc; color: var(--accent); }
+.drv-score .k-muted { margin-left: auto; max-width: 300px; }
+@media (max-width: 900px) {
+  .drv-row { grid-template-columns: minmax(0, 1fr) 80px 80px; } .drv-verdict { grid-column: 1 / -1; } .drv-head > span:last-child { display: none; }
 }
