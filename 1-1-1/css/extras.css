@@ -197,3 +197,56 @@ html[data-embed="solo"] #main { padding-top: 20px; }
 #main .feedback.is-compact p { margin: 0; padding: 8px 16px; border-radius: 12px; background: rgb(255 255 255 / 88%); }
 #main .feedback.is-compact .button { margin: 0; min-width: 240px; min-height: 56px; padding: 14px 40px; border-radius: 16px; font-size: 1.15rem; box-shadow: 0 10px 24px rgb(19 75 215 / 22%); }
 #main .feedback.is-compact:focus { outline: none; }
+
+/* ── Le menu (js/core.js, renderMenu) ───────────────────────────────────
+   Remplace la rangée d'onglets des exercices. Un rail bleu nuit à gauche :
+   bouton menu, accueil, progression totale en jauge verticale. Le volet
+   s'ouvre par-dessus la page : exercices de la série, coche corail pour
+   chaque exercice terminé, exercice en cours en blanc. */
+.exercise-nav { display: none !important; }
+:root { --menu-rail: 68px; --menu-panel: min(360px, calc(100vw - var(--menu-rail) - 24px)); }
+body.has-menu { padding-left: var(--menu-rail); }
+.av-menu { position: fixed; inset: 0 auto 0 0; z-index: 60; display: flex; font-family: "Fira Sans", system-ui, sans-serif; pointer-events: none; }
+.av-menu-rail { position: relative; z-index: 2; width: var(--menu-rail); display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 14px 0 22px; background: var(--navy); color: #fff; pointer-events: auto; box-shadow: 2px 0 14px rgb(16 20 72 / 14%); }
+.av-menu-toggle, .av-menu-home, .av-menu-close { display: grid; place-items: center; width: 46px; height: 46px; border: 0; border-radius: 12px; background: none; color: inherit; cursor: var(--cursor-hand, pointer); text-decoration: none; transition: background .15s ease; }
+.av-menu-toggle:hover, .av-menu-home:hover { background: rgb(255 255 255 / 12%); }
+.av-menu-home { color: rgb(255 255 255 / 72%); }
+.av-menu :focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; }
+.av-menu-progress { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.av-menu-percent { display: grid; place-items: center; width: 44px; height: 44px; border: 2px solid rgb(255 255 255 / 30%); border-radius: 50%; font-size: .74rem; font-weight: 700; }
+.av-menu-track { position: relative; width: 10px; height: clamp(90px, 28vh, 220px); border-radius: 999px; background: rgb(255 255 255 / 16%); overflow: hidden; }
+.av-menu-fill { position: absolute; inset: auto 0 0; height: 0; border-radius: inherit; background: #ff936b; transition: height .5s ease; }
+
+.av-menu-panel { position: relative; z-index: 1; width: var(--menu-panel); display: flex; flex-direction: column; padding: 22px 26px 22px 28px; background: #1b2370; color: #fff; border-radius: 0 26px 26px 0; box-shadow: 10px 0 34px rgb(16 20 72 / 26%); transform: translateX(-105%); visibility: hidden; transition: transform .28s ease, visibility 0s linear .28s; pointer-events: auto; }
+.av-menu.is-open .av-menu-panel { transform: none; visibility: visible; transition: transform .28s ease; }
+.av-menu-title { margin: 6px 0 22px; font-size: 1.35rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.av-menu-nav { flex: 1; overflow-y: auto; margin: 0 -10px; }
+.av-menu-list { list-style: none; margin: 0; padding: 0 10px; display: grid; gap: 4px; }
+.av-menu-list a { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 11px 12px; border-radius: 12px; color: rgb(255 255 255 / 70%); font-weight: 600; line-height: 1.3; text-decoration: none; transition: background .15s ease, color .15s ease; }
+.av-menu-list a:hover { background: rgb(255 255 255 / 9%); color: #fff; }
+.av-menu-list a.active { background: rgb(255 255 255 / 12%); color: #fff; font-weight: 700; }
+.av-menu-check { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border: 2px solid rgb(255 255 255 / 32%); border-radius: 50%; }
+.av-menu-list a.is-done .av-menu-check { border-color: #ff936b; background: #ff936b; color: var(--navy); }
+.av-menu-foot { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgb(255 255 255 / 30%); display: grid; gap: 14px; font-size: .85rem; }
+.av-menu-module { display: flex; gap: 18px; color: rgb(255 255 255 / 72%); text-transform: uppercase; letter-spacing: .04em; }
+.av-menu-module span:first-child { white-space: nowrap; }
+.av-menu-links { display: flex; gap: 22px; }
+.av-menu-links a { color: #fff; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: .04em; }
+.av-menu-links a:hover { text-decoration: underline; }
+.av-menu-close { position: absolute; top: 50%; right: -26px; width: 44px; height: 64px; transform: translateY(-50%); border-radius: 0 16px 16px 0; background: #1b2370; box-shadow: 8px 0 18px rgb(16 20 72 / 18%); }
+.av-menu-close:hover { background: #26308a; }
+.av-menu-backdrop { position: fixed; inset: 0; z-index: 0; background: rgb(16 20 72 / 28%); opacity: 0; visibility: hidden; transition: opacity .28s ease, visibility 0s linear .28s; }
+.av-menu.is-open .av-menu-backdrop { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .28s ease; }
+@media (prefers-reduced-motion: reduce) { .av-menu-panel, .av-menu-backdrop, .av-menu-fill { transition: none !important; } }
+/* Petit écran : plus de rail, un bouton menu flottant en haut à gauche. */
+@media (max-width: 720px) {
+  :root { --menu-rail: 0px; --menu-panel: calc(100vw - 40px); }
+  .av-menu-rail { position: fixed; top: 10px; left: 10px; width: auto; padding: 0; background: var(--navy); border-radius: 14px; }
+  .av-menu-home, .av-menu-progress { display: none; }
+  .av-menu-panel { padding-top: 70px; }
+  .topbar { padding-left: 70px !important; }
+}
+/* Exercice seul (intégration « solo ») et impression : pas de menu. */
+html[data-embed="solo"] .av-menu { display: none !important; }
+html[data-embed="solo"] body.has-menu { padding-left: 0; }
+@media print { .av-menu { display: none !important; } body.has-menu { padding-left: 0; } }

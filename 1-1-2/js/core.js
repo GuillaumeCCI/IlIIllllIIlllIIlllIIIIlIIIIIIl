@@ -216,6 +216,7 @@
     }).join('');
     container.innerHTML = tabs;
     revealActiveNav();
+    renderMenu(current, serie);
 
     const seriesBar = $('#series-links');
     if (seriesBar) {
@@ -226,6 +227,87 @@
         return `<a href="${esc(pageUrl(s.exercises[0].file))}" class="series-link ${active ? 'active' : ''}" ${active ? 'aria-current="true"' : ''}><strong>${esc(s.label)}</strong><span>${n} / ${keys.length}</span></a>`;
       }).join('');
     }
+  }
+
+  /* LE MENU. Un rail à gauche (bouton menu, accueil, progression totale)
+   * et un volet qui s'ouvre sur les exercices de la série en cours, avec une
+   * coche pour chaque exercice terminé. Il remplace la rangée d'onglets, qui
+   * reste construite mais masquée (extras.css). Styles : extras.css. */
+  const MENU_SVG = {
+    burger: '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg>',
+    home: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10.5 12 4l8 6.5V20H4z"/><path d="M10 20v-5h4v5"/></svg>',
+    back: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m14.5 6-6 6 6 6"/></svg>'
+  };
+  const moduleCode = () => catalog.code || (String(catalog.storageKey || '').match(/\d+-\d+-\d+/) || [''])[0];
+  let menu = null;
+
+  function setMenuOpen(open, { focus = true } = {}) {
+    if (!menu) return;
+    const toggle = menu.querySelector('.av-menu-toggle');
+    const panel = menu.querySelector('.av-menu-panel');
+    menu.classList.toggle('is-open', open);
+    document.body.classList.toggle('menu-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    panel.inert = !open;
+    if (!focus) return;
+    if (open) (panel.querySelector('[aria-current]') || panel.querySelector('a, button'))?.focus();
+    else toggle.focus();
+  }
+
+  function buildMenu() {
+    // Sans vrai document (tests), pas de menu.
+    if (!document.body || typeof document.body.prepend !== 'function') return false;
+    menu = document.createElement('aside');
+    menu.className = 'av-menu';
+    menu.innerHTML = `<div class="av-menu-rail">
+        <button type="button" class="av-menu-toggle" aria-expanded="false" aria-controls="av-menu-panel" aria-label="Ouvrir le menu">${MENU_SVG.burger}</button>
+        <a class="av-menu-home" href="${esc(homeUrl())}" aria-label="Accueil du module" title="Accueil du module">${MENU_SVG.home}</a>
+        <div class="av-menu-progress"><span class="av-menu-percent"></span><span class="av-menu-track"><span class="av-menu-fill"></span></span></div>
+      </div>
+      <div class="av-menu-panel" id="av-menu-panel">
+        <p class="av-menu-title">Menu</p>
+        <nav class="av-menu-nav"><ol class="av-menu-list"></ol></nav>
+        <div class="av-menu-foot">
+          <div class="av-menu-module"><span>Module ${esc(moduleCode())}</span><span class="av-menu-serie"></span></div>
+          <div class="av-menu-links"><a href="${esc(homeUrl())}">Accueil</a><a href="${esc(homeUrl())}#bilan">Mon bilan</a></div>
+        </div>
+        <button type="button" class="av-menu-close" aria-label="Fermer le menu">${MENU_SVG.back}</button>
+      </div>
+      <div class="av-menu-backdrop"></div>`;
+    document.body.prepend(menu);
+    document.body.classList.add('has-menu');
+    menu.querySelector('.av-menu-toggle').addEventListener('click', () => setMenuOpen(!menu.classList.contains('is-open')));
+    menu.querySelector('.av-menu-close').addEventListener('click', () => setMenuOpen(false));
+    menu.querySelector('.av-menu-backdrop').addEventListener('click', () => setMenuOpen(false, { focus: false }));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && menu.classList.contains('is-open')) setMenuOpen(false);
+    });
+    setMenuOpen(false, { focus: false });
+    return true;
+  }
+
+  function renderMenu(current, serie) {
+    if (!menu && !buildMenu()) return;
+    menu.querySelector('.av-menu-nav').setAttribute('aria-label', `Les exercices de la série ${serie.label}`);
+    menu.querySelector('.av-menu-serie').textContent = serie.label;
+    menu.querySelector('.av-menu-list').innerHTML = serie.exercises.map(ex => {
+      const key = `${serie.id}-${ex.id}`;
+      const active = key === current.key;
+      const done = isDone(key);
+      return `<li><a href="${esc(pageUrl(ex.file))}" class="${active ? 'active' : ''} ${done ? 'is-done' : ''}" ${active ? 'aria-current="step"' : ''}>
+        <span class="av-menu-label">${esc(ex.label)}</span>
+        <span class="av-menu-check">${done ? icon('check', { size: 16, strokeWidth: 3, label: 'terminé' }) : '<span class="sr-only">à faire</span>'}</span>
+      </a></li>`;
+    }).join('');
+    // La progression totale : tous les exercices du parcours (ou du thème).
+    const percent = allKeys.length ? Math.round(completedCount() / allKeys.length * 100) : 0;
+    const progress = menu.querySelector('.av-menu-progress');
+    progress.setAttribute('role', 'img');
+    progress.setAttribute('aria-label', `Progression totale : ${percent} %`);
+    progress.title = `Progression totale : ${completedCount()} sur ${allKeys.length}`;
+    menu.querySelector('.av-menu-percent').textContent = `${percent} %`;
+    menu.querySelector('.av-menu-fill').style.height = `${percent}%`;
   }
 
   function revealActiveNav() {
