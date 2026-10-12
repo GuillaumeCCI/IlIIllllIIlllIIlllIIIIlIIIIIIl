@@ -240,3 +240,13 @@
 }
 /* La lettre A / P rentre dans la case et se rapproche de son nom. */
 .cap-page .cap-box-head { gap: 12px; margin-left: -4px; margin-top: 10px; }
+
+/* 2.2 · Passez en mode client, d'après la maquette : deux cartes côte à
+   côte (sans flèche), l'illustration sous la fiche technique, la consigne
+   au-dessus du champ. */
+#main .mc-solo.k-panel { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; padding: 0; background: none; box-shadow: none; border: 0; }
+.mc-solo-tech { padding: 30px 34px 24px; border-radius: 18px; background: #fff; box-shadow: 0 8px 26px rgb(20 40 100 / 7%); }
+.mc-solo-client { border: 16px solid #fff; border-radius: 30px; box-shadow: 0 8px 26px rgb(20 40 100 / 7%); }
+.mc-solo-picture { justify-self: center; width: min(100%, 360px); margin-top: auto; pointer-events: none; }
+.mc-solo-question { margin: 0; font-size: clamp(1.1rem, 1.35vw, 1.3rem); font-weight: 600; color: var(--navy); }
+@media (max-width: 900px) { #main .mc-solo.k-panel { grid-template-columns: minmax(0, 1fr); } }

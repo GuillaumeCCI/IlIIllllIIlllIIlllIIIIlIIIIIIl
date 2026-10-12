@@ -31,12 +31,13 @@
           <div class="mc-solo-tech">
             <p class="cap-feature-head"><span class="cap-n">${i + 1}</span><span class="cap-pill">Fiche technique</span><span class="mc-solo-tag">${esc(c.tag)}</span></p>
             <div class="mc-solo-card"><span class="mc-solo-doc">${icon('document', { size: 26 })}</span><p>“ ${esc(c.card)} ”</p></div>
-            ${c.symbol ? `<span class="mc-solo-art" aria-hidden="true">${icon(c.symbol, { size: 64, strokeWidth: 1.4 })}</span>` : ''}
+            ${c.image ? `<img class="mc-solo-picture" src="${esc(core.asset(c.image))}" alt="" decoding="async">`
+              : c.symbol ? `<span class="mc-solo-art" aria-hidden="true">${icon(c.symbol, { size: 64, strokeWidth: 1.4 })}</span>` : ''}
           </div>
-          <span class="mc-solo-arrow" aria-hidden="true">${icon('arrowRight', { size: 30 })}</span>
           <div class="mc-solo-client">
             <p class="mc-solo-head"><span class="mc-solo-user">${icon('users', { size: 20 })}</span><span class="mc-solo-pill">Bénéfice client</span></p>
-            ${ex.field(`client${i}`, `Défi ${i + 1} : le bénéfice concret`, { placeholder: 'Exprimez ici le bénéfice concret pour le client…', max: 220, rows: 6, hideLabel: true })}
+            <p class="mc-solo-question">Exprimez ici le bénéfice concret pour le client.</p>
+            ${ex.field(`client${i}`, `Défi ${i + 1} : le bénéfice concret pour le client`, { placeholder: 'Écrivez votre réponse ici…', max: 220, rows: 6, hideLabel: true })}
             <p class="mc-solo-hint">${kit.dialogButton('hint', 'Voir un indice', 'secondary', '')}</p>
           </div>
         </section>

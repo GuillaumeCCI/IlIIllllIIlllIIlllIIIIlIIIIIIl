@@ -73,8 +73,9 @@ window.ATELIER_S4 = {
     subtitle: 'Transformez chaque fiche technique en bénéfice concret.',
     tip: 'Imaginez ce que le client vivra réellement.',
     challenges: [
-      // `symbol` : le pictogramme dessiné sous la fiche technique.
-      { tag: 'Logiciel', symbol: 'cloud', card: 'Notre logiciel intègre une fonction de sauvegarde automatique.', model: 'Vos données clients sont protégées en permanence, sans que vous ayez à y penser : vous ne perdez plus rien.' },
+      // `image` : l'illustration sous la fiche technique ; `symbol` : le
+      // pictogramme de secours, sans image.
+      { tag: 'Logiciel', symbol: 'cloud', image: 'assets/illustrations/s4/mc-sauvegarde.webp', card: 'Notre logiciel intègre une fonction de sauvegarde automatique.', model: 'Vos données clients sont protégées en permanence, sans que vous ayez à y penser : vous ne perdez plus rien.' },
       { tag: 'Immobilier', symbol: 'building', card: 'Le bien dispose d’une double exposition.', model: 'Vous profitez de la lumière du matin comme du soir : des pièces claires toute la journée, plus agréables à vivre.' }
     ],
     criteria: 'Résultat vécu · langage simple · phrase directe'
