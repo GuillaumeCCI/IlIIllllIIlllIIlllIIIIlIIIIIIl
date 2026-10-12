@@ -227,7 +227,7 @@
    « Preuve ». Les décors restent derrière le champ de saisie. */
 .cap-feature-text { margin: 0; font-size: clamp(1.8rem, 2.6vw, 2.5rem); line-height: 1.15; }
 .cap-feature-text::after { content: ''; display: block; width: 52px; height: 4px; margin-top: 22px; border-radius: 2px; background: var(--accent); }
-.cap-feature-picture { position: absolute; left: 0; bottom: 18px; width: calc(100% - 14px); max-height: 46%; object-fit: contain; object-position: left bottom; pointer-events: none; }
+.cap-feature-picture { position: absolute; left: -14px; bottom: 18px; width: 100%; max-height: 46%; object-fit: contain; object-position: left bottom; pointer-events: none; }
 .cap-box { position: relative; isolation: isolate; overflow: hidden; padding-bottom: 26px; }
 .cap-box.tone-a { border-color: #d3eee1; background-image: url('../assets/illustrations/s4/cap-deco-feuilles.webp'); background-repeat: no-repeat; background-position: right 14px top 10px; background-size: auto 112px; }
 .cap-box.tone-p { border-color: #f9d6cd; background-image: url('../assets/illustrations/s4/cap-deco-corail.webp'); background-repeat: no-repeat; background-position: right -4px bottom -4px; background-size: auto 205px; }
@@ -238,3 +238,5 @@
   .cap-feature { padding-bottom: 30px; }
   .cap-box-question { margin-right: 70px; }
 }
+/* La lettre A / P rentre dans la case et se rapproche de son nom. */
+.cap-page .cap-box-head { gap: 12px; margin-left: -4px; margin-top: 10px; }
