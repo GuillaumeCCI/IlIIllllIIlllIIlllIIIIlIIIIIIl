@@ -380,3 +380,6 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 #main .k-choice:not(:where(.is-chosen, .is-answer, .is-wrong, .is-right, .is-expected)):not(:has(:checked)) { border-color: transparent; }
 #main .k-choice:not(:where(.is-chosen, .is-answer, .is-wrong, .is-right, .is-expected, .cgr-card *)):not(:has(:checked)):hover { border-color: transparent; box-shadow: 0 6px 16px rgb(20 40 100 / 10%); }
 #main .dk-zone:not(:where(.is-chosen, .is-right, .is-wrong, .is-answer)), #main .dk-zone:not(:where(.is-chosen, .is-right, .is-wrong, .is-answer)):hover { border-color: transparent; }
+/* En-tête : le thème en gras, le nom de l'exercice (le <span>) en normal. */
+.topbar .course-label { font-weight: 800; color: var(--navy); }
+.topbar .course-label span { font-weight: 400; color: var(--muted); }

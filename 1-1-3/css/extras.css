@@ -360,3 +360,6 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
   .corrige-body { grid-template-columns: minmax(0, 1fr); }
   .corrige-art { max-width: 260px; justify-self: center; order: -1; }
 }
+/* En-tête : le thème en gras, le nom de l'exercice (le <span>) en normal. */
+.topbar .course-label { font-weight: 800; color: var(--navy); }
+.topbar .course-label span { font-weight: 400; color: var(--muted); }

@@ -46,11 +46,11 @@
           value.theme = serie.id;
           value.intro = `${serie.exercises.length} exercices · ${serie.label}.`;
           document.documentElement.dataset.embedTheme = serie.id;
-          /* L'en-tête de l'accueil annonce tout le module (« 4 séries, … ») :
-           * il nomme le thème à la place. */
+          /* L'en-tête de l'accueil annonce tout le module (« Série 1-1-1 ·
+           * 4 séries, … ») : il ne nomme plus que le thème, en gras. */
           document.addEventListener('DOMContentLoaded', () => {
-            const span = document.querySelector('.course-label span');
-            if (span && /séries/.test(span.textContent)) span.textContent = `· ${serie.label}`;
+            const label = document.querySelector('.course-label');
+            if (label && /séries/.test(label.textContent)) label.textContent = serie.label;
           });
         }
         catalog = value;
