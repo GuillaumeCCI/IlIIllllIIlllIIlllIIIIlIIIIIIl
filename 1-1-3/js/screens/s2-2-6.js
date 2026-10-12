@@ -74,7 +74,7 @@
     const s = situations[i];
     return `<p class="k-label">Script ${i + 1} / ${SELF}</p>
       <h2 class="rb-title">${esc(s.short)}</h2>
-      ${kit.clientCard(s.quote, `assets/illustrations/clients/${['client-tasse', 'client-chignon', 'client-cheveux-gris'][situations.indexOf(s) % 3]}.webp`, 'Le client vous dit')}
+      ${kit.clientCard(s.quote, null, 'Le client vous dit', situations.indexOf(s))}
       <h3 class="rb-label">Votre réponse type</h3>
       ${ex.field(`script${i}`, 'Votre réponse type', { placeholder: 'Répondez au client en 2 ou 3 phrases…', max: 500, rows: 4, hideLabel: true })}
       <p class="k-muted" data-live="sentences">${sentencesLine(i)}</p>`;

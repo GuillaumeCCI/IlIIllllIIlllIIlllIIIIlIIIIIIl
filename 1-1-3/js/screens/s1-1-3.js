@@ -40,7 +40,7 @@
 
   function clientPanel(i) {
     return `<section class="ear-client">
-      <img class="ear-portrait" src="${esc(core.asset(`assets/illustrations/clients/${['client-pull-clair', 'client-tasse', 'client-chignon', 'client-cheveux-gris'][i % 4]}.webp`))}" alt="" decoding="async">
+      <img class="ear-portrait" src="${esc(core.asset(kit.portraitFor(null, i)))}" alt="" decoding="async">
       <p class="ear-eyebrow">${esc(content.eyebrow)} · Objection ${String(i + 1).padStart(2, '0')}</p>
       <h2>Écoutez le client</h2>
       <span class="ear-rule" aria-hidden="true"></span>

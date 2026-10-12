@@ -34,13 +34,7 @@
         aside: `<div class="say-progress"><span class="say-dots">${needs.map((item, n) =>
           `<button type="button" class="say-dot ${n === i ? 'is-current' : done(n) ? 'is-done' : ''}" data-act="need" data-index="${n}" aria-label="Besoin ${n + 1} : ${esc(item.tab)}"></button>`).join('')}</span><span>Besoin ${i + 1} sur ${needs.length}</span></div>` })}
       <form novalidate>
-        <section class="say-card">
-          <div class="say-who" aria-hidden="true"><img class="say-portrait" src="${esc(core.asset('assets/illustrations/s3/say-cliente.webp'))}" alt="" decoding="async"></div>
-          <div class="say-said">
-            <p class="say-label">Le client vous dit</p>
-            <div class="say-quote"><img class="say-glyph" src="${esc(core.asset('assets/illustrations/s3/say-guillemet-ouvrant.webp'))}" alt="" aria-hidden="true"><blockquote>${esc(needs[i].quote.slice(0, needs[i].quote.lastIndexOf(' ') + 1))}<span class="client-card-end">${esc(needs[i].quote.slice(needs[i].quote.lastIndexOf(' ') + 1))}<img class="say-glyph is-closing" src="${esc(core.asset('assets/illustrations/s3/say-guillemet-fermant.webp'))}" alt="" aria-hidden="true"></span></blockquote></div>
-          </div>
-        </section>
+        ${kit.clientCard(needs[i].quote, null, 'Le client vous dit', i)}
         <div class="say-choose"><h2>Quel argument répond le mieux ?</h2><span class="k-muted">${free} disponible${free > 1 ? 's' : ''} · 2 resteront inutilisés</span></div>
         <div class="say-options" role="radiogroup">${options.map((text, o) => {
           const owner = takenBy(o);

@@ -393,39 +393,43 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 .deck-recap li:has(.deck-recap-reopen:hover) { background: #f5f8ff; }
 .deck-recap .deck-recap-reopen:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-/* ── La carte « citation client » (clientCard) ───────────────────────────
-   Le client illustré à gauche, sa réplique à droite entre guillemets
-   dessinés. La carte prend la couleur du papier des dessins pour qu'ils
-   s'y fondent. */
-#main .client-card { display: grid; grid-template-columns: minmax(200px, 26%) minmax(0, 1fr); align-items: center; margin: 0 0 22px; padding: 0 44px 0 0; overflow: hidden; border-radius: 20px; background: #fff; box-shadow: 0 14px 40px rgb(15 35 78 / 7%); }
-.client-card-who { align-self: stretch; overflow: hidden; }
-.client-card-who img { display: block; width: 100%; height: 100%; min-height: 170px; max-height: 210px; object-fit: cover; object-position: left center; box-shadow: none !important; }
-.client-card-said { padding: 20px 0 20px 18px; }
-#main .client-card-label { margin: 0 0 12px; font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #4c5f86; }
-.client-card-label::after { content: ''; display: block; width: 46px; height: 3px; margin-top: 8px; border-radius: 3px; background: var(--coral, #ff936b); }
-.client-card-quote { display: grid; grid-template-columns: 56px minmax(0, 1fr) 46px; gap: 8px; align-items: start; }
-.client-card-quote blockquote { margin: 0; font-size: clamp(1.3rem, 1.9vw, 1.75rem); font-weight: 800; line-height: 1.25; color: var(--navy); }
-.client-card-mark { width: 52px; height: auto; margin-top: 6px; box-shadow: none !important; }
-.client-card-mark.is-closing { width: 56px; align-self: end; margin: 0 0 -28px; }
-@media (max-width: 760px) {
-  #main .client-card { grid-template-columns: 1fr; padding: 0 20px; }
-  .client-card-who { margin: 0 -20px; max-height: 190px; }
-  .client-card-said { padding: 16px 0 22px; }
-  .client-card-quote { grid-template-columns: 34px minmax(0, 1fr) 30px; }
-  .client-card-mark { width: 34px; } .client-card-mark.is-closing { width: 32px; margin-bottom: -18px; }
+/* ══════════════════════════════════════════════════════════════════════
+   CARTE « CITATION CLIENT » · règle commune aux 4 modules
+   Pour changer l'apparence de TOUTES les cartes, modifiez seulement ces
+   variables. Le choix du portrait de chaque page se fait dans
+   js/catalog.js (rubrique `portraits`).
+   ══════════════════════════════════════════════════════════════════════ */
+:root {
+  --client-card-bg: #fff;                         /* fond de la carte */
+  --client-card-radius: 20px;                     /* arrondi des angles */
+  --client-card-shadow: 0 14px 40px rgb(15 35 78 / 7%);
+  --client-card-portrait: 30%;                    /* largeur du portrait */
+  --client-card-label: #4c5f86;                   /* « Le client vous dit » */
+  --client-card-accent: var(--coral, #ff936b);    /* petit trait sous le libellé */
+  --client-card-text: var(--navy);                /* la réplique */
+  --client-card-size: clamp(1.3rem, 1.9vw, 1.75rem);
+  --client-card-mark: 68px;                       /* guillemet ouvrant */
 }
-/* La carte s'adapte à sa propre largeur : dans une colonne étroite, le
-   portrait passe au-dessus de la réplique. */
 .client-card-box { container-type: inline-size; margin: 0 0 22px; }
-#main .client-card-box .client-card { margin: 0; }
+#main .client-card { display: grid; grid-template-columns: var(--client-card-portrait) minmax(0, 1fr); align-items: center; margin: 0; padding: 0 44px 0 0; overflow: hidden; border-radius: var(--client-card-radius); background: var(--client-card-bg); box-shadow: var(--client-card-shadow); }
+/* Le portrait est toujours affiché en entier (jamais recadré). */
+.client-card-who { align-self: end; display: flex; align-items: flex-end; justify-content: center; padding: 14px 0 0 14px; }
+.client-card-who img { display: block; width: 100%; height: auto; object-fit: contain; box-shadow: none !important; }
+.client-card-said { padding: 22px 0 22px 22px; }
+#main .client-card-label { margin: 0 0 12px; font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--client-card-label); }
+.client-card-label::after { content: ''; display: block; width: 46px; height: 3px; margin-top: 8px; border-radius: 3px; background: var(--client-card-accent); }
+.client-card-quote { display: grid; grid-template-columns: calc(var(--client-card-mark) + 10px) minmax(0, 1fr); gap: 10px; align-items: start; }
+.client-card-quote blockquote { margin: 0; font-size: var(--client-card-size); font-weight: 800; line-height: 1.25; color: var(--client-card-text); }
+.client-card-mark { width: var(--client-card-mark); height: auto; margin-top: -2px; box-shadow: none !important; }
+.client-card-end { white-space: nowrap; } /* le dernier mot reste avec le guillemet fermant */
+.client-card-quote blockquote .client-card-mark.is-closing { display: inline-block; width: calc(var(--client-card-mark) * .74); margin: 0 0 0 12px; vertical-align: -.05em; }
+/* Carte étroite (colonne, téléphone) : portrait entier au-dessus. */
 @container (max-width: 640px) {
   #main .client-card { grid-template-columns: 1fr; padding: 0 22px; }
-  .client-card-who { margin: 0 -22px; max-height: 170px; }
-  .client-card-who img { min-height: 0; max-height: 170px; object-position: center; }
+  .client-card-who { padding: 16px 0 0; }
+  .client-card-who img { width: auto; max-width: 100%; max-height: 190px; }
   .client-card-said { padding: 14px 0 22px; }
   .client-card-quote { grid-template-columns: 46px minmax(0, 1fr); }
-  .client-card-mark { width: 42px; } .client-card-quote blockquote .client-card-mark.is-closing { width: 32px; }
+  .client-card-mark { width: 42px; }
+  .client-card-quote blockquote .client-card-mark.is-closing { width: 32px; margin-left: 6px; }
 }
-.client-card-end { white-space: nowrap; }
-@container (max-width: 640px) { .client-card-who img { object-fit: contain; object-position: center bottom; height: 170px; } }
-.client-card-quote blockquote .client-card-mark.is-closing { vertical-align: -.05em; }

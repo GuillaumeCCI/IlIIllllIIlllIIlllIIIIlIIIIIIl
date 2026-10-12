@@ -16,7 +16,7 @@
     return `<div class="writing-workshop">
       ${core.pageTitle(content.eyebrow, content.title)}
       ${core.mission('Votre mission', content.intro, '', 'chat')}
-      ${core.clientCard(content.mission, 'assets/illustrations/clients/client-chignon.webp')}
+      ${core.clientCard(content.mission)}
       <form novalidate>
         <div class="attitude-grid">
           ${attitudes.map((attitude, i) => `<section class="attitude-card">

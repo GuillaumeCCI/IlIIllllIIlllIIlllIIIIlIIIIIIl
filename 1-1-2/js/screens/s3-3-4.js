@@ -66,7 +66,7 @@
     const score = reviewing ? kit.score('row', answers) : null;
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: counter() })}
-      ${kit.clientCard(content.priority, 'assets/illustrations/clients/client-pull-clair.webp', 'Priorité du client')}
+      ${kit.clientCard(content.priority, null, 'Priorité du client')}
       <form class="k-panel" novalidate>
         ${reviewing ? '' : '<p class="k-muted">Cochez une seule réponse par ligne.</p>'}
         ${kit.matrix({ key: 'row', rows, columns: content.columns, head: 'Arguments du commercial', answers: reviewing ? answers : null })}

@@ -69,6 +69,20 @@ window.ATELIER_CATALOG = {
   ]
 };
 
+/* LES PORTRAITS DES CARTES « CITATION CLIENT » (une ligne par page).
+ * Changer un portrait : remplacer son nom. Portraits disponibles, dans
+ * assets/illustrations/clients/ : client-tasse, client-cheveux-gris,
+ * client-chignon, client-pull-clair, client-veste-verte. Une liste
+ * ['…', '…'] donne un portrait par cas, dans l'ordre. `default` sert
+ * aux pages non listées. */
+window.ATELIER_CATALOG.portraits = {
+  default: 'client-tasse',
+  's1-1-3': ['client-pull-clair', 'client-tasse', 'client-chignon', 'client-cheveux-gris'],
+  's2-2-5': 'client-tasse',
+  's2-2-6': ['client-tasse', 'client-chignon', 'client-cheveux-gris'],
+  's3-2-2': ['client-cheveux-gris', 'client-chignon', 'client-pull-clair'],
+};
+
 /* Index pratique : liste à plat de tous les exercices, dans l'ordre du parcours.
  * Chaque entrée reçoit `key` (« s2-2.1 »), `series` et `seriesLabel`. */
 window.ATELIER_CATALOG.all = window.ATELIER_CATALOG.series.flatMap(serie =>
