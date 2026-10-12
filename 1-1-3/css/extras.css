@@ -241,7 +241,7 @@ html[data-embed="solo"] #main { padding-top: 20px; }
 
 /* ── Le menu (js/core.js, renderMenu) ───────────────────────────────────
    Remplace la rangée d'onglets des exercices. Un rail bleu nuit à gauche :
-   bouton menu, accueil, progression totale en jauge verticale. Le volet
+   bouton menu, accueil, progression du thème en jauge verticale. Le volet
    s'ouvre par-dessus la page : exercices de la série, coche corail pour
    chaque exercice terminé, exercice en cours en blanc. */
 .exercise-nav { display: none !important; }

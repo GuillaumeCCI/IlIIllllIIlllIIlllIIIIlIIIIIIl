@@ -235,7 +235,7 @@
     }
   }
 
-  /* LE MENU. Un rail à gauche (bouton menu, accueil, progression totale)
+  /* LE MENU. Un rail à gauche (bouton menu, accueil, progression du thème)
    * et un volet qui s'ouvre sur les exercices de la série en cours, avec une
    * coche pour chaque exercice terminé. Il remplace la rangée d'onglets, qui
    * reste construite mais masquée (extras.css). Styles : extras.css. */
@@ -306,12 +306,14 @@
         <span class="av-menu-check">${done ? icon('check', { size: 16, strokeWidth: 3, label: 'terminé' }) : '<span class="sr-only">à faire</span>'}</span>
       </a></li>`;
     }).join('');
-    // La progression totale : tous les exercices du parcours (ou du thème).
-    const percent = allKeys.length ? Math.round(completedCount() / allKeys.length * 100) : 0;
+    // La progression du thème : les exercices de la série en cours.
+    const keys = serie.exercises.map(ex => `${serie.id}-${ex.id}`);
+    const done = keys.filter(isDone).length;
+    const percent = keys.length ? Math.round(done / keys.length * 100) : 0;
     const progress = menu.querySelector('.av-menu-progress');
     progress.setAttribute('role', 'img');
-    progress.setAttribute('aria-label', `Progression totale : ${percent} %`);
-    progress.title = `Progression totale : ${completedCount()} sur ${allKeys.length}`;
+    progress.setAttribute('aria-label', `Progression du thème ${serie.label} : ${percent} %`);
+    progress.title = `${serie.label} : ${done} exercice${done > 1 ? 's' : ''} sur ${keys.length}`;
     menu.querySelector('.av-menu-percent').textContent = `${percent} %`;
     menu.querySelector('.av-menu-fill').style.height = `${percent}%`;
   }
