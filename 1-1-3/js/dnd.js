@@ -277,8 +277,10 @@
     ghost.setAttribute('aria-hidden', 'true');
     Object.assign(ghost.style, { width: `${rect.width}px`, height: `${rect.height}px` });
     doc.body.appendChild(ghost);
-    press.dx = event.clientX - rect.left;
-    press.dy = event.clientY - rect.top;
+    // La prise se mesure là où le bouton a été enfoncé : mesurée au départ
+    // du glisser (après quelques pixels), elle décalait la carte du pointeur.
+    press.dx = press.x - rect.left;
+    press.dy = press.y - rect.top;
     press.el.classList.add('is-lifted');
     doc.documentElement.classList.add('is-lifting');
     move(event);
