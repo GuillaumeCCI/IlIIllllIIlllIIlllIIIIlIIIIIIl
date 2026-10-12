@@ -328,3 +328,10 @@ body .topbar, body.is-briefing .topbar { margin: 10px 14px 0; border: 1px solid 
   .topbar .header-icon { width: 26px; height: 26px; }
 }
 @media (min-width: 721px) { body .topbar { padding-left: 18px; } } /* logo et titre rapprochés du bord gauche de la carte */
+/* Partout : plus de contour autour des tuiles de réponse colorées
+   (C / A / P, caractéristique / bénéfice…) ni des deux grands boutons de
+   tri. L'anneau de la réponse choisie et les couleurs du corrigé restent ;
+   au survol, une ombre légère ; les boutons de tri gardent leur ombre colorée. */
+#main .k-choice:not(:where(.is-chosen, .is-answer, .is-wrong, .is-right, .is-expected)):not(:has(:checked)) { border-color: transparent; }
+#main .k-choice:not(:where(.is-chosen, .is-answer, .is-wrong, .is-right, .is-expected, .cgr-card *)):not(:has(:checked)):hover { border-color: transparent; box-shadow: 0 6px 16px rgb(20 40 100 / 10%); }
+#main .dk-zone:not(:where(.is-chosen, .is-right, .is-wrong, .is-answer)), #main .dk-zone:not(:where(.is-chosen, .is-right, .is-wrong, .is-answer)):hover { border-color: transparent; }
