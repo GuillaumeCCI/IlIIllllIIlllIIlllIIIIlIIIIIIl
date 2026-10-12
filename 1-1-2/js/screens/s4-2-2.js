@@ -37,7 +37,7 @@
           <div class="mc-solo-client">
             <p class="mc-solo-head"><span class="mc-solo-user">${icon('users', { size: 20 })}</span><span class="mc-solo-pill">Bénéfice client</span></p>
             ${ex.field(`client${i}`, `Défi ${i + 1} : le bénéfice concret`, { placeholder: 'Exprimez ici le bénéfice concret pour le client…', max: 220, rows: 6, hideLabel: true })}
-            <p class="mc-solo-tip">${icon('bulbFilled', { size: 28 })}<span>Résultat utile : langage simple, phrase directe.</span></p>
+            <p class="mc-solo-tip">${icon('bulbFilled', { size: 36 })}<span>Résultat utile : langage simple, phrase directe.</span></p>
           </div>
         </section>
         ${core.errorsBox()}
