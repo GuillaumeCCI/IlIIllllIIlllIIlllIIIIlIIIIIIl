@@ -354,3 +354,28 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 #main .k-choice:not(:where(.is-chosen, .is-answer, .is-wrong, .is-right, .is-expected)):not(:has(:checked)) { border-color: transparent; }
 #main .k-choice:not(:where(.is-chosen, .is-answer, .is-wrong, .is-right, .is-expected, .cgr-card *)):not(:has(:checked)):hover { border-color: transparent; box-shadow: 0 6px 16px rgb(20 40 100 / 10%); }
 #main .dk-zone:not(:where(.is-chosen, .is-right, .is-wrong, .is-answer)), #main .dk-zone:not(:where(.is-chosen, .is-right, .is-wrong, .is-answer)):hover { border-color: transparent; }
+
+/* ── Le corrigé en étapes (kit.corrige) ──────────────────────────────────
+   Pastille « Corrigé », grand titre, points numérotés dans des ronds bleus
+   reliés par un trait, illustration de checklist à droite, encadré ampoule. */
+.corrige { position: relative; padding: 30px 40px 32px; }
+#main .corrige-tag { display: inline-flex; margin: 0 0 12px; padding: 5px 14px; border: 1.5px solid #c9d7f6; border-radius: 999px; background: #fff; color: var(--accent); font-size: .8rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+#main .corrige-title { margin: 0 0 22px; padding: 0; font-size: clamp(1.9rem, 2.6vw, 2.5rem); }
+#main .corrige-title::after { content: none; }
+.corrige-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: 32px; align-items: center; }
+.corrige-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.corrige-steps li { position: relative; display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 26px; padding-bottom: 26px; }
+.corrige-steps li:last-child { padding-bottom: 6px; }
+.corrige-steps li:not(:last-child)::before { content: ''; position: absolute; left: 26px; top: 54px; bottom: 0; width: 2px; background: #d5e0f6; }
+.corrige-n { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: #e6eefc; color: var(--accent); font-size: 1.35rem; font-weight: 800; }
+.corrige-steps strong { display: block; margin-top: 4px; font-size: 1.2rem; color: var(--navy); }
+.corrige-steps li span:not(.corrige-n) { display: block; margin-top: 4px; color: #3d4a6e; line-height: 1.5; }
+.corrige-art { width: 100%; pointer-events: none; }
+.corrige-note { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 22px; align-items: center; margin-top: 22px; padding: 18px 26px; border-radius: 14px; background: #eef3fd; }
+.corrige-note p { margin: 0; padding-left: 22px; border-left: 1.5px solid #c9d4ea; color: var(--navy); line-height: 1.5; }
+.corrige-note .icon { color: var(--accent); }
+@media (max-width: 900px) {
+  .corrige { padding: 24px 22px; }
+  .corrige-body { grid-template-columns: minmax(0, 1fr); }
+  .corrige-art { max-width: 260px; justify-self: center; order: -1; }
+}

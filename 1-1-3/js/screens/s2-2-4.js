@@ -51,16 +51,14 @@
             <div class="spot-actions">${kit.dialogButton('hint', 'Voir un indice', 'text-button', 'lightbulb')}<span class="k-muted">Vous pourrez reformuler avant de valider.</span>${kit.submit('Vérifier mes repérages', found() === total ? '' : 'data-pending="true"')}</div>`}
         </form>
       </div>
-      ${reviewing ? `${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>` : kit.utility('Les 4 erreurs attendues après validation')}
+      ${reviewing ? `${kit.corrige({ title: 'Les 4 erreurs à repérer', items: content.errors,
+        note: 'Comparez : chacune de vos lignes correspond-elle à l’une de ces erreurs ? L’ordre n’a pas d’importance.' })}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>` : kit.utility('Les 4 erreurs attendues après validation')}
     </div>`;
   }
 
   function reviewBody() {
     return `<h2>Vos repérages</h2>
-      <ol class="spot-own">${content.errors.map((_, i) => `<li>${esc(ex.value(`spot${i}`))}</li>`).join('')}</ol>
-      <h2 class="spot-expected-title">Les 4 erreurs à repérer</h2>
-      <ol class="spot-expected">${content.errors.map(e => `<li><strong>${esc(e.title)}</strong><span>${esc(e.text)}</span></li>`).join('')}</ol>
-      ${ex.inlineNote('Comparez : chacune de vos lignes correspond-elle à l’une de ces erreurs ? L’ordre n’a pas d’importance.', 'neutral')}`;
+      <ol class="spot-own">${content.errors.map((_, i) => `<li>${esc(ex.value(`spot${i}`))}</li>`).join('')}</ol>`;
   }
 
   function validate(values) {

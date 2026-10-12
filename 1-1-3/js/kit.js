@@ -84,6 +84,20 @@
   /* Petite ligne d'aide grise, avec une icône. */
   const help = (text, symbol = 'info') => `<p class="k-help">${icon(symbol, { size: 17 })}<span>${esc(text)}</span></p>`;
 
+  /* LE CORRIGÉ EN ÉTAPES : pastille « Corrigé », titre, points numérotés
+   * reliés par un trait (titre + explication), illustration de checklist à
+   * droite, puis un encadré « ampoule » pour la consigne de comparaison.
+   * `items` : [{ title, text }]. Styles : extras.css. */
+  const corrige = ({ title, items, note = '' }) =>
+    `<section class="k-panel corrige"><p class="corrige-tag">Corrigé</p>
+      <h2 class="corrige-title">${esc(title)}</h2>
+      <div class="corrige-body">
+        <ol class="corrige-steps">${items.map((item, i) => `<li><span class="corrige-n" aria-hidden="true">${i + 1}</span><div><strong>${esc(item.title)}</strong><span>${esc(item.text)}</span></div></li>`).join('')}</ol>
+        <img class="corrige-art" src="${esc(window.AtelierCore.asset('assets/illustrations/corrige-checklist.webp'))}" alt="" decoding="async">
+      </div>
+      ${note ? `<div class="corrige-note">${icon('lightbulb', { size: 38 })}<p>${esc(note)}</p></div>` : ''}
+    </section>`;
+
   /* ───────────────────────────── Actions ────────────────────────────── */
 
   const submit = (label, extra = '') =>
@@ -568,6 +582,7 @@
   }
 
   root.AtelierKit = Object.freeze({
+    corrige,
     esc, icon, words, seconds, filled, plural, stage, setStage, list,
     head, steps, band, tip, help, submit, act, back, reset, dialogButton, bar, utility,
     matrix, answered, score, choiceButtons,

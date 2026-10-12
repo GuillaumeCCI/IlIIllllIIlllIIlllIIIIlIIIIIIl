@@ -34,11 +34,8 @@
         </div>
         ${reviewing ? '' : `${core.errorsBox()}${kit.bar({ left: kit.help(content.tip, 'info'), right: kit.submit('Comparer avec le corrigé') })}`}
       </form>
-      ${reviewing ? `<section class="k-panel">
-        <h2>Le corrigé</h2>
-        <ol class="over-model">${content.model.map(m => `<li><strong>${esc(m.title)}</strong><span>${esc(m.text)}</span></li>`).join('')}</ol>
-        ${ex.inlineNote('Comparez avec vos trois erreurs : l’ordre importe peu, c’est l’idée qui compte. Retrouvez-vous le fond (besoin ignoré), le rythme (avalanche) et l’écoute (signal manqué) ?', 'neutral')}
-      </section>${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>` : kit.utility('Corrigé disponible après votre diagnostic')}
+      ${reviewing ? `${kit.corrige({ title: 'Le corrigé', items: content.model,
+        note: 'Comparez avec vos trois erreurs : l’ordre importe peu, c’est l’idée qui compte. Retrouvez-vous le fond (besoin ignoré), le rythme (avalanche) et l’écoute (signal manqué) ?' })}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>` : kit.utility('Corrigé disponible après votre diagnostic')}
     </div>`;
   }
 
@@ -47,7 +44,8 @@
       .map(i => ({ key: `error${i}`, message: `Décrivez l’erreur ${i + 1}.` }));
   }
 
-  const feedback = () => ['Votre diagnostic est enregistré. Le corrigé détaille les trois erreurs majeures de l’échange.'];
+  // Le corrigé à l'écran dit tout : pas de phrase de bilan en plus.
+  const feedback = () => [];
 
   ex.mount('s4-3.2', { screen, validate, feedback, compactFeedback: true });
 })();
