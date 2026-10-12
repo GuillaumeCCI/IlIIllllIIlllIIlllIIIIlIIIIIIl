@@ -343,3 +343,7 @@ body .topbar, body.is-briefing .topbar { margin: 10px 14px 0; border: 1px solid 
   .topbar .header-icon { width: 26px; height: 26px; }
 }
 @media (min-width: 721px) { body .topbar { padding-left: 18px; } } /* logo et titre rapprochés du bord gauche de la carte */
+/* 3.1 « À faire ou à éviter ? » : pas de petits traits au-dessus de
+   l'icône de la carte, et de l'air entre la carte et les deux réponses. */
+.express-page .express-symbol::after { content: none; }
+.express-page .express-play .express-zones { margin-top: 36px; }
