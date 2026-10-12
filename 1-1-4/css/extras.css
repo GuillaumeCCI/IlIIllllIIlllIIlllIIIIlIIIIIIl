@@ -346,10 +346,10 @@ html[data-embed="solo"] body.has-menu { padding-left: 0; }
 .topbar .course-label { padding-left: 0; border-left: 0; }
 /* Plus de mention « Brouillon local / Sauvegardé ici » en haut à droite. */
 .topbar .save-status { display: none !important; }
-/* ── En-tête en carte (maquette « bandeau en haut à droite ») ────────────
-   Carte blanche arrondie posée sur le fond, icônes noires à contour blanc
+/* ── En-tête : barre blanche pleine largeur, collée en haut ───────────────
+   Barre blanche sans coins arrondis, icônes noires à contour blanc
    (dessins clavier, plein écran, sons, musique), libellés en bleu. */
-body .topbar, body.is-briefing .topbar { margin: 10px 14px 0; border: 1px solid #e3e6f4; border-radius: 18px; background: #fff; box-shadow: 0 6px 20px rgb(16 20 72 / 7%); min-height: 64px; padding-top: 10px; padding-bottom: 10px; }
+body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1px solid #e3e6f4; border-radius: 0; background: #fff; box-shadow: 0 4px 14px rgb(16 20 72 / 5%); min-height: 64px; padding-top: 10px; padding-bottom: 10px; }
 .topbar .header-button, .sound-dock .sound-toggle { align-items: center; gap: 8px; padding: 6px 10px; border-radius: 12px; line-height: 1; }
 .header-button .header-icon, .sound-dock .header-icon { width: 30px; height: 30px; flex: none; color: #0a0a0a; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1.5px #fff); }
 .topbar .sound-toggle { color: var(--accent); font-weight: 800; font-size: 1rem; }
@@ -358,7 +358,7 @@ body .topbar, body.is-briefing .topbar { margin: 10px 14px 0; border: 1px solid 
 .topbar .header-button.is-on { background: var(--tint); color: var(--accent); }
 .topbar .header-button.is-on .header-icon { color: var(--accent); }
 .topbar .header-button:hover { background: var(--tint); }
-@media (max-width: 720px) { .topbar { margin: 8px 8px 0; } }
+@media (max-width: 720px) { .topbar { margin: 0; } }
 .series-bar { background: transparent; border-bottom: 0; } /* sous l’en-tête en carte, la rangée des séries se pose sur le fond */
 /* Logo CCI en tête de la carte d'en-tête, juste avant le titre. Image
    recadrée sur le logo (assets/logo-cci.webp, 497 × 96) : sans marge vide,
