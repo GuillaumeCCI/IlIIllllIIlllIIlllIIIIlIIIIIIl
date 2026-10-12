@@ -62,7 +62,7 @@
     const body = reviewing
       ? `${kit.result(right, total, 'comportements bien classés')}${kit.deckReview(cards, zones)}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
       : index === null
-        ? `<h2>Relisez votre classement</h2><p class="k-muted">Modifiez une situation si besoin, puis validez.</p>${kit.deckRecap(cards, zones, 'Valider mon classement')}`
+        ? `<h2>Relisez votre classement</h2><p class="k-muted">Cliquez sur une ligne pour la modifier, puis validez.</p>${kit.deckRecap(cards, zones, 'Valider mon classement')}`
         : sortScreen(index);
     /* Pendant le tri, l'écran suit la maquette : ni compteur, ni bandeau
      * de consigne, ni panneau blanc. La carte et les deux réponses se

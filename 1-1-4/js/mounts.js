@@ -121,7 +121,7 @@
       const body = reviewing
         ? `${kit().result(right, total, content.resultLabel || 'bonnes réponses')}${kit().deckReview(cards, zones)}${content.keyPoint ? root.AtelierExercise.inlineNote(content.keyPoint, 'neutral') : ''}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`
         : index === null
-          ? `<h2>Relisez vos réponses</h2><p class="k-muted">Modifiez une carte si besoin, puis validez.</p>${kit().deckRecap(cards, zones, 'Valider mes réponses')}`
+          ? `<h2>Relisez vos réponses</h2><p class="k-muted">Cliquez sur une ligne pour la modifier, puis validez.</p>${kit().deckRecap(cards, zones, 'Valider mes réponses')}`
           : playScreen(index);
       return `<div class="k-page dk-page">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,

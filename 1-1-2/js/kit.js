@@ -393,7 +393,7 @@
       <span class="deck-recap-n">${String(i + 1).padStart(2, '0')}</span>
       <span class="deck-recap-text">${esc(card.text)}</span>
       <span class="deck-recap-zone tone-${esc(zoneOf(placed[i]).tone || 'neutral')}">${esc(zoneOf(placed[i]).label || '')}</span>
-      <button type="button" class="text-button with-icon" data-act="deck-reopen" data-index="${i}">${icon('pencil', { size: 15 })}<span>Modifier</span></button>
+      <button type="button" class="deck-recap-reopen" data-act="deck-reopen" data-index="${i}"><span class="sr-only">Modifier la carte ${i + 1}</span></button>
     </li>`).join('')}</ol>
     <div class="k-bar"><div class="k-bar-left">${act('deck-undo', `${icon('undo', { size: 17 })}<span>Annuler le dernier choix</span>`)}</div><div class="k-bar-center">Toutes les cartes sont classées.</div><div class="k-bar-right">${submit(submitLabel)}</div></div>`;
   }

@@ -53,7 +53,7 @@
     const body = reviewing
       ? `${kit.result(right, total, 'réactions bien classées')}${kit.deckReview(cards, zones)}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
       : index === null
-        ? `<h2>Relisez votre classement</h2><p class="k-muted">Modifiez une réaction si besoin, puis validez.</p>${kit.deckRecap(cards, zones, 'Valider mon classement')}`
+        ? `<h2>Relisez votre classement</h2><p class="k-muted">Cliquez sur une ligne pour la modifier, puis validez.</p>${kit.deckRecap(cards, zones, 'Valider mon classement')}`
         : sortScreen(index);
     return `<div class="k-page nat-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,

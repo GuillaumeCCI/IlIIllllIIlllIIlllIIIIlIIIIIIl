@@ -386,3 +386,9 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 /* Tableau à cocher (kit.matrix) : une case vide se voit, en pointillés. */
 #main .k-matrix .k-box:not(.is-checked):not(.is-answer):not(.is-wrong) { border: 1.5px dashed #9aabd1 !important; box-shadow: none !important; background: #fff; }
 #main .k-matrix label:hover .k-box:not(.is-checked) { border-color: var(--accent) !important; }
+/* Récapitulatif avant validation : plus de lien « Modifier », toute la ligne
+   rouvre la carte (bouton invisible posé sur la ligne). */
+.deck-recap li { position: relative; }
+.deck-recap .deck-recap-reopen { position: absolute; inset: 0; z-index: 1; padding: 0; border: 0; border-radius: inherit; background: none; cursor: var(--cursor-hand, pointer); }
+.deck-recap li:has(.deck-recap-reopen:hover) { background: #f5f8ff; }
+.deck-recap .deck-recap-reopen:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }

@@ -45,7 +45,7 @@
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle })}
       <form novalidate class="${!reviewing && index !== null ? 'express-play' : ''}">
         ${reviewing ? `<section class="k-panel">${kit.result(right, total, 'cartes bien classées')}${kit.deckReview(cards, zones)}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div></section>`
-          : index === null ? `<section class="k-panel"><h2>Relisez votre classement</h2><p class="k-muted">Modifiez une carte si besoin, puis validez.</p>${kit.deckRecap(cards, zones, 'Valider mon classement')}${core.errorsBox()}</section>`
+          : index === null ? `<section class="k-panel"><h2>Relisez votre classement</h2><p class="k-muted">Cliquez sur une ligne pour la modifier, puis validez.</p>${kit.deckRecap(cards, zones, 'Valider mon classement')}${core.errorsBox()}</section>`
           : playScreen(index)}
       </form>
       ${reviewing ? '' : kit.utility('Corrigé disponible après les 6 cartes')}
