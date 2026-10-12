@@ -1,0 +1,455 @@
+/* ══════════════════════════════════════════════════════════════════════
+   SÉRIE 1 · BÂTIR L'ARGUMENT · styles propres aux exercices 1.3 à 1.6.
+   (1.1 et 1.2 sont dans kit.css, qui porte aussi les briques communes.)
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1.3 · La fabrique à arguments ────────────────────────────────────── */
+.fab-prospect { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 16px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+.fab-prospect-title { display: inline-flex; align-items: center; gap: 10px; color: var(--navy); font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; font-weight: 800; }
+.fab-prospect-title .icon { color: var(--accent); }
+.fab-pill { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 30px; background: #f1f5fd; color: var(--navy); font-size: .9rem; }
+.fab-pill .icon { color: var(--accent); }
+.fab-divider { width: 1px; height: 30px; background: var(--line); margin: 0 4px; }
+.fab-need-n { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #dfe8fb; color: var(--accent); font-weight: 800; }
+.fab-need.tone-1 .fab-need-n { background: #fde3df; color: #d23b26; }
+.fab-need.tone-2 .fab-need-n { background: #dcf3ea; color: #138a68; }
+.fab-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+.fab-card { position: relative; display: flex; align-items: center; gap: 10px; min-height: 66px; padding: 10px 26px 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fafbfe; color: var(--navy); text-align: left; font-size: .86rem; line-height: 1.3; cursor: var(--cursor-grab, grab); transition: border-color .12s, background .12s; }
+.fab-card:hover:not(:disabled) { border-color: var(--accent); background: #fff; }
+.fab-card:disabled { cursor: inherit; opacity: .7; }
+.fab-card.is-on { border-color: var(--accent); background: #edf3ff; box-shadow: 0 0 0 1px var(--accent); }
+.fab-card.is-dragging { opacity: .45; }
+.fab-card-symbol { color: var(--navy); flex-shrink: 0; }
+.fab-card-grip { position: absolute; top: 8px; right: 6px; color: #9aa8c9; }
+.fab-card.is-on .fab-card-grip { color: var(--accent); }
+.fab-build-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+.fab-build-head h2 { font-size: 1.35rem; }
+.fab-tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.fab-tab { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 20px; background: #fff; color: var(--muted); font-size: .82rem; font-weight: 650; }
+.fab-tab.is-active { border-color: var(--accent); color: var(--accent); background: var(--tint); }
+.fab-tab.is-done { color: var(--ok); }
+.fab-need-banner { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-radius: 12px; background: #eaf1ff; color: var(--accent); margin-bottom: 16px; }
+.fab-need-banner h3 { font-size: 1.35rem; }
+.fab-stage { padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; }
+.fab-stage-head { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.fab-stage-head h3 { font-size: 1.1rem; }
+.fab-letter { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 1.5rem; font-weight: 800; flex-shrink: 0; }
+.fab-drop { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 8px; min-height: 170px; padding: 14px; border: 2px dashed #b9c9ec; border-radius: 10px; background: #fbfcff; margin-bottom: 6px; transition: background .12s; }
+.fab-drop.is-over { background: #eaf1ff; border-color: var(--accent); }
+.fab-drop-empty { display: grid; justify-items: center; gap: 10px; margin: auto; color: var(--muted); }
+.fab-drop-empty .icon { color: #8ea2cf; }
+.fab-chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 8px 7px 12px; border: 1px solid #bcd0fb; border-radius: 30px; background: #fff; color: var(--navy); font-size: .88rem; }
+.fab-chip .icon { color: var(--accent); }
+.fab-chip.is-small { padding: 4px 10px; font-size: .8rem; background: #f1f5fd; }
+.fab-chip-remove { display: grid; place-items: center; width: 24px; height: 24px; border: 0; border-radius: 50%; background: #eef2fa; color: var(--muted); padding: 0; }
+.fab-chip-remove:hover { background: var(--ko-soft); color: var(--ko); }
+.fab-recall { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.fab-review { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.fab-verdicts { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.fab-verdicts li { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.fab-verdicts small { color: var(--muted); }
+
+/* ── 1.4 · Le radar SONCAS ────────────────────────────────────────────── */
+.soncas-title { font-size: 1.35rem; padding-bottom: 12px; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
+.soncas-scene { position: relative; border-radius: 12px; overflow: hidden; background: #eef3fb; }
+.soncas-scene img { display: block; width: 100%; aspect-ratio: 610 / 280; object-fit: cover; }
+.soncas-scene.is-plain { display: grid; justify-items: center; gap: 8px; padding: 22px 16px 16px; background: linear-gradient(180deg, #eaf1ff, #f7f9ff); }
+.soncas-avatar { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; background: #fff; color: var(--accent); }
+.soncas-bubble { display: flex; gap: 10px; margin: -18px 12px 12px; position: relative; padding: 14px 16px; border-radius: 14px; background: #fff; box-shadow: 0 8px 24px rgb(20 30 70 / 14%); color: var(--navy); }
+.soncas-scene.is-plain .soncas-bubble { margin: 6px 0 0; }
+.soncas-bubble > .icon { color: #9bb3e8; flex-shrink: 0; }
+.soncas-bubble p { line-height: 1.7; }
+.soncas-word { display: inline; padding: 1px 2px; border: 0; border-radius: 4px; background: transparent; color: inherit; font: inherit; line-height: inherit; cursor: var(--cursor-hand, pointer); }
+.soncas-word:hover { background: #eef3fd; }
+.soncas-word.is-clue { background: #ffe9a3; box-shadow: inset 0 -2px 0 #e0a400; }
+.soncas-clues { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 12px 16px; border: 1.5px dashed #c5d3ef; border-radius: 10px; color: var(--navy); }
+.soncas-question { display: flex; align-items: center; gap: 16px; margin: 6px 0 14px; }
+.soncas-question h3 { font-size: 1.35rem; color: var(--navy); }
+.soncas-big { display: grid; place-items: center; width: 70px; height: 70px; border-radius: 50%; background: var(--tint); color: var(--accent); font-size: 2rem; font-weight: 800; flex-shrink: 0; }
+.soncas-big.is-small { width: 52px; height: 52px; font-size: 1.4rem; background: var(--accent); color: #fff; }
+.soncas-motives { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+.soncas-motive { display: grid; justify-items: center; gap: 8px; padding: 18px 10px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; color: var(--navy); font-size: 1.05rem; cursor: var(--cursor-hand, pointer); }
+.soncas-motive:hover { border-color: var(--accent); }
+.soncas-motive:has(:checked) { border-color: var(--accent); background: #edf3ff; box-shadow: 0 0 0 2px var(--accent); }
+.soncas-motive:has(:focus-visible) { outline: 3px solid var(--accent); outline-offset: 2px; }
+.soncas-args { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 8px; }
+.soncas-arg { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; color: var(--navy); text-align: left; font-size: .95rem; }
+.soncas-arg:hover { border-color: var(--accent); }
+.soncas-arg.is-on { border-color: var(--accent); background: #edf3ff; box-shadow: 0 0 0 1px var(--accent); }
+.soncas-arg-letter { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--tint); color: var(--accent); font-weight: 800; flex-shrink: 0; }
+.soncas-arg.is-on .soncas-arg-letter { background: var(--accent); color: #fff; }
+.soncas-recap { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding: 10px 16px; border-radius: 12px; background: #eef4ff; margin-bottom: 12px; }
+.soncas-recap.is-small { margin: 12px 0; }
+.soncas-recap-motive { display: inline-flex; align-items: center; gap: 12px; color: var(--navy); }
+.soncas-recap small { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); font-weight: 700; }
+.soncas-recap-motive strong { font-size: 1.15rem; }
+.soncas-recap-args { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-left: 18px; border-left: 1px solid #c8d6f2; }
+.soncas-recap-args small { width: 100%; }
+.soncas-recap-arg { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 8px; background: #fff; font-size: .82rem; color: var(--navy); }
+.soncas-recap-arg .icon { color: #fff; background: var(--accent); border-radius: 50%; padding: 2px; flex-shrink: 0; }
+.soncas-quote-review { line-height: 1.9; color: var(--navy); }
+.soncas-quote-review .is-found { background: #c8efd8; border-radius: 4px; padding: 1px 3px; }
+.soncas-quote-review .is-missed { border-bottom: 2px dashed #e0a400; }
+.soncas-quote-review .is-extra { background: #f3f4f8; border-radius: 4px; padding: 1px 3px; }
+.soncas-args-review { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; }
+.soncas-args-review li { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.soncas-args-review small { color: var(--muted); }
+.soncas-review h2 { margin-bottom: 8px; }
+
+/* ── 1.5 · Le tournoi des arguments ───────────────────────────────────── */
+.tournoi-layout { grid-template-columns: minmax(0, .3fr) minmax(0, .7fr); }
+.tournoi-client h2 { margin-bottom: 12px; }
+.tournoi-picture { margin: 0; border-radius: 12px; overflow: hidden; }
+.tournoi-picture img { display: block; width: 100%; aspect-ratio: 1.45; object-fit: cover; object-position: center 30%; }
+.tournoi-quote { display: flex; gap: 10px; margin: 0 0 10px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; color: var(--navy); font-size: 1.05rem; }
+.tournoi-quote .icon { color: #9bb3e8; flex-shrink: 0; }
+.bracket { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 22px; align-items: center; margin: 14px 0 16px; }
+.bracket-semis { display: grid; gap: 14px; }
+.duel { padding: 12px; border: 1px solid #d6e0f3; border-radius: 12px; background: #f7f9fe; }
+.duel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: .85rem; text-transform: uppercase; color: var(--navy); letter-spacing: .03em; }
+.duel-state { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; background: #e8eefb; color: var(--accent); text-transform: none; letter-spacing: 0; font-size: .82rem; }
+.duel-state.is-done { background: var(--ok-soft); color: var(--ok); }
+.duel-pair { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 8px; }
+.duel-vs { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: #fff; border: 1px solid var(--line); color: var(--accent); font-weight: 800; }
+.duel-card { position: relative; display: grid; justify-items: center; gap: 8px; min-height: 120px; padding: 14px 10px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; color: var(--navy); font-size: .98rem; text-align: center; transition: transform .12s, border-color .12s; }
+button.duel-card:hover:not(:disabled) { border-color: var(--accent); transform: translateY(-2px); }
+.duel-card.is-winner { border-color: #3fae74; box-shadow: 0 0 0 2px #3fae74; }
+.duel-card.is-loser { opacity: .5; }
+.duel-card.is-empty { color: var(--muted); background: #fafbfe; }
+.duel-crown { position: absolute; top: 6px; right: 6px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #3fae74; color: #fff; }
+.duel-letter { display: inline-grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; color: #fff; font-size: 1.4rem; font-weight: 800; flex-shrink: 0; }
+.duel-letter.tone-blue { background: #1b55e2; }
+.duel-letter.tone-red { background: #ef5b46; }
+.duel-letter.tone-green { background: #1d9e5a; }
+.duel-letter.tone-orange { background: #f0a412; }
+.duel-unknown { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 2px dashed #b9c6e2; font-size: 1.4rem; font-weight: 800; }
+.duel-final { padding: 14px; border: 1px solid #f3dd9c; border-radius: 14px; background: #fffaea; }
+.duel-final-title { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 12px; color: #d08a00; font-weight: 800; text-transform: uppercase; font-size: 1.05rem; }
+.duel-locked { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding: 10px 14px; border-radius: 10px; background: #eef1f7; color: var(--muted); font-size: .88rem; }
+.tournoi-done { display: flex; align-items: center; gap: 14px; font-size: 1.8rem; margin-bottom: 14px; }
+.tournoi-done .icon { color: #e0a400; }
+.tournoi-summary { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 12px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: #f6f8fe; margin-bottom: 14px; }
+.tournoi-summary > span { display: inline-flex; align-items: center; gap: 10px; text-transform: uppercase; font-size: .82rem; color: var(--navy); }
+.tournoi-summary > span > .icon { color: #fff; background: #3fae74; border-radius: 50%; padding: 3px; width: 24px; height: 24px; }
+.tournoi-summary .duel-letter { width: 38px; height: 38px; font-size: 1.1rem; }
+.tournoi-winner { padding: 14px 18px; border: 1px solid #f3dd9c; border-radius: 12px; background: #fffaea; margin-bottom: 16px; }
+.tournoi-winner .k-label { color: #d08a00; }
+.tournoi-winner-line { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 1.35rem; color: var(--navy); margin-top: 6px; }
+.tournoi-badge { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; padding: 8px 16px; border-radius: 30px; background: #fff0c2; color: #c47f00; font-size: .9rem; font-weight: 800; text-transform: uppercase; }
+.tournoi-review { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.tournoi-review li { display: grid; gap: 4px; justify-items: start; }
+
+/* ── 1.6 · Construire puis réparer ────────────────────────────────────── */
+.repair-side { background: linear-gradient(180deg, #f1f6ff, #f8faff); }
+.repair-block { display: flex; gap: 18px; padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+.repair-block:nth-of-type(2) { border-bottom: 0; margin-bottom: 8px; }
+.repair-block h2 { font-size: 1.6rem; margin-bottom: 8px; }
+.repair-block p { color: var(--muted); }
+.repair-symbol { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: #e2ebfc; color: var(--accent); flex-shrink: 0; }
+.repair-needs { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 10px; color: var(--navy); }
+.repair-needs li { display: flex; align-items: center; gap: 14px; }
+.repair-needs span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #e2ebfc; color: var(--accent); font-weight: 800; flex-shrink: 0; }
+.repair-challenge { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 1px solid #f5c7bf; border-radius: 12px; background: #fff3f1; color: #d2412b; }
+.repair-challenge .icon { flex-shrink: 0; }
+.repair-challenge.is-green { border-color: #b6e3cb; background: #effaf4; color: #138a5a; }
+.repair-page.stage-1 .k-step.is-active .k-step-dot, .repair-page.stage-2 .k-step.is-active .k-step-dot { background: var(--coral); box-shadow: 0 0 0 5px #ffe5e0; }
+.repair-page.stage-1 .k-step.is-active, .repair-page.stage-2 .k-step.is-active { color: var(--coral); }
+.repair-page.stage-3 .k-step.is-active .k-step-dot { background: #18a36b; box-shadow: 0 0 0 5px #ddf5ea; }
+.repair-page.stage-3 .k-step.is-active { color: #18a36b; }
+.repair-page .k-step.is-done .k-step-dot { background: #97a6c4; color: #fff; }
+.repair-page.stage-1 .k-submit, .repair-page.stage-2 .k-submit { background: var(--coral); border-color: var(--coral); }
+.repair-page.stage-1 .k-submit:hover, .repair-page.stage-2 .k-submit:hover { background: #d9442f; border-color: #d9442f; }
+.repair-stage-label { color: var(--coral); font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+.repair-stage-label.is-green { color: #18a36b; }
+.repair-title { font-size: clamp(1.6rem, 2.2vw, 2.2rem); margin: 4px 0 8px; }
+.repair-lede { color: var(--muted); font-size: 1.02rem; margin-bottom: 14px; }
+.repair-inspiration { display: flex; align-items: center; gap: 18px; padding: 14px 0; border-top: 1px solid var(--line); margin-top: 8px; }
+.repair-deck { color: var(--accent); }
+.repair-inspiration-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+.repair-trap { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 10px; background: #fff3f1; color: #9c3121; }
+.repair-trap .icon { flex-shrink: 0; margin-top: 2px; }
+.repair-recall { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: start; padding: 14px; border: 1px solid #c8d8f6; border-radius: 12px; background: #f8faff; margin-bottom: 14px; }
+.repair-recall-symbol { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 10px; background: #e2ebfc; color: var(--accent); }
+.repair-recall p:last-child { color: var(--navy); }
+.repair-diag-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.repair-diag-head h3 { font-size: 1.25rem; }
+.repair-error { display: grid; grid-template-columns: auto 90px minmax(0, 1fr); align-items: center; gap: 12px; margin-bottom: 10px; }
+.repair-error-n { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--coral); color: #fff; font-weight: 800; }
+.repair-error label { color: var(--coral); font-weight: 650; }
+.repair-error input[type="text"] { padding: 12px 14px; }
+.repair-help { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; color: var(--accent); margin-top: 6px; }
+.repair-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; }
+.repair-diag-list { padding-left: 20px; color: var(--navy); display: grid; gap: 6px; }
+.repair-checks { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 8px; color: var(--navy); }
+.repair-checks li { display: flex; gap: 10px; align-items: flex-start; }
+.repair-checks .icon { color: var(--ok); flex-shrink: 0; margin-top: 3px; }
+
+@media (max-width: 1100px) {
+  .fab-review, .bracket, .tournoi-layout { grid-template-columns: minmax(0, 1fr); }
+  .fab-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .soncas-motives { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .soncas-args { grid-template-columns: minmax(0, 1fr); }
+  .repair-error { grid-template-columns: auto minmax(0, 1fr); }
+  .repair-error label { display: none; }
+  .fab-cards { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   MISE EN PAGE DES MAQUETTES · série 1 (1.1 à 1.6)
+   Ces règles reprennent les maquettes fournies : fils d'étapes et
+   compteurs en haut à droite, contenus posés sur le fond plutôt que dans
+   un grand panneau quand la maquette le montre ainsi, cartes blanches.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Pastilles de progression (arguments, besoins). */
+.k-dots { display: inline-flex; align-items: center; gap: 8px; vertical-align: middle; margin-left: 10px; }
+.k-dot { width: 13px; height: 13px; padding: 0; border: 0; border-radius: 50%; background: #d7deec; }
+.k-dot.is-done { background: #9bb6f0; }
+.k-dot.is-current { background: var(--accent); }
+button.k-dot { cursor: var(--cursor-hand, pointer); }
+button.k-dot:hover { box-shadow: 0 0 0 3px var(--tint); }
+
+/* Fil d'étapes placé dans l'en-tête, à droite. */
+.k-head-aside .k-steps { margin: 0; justify-content: flex-end; flex-wrap: nowrap; }
+.k-head-aside .k-step { white-space: nowrap; }
+
+/* Boutons de la barre du bas en pilule, comme sur les maquettes. */
+.intrus-page .k-bar .button, .hl-page .k-bar .button { border-radius: 30px; }
+
+/* ── 1.1 · Trouvez l'intrus ───────────────────────────────────────────── */
+.intrus-page .k-head { position: relative; justify-content: center; text-align: center; }
+.intrus-page .k-head-text { flex: 0 1 900px; }
+.intrus-page .k-head-aside { position: absolute; top: 0; right: 0; padding-top: 0; }
+.intrus-page .k-head-aside .k-tab { padding: 5px 12px 5px 5px; font-size: .9rem; }
+.intrus-page .k-head-aside .k-tab-dot { width: 26px; height: 26px; }
+.intrus-stage { max-width: 1180px; width: 100%; margin: 6px auto 0; }
+.intrus-card { background: #fff; border-color: #e6e9f0; box-shadow: 0 8px 22px rgb(35 40 80 / 10%); }
+.intrus-card:hover { box-shadow: 0 14px 28px rgb(35 40 80 / 16%); }
+.intrus-card.is-static { background: #fff; }
+.intrus-bin { display: grid; justify-items: center; gap: 4px; max-width: 1000px; padding: 22px 16px; border-width: 1.5px; border-radius: 16px; }
+.intrus-bin-symbol { color: #e0412c; }
+.intrus-bin-title { text-transform: none; font-size: 1.2rem; letter-spacing: 0; }
+.intrus-stage .k-bar { margin-top: 26px; }
+
+/* ── 1.2 · Décomposez l'argument ──────────────────────────────────────── */
+.hl-page { max-width: 1240px; width: 100%; margin: 0 auto; }
+.hl-stage { display: grid; gap: 14px; }
+.hl-argument { background: #fff; border-color: #e6e9f0; box-shadow: 0 10px 26px rgb(35 40 80 / 8%); }
+.hl-lead { text-align: center; color: var(--muted); font-size: 1.08rem; margin-top: 10px; }
+.hl-lead strong { color: var(--navy); }
+.hl-tools { margin-bottom: 0; gap: 14px; }
+.hl-tool { gap: 12px; padding: 10px 26px 10px 18px; border-radius: 14px; }
+.hl-tool-letter { font-size: 1.6rem; line-height: 1; }
+.hl-tool-label { font-weight: 650; }
+.hl-tool.tone-c .hl-tool-letter { color: var(--c-tone); }
+.hl-tool.tone-a .hl-tool-letter { color: var(--a-tone); }
+.hl-tool.tone-p .hl-tool-letter { color: var(--coral); }
+.hl-tool.tone-p .hl-pen { color: var(--coral); }
+
+/* ── 1.3 · La fabrique à arguments ────────────────────────────────────── */
+.fab-layout { grid-template-columns: minmax(0, .44fr) minmax(0, .56fr); }
+.fab-layout .k-badge { width: 56px; height: 56px; }
+.fab-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.fab-card { background: #fff; padding-right: 34px; min-height: 60px; }
+.fab-card-grip { top: 50%; transform: translateY(-50%); right: 10px; }
+.fab-card-symbol { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; }
+.fab-card-symbol.tone-blue { background: #e8efff; color: #1b55e2; }
+.fab-card-symbol.tone-coral { background: #fdebe7; color: #e0533e; }
+.fab-card-symbol.tone-green { background: #e2f5ec; color: #17905f; }
+.fab-build-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; margin-bottom: 16px; }
+.fab-build-head h2 { font-size: 1.35rem; }
+.fab-build-count { display: grid; justify-items: end; gap: 8px; color: var(--muted); font-size: .92rem; }
+.fab-build-count .k-dots { margin: 0; }
+.fab-need-banner { gap: 16px; padding: 12px 18px; }
+.fab-need-banner h3 { font-size: 1.3rem; color: var(--navy); }
+.fab-need-big { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 1.25rem; font-weight: 800; flex-shrink: 0; }
+.fab-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.fab-col { display: grid; align-content: start; gap: 10px; padding: 0 14px; min-width: 0; }
+.fab-col + .fab-col { border-left: 1px solid var(--line); }
+.fab-col:first-child { padding-left: 0; }
+.fab-col:last-child { padding-right: 0; }
+.fab-col-head { display: flex; align-items: flex-start; gap: 10px; padding: 4px; border: 0; border-radius: 10px; background: none; text-align: left; color: var(--navy); }
+button.fab-col-head { cursor: var(--cursor-hand, pointer); }
+button.fab-col-head:hover { background: #f4f7fd; }
+.fab-col-head strong { display: block; font-size: 1.02rem; }
+.fab-col-head small { display: block; color: var(--muted); font-size: .76rem; margin-top: 2px; }
+.fab-col-letter { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; }
+.fab-col.tone-c .fab-col-letter { background: var(--c-soft); color: var(--c-tone); }
+.fab-col.tone-c strong { color: var(--c-tone); }
+.fab-col.tone-a .fab-col-letter { background: #fdebe7; color: var(--coral); }
+.fab-col.tone-a strong { color: var(--coral); }
+.fab-col.tone-p .fab-col-letter { background: var(--a-soft); color: var(--a-tone); }
+.fab-col.tone-p strong { color: var(--a-tone); }
+.fab-col .fab-drop { min-height: 210px; margin: 0; flex-direction: column; flex-wrap: nowrap; border-width: 1.5px; border-color: #c9d4ea; }
+.fab-col .fab-drop.is-active { border-color: var(--accent); background: #f3f7ff; }
+.fab-col-head.is-active .fab-col-letter { box-shadow: 0 0 0 3px var(--accent); }
+.fab-col .fab-drop-empty { text-align: center; font-size: .82rem; }
+.fab-col .fab-chip { width: 100%; border-radius: 10px; font-size: .82rem; }
+.fab-col .fab-chip > span { flex: 1; min-width: 0; }
+.fab-col textarea { min-height: 210px; }
+
+/* ── 1.4 · Le radar SONCAS, étape 4 ───────────────────────────────────── */
+.soncas-final { grid-template-columns: minmax(0, .34fr) minmax(0, .66fr); }
+.soncas-side { display: grid; gap: 12px; padding: 18px; border-radius: 16px; background: rgb(255 255 255 / 70%); border: 1px solid var(--line); }
+.soncas-side-motive { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 12px; background: #eaf1ff; color: var(--navy); }
+.soncas-side-motive small { display: block; font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); font-weight: 700; }
+.soncas-side-motive strong { font-size: 1.3rem; }
+.soncas-side .k-label { margin-top: 6px; }
+.soncas-side-args { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.soncas-side-args li { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 12px; background: #fff; box-shadow: 0 4px 14px rgb(30 40 80 / 7%); color: var(--navy); }
+.soncas-side-args li > span:first-child { flex: 1; }
+.soncas-side-letter { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 8px; background: var(--c-soft); color: var(--c-tone); font-weight: 800; text-transform: uppercase; flex-shrink: 0; }
+.soncas-side-args li + li .soncas-side-letter { background: #fdebe7; color: var(--coral); }
+
+/* ── 1.5 · Le tournoi, un duel à la fois ──────────────────────────────── */
+.match-steps { display: flex; align-items: center; gap: 0; }
+.match-count { margin-right: 18px; color: var(--navy); font-size: .92rem; }
+.match-dot { display: grid; place-items: center; width: 42px; height: 42px; border: 0; border-radius: 50%; background: #e7ecf7; color: var(--navy); font-weight: 800; font-size: 1.05rem; cursor: var(--cursor-hand, pointer); }
+.match-dot.is-active { background: var(--accent); color: #fff; box-shadow: 0 0 0 5px var(--tint); }
+.match-dot.is-done { background: var(--tint); color: var(--accent); }
+.match-dot:disabled { cursor: not-allowed; opacity: .7; }
+.match-line { width: 36px; height: 2px; background: #c8d3ec; }
+.duel-panel h2 { font-size: clamp(1.5rem, 2vw, 2rem); }
+.duel-label { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+.duel-pair.is-solo { gap: 24px; margin: 18px 0 20px; }
+.duel-pair.is-solo .duel-vs { width: 54px; height: 54px; background: var(--tint); border: 0; font-size: 1.05rem; }
+.duel-pair.is-solo .duel-card { min-height: 240px; align-content: center; gap: 18px; padding: 28px 22px; border-radius: 16px; box-shadow: 0 8px 22px rgb(30 40 80 / 8%); font-size: 1.3rem; font-weight: 700; }
+.duel-pair.is-solo .duel-letter { width: 70px; height: 70px; font-size: 1.9rem; }
+.duel-radio { position: absolute; top: 14px; right: 14px; display: grid; place-items: center; width: 30px; height: 30px; border: 1.5px solid #c3cde0; border-radius: 50%; background: #fff; color: #fff; }
+.duel-card.is-winner .duel-radio { border-color: #3fae74; background: #3fae74; }
+.duel-card.is-loser { opacity: .6; }
+
+/* ── 1.6 · Construire puis réparer ────────────────────────────────────── */
+.repair-side { background: #fff; }
+.repair-stage-label.is-blue { color: var(--accent); }
+.repair-inspiration { padding: 14px 18px; border: 0; border-radius: 12px; background: #f1f5fd; margin-top: 14px; }
+
+@media (max-width: 1100px) {
+  .soncas-final, .fab-layout { grid-template-columns: minmax(0, 1fr); }
+  .intrus-page .k-head-aside { position: static; }
+  .intrus-page .k-head { flex-direction: column; align-items: center; }
+  .k-head-aside .k-steps { justify-content: flex-start; flex-wrap: wrap; }
+}
+@media (max-width: 760px) {
+  .fab-cols { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .fab-col { padding: 0; }
+  .fab-col + .fab-col { border-left: 0; }
+  .fab-cards { grid-template-columns: minmax(0, 1fr); }
+  .duel-pair.is-solo { grid-template-columns: minmax(0, 1fr); }
+  .duel-pair.is-solo .duel-vs { justify-self: center; }
+  .hl-tool-label { display: none; }
+}
+
+/* ── 1.1 · Étape 2 « Identifiez la bonne catégorie » (maquette) ───────── */
+.intrus-page.stage-2 .k-head { justify-content: flex-start; text-align: left; }
+.intrus-page.stage-2 .k-head-text { flex: 1 1 auto; }
+.intrus-page.stage-2 .intrus-cards.is-trio { grid-template-columns: repeat(3, minmax(0, 340px)); gap: 22px; margin-bottom: 34px; }
+.intrus-page.stage-2 .intrus-card.is-static { min-height: 220px; gap: 18px; border-radius: 14px; }
+.intrus-symbol { display: grid; place-items: center; color: var(--navy); }
+.intrus-page.stage-2 .intrus-text { font-size: 1.35rem; }
+.intrus-page.stage-2 .k-bar { border-top: 0; }
+.intrus-page.stage-2 .k-bar .with-icon { display: inline-flex; align-items: center; gap: 10px; }
+@media (max-width: 760px) {
+  .intrus-page.stage-2 .intrus-cards.is-trio { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── 1.2 · Relecture : votre découpage → le corrigé (maquette) ────────── */
+.hl-compare { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 22px; align-items: stretch; }
+.hl-compare-arrow { align-self: center; color: var(--navy); }
+.hl-side { display: grid; align-content: start; gap: 22px; padding: 22px 28px 28px; }
+.hl-side-head { display: flex; align-items: center; gap: 8px; }
+.hl-side-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: #e6eefc; color: var(--accent); }
+.hl-side-pill { padding: 8px 18px; border-radius: 22px; background: #e6eefc; color: var(--accent); font-size: .85rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.hl-side.is-model .hl-side-icon, .hl-side.is-model .hl-side-pill { background: #dff3e8; color: #17794f; }
+.hl-side-text { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; font-size: 1.3rem; line-height: 2.1; color: var(--navy); }
+.hl-side-quote { color: var(--accent); line-height: 1; padding-top: 10px; }
+.hl-range { padding: 4px 6px; border-radius: 5px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.hl-range.hl-c { background: #dce6fd; }
+.hl-range.hl-a { background: #d5f1e4; }
+.hl-range.hl-p { background: #fdeab0; }
+.hl-tools.is-legend .hl-tool { border: 0; box-shadow: none; padding: 10px 24px 10px 18px; cursor: inherit; }
+.hl-tools.is-legend .hl-tool.tone-c { background: #e6eeff; }
+.hl-tools.is-legend .hl-tool.tone-a { background: #dff4ea; }
+.hl-tools.is-legend .hl-tool.tone-p { background: #fdf3d2; }
+.hl-tools.is-legend .hl-tool.tone-p .hl-tool-letter, .hl-tools.is-legend .hl-tool.tone-p .hl-pen { color: #c98600; }
+.hl-review-bar { border-top: 0; }
+.hl-page .k-head-aside .k-count { display: inline-flex; align-items: center; gap: 6px; }
+.hl-page .k-head-aside .k-dot { margin-left: 6px; }
+@media (max-width: 900px) {
+  .hl-compare { grid-template-columns: minmax(0, 1fr); }
+  .hl-compare-arrow { transform: rotate(90deg); justify-self: center; }
+}
+
+/* ── 1.1 · Trouvez l'intrus : cartes illustrées (maquette) ───────────────
+   Bandeau teinté en haut (la poignée), numéro dans une pastille de la même
+   teinte, illustration, puis le texte. Les cartes ne penchent plus. */
+.intrus-page.stage-1 .intrus-stage { max-width: 1420px; }
+.intrus-page.stage-1 .intrus-cards { max-width: 1120px; gap: 22px; margin-bottom: 22px; }
+.intrus-page.stage-1 .intrus-card { --tone: #e8f0fe; --ink: var(--accent); justify-content: flex-start; gap: 8px; min-height: 0; padding: 0 14px 18px; overflow: hidden; border: 1px solid #ece7de; border-radius: 16px; background: #fff; box-shadow: 0 10px 26px rgb(35 40 80 / 9%); transform: none; }
+.intrus-page.stage-1 .intrus-card:hover { transform: translateY(-3px); box-shadow: 0 16px 32px rgb(35 40 80 / 14%); }
+.intrus-page .intrus-card.tone-coral, .intrus-cards .intrus-card.tone-coral { --tone: #fde4da; --ink: #e0533f; }
+.intrus-page .intrus-card.tone-green, .intrus-cards .intrus-card.tone-green { --tone: #e2eee3; --ink: #1f5e45; }
+.intrus-page .intrus-card.tone-lilac, .intrus-cards .intrus-card.tone-lilac { --tone: #e3e9fd; --ink: var(--accent); }
+.intrus-band { display: grid; place-items: center; align-self: stretch; height: 40px; margin: 0 -14px; background: var(--tone); border-radius: 0 0 50% 50% / 0 0 14px 14px; }
+.intrus-page.stage-1 .intrus-grip { color: #7f8fc6; }
+.intrus-page.stage-1 .intrus-number { width: 40px; height: 40px; margin-top: 2px; background: var(--tone); color: var(--ink); font-size: 1.15rem; }
+.intrus-picture { display: grid; place-items: center; width: 88%; aspect-ratio: 730 / 451; }
+.intrus-picture img { width: 100%; height: 100%; object-fit: contain; }
+.intrus-blob { display: grid; place-items: center; width: 62%; aspect-ratio: 1.55; border-radius: 50%; background: var(--tone); color: var(--navy); }
+.intrus-page.stage-1 .intrus-text { margin-top: 2px; font-size: 1.12rem; font-weight: 750; line-height: 1.2; }
+.intrus-page.stage-1 .intrus-bin { max-width: 1000px; padding: 16px 16px 18px; }
+.intrus-page.stage-1 .intrus-bin-symbol { display: inline-flex; align-items: center; gap: 12px; }
+.intrus-spark { position: relative; width: 18px; height: 22px; }
+.intrus-spark::before, .intrus-spark::after { content: ''; position: absolute; left: 0; width: 16px; height: 2.5px; border-radius: 2px; background: #f08a6c; }
+.intrus-spark.is-left::before { top: 4px; transform: rotate(-25deg); }
+.intrus-spark.is-left::after { bottom: 4px; transform: rotate(25deg); }
+.intrus-spark.is-right::before { top: 4px; transform: rotate(25deg); }
+.intrus-spark.is-right::after { bottom: 4px; transform: rotate(-25deg); }
+
+/* ── 1.4 · Le radar SONCAS : motivations en cartes horizontales ─────────
+   Carte blanche : à gauche le numéro dans une pastille teintée et le nom,
+   à droite l'illustration (fond ramené au blanc). Un liseré de la teinte
+   en haut. */
+.soncas-motive.has-picture { --tone: #e3ecfb; --ink: var(--accent); position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 92px; justify-items: start; align-items: center; gap: 12px; padding: 10px 18px 10px 18px; overflow: hidden; border-color: var(--line); border-radius: 14px; background: #fff; text-align: left; }
+.soncas-motive.has-picture::before { content: ''; position: absolute; inset: 0 0 auto; height: 5px; background: var(--tone); }
+.soncas-motive.has-picture.tone-lilac { --tone: #e9e1f6; --ink: #6a4fa3; }
+.soncas-motive.has-picture.tone-gold { --tone: #f8e7b8; --ink: #8a6410; }
+.soncas-motives:has(.has-picture) { grid-template-columns: repeat(3, minmax(0, 250px)); justify-content: start; }
+.soncas-motive-art { display: grid; width: 92px; aspect-ratio: 810 / 750; }
+.soncas-motive-art img { width: 100%; height: 100%; object-fit: contain; }
+.soncas-motive-copy { display: grid; justify-items: start; gap: 6px; }
+.soncas-motive-n { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--tone); color: var(--ink); font-size: .85rem; font-weight: 800; }
+.soncas-motive.has-picture strong { font-size: 1.12rem; }
+.soncas-motive.has-picture:hover { border-color: #b9c9ef; }
+.soncas-motive.has-picture:has(:checked) { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 2px var(--accent); }
+
+/* ── 1.5 · Le tournoi : cartes de duel illustrées (maquette) ────────────
+   Format paysage : la lettre en haut à gauche, le titre dessous, aligné à
+   gauche ; l'illustration occupe la moitié droite. */
+.duel-pair.is-solo .duel-card.has-picture { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); grid-template-rows: auto 1fr; justify-items: start; align-content: stretch; align-items: start; gap: 14px 10px; min-height: 250px; padding: 26px 0 0 28px; overflow: hidden; text-align: left; }
+.duel-pair.is-solo:has(.has-picture) { align-items: stretch; }
+.duel-pair.is-solo:has(.has-picture) .duel-vs { align-self: center; }
+.duel-card.has-picture .duel-letter { grid-column: 1; grid-row: 1; }
+.duel-card.has-picture .duel-text { grid-column: 1; grid-row: 2; align-self: center; padding-bottom: 26px; font-size: 1.35rem; line-height: 1.2; }
+.duel-art { grid-column: 2; grid-row: 1 / -1; align-self: stretch; justify-self: stretch; display: grid; place-items: center; padding: 6px 26px 26px 0; }
+.duel-art img { width: 100%; max-height: 190px; object-fit: contain; }
+.duel-art.is-bleed { place-items: end; margin-top: -26px; padding: 0; }
+.duel-art.is-bleed img { max-height: none; height: 100%; object-fit: contain; object-position: right bottom; }
+.duel-card.has-picture .duel-radio { z-index: 1; }
+
+/* La carte écartée, en réduction et grisée, dans la corbeille. */
+.intrus-page.stage-1 .intrus-bin .intrus-mini { width: 132px; gap: 4px; padding: 0 10px 12px; cursor: inherit; filter: grayscale(.85); opacity: .6; transform: rotate(-2deg); box-shadow: 0 4px 12px rgb(35 40 80 / 8%); }
+.intrus-page.stage-1 .intrus-bin .intrus-mini:hover { transform: rotate(-2deg); box-shadow: 0 4px 12px rgb(35 40 80 / 8%); }
+.intrus-bin .intrus-mini .intrus-band { height: 18px; margin: 0 -10px; }
+.intrus-bin .intrus-mini .intrus-number { width: 26px; height: 26px; margin-top: 0; font-size: .85rem; }
+.intrus-bin .intrus-mini .intrus-picture { width: 80%; }
+.intrus-bin .intrus-mini .intrus-text { font-size: .74rem; }
+.intrus-page.stage-1 .intrus-bin.is-filled { padding: 12px 16px 14px; gap: 6px; }
+.intrus-page.stage-1 .intrus-cards:has(> :nth-child(3):last-child) { grid-template-columns: repeat(3, minmax(0, 262px)); justify-content: center; }
+
+/* Étape 2 : les trois cartes restantes gardent leur illustration. */
+.intrus-page.stage-2 .intrus-card.has-art { justify-content: flex-start; gap: 10px; padding: 18px 18px 22px; }
+.intrus-page.stage-2 .intrus-card.has-art .intrus-picture { width: 82%; }
+.intrus-page.stage-2 .intrus-card.has-art .intrus-text { font-size: 1.2rem; }

@@ -1,0 +1,8 @@
+# Netlify : les anciennes adresses du module 1-1-1 (publié seul à la racine)
+# renvoient vers son nouvel emplacement, /1-1-1/.
+/            embed=:embed  /1-1-1/index.html?embed=:embed  301
+/index.html  embed=:embed  /1-1-1/index.html?embed=:embed  301
+/exercices/*  /1-1-1/exercices/:splat  301
+/js/*         /1-1-1/js/:splat         301
+/css/*        /1-1-1/css/:splat        301
+/assets/*     /1-1-1/assets/:splat     301

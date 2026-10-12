@@ -1,0 +1,521 @@
+/* ══════════════════════════════════════════════════════════════════════
+   PAGE DE CONTEXTE · l'écran qui précède chaque exercice.
+
+   Registre volontairement différent de celui des exercices : fond crème,
+   grand titre en serif, décor végétal sur les côtés. Le passage au fond
+   blanc et sobre de l'exercice marque le moment où l'on se met au travail.
+
+   Trois zones : le titre en haut, la carte « Votre mission » à gauche,
+   l'aperçu de l'exercice à droite.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Le fond crème ────────────────────────────────────────────────────── */
+/* La page de contexte porte le MÊME fond que l'exercice : il est posé sur
+   le corps de page par applyBackground(), dans js/core.js, et vaut pour
+   toute la traversée (contexte, menu des cas, exercice).
+
+   Seule la teinte change d'une étape à l'autre : crème ici, blanc dans
+   l'exercice. C'est ce passage qui marque le moment où l'on se met au
+   travail, sans que le décor, lui, ne saute d'une image à une autre. */
+body.is-briefing {
+  background-color: #fbf7f0;
+}
+body.is-briefing .topbar {
+  background: #fbf7f0f2;
+  border-bottom-color: #e6ddcd;
+  backdrop-filter: blur(6px);
+}
+body.is-briefing .exercise-nav { background: #fbf7f0f2; border-bottom-color: #e6ddcd; }
+body.is-briefing .exercise-link:hover { background: #f3ece0; }
+body.is-briefing .site-footer { color: #9a8f7d; }
+
+/* ── La page ──────────────────────────────────────────────────────────── */
+/* La page est CENTRÉE dans l'écran, en largeur comme en hauteur : le
+   feuillage occupe les bords, le contenu tient le milieu dégagé.
+   (layout.css borne .briefing à 980 px : on reprend la main ici.) */
+body.is-briefing .briefing {
+  width: min(100% - 20vw, 1260px);
+  max-width: none;
+  margin: 0 auto;
+  padding: clamp(24px, 7vh, 88px) 0 32px;
+  min-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ── Le titre ─────────────────────────────────────────────────────────── */
+/* Registre éditorial, tenu avec la seule Fira Sans : un surtitre en
+   petites capitales espacées, un titre très grand mais en demi-gras
+   (le 800 faisait bloc), serré, et un sous-titre posé sur deux lignes. */
+.briefing-head { margin-bottom: clamp(36px, 5.5vh, 56px); max-width: 1080px; }
+
+.briefing-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px 3px;
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #3d63d8;
+}
+.briefing-eyebrow strong { font-weight: 700; color: #1b45d6; }
+.briefing-eyebrow span[aria-hidden] { color: #f2795a; font-weight: 700; }
+
+.briefing-head h1 {
+  display: inline-block;
+  position: relative;
+  font-size: clamp(3rem, 6vw, 5.4rem);
+  font-weight: 600;
+  line-height: .98;
+  letter-spacing: -.035em;
+  color: #16205e;
+  margin: 0 0 18px -.04em;
+}
+/* Le sous-titre, sur deux lignes : la matière de l'exercice, puis
+   l'intention. Même encre, même corps, sans souligné. */
+.briefing-lede {
+  font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+  font-weight: 400;
+  line-height: 1.45;
+  color: #1f2a62;
+  max-width: 60ch;
+}
+.briefing-lede .lede-key { display: block; }
+
+/* ── Les deux colonnes ────────────────────────────────────────────────── */
+/* La carte et l'aperçu se partagent le poids visuel : la carte s'élargit,
+   l'aperçu garde une colonne franche et se cale en haut de la carte. */
+.briefing-body {
+  display: grid;
+  grid-template-columns: minmax(360px, 570fr) minmax(0, 610fr);
+  gap: clamp(40px, 5vw, 80px);
+  align-items: start;
+}
+
+/* Avec une vraie illustration, l'ordre s'inverse : la scène prend la
+   grande colonne de gauche, la consigne la colonne de droite. Une image
+   pose le contexte d'un coup d'œil, là où un schéma de mécanique ne dit
+   rien tant qu'on n'a pas lu la consigne. */
+.briefing-body.has-art {
+  grid-template-columns: minmax(0, 1.35fr) minmax(340px, 440px);
+}
+.briefing-body.has-art > div:first-child { order: 2; }
+.briefing-body.has-art > .briefing-preview { order: 1; align-items: stretch; }
+
+@media (max-width: 1100px) {
+  .briefing-body, .briefing-body.has-art { grid-template-columns: minmax(0, 1fr); }
+  .briefing-body.has-art > div:first-child { order: 1; }
+  .briefing-body.has-art > .briefing-preview { order: 2; }
+}
+
+/* ── La carte « Votre mission » ───────────────────────────────────────── */
+.mission-card {
+  background: #ffffff;
+  border: 1px solid #efe8db;
+  border-radius: 24px;
+  padding: 40px 40px 38px;
+  box-shadow: 0 30px 60px -18px #2a33621f, 0 10px 24px #2a33620a;
+}
+.mission-card-head { display: flex; align-items: center; gap: 20px; margin-bottom: 26px; }
+.mission-card-head .briefing-icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #e8efff;
+  color: #1b4fd8;
+  flex-shrink: 0;
+}
+.mission-card-head h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #16205e;
+  letter-spacing: -.015em;
+}
+.mission-card > p {
+  font-size: 1.12rem;
+  line-height: 1.65;
+  color: #2a3566;
+  margin-bottom: 30px;
+}
+
+/* La note de méthode, séparée par un filet. */
+.mission-note {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px solid #e8e2d6;
+  padding-top: 26px;
+  margin-bottom: 30px;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #2a3566;
+}
+.mission-note .icon { color: #1b4fd8; flex-shrink: 0; }
+
+.mission-card .button.primary {
+  width: 100%;
+  justify-content: center;
+  gap: 12px;
+  padding: 17px 24px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: 12px;
+  background: #1b45d6;
+  border-color: #1b45d6;
+  box-shadow: 0 10px 24px #1b45d633;
+}
+.mission-card .button.primary:hover { background: #1639b8; border-color: #1639b8; }
+
+/* ── Les critères, repliés par défaut ─────────────────────────────────── */
+/* Ils comptent, mais ne doivent pas alourdir la page : on les ouvre à la
+   demande, sous la carte de mission. */
+.briefing-criteria { margin-top: 22px; }
+.briefing-criteria > summary {
+  font-size: .92rem;
+  color: #1b4fd8;
+  font-weight: 600;
+  padding: 6px 0;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.briefing-criteria > summary::-webkit-details-marker { display: none; }
+.briefing-criteria > summary::after {
+  content: '';
+  width: 8px; height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform .18s ease;
+}
+.briefing-criteria[open] > summary::after { transform: rotate(-135deg) translateY(-2px); }
+.briefing-criteria ul { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 9px; }
+.briefing-criteria li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  font-size: .91rem;
+  line-height: 1.5;
+  color: #4a5578;
+}
+.briefing-criteria li .icon { color: #2f9163; margin-top: 2px; }
+
+/* ── L'aperçu de l'exercice ───────────────────────────────────────────── */
+.briefing-preview { position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 0; }
+/* Un semis de points façon Risograph, en retrait derrière l'aperçu : il
+   ancre la colonne de droite sans rien dire de plus que le dessin. */
+.briefing-body:not(.has-art) .briefing-preview::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -4%;
+  bottom: -6%;
+  width: 46%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, #3d63d8 1.6px, transparent 2.2px) 0 0 / 15px 15px;
+  opacity: .22;
+  -webkit-mask: radial-gradient(closest-side, #000 30%, transparent 100%);
+          mask: radial-gradient(closest-side, #000 30%, transparent 100%);
+  pointer-events: none;
+}
+.briefing-body:not(.has-art) .briefing-preview { justify-content: flex-start; align-items: flex-start; }
+/* Le dessin a 40 unités de marge sur 640 autour de ses cartes : on l'élargit
+   d'autant pour que les cartes, et non le cadre invisible du SVG, tombent
+   sur les bords de la colonne. Remonté, il démarre un peu au-dessus de la
+   carte de mission, comme sur la maquette. */
+.briefing-body:not(.has-art) .briefing-preview > .preview-art {
+  width: calc(100% * 640 / 560);
+  max-width: none;
+  max-height: none;
+  margin: -9% 0 0 -7.15%;
+}
+/* L'aperçu occupe sa colonne quelle que soit la famille de dessin : sans
+   largeur imposée, un SVG plus haut que large se contente de sa hauteur
+   maximale et laisse la colonne à moitié vide. */
+.preview-art { width: 100%; height: auto; max-height: 66vh; display: block; }
+.briefing-preview > .preview-art { flex: 0 0 auto; }
+
+/* La citation du client, quand l'exercice en a une, remplace l'aperçu. */
+.briefing-preview .client-quote {
+  background: #ffffffcc;
+  border: 1px solid #e6ddcd;
+  margin: 0 0 18px;
+  width: 100%;
+}
+
+/* ── Adaptations ──────────────────────────────────────────────────────── */
+@media (max-height: 900px) {
+  body.is-briefing .briefing { padding-top: clamp(16px, 5vh, 44px); min-height: 0; }
+  .briefing-head { margin-bottom: 40px; }
+  .briefing-head h1 { font-size: clamp(2.6rem, 5vw, 4.4rem); margin-bottom: 18px; }
+  .mission-card { padding: 26px 28px 24px; }
+  .mission-card-head { margin-bottom: 16px; }
+  .mission-card-head .briefing-icon { width: 52px; height: 52px; }
+  .mission-card > p { font-size: 1.02rem; margin-bottom: 18px; }
+  .mission-note { padding-top: 14px; margin-bottom: 18px; }
+  .mission-card .button.primary { padding: 15px 22px; font-size: 1rem; }
+  .preview-art { max-height: 54vh; }
+}
+
+@media (max-width: 1100px) {
+  .briefing-body { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .briefing-body:not(.has-art) .briefing-preview > .preview-art { width: 100%; max-height: 38vh; margin: 0; }
+  .briefing-preview { order: -1; }
+  .preview-art { max-height: 38vh; }
+}
+
+@media (max-width: 760px) {
+  /* Le décor latéral n'a plus la place : on le retire plutôt que de le
+     laisser mordre sur le texte. */
+  body.is-briefing { background-image: none; }
+  body.is-briefing .briefing { min-height: 0; width: 100%; }
+  .briefing-head h1 { font-size: clamp(2.3rem, 10vw, 3rem); }
+  .mission-card { padding: 22px; border-radius: 18px; }
+  .briefing-body { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .briefing-criteria > summary::after { transition: none; }
+}
+
+/* ── Impression ───────────────────────────────────────────────────────── */
+@media print {
+  body.is-briefing { background: #fff; }
+  .briefing-criteria { display: block; }
+  .briefing-criteria ul { display: grid !important; }
+  .mission-card { box-shadow: none; border: 1px solid #ddd; }
+}
+
+/* ── Les illustrations de la page de contexte ─────────────────────────── */
+/* Une illustration fournie remplace le schéma de mécanique : elle montre la
+   scène plutôt que les rouages, ce qui pose mieux le contexte. */
+.briefing-pictures { width: 100%; display: grid; gap: 10px; }
+.briefing-picture {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f1ece2;
+  box-shadow: 0 16px 38px #2a336218, 0 2px 6px #2a33620d;
+}
+/* Une illustration est montrée ENTIÈRE : elle a été composée pour être
+   lue d'un bloc, et un recadrage couperait ce qu'elle raconte. Sa largeur
+   la contraint, sa hauteur suit ses proportions. Les galeries de trois
+   scènes, elles, sont recadrées : voir plus bas. */
+.briefing-picture img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Les exercices à plusieurs clients (S2 A et S2 F) montrent leurs trois
+   scènes côte à côte, comme dans l'exercice lui-même. */
+.briefing-pictures.is-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+/* Trois scènes côte à côte sont mises au même format portrait : elles
+   doivent donc être recadrées, et non déformées. Le cadrage est ancré
+   au-dessus du milieu, là où se trouvent les visages. */
+.briefing-pictures.is-gallery .briefing-picture img {
+  max-height: 42vh;
+  aspect-ratio: .82 / 1;
+  object-fit: cover;
+  object-position: center 28%;
+}
+
+.briefing-picture .image-error { min-height: 160px; display: grid; place-content: center; padding: 22px; color: #8d8477; }
+
+@media (max-height: 900px) {
+  .briefing-pictures.is-gallery .briefing-picture img { max-height: 34vh; }
+}
+@media (max-width: 1100px) {
+  .briefing-pictures.is-gallery .briefing-picture img { max-height: 28vh; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   MENU DES CAS · pour les exercices qui en comptent plusieurs
+
+   S'affiche après la consigne, sur le même fond crème. L'apprenant choisit
+   le cas qu'il veut traiter, dans l'ordre qu'il veut, et y revient après
+   chaque correction.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Le menu des cas occupe plus de largeur qu'une page de lecture : la
+   grille de choix s'étale au lieu de se tasser au centre. Il reste
+   néanmoins en retrait des bords, où le feuillage est le plus dense :
+   posé dessus, un titre sombre perdrait son contraste. */
+.case-menu { max-width: 1560px; width: 100%; margin: 0 auto; padding: 10px 0 20px; }
+
+/* Le titre et l'accroche restent lisibles même si une feuille passe
+   derrière eux. */
+.case-menu > .page-title, .case-menu-intro { position: relative; z-index: 1; }
+.case-menu > .page-title { margin-bottom: 10px; }
+.case-menu > .page-title h1 {
+  font-size: clamp(2rem, 3.4vw, 3.1rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: #16205e;
+}
+.case-menu-intro { font-size: 1.05rem; line-height: 1.55; color: #2a3566; margin-bottom: 28px; max-width: 760px; }
+
+.case-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+
+.case-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 0;
+  border: 1px solid #e6ddcd;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 30px #2a336212;
+  cursor: var(--cursor-hand, pointer);
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+/* Le rembourrage est porté par le corps, et non par la carte : c'est ce
+   qui permet à l'illustration d'aller d'un bord à l'autre. */
+.case-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 22px 24px 24px;
+}
+
+/* L'illustration du cas, en bandeau. Sa hauteur est fixée pour que trois
+   ou quatre cartes côte à côte restent alignées, quelles que soient les
+   proportions des images déposées. */
+.case-card-picture {
+  display: block;
+  height: 168px;
+  background: #f3ece0;
+  border-bottom: 1px solid #efe6d6;
+}
+/* Le bandeau recadre l'image : `cover` la remplit sans la déformer, mais
+   doit savoir QUELLE part garder. Centré, il coupait les visages, qui se
+   trouvent dans le haut de ces scènes. On ancre donc le cadrage un peu
+   au-dessus du milieu : les personnages restent entiers. */
+.case-card-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+  display: block;
+}
+
+/* Sans illustration, le corps reprend l'espace du haut. */
+.case-card:not(:has(.case-card-picture)) .case-card-body { padding-top: 22px; }
+.case-card:hover { transform: translateY(-2px); box-shadow: 0 18px 40px #2a33621f; border-color: #c3d3f2; }
+.case-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.case-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.case-card-number {
+  display: grid; place-items: center;
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: #e8efff;
+  color: #1b4fd8;
+  font-weight: 750;
+  font-size: .95rem;
+}
+.case-card-state {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .78rem; font-weight: 650;
+  color: #8d8477;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #f4f0e8;
+}
+.case-card-label { font-size: 1.15rem; font-weight: 750; color: #16205e; line-height: 1.3; }
+.case-card-hint { font-size: .88rem; line-height: 1.5; color: #5c6686; font-style: italic; }
+
+/* Un cas traité se distingue sans crier victoire. */
+.case-card.is-done { border-color: #bfe2cf; }
+.case-card.is-done .case-card-body { background: #fbfefc; }
+.case-card.is-done .case-card-number { background: #d9f0e3; color: #1b6b47; }
+.case-card.is-done .case-card-state { background: #e2f5ea; color: #1b6b47; }
+
+.case-menu-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 18px; flex-wrap: wrap;
+  margin-top: 26px;
+}
+.case-menu-count { font-size: .9rem; color: #8d8477; margin: 0; }
+
+@media (max-height: 900px) {
+  .case-menu-intro { margin-bottom: 20px; font-size: 1rem; }
+  .case-card-body { padding: 17px 19px 19px; gap: 9px; }
+  .case-card-picture { height: 132px; }
+  .case-card-label { font-size: 1.05rem; }
+  .case-menu-foot { margin-top: 18px; }
+}
+
+
+/* ── L'illustration en vedette ────────────────────────────────────────── */
+/* Dans la disposition `has-art`, l'image remplit sa colonne. Le coin
+   arrondi et l'ombre la détachent du fond sans l'encadrer. */
+.briefing-body.has-art .briefing-pictures { width: 100%; }
+/* Une illustration seule est montrée ENTIÈRE : elle a été composée
+   pour être lue d'un bloc, et un recadrage couperait ce qu'elle raconte
+   (ici l'étiquette de prix qui justifie l'objection). On la contraint
+   donc par la largeur, et sa hauteur suit ses proportions. */
+.briefing-body.has-art .briefing-pictures:not(.is-gallery) .briefing-picture img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  border-radius: 18px;
+  box-shadow: 0 18px 44px #2a336218;
+}
+
+/* La citation, désormais dans la carte de mission, se pose entre la
+   consigne et le bouton. */
+.mission-card .client-quote { margin: -8px 0 26px; }
+
+/* ── Le carton d'entrée dans l'exercice ───────────────────────────────── */
+/* Posé par launchExercise(), dans js/exercise.js : il couvre la page de
+   contexte le temps que l'exercice se prépare, puis s'efface. */
+.launch-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #fbf7f0;
+  opacity: 0;
+  transition: opacity .6s cubic-bezier(.4, 0, .2, 1);
+}
+.launch-veil.bg-1 { background: #fbf7f0 url('../assets/backgrounds/chargement-1.webp') center / cover no-repeat; }
+.launch-veil.bg-2 { background: #fbf7f0 url('../assets/backgrounds/chargement-2.webp') center / cover no-repeat; }
+.launch-veil.is-shown { opacity: 1; }
+/* La sortie est lente et douce : le titre s'efface d'abord, puis le voile. */
+.launch-veil.is-leaving { opacity: 0; transition: opacity .85s cubic-bezier(.4, 0, .2, 1) .12s; }
+.launch-veil.is-leaving .launch-card { opacity: 0; transform: translateY(-4px); transition: opacity .35s ease, transform .5s ease; }
+.launch-card {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .6s ease .15s, transform .8s cubic-bezier(.2, .7, .2, 1) .1s;
+}
+.launch-veil.is-shown .launch-card { opacity: 1; transform: none; }
+.launch-eyebrow { font-size: .8rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #1b45d6; }
+.launch-title { font-size: clamp(2rem, 4.2vw, 3.6rem); font-weight: 600; line-height: 1.05; letter-spacing: -.03em; color: #16205e; }
+.launch-bar { width: 180px; height: 4px; margin-top: 14px; border-radius: 4px; background: #e3e1da; overflow: hidden; }
+.launch-bar span { display: block; height: 100%; background: #1b45d6; border-radius: inherit; transform: scaleX(0); transform-origin: left; }
+.launch-veil.is-shown .launch-bar span { transform: scaleX(1); transition: transform .8s cubic-bezier(.4, 0, .2, 1) .45s; }
+
+/* L'exercice remonte doucement quand le carton s'efface. */
+#main.is-entering { animation: launch-in .9s cubic-bezier(.2, .7, .2, 1) .1s both; }
+@keyframes launch-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}

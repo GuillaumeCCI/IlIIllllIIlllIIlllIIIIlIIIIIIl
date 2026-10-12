@@ -1,0 +1,57 @@
+AJOUTER UN BACKGROUND
+=====================
+
+Les PNG de ces dossiers sont pour l'instant TRANSPARENTS : le fond des
+exercices reste donc blanc. Glissez une image PNG portant le meme nom
+pour remplacer celui de votre choix, puis rechargez la page.
+
+DEUX NIVEAUX DE FOND
+
+  commun.webp  (a la racine de ce dossier)
+      Fond affiche derriere TOUS les exercices des trois series.
+      Remplacez-le pour habiller l'ensemble du parcours d'un seul coup.
+
+  s1/, s2/, s3/
+      Fond propre a un exercice. Il se superpose au fond commun :
+      un fond opaque le masque, un fond transparent le laisse apparaitre.
+
+── GÉRER LES OBJECTIONS ──────────────────────────────────────────
+
+  1.1 · Bon réflexe ou à éviter ?     s1/1-1-3-S1-1-1.webp
+  1.2 · À chaque étape, son rôle      s1/1-1-3-S1-1-2.webp
+  1.3 · Écoutez le client             s1/1-1-3-S1-1-3.webp
+  1.4 · Ce qui n’est pas dit          s1/1-1-3-S1-1-4.webp
+  1.5 · Face au « C’est trop cher »   s1/1-1-3-S1-1-5.webp
+  1.6 · Répondre en 6 étapes          s1/1-1-3-S1-1-6.webp
+  1.7 · Ma bibliothèque d’objections  s1/1-1-3-S1-1-7.webp
+
+── PROSPECTION TÉLÉPHONIQUE ──────────────────────────────────────
+
+  2.1 · Barrage, prétexte ou vraie objection ?   s2/1-1-3-S2-2-1.webp
+  2.2 · À chaque erreur sa conséquence           s2/1-1-3-S2-2-2.webp
+  2.3 · Franchir le standard en douceur          s2/1-1-3-S2-2-3.webp
+  2.4 · Repérer les erreurs de prospection       s2/1-1-3-S2-2-4.webp
+  2.5 · Garder la main face à la demande de doc  s2/1-1-3-S2-2-5.webp
+  2.6 · Le script de rebond                      s2/1-1-3-S2-2-6.webp
+  2.7 · Construisez vos cartes réflexes          s2/1-1-3-S2-2-7.webp
+
+── MANIPULATION ──────────────────────────────────────────────────
+
+  1.1 · Dans le bon ordre                  s3/1-1-3-S3-1-1.webp
+  1.2 · Le crash-test de l’objection prix  s3/1-1-3-S3-1-2.webp
+  2.1 · À chaque objection, sa nature      s3/1-1-3-S3-2-1.webp
+  2.2 · Passez en mode traitement          s3/1-1-3-S3-2-2.webp
+
+CONSEILS
+  Format paysage, par exemple 1920 x 1080 pixels.
+  Le fond est centre et couvre l'ecran ; il peut etre recadre sur mobile.
+  Privilegiez des fonds clairs, surtout derriere les titres.
+  Les panneaux de reponse restent blancs et opaques pour rester lisibles.
+
+REGLAGES FINS
+  background-size et background-position : debut de css/styles.css.
+  Pour retirer un fond : rendez son PNG transparent, ou mettez la valeur
+  background a null pour cet exercice dans js/catalog.js.
+
+SITE PUBLIE
+  Envoyez le fichier modifie sur GitHub, puis rechargez la page en ligne.

@@ -1,0 +1,178 @@
+/* ══════════════════════════════════════════════════════════════════════
+   SÉRIE 2 · PITCHER AVEC IMPACT · styles propres aux exercices.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── 2.1 · Mythe ou méthode ? ─────────────────────────────────────────── */
+.myth-board { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr); gap: 34px; }
+.myth-left { display: grid; align-content: start; gap: 14px; padding-right: 30px; border-right: 1px solid var(--line); }
+.myth-title { font-size: clamp(1.6rem, 2.2vw, 2.1rem); }
+.myth-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 22px; margin: 24px 0; }
+.myth-card { position: relative; padding: 26px 50px 26px 40px; border: 1px solid var(--line); border-left: 8px solid var(--accent); border-radius: 12px; background: #fff; box-shadow: 0 8px 22px rgb(30 40 80 / 8%); cursor: var(--cursor-grab, grab); }
+.myth-card.is-dragging { opacity: .5; }
+.myth-grip { position: absolute; top: 14px; right: 14px; color: #9aa8c9; }
+.myth-text { font-size: clamp(1.3rem, 1.9vw, 1.8rem); color: var(--navy); line-height: 1.3; margin-bottom: 14px; }
+.myth-arrow { display: grid; justify-items: center; gap: 4px; color: var(--accent); font-weight: 800; font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; }
+.myth-right { display: grid; gap: 16px; align-content: start; }
+.myth-zone { display: block; width: 100%; padding: 10px; border: 1px solid var(--line); border-top: 5px solid var(--z, var(--accent)); border-radius: 12px; background: #fff; color: var(--z, var(--accent)); text-align: center; }
+.myth-zone.tone-bad { --z: #ef5b46; }
+.myth-zone.tone-good { --z: #127a63; }
+.myth-zone-inner { display: grid; justify-items: center; gap: 4px; padding: 18px; border: 1.5px dashed #c7cfdf; border-radius: 8px; }
+.myth-zone strong { font-size: 1.3rem; text-transform: uppercase; }
+.myth-zone span { color: var(--muted); font-size: 1rem; }
+.myth-zone small { color: #8a96b4; }
+.myth-zone:hover .myth-zone-inner, .myth-zone.is-over .myth-zone-inner { background: color-mix(in srgb, var(--z) 8%, #fff); border-color: var(--z); }
+
+/* ── 2.2 · L'échelle de conviction ────────────────────────────────────── */
+.ladder-layout { gap: 34px; }
+.ladder-layout > section:first-child { padding-right: 30px; border-right: 1px solid var(--line); }
+.ladder-cards { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 10px; }
+.ladder-card, .ladder-slot { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; width: 100%; min-height: 64px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--navy); text-align: left; font-size: 1rem; }
+.ladder-card { cursor: var(--cursor-grab, grab); }
+.ladder-card:hover { border-color: var(--accent); }
+.ladder-card.is-selected { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); background: #f3f7ff; }
+.ladder-card.is-dragging { opacity: .45; }
+.ladder-letter { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: #eef2fa; color: var(--navy); font-weight: 800; }
+.ladder-grip { color: #8ea0d4; }
+.ladder-empty { color: var(--muted); padding: 20px; text-align: center; border: 1px dashed var(--line); border-radius: 10px; }
+.ladder-side h2 { margin-bottom: 8px; }
+.ladder-top, .ladder-bottom { color: var(--accent); font-weight: 800; font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; }
+.ladder-rows { position: relative; display: grid; gap: 10px; margin: 8px 0; padding-left: 34px; }
+.ladder-axis { position: absolute; left: 10px; top: 6px; bottom: 6px; width: 2px; background: var(--accent); }
+.ladder-axis::before { content: ''; position: absolute; top: -6px; left: -6px; border: 7px solid transparent; border-bottom-color: var(--accent); border-top: 0; }
+.ladder-row { display: grid; grid-template-columns: 46px minmax(0, 1fr); align-items: center; gap: 12px; }
+.ladder-n { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid #a9b6d4; color: var(--navy); font-weight: 800; font-size: 1.15rem; background: #fff; }
+.ladder-slot { border-style: dashed; border-color: #c4cde0; min-height: 60px; }
+.ladder-slot:hover { border-color: var(--accent); background: #f7f9ff; }
+.ladder-slot.is-over { border-color: var(--accent); background: #eaf1ff; }
+.ladder-slot.is-filled { border-style: solid; border-color: #bcd0fb; }
+.ladder-slot.is-ok { border-color: #8fd0ad; background: #f4fbf7; }
+.ladder-slot.is-ko { border-color: #f0b3a9; background: #fff7f6; }
+.ladder-placeholder { grid-column: 1 / -1; text-align: center; color: #8a96b4; }
+.ladder-remove { color: var(--muted); }
+.ladder-slot .ladder-text { font-size: .95rem; }
+.ladder-explain { padding-left: 18px; display: grid; gap: 10px; color: var(--navy); line-height: 1.5; margin-top: 8px; }
+
+/* ── 2.3 · Le studio d'accroches ──────────────────────────────────────── */
+.studio-layout { grid-template-columns: minmax(0, .35fr) minmax(0, .65fr); }
+.studio-picture { margin: 10px 0 14px; border-radius: 10px; overflow: hidden; }
+.studio-picture img { display: block; width: 100%; aspect-ratio: 1.05; object-fit: cover; object-position: 48% 30%; }
+.studio-prospect h2 { font-size: 1.6rem; }
+.studio-software { color: var(--accent); margin-bottom: 10px; }
+.studio-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); margin-bottom: 20px; }
+.studio-tab { display: flex; align-items: center; gap: 12px; padding: 4px 4px 14px; border: 0; border-bottom: 3px solid transparent; background: none; color: var(--muted); font-size: 1.05rem; }
+.studio-tab-n { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #c9d3ea; background: #f3f6fc; font-weight: 700; }
+.studio-tab.is-active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
+.studio-tab.is-active .studio-tab-n { background: var(--accent); border-color: var(--accent); color: #fff; }
+.studio-tab.is-done .studio-tab-n { background: var(--ok-soft); color: var(--ok); border-color: #b8e2cb; }
+.studio-kind { color: var(--accent); }
+.studio-title { font-size: clamp(1.6rem, 2.3vw, 2.3rem); margin: 6px 0 4px; }
+.studio-criteria { display: flex; gap: 14px; color: var(--accent); flex-wrap: wrap; }
+.studio-review { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+
+/* ── 2.4 · La chasse aux preuves ──────────────────────────────────────── */
+.proof-pitch { font-size: clamp(1.1rem, 1.5vw, 1.4rem); color: var(--navy); margin: 6px 0 14px; line-height: 1.5; }
+
+/* ── 2.5 · L'audit du pitch ───────────────────────────────────────────── */
+.audit-pitch p:last-child { font-size: 1.15rem; color: var(--navy); margin-top: 6px; }
+.audit-layout { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.audit-layout h2 { margin-bottom: 10px; }
+.audit-actions { grid-column: 1 / -1; }
+.audit-actions .k-bar { margin-top: 0; border-top: 0; padding-top: 0; }
+.audit-total { text-align: right; font-weight: 800; color: var(--navy); margin-top: 12px; font-size: 1.1rem; }
+.audit-note { font-size: 1.15rem; color: var(--navy); }
+
+/* ── 2.6 · Le pitch de 60 secondes ────────────────────────────────────── */
+.pitch-page .k-head-aside { display: grid; justify-items: end; gap: 8px; }
+.pitch-badge { display: inline-block; padding: 6px 14px; border: 1px solid #b9cdf6; border-radius: 10px; background: #eef4ff; color: var(--navy); font-weight: 650; }
+.pitch-layout { grid-template-columns: minmax(0, .3fr) minmax(0, .7fr); }
+.pitch-layout.is-record { grid-template-columns: minmax(0, .4fr) minmax(0, .6fr); }
+.pitch-layout.is-evaluate { grid-template-columns: minmax(0, .32fr) minmax(0, .68fr); }
+.pitch-contract { display: grid; gap: 12px; align-content: start; color: var(--navy); }
+.pitch-clock { display: flex; align-items: center; gap: 22px; color: var(--navy); }
+.pitch-clock strong { font-size: 3.4rem; font-weight: 800; }
+.pitch-structure { padding-left: 22px; display: grid; gap: 10px; font-size: 1.05rem; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+.pitch-tone { color: var(--navy); }
+.pitch-words { text-align: right; color: var(--accent); font-size: .95rem; margin-top: 4px; }
+.pitch-parts { border: 0; border-top: 1px solid var(--line); margin: 14px 0 0; padding: 12px 0 0; display: flex; flex-wrap: wrap; gap: 10px 28px; }
+.pitch-parts legend { color: var(--accent); font-weight: 650; padding: 0; margin-bottom: 8px; float: left; width: 100%; }
+.pitch-part { display: inline-flex; align-items: center; gap: 12px; font-size: 1.02rem; color: var(--navy); cursor: var(--cursor-hand, pointer); }
+.pitch-part input { width: 26px; height: 26px; }
+.pitch-text-head { display: flex; justify-content: space-between; align-items: center; }
+.pitch-text-body { min-height: 230px; padding: 14px; border: 1px solid #c9d6f1; border-radius: 10px; color: var(--navy); white-space: pre-wrap; margin: 8px 0; }
+.rec-format { display: inline-flex; margin: 0 auto 12px; border: 1px solid #c9d6f1; border-radius: 8px; overflow: hidden; }
+.rec-format-option { display: inline-flex; align-items: center; gap: 10px; padding: 10px 34px; border: 0; background: #fff; color: var(--navy); font-weight: 600; }
+.rec-format-option.is-on { background: var(--accent); color: #fff; }
+.pitch-layout.is-record form { text-align: center; }
+.pitch-layout.is-record form h2, .pitch-layout.is-record form .k-instruction { text-align: left; }
+.rec-stage { display: grid; justify-items: center; gap: 8px; padding: 18px; border: 1.5px dashed #c9d6f1; border-radius: 12px; }
+.rec-symbol { display: grid; place-items: center; width: 92px; height: 92px; border-radius: 50%; background: #eef3fd; color: var(--navy); }
+.rec-stage.is-recording .rec-symbol { background: #ffe5e0; color: #d2412b; animation: rec-pulse 1.2s infinite; }
+@keyframes rec-pulse { 50% { transform: scale(1.06); } }
+.rec-live { width: min(100%, 360px); border-radius: 10px; background: #111; }
+.rec-time { font-size: 1.1rem; color: var(--muted); }
+.rec-time strong { font-size: 2.4rem; color: var(--navy); font-variant-numeric: tabular-nums; }
+.rec-wave { display: flex; align-items: center; gap: 4px; height: 34px; }
+.rec-wave i { width: 3px; border-radius: 2px; background: #b7c6ea; }
+.rec-button { min-width: 320px; }
+.rec-dot { width: 16px; height: 16px; border-radius: 50%; background: #ff6b55; flex-shrink: 0; }
+.rec-player { width: 100%; margin: 12px 0; border-radius: 10px; }
+.rec-duration { color: var(--navy); margin-bottom: 14px; }
+.rec-duration .is-ok { display: inline-flex; align-items: center; gap: 6px; color: var(--ok); }
+.rec-listen-title { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.rec-listen { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 10px; color: var(--navy); }
+.pitch-score-list { list-style: none; padding: 0; margin: 14px 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; }
+.pitch-score-list li { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); color: var(--navy); }
+
+@media (max-width: 1100px) {
+  .myth-board, .audit-layout, .studio-layout, .studio-review, .pitch-layout, .pitch-layout.is-record, .pitch-layout.is-evaluate { grid-template-columns: minmax(0, 1fr); }
+  .myth-left, .ladder-layout > section:first-child { padding-right: 0; border-right: 0; }
+}
+@media (max-width: 760px) {
+  .myth-row { grid-template-columns: minmax(0, 1fr); }
+  .myth-arrow { display: none; }
+  .studio-tab span:last-child { display: none; }
+  .studio-tab.is-active span:last-child { display: inline; }
+  .rec-button { min-width: 0; width: 100%; }
+  .pitch-score-list { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── 2.2 · L'échelle de conviction, relecture (maquette) ──────────────── */
+.ladder.is-review .ladder-top, .ladder.is-review .ladder-bottom, .ladder.is-review .ladder-axis { display: none; }
+.ladder.is-review .ladder-rows { padding-left: 0; gap: 12px; }
+.ladder.is-review .ladder-row { grid-template-columns: 64px minmax(0, 1fr); gap: 24px; }
+.ladder.is-review .ladder-n { width: 64px; height: 64px; font-size: 1.5rem; }
+.ladder.is-review .ladder-slot { min-height: 74px; padding: 10px 16px; }
+.ladder.is-review .ladder-letter { width: 52px; height: 52px; background: #e6eeff; font-size: 1.2rem; }
+.ladder.is-review .ladder-slot .ladder-text { font-size: 1.1rem; }
+.ladder-verdict { display: inline-flex; align-items: center; gap: 12px; padding: 6px 16px 6px 6px; border-radius: 30px; font-weight: 700; white-space: nowrap; }
+.ladder-verdict-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: #fff; }
+.ladder-verdict.is-ok { background: #ddf3e6; color: var(--ok); }
+.ladder-verdict.is-ok .ladder-verdict-icon { background: #1f9d5c; }
+.ladder-verdict.is-ko { background: #fde3df; color: #d23b26; }
+.ladder-verdict.is-ko .ladder-verdict-icon { background: #e5483a; }
+
+/* ── 2.1 · Mythe ou méthode ?, maquette ───────────────────────────────── */
+.myth-page { max-width: 1300px; width: 100%; margin: 0 auto; }
+.myth-progress { display: grid; justify-items: end; gap: 10px; }
+.myth-progress .k-dots { margin: 0; }
+.myth-stage { padding: 6px 0 0; }
+.myth-stage .myth-left { padding: 10px 30px 20px 0; }
+.myth-stage .myth-right h2 { font-size: clamp(1.5rem, 2vw, 2rem); }
+.myth-stage .myth-card { background: #fff; box-shadow: 0 14px 36px rgb(15 35 78 / 8%); border-color: #e3e8f2; }
+.myth-stage .myth-zone { padding: 0; border: 1.5px dashed var(--z); border-radius: 14px; background: color-mix(in srgb, var(--z) 7%, #fff); }
+.myth-stage .myth-zone-inner { padding: 26px 18px; border: 0; }
+.myth-stage .myth-zone .icon, .myth-stage .myth-zone strong { color: var(--z); }
+.myth-stage .myth-zone.tone-bad { --z: #e5583f; }
+.myth-stage .myth-zone.tone-good { --z: #1a8a64; }
+.myth-stage .myth-zone:hover .myth-zone-inner, .myth-stage .myth-zone.is-over .myth-zone-inner { background: color-mix(in srgb, var(--z) 10%, #fff); border-radius: 14px; }
+.myth-stage .k-bar { border-top: 0; margin-top: 30px; }
+.myth-stage .k-bar .button { border-radius: 30px; }
+.myth-stage .k-bar .with-icon { display: inline-flex; align-items: center; gap: 10px; }
+.myth-skip { background: #9fb8f3; border-color: #9fb8f3; }
+.myth-skip:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); }
+
+/* ── Illustrations : zones Mythe / Méthode (2.1), choix du vendeur (3.5) ─
+   Le fond des dessins est blanc : « multiply » le fond teinté de la zone. */
+.myth-zone-art { width: auto; height: 92px; }
+.say-symbol.has-art { width: 86px; }
+.say-symbol.has-art img { width: 86px; height: auto; }

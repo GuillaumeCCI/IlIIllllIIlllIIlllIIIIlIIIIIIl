@@ -1,0 +1,79 @@
+AJOUTER UN BACKGROUND
+=====================
+
+Les PNG de ces dossiers sont pour l'instant TRANSPARENTS : le fond des
+exercices reste donc blanc. Glissez une image PNG portant le meme nom
+pour remplacer celui de votre choix, puis rechargez la page.
+
+DEUX NIVEAUX DE FOND
+
+  commun.webp  (a la racine de ce dossier)
+      Fond affiche derriere TOUS les exercices des cinq series.
+      Remplacez-le pour habiller l'ensemble du parcours d'un seul coup.
+
+  s1/, s2/, s3/, s4/, s5/
+      Fond propre a un exercice. Il se superpose au fond commun :
+      un fond opaque le masque, un fond transparent le laisse apparaitre.
+
+── ANNONCER LE PRIX ──────────────────────────────────────────────
+
+  1.1 · L’art d’annoncer le prix  s1/1-1-4-S1-1-1.webp
+  1.2 · La méthode sandwich       s1/1-1-4-S1-1-2.webp
+  1.4 · Le prix arrive trop tôt   s1/1-1-4-S1-1-4.webp
+  1.5 · Le duel des annonces      s1/1-1-4-S1-1-5.webp
+  1.7 · Ma banque d’annonces      s1/1-1-4-S1-1-7.webp
+
+── DÉFENDRE LE PRIX ──────────────────────────────────────────────
+
+  2.1 · Défendre son prix sans le brader  s2/1-1-4-S2-2-1.webp
+  2.2 · Quel levier dans cette réponse ?  s2/1-1-4-S2-2-2.webp
+  2.3 · Le prix, remis à l’échelle        s2/1-1-4-S2-2-3.webp
+  2.4 · Quatre faux pas face au prix      s2/1-1-4-S2-2-4.webp
+  2.5 · Deux réponses, laquelle tient ?   s2/1-1-4-S2-2-5.webp
+  2.6 · Ton kit de défense du prix        s2/1-1-4-S2-2-6.webp
+  2.7 · Défendre la valeur                s2/1-1-4-S2-2-7.webp
+
+── CONCLURE LA VENTE ─────────────────────────────────────────────
+
+  3.1 · Attrape le bon signal !             s3/1-1-4-S3-3-1.webp
+  3.2 · À chaque conclusion, sa réplique    s3/1-1-4-S3-3-2.webp
+  3.3 · À vous de conclure !                s3/1-1-4-S3-3-3.webp
+  3.4 · Le signal qui méritait une réponse  s3/1-1-4-S3-3-4.webp
+  3.5 · Comparer deux façons de conclure    s3/1-1-4-S3-3-5.webp
+  3.6 · Conduire la fin du rendez-vous      s3/1-1-4-S3-3-6.webp
+  3.7 · Construire sa boîte à conclusions   s3/1-1-4-S3-3-7.webp
+
+── RELANCER ──────────────────────────────────────────────────────
+
+  4.1 · Le Vrai / Faux de la relance  s4/1-1-4-S4-4-1.webp
+  4.2 · L’anatomie d’une relance      s4/1-1-4-S4-4-2.webp
+  4.3 · Trouver l’élément de valeur   s4/1-1-4-S4-4-3.webp
+  4.4 · Analyser une relance à jeter  s4/1-1-4-S4-4-4.webp
+  4.5 · À vous de trancher !          s4/1-1-4-S4-4-5.webp
+  4.6 · Construire la stratégie       s4/1-1-4-S4-4-6.webp
+  4.7 · Créer votre modèle            s4/1-1-4-S4-4-7.webp
+
+── MANIPULATION ──────────────────────────────────────────────────
+
+  1.1 · Annoncer le prix avec assurance  s5/1-1-4-S5-1-1.webp
+  1.2 · À vous d’annoncer le prix        s5/1-1-4-S5-1-2.webp
+  2.1 · Valoriser ou brader ?            s5/1-1-4-S5-2-1.webp
+  2.2 · Défendre le prix                 s5/1-1-4-S5-2-2.webp
+  3.1 · Signal d’achat ou pas ?          s5/1-1-4-S5-3-1.webp
+  3.2 · À vous de conclure               s5/1-1-4-S5-3-2.webp
+  4.1 · Les bons réflexes de relance     s5/1-1-4-S5-4-1.webp
+  4.2 · Rédigez votre relance            s5/1-1-4-S5-4-2.webp
+
+CONSEILS
+  Format paysage, par exemple 1920 x 1080 pixels.
+  Le fond est centre et couvre l'ecran ; il peut etre recadre sur mobile.
+  Privilegiez des fonds clairs, surtout derriere les titres.
+  Les panneaux de reponse restent blancs et opaques pour rester lisibles.
+
+REGLAGES FINS
+  background-size et background-position : debut de css/styles.css.
+  Pour retirer un fond : rendez son PNG transparent, ou mettez la valeur
+  background a null pour cet exercice dans js/catalog.js.
+
+SITE PUBLIE
+  Envoyez le fichier modifie sur GitHub, puis rechargez la page en ligne.

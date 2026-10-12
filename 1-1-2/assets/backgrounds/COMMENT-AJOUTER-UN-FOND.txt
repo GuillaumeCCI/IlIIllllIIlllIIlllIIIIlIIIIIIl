@@ -1,0 +1,66 @@
+AJOUTER UN BACKGROUND
+=====================
+
+Les PNG de ces dossiers sont pour l'instant TRANSPARENTS : le fond des
+exercices reste donc blanc. Glissez une image PNG portant le meme nom
+pour remplacer celui de votre choix, puis rechargez la page.
+
+DEUX NIVEAUX DE FOND
+
+  commun.webp  (a la racine de ce dossier)
+      Fond affiche derriere TOUS les exercices des quatre series.
+      Remplacez-le pour habiller l'ensemble du parcours d'un seul coup.
+
+  s1/, s2/, s3/, s4/
+      Fond propre a un exercice. Il se superpose au fond commun :
+      un fond opaque le masque, un fond transparent le laisse apparaitre.
+
+── BÂTIR L’ARGUMENT ──────────────────────────────────────────────
+
+  1.1 · Trouvez l’intrus          s1/1-1-2-S1-1-1.webp
+  1.2 · Décomposez l’argument     s1/1-1-2-S1-1-2.webp
+  1.3 · La fabrique à arguments   s1/1-1-2-S1-1-3.webp
+  1.4 · Le radar SONCAS           s1/1-1-2-S1-1-4.webp
+  1.5 · Le tournoi des arguments  s1/1-1-2-S1-1-5.webp
+  1.6 · Réparer un argumentaire   s1/1-1-2-S1-1-6.webp
+
+── PITCHER AVEC IMPACT ───────────────────────────────────────────
+
+  2.1 · Mythe ou méthode ?       s2/1-1-2-S2-2-1.webp
+  2.2 · L’échelle de conviction  s2/1-1-2-S2-2-2.webp
+  2.3 · Le studio d’accroches    s2/1-1-2-S2-2-3.webp
+  2.4 · La chasse aux preuves    s2/1-1-2-S2-2-4.webp
+  2.5 · L’audit du pitch         s2/1-1-2-S2-2-5.webp
+  2.6 · Le pitch de 60 secondes  s2/1-1-2-S2-2-6.webp
+
+── ARGUMENTER AVEC JUSTESSE ──────────────────────────────────────
+
+  3.1 · Repérez l’intrus               s3/1-1-2-S3-3-1.webp
+  3.2 · Action → Réaction              s3/1-1-2-S3-3-2.webp
+  3.3 · Le bon argument au bon moment  s3/1-1-2-S3-3-3.webp
+  3.4 · Le radar de dérive             s3/1-1-2-S3-3-4.webp
+  3.5 · Vérifier avant d’avancer       s3/1-1-2-S3-3-5.webp
+  3.6 · L’arbre des réactions          s3/1-1-2-S3-3-6.webp
+
+── MANIPULATION ──────────────────────────────────────────────────
+
+  1.1 · C, A ou P ?                    s4/1-1-2-S4-1-1.webp
+  1.2 · Dérouler la chaîne CAP         s4/1-1-2-S4-1-2.webp
+  2.1 · Caractéristique ou bénéfice ?  s4/1-1-2-S4-2-1.webp
+  2.2 · Passez en mode client          s4/1-1-2-S4-2-2.webp
+  3.1 · À faire ou à éviter ?          s4/1-1-2-S4-3-1.webp
+  3.2 · Repérer la sur-argumentation   s4/1-1-2-S4-3-2.webp
+
+CONSEILS
+  Format paysage, par exemple 1920 x 1080 pixels.
+  Le fond est centre et couvre l'ecran ; il peut etre recadre sur mobile.
+  Privilegiez des fonds clairs, surtout derriere les titres.
+  Les panneaux de reponse restent blancs et opaques pour rester lisibles.
+
+REGLAGES FINS
+  background-size et background-position : debut de css/styles.css.
+  Pour retirer un fond : rendez son PNG transparent, ou mettez la valeur
+  background a null pour cet exercice dans js/catalog.js.
+
+SITE PUBLIE
+  Envoyez le fichier modifie sur GitHub, puis rechargez la page en ligne.

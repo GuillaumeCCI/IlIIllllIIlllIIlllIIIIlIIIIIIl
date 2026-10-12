@@ -1,41 +1,72 @@
 <!doctype html>
-<html lang="fr" data-depth="0">
+<html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Vingt-trois exercices pour s’entraîner à la prise de contact, à l’écoute active, à la gestion des objections et à la manipulation des méthodes.">
   <meta name="theme-color" content="#1249d8">
-  <title>L’Atelier Vente · Série 1-1-1</title>
+  <title>L’Atelier Vente · Tous les modules</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231249d8'/%3E%3Cpath d='M9 29 17 10h7l-8 19z' fill='white'/%3E%3Cpath d='m23 19 7 10h-8l-3-5z' fill='%23ff936b'/%3E%3C/svg%3E">
-  <script src="js/embed.js"></script>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/review.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/briefing.css">
-  <link rel="stylesheet" href="css/extras.css">
-  <script defer src="js/catalog.js"></script>
-  <script defer src="js/web-images.js"></script>
-  <script defer src="js/icons.js"></script>
-  <script defer src="js/core.js"></script>
-  <script defer src="js/home.js"></script>
-  <script defer src="js/sounds.js"></script>
+  <style>
+  @font-face { font-family: 'Fira Sans'; font-weight: 400; src: url('1-1-4/assets/fonts/fira-sans-400.woff2') format('woff2'); font-display: swap; }
+  @font-face { font-family: 'Fira Sans'; font-weight: 700; src: url('1-1-4/assets/fonts/fira-sans-700.woff2') format('woff2'); font-display: swap; }
+  @font-face { font-family: 'Fira Sans'; font-weight: 800; src: url('1-1-4/assets/fonts/fira-sans-800.woff2') format('woff2'); font-display: swap; }
+  :root { --navy: #13205c; --accent: #1249d8; --tint: #e6eeff; --coral: #ff936b; --muted: #5b6a8f; --line: #dde3f0; --bg: #f8f5f0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Fira Sans', system-ui, sans-serif; color: var(--navy); background: var(--bg); line-height: 1.5; }
+  a { color: var(--accent); }
+  .top { display: flex; align-items: center; gap: 14px; padding: 18px clamp(16px, 4vw, 64px); background: #fff; border-bottom: 1px solid var(--line); }
+  .top strong { font-size: 1.2rem; }
+  .top nav { margin-left: auto; display: flex; gap: 18px; }
+  .mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(115deg, var(--accent) 55%, var(--coral) 55%); }
+  main { max-width: 1240px; margin: 0 auto; padding: 36px clamp(16px, 4vw, 48px) 64px; }
+  h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0 0 8px; line-height: 1.1; }
+  .lede { color: var(--muted); font-size: 1.15rem; margin: 0 0 28px; max-width: 760px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; box-shadow: 0 6px 18px rgb(20 40 100 / 6%); }
+  .button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; border-radius: 10px; background: var(--accent); color: #fff; font-weight: 700; text-decoration: none; border: 0; font: inherit; font-weight: 700; cursor: pointer; }
+  .button.secondary { background: #fff; color: var(--accent); border: 1.5px solid var(--accent); }
+  .button.small { padding: 6px 12px; font-size: .88rem; border-radius: 8px; }
+  .k { display: inline-block; padding: 3px 10px; border-radius: 12px; background: var(--tint); color: var(--accent); font-weight: 800; font-size: .85rem; }
+  footer { text-align: center; color: var(--muted); font-size: .88rem; padding: 0 16px 32px; }
+  .sound-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; font: inherit; font-weight: 650; font-size: .88rem; color: var(--accent); cursor: pointer; }
+  .sound-toggle[aria-pressed="false"] { color: var(--muted); }
+</style>
 </head>
-<body class="page-scrolls">
-  <a class="skip-link" href="#main">Aller au contenu</a>
-  <header class="topbar">
-    <a class="brand" href="index.html" aria-label="L’Atelier Vente, accueil"><span class="brand-mark" aria-hidden="true"></span><span>L’Atelier Vente</span></a>
-    <div class="course-label">Série 1-1-1 <span>· 4 séries, 23 exercices</span></div>
-    <div class="overall-progress"><progress id="course-progress" max="23" value="0" aria-label="Exercices terminés"></progress><span id="course-count">0 sur 23 terminés</span></div>
-    <button type="button" class="header-button" data-action="keyboard-help" aria-pressed="false"></button>
-    <button type="button" class="header-button fullscreen-button" data-action="fullscreen" aria-pressed="false"></button>
-    <span id="save-status" class="save-status" role="status">Brouillon local</span>
-  </header>
-  <nav class="series-bar" aria-label="Les quatre séries"><div id="series-links"></div></nav>
-  <main id="main" tabindex="-1"></main>
-  <footer class="site-footer"><span>1-1-1 · L’Atelier Vente</span><span>Vos réponses restent dans ce navigateur.</span></footer>
-  <dialog id="info-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><h2 id="dialog-title"></h2><button type="button" class="icon-button" data-action="close-dialog" aria-label="Fermer la fenêtre">×</button></div><div id="dialog-body"></div></dialog>
-  <div id="toast" class="toast" role="status"></div>
-  <noscript>Activez JavaScript pour parcourir les exercices. Les maquettes d’origine se trouvent dans le dossier references.</noscript>
+<body>
+  <header class="top"><span class="mark" aria-hidden="true"></span><strong>L’Atelier Vente</strong>
+    <nav><a href="index.html">Les modules</a><a href="integrer.html">Intégrer</a><span data-sound-anchor hidden></span></nav></header>
+  <main>
+  <h1>L’Atelier Vente</h1>
+  <p class="lede">99 exercices interactifs de vente, en 4 modules. Choisissez un module pour enchaîner ses exercices, ou ouvrez la page « Intégrer » pour placer un module ou un exercice dans une autre plateforme.</p>
+  <div class="grid"><article class="card module">
+    <span class="k">Module 1-1-1</span>
+    <p class="intro">Vingt-trois exercices pour s’entraîner à la prise de contact, à l’écoute active, à la gestion des objections et à la manipulation des méthodes.</p>
+    <ul><li><strong>Prise de contact</strong> · 8 exercices</li><li><strong>Écoute active</strong> · 4 exercices</li><li><strong>Gestion des objections</strong> · 7 exercices</li><li><strong>Manipulation</strong> · 4 exercices</li></ul>
+    <a class="button" href="1-1-1/index.html">Ouvrir le module (23 exercices)</a>
+  </article><article class="card module">
+    <span class="k">Module 1-1-2</span>
+    <p class="intro">Vingt-quatre exercices pour bâtir un argument, le rendre percutant, l’ajuster au client et manipuler les méthodes CAP et SONCAS.</p>
+    <ul><li><strong>Bâtir l’argument</strong> · 6 exercices</li><li><strong>Pitcher avec impact</strong> · 6 exercices</li><li><strong>Argumenter avec justesse</strong> · 6 exercices</li><li><strong>Manipulation</strong> · 6 exercices</li></ul>
+    <a class="button" href="1-1-2/index.html">Ouvrir le module (24 exercices)</a>
+  </article><article class="card module">
+    <span class="k">Module 1-1-3</span>
+    <p class="intro">Dix-huit exercices pour accueillir et traiter les objections, garder la main au téléphone et manipuler la méthode de traitement en six étapes.</p>
+    <ul><li><strong>Gérer les objections</strong> · 7 exercices</li><li><strong>Prospection téléphonique</strong> · 7 exercices</li><li><strong>Manipulation</strong> · 4 exercices</li></ul>
+    <a class="button" href="1-1-3/index.html">Ouvrir le module (18 exercices)</a>
+  </article><article class="card module">
+    <span class="k">Module 1-1-4</span>
+    <p class="intro">Trente-quatre exercices pour annoncer le prix avec assurance, le défendre sans le brader, conclure au bon moment et relancer avec de la valeur.</p>
+    <ul><li><strong>Annoncer le prix</strong> · 5 exercices</li><li><strong>Défendre le prix</strong> · 7 exercices</li><li><strong>Conclure la vente</strong> · 7 exercices</li><li><strong>Relancer</strong> · 7 exercices</li><li><strong>Manipulation</strong> · 8 exercices</li></ul>
+    <a class="button" href="1-1-4/index.html">Ouvrir le module (34 exercices)</a>
+  </article></div>
+</main>
+<style>
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+  .module { display: grid; gap: 12px; align-content: start; }
+  .module .intro { margin: 0; }
+  .module ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: .95rem; }
+  .module .button { justify-self: start; margin-top: 4px; }
+</style>
+  <footer>Vos réponses restent dans votre navigateur : rien n’est envoyé à un serveur.</footer>
+  <script defer src="1-1-1/js/sounds.js"></script>
 </body>
 </html>

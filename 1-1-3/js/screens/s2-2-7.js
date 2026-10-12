@@ -1,0 +1,119 @@
+/* S2 2.7 · Construisez vos cartes réflexes.
+ *
+ * Une carte par esquive, trois gestes pour la préparer : la posture, la
+ * réponse, le rebond. Chaque geste s'écrit à son tour ; la carte terminée,
+ * on passe à la suivante. Une fois les trois cartes prêtes, la fiche
+ * s'ouvre « en mode appel » : gros caractères, à garder sous les yeux.
+ */
+(() => {
+  'use strict';
+  const core = window.AtelierCore;
+  const ex = window.AtelierExercise;
+  const kit = window.AtelierKit;
+  const { esc, icon } = kit;
+  const content = window.ATELIER_S2['2.7'];
+  const cards = content.cards;
+  const gestures = content.gestures;
+
+  const val = (g, c) => ex.value(`${gestures[g].id}${c}`);
+  const cardDone = c => gestures.every((_, g) => kit.filled(val(g, c)));
+  const ready = () => cards.filter((_, c) => cardDone(c)).length;
+  const card = () => Math.min(Math.max(0, Number(ex.value('card')) || 0), cards.length - 1);
+  const gesture = c => {
+    const asked = Number(ex.value(`g${c}`));
+    if (Number.isInteger(asked) && asked >= 0 && asked < gestures.length) return asked;
+    const free = gestures.findIndex((_, g) => !kit.filled(val(g, c)));
+    return free === -1 ? gestures.length - 1 : free;
+  };
+
+  function tabs(current) {
+    return `<div class="reflex-tabs">${cards.map((c, i) => `<button type="button" class="reflex-tab ${i === current ? 'is-current' : ''} ${cardDone(i) ? 'is-done' : ''}" data-act="card" data-index="${i}">
+      <span class="reflex-n">${cardDone(i) && i !== current ? icon('check', { size: 18 }) : String(i + 1).padStart(2, '0')}</span><span>« ${esc(c.quote)} »</span></button>`).join('')}</div>`;
+  }
+
+  function editor(c) {
+    const g = gesture(c);
+    const step = gestures[g];
+    return `<section class="reflex-card">
+      <p class="reflex-position">Carte ${String(c + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}</p>
+      <h2 class="reflex-quote">« ${esc(cards[c].quote)} »</h2>
+      <ol class="k-steps is-compact reflex-steps">${gestures.map((s, k) => `<li class="k-step ${k === g ? 'is-active' : kit.filled(val(k, c)) ? 'is-done' : 'is-next'}">
+        <button type="button" class="k-step-dot" data-act="gesture" data-index="${k}" aria-label="${esc(s.label)}">${kit.filled(val(k, c)) && k !== g ? icon('check', { size: 16 }) : k + 1}</button><span class="k-step-label">${esc(s.label)}</span></li>`).join('')}</ol>
+      <h3 class="reflex-question">${esc(step.question)}</h3>
+      <p class="k-muted">${esc(step.sub)}</p>
+      ${ex.field(`${step.id}${c}`, step.question, { placeholder: step.placeholder, max: 300, rows: 3, hideLabel: true })}
+      <p class="k-muted">Restez concret et utilisable pendant un appel.</p>
+      ${core.errorsBox()}
+      <div class="reflex-actions">${kit.dialogButton(`tip${g}`, 'Voir un repère', 'secondary', 'book')}${kit.submit(g < gestures.length - 1 ? step.next : ready() === cards.length || (ready() === cards.length - 1 && !cardDone(c)) ? 'Ouvrir ma fiche en mode appel' : step.next)}</div>
+    </section>`;
+  }
+
+  function reviewScreen() {
+    return `<section class="reflex-sheet" aria-label="Ma fiche en mode appel">
+      <header><span>${icon('phone', { size: 26 })}</span><div><p class="k-label">Mode appel</p><h2>Mes cartes réflexes</h2></div></header>
+      <div class="reflex-sheet-grid">${cards.map((c, i) => `<article class="reflex-final">
+        <p class="reflex-final-quote">« ${esc(c.quote)} »</p>
+        <dl>${gestures.map((g, k) => `<dt>${esc(g.label)}</dt><dd>${esc(val(k, i))}</dd>`).join('')}</dl>
+      </article>`).join('')}</div>
+    </section>
+    <section class="k-panel">
+      <h2>Les cartes du corrigé</h2>
+      <div class="reflex-sheet-grid">${cards.map(c => `<article class="reflex-model">
+        <p class="reflex-final-quote">« ${esc(c.quote)} »</p>
+        <dl>${gestures.map(g => `<dt>${esc(g.label)}</dt><dd>${esc(c.model[g.id])}</dd>`).join('')}</dl>
+      </article>`).join('')}</div>
+    </section>
+    ${core.feedbackBox()}<div class="k-utility"><button type="button" class="text-button with-icon" data-act="print">${icon('document', { size: 17 })}<span>Imprimer ma fiche</span></button>${kit.reset()}</div>`;
+  }
+
+  function screen() {
+    const reviewing = ex.reviewing();
+    const c = card();
+    return `<div class="k-page reflex-page">
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
+        aside: `<p class="k-count reflex-count"><strong>${ready()} / ${cards.length}</strong> cartes prêtes</p>` })}
+      ${reviewing ? reviewScreen() : `${tabs(c)}<form novalidate class="reflex-form">${editor(c)}</form>
+        <p class="k-muted reflex-foot">Une fois les 3 cartes terminées, ouvrez votre fiche en mode appel.</p>`}
+      ${reviewing ? '' : kit.utility('Corrigé disponible avec votre fiche')}
+    </div>`;
+  }
+
+  function validate(values) {
+    const c = card();
+    const g = gesture(c);
+    const field = `${gestures[g].id}${c}`;
+    if (!kit.filled(values[field])) return [{ key: field, message: `Carte ${c + 1} : complétez « ${gestures[g].label} ».` }];
+    for (let i = 0; i < cards.length; i++) {
+      const missing = gestures.findIndex((s, k) => !kit.filled(values[`${s.id}${i}`]));
+      if (missing !== -1) return [{ key: 'card', message: `Carte ${i + 1} : il manque « ${gestures[missing].label} ».` }];
+    }
+    return [];
+  }
+
+  function intercept(values) {
+    const c = card();
+    const g = gesture(c);
+    if (!kit.filled(values[`${gestures[g].id}${c}`])) return false;
+    // Geste suivant de la même carte, sinon carte suivante incomplète.
+    const nextGesture = gestures.findIndex((s, k) => k > g && !kit.filled(values[`${s.id}${c}`]));
+    const anyGesture = gestures.findIndex(s => !kit.filled(values[`${s.id}${c}`]));
+    if (nextGesture !== -1 || anyGesture !== -1) { ex.setValue(`g${c}`, nextGesture !== -1 ? nextGesture : anyGesture); return true; }
+    for (let step = 1; step < cards.length; step++) {
+      const next = (c + step) % cards.length;
+      const free = gestures.findIndex(s => !kit.filled(values[`${s.id}${next}`]));
+      if (free !== -1) { ex.setValue('card', next); ex.setValue(`g${next}`, free); core.toast(`Carte ${c + 1} prête.`); return true; }
+    }
+    return false;
+  }
+
+  const feedback = () => ['Vos trois cartes sont prêtes : relisez-les à voix haute avant votre prochaine session d’appels.'];
+
+  kit.on({
+    card: el => { ex.setValue('card', Number(el.dataset.index)); kit.commit(); },
+    gesture: el => { ex.setValue(`g${card()}`, Number(el.dataset.index)); kit.commit(); },
+    print: () => window.print()
+  });
+  kit.dialogs(Object.fromEntries(gestures.map((g, i) => [`tip${i}`, { title: `Repère · ${g.label}`, html: `<p>${esc(g.tip)}</p>` }])));
+
+  ex.mount('s2-2.7', { screen, validate, intercept, feedback, compactFeedback: true });
+})();

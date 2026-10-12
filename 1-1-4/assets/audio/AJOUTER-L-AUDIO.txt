@@ -1,0 +1,11 @@
+AUDIO
+=====
+
+Le module 1-1-4 n'utilise aucun fichier audio fourni.
+
+Le seul usage du son est l'exercice 2.6 (Le pitch de 60 secondes) : l'apprenant
+s'y enregistre lui-meme, en audio ou en video, avec le micro de son appareil.
+Cette prise reste dans la memoire de la page : elle n'est ni envoyee a un
+serveur, ni conservee dans le brouillon, et s'efface en quittant la page.
+
+Ce dossier est conserve pour un eventuel enregistrement a ajouter plus tard.

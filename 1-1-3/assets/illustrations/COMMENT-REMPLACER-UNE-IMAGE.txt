@@ -1,0 +1,66 @@
+REMPLACER UNE ILLUSTRATION
+==========================
+
+1. Exportez votre nouvelle image au format PNG.
+2. Renommez-la EXACTEMENT comme le fichier a remplacer (meme casse).
+3. Glissez-la dans le sous-dossier indique et acceptez le remplacement.
+4. Actualisez la page (Ctrl+F5 sous Windows, Cmd+Maj+R sous macOS).
+
+Aucun fichier de code n'est a modifier tant que vous gardez le nom.
+Ajouter une image sous un autre nom ne remplace pas l'ancienne.
+Renommer un JPG en .png ne le convertit pas : exportez vraiment en PNG.
+
+Pour un autre nom, un autre format (.jpg, .webp) ou un nouveau texte
+alternatif : modifiez l'entree de l'exercice dans js/catalog.js.
+
+── GÉRER LES OBJECTIONS ──────────────────────────────────────────
+
+  1.1 · Bon réflexe ou à éviter ?     (aucune illustration)  
+  1.2 · À chaque étape, son rôle      (aucune illustration)  
+  1.3 · Écoutez le client             (aucune illustration)  
+  1.4 · Ce qui n’est pas dit          s1/1-1-3-S1-i1-4.png   Dans un magasin de décoration, un client quitte la boutique d’un geste de la main pendant que la commerciale, au téléphone, désigne un calendrier.
+  1.5 · Face au « C’est trop cher »   s1/1-1-3-S1-i1-5.png   Un client lève la main et désigne une lampe d’un air sceptique ; la vendeuse, derrière le comptoir, l’écoute.
+  1.6 · Répondre en 6 étapes          (aucune illustration)  
+  1.7 · Ma bibliothèque d’objections  (aucune illustration)  
+
+── PROSPECTION TÉLÉPHONIQUE ──────────────────────────────────────
+
+  2.1 · Barrage, prétexte ou vraie objection ?   (aucune illustration)  
+  2.2 · À chaque erreur sa conséquence           (aucune illustration)  
+  2.3 · Franchir le standard en douceur          (aucune illustration)  
+  2.4 · Repérer les erreurs de prospection       s2/1-1-3-S2-i2-4.png   Une cliente au téléphone, dans un showroom de mobilier de bureau, fronce les sourcils et fait un geste d’incompréhension.
+  2.5 · Garder la main face à la demande de doc  (aucune illustration)  
+  2.6 · Le script de rebond                      (aucune illustration)  
+  2.7 · Construisez vos cartes réflexes          (aucune illustration)  
+
+── MANIPULATION ──────────────────────────────────────────────────
+
+  1.1 · Dans le bon ordre                  (aucune illustration)  
+  1.2 · Le crash-test de l’objection prix  (aucune illustration)  
+  2.1 · À chaque objection, sa nature      (aucune illustration)  
+  2.2 · Passez en mode traitement          (aucune illustration)  
+
+AJOUTER UNE ILLUSTRATION LA OU IL N'Y EN A PAS
+
+  Les exercices marques "(aucune illustration)" affichent a la place un
+  schema de leur mecanique, dessine automatiquement. Pour leur donner une
+  vraie illustration :
+
+    1. Deposez votre PNG dans assets/illustrations/<serie>/
+       (creez le dossier s3/ s'il n'existe pas encore)
+    2. Dans js/catalog.js, ajoutez a l'entree de l'exercice :
+         image: 'assets/illustrations/s3/mon-image.png',
+         alt: 'Description de la scene, pour les lecteurs d ecran'
+    3. Rechargez la page : l'illustration remplace le schema.
+
+  Le schema reste utilise tant qu'aucune image n'est declaree : aucune
+  page de contexte ne reste vide.
+
+NOTE SUR LA SERIE 1
+  Le portrait du client de l exercice 1.6 (1-1-3-S1-portrait.png) a ete
+  recadre dans l illustration 1.4, faute de fichier separe. Remplacez-le
+  par l original des que possible, en gardant le meme nom.
+
+SITE PUBLIE
+  Remplacer le fichier sur votre ordinateur ne change pas le site en ligne.
+  Envoyez ensuite le fichier modifie sur GitHub, puis rechargez la page.

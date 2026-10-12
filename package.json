@@ -1,19 +1,11 @@
 {
-  "name": "atelier-vente-1-1-1",
-  "version": "2.0.0",
+  "name": "atelier-vente",
+  "version": "1.0.0",
   "private": true,
-  "description": "Vingt-trois exercices de vente en quatre series, sans dependance ni compilation.",
+  "description": "L'Atelier Vente : les modules 1-1-1 a 1-1-4, prets pour GitHub Pages.",
   "scripts": {
-    "start": "node server.mjs",
-    "dev": "node server.mjs",
-    "build:pages": "node tools/build-pages.mjs",
-    "test": "node --test tests/rules.test.cjs && node tests/screens.test.cjs && node tests/flows.test.cjs",
-    "build": "node tools/build-pages.mjs && node tools/build-guides.mjs",
-    "build:guides": "node tools/build-guides.mjs",
-    "check:layout": "node tools/check-layout.mjs",
-    "build:images": "node tools/build-images.mjs"
+    "assembler": "node outils/assembler.mjs",
+    "start": "node server.mjs --port 4180"
   },
-  "engines": {
-    "node": ">=18"
-  }
+  "engines": { "node": ">=18" }
 }
