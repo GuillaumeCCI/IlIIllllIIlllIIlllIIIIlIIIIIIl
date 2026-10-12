@@ -18,11 +18,13 @@
   const current = () => Math.min(Math.max(0, Number(ex.value('line')) || 0), lines.length - 1);
   const lineDone = i => kit.filled(ex.value(`adv${i}`)) && kit.filled(ex.value(`proof${i}`));
 
-  /* Une case A ou P de la colonne de droite. */
-  function box(field, tone, letter, label, placeholder) {
+  /* Une case A ou P de la colonne de droite : la lettre et son nom, la
+   * question en titre, puis le champ. */
+  function box(field, tone, letter, label, question) {
     return `<div class="cap-box tone-${tone}">
       <p class="cap-box-head"><span class="cap-box-letter">${letter}</span><span>${esc(label)}</span></p>
-      ${ex.field(field, label, { placeholder, max: 220, rows: 3, hideLabel: true })}
+      <p class="cap-box-question">${esc(question)}</p>
+      ${ex.field(field, `${label} : ${question}`, { placeholder: 'Écrivez votre réponse ici…', max: 220, rows: 3, hideLabel: true })}
     </div>`;
   }
 
@@ -40,7 +42,8 @@
           <section class="k-panel cap-feature">
             <p class="cap-feature-head"><span class="cap-pill">Caractéristique</span><span class="cap-n">${i + 1}</span></p>
             <p class="cap-feature-text">${esc(item.feature)}</p>
-            ${item.symbol ? `<span class="cap-feature-art" aria-hidden="true">${icon(item.symbol, { size: 64, strokeWidth: 1.4 })}</span>` : ''}
+            ${item.image ? `<img class="cap-feature-picture" src="${esc(core.asset(item.image))}" alt="" decoding="async">`
+              : item.symbol ? `<span class="cap-feature-art" aria-hidden="true">${icon(item.symbol, { size: 64, strokeWidth: 1.4 })}</span>` : ''}
           </section>
           <section class="k-panel cap-fields">
             ${box(`adv${i}`, 'a', 'A', 'Avantage', 'Quel bénéfice concret pour le client ?')}

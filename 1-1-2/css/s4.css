@@ -220,3 +220,21 @@
 .express-undo { display: inline-flex; align-items: center; gap: 10px; border: 0; background: none; color: var(--accent); font-size: 1rem; }
 .express-undo:disabled { color: #9aa5bd; cursor: not-allowed; }
 @media (max-width: 760px) { .express-progress { gap: 14px; flex-wrap: wrap; } }
+
+/* 1.2 · Dérouler la chaîne CAP, d'après la maquette : illustration sous la
+   caractéristique, trait bleu sous son texte, question en titre de chaque
+   case, feuillage dans le coin de « Avantage », motif corail dans celui de
+   « Preuve ». Les décors restent derrière le champ de saisie. */
+.cap-feature-text { margin: 0; font-size: clamp(1.8rem, 2.6vw, 2.5rem); line-height: 1.15; }
+.cap-feature-text::after { content: ''; display: block; width: 52px; height: 4px; margin-top: 22px; border-radius: 2px; background: var(--accent); }
+.cap-feature-picture { position: absolute; left: 0; bottom: 18px; width: calc(100% - 14px); max-height: 46%; object-fit: contain; object-position: left bottom; pointer-events: none; }
+.cap-box { position: relative; isolation: isolate; overflow: hidden; padding-bottom: 26px; }
+.cap-box.tone-a { border-color: #d3eee1; background-image: url('../assets/illustrations/s4/cap-deco-feuilles.webp'); background-repeat: no-repeat; background-position: right 14px top 10px; background-size: auto 112px; }
+.cap-box.tone-p { border-color: #f9d6cd; background-image: url('../assets/illustrations/s4/cap-deco-corail.webp'); background-repeat: no-repeat; background-position: right -4px bottom -4px; background-size: auto 205px; }
+.cap-box-question { margin: 4px 120px 14px 0; font-size: clamp(1.15rem, 1.4vw, 1.35rem); font-weight: 600; color: var(--navy); }
+.cap-box textarea { position: relative; z-index: 1; background: rgb(255 255 255 / 96%); }
+@media (max-width: 900px) {
+  .cap-feature-picture { position: static; width: calc(100% + 34px); max-height: 180px; margin-left: -34px; } /* collée au bord gauche malgré la marge de la carte */
+  .cap-feature { padding-bottom: 30px; }
+  .cap-box-question { margin-right: 70px; }
+}

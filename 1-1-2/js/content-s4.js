@@ -40,9 +40,10 @@ window.ATELIER_S4 = {
       { id: 'P', label: 'Preuve', text: 'Ce qui le prouve', tone: 'p' }
     ],
     lines: [
-      // `symbol` : le pictogramme dessiné sous la caractéristique.
-      { feature: 'Livraison en 24 h.', symbol: 'truck', advantage: 'Vous êtes opérationnel dès le lendemain, sans interruption d’activité.', proof: '98 % des commandes livrées sous 24 h en 2024.' },
-      { feature: 'Formation des utilisateurs incluse.', symbol: 'users', advantage: 'Vos équipes maîtrisent l’outil rapidement, sans surcoût.', proof: '2 sessions de formation planifiées au devis.' }
+      // `image` : l'illustration posée sous la caractéristique ; `symbol` :
+      // le pictogramme de secours, sans image.
+      { feature: 'Livraison en 24 h.', symbol: 'truck', image: 'assets/illustrations/s4/cap-livraison.webp', advantage: 'Vous êtes opérationnel dès le lendemain, sans interruption d’activité.', proof: '98 % des commandes livrées sous 24 h en 2024.' },
+      { feature: 'Formation des utilisateurs incluse.', symbol: 'users', image: 'assets/illustrations/s4/cap-formation.webp', advantage: 'Vos équipes maîtrisent l’outil rapidement, sans surcoût.', proof: '2 sessions de formation planifiées au devis.' }
     ]
   },
 
