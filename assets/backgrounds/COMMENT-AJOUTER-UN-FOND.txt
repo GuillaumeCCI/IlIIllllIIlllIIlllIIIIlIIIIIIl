@@ -1,0 +1,65 @@
+AJOUTER UN BACKGROUND
+=====================
+
+Les PNG de ces dossiers sont pour l'instant TRANSPARENTS : le fond des
+exercices reste donc blanc. Glissez une image PNG portant le meme nom
+pour remplacer celui de votre choix, puis rechargez la page.
+
+DEUX NIVEAUX DE FOND
+
+  commun.webp  (a la racine de ce dossier)
+      Fond affiche derriere TOUS les exercices des quatre series.
+      Remplacez-le pour habiller l'ensemble du parcours d'un seul coup.
+
+  s1/, s2/, s3/, s4/
+      Fond propre a un exercice. Il se superpose au fond commun :
+      un fond opaque le masque, un fond transparent le laisse apparaitre.
+
+── PRISE DE CONTACT ──────────────────────────────────────────────
+
+  A · Analyser               s1/1-1-1-A.webp
+  B · S’adapter              s1/1-1-1-B.webp
+  C · Comparer               s1/1-1-1-C.webp
+  D · Construire             s1/1-1-1-D.webp
+  E1 · Garder le lien        s1/1-1-1-E1.webp
+  E2 · Aller à l’essentiel   s1/1-1-1-E2.webp
+  E3 · Prendre l’initiative  s1/1-1-1-E3.webp
+  F · Changer de canal       s1/1-1-1-F.webp
+
+── ÉCOUTE ACTIVE ─────────────────────────────────────────────────
+
+  A · Choisir la réponse juste   s2/1-1-1-S2-A.webp
+  B · Reformuler sans dévier     s2/1-1-1-S2-B.webp
+  D · Les 6 attitudes de Porter  s2/1-1-1-S2-D.webp
+  F · Adapter son écoute         s2/1-1-1-S2-F.webp
+
+── GESTION DES OBJECTIONS ────────────────────────────────────────
+
+  1.1 · Les bons réflexes          s3/1-1-1-S3-1-1.webp
+  1.2 · Chaque étape, son rôle     s3/1-1-1-S3-1-2.webp
+  1.3 · Diagnostiquer l’objection  s3/1-1-1-S3-1-3.webp
+  1.4 · Derrière le prétexte       s3/1-1-1-S3-1-4.webp
+  1.5 · La réponse la plus juste   s3/1-1-1-S3-1-5.webp
+  1.6 · Traitement complet         s3/1-1-1-S3-1-6.webp
+  1.7 · Vos cartes réflexes        s3/1-1-1-S3-1-7.webp
+
+── MANIPULATION ──────────────────────────────────────────────────
+
+  1.1 · Remettre dans l’ordre    s4/1-1-1-S4-1-1.webp
+  1.2 · Repérer ce qui cloche    s4/1-1-1-S4-1-2.webp
+  2.1 · Associer les attitudes   s4/1-1-1-S4-2-1.webp
+  2.2 · Réparer la conversation  s4/1-1-1-S4-2-2.webp
+
+CONSEILS
+  Format paysage, par exemple 1920 x 1080 pixels.
+  Le fond est centre et couvre l'ecran ; il peut etre recadre sur mobile.
+  Privilegiez des fonds clairs, surtout derriere les titres.
+  Les panneaux de reponse restent blancs et opaques pour rester lisibles.
+
+REGLAGES FINS
+  background-size et background-position : debut de css/styles.css.
+  Pour retirer un fond : rendez son PNG transparent, ou mettez la valeur
+  background a null pour cet exercice dans js/catalog.js.
+
+SITE PUBLIE
+  Envoyez le fichier modifie sur GitHub, puis rechargez la page en ligne.

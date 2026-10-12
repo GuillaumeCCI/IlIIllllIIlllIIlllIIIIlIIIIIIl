@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>L’Atelier Vente · Tous les modules</title>
+  <!--
+    Page d'accueil de « Go Live » (extension Live Server de VS Code).
+    Les quatre modules sont montés par .vscode/settings.json sous /1-1-1/,
+    /1-1-2/, /1-1-3/ et /1-1-4/. La liste des exercices est lue dans le
+    catalogue de chaque module : elle reste à jour sans rien modifier ici.
+  -->
+  <style>
+    @font-face { font-family: 'Fira Sans'; font-weight: 400; src: url('/1-1-1/assets/fonts/fira-sans-400.woff2') format('woff2'); }
+    @font-face { font-family: 'Fira Sans'; font-weight: 600; src: url('/1-1-1/assets/fonts/fira-sans-600.woff2') format('woff2'); }
+    @font-face { font-family: 'Fira Sans'; font-weight: 800; src: url('/1-1-1/assets/fonts/fira-sans-800.woff2') format('woff2'); }
+    :root { --blue: #1249d8; --ink: #17213a; --muted: #5b6478; --line: #dfe3ec; --bg: #f6f4ef; --card: #fff; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 16px/1.5 'Fira Sans', system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+    header { background: var(--blue); color: #fff; padding: 28px 24px; }
+    header h1 { margin: 0; font-size: 1.8rem; font-weight: 800; }
+    header p { margin: 6px 0 0; opacity: .9; }
+    header { position: relative; }
+    .sound-bar { position: absolute; top: 24px; right: 24px; display: flex; gap: 8px; }
+    .sound-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid rgb(255 255 255 / 45%); border-radius: 999px; background: rgb(255 255 255 / 12%); color: #fff; font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer; }
+    .sound-toggle[aria-pressed="false"] { opacity: .7; }
+    .music-toggle.is-waiting { animation: music-wait 1.6s ease-in-out infinite; }
+    @keyframes music-wait { 50% { opacity: .45; } }
+    @media (max-width: 640px) { .sound-bar { position: static; margin-top: 12px; } .sound-toggle-label { display: none; } }
+    main { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; }
+    .modules { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .module { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; }
+    .module h2 { margin: 0; font-size: 1.25rem; font-weight: 800; }
+    .module .count { color: var(--muted); font-size: .9rem; margin: 2px 0 12px; }
+    .module .open { margin-top: auto; align-self: flex-start; background: var(--blue); color: #fff; text-decoration: none; padding: 8px 14px; border-radius: 999px; font-weight: 600; }
+    .serie { margin: 0 0 10px; }
+    .serie h3 { margin: 0 0 4px; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+    .serie ul { list-style: none; margin: 0; padding: 0; }
+    .serie a { display: flex; gap: 8px; padding: 3px 0; color: var(--ink); text-decoration: none; }
+    .serie a:hover { color: var(--blue); text-decoration: underline; }
+    .serie .id { min-width: 2.4em; font-weight: 600; color: var(--blue); }
+    /* Aperçu au survol : la page de contexte de l'exercice, en miniature.
+       La page est chargée en 1280 × 800 puis réduite. */
+    .peek { position: fixed; z-index: 20; width: 480px; height: 300px; border-radius: 14px; overflow: hidden; background: #f8f5f0; border: 1px solid var(--line); box-shadow: 0 18px 48px rgb(16 20 72 / 18%), 0 2px 6px rgb(16 20 72 / 8%); opacity: 0; transform: translateY(6px) scale(.98); transition: opacity .18s ease, transform .18s ease; pointer-events: none; }
+    .peek.is-shown { opacity: 1; transform: none; }
+    .peek iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; transform: scale(.375); transform-origin: 0 0; opacity: 0; transition: opacity .25s ease; }
+    .peek iframe.is-ready { opacity: 1; }
+    .peek-wait { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .9rem; }
+    @media (prefers-reduced-motion: reduce) { .peek, .peek iframe { transition: none; } }
+    .error { background: #fff1ee; border: 1px solid #f3b8aa; border-radius: 10px; padding: 10px 12px; color: #8a2a12; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>L’Atelier Vente</h1>
+    <p id="summary">Chargement des modules…</p>
+    <!-- Les boutons Sons et Musique : sounds.js les place ici, et joue la musique du menu. -->
+    <div class="sound-bar"><span data-sound-anchor hidden></span></div>
+  </header>
+  <main><div class="modules" id="modules"></div></main>
+  <script defer src="/1-1-1/js/sounds.js"></script>
+  <div class="peek" id="peek" aria-hidden="true"><span class="peek-wait">Chargement de l’aperçu…</span></div>
+  <script>
+    /* L'APERÇU AU SURVOL. Survoler un exercice affiche, à côté, sa page de
+     * contexte en miniature : l'exercice ouvert en mode « apercu » (toujours
+     * la page de contexte, sans sons ni musique, rien d'enregistré). Les
+     * dernières pages survolées restent chargées : y revenir est immédiat.
+     * Rien sur un écran tactile, qui ne connaît pas le survol. */
+    (() => {
+      if (!matchMedia('(hover: hover)').matches) return;
+      const peek = document.getElementById('peek');
+      const frames = new Map(); // adresse → iframe, les plus récentes en dernier
+      const KEEP = 8;
+      let timer = 0, leaving = 0, current = null;
+
+      function frameFor(href) {
+        let frame = frames.get(href);
+        if (frame) { frames.delete(href); frames.set(href, frame); return frame; }
+        frame = document.createElement('iframe');
+        frame.tabIndex = -1;
+        frame.title = 'Aperçu';
+        frame.addEventListener('load', () => setTimeout(() => frame.classList.add('is-ready'), 120));
+        frame.src = href + (href.includes('?') ? '&' : '?') + 'embed=apercu';
+        peek.appendChild(frame);
+        frames.set(href, frame);
+        if (frames.size > KEEP) { const [old, f] = frames.entries().next().value; f.remove(); frames.delete(old); }
+        return frame;
+      }
+
+      function place(link) {
+        const r = link.getBoundingClientRect();
+        const w = 480, h = 300, gap = 18;
+        const card = link.closest('.module').getBoundingClientRect();
+        let left = card.right + gap;
+        if (left + w > innerWidth - 12) left = card.left - w - gap;
+        if (left < 12) left = Math.min(innerWidth - w - 12, r.right + gap);
+        const top = Math.max(12, Math.min(innerHeight - h - 12, r.top + r.height / 2 - h / 2));
+        peek.style.left = left + 'px';
+        peek.style.top = top + 'px';
+      }
+
+      function show(link) {
+        current = link;
+        const frame = frameFor(link.getAttribute('href'));
+        frames.forEach(f => { f.style.visibility = f === frame ? 'visible' : 'hidden'; });
+        place(link);
+        peek.classList.add('is-shown');
+      }
+
+      function hide() {
+        clearTimeout(timer);
+        clearTimeout(leaving);
+        current = null;
+        peek.classList.remove('is-shown');
+      }
+
+      document.addEventListener('mouseover', event => {
+        const link = event.target.closest('.serie a');
+        if (!link) return;
+        // D'un exercice à l'autre, l'aperçu suit sans s'éteindre.
+        clearTimeout(leaving);
+        if (link === current) return;
+        clearTimeout(timer);
+        const open = peek.classList.contains('is-shown');
+        timer = setTimeout(() => show(link), open ? 0 : 220);
+      });
+      document.addEventListener('mouseout', event => {
+        const link = event.target.closest('.serie a');
+        if (!link || link.contains(event.relatedTarget)) return;
+        clearTimeout(timer);
+        leaving = setTimeout(hide, 140);
+      });
+      addEventListener('scroll', hide, { passive: true });
+    })();
+  </script>
+  <script>
+    'use strict';
+    const MODULES = ['1-1-1', '1-1-2', '1-1-3', '1-1-4'];
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+    // Chaque catalogue écrit window.ATELIER_CATALOG : on les charge un par un.
+    const loadCatalog = code => new Promise(resolve => {
+      delete window.ATELIER_CATALOG;
+      const script = document.createElement('script');
+      script.src = `/${code}/js/catalog.js`;
+      script.onload = () => resolve(window.ATELIER_CATALOG || null);
+      script.onerror = () => resolve(null);
+      document.head.appendChild(script);
+    });
+
+    function card(code, catalog) {
+      if (!catalog) return `<section class="module"><h2>Module ${code}</h2>
+        <p class="error">Module introuvable. Vérifiez que le dossier Atelier-Vente-${code} est bien à côté d’Atelier-Vente-1-1-1, puis relancez « Go Live ».</p></section>`;
+      const total = catalog.series.reduce((n, s) => n + s.exercises.length, 0);
+      return `<section class="module">
+        <h2>Module ${code}</h2>
+        <p class="count">${catalog.series.length} séries · ${total} exercices</p>
+        ${catalog.series.map(serie => `<div class="serie"><h3>${esc(serie.label)}</h3><ul>
+          ${serie.exercises.map(ex => `<li><a href="/${code}/exercices/${esc(ex.file)}.html"><span class="id">${esc(ex.id)}</span><span>${esc(ex.label)}</span></a></li>`).join('')}
+        </ul></div>`).join('')}
+        <a class="open" href="/${code}/index.html">Ouvrir le parcours ${code}</a>
+      </section>`;
+    }
+
+    (async () => {
+      const html = [];
+      let total = 0;
+      for (const code of MODULES) {
+        const catalog = await loadCatalog(code);
+        if (catalog) total += catalog.series.reduce((n, s) => n + s.exercises.length, 0);
+        html.push(card(code, catalog));
+      }
+      document.getElementById('modules').innerHTML = html.join('');
+      document.getElementById('summary').textContent = `${MODULES.length} modules · ${total} exercices. Cliquez un exercice pour l’ouvrir seul, ou ouvrez le parcours complet d’un module.`;
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  // « Go Live » (Live Server) ouvre une page qui liste les 4 modules.
+  // Les modules voisins sont montés depuis les dossiers Atelier-Vente-1-1-x,
+  // placés à côté d'Atelier-Vente-1-1-1.
+  "liveServer.settings.root": "/.vscode/go-live",
+  "liveServer.settings.mount": [
+    ["/1-1-1", "."],
+    ["/1-1-2", "../../Atelier-Vente-1-1-2/atelier-vente"],
+    ["/1-1-3", "../../Atelier-Vente-1-1-3/atelier-vente"],
+    ["/1-1-4", "../../Atelier-Vente-1-1-4/atelier-vente"]
+  ]
+}

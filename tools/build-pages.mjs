@@ -1,0 +1,104 @@
+/* Génère les 23 pages d'exercice de `exercices/` à partir du catalogue.
+ *
+ * Chaque page est un fichier HTML autonome et lisible : elle charge les
+ * mêmes CSS et JS partagés, puis son propre script d'écran. Relancez ce
+ * script après avoir ajouté un exercice au catalogue :
+ *
+ *     npm run build:pages
+ *
+ * Les pages existantes sont réécrites ; les scripts d'écran dans
+ * `js/screens/` ne sont JAMAIS touchés.
+ */
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+
+/* Le catalogue est un fichier navigateur : on l'évalue dans un bac à sable
+ * minimal plutôt que de le dupliquer ici. */
+const sandbox = { window: {} };
+new Function('window', readFileSync(resolve(root, 'js/catalog.js'), 'utf8'))(sandbox.window);
+const catalog = sandbox.window.ATELIER_CATALOG;
+
+const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231249d8'/%3E%3Cpath d='M9 29 17 10h7l-8 19z' fill='white'/%3E%3Cpath d='m23 19 7 10h-8l-3-5z' fill='%23ff936b'/%3E%3C/svg%3E";
+
+const escape = value => String(value).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+function page(serie, exercise) {
+  const key = `${serie.id}-${exercise.id}`;
+  const title = `${exercise.label} · ${serie.label} · L’Atelier Vente`;
+  return `<!doctype html>
+<html lang="fr" data-depth="1">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="${escape(serie.label)} · ${escape(exercise.label)}. Exercice interactif de L’Atelier Vente.">
+  <meta name="theme-color" content="#1249d8">
+  <title>${escape(title)}</title>
+  <link rel="icon" type="image/svg+xml" href="${favicon}">
+  <script src="../js/embed.js"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/review.css">
+  <link rel="stylesheet" href="../css/sorter.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/briefing.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <script defer src="../js/catalog.js"></script>
+  <script defer src="../js/briefings.js"></script>
+  <script defer src="../js/previews.js"></script>
+  <script defer src="../js/content-s1.js"></script>
+  <script defer src="../js/content-s2.js"></script>
+  <script defer src="../js/content-s3.js"></script>
+  <script defer src="../js/content-s4.js"></script>
+  <script defer src="../js/web-images.js"></script>
+  <script defer src="../js/icons.js"></script>
+  <script defer src="../js/core.js"></script>
+  <script defer src="../js/rules.js"></script>
+  <script defer src="../js/exercise.js"></script>
+  <script defer src="../js/dnd.js"></script>
+  <script defer src="../js/placement.js"></script>
+  <script defer src="../js/sorter.js"></script>
+  <script defer src="../js/media.js"></script>
+  <script defer src="../js/sounds.js"></script>
+  <script defer src="../js/screens/${exercise.file}.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller à l’exercice</a>
+  <header class="topbar">
+    <a class="brand" href="../index.html" aria-label="L’Atelier Vente, accueil"><span class="brand-mark" aria-hidden="true"></span><span>L’Atelier Vente</span></a>
+    <div class="course-label">${escape(serie.label)} <span>· ${escape(exercise.label)}</span></div>
+    <div class="overall-progress"><progress id="course-progress" max="100" value="0" aria-label="Exercices terminés"></progress><span id="course-count">0 terminé</span></div>
+    <button type="button" class="header-button" data-action="keyboard-help" aria-pressed="false"></button>
+    <button type="button" class="header-button fullscreen-button" data-action="fullscreen" aria-pressed="false"></button>
+    <span id="save-status" class="save-status" role="status">Brouillon local</span>
+  </header>
+  <nav class="exercise-nav" aria-label="Les exercices de la série ${escape(serie.label)}"><div id="exercise-links"></div></nav>
+  <main id="main" tabindex="-1"></main>
+  <footer class="site-footer"><span>1-1-1 · ${escape(serie.label)}</span><span>Vos réponses restent dans ce navigateur.</span></footer>
+  <dialog id="info-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><h2 id="dialog-title"></h2><button type="button" class="icon-button" data-action="close-dialog" aria-label="Fermer la fenêtre">×</button></div><div id="dialog-body"></div></dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <noscript>Activez JavaScript pour remplir cet exercice. Les maquettes d’origine se trouvent dans le dossier references.</noscript>
+</body>
+</html>
+`;
+}
+
+mkdirSync(resolve(root, 'exercices'), { recursive: true });
+
+let written = 0;
+let missing = [];
+for (const serie of catalog.series) {
+  for (const exercise of serie.exercises) {
+    writeFileSync(resolve(root, 'exercices', `${exercise.file}.html`), page(serie, exercise), 'utf8');
+    written++;
+    if (!existsSync(resolve(root, 'js/screens', `${exercise.file}.js`))) missing.push(`js/screens/${exercise.file}.js`);
+  }
+}
+
+console.log(`${written} pages écrites dans exercices/.`);
+if (missing.length) {
+  console.log(`\nScripts d’écran encore absents (${missing.length}) :`);
+  for (const file of missing) console.log(`  · ${file}`);
+}

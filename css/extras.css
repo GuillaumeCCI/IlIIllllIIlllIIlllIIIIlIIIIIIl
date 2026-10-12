@@ -1,0 +1,199 @@
+/* ══════════════════════════════════════════════════════════════════════
+   SONS ET INTÉGRATION · commun aux modules 1-1-1 à 1-1-4.
+   Voir js/sounds.js et js/embed.js.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Bouton Sons ──────────────────────────────────────────────────────── */
+.sound-toggle { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 650; font-size: .88rem; }
+.sound-toggle[aria-pressed="false"] { color: var(--muted); }
+/* Sans en-tête (exercice intégré seul) : Sons et Musique flottent ensemble. */
+.sound-dock { position: fixed; top: 10px; right: 10px; z-index: 50; display: flex; gap: 8px; }
+.sound-dock .sound-toggle { padding: 6px 12px; border: 1px solid var(--line); border-radius: 20px; background: #fff; box-shadow: var(--shadow); }
+/* Sur petit écran, les boutons d'en-tête sont masqués : celui-ci reste,
+ * réduit à son icône. */
+@media (max-width: 760px) {
+  .topbar .sound-toggle { display: inline-flex; }
+  .sound-toggle-label { display: none; }
+}
+
+/* La musique attend un premier geste (règle des navigateurs) : le bouton
+ * Musique pulse doucement pour le signaler. */
+.music-toggle.is-waiting { animation: music-wait 1.6s ease-in-out infinite; }
+@keyframes music-wait { 50% { opacity: .45; } }
+@media (prefers-reduced-motion: reduce) { .music-toggle.is-waiting { animation: none; text-decoration: underline dotted; } }
+
+/* ── Module intégré : sans pied de page ───────────────────────────────── */
+html[data-embed] .site-footer { display: none; }
+
+/* ── Exercice seul : l'exercice, son corrigé, et rien d'autre ─────────── */
+html[data-embed="solo"] .topbar,
+html[data-embed="solo"] .exercise-nav,
+html[data-embed="solo"] .series-bar,
+html[data-embed="solo"] .bottom-navigation,
+html[data-embed="solo"] #feedback a.button { display: none !important; }
+html[data-embed="solo"] #main { padding-top: 20px; }
+
+/* ── ÉCHELLE COMMUNE ────────────────────────────────────────────────────
+   Tous les exercices, dans tous les modules, à la même échelle : même
+   titre (43 px sur grand écran), même sous-titre. Certains écrans, refaits
+   d'après une maquette, avaient grossi leur titre (jusqu'à 58 px) ; ceux du
+   module 1-1-1 étaient un peu plus petits. La page de contexte garde son
+   grand titre éditorial. */
+#main *:not(.briefing-head) > h1 { font-size: clamp(1.8rem, 2.6vw, 2.7rem) !important; line-height: 1.12; }
+#main .k-subtitle, #main .subtitle { font-size: clamp(1rem, 1.25vw, 1.22rem) !important; }
+
+/* ── Surtitre en pastille ───────────────────────────────────────────────
+   Le surtitre d'un exercice (« Méthode CAP »…) est déplacé par exercise.js
+   dans l'angle haut gauche de la zone d'exercice, en pastille blanche comme
+   les boutons du bas. Le contenu descend pour lui laisser la place. */
+#main { position: relative; }
+#main > .page-tag { position: absolute; top: 14px; left: clamp(20px, 3vw, 64px); z-index: 2; display: inline-flex; align-items: center; margin: 0; padding: 7px 16px; border: 1.5px solid #afbddd; border-radius: 30px; background: #fff; color: var(--accent); font-size: .78rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; line-height: 1.2; box-shadow: 0 2px 8px rgb(35 40 80 / 6%); }
+#main > .page-tag + * { margin-top: 30px; }
+
+/* ── Apparition de l'écran (exercise.js, revealScreen) ──────────────────
+   La consigne en fondu, puis les blocs de l'exercice un à un, en remontant
+   de quelques pixels. */
+@keyframes reveal-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes reveal-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+#main .is-revealing { animation: reveal-rise .7s cubic-bezier(.2, .7, .2, 1) var(--reveal-delay, 0s) both !important; }
+#main .is-revealing.is-reveal-head { animation: reveal-fade 1.3s ease-out var(--reveal-delay, 0s) both !important; }
+@media (prefers-reduced-motion: reduce) { #main .is-revealing, #main .is-revealing.is-reveal-head { animation: none !important; } }
+
+/* ── Fenêtre « Repère » ─────────────────────────────────────────────────
+   Fond crème, pastille illustrée devant le titre, le conseil en grand
+   derrière un trait corail, les clés en pastilles de couleur, et deux
+   taches aquarelle discrètes dans l'angle. */
+#info-dialog.is-tip { width: min(680px, calc(100vw - 32px)); padding: 24px 28px 28px; overflow: hidden; border-color: #ece7de; border-radius: 22px; background: #fcfaf6; }
+#info-dialog.is-tip::after { content: ''; position: absolute; right: 0; bottom: 0; width: 110px; height: 135px; background: url('../assets/illustrations/repere-coin.webp') right bottom / contain no-repeat; pointer-events: none; -webkit-mask-image: radial-gradient(circle at 100% 100%, #000 52%, transparent 74%); mask-image: radial-gradient(circle at 100% 100%, #000 52%, transparent 74%); }
+#info-dialog.is-tip #dialog-body > p:first-child { margin-right: 70px; padding-left: 16px; }
+#info-dialog.is-tip .dialog-top { align-items: center; margin-bottom: 14px; }
+#info-dialog.is-tip #dialog-title { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; line-height: 1.15; }
+.tip-badge { display: block; width: 48px; height: 46px; flex-shrink: 0; margin: -8px 0 -6px -6px; background: url('../assets/illustrations/repere-badge.webp') center / contain no-repeat; }
+.tip-badge svg { display: none; }
+#info-dialog.is-tip #dialog-body > p:first-child { position: relative; z-index: 1; padding-left: 22px; border-left: 3px solid var(--coral); font-size: 1.02rem; font-weight: 500; line-height: 1.55; color: var(--navy); }
+#info-dialog.is-tip #dialog-body > * + * { margin-top: 18px; }
+.tip-keys { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; color: var(--muted); }
+.tip-key { display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px 7px 12px; border-radius: 999px; background: #e6eefc; color: var(--navy); font-weight: 600; }
+.tip-key::before { content: ''; width: 11px; height: 11px; border-radius: 50%; background: #2f6fe0; }
+.tip-key.tone-coral { background: #fde6dd; }
+.tip-key.tone-coral::before { background: #ef7a5c; }
+.tip-key.tone-green { background: #e3f0e6; }
+.tip-key.tone-green::before { background: #5c9c76; }
+.tip-key + .tip-key::after { content: none; }
+.tip-sep { width: 4px; height: 4px; border-radius: 50%; background: #b9c3d6; }
+
+/* ── « Voir un repère » ─────────────────────────────────────────────────
+   À droite du titre de la zone de réponse (exercise.js, placeHintButtons),
+   habillé comme la maquette : ampoule illustrée, fond crème, bord bleu. */
+.hint-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.hint-row > :first-child { margin-bottom: 0; }
+.hint-row + * { margin-top: 10px; }
+#main .k-dialog-button { background: #fff; border: 0; border-radius: 16px; color: #1d3f9a; box-shadow: 0 6px 18px rgb(20 40 100 / 9%), 0 1px 3px rgb(20 40 100 / 6%); }
+#main .k-dialog-button:hover { background: #fff; box-shadow: 0 10px 24px rgb(20 40 100 / 13%), 0 1px 3px rgb(20 40 100 / 8%); transform: translateY(-1px); }
+#main .k-dialog-button .icon { display: none; }
+#main .k-dialog-button::before { content: ''; width: 22px; height: 24px; margin: -4px 2px -2px -2px; background: url('../assets/illustrations/repere-ampoule.webp') center / contain no-repeat; }
+.hint-spot { display: block; }
+
+/* ── Allègement commun (maquette « cartes réflexes ») ───────────────────
+   Onglets numérotés en cartes : sans bordure, ombre douce, l'onglet en
+   cours soulevé avec un fin liseré. Fils d'étapes compacts : segments
+   dans une pastille gris-bleu, l'étape en cours surlignée. */
+#main .fix-tab, #main .fm-tab { border: 0; border-radius: 16px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 7%); transition: box-shadow .15s, transform .15s; }
+#main .fix-tab:hover, #main .fm-tab:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgb(20 40 100 / 11%); }
+#main .fix-tab.is-current, #main .fm-tab.is-current { background: #fff; box-shadow: 0 12px 28px rgb(20 40 100 / 14%), inset 0 0 0 1.5px #c9d8fb; }
+#main .k-steps.is-compact { display: inline-flex; flex-wrap: nowrap; gap: 0; margin: 0; padding: 6px; border-radius: 14px; background: #f1f4fa; }
+#main .k-steps.is-compact .k-step { padding: 6px 16px 6px 8px; border-radius: 10px; white-space: nowrap; }
+#main .k-steps.is-compact .k-step + .k-step { border-left: 1px solid #d6deec; }
+#main .k-steps.is-compact .k-step + .k-step::before, #main .k-steps.is-compact .k-step::after { display: none; }
+#main .k-steps.is-compact .k-step.is-active { background: #e2eafb; border-left-color: transparent; }
+#main .k-steps.is-compact .k-step.is-active + .k-step { border-left-color: transparent; }
+#main .k-steps.is-compact .k-step-dot { width: 28px; height: 28px; font-size: .85rem; }
+#main .k-steps.is-compact .k-step-label { font-size: .92rem; }
+
+/* ── ENCADRÉS ALLÉGÉS ───────────────────────────────────────────────────
+   Tous les encadrés blancs des exercices (cartes, options, panneaux,
+   onglets) perdent leur trait de contour au profit d'une ombre douce,
+   comme sur la maquette des cartes réflexes. Un encadré dans un état
+   particulier (choisi, en cours, juste, faux, verrouillé…) garde son
+   propre style, défini par son exercice : on ne le touche pas. Les zones
+   de dépôt en pointillés et les champs de saisie gardent leur contour. */
+#main :where(.case-card, .k-tab, .case-tab, .attitude-card, .case-row, .draggable-card, .objection-card, .opening-card, .option-row, .own-answer, .panel, .placed-card, .radio-card, .recap-row, .result-row, .review-row, .sorter-choice, .summary-row, .scenario, .ar-row, .cap-option, .check-choice, .duel-card, .express-card, .fab-prospect, .fab-tab, .hl-tool, .intrus-card, .ladder-card, .moment-option, .myth-card, .say-option, .soncas-arg, .soncas-motive, .tree-branch, .tree-root-node, .verdict-item, .cgr-card, .cgr-legend, .cg-card, .deck-recap li, .k-box, .k-panel, .k-result, .ear-option, .ear-action, .nat-card, .path-card, .rb-item, .reflex-card, .role-verb, .six-choice, .xp-card, .xp-answer, .call-key, .cmp-option, .crash-rows li, .cmp-criterion, .dk-card, .fm-choice, .mt-card, .sc-email, .sw-tool, .pair-error, .pair-consequence, .role-review li, .mt-review li, .fix-tab, .fm-tab, .reflex-tab):not(:where(.is-chosen, .is-current, .is-active, .active, .is-on, .is-selected, .is-winner, .is-right, .is-wrong, .is-ok, .is-ko, .is-answer, .is-expected, .is-locked, .is-used, .is-correct, .is-incorrect, .is-filled, .is-dragging, [aria-pressed="true"], [aria-checked="true"], :has(input:checked), :disabled)) { border-color: transparent; box-shadow: 0 6px 18px rgb(20 40 100 / 7%), 0 1px 2px rgb(20 40 100 / 4%); }
+#main :where(.case-card, .k-tab, .case-tab, .attitude-card, .case-row, .draggable-card, .objection-card, .opening-card, .option-row, .own-answer, .panel, .placed-card, .radio-card, .recap-row, .result-row, .review-row, .sorter-choice, .summary-row, .scenario, .ar-row, .cap-option, .check-choice, .duel-card, .express-card, .fab-prospect, .fab-tab, .hl-tool, .intrus-card, .ladder-card, .moment-option, .myth-card, .say-option, .soncas-arg, .soncas-motive, .tree-branch, .tree-root-node, .verdict-item, .cgr-card, .cgr-legend, .cg-card, .deck-recap li, .k-box, .k-panel, .k-result, .ear-option, .ear-action, .nat-card, .path-card, .rb-item, .reflex-card, .role-verb, .six-choice, .xp-card, .xp-answer, .call-key, .cmp-option, .crash-rows li, .cmp-criterion, .dk-card, .fm-choice, .mt-card, .sc-email, .sw-tool, .pair-error, .pair-consequence, .role-review li, .mt-review li, .fix-tab, .fm-tab, .reflex-tab):where(button, label, a):not(:where(.is-chosen, .is-current, .is-active, .active, .is-on, .is-selected, .is-winner, .is-right, .is-wrong, .is-ok, .is-ko, .is-answer, .is-expected, .is-locked, .is-used, .is-correct, .is-incorrect, .is-filled, .is-dragging, [aria-pressed="true"], [aria-checked="true"], :has(input:checked), :disabled)):hover { border-color: transparent; box-shadow: 0 10px 24px rgb(20 40 100 / 12%), 0 1px 3px rgb(20 40 100 / 6%); }
+/* Un encadré posé dans un autre encadré : ombre plus discrète. */
+#main :where(.panel, .k-panel, .reflex-card, .k-box) :where(.attitude-card, .case-row, .draggable-card, .objection-card, .opening-card, .option-row, .own-answer, .panel, .placed-card, .radio-card, .recap-row, .result-row, .review-row, .sorter-choice, .summary-row, .scenario, .ar-row, .cap-option, .check-choice, .duel-card, .express-card, .fab-prospect, .fab-tab, .hl-tool, .intrus-card, .ladder-card, .moment-option, .myth-card, .say-option, .soncas-arg, .soncas-motive, .tree-branch, .tree-root-node, .verdict-item, .cgr-card, .cgr-legend, .cg-card, .deck-recap li, .k-box, .k-panel, .k-result, .ear-option, .ear-action, .nat-card, .path-card, .rb-item, .reflex-card, .role-verb, .six-choice, .xp-card, .xp-answer, .call-key, .cmp-option, .crash-rows li, .cmp-criterion, .dk-card, .fm-choice, .mt-card, .sc-email, .sw-tool, .pair-error, .pair-consequence, .role-review li, .mt-review li, .fix-tab, .fm-tab, .reflex-tab):not(:where(.is-chosen, .is-current, .is-active, .active, .is-on, .is-selected, .is-winner, .is-right, .is-wrong, .is-ok, .is-ko, .is-answer, .is-expected, .is-locked, .is-used, .is-correct, .is-incorrect, .is-filled, .is-dragging, [aria-pressed="true"], [aria-checked="true"], :has(input:checked), :disabled)) { box-shadow: 0 3px 10px rgb(20 40 100 / 7%), 0 0 0 1px rgb(20 40 100 / 4%); }
+
+/* ── Écrans à cas (1-1-1 · A, F) : la scène du client ───────────────────
+   L'illustration du cas en grand, sa réplique posée dessus ; la consigne en
+   simple texte ; les numéros de cas en ronds, l'avancée en anneau. */
+.scene-intro { margin: 6px 0 18px; font-size: 1.05rem; line-height: 1.5; color: var(--text); }
+.case-scene { position: relative; margin: 0 0 18px; overflow: hidden; border-radius: 16px; box-shadow: 0 10px 26px rgb(20 40 100 / 12%); }
+.case-scene img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; margin-bottom: -50px; } /* 50 px rognés en bas */
+.case-scene figcaption { position: absolute; inset: auto 0 0; display: flex; align-items: flex-end; gap: 10px; padding: 70px 26px 20px; background: linear-gradient(transparent, rgb(16 22 60 / 78%) 55%); color: #fff; font-size: clamp(1.05rem, 1.5vw, 1.3rem); font-style: italic; font-weight: 600; line-height: 1.35; }
+.case-scene-mark { font-family: Georgia, serif; font-size: 2.6em; font-style: normal; line-height: .6; opacity: .75; }
+.case-scene-mark:first-child { align-self: flex-start; margin-top: .1em; }
+.case-dot { border-radius: 50% !important; }
+.case-bar-count { display: inline-flex; align-items: center; gap: 10px; }
+.case-ring { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(var(--accent) var(--done, 0%), #dbe3f2 0); -webkit-mask: radial-gradient(circle, transparent 7px, #000 7.5px); mask: radial-gradient(circle, transparent 7px, #000 7.5px); }
+.scenario .note { border-radius: 14px; }
+#main .radio-card input[type="radio"] { width: 26px; height: 26px; }
+
+/* ── CHOIX DE RÉPONSE (maquette « Client novice », tous les exercices) ───
+   Options amples, sans contour, ombre douce ; pastille de lettre ronde bleu
+   clair ; l'option survolée ou choisie sur fond bleu très clair avec un fin
+   liseré. Les états de correction (juste, faux…) gardent leur style. Les
+   titres de panneau sont soulignés d'un trait corail. */
+#main :where(.radio-card, .say-option, .soncas-arg, .ear-option, .cmp-option:not(.is-static), .role-verb, .cap-option):not(:where(.is-right, .is-wrong, .is-answer, .is-used, .is-locked, :disabled)) { border-radius: 16px; transition: background .15s, box-shadow .15s; }
+#main :where(.radio-card, .say-option, .soncas-arg, .ear-option):not(:where(.is-right, .is-wrong, .is-answer, .is-used, .is-locked, :disabled)) { gap: 20px; padding: 18px 22px; }
+#main :where(.radio-card, .say-option, .soncas-arg, .ear-option, .cmp-option:not(.is-static), .role-verb, .cap-option):not(:where(.is-right, .is-wrong, .is-answer, .is-used, .is-locked, :disabled, :has(input:checked), .is-chosen, .is-on, .selected)):hover { background: #f5f8ff; }
+#main :where(.radio-card, .say-option, .soncas-arg, .ear-option, .cmp-option:not(.is-static), .role-verb, .cap-option):where(:has(input:checked), .is-chosen, .is-on, .selected):not(:where(.is-right, .is-wrong, .is-answer, .is-used, .is-locked, :disabled)) { border-color: transparent; background: #eef4ff; box-shadow: 0 8px 22px rgb(20 40 100 / 8%), inset 0 0 0 1.5px #b9cdf6; color: var(--navy); }
+#main :where(.radio-badge, .say-letter, .soncas-arg-letter, .ear-letter, .role-letter, .cap-letter) { display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0; border-radius: 50%; background: #e3ecfb; color: var(--accent); font-size: 1.15rem; font-weight: 700; }
+#main :where(.radio-card, .say-option, .soncas-arg, .ear-option, .cmp-option:not(.is-static), .role-verb, .cap-option):where(:has(input:checked), .is-chosen, .is-on, .selected) :where(.radio-badge, .say-letter, .soncas-arg-letter, .ear-letter, .role-letter, .cap-letter) { background: #e3ecfb; color: var(--accent); }
+#main :where(.radio-card, .say-option, .soncas-arg, .ear-option) :where(.radio-body strong, .say-option-copy strong) { font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
+#main .panel-title h2 { position: relative; padding-bottom: 10px; }
+#main .panel-title h2::after { content: ''; position: absolute; left: 0; bottom: 0; width: 64px; height: 3px; border-radius: 3px; background: var(--coral, #ff936b); }
+/* Les boutons d'aide en lien texte (« Voir un indice », « Rappel »…) prennent
+   la même pastille blanche que « Voir un repère » : pas de soulignement. */
+#main .k-dialog-button, #main .k-dialog-button.text-button { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 10px 20px 10px 16px; border: 0; border-radius: 16px; background: #fff; color: #1d3f9a; font-weight: 700; text-decoration: none; box-shadow: 0 6px 18px rgb(20 40 100 / 9%), 0 1px 3px rgb(20 40 100 / 6%); }
+#main .k-dialog-button span { text-decoration: none; }
+
+/* ── Ombre portée en bas à droite ───────────────────────────────────────
+   Les illustrations de mise en situation et les bulles posées dessus
+   reçoivent une ombre décalée vers le bas et la droite. */
+#main :where(.illustration, .case-scene, .hidden-scene, .objection-scene, .sc-picture, .studio-picture, .tournoi-picture, .call-scene, .cmp-banner, .cmp-scene, .media-scene, .soncas-scene, .fm-review-scene) { box-shadow: 5px 7px 16px rgb(16 22 60 / 11%), 1px 2px 4px rgb(16 22 60 / 6%); }
+#main :where(.hidden-bubble, .cmp-bubble, .soncas-bubble, .sc-bubble, .over-bubble, .crash-bubble, .six-bubble, .repair-bubble) { box-shadow: 3px 5px 12px rgb(16 22 60 / 13%), 1px 1px 3px rgb(16 22 60 / 6%); }
+/* Partout : toute illustration de mise en situation (les .png / .jpg ; les
+   dessins détourés .webp n'ont pas de cadre) reçoit la même ombre en bas à
+   droite. Dans une carte qui la rogne, l'ombre est simplement cachée. */
+:where(#main, .briefing) img:where([src$=".png"], [src$=".jpg"], [src$=".jpeg"]) { box-shadow: 5px 7px 16px rgb(16 22 60 / 11%), 1px 2px 4px rgb(16 22 60 / 6%); }
+/* Une image qui forme le haut d’une carte en fait partie : pas d’ombre. */
+#main .case-card-picture img, #main .case-card img { box-shadow: none; }
+
+/* Pas d'ombre sur une ombre : quand un encadré teinté réunit une image et une
+   bulle (objection choisie…), c'est lui qui porte l'ombre, pas ce qu'il
+   contient. */
+#main :where(.six-objection, .fab-need-banner, .rb-client, .xp-card) { box-shadow: 5px 7px 16px rgb(16 22 60 / 11%), 1px 2px 4px rgb(16 22 60 / 6%); }
+#main :where(.six-objection, .fab-need-banner, .rb-client, .xp-card) :where(*) { box-shadow: none !important; }
+
+/* ── Cartes de choix vierges (« Commercial 1 / 2 »…) : fond de carte ─────
+   Papier blanc cassé, et dans les deux angles bas les décorations de la
+   maquette (feuilles, taches aquarelle), posées en fond : elles restent en
+   bas quelle que soit la hauteur de la carte. Le texte garde un peu d'air
+   au-dessus d'elles. */
+#main .cmp-option:not(.is-static) { padding-top: 26px; padding-bottom: 26px; align-content: center; align-items: center; background: url('../assets/illustrations/carte-deco-gauche.webp') left bottom / auto 96px no-repeat, url('../assets/illustrations/carte-deco-droite.webp') right bottom / auto 70px no-repeat, #fbfaf7; }
+#main .cmp-option:not(.is-static).is-chosen { background: url('../assets/illustrations/carte-deco-gauche.webp') left bottom / auto 96px no-repeat, url('../assets/illustrations/carte-deco-droite.webp') right bottom / auto 70px no-repeat, #f3f7ff; }
+/* Panneaux transparents (posés à même le fond) : ni ombre ni cadre. */
+#main :is(.xp-bare, .is-bare, .is-plain) { box-shadow: none !important; border-color: transparent !important; }
+
+/* ── Lisibilité sur les fonds décorés ───────────────────────────────────
+   Les textes posés à même le fond (bilan de correction, rappel d'ordre,
+   liens Réinitialiser) passent sur une plaque claire translucide : les
+   motifs du fond ne les rendent plus illisibles. */
+#main .feedback:not([hidden]) { border-radius: 16px; background: rgb(255 255 255 / 92%); box-shadow: 0 6px 18px rgb(20 40 100 / 7%); }
+#main .feedback.is-compact:not([hidden]) { padding: 14px 20px; }
+#main :is(.role-order, .k-utility, .lock-note) { width: fit-content; max-width: 100%; padding: 8px 16px; border-radius: 12px; background: rgb(255 255 255 / 88%); }
+/* Bilan compact : plus d'encadré. Le bouton Continuer est seul à droite ;
+   une éventuelle phrase de bilan garde sa petite plaque claire. */
+#main .feedback.is-compact:not([hidden]) { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px 20px; padding: 0; border: 0; background: none; box-shadow: none; }
+#main .feedback.is-compact p { margin: 0; padding: 8px 16px; border-radius: 12px; background: rgb(255 255 255 / 88%); }
+#main .feedback.is-compact .button { margin: 0; min-width: 240px; min-height: 56px; padding: 14px 40px; border-radius: 16px; font-size: 1.15rem; box-shadow: 0 10px 24px rgb(19 75 215 / 22%); }
+#main .feedback.is-compact:focus { outline: none; }

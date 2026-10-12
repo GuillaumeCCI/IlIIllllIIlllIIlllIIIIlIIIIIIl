@@ -1,0 +1,141 @@
+/* ══════════════════════════════════════════════════════════════════════
+   CORRECTION AFFICHÉE EN PLACE · chargé après components.css.
+
+   Principe : après validation, la correction se pose au contact de ce
+   qu'elle corrige. Une pastille verte ou rouge en face de la réponse, une
+   remarque courte juste dessous, puis la version modèle présentée
+   exactement comme la production de l'apprenant, pour que la comparaison
+   se fasse ligne à ligne sans effort.
+
+   Le pavé de relecture du bas ne garde que la synthèse.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Pastille de verdict ──────────────────────────────────────────────── */
+.mark { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border-radius: 20px; font-size: .78rem; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+.mark-ok { background: #e2f5ea; color: #1b6b47; }
+.mark-ko { background: #fde9e7; color: #a93226; }
+.mark .icon { flex-shrink: 0; }
+
+/* ── Remarque glissée sous un champ ───────────────────────────────────── */
+.inline-note {
+  display: block;
+  margin: 8px 0 0;
+  padding: 9px 12px 9px 13px;
+  border-left: 3px solid var(--line);
+  border-radius: 0 7px 7px 0;
+  background: #f7f9fd;
+  color: var(--muted);
+  font-size: .85rem;
+  line-height: 1.5;
+}
+.inline-note.tone-good { border-left-color: #58b183; background: #f1faf5; color: #1f6348; }
+.inline-note.tone-bad { border-left-color: #dd8378; background: #fdf4f3; color: #96372c; }
+.inline-note.tone-neutral { border-left-color: #a8bde3; background: #f5f8fe; color: #46577d; }
+
+/* ── Lignes relues ────────────────────────────────────────────────────── */
+.review-rows { display: grid; gap: 10px; }
+.review-row {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) minmax(170px, auto);
+  gap: 12px;
+  align-items: start;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+.review-row.is-key { border-color: #bfe2cf; background: #fbfefc; }
+.review-row .step-number { width: 30px; height: 30px; font-size: .95rem; }
+.review-body { min-width: 0; }
+.review-line { font-size: .95rem; line-height: 1.5; color: var(--navy); }
+.review-body .inline-note { margin-top: 6px; font-size: .82rem; padding: 7px 11px; }
+.review-function { display: inline-flex; align-items: center; gap: 9px; justify-content: flex-end; font-size: .85rem; font-weight: 650; color: var(--navy); padding-top: 4px; }
+
+/* ── Bloc « version modèle » ──────────────────────────────────────────── */
+.model-block {
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid #c8dcf5;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #f6faff, #fdfeff);
+}
+.model-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.model-head .icon { color: var(--accent); }
+.model-head h3 { font-size: 1rem; color: var(--accent); }
+.model-intro { font-size: .85rem; color: var(--muted); line-height: 1.5; margin-bottom: 14px; }
+.model-block .review-row { border-color: #d9e6f8; background: #fff; }
+.model-block .review-line { font-style: italic; }
+.model-rows { gap: 8px; }
+
+/* ── Synthèse du bas, allégée ─────────────────────────────────────────── */
+/* Le gros pavé vert devient une bande discrète : le détail est en place. */
+.feedback { padding: 18px 20px; margin-top: 18px; }
+.feedback h3 { margin: 8px 0 6px; font-size: .98rem; }
+.feedback p { font-size: .88rem; line-height: 1.55; }
+.feedback p + p { margin-top: 7px; }
+.feedback .feedback-disclaimer { font-size: .76rem; margin: 10px 0 0; }
+.feedback .button { margin-top: 12px; }
+
+/* ── Adaptations en hauteur réduite ───────────────────────────────────── */
+@media (max-height: 860px) {
+  .review-row { padding: 9px 12px; gap: 10px; }
+  .review-line { font-size: .89rem; }
+  .review-body .inline-note { font-size: .78rem; padding: 6px 10px; margin-top: 5px; }
+  .model-block { margin-top: 14px; padding: 14px; }
+  .model-intro { margin-bottom: 10px; font-size: .8rem; }
+  .feedback { padding: 11px 14px; }
+}
+@media (max-width: 850px) {
+  .review-row { grid-template-columns: 30px minmax(0, 1fr); }
+  .review-function { grid-column: 2; justify-content: flex-start; padding-top: 0; }
+}
+
+/* ── Liste de choix passée en relecture ───────────────────────────────── */
+.option-review { display: grid; gap: 8px; }
+.option-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: #fff; font-size: .9rem; line-height: 1.5; }
+.option-row .option-text { flex: 1; min-width: 0; color: var(--navy); }
+.option-row .radio-badge { width: 27px; height: 27px; font-size: .78rem; }
+.option-row.is-answer { border-color: #7cc49b; background: #f3fbf6; }
+.option-row.is-answer .radio-badge { background: #d9f0e3; color: #1b6b47; }
+.option-row.is-wrong { border-color: #e9a79e; background: #fdf5f4; }
+.option-row.is-wrong .radio-badge { background: #fbdcd8; color: #a93226; }
+.option-row.is-muted { opacity: .55; }
+.option-row.is-muted .option-text { color: var(--muted); }
+
+/* ── Réponse rédigée, relue ───────────────────────────────────────────── */
+.own-answer { margin-top: 14px; padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+.own-answer:first-child { margin-top: 0; }
+.own-answer h4 { margin: 0 0 7px; font-size: .8rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--muted); }
+.own-answer > p { font-size: .93rem; line-height: 1.55; color: var(--navy); }
+.own-line { font-size: .9rem; line-height: 1.5; color: var(--navy); }
+
+/* ── Tableau de réponses relu (S2 B) ──────────────────────────────────── */
+.answer-row.row-ok { background: #fafdfb; }
+.answer-row.row-ko { background: #fefaf9; }
+.row-verdict { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.row-chosen { font-size: .79rem; color: var(--muted); }
+.row-model { min-width: 0; }
+.row-verdict .inline-note, .row-model .inline-note { margin-top: 4px; font-size: .79rem; padding: 6px 10px; }
+
+@media (max-height: 860px) {
+  .option-row { padding: 9px 12px; font-size: .86rem; }
+  .own-answer { margin-top: 10px; padding: 10px 12px; }
+  .own-answer > p { font-size: .88rem; }
+}
+
+/* Cartes d'ouverture relues (S1 C) */
+.opening-card.card-ok { border-color: #7cc49b; background: #f6fcf9; }
+.opening-card.card-ko { border-color: #e3e8f1; background: #fbfcfe; }
+.opening-card .mark { align-self: flex-start; margin-top: auto; }
+
+/* Intitulé d'un bloc relu, quand un cas comporte plusieurs décisions à
+   relire l'une sous l'autre (S3 1.3 : la nature, puis le geste). */
+.review-heading {
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 18px 0 9px;
+}
+.review-heading:first-of-type { margin-top: 12px; }

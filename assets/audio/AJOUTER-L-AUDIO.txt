@@ -1,0 +1,32 @@
+AJOUTER VOTRE PROPRE AUDIO
+==========================
+
+Aucun fichier audio n'etait joint aux maquettes d'origine.
+L'exercice A de la serie 1 utilise un texte de demonstration, lu par la
+synthese vocale du navigateur. La transcription reste accessible au clic.
+
+POUR UTILISER VOTRE PROPRE ACCROCHE
+
+1. Deposez votre fichier dans ce dossier, nomme 1-1-1-A.mp3
+2. Ouvrez js/content-s1.js et modifiez l'objet audio :
+
+     audio: {
+       src: 'assets/audio/1-1-1-A.mp3',
+       demo: false,
+       transcript: 'Votre transcription exacte, mot pour mot...'
+     }
+
+3. Actualisez la page et testez la lecture.
+
+La transcription doit correspondre a l'enregistrement : elle sert aux
+personnes qui n'activent pas le son et a celles qui utilisent un lecteur
+d'ecran. Elle reste affichee par le bouton « Voir la transcription ».
+
+A NOTER
+  Les illustrations et les fonds ne demandent AUCUNE modification de code
+  tant que vous conservez le nom du fichier : voyez les aide-memoire dans
+  assets/illustrations/ et assets/backgrounds/.
+
+  L'entrainement oral de l'exercice E1 (serie 1) n'utilise pas ce dossier :
+  il enregistre temporairement le micro pour une reecoute immediate, sans
+  rien conserver ni envoyer.

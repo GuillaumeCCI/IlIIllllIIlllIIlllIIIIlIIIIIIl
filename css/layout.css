@@ -1,0 +1,311 @@
+/* ══════════════════════════════════════════════════════════════════════
+   MISE EN PAGE · chargé en dernier, après styles.css, components.css et
+   review.css.
+
+   La page défile normalement. Un exercice chargé peut dépasser la hauteur
+   de l'écran : c'est accepté, et préférable à des zones internes qui
+   défilent chacune de leur côté en coupant le contenu.
+
+   Ce fichier règle donc deux choses :
+     · la LARGEUR, pour que rien ne reste tassé au centre d'un grand écran ;
+     · la DENSITÉ, pour qu'un maximum tienne d'emblée sur un écran bas.
+
+   Il porte aussi les boutons de l'en-tête et les commandes clavier.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Occuper la largeur ───────────────────────────────────────────────── */
+/* 1600 px laissaient plus de 300 px inutilisés sur un écran de 1920. Les
+   pages prennent toute la largeur, avec des marges proportionnelles. */
+#main { max-width: none; width: 100%; padding: 20px clamp(20px, 3vw, 64px) 16px; min-height: 0; }
+.site-footer { max-width: none; padding-left: clamp(20px, 3vw, 64px); padding-right: clamp(20px, 3vw, 64px); }
+#exercise-links { max-width: none; }
+.topbar { padding-left: clamp(20px, 3vw, 64px); padding-right: clamp(20px, 3vw, 64px); }
+
+/* L'atelier d'écriture s'étale, mais une ligne de texte trop longue devient
+   pénible à lire : on borne le seul texte courant, pas les plateaux. */
+.writing-workshop { max-width: none; width: 100%; }
+.writing-workshop > .page-title,
+.writing-workshop > .mission { max-width: 1100px; }
+
+/* Les plateaux de manipulation profitent de toute la largeur : les zones de
+   dépôt s'élargissent au lieu de s'empiler au centre. */
+.board-sequence { width: 100%; }
+.sequence-slots { gap: 14px; }
+.sequence-slots .slot { flex: 1 1 0; min-width: 0; }
+.board-sides { gap: 32px; }
+.board-grid { gap: 28px; }
+.board-row .board-zones { gap: 12px; }
+.draggable-card { max-width: min(520px, 90%); }
+
+@media (min-width: 1500px) {
+  .two-columns { gap: 36px; }
+  .answer-panel, .writing-workshop > form { padding-left: 28px; padding-right: 28px; }
+}
+
+/* Le compteur de caractères est positionné en absolu dans son champ : sans
+   contexte de positionnement sur un conteneur intermédiaire, il s'échappe
+   et fausse la largeur de la page. */
+.field, .argument-row, .writing-row, .answer-row, .attitude-card, .review-row { position: relative; }
+
+/* ── Accueil et bilan ─────────────────────────────────────────────────── */
+.home-series { max-width: none; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.summary-page { max-width: 1400px; }
+.summary-series .summary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px; }
+
+@media (max-width: 1400px) { .home-series { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .home-series { grid-template-columns: minmax(0, 1fr); } }
+
+/* ── Densité sur les écrans bas ───────────────────────────────────────── */
+/* La page peut défiler, mais autant qu'un maximum tienne d'emblée : sous
+   900 px de haut, les espacements et les illustrations se resserrent. */
+@media (max-height: 900px) {
+  .topbar { padding-top: 9px; padding-bottom: 9px; }
+  #main { padding-top: 14px; }
+  .page-title { margin-bottom: 14px; }
+  .panel { padding: 18px; }
+  .panel-title { margin-bottom: 16px; }
+  .step { margin-bottom: 15px; }
+  .callout { padding: 14px; margin-bottom: 13px; }
+  .note { padding: 13px; margin-top: 12px; }
+  .mission { padding: 16px 20px; margin-bottom: 16px; }
+  .scenario .illustration img, .media-scene .illustration img { max-height: 30vh; }
+  .illustration-gallery .illustration img { max-height: 28vh; }
+  .context-panel .illustration img { max-height: 24vh; }
+  .opening-card { padding: 13px; gap: 12px; }
+  .opening-card blockquote { font-size: .88rem; line-height: 1.5; }
+  .timer-widget { padding: 12px; gap: 12px; margin: 14px 0; }
+  .timer-face { width: 72px; height: 72px; border-width: 5px; }
+}
+
+@media (max-height: 760px) {
+  .exercise-link { padding: 9px 8px; }
+  #main { padding-top: 10px; }
+  h1 { font-size: clamp(1.4rem, 1.9vw, 1.9rem); }
+  .page-title { margin-bottom: 11px; }
+  .subtitle { margin-top: 5px; }
+  .panel { padding: 15px 17px; }
+  .panel-title { margin-bottom: 13px; }
+  .step { margin-bottom: 13px; gap: 11px; }
+  .step-number { width: 30px; height: 30px; font-size: .98rem; }
+  .callout { padding: 11px 13px; margin-bottom: 11px; }
+  .callout p { font-size: .9rem; }
+  .note { padding: 11px; margin-top: 11px; }
+  .note p { font-size: .86rem; }
+  .site-footer { padding: 7px 3vw 9px; font-size: .72rem; }
+  .scenario .illustration img, .media-scene .illustration img { max-height: 26vh; }
+  .illustration-gallery .illustration img { max-height: 24vh; }
+  .attitude-card { padding: 13px; }
+  .base-opening { padding: 11px 15px; margin-bottom: 11px; }
+  .channel-mission .illustration img { max-height: 13vh; }
+}
+
+/* ── Boutons de l'en-tête ─────────────────────────────────────────────── */
+.header-button {
+  background: none;
+  border: 0;
+  padding: 6px;
+  border-radius: 8px;
+  color: var(--muted);
+  display: inline-flex;
+  line-height: 0;
+}
+.header-button:hover { background: var(--tint); color: var(--accent); }
+.header-button.is-on { background: var(--accent); color: #fff; }
+.header-button.is-on:hover { background: var(--accent-dark); }
+
+/* En plein écran, le pied de page cède sa hauteur au contenu. */
+body:fullscreen .site-footer,
+body:-webkit-full-screen .site-footer { display: none; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   COMMANDES CLAVIER · affichées à la demande
+
+   Les plateaux de glisser-déposer proposent une alternative au clavier.
+   Elle encombrait l'écran en permanence ; elle est masquée par défaut et
+   révélée par le bouton de l'en-tête.
+
+   Masquée ne veut PAS dire absente : le bloc garde sa place dans l'ordre
+   de tabulation et reste annoncé par les lecteurs d'écran. Il réapparaît
+   dès qu'un de ses boutons reçoit le focus, pour qu'on voie ce que l'on
+   manipule. Personne n'est donc jamais bloqué.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Réduit à un point sans sortir du flux de tabulation, ce que feraient
+   `display: none` ou `visibility: hidden`. Même technique que `.sr-only`,
+   mais réversible. */
+.deck .keyboard-choices,
+.keyboard-choices {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Mode activé, ou focus clavier à l'intérieur : le bloc reprend sa place. */
+body.show-keyboard-help .deck .keyboard-choices,
+body.show-keyboard-help .keyboard-choices,
+.keyboard-choices:focus-within {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 10px 0 0;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+}
+
+/* Le libellé ne s'affiche qu'en mode activé : au simple focus, les boutons
+   parlent d'eux-mêmes. */
+.keyboard-label { display: none; }
+body.show-keyboard-help .keyboard-label { display: block; }
+
+/* Ouvert par le focus seul, un liseré rappelle d'où vient ce bloc. */
+body:not(.show-keyboard-help) .keyboard-choices:focus-within {
+  border-top: 1px dashed var(--line);
+  padding-top: 8px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   PAGE DE CONTEXTE · ce qui précède chaque exercice
+   ══════════════════════════════════════════════════════════════════════ */
+
+.briefing { max-width: 980px; margin: 0 auto; }
+.briefing > .page-title { margin-bottom: 22px; }
+
+.briefing-blocks { display: grid; gap: 16px; }
+.briefing-block {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.briefing-block .briefing-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background: var(--tint);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.briefing-block h2 { font-size: 1.02rem; margin-bottom: 7px; }
+.briefing-block p { font-size: .95rem; line-height: 1.6; color: var(--text); }
+.briefing-block ul { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+.briefing-block li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: baseline; font-size: .92rem; line-height: 1.5; }
+.briefing-block li .icon { color: #1f7a52; align-self: start; margin-top: 3px; }
+
+/* La citation du client, quand l'exercice en a une. */
+.briefing .client-quote { margin: 0; }
+
+.briefing-illustration { border-radius: var(--radius); overflow: hidden; margin-bottom: 20px; }
+.briefing-illustration img { width: 100%; height: auto; max-height: 34vh; object-fit: cover; display: block; }
+
+.briefing-start { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin-top: 24px; }
+.briefing-start .muted { font-size: .85rem; }
+.briefing-start .button.primary { padding-left: 26px; padding-right: 26px; }
+
+/* Le lien de retour à la consigne, posé dans l'en-tête du panneau. */
+.review-brief { font-size: .82rem; }
+
+@media (max-height: 900px) {
+  .briefing > .page-title { margin-bottom: 16px; }
+  .briefing-blocks { gap: 12px; }
+  .briefing-block { padding: 15px 17px; gap: 13px; }
+  .briefing-block p { font-size: .91rem; line-height: 1.5; }
+  .briefing-illustration img { max-height: 24vh; }
+  .briefing-start { margin-top: 18px; }
+}
+
+@media (max-width: 760px) {
+  .briefing-block { grid-template-columns: minmax(0, 1fr); }
+  .briefing-block .briefing-icon { display: none; }
+}
+
+/* ── Impression ───────────────────────────────────────────────────────── */
+@media print {
+  .header-button { display: none; }
+  .keyboard-choices { position: static; width: auto; height: auto; margin: 0; clip-path: none; }
+}
+
+/* ── Le fil au-dessus d'un cas ────────────────────────────────────────── */
+/* Rappelle où l'on en est et permet de sauter d'un cas à l'autre sans
+   repasser par le menu. */
+.case-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+  padding-bottom: 13px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--line);
+}
+.case-bar .text-button { padding: 4px 0; }
+.case-bar-count { font-size: .8rem; color: var(--muted); }
+
+.case-dots { display: inline-flex; gap: 7px; }
+.case-dot {
+  display: grid; place-items: center;
+  width: 28px; height: 28px;
+  border: 1px solid var(--field-line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--muted);
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: var(--cursor-hand, pointer);
+}
+.case-dot:hover { border-color: var(--accent); color: var(--accent); }
+.case-dot.filled { background: #e2f5ea; border-color: #a8d8bf; color: #1b6b47; }
+.case-dot.current { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* La barre d'actions d'un cas déjà corrigé. */
+.form-actions.is-reviewed .completion-status { display: inline-flex; align-items: center; gap: 7px; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   FOND DE PAGE · lisibilité avant décor
+
+   Les fonds de assets/backgrounds/ sont dessinés avec un centre clair et
+   leur décor sur les bords. La page, elle, occupe toute la largeur : le
+   décor se retrouverait donc derrière le contenu.
+
+   Le fond s'affiche à 85 % de son intensité : un voile ivoire léger
+   (15 %) l'adoucit à peine. Pour régler l'intensité, changez seulement
+   --fond-opacite ci-dessous : 1 = couleurs d'origine, 0.5 = moitié.
+   ══════════════════════════════════════════════════════════════════════ */
+:root { --fond-opacite: 0.85; }
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fbf7f0;
+  opacity: calc(1 - var(--fond-opacite));
+  pointer-events: none;
+  z-index: 0;
+}
+body { position: relative; }
+
+/* Le contenu et les barres passent au-dessus du fond. */
+.topbar, .exercise-nav, #main, .site-footer { position: relative; z-index: 1; }
+
+/* La colonne de gauche n'avait pas de surface à elle : son texte se
+   posait à même le fond. Elle reçoit la même carte que les panneaux. */
+.two-columns > .scenario {
+  background: #ffffffd9;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+.two-columns > .scenario.panel { background: var(--card); }
+
+@media (max-height: 900px) {
+  .two-columns > .scenario { padding: 17px; }
+}
