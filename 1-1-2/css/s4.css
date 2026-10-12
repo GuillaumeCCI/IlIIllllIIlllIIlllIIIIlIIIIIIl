@@ -182,6 +182,7 @@
 .mc-solo-user { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #d9efe3; color: var(--a-tone); }
 .mc-solo-pill { padding: 8px 18px; border-radius: 22px; background: #d9efe3; color: #13774f; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; font-size: .9rem; }
 .mc-solo-client textarea { min-height: 200px; background: #fff; }
+.mc-solo-hint { justify-self: start; margin: 0; } /* « Voir un indice », sous la zone de réponse */
 .mc-solo-tip { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 12px; background: #dcf1e5; color: var(--navy); }
 .mc-solo-tip .icon { color: var(--a-tone); flex-shrink: 0; }
 .cap-page .k-bar .text-button.with-icon { display: inline-flex; align-items: center; gap: 10px; }
