@@ -228,6 +228,8 @@ html[data-embed="solo"] #main { padding-top: 20px; }
 .dk-board:has(.dk-zones.count-2) .dk-body { padding: 0; border: 0; background: none; box-shadow: none; }
 .dk-board:has(.dk-zones.count-2) .dk-body:not(:has(.dk-symbol)) .dk-words { margin-left: 0; padding-left: 0; border-left: 0; }
 .express-zone.tone-bad, .express-zone.tone-good { background: #fff; border-color: color-mix(in srgb, var(--z) 24%, transparent); }
+/* Plus de contour autour des deux réponses : seule reste l’ombre colorée. */
+.express-page .express-zone, .express-page .express-zone:hover, .express-page .express-zone.is-over { border-color: transparent; }
 /* L'en-tête centré, la progression en dessous (comme la maquette). */
 .dk-page:has(.dk-zones.count-2) .k-head, .express-page .k-head { flex-direction: column; align-items: center; gap: 14px; }
 .dk-page:has(.dk-zones.count-2) .k-head-aside, .express-page .k-head-aside { position: static; justify-content: center; padding-top: 0; }
