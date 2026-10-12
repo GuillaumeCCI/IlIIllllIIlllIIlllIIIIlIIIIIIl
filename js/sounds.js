@@ -512,7 +512,6 @@
       .av-entrance.is-shown { opacity: 1; }
       .av-entrance.is-leaving { opacity: 0; transition-duration: .6s; pointer-events: none; }
       .av-entrance-card { display: grid; justify-items: center; gap: 18px; max-width: 560px; }
-      .av-entrance-mark { width: 56px; height: 56px; }
       .av-entrance h1 { margin: 0; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 800; line-height: 1.05; }
       .av-entrance p { margin: 0; font-size: 1.1rem; line-height: 1.5; color: #58688b; }
       .av-entrance-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 10px; }
@@ -528,7 +527,6 @@
     entrance.setAttribute('aria-modal', 'true');
     entrance.setAttribute('aria-labelledby', 'av-entrance-title');
     entrance.innerHTML = `<div class="av-entrance-card">
-      <svg class="av-entrance-mark" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#134bd7"/><path d="M9 29 17 10h7l-8 19z" fill="#fff"/><path d="m23 19 7 10h-8l-3-5z" fill="#ff936b"/></svg>
       <h1 id="av-entrance-title">L’Atelier Vente</h1>
       <p>Souhaitez-vous une musique de fond pendant les exercices ?<br>Vous pourrez changer d’avis à tout moment avec le bouton&nbsp;«&nbsp;Musique&nbsp;».</p>
       <div class="av-entrance-actions">
