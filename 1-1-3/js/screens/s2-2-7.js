@@ -36,7 +36,7 @@
     const step = gestures[g];
     return `<section class="reflex-card">
       <p class="reflex-position">Carte ${String(c + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}</p>
-      <h2 class="reflex-quote">« ${esc(cards[c].quote)} »</h2>
+      ${kit.clientCard(cards[c].quote, null, 'Le client vous dit', c)}
       <ol class="k-steps is-compact reflex-steps">${gestures.map((s, k) => `<li class="k-step ${k === g ? 'is-active' : kit.filled(val(k, c)) ? 'is-done' : 'is-next'}">
         <button type="button" class="k-step-dot" data-act="gesture" data-index="${k}" aria-label="${esc(s.label)}">${kit.filled(val(k, c)) && k !== g ? icon('check', { size: 16 }) : k + 1}</button><span class="k-step-label">${esc(s.label)}</span></li>`).join('')}</ol>
       <h3 class="reflex-question">${esc(step.question)}</h3>

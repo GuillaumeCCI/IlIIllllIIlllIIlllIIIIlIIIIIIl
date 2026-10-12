@@ -80,6 +80,7 @@ window.ATELIER_CATALOG.portraits = {
   's1-1-3': ['client-pull-clair', 'client-tasse', 'client-chignon', 'client-cheveux-gris'],
   's2-2-5': 'client-tasse',
   's2-2-6': ['client-tasse', 'client-chignon', 'client-cheveux-gris'],
+  's2-2-7': ['client-chignon', 'client-tasse', 'client-pull-clair'],
   's3-2-2': ['client-cheveux-gris', 'client-chignon', 'client-pull-clair'],
 };
 
