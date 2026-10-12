@@ -121,6 +121,22 @@
         </div>
       </li>`).join('')}</ol>`;
 
+  /* LA CARTE « CITATION CLIENT » : le client illustré à gauche (portrait,
+   * fond papier), « Le client vous dit », sa réplique entre guillemets
+   * dessinés. `portrait` : chemin de l'image depuis la racine du module.
+   * Styles : extras.css (.client-card). */
+  const clientCard = (text, portrait, label = 'Le client vous dit') => {
+    const clean = String(text).replace(/^s*«s*/, '').replace(/s*»s*$/, '');
+    const art = name => esc(core().asset(`assets/illustrations/clients/${name}.webp`));
+    return `<section class="client-card">
+      <div class="client-card-who" aria-hidden="true"><img src="${esc(core().asset(portrait))}" alt="" decoding="async"></div>
+      <div class="client-card-said">
+        <p class="client-card-label">${esc(label)}</p>
+        <div class="client-card-quote"><img class="client-card-mark" src="${art('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${esc(clean)}</blockquote><img class="client-card-mark is-closing" src="${art('guillemet-fermant')}" alt="" aria-hidden="true"></div>
+      </div>
+    </section>`;
+  };
+
   /* ───────────────────────────── Actions ────────────────────────────── */
 
   const submit = (label, extra = '') =>
@@ -539,7 +555,7 @@
   }
 
   root.AtelierKit = Object.freeze({
-    corrige, answerReview,
+    corrige, answerReview, clientCard,
     esc, icon, words, seconds, filled, plural, stage, setStage, list,
     head, steps, band, tip, help, submit, act, back, reset, dialogButton, bar, utility,
     matrix, answered, score, choiceButtons,

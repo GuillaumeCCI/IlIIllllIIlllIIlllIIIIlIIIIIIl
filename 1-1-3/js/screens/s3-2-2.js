@@ -28,8 +28,9 @@
 
   function caseBody(i) {
     const c = cases[i];
-    return `<p class="k-label">Client</p>
-      <p class="fix-client"><span class="fix-c">C</span><span>« ${esc(c.client)} »</span></p>
+    // Un client illustré différent pour chaque situation.
+    const portrait = ['client-cheveux-gris', 'client-chignon', 'client-pull-clair'][i % 3];
+    return `${kit.clientCard(c.client, `assets/illustrations/clients/${portrait}.webp`, 'Le client vous dit')}
       <div class="fix-grid">
         <section class="fix-bad">
           <p class="fix-bad-title">${icon('close', { size: 18 })}<span>Le réflexe à éviter</span></p>
