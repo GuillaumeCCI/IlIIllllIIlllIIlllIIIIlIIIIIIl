@@ -254,3 +254,7 @@ html[data-embed="solo"] body.has-menu { padding-left: 0; }
    seule compte la jauge du thème, dans le rail du menu. L'élément reste
    dans les pages (core.js le met à jour) mais n'est plus affiché. */
 .topbar .overall-progress > * { display: none !important; } /* le conteneur vide garde son margin-left: auto, qui cale les boutons à droite */
+/* Plus de logo « L'Atelier Vente » dans l'en-tête : le titre de la série
+   ouvre la barre, sans filet de séparation. */
+.topbar .brand { display: none !important; }
+.topbar .course-label { padding-left: 0; border-left: 0; }
