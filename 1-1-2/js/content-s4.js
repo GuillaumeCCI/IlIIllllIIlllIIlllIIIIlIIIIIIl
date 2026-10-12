@@ -11,6 +11,7 @@ window.ATELIER_S4 = {
     eyebrow: 'Exercice 1.1',
     title: 'Caractéristique, avantage ou preuve ?',
     subtitle: 'Identifiez la nature de chaque argument commercial.',
+    letterButtons: true,
     legend: [
       { id: 'C', label: 'Caractéristique', text: 'Ce que le produit fait', tone: 'c' },
       { id: 'A', label: 'Avantage', text: 'Ce que le client gagne', tone: 'a' },

@@ -201,7 +201,11 @@
    * que la précédente a sa réponse (la relecture les montre toutes). */
   function mountChoiceGrid(key, content, { progressive = false } = {}) {
     const items = content.items;
-    const options = content.legend.map(l => ({ id: l.id, label: l.label, badge: l.id, tone: l.tone }));
+    // `letterButtons` : les tuiles ne portent que la lettre (C, A, P), la
+    // légende au-dessus en donne le sens.
+    const options = content.legend.map(l => content.letterButtons
+      ? { id: l.id, label: l.id, tone: l.tone }
+      : { id: l.id, label: l.label, badge: l.id, tone: l.tone });
     const answers = items.map(item => item.answer);
     const count = () => answered('item', items.length);
     const shown = () => progressive ? reach(items.length, i => filled(ex().value(`item${i}`))) : items.length;
