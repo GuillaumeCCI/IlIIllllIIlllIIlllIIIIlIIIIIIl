@@ -354,8 +354,12 @@
   function playerFor(name) {
     if (players[name]) return players[name];
     let audio;
-    try { audio = new Audio(urlOf(TRACKS[name].file)); } catch { return null; }
-    audio.preload = 'auto';
+    try { audio = new Audio(); } catch { return null; }
+    /* Rien n'est téléchargé d'avance : une musique pèse 1 à 2,5 Mo, et
+     * l'apprenant peut choisir « Sans musique » ou le navigateur refuser la
+     * lecture faute de clic. Le fichier n'est demandé qu'au vrai départ. */
+    audio.preload = 'none';
+    audio.src = urlOf(TRACKS[name].file);
     audio.volume = QUIET;
     loopWithCrossfade(audio, name);
     if (name === 'menu') {
