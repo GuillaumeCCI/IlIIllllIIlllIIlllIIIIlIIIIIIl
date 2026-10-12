@@ -29,14 +29,44 @@
   document.documentElement.dataset.embed = mode;
   if (preview) document.documentElement.dataset.preview = 'true';
 
-  /* Les liens internes gardent le mode : un module intégré reste intégré
-   * d'un exercice à l'autre. */
+  /* ?embed=module&theme=s2 : le module réduit à une seule série (un thème),
+   * pour une séquence de LMS. Le catalogue est filtré dès qu'il est posé,
+   * avant que `all` soit calculé : accueil, onglets, « Continuer », bilan et
+   * progression ne voient plus que les exercices de ce thème. */
+  const theme = mode === 'module' ? params.get('theme') : null;
+  if (theme) {
+    let catalog;
+    Object.defineProperty(root, 'ATELIER_CATALOG', {
+      configurable: true,
+      get: () => catalog,
+      set(value) {
+        const serie = value && Array.isArray(value.series) && value.series.find(s => s.id === theme);
+        if (serie) {
+          value.series = [serie];
+          value.theme = serie.id;
+          value.intro = `${serie.exercises.length} exercices · ${serie.label}.`;
+          document.documentElement.dataset.embedTheme = serie.id;
+          /* L'en-tête de l'accueil annonce tout le module (« 4 séries, … ») :
+           * il nomme le thème à la place. */
+          document.addEventListener('DOMContentLoaded', () => {
+            const span = document.querySelector('.course-label span');
+            if (span && /séries/.test(span.textContent)) span.textContent = `· ${serie.label}`;
+          });
+        }
+        catalog = value;
+      }
+    });
+  }
+
+  /* Les liens internes gardent le mode (et le thème) : un module intégré
+   * reste intégré d'un exercice à l'autre. */
   document.addEventListener('click', event => {
     const link = event.target.closest && event.target.closest('a[href]');
     if (!link || link.target === '_blank') return;
     const url = new URL(link.getAttribute('href'), root.location.href);
     if (url.origin !== root.location.origin || url.searchParams.has('embed')) return;
     url.searchParams.set('embed', mode);
+    if (theme) url.searchParams.set('theme', theme);
     link.href = url.pathname + url.search + url.hash;
   }, true);
 
