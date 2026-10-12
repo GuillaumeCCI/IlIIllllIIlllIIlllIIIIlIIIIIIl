@@ -114,6 +114,29 @@
     </section>`;
   };
 
+  /* LE CORRIGÉ RÉPONSE PAR RÉPONSE : pastille « Corrigé », grand titre,
+   * lecteur illustré en haut à droite, puis une carte par question :
+   * numéro, étiquette, énoncé, et trois cases « Votre réponse » (rouge si
+   * fausse, verte si juste), « Bonne réponse », « Explication ».
+   * items : [{ tag?, text, yours, expected, ok, why }]. Styles : extras.css. */
+  const answerReview = ({ title = 'Le corrigé', subtitle = '', aside = '', items }) => `<div class="k-page ar-review">
+      <header class="arv-head">
+        <div class="arv-head-text"><p class="corrige-tag">Corrigé</p><h1>${esc(title)}</h1>${subtitle ? `<p class="arv-subtitle">${esc(subtitle)}</p>` : ''}${aside}</div>
+        <img class="arv-art" src="${esc(core().asset('assets/illustrations/corrige-lecteur.webp'))}" alt="" decoding="async">
+      </header>
+      <ol class="arv-list">${items.map((item, i) => `<li class="arv-item ${item.ok ? 'is-ok' : 'is-ko'}">
+        <span class="arv-n" aria-hidden="true">${i + 1}</span>
+        <div class="arv-body">
+          ${item.tag ? `<p class="arv-tag">${esc(item.tag)}</p>` : ''}
+          <p class="arv-text">${esc(item.text)}</p>
+          <div class="arv-cells">
+            <div class="arv-cell is-yours ${item.ok ? 'is-ok' : 'is-ko'}"><span class="arv-mark">${icon(item.ok ? 'check' : 'close', { size: 16, strokeWidth: 3 })}</span><div><strong>Votre réponse</strong><span>${esc(item.yours || 'Aucune réponse')}</span></div></div>
+            <div class="arv-cell is-expected ${item.ok ? 'is-quiet' : ''}"><span class="arv-mark">${icon('check', { size: 16, strokeWidth: 3 })}</span><div><strong>Bonne réponse</strong><span>${esc(item.expected)}</span></div></div>
+            <div class="arv-cell is-why">${icon('lightbulb', { size: 26 })}<div><strong>Explication</strong><span>${esc(item.why || '')}</span></div></div>
+          </div>
+        </div>
+      </li>`).join('')}</ol>`;
+
   /* ───────────────────────────── Actions ────────────────────────────── */
 
   const submit = (label, extra = '') =>
@@ -230,23 +253,10 @@
           return `<span class="k-choice tone-${esc(option.tone || 'blue')} ${state}"${said ? ` aria-label="${esc(option.label)}, ${said}"` : ''}>${option.badge ? `<span class="k-choice-badge">${esc(option.badge)}</span>` : ''}<span>${esc(option.label)}</span>${sign}</span>`;
         }).join('')}</div>`;
       };
-      return `<div class="k-page cg-page is-review">
-        ${head({ eyebrow: content.eyebrow, title: 'Voici vos réponses',
-          aside: `<div class="cgr-score"><p><strong>${right} / ${items.length}</strong> bonnes réponses</p><span class="cgr-dots" aria-hidden="true">${verdicts.map(ok => `<span class="cgr-dot ${ok ? 'is-ok' : 'is-ko'}"></span>`).join('')}</span></div>` })}
-        <div class="cgr-legend">
-          <div class="cgr-legend-item">${mark('is-ok')}<span><strong>Bonne réponse</strong><small>Votre choix était le bon.</small></span></div>
-          <div class="cgr-legend-item">${mark('is-ko')}<span><strong>Réponse incorrecte</strong><small>Votre choix n’était pas le bon.</small></span></div>
-          <div class="cgr-legend-item">${mark('is-expected')}<span><strong>Réponse attendue</strong><small>Ce qu’il fallait choisir.</small></span></div>
-        </div>
+      return `${answerReview({ subtitle: 'Voici vos réponses, accompagnées des bonnes réponses et d’une explication pour chaque affirmation.',
+        aside: `<p class="arv-score"><strong>${right} / ${items.length}</strong> bonnes réponses</p>`,
+        items: items.map((item, i) => ({ text: item.text, yours: ex().value(`item${i}`) ? labelOf(ex().value(`item${i}`)) : '', expected: labelOf(item.answer), ok: verdicts[i], why: item.why })) })}
         <form novalidate>
-          <div class="cgr-grid">${items.map((item, i) => `<section class="cgr-card ${verdicts[i] ? 'is-ok' : 'is-ko'}">
-            <p class="cg-text"><span class="cg-n">${i + 1}</span><span>${esc(item.text)}</span></p>
-            ${choices(item, i)}
-            <div class="cgr-verdict ${verdicts[i] ? 'is-ok' : 'is-ko'}">${mark(verdicts[i] ? 'is-ok' : 'is-ko', 16)}<div>
-              <strong>${verdicts[i] ? 'Bonne réponse !' : 'Ce n’est pas la bonne réponse.'}</strong>
-              <p>${verdicts[i] ? '' : `Il fallait : <b>${esc(labelOf(item.answer))}</b>. `}${esc(item.why)}</p>
-            </div></div>
-          </section>`).join('')}</div>
           ${core().feedbackBox()}<div class="k-utility">${reset()}</div>
         </form>
       </div>`;
@@ -599,7 +609,7 @@
   }
 
   root.AtelierKit = Object.freeze({
-    corrige, clientCard,
+    corrige, clientCard, answerReview,
     esc, icon, words, seconds, filled, plural, stage, setStage, list,
     head, steps, band, tip, help, submit, act, back, reset, dialogButton, bar, utility,
     matrix, answered, score, choiceButtons,

@@ -65,24 +65,9 @@
   function reviewScreen() {
     const right = needs.filter((item, i) => pick(i) === item.answer).length;
     const label = o => (o === null ? 'aucun argument' : `${letters[o]} · ${options[o]}`);
-    return `<div class="k-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: 'Vos arguments, besoin par besoin', subtitle: 'Pour chaque attente, votre choix puis l’argument attendu.' })}
-      ${kit.result(right, needs.length, 'arguments bien placés')}
-      <section class="k-panel cmp-list">${needs.map((item, i) => {
-        const ok = pick(i) === item.answer;
-        return `<div class="cmp-row">
-          <span class="cmp-n">${i + 1}</span>
-          <div class="cmp-body">
-            <p class="cmp-quote"><span class="k-label">${esc(item.tab)}</span>“${esc(item.quote)}”</p>
-            <p class="cmp-line"><span class="cmp-pill">${icon('user', { size: 18 })}<span>Votre choix</span></span><span>${esc(label(pick(i)))}</span></p>
-            <p class="cmp-line is-model"><span class="cmp-pill">${icon('check', { size: 18 })}<span>Corrigé</span></span><span>${esc(label(item.answer))}</span></p>
-            <div class="cmp-verdict ${ok ? 'is-ok' : 'is-ko'}">
-              <span class="cmp-verdict-icon">${icon(ok ? 'check' : 'close', { size: 18 })}</span>
-              <div><strong>${ok ? 'Bon choix' : 'Ce n’est pas l’argument le plus direct'}</strong>${ok ? '' : `<p>→ Attendu : ${esc(options[item.answer])}</p>`}<p class="cmp-why">${esc(item.why)}</p></div>
-            </div>
-          </div>
-        </div>`;
-      }).join('')}</section>
+    return `${kit.answerReview({ subtitle: 'Voici vos réponses, accompagnées des bonnes réponses et d’une explication pour chaque besoin.',
+        aside: `<p class="arv-score"><strong>${right} / ${needs.length}</strong> arguments bien placés</p>`,
+        items: needs.map((item, i) => ({ tag: item.tab, text: `“${item.quote}”`, yours: pick(i) === null ? '' : options[pick(i)], expected: options[item.answer], ok: pick(i) === item.answer, why: item.why })) })}
       ${ex.inlineNote(content.intruders, 'neutral')}
       ${core.feedbackBox()}
       <div class="k-utility">${kit.reset()}</div>

@@ -382,3 +382,39 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 /* En-tête : le thème en gras, le nom de l'exercice (le <span>) en normal. */
 .topbar .course-label { font-weight: 800; color: var(--navy); }
 .topbar .course-label span { font-weight: 400; color: var(--muted); }
+
+/* ── Le corrigé réponse par réponse (kit.answerReview) ───────────────────
+   Titre et lecteur illustré, puis une carte par question : numéro relié,
+   étiquette, énoncé, et trois cases (votre réponse, bonne réponse,
+   explication). */
+.arv-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px; margin-bottom: -6px; }
+.arv-head h1 { margin: 0; font-size: clamp(2.2rem, 3.4vw, 3.1rem); }
+.arv-subtitle { margin: 6px 0 0; font-size: 1.1rem; color: #3d4a6e; }
+#main .arv-score { margin: 10px 0 0; color: var(--muted); }
+.arv-score strong { color: var(--accent); font-size: 1.1rem; }
+.arv-art { width: clamp(200px, 22vw, 300px); margin-bottom: -8px; pointer-events: none; box-shadow: none !important; }
+.arv-list { position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.arv-item { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 24px; padding: 24px 26px 24px 22px; border-radius: 18px; background: #fff; box-shadow: 0 10px 30px rgb(20 40 100 / 7%); }
+.arv-n { position: relative; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: #e6eefc; color: var(--accent); font-size: 1.4rem; font-weight: 800; }
+.arv-n::after { content: ''; position: absolute; top: 62px; left: 26px; width: 2px; height: calc(100% + 40px); background: #e1e8f6; }
+.arv-item { overflow: hidden; }
+#main .arv-tag { margin: 0 0 4px; font-size: .82rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #34528a; }
+#main .arv-text { margin: 0 0 16px; font-size: clamp(1.1rem, 1.4vw, 1.3rem); font-weight: 700; color: var(--navy); line-height: 1.35; }
+.arv-cells { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.arv-cell { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: start; padding: 16px 18px; border-radius: 14px; background: #f4f6fb; line-height: 1.45; }
+.arv-cell strong { display: block; margin-bottom: 2px; font-size: .95rem; }
+.arv-cell span:not(.arv-mark) { color: var(--navy); }
+.arv-mark { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #fff; }
+.arv-cell.is-yours.is-ko { background: #fdeeec; } .arv-cell.is-yours.is-ko strong, .arv-cell.is-yours.is-ko .arv-mark { color: #d6452f; }
+.arv-cell.is-yours.is-ok, .arv-cell.is-expected { background: #e9f6ee; } .arv-cell.is-yours.is-ok strong, .arv-cell.is-expected strong, .arv-cell.is-yours.is-ok .arv-mark, .arv-cell.is-expected .arv-mark { color: #17794f; }
+.arv-cell.is-yours.is-ok .arv-mark, .arv-cell.is-expected:not(.is-quiet) .arv-mark { background: #1f9a62; color: #fff; }
+.arv-cell.is-yours.is-ko .arv-mark { background: #fbdcd6; }
+.arv-cell.is-expected.is-quiet { background: #f4f6fb; } .arv-cell.is-expected.is-quiet strong { color: #5b6886; } .arv-cell.is-expected.is-quiet .arv-mark { color: #9aa6bf; }
+.arv-cell.is-why { background: #eef3fd; } .arv-cell.is-why strong { color: var(--navy); } .arv-cell.is-why > .icon { color: var(--accent); }
+@media (max-width: 1000px) { .arv-cells { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  .arv-head { grid-template-columns: 1fr; } .arv-art { justify-self: end; width: 180px; order: -1; margin: 0; }
+  .arv-item { grid-template-columns: 1fr; gap: 10px; padding: 18px; } .arv-n { width: 42px; height: 42px; font-size: 1.1rem; } .arv-n::after { display: none; }
+}
+#main .arv-cell.is-why > svg.icon { width: 34px !important; height: 34px !important; margin: -3px -4px 0; }
+
