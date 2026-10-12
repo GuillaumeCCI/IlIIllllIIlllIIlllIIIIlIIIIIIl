@@ -48,7 +48,7 @@ html[data-embed="solo"] #main { padding-top: 20px; }
    les boutons du bas. Le contenu descend pour lui laisser la place. */
 #main { position: relative; }
 #main > .page-tag { position: absolute; top: 14px; left: clamp(20px, 3vw, 64px); z-index: 2; display: inline-flex; align-items: center; margin: 0; padding: 7px 16px; border: 1.5px solid #afbddd; border-radius: 30px; background: #fff; color: var(--accent); font-size: .78rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; line-height: 1.2; box-shadow: 0 2px 8px rgb(35 40 80 / 6%); }
-#main > .page-tag + * { margin-top: 30px; }
+#main > .page-tag + * { margin-top: 56px; } /* la bulle (≈ 34 px de haut, posée à 14 px) garde un vrai espace avant le titre */
 
 /* ── Apparition de l'écran (exercise.js, revealScreen) ──────────────────
    La consigne en fondu, puis les blocs de l'exercice un à un, en remontant
