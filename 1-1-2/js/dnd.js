@@ -322,7 +322,10 @@
   doc.addEventListener('pointerdown', event => {
     if (event.button !== 0 || event.pointerType === 'touch') return;
     const el = event.target.closest && event.target.closest(SOURCES);
-    if (!el || event.target.closest('input, textarea, select, [data-no-lift]')) return;
+    // Les champs ne se soulèvent pas (on y tape), sauf ceux marqués `data-lift`
+    // (un numéro déjà posé qu'on peut déplacer) : un clic sans mouvement y
+    // place toujours le curseur.
+    if (!el || (event.target.closest('input, textarea, select, [data-no-lift]') && !event.target.closest('[data-lift]'))) return;
     press = { el, x: event.clientX, y: event.clientY, id: event.pointerId };
     // Le relâchement nous parvient même hors de la fenêtre.
     try { el.setPointerCapture(event.pointerId); } catch (error) { /* sans effet */ }

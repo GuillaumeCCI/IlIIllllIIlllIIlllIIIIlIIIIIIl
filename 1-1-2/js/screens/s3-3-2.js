@@ -4,7 +4,8 @@
  * pastille vers la réaction qu'elle provoque, on clique la pastille puis
  * l'emplacement « N° », ou on tape le numéro dans l'emplacement. Un numéro
  * ne sert qu'une fois : le reposer ailleurs le retire de son ancien
- * emplacement.
+ * emplacement. Un numéro déjà posé se glisse vers un autre emplacement :
+ * les deux échangent leur place.
  */
 (() => {
   'use strict';
@@ -61,7 +62,7 @@
               return `<li class="ar-row ${ok ? 'is-ok' : 'is-ko'}"><span class="ar-letter">${letters[i]}</span><span><strong class="ar-reaction">${esc(reaction.text)}</strong><small class="k-why">${esc(behaviours[reaction.answer - 1])}${reaction.why ? ` ${esc(reaction.why)}` : ''}</small></span><span class="ar-expected ${ok ? 'is-ok' : 'is-ko'}" title="${ok ? 'Votre réponse est juste' : `Vous aviez mis : ${value ?? 'rien'}`}">N° attendu : ${reaction.answer}</span></li>`;
             }
             return `<li class="ar-row"><span class="ar-letter">${letters[i]}</span><span>${esc(reaction.text)}</span>
-              <input type="text" class="ar-slot ${value ? 'is-filled' : ''}" inputmode="numeric" maxlength="1" autocomplete="off" placeholder="N°" value="${value || ''}" data-drop="${i}" data-act="slot" data-index="${i}" aria-label="Réaction ${letters[i]} : numéro du comportement, de 1 à ${behaviours.length}">
+              <input type="text" class="ar-slot ${value ? 'is-filled' : ''}" inputmode="numeric" maxlength="1" autocomplete="off" placeholder="N°" value="${value || ''}"${value ? ` draggable="true" data-lift data-drag="slot${i}"` : ''} data-drop="${i}" data-act="slot" data-index="${i}" aria-label="Réaction ${letters[i]} : numéro du comportement, de 1 à ${behaviours.length}">
             </li>`;
           }).join('')}</ol>
         </section>
@@ -124,7 +125,19 @@
   document.addEventListener('keydown', event => {
     if (event.key === 'Enter' && event.target.closest && event.target.closest('input.ar-slot')) event.preventDefault();
   });
-  kit.onDrop((id, slot) => { place(Number(id), Number(slot)); kit.commit(); });
+  /* Dépôt : une pastille (« 3 ») se pose ; un numéro déjà posé (« slot2 »)
+   * glissé sur un autre emplacement échange sa place avec lui. */
+  kit.onDrop((id, slot) => {
+    const to = Number(slot);
+    if (String(id).startsWith('slot')) {
+      const from = Number(String(id).slice(4));
+      if (from === to) return;
+      const list = matches();
+      [list[from], list[to]] = [list[to], list[from]];
+      ex.setValue('match', list);
+    } else place(Number(id), to);
+    kit.commit();
+  });
   kit.dialogs({ rule: { title: 'La consigne', html: `<p>${esc(content.subtitle)}</p><p>${esc(content.note)}</p><p>${esc(content.rule)}</p>` } });
 
   ex.mount('s3-3.2', { screen, validate, feedback, compactFeedback: true });
