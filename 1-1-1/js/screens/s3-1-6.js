@@ -32,10 +32,7 @@
     /* Le rail : l'objection, puis les six étapes empilées. Chacune est
      * cliquable pour revenir dessus. */
     const rail = `<aside class="step-rail">
-      <div class="step-rail-quote">
-        <p class="eyebrow">Objection client</p>
-        <blockquote>« ${esc(content.objection)} »</blockquote>
-      </div>
+      ${core.clientCard(content.objection, null, 'Objection client')}
       <ol class="step-rail-list">${method.map((entry, n) => `
         <li>
           <button type="button" class="step-rail-item ${n === i ? 'is-active' : ''} ${stepDone(n) ? 'is-done' : ''}"

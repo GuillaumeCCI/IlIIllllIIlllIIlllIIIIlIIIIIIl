@@ -93,6 +93,7 @@ window.ATELIER_CATALOG.portraits = {
   's3-3-3': 'client-veste-verte',
   's3-3-4': 'client-pull-clair',
   's3-3-5': 'client-chignon',
+  's3-3-6': 'client-cheveux-gris',
 };
 
 /* Index pratique : liste à plat de tous les exercices, dans l'ordre du parcours.

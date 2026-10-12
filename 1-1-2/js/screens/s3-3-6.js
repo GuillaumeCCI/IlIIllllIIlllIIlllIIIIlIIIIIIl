@@ -57,9 +57,7 @@
         <div class="tree-columns">
           <aside class="k-panel tree-rootcard">
             <p class="tree-card-label">La branche</p>
-            <div class="tree-need"><span class="tree-root-node is-small">${icon('sprout', { size: 26 })}</span>
-              <div><strong>Besoin du client</strong><blockquote>“${esc(content.need)}”</blockquote></div>
-            </div>
+            ${kit.clientCard(content.need, null, 'Besoin du client')}
             <p class="tree-info">${icon('info', { size: 20 })}<span>Gardez ce besoin comme fil conducteur. ${where}</span></p>
           </aside>
           <div class="k-panel tree-stepcard">

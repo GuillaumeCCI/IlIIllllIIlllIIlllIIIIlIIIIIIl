@@ -101,6 +101,7 @@ window.ATELIER_CATALOG.portraits = {
   default: 'client-tasse',
   's2-b': 'client-cheveux-gris',
   's2-d': 'client-chignon',
+  's3-1-6': 'client-tasse',
 };
 
 /* Index pratique : liste à plat de tous les exercices, dans l'ordre du parcours.
