@@ -40,11 +40,11 @@
         if (review) {
           const expected = cards.find(c => c.step === i);
           const ok = id === expected.id;
-          // La case nomme son étape, puis dit où va vraiment la carte posée là.
+          // La case nomme son étape, puis dit quelle carte y est posée et à quelle étape elle va vraiment.
           const home = card ? method[card.step].name : '';
           return `<li class="path-stop ${i % 2 ? 'is-low' : ''}"><span class="path-n">${i + 1}</span>
             <button type="button" class="path-slot is-filled ${ok ? 'is-ok' : 'is-ko'} ${detail === i ? 'is-detail' : ''}" data-act="detail" data-index="${i}"><strong>${esc(method[i].name)}</strong>
-              <span class="path-verdict">${icon(ok ? 'check' : 'close', { size: 15, strokeWidth: 3 })}<span>${ok ? 'Bien placée' : `Sa bonne étape :<b>${esc(home)}</b>`}</span></span></button></li>`;
+              <span class="path-verdict">${icon(ok ? 'check' : 'close', { size: 15, strokeWidth: 3 })}<span>${ok ? 'Bien placée' : `Vous avez posé la carte ${esc(id)},<b>qui va à l’étape « ${esc(home)} »</b>`}</span></span></button></li>`;
         }
         return `<li class="path-stop ${i % 2 ? 'is-low' : ''}"><span class="path-n">${i + 1}</span>
           <button type="button" class="path-slot ${card ? 'is-filled' : ''}" data-drop="${i}" data-act="slot" data-slot="${i}" aria-label="Case ${i + 1}${card ? ` : carte ${card.id}` : ', vide'}"
