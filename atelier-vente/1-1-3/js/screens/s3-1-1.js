@@ -40,8 +40,11 @@
         if (review) {
           const expected = cards.find(c => c.step === i);
           const ok = id === expected.id;
+          // La case nomme son étape, puis dit où va vraiment la carte posée là.
+          const home = card ? method[card.step].name : '';
           return `<li class="path-stop ${i % 2 ? 'is-low' : ''}"><span class="path-n">${i + 1}</span>
-            <div class="path-slot is-filled ${ok ? 'is-ok' : 'is-ko'}"><span class="path-letter">${esc(id || '?')}</span><strong>${esc(method[i].name)}</strong>${kit.mark(ok, ok ? 'Bien placée' : `Attendu : ${expected.id}`)}</div></li>`;
+            <button type="button" class="path-slot is-filled ${ok ? 'is-ok' : 'is-ko'} ${detail === i ? 'is-detail' : ''}" data-act="detail" data-index="${i}"><strong>${esc(method[i].name)}</strong>
+              <span class="path-verdict">${icon(ok ? 'check' : 'close', { size: 15, strokeWidth: 3 })}<span>${ok ? 'Bien placée' : `Sa bonne étape :<b>${esc(home)}</b>`}</span></span></button></li>`;
         }
         return `<li class="path-stop ${i % 2 ? 'is-low' : ''}"><span class="path-n">${i + 1}</span>
           <button type="button" class="path-slot ${card ? 'is-filled' : ''}" data-drop="${i}" data-act="slot" data-slot="${i}" aria-label="Case ${i + 1}${card ? ` : carte ${card.id}` : ', vide'}"
@@ -51,6 +54,43 @@
       }).join('')}
       <li class="path-end is-arrival"><span>Arrivée</span></li>
     </ol>`;
+  }
+
+  /* Le détail d'une étape, après validation : la carte posée et la carte
+   * attendue, côte à côte. Non enregistré : s'ouvre sur la première erreur. */
+  let detail = null;
+  const firstWrong = () => { const i = slots().findIndex((id, k) => !cardOf(id) || cardOf(id).step !== k); return i === -1 ? 0 : i; };
+  const cardBox = card => card ? `<div class="path-detail-card"><span class="path-letter">${esc(card.id)}</span><p>${esc(card.text)}</p></div>` : '<div class="path-detail-card"><p>Aucune carte.</p></div>';
+
+  function details() {
+    if (detail === null) detail = firstWrong();
+    const i = detail;
+    const mine = cardOf(slots()[i]);
+    const expected = cards.find(c => c.step === i);
+    const ok = mine && mine.id === expected.id;
+    return `<section class="k-panel path-detail">
+      <nav class="path-detail-nav" aria-label="Les étapes"><h2>Détail des étapes</h2>
+        <ol>${method.map((step, k) => {
+          const good = cardOf(slots()[k]) && cardOf(slots()[k]).step === k;
+          return `<li><button type="button" class="${k === i ? 'is-current' : ''} ${good ? 'is-ok' : 'is-ko'}" data-act="detail" data-index="${k}" aria-current="${k === i}"><span>${k + 1} · ${esc(step.name)}</span>${icon(k === i ? 'arrowRight' : good ? 'check' : 'close', { size: 16 })}</button></li>`;
+        }).join('')}</ol>
+      </nav>
+      <div class="path-detail-body">
+        <p class="path-detail-pos">Étape ${i + 1} sur ${SLOTS}</p>
+        <h3>${i + 1} · ${esc(method[i].name)}</h3>
+        <p class="path-detail-role">${esc(method[i].role)}</p>
+        <div class="path-detail-pair ${ok ? 'is-single' : ''}">
+          <div class="path-detail-box ${ok ? 'is-ok' : 'is-ko'}">
+            <p class="path-detail-title">${icon(ok ? 'check' : 'close', { size: 18, strokeWidth: 3 })}<span><strong>Votre choix</strong>${ok ? 'C’est la bonne carte pour cette étape.' : `Vous avez placé cette carte en ${i + 1}<sup>${i ? 'e' : 're'}</sup> position.`}</span></p>
+            ${cardBox(mine)}
+          </div>
+          ${ok ? '' : `<div class="path-detail-box is-ok">
+            <p class="path-detail-title">${icon('check', { size: 18, strokeWidth: 3 })}<span><strong>Carte attendue</strong>À cette étape, la carte attendue est :</span></p>
+            ${cardBox(expected)}
+          </div>`}
+        </div>
+      </div>
+    </section>`;
   }
 
   function hand() {
@@ -67,16 +107,16 @@
     const n = placed();
     const right = slots().filter((id, i) => cardOf(id) && cardOf(id).step === i).length;
     return `<div class="k-page path-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title,
+        subtitle: reviewing ? `${right} carte${right > 1 ? 's' : ''} sur ${SLOTS} à la bonne place. Voici votre parcours et les réponses attendues.` : content.subtitle,
         aside: `<p class="k-count path-count"><strong>${n} / ${SLOTS}</strong> coups placés</p>` })}
       <form novalidate class="path-form">
         <section class="path-board">
           <h2>${esc(content.pathTitle)}</h2>
-          ${reviewing ? kit.result(right, SLOTS, 'cartes à la bonne place') : ''}
           ${path(reviewing)}
-          <p class="k-muted path-note">${reviewing ? `La méthode : ${method.map(s => esc(s.name)).join(' · ')}.` : 'Placez une carte sur chaque case. Vous pouvez les déplacer pour changer l’ordre.'}</p>
+          ${reviewing ? '' : '<p class="k-muted path-note">Placez une carte sur chaque case. Vous pouvez les déplacer pour changer l’ordre.</p>'}
         </section>
-        ${reviewing ? `<section class="k-panel"><h2>Le rôle de chaque étape</h2><ol class="path-roles">${method.map((s, i) => `<li><strong>${i + 1} · ${esc(s.name)}</strong><span>${esc(s.role)}</span><em>Carte ${cards.find(c => c.step === i).id}</em></li>`).join('')}</ol></section>
+        ${reviewing ? `${details()}
           ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
         : `<section class="k-panel path-cards"><h2>Vos cartes</h2>${hand()}</section>
           ${core.errorsBox()}
@@ -101,6 +141,7 @@
   }
 
   kit.on({
+    detail: el => { detail = Number(el.dataset.index); ex.rebuild(); },
     pick: el => { ex.setValue('selected', selected() === el.dataset.card ? '' : el.dataset.card); kit.commit(); },
     slot: el => {
       const slot = Number(el.dataset.slot);
