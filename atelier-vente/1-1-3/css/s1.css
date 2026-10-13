@@ -379,6 +379,17 @@
 /* 1.1 · d'après la maquette : la carte sur son fond peint (papier, feuilles,
    taches), sans contour ; « 4 restantes » seul en haut, sans la frise ; le
    bouton « Revenir à la précédente » sans contour. */
-.xp-card { border: 0; background: #fbf8f2 url('../assets/illustrations/s1/reflexe-carte.webp') center / cover no-repeat; }
+/* Le fond peint porte le rond bleu de l'icône, ses petits traits et le
+   trait vertical (mesurés sur l'image de 1954 × 441 : rond centré à 9 %
+   de la largeur et à mi-hauteur, 12,3 % de diamètre ; trait à 19,1 %).
+   La carte garde les proportions de l'image ; l'icône se pose dans le rond
+   peint, le texte commence après le trait. */
+.xp-card { aspect-ratio: 1954 / 441; display: flex; flex-direction: column; justify-content: center; padding: 14px 4% 14px 22%; border: 0; background: #fff url('../assets/illustrations/s1/reflexe-carte.webp') center / 100% 100% no-repeat; }
+.xp-card .xp-tag { position: absolute; top: 9%; left: 2.2%; }
+.xp-card .xp-card-body { margin-top: 0; }
+.xp-card .xp-symbol { position: absolute; left: 9%; top: 50%; width: 12.3%; height: auto; aspect-ratio: 1; transform: translate(-50%, -50%); background: none; }
+.xp-card .xp-symbol::after { display: none; }
+.xp-card .xp-symbol .icon { width: 40%; height: auto; }
+.xp-card .xp-card-words { margin-left: 0; padding: 0; border-left: 0; }
 .xp-top { display: flex; justify-content: flex-end; }
 .xp-page .k-bar .button.secondary { border-color: transparent; box-shadow: none; }
