@@ -14,8 +14,11 @@ const server = createServer(async (request, response) => {
   try {
     if (!['GET', 'HEAD'].includes(request.method)) { response.writeHead(405); response.end(); return; }
     const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
-    let path = resolve(root, '.' + pathname);
-    const rel = relative(root, path);
+    // Les fichiers communs (/moteur/…, que le navigateur demande à la racine
+    // depuis ../../moteur/) viennent du moteur du dépôt.
+    const base = pathname.startsWith('/moteur/') ? resolve(root, '..', '..') : root;
+    let path = resolve(base, '.' + pathname);
+    const rel = relative(base, path);
     if (rel === '..' || rel.startsWith('..' + sep) || rel.split(sep).some(part => part.startsWith('.'))) { response.writeHead(403); response.end('Accès refusé'); return; }
     if ((await stat(path)).isDirectory()) path = resolve(path, 'index.html');
     const bytes = await readFile(path);

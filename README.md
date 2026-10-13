@@ -5,6 +5,9 @@ Un dépôt, plusieurs parcours d’exercices interactifs. Publié par Netlify à
 ```
 atelier-vente/            ← ce dépôt (Documents\atelier-vente)
 ├── index.html            l’accueil général (liste des parcours, généré)
+├── moteur/               UNE copie des fichiers communs à tous les parcours :
+│                         scripts (sons, glisser-déposer, exercices…), styles
+│                         de base, sons, polices, fonds de chargement
 ├── atelier-vente/        un parcours
 │   ├── index.html        son accueil (généré)
 │   ├── integrer.html     liens et codes d’intégration LMS (généré)
@@ -25,6 +28,10 @@ atelier-vente/            ← ce dépôt (Documents\atelier-vente)
 ## Les liens LMS
 
 Un thème d’un module : `https://<site>/atelier-vente/1-1-2/index.html?embed=module&theme=s3`. La page `atelier-vente/integrer.html` donne tous les liens.
+
+## Le moteur commun
+
+Un fichier de `moteur/` sert à tous les modules de tous les parcours : le modifier change tout le site. Un fichier présent dans un module (`js/`, `css/`) reste propre à ce module. Les pages chargent le moteur par `../../moteur/` (accueil d’un module) ou `../../../moteur/` (page d’exercice).
 
 ## Réglages communs
 

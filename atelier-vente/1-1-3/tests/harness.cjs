@@ -10,7 +10,9 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
-const read = file => fs.readFileSync(path.join(root, file), 'utf8');
+// Un fichier absent du module vient du moteur commun (../../moteur).
+const source = file => (fs.existsSync(path.join(root, file)) ? path.join(root, file) : path.join(root, '../../moteur', file));
+const read = file => fs.readFileSync(source(file), 'utf8');
 
 function createElement(tag = 'div') {
   return {

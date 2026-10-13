@@ -76,9 +76,9 @@ for (const entry of MODULES) {
 
 const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231249d8'/%3E%3Cpath d='M9 29 17 10h7l-8 19z' fill='white'/%3E%3Cpath d='m23 19 7 10h-8l-3-5z' fill='%23ff936b'/%3E%3C/svg%3E";
 const STYLE = `
-  @font-face { font-family: 'Fira Sans'; font-weight: 400; src: url('1-1-4/assets/fonts/fira-sans-400.woff2') format('woff2'); font-display: swap; }
-  @font-face { font-family: 'Fira Sans'; font-weight: 700; src: url('1-1-4/assets/fonts/fira-sans-700.woff2') format('woff2'); font-display: swap; }
-  @font-face { font-family: 'Fira Sans'; font-weight: 800; src: url('1-1-4/assets/fonts/fira-sans-800.woff2') format('woff2'); font-display: swap; }
+  @font-face { font-family: 'Fira Sans'; font-weight: 400; src: url('../moteur/assets/fonts/fira-sans-400.woff2') format('woff2'); font-display: swap; }
+  @font-face { font-family: 'Fira Sans'; font-weight: 700; src: url('../moteur/assets/fonts/fira-sans-700.woff2') format('woff2'); font-display: swap; }
+  @font-face { font-family: 'Fira Sans'; font-weight: 800; src: url('../moteur/assets/fonts/fira-sans-800.woff2') format('woff2'); font-display: swap; }
   :root { --navy: #13205c; --accent: #1249d8; --tint: #e6eeff; --coral: #ff936b; --muted: #5b6a8f; --line: #dde3f0; --bg: #f8f5f0; }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: 'Fira Sans', system-ui, sans-serif; color: var(--navy); background: var(--bg); line-height: 1.5; }
@@ -139,7 +139,7 @@ const home = page('L’Atelier Vente · Tous les modules', `<main>
   .module .intro { margin: 0; }
   .module ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: .95rem; }
   .module .button { justify-self: start; margin-top: 4px; }
-</style>`, '<script defer src="1-1-1/js/sounds.js"></script>'); // sons et musique du menu
+</style>`, '<script defer src="../moteur/js/sounds.js"></script>'); // sons et musique du menu
 writeFileSync(join(repo, 'index.html'), home);
 
 /* ──────────────────────────── Intégrer ───────────────────────────────── */
@@ -243,7 +243,7 @@ writeFileSync(join(root, 'index.html'), `<!doctype html>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Les parcours</title>
   <link rel="icon" type="image/svg+xml" href="${favicon}">
-  <style>${STYLE.replaceAll("url('1-1-4/assets", `url('${slug}/${MODULES.at(-1).code}/assets`)}</style>
+  <style>${STYLE.replaceAll("url('../moteur/", "url('moteur/")}</style>
 </head>
 <body>
   <header class="top"><span class="mark" aria-hidden="true"></span><strong>Les parcours</strong></header>

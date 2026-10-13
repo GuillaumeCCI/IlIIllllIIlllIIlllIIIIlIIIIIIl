@@ -285,7 +285,7 @@ test('chaque page charge les sons et le mode intégré', () => {
 
 test('le mode intégré se charge avant l’affichage, sans defer', () => {
   const html = fs.readFileSync(path.join(root, `exercices/${catalog.all[0].file}.html`), 'utf8');
-  assert.ok(html.includes('<script src="../js/embed.js"></script>'));
+  assert.ok(html.includes('<script src="../../../moteur/js/embed.js"></script>'));
 });
 
 console.log('\nIcônes');

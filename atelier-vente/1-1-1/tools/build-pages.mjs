@@ -37,13 +37,13 @@ function page(serie, exercise) {
   <meta name="theme-color" content="#1249d8">
   <title>${escape(title)}</title>
   <link rel="icon" type="image/svg+xml" href="${favicon}">
-  <script src="../js/embed.js"></script>
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/components.css">
-  <link rel="stylesheet" href="../css/review.css">
-  <link rel="stylesheet" href="../css/sorter.css">
+  <script src="../../../moteur/js/embed.js"></script>
+  <link rel="stylesheet" href="../../../moteur/css/styles.css">
+  <link rel="stylesheet" href="../../../moteur/css/components.css">
+  <link rel="stylesheet" href="../../../moteur/css/review.css">
+  <link rel="stylesheet" href="../../../moteur/css/sorter.css">
   <link rel="stylesheet" href="../css/layout.css">
-  <link rel="stylesheet" href="../css/briefing.css">
+  <link rel="stylesheet" href="../../../moteur/css/briefing.css">
   <link rel="stylesheet" href="../css/extras.css">
   <script defer src="../js/catalog.js"></script>
   <script defer src="../js/briefings.js"></script>
@@ -56,12 +56,12 @@ function page(serie, exercise) {
   <script defer src="../js/icons.js"></script>
   <script defer src="../js/core.js"></script>
   <script defer src="../js/rules.js"></script>
-  <script defer src="../js/exercise.js"></script>
-  <script defer src="../js/dnd.js"></script>
-  <script defer src="../js/placement.js"></script>
-  <script defer src="../js/sorter.js"></script>
-  <script defer src="../js/media.js"></script>
-  <script defer src="../js/sounds.js"></script>
+  <script defer src="../../../moteur/js/exercise.js"></script>
+  <script defer src="../../../moteur/js/dnd.js"></script>
+  <script defer src="../../../moteur/js/placement.js"></script>
+  <script defer src="../../../moteur/js/sorter.js"></script>
+  <script defer src="../../../moteur/js/media.js"></script>
+  <script defer src="../../../moteur/js/sounds.js"></script>
   <script defer src="../js/screens/${exercise.file}.js"></script>
 </head>
 <body>

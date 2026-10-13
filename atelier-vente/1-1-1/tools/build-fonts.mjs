@@ -56,7 +56,7 @@ const FACES = [
   { file: 'FiraSans-ExtraBold.otf', out: 'fira-sans-800.woff2',  weight: 800, style: 'normal' }
 ];
 
-const target = join(root, 'assets', 'fonts');
+const target = join(root, '..', '..', 'moteur', 'assets', 'fonts');
 mkdirSync(target, { recursive: true });
 
 let before = 0;
