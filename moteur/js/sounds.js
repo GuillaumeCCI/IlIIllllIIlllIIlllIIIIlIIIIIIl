@@ -499,13 +499,10 @@
     button.title = on ? 'La musique démarre au premier clic sur la page' : (musicOff ? 'Activer la musique' : 'Couper la musique');
   }
 
-  /* LE PLEIN ÉCRAN, voulu pour toute la visite. Le navigateur ne l'accorde
-   * que sur un clic, et le quitte à chaque changement de page : le choix est
-   * donc gardé le temps de la visite, et rétabli au premier clic sur la page
-   * suivante. Quitter le plein écran (Échap, bouton de l'en-tête) le retire. */
-  const FULLSCREEN_STORE = 'atelier-vente-plein-ecran';
-  // Dans le cadre d'intégration (cadre.html), c'est lui qui passe en plein
-  // écran : il ne change pas de page, le plein écran tient d'un exercice à l'autre.
+  /* LE PLEIN ÉCRAN, demandé par l'écran d'entrée. Rien d'autre ne le relance :
+   * l'apprenant qui en sort (Échap, bouton de l'en-tête) reste en fenêtre.
+   * Dans le cadre d'intégration (cadre.html), c'est lui qui passe en plein
+   * écran : il ne change pas de page, le plein écran tient d'un exercice à l'autre. */
   const host = (() => {
     try { if (root.parent !== root && root.parent.document.documentElement.hasAttribute('data-cadre')) return root.parent.document; } catch { /* autre origine */ }
     return document;
@@ -519,24 +516,6 @@
       const asked = page.requestFullscreen ? page.requestFullscreen() : page.webkitRequestFullscreen && page.webkitRequestFullscreen();
       if (asked && asked.catch) asked.catch(() => {});
     } catch { /* refusé : la page reste en fenêtre */ }
-  }
-  let leaving = false;
-  root.addEventListener('beforeunload', () => { leaving = true; });
-  root.addEventListener('pagehide', () => { leaving = true; });
-  root.addEventListener('pageshow', () => { leaving = false; });
-  ['fullscreenchange', 'webkitfullscreenchange'].forEach(type => host.addEventListener(type, () => {
-    if (leaving) return;
-    try { root.sessionStorage.setItem(FULLSCREEN_STORE, isFullscreen() ? 'oui' : 'non'); } catch { /* choix non gardé */ }
-  }));
-  if (canFullscreen) {
-    let wanted = false;
-    try { wanted = root.sessionStorage.getItem(FULLSCREEN_STORE) === 'oui'; } catch { /* pas de choix gardé */ }
-    // Pas sur le bouton Plein écran de l'en-tête : il basculerait aussitôt dans l'autre sens.
-    if (wanted) ['pointerdown', 'keydown'].forEach(type => document.addEventListener(type, function resume(event) {
-      if (event.target && event.target.closest && event.target.closest('[data-action="fullscreen"], [data-entrance], [data-entrance-screen]')) return;
-      ['pointerdown', 'keydown'].forEach(t => document.removeEventListener(t, resume, true));
-      enterFullscreen();
-    }, true));
   }
 
   /* L'ÉCRAN D'ACCUEIL. À la première arrivée de la visite sur un accueil
