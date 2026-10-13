@@ -241,15 +241,14 @@ body.is-briefing .briefing {
    maximale et laisse la colonne à moitié vide. */
 .preview-art { width: 100%; height: auto; max-height: 66vh; display: block; }
 .briefing-preview > .preview-art { flex: 0 0 auto; }
-/* L'illustration d'une famille (previews.js) : une image peinte, à fond
-   crème, et non un tracé à marges invisibles : ni élargie ni remontée. */
+/* L'illustration d'une famille (previews.js) : une image peinte et
+   détourée (fond transparent), recadrée au plus près de ses éléments, et non
+   un tracé à marges invisibles : ni élargie ni remontée. */
 .briefing-body:not(.has-art) .briefing-preview > img.preview-art {
   width: 100%;
-  max-height: 66vh;
-  margin: 0;
+  max-height: 60vh;
+  margin: 8px 0 0;
   object-fit: contain;
-  border-radius: 22px;
-  box-shadow: 0 10px 30px rgb(33 50 92 / 8%);
 }
 
 /* La citation du client, quand l'exercice en a une, remplace l'aperçu. */
