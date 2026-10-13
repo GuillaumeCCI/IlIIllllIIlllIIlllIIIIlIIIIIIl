@@ -14,8 +14,56 @@
   const attitudeKey = i => `attitude${i}`;
   const rewriteKey = i => `rewrite${i}`;
 
+  /* Un pictogramme par attitude, pour les tuiles de choix. */
+  const SYMBOLS = {
+    'Jugement / évaluation': 'scales',
+    'Interprétation': 'thought',
+    'Soutien / consolation': 'hands',
+    'Investigation / enquête': 'search',
+    'Solution / décision': 'lightbulb',
+    'Compréhension / reformulation': 'ear'
+  };
+
+  /* Une réplique à la fois : la réponse du vendeur, puis côte à côte
+   * l'attitude à identifier et la reformulation à écrire. */
+  function replica() {
+    const at = Math.min(ex.wizardAt(), cases.length - 1);
+    const item = cases[at];
+    const last = at === cases.length - 1;
+    const left = cases.length - at - 1;
+    const back = at ? core.button(`${icon('arrowLeft', { size: 17 })}<span>Réplique précédente</span>`, 'wizard-prev', 'text-button with-icon') : '';
+    return `<form class="replica-screen" novalidate>
+      ${core.pageTitle(content.eyebrow, content.title)}
+      ${core.mission('Consigne', content.intro, '', 'book')}
+      ${core.clientCard(content.mission)}
+      <div class="replica-progress">
+        <div class="replica-bar" aria-hidden="true"><span style="width:${((at + 1) / cases.length) * 100}%"></span></div>
+        ${core.stepPill(at, cases.length, 'Réplique')}
+      </div>
+      <div class="replica-seller">
+        <span class="replica-avatar" aria-hidden="true">${icon('user', { size: 30 })}</span>
+        <div><p class="replica-label">Réplique du vendeur n°${at + 1}</p><p class="replica-text">« ${esc(item.text)} »</p></div>
+      </div>
+      <div class="replica-cards">
+        <section class="panel replica-card">
+          <h2><span class="replica-num">1</span>Attitude identifiée</h2>
+          ${ex.radioCards(attitudeKey(at), attitudes.map(label => ({ id: label, label, symbol: SYMBOLS[label] })), 'attitude-tiles')}
+        </section>
+        <section class="panel replica-card">
+          <h2><span class="replica-num">2</span>Votre reformulation</h2>
+          ${ex.field(rewriteKey(at), `Votre reformulation de la réplique ${at + 1}`, { placeholder: 'Reformulez sans rien ajouter à ce que dit le client…', max: 300, rows: 7, hideLabel: true })}
+        </section>
+      </div>
+      ${last
+        ? `${core.errorsBox()}<div class="wiz-back">${back}</div>${ex.actions('Valider mes réponses')}`
+        : `<div class="wiz-actions">${back}<span class="replica-left">${left} réponse${left > 1 ? 's' : ''} reste${left > 1 ? 'nt' : ''}</span>${core.button(`<span>Réponse suivante</span>${icon('arrowRight', { size: 18 })}`, 'wizard-next', 'primary', `data-require="${attitudeKey(at)},${rewriteKey(at)}"`)}</div>`}
+      ${core.feedbackBox()}
+    </form>`;
+  }
+
   function screen() {
     const review = ex.reviewing();
+    if (!review) return replica();
     return `<div class="writing-workshop">
       ${core.pageTitle(content.eyebrow, content.title)}
       ${core.mission('Votre mission', content.intro, '', 'target')}

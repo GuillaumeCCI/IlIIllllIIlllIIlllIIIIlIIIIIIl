@@ -158,7 +158,7 @@
 
   /* La pastille de progression d'un exercice en étapes : les points reliés
    * (étape en cours en grand), puis « Étape 2 sur 3 ». Styles : extras.css. */
-  const stepPill = (at, total) => `<div class="step-pill" aria-label="Étape ${at + 1} sur ${total}"><span class="step-pill-dots" aria-hidden="true">${Array.from({ length: total }, (_, i) => `<span class="${i === at ? 'is-current' : i < at ? 'is-done' : ''}"></span>`).join('')}</span><span class="step-pill-label">Étape ${at + 1} sur ${total}</span></div>`;
+  const stepPill = (at, total, word = 'Étape') => `<div class="step-pill" aria-label="${word} ${at + 1} sur ${total}"><span class="step-pill-dots" aria-hidden="true">${Array.from({ length: total }, (_, i) => `<span class="${i === at ? 'is-current' : i < at ? 'is-done' : ''}"></span>`).join('')}</span><span class="step-pill-label">${word} ${at + 1} sur ${total}</span></div>`;
 
   const panelTitle = (title, extra = '') =>
     `<div class="panel-title"><h2>${esc(title)}</h2>${extra}</div>`;

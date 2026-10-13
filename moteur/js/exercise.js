@@ -832,8 +832,9 @@
         // Passer un cas repart de sa première étape.
         case 'skip-case': setCursor(cursor() + 1); setValue('stage', 1); rebuild(); break;
         case 'wizard-next': {
-          const need = control.dataset.require;
-          if (need && !String(value(need) || '').trim()) {
+          // data-require : un ou plusieurs champs (séparés par des virgules) à remplir d'abord.
+          const need = (control.dataset.require || '').split(',').filter(Boolean).find(key => !String(value(key) || '').trim());
+          if (need) {
             core.toast('Complétez votre réponse pour continuer.');
             $(`[data-field="${need}"]`)?.focus();
             break;

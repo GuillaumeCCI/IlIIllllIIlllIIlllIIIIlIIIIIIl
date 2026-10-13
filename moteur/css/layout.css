@@ -366,3 +366,39 @@ body { position: relative; }
 .writing-layout { grid-template-columns: minmax(0, 1.25fr) minmax(300px, 1fr); }
 .writing-layout .wiz-aside { align-self: center; justify-items: center; }
 @media (max-width: 900px) { .writing-layout { grid-template-columns: minmax(0, 1fr); } }
+
+/* Une réplique à la fois (1-1-1 S2 B) : progression, réplique du vendeur,
+   puis attitude et reformulation côte à côte. */
+.replica-screen { display: grid; gap: 20px; max-width: 1180px; margin: 0 auto; width: 100%; }
+.replica-screen > .page-title, .replica-screen > .mission { margin: 0; }
+.replica-screen .client-card-box { margin: 0; }
+.replica-progress { display: flex; align-items: center; gap: 20px; }
+.replica-bar { flex: 1; height: 8px; border-radius: 99px; background: #e3e9f5; overflow: hidden; }
+.replica-bar span { display: block; height: 100%; border-radius: inherit; background: var(--accent); transition: width .3s; }
+.replica-seller { display: flex; align-items: center; gap: 18px; padding: 18px 24px; border-radius: 18px; background: #eef3fd; }
+.replica-avatar { display: grid; place-items: center; flex-shrink: 0; width: 58px; height: 58px; border-radius: 50%; background: #fff; color: var(--accent); box-shadow: 0 4px 12px rgb(20 40 100 / 8%); }
+.replica-label { margin: 0 0 2px; font-size: .82rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.replica-text { margin: 0; font-size: 1.15rem; font-weight: 600; color: var(--navy); }
+.replica-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+.replica-card { display: grid; gap: 16px; align-content: start; margin: 0; }
+.replica-card h2 { display: flex; align-items: center; gap: 12px; margin: 0; font-size: 1.2rem; }
+.replica-num { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #e6eefc; color: var(--accent); font-weight: 800; }
+.replica-card .field, .replica-card textarea { margin: 0; }
+.replica-card textarea { min-height: 220px; }
+.replica-left { color: var(--muted); font-weight: 600; }
+/* Les tuiles d'attitude : pictogramme au-dessus, sans filet fin. */
+.attitude-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.attitude-tiles .radio-card { flex-direction: column; justify-content: center; gap: 8px; min-height: 104px; padding: 12px 8px; border: 0; border-radius: 14px; background: #f5f7fc; text-align: center; }
+.attitude-tiles .radio-card:hover { background: #edf2fc; }
+#main .attitude-tiles .radio-card.selected { background: #e3ebfc; box-shadow: 0 0 0 2.5px var(--accent); }
+#main .attitude-tiles .radio-card.selected .radio-symbol { background: var(--accent); color: #fff; }
+#main .attitude-tiles .radio-card.selected strong { color: var(--accent); }
+.attitude-tiles .radio-card input { position: absolute; opacity: 0; pointer-events: none; }
+.attitude-tiles .radio-symbol { width: 50px; height: 50px; border-radius: 50%; background: #fff; }
+#main .attitude-tiles .radio-symbol .icon { width: 28px; height: 28px; }
+.attitude-tiles .radio-body strong { font-size: .88rem; line-height: 1.25; }
+@media (max-width: 900px) {
+  .replica-cards { grid-template-columns: minmax(0, 1fr); }
+  .replica-progress { flex-direction: column; align-items: stretch; }
+}
+@media (max-width: 520px) { .attitude-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

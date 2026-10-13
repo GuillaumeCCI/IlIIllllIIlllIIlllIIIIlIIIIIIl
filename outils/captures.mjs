@@ -7,6 +7,7 @@
  * puis écran d'exercice) et chaque accueil de module, en 1440 × 900, avec
  * Edge sans fenêtre. « comparer » liste les pages dont l'image a changé.
  * Les dossiers de photos restent hors du dépôt (captures/ est ignoré).
+ * HEIGHT=1600 agrandit la fenêtre pour voir toute la page.
  */
 import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -56,7 +57,7 @@ async function take(dir) {
   });
   const ev = x => send('Runtime.evaluate', { expression: x, awaitPromise: true });
   const shot = async file => { const s = await send('Page.captureScreenshot', { format: 'png' }); writeFileSync(join(dir, file), Buffer.from(s.data, 'base64')); };
-  await send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false });
+  await send('Emulation.setDeviceMetricsOverride', { width: 1440, height: Number(process.env.HEIGHT) || 900, deviceScaleFactor: 1, mobile: false });
   // Musique et sons coupés (pas d'écran d'accueil sonore). Les animations ne
   // sont pas figées : certaines pages attendent leur fin pour continuer.
   await send('Page.addScriptToEvaluateOnNewDocument', { source: `try { localStorage.setItem('atelier-vente-musique', 'off'); localStorage.setItem('atelier-vente-sons', 'off'); } catch {}` });
