@@ -1,8 +1,15 @@
-# Netlify : les anciennes adresses du module 1-1-1 (publié seul à la racine)
-# renvoient vers son nouvel emplacement, /1-1-1/.
-/            embed=:embed  /1-1-1/index.html?embed=:embed  301!
-/index.html  embed=:embed  /1-1-1/index.html?embed=:embed  301!
-/exercices/*  /1-1-1/exercices/:splat  301
-/js/*         /1-1-1/js/:splat         301
-/css/*        /1-1-1/css/:splat        301
-/assets/*     /1-1-1/assets/:splat     301
+# Netlify · les anciennes adresses renvoient vers la nouvelle organisation
+# (un dossier par parcours, ici atelier-vente/). Les paramètres (?embed=…,
+# &theme=…) suivent la redirection.
+/1-1-1/*        /atelier-vente/1-1-1/:splat   301
+/1-1-2/*        /atelier-vente/1-1-2/:splat   301
+/1-1-3/*        /atelier-vente/1-1-3/:splat   301
+/1-1-4/*        /atelier-vente/1-1-4/:splat   301
+/integrer.html  /atelier-vente/integrer.html  301
+# Toute première version : le module 1-1-1 publié seul à la racine.
+/            embed=:embed  /atelier-vente/1-1-1/index.html?embed=:embed  301!
+/index.html  embed=:embed  /atelier-vente/1-1-1/index.html?embed=:embed  301!
+/exercices/*  /atelier-vente/1-1-1/exercices/:splat  301
+/js/*         /atelier-vente/1-1-1/js/:splat         301
+/css/*        /atelier-vente/1-1-1/css/:splat        301
+/assets/*     /atelier-vente/1-1-1/assets/:splat     301

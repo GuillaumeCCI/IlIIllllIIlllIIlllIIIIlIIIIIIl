@@ -2,10 +2,13 @@
   "name": "atelier-vente",
   "version": "1.0.0",
   "private": true,
-  "description": "L'Atelier Vente : les modules 1-1-1 a 1-1-4, prets pour GitHub Pages.",
+  "description": "L’Atelier Vente : les parcours d’exercices interactifs (un dossier par parcours).",
   "scripts": {
+    "test": "node outils/tester.mjs",
     "assembler": "node outils/assembler.mjs",
     "start": "node server.mjs --port 4180"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }

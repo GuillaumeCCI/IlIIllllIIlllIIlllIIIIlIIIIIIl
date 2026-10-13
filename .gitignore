@@ -1,3 +1,8 @@
 node_modules/
 .DS_Store
 Thumbs.db
+*.log
+# Captures d'écran de contrôle et maquettes de référence : gardées sur
+# l'ordinateur, jamais publiées.
+captures/
+references/

@@ -1,32 +1,30 @@
-/* ASSEMBLE LE SITE À PUBLIER SUR GITHUB · à relancer après chaque modification.
+/* LES PAGES D'ACCUEIL D'UN PARCOURS · à relancer après avoir ajouté un module
+ * ou changé un titre d'exercice.
  *
- *     node outils/assembler.mjs
+ *     node outils/assembler.mjs            (le parcours atelier-vente)
+ *     node outils/assembler.mjs <parcours> (un autre parcours)
  *
- * Les modules se modifient toujours dans leur propre dossier
- * (Atelier-Vente-1-1-1, …-1-1-4). Ce script en recopie la partie utile au
- * site (pages, scripts, styles, images) dans ce dépôt, puis régénère :
- *   index.html     l'accueil général, une carte par module ;
+ * Chaque parcours est un dossier à la racine du dépôt (atelier-vente/…),
+ * qui contient ses modules (1-1-1/, 1-1-2/…). Les modules se modifient sur
+ * place ; ce script ne copie rien, il régénère seulement, dans le dossier
+ * du parcours :
+ *   index.html     l'accueil du parcours, une carte par module ;
  *   integrer.html  la page « Intégrer » : un lien et un code d'intégration
- *                  pour chaque module et pour chaque exercice.
- *
- * Ne sont PAS copiés : tests, outils, maquettes (references/), captures,
- * node_modules, et les illustrations d'origine dont une version allégée
- * (.web.png) existe : le site n'affiche que celle-ci.
+ *                  pour chaque module, chaque thème et chaque exercice.
  */
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync, readdirSync, statSync, copyFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const slug = process.argv[2] || 'atelier-vente';
+const repo = join(root, slug);
+if (!existsSync(repo)) { console.error(`Parcours introuvable : ${slug}`); process.exit(1); }
 
 /* Les modules publiés, dans l'ordre de l'accueil. `source` : le dossier du
  * projet, relatif à ce dépôt. Ajoutez une ligne pour un nouveau module. */
-const MODULES = [
-  { code: '1-1-1', source: '../Atelier-Vente-1-1-1/atelier-vente' },
-  { code: '1-1-2', source: '../Atelier-Vente-1-1-2/atelier-vente' },
-  { code: '1-1-3', source: '../Atelier-Vente-1-1-3/atelier-vente' },
-  { code: '1-1-4', source: '../Atelier-Vente-1-1-4/atelier-vente' }
-];
+const MODULES = readdirSync(repo).filter(name => /^[0-9]/.test(name) && existsSync(join(repo, name, 'js/catalog.js'))).sort()
+  .map(code => ({ code, source: code }));
 
 const KEEP = ['index.html', 'exercices', 'js', 'css', 'assets'];
 
@@ -59,10 +57,6 @@ const modules = [];
 for (const entry of MODULES) {
   const source = resolve(repo, entry.source);
   if (!existsSync(source)) { console.error(`Module introuvable : ${entry.source}`); process.exit(1); }
-  const target = join(repo, entry.code);
-  rmSync(target, { recursive: true, force: true });
-  const stats = { files: 0, bytes: 0, skipped: 0 };
-  for (const name of KEEP) if (existsSync(join(source, name))) copy(join(source, name), join(target, name), stats);
 
   const catalog = readCatalog(source);
   const home = readFileSync(join(source, 'index.html'), 'utf8');
@@ -75,7 +69,7 @@ for (const entry of MODULES) {
       exercises: serie.exercises.map(exercise => ({ id: exercise.id, file: exercise.file, label: exercise.label }))
     }))
   });
-  console.log(`${entry.code} : ${stats.files} fichiers, ${(stats.bytes / 1024 / 1024).toFixed(1)} Mo (${stats.skipped} originaux d’illustration non copiés)`);
+  console.log(`${entry.code} : ${catalog.series.reduce((n, s) => n + s.exercises.length, 0)} exercices`);
 }
 
 /* ─────────────────────────── Gabarit commun ──────────────────────────── */
@@ -233,5 +227,36 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
 </script>`);
 writeFileSync(join(repo, 'integrer.html'), integrate);
 
-writeFileSync(join(repo, '.nojekyll'), '');
+
 console.log('\nAccueil et page « Intégrer » régénérés.');
+
+/* ───────────────────── Accueil général : la liste des parcours ─────────── */
+
+const parcours = readdirSync(root).filter(name => !name.startsWith('.') && existsSync(join(root, name, 'index.html'))
+  && readdirSync(join(root, name)).some(m => existsSync(join(root, name, m, 'js/catalog.js')))).sort();
+const titleOf = name => (readFileSync(join(root, name, 'index.html'), 'utf8').match(/<h1>([^<]*)<\/h1>/) || [])[1] || name;
+const ledeOf = name => (readFileSync(join(root, name, 'index.html'), 'utf8').match(/<p class="lede">([^<]*)/) || [])[1] || '';
+writeFileSync(join(root, 'index.html'), `<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les parcours</title>
+  <link rel="icon" type="image/svg+xml" href="${favicon}">
+  <style>${STYLE.replaceAll("url('1-1-4/assets", `url('${slug}/${MODULES.at(-1).code}/assets`)}</style>
+</head>
+<body>
+  <header class="top"><span class="mark" aria-hidden="true"></span><strong>Les parcours</strong></header>
+  <main>
+    <h1>Les parcours</h1>
+    <div class="grid">${parcours.map(name => `<article class="card module">
+      <span class="k">${esc(name)}</span>
+      <h2>${titleOf(name)}</h2>
+      <p class="intro">${ledeOf(name).split('.')[0]}.</p>
+      <a class="button" href="${esc(name)}/index.html">Ouvrir le parcours</a>
+    </article>`).join('')}</div>
+  </main>
+</body>
+</html>
+`);
+console.log(`Accueil général : ${parcours.length} parcours.`);
