@@ -85,7 +85,7 @@
     function uncover() {
       waiting = false;
       clearTimeout(rescue);
-      setTimeout(function () { cover.classList.remove('is-on'); }, Math.max(0, since + 900 - Date.now()));
+      setTimeout(function () { cover.classList.remove('is-on'); }, Math.max(0, since + 1900 - Date.now()));
     }
     window.atelierTransition = function (url) {
       if (waiting) return;
