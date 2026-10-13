@@ -46,21 +46,21 @@ button.path-card:hover { border-color: var(--accent); }
 .crash-layout { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
 .crash-exchange { background: #fffbf3; }
 .crash-exchange h2 { font-size: 1.6rem; }
-.crash-chat { list-style: none; margin: 18px 0; padding: 0; display: grid; gap: 22px; }
+/* Le titre sur un aplat rose, façon coup de pinceau (maquette). */
+.crash-title { display: inline-block; padding: 8px 26px 9px; border-radius: 10px 22px 12px 26px / 18px 8px 20px 10px; background: #fbd3c8; color: var(--navy); transform: rotate(-.6deg); }
+.crash-chat { list-style: none; margin: 22px 0 18px; padding: 0; display: grid; gap: 26px; }
 .crash-line { display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: start; gap: 14px; }
-.crash-avatar { display: grid; justify-items: center; gap: 6px; color: #5b6a8f; }
-.crash-avatar .icon { padding: 14px; box-sizing: content-box; border-radius: 50%; background: #e7ebf3; }
-.crash-avatar.is-seller { color: var(--accent); }
-.crash-avatar.is-seller .icon { background: #dfe8fb; }
-.crash-avatar small { padding: 3px 10px; border-radius: 10px; background: #e7ebf3; font-weight: 800; font-size: .72rem; text-transform: uppercase; }
-.crash-avatar.is-seller small { background: #dfe8fb; }
-.crash-bubble { justify-self: start; padding: 16px 24px; border-radius: 16px; background: #eef0f5; color: var(--navy); font-size: 1.25rem; }
-.crash-bubble.is-long { justify-self: stretch; background: #fff; border: 1px solid #dfe5f1; line-height: 1.75; font-size: 1.15rem; }
-.crash-passage { display: inline; padding: 2px 4px; border: 0; border-radius: 6px; background: none; color: inherit; font: inherit; text-align: left; cursor: var(--cursor-hand, pointer); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-button.crash-passage:hover { background: #fff1d6; }
-.crash-passage.is-flagged { background: #ffe1db; box-shadow: inset 0 -2px 0 #e5402f; }
+.crash-avatar { display: grid; justify-items: center; gap: 6px; color: var(--navy); }
+.crash-avatar img { width: 78px; height: 78px; border-radius: 50%; }
+.crash-avatar small { font-weight: 700; font-size: .9rem; }
+.crash-bubble { justify-self: start; margin: 10px 0 0; padding: 16px 24px; border-radius: 18px 18px 18px 6px; background: #eceff5; color: var(--navy); font-size: 1.15rem; }
+/* La réponse du commercial : une bulle par passage. */
+.crash-replies { display: grid; justify-items: start; gap: 10px; }
+.crash-passage { display: inline-flex; align-items: baseline; gap: 10px; max-width: 100%; padding: 11px 18px; border: 0; border-radius: 16px 16px 16px 6px; background: #fdebe5; color: var(--navy); font: inherit; font-size: 1.05rem; line-height: 1.45; text-align: left; cursor: var(--cursor-hand, pointer); transition: background .15s ease, box-shadow .15s ease; }
+button.crash-passage:hover { background: #fcdcd3; }
+.crash-passage.is-flagged { background: #fcd6cc; box-shadow: inset 0 0 0 1.5px #f2a99a; }
 .crash-passage.is-static { cursor: inherit; }
-.crash-flag { display: inline-flex; align-items: center; gap: 2px; margin-right: 6px; padding: 0 6px; border-radius: 8px; background: #e5402f; color: #fff; font-size: .8rem; font-weight: 800; vertical-align: 2px; }
+.crash-flag { flex: none; display: inline-flex; align-items: center; gap: 3px; padding: 1px 7px; border-radius: 7px; background: #e5402f; color: #fff; font-size: .82rem; font-weight: 800; }
 .crash-diag h2 { font-size: 1.6rem; }
 .crash-score { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 6px 0 10px; }
 .crash-score .k-count { padding: 10px 20px; border-radius: 20px; background: #eef3fd; color: var(--navy); }

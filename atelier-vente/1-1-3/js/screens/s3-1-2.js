@@ -25,16 +25,23 @@
   const rowOf = p => [0, 1, 2, 3].find(r => flag(r) === p);
   const named = () => [0, 1, 2, 3].filter(r => kit.filled(ex.value(`error${r}`))).length;
 
+  /* L'échange, d'après la maquette : un portrait par interlocuteur, et la
+   * réponse du commercial découpée en bulles, une par passage. Cliquer une
+   * bulle y pose (ou retire) un drapeau numéroté. */
+  const avatar = (who, label) =>
+    `<span class="crash-avatar"><img src="${esc(core.asset(`assets/illustrations/s3/crash-${who}.webp`))}" alt="" decoding="async"><small>${label}</small></span>`;
+
   function exchange(clickable) {
     return `<ol class="crash-chat">
-      <li class="crash-line"><span class="crash-avatar">${icon('users', { size: 26 })}<small>Client</small></span><p class="crash-bubble">« ${esc(content.client)} »</p></li>
-      <li class="crash-line is-seller"><span class="crash-avatar is-seller">${icon('users', { size: 26 })}<small>Commercial</small></span>
-        <p class="crash-bubble is-long">« ${passages.map((p, i) => {
+      <li class="crash-line">${avatar('client', 'Client')}<p class="crash-bubble">« ${esc(content.client)} »</p></li>
+      <li class="crash-line is-seller">${avatar('commercial', 'Commercial')}
+        <div class="crash-replies">${passages.map((p, i) => {
           const row = rowOf(i);
+          const badge = row !== undefined ? `<span class="crash-flag">${icon('flag', { size: 14 })}${row + 1}</span>` : '';
           return clickable
-            ? `<button type="button" class="crash-passage ${row !== undefined ? 'is-flagged' : ''}" data-act="flag" data-index="${i}" aria-pressed="${row !== undefined}">${row !== undefined ? `<span class="crash-flag">${icon('flag', { size: 14 })}${row + 1}</span>` : ''}${esc(p.text)}</button>`
-            : `<span class="crash-passage is-static ${row !== undefined ? 'is-flagged' : ''}">${esc(p.text)}</span>`;
-        }).join(' ')} »</p></li>
+            ? `<button type="button" class="crash-passage ${row !== undefined ? 'is-flagged' : ''}" data-act="flag" data-index="${i}" aria-pressed="${row !== undefined}">${badge}<span>« ${esc(p.text)} »</span></button>`
+            : `<span class="crash-passage is-static ${row !== undefined ? 'is-flagged' : ''}">${badge}<span>« ${esc(p.text)} »</span></span>`;
+        }).join('')}</div></li>
     </ol>`;
   }
 
@@ -45,7 +52,7 @@
   function diagnostic() {
     return `<div class="k-columns crash-layout">
       <section class="k-panel crash-exchange">
-        <h2>L’échange à analyser</h2>
+        <h2 class="crash-title">L’échange à analyser</h2>
         ${exchange(true)}
         ${kit.help('Sélectionnez un passage pour poser un drapeau.')}
       </section>
@@ -68,7 +75,7 @@
   function rewrite() {
     return `<div class="k-columns crash-layout">
       <section class="k-panel crash-exchange">
-        <h2>L’échange à réparer</h2>
+        <h2 class="crash-title">L’échange à réparer</h2>
         ${exchange(false)}
         <h3 class="k-small-title">Votre diagnostic</h3>
         <ol class="crash-own">${[0, 1, 2, 3].map(r => `<li>${esc(ex.value(`error${r}`))}</li>`).join('')}</ol>
