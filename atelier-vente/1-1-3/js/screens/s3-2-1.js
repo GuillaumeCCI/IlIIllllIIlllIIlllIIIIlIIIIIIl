@@ -35,7 +35,7 @@
     <p class="nat-instruction">${esc(content.instruction)}</p>
     <div class="nat-zones" role="radiogroup" aria-label="Les quatre natures">${zones.map(z => `
       <button type="button" class="nat-zone ${pick() === z.id ? 'is-chosen' : ''}" role="radio" aria-checked="${pick() === z.id}" data-drop="${z.id}" data-act="pick" data-zone="${z.id}">
-        <span class="nat-folder">${icon(pick() === z.id ? 'check' : 'folder', { size: 30 })}</span>
+        <span class="nat-folder"><img src="${esc(core.asset(`assets/illustrations/s3/nature-${z.id}.webp`))}" alt="" decoding="async">${pick() === z.id ? `<span class="nat-chosen">${icon('check', { size: 16, strokeWidth: 3 })}</span>` : ''}</span>
         <span><strong>${esc(z.label)}</strong><small>${esc(z.text)}</small></span>
       </button>`).join('')}</div>
     ${kit.bar({

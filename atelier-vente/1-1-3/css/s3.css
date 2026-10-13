@@ -194,3 +194,13 @@ button.crash-passage:hover { background: #fcdcd3; }
 .crash-side-next .button { display: inline-flex; align-items: center; gap: 10px; padding: 14px 30px; border-radius: 12px; font-size: 1.08rem; }
 .crash-side-next .button .icon { width: 20px; height: 20px; }
 .crash-review-back { margin-top: 18px; }
+
+/* 2.1 · d'après la maquette : la carte de réaction sur son fond illustré
+   (taches, horloge), les quatre cases avec leur icône peinte. */
+.nat-card { background: #fbf8f2 url('../assets/illustrations/s3/nature-carte.webp') right center / cover no-repeat; border-color: #ece6da; overflow: hidden; }
+.nat-card-body { padding-right: clamp(0px, 14%, 170px); }
+.nat-folder { position: relative; width: 104px; height: 104px; background: none; }
+.nat-folder img { width: 100%; height: 100%; }
+.nat-zone.is-chosen .nat-folder { background: none; }
+.nat-chosen { position: absolute; right: -2px; bottom: 2px; display: grid; place-items: center; width: 30px; height: 30px; border: 2.5px solid #fff; border-radius: 50%; background: var(--accent); color: #fff; }
+@media (max-width: 760px) { .nat-folder { width: 72px; height: 72px; } .nat-card-body { padding-right: 0; } }
