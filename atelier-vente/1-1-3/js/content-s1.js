@@ -56,7 +56,7 @@ window.ATELIER_S1 = {
     title: 'À chaque étape, son rôle',
     subtitle: 'Identifiez l’étape qui correspond à chaque rôle.',
     instruction: 'Sélectionnez un verbe : le rôle suivant apparaîtra automatiquement.',
-    lead: 'Dans l’échange, cette étape sert à…',
+    lead: 'Retrouvez l’étape qui a pour rôle de…',
     question: 'À quelle étape de la méthode ce rôle correspond-il ?',
     // L'ordre des rôles est mélangé ; `answer` renvoie à l'étape de ATELIER_METHOD.
     roles: [
