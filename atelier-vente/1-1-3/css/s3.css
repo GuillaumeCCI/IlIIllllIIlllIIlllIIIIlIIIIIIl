@@ -219,3 +219,37 @@ button.crash-passage:hover { background: #fcdcd3; }
 .nat-zone.is-chosen .nat-folder { background: none; }
 .nat-chosen { position: absolute; right: -2px; bottom: 2px; display: grid; place-items: center; width: 30px; height: 30px; border: 2.5px solid #fff; border-radius: 50%; background: var(--accent); color: #fff; }
 @media (max-width: 760px) { .nat-folder { width: 72px; height: 72px; } .nat-card-body { padding-right: 0; } }
+
+/* 2.1 · le corrigé, d'après la maquette : panneau indicateur en haut à
+   droite, une ligne par réaction, la case choisie (cochée ou barrée) et la
+   case attendue quand elle diffère. */
+.nat-page.is-recap { position: relative; }
+.nat-signpost { position: absolute; top: -14px; right: 3%; z-index: 0; width: min(20%, 230px); height: auto; pointer-events: none; }
+.nat-page.is-recap .k-head { position: relative; z-index: 1; min-height: 150px; padding-right: 28%; }
+.nat-recap { position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.nat-recap li { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 12px 18px 12px 14px; border: 1px solid #ebe6dd; border-left: 3px solid var(--row); border-radius: 12px; background: #fff; box-shadow: 0 4px 14px rgb(33 50 92 / 5%); }
+.nat-recap li.tone-blue { --row: #1d47a8; --row-soft: #e3ebfb; }
+.nat-recap li.tone-coral { --row: #e5623f; --row-soft: #fde3dc; }
+.nat-recap li.tone-green { --row: #3e6b55; --row-soft: #e3efe7; }
+.nat-recap-n { display: grid; place-items: center; width: 58px; height: 40px; border-radius: 999px; background: var(--row-soft); color: var(--row); font-size: 1.2rem; font-weight: 800; }
+.nat-recap-text strong { display: block; color: var(--navy); font-size: 1.05rem; font-weight: 600; }
+.nat-recap-text small { display: block; margin-top: 3px; color: #5b6a8f; font-size: .9rem; }
+.nat-recap-zones { display: grid; justify-items: end; gap: 6px; }
+.nat-pill { display: inline-flex; align-items: center; gap: 10px; padding: 5px 14px 5px 6px; border-radius: 999px; font-size: .95rem; font-weight: 600; color: var(--navy); white-space: nowrap; }
+.nat-pill img { width: 30px; height: 30px; }
+.nat-pill.tone-blue { background: #e3ebfb; }
+.nat-pill.tone-coral { background: #fde3dc; }
+.nat-pill.tone-green { background: #e3efe7; }
+.nat-pill.tone-violet { background: #ece6fa; }
+.nat-mark { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: #fff; }
+.is-ok .nat-mark { background: #2f9163; }
+.is-ko .nat-mark { background: #d8452f; }
+.is-ko .nat-recap-zones > .nat-pill { opacity: .75; text-decoration: line-through; text-decoration-color: rgb(216 69 47 / 60%); }
+.nat-expected { display: inline-flex; align-items: center; gap: 8px; color: #2f6b4f; font-size: .85rem; font-weight: 700; }
+.nat-recap-actions { display: flex; justify-content: flex-end; margin-top: 18px; }
+@media (max-width: 900px) {
+  .nat-signpost { display: none; }
+  .nat-page.is-recap .k-head { min-height: 0; padding-right: 0; }
+  .nat-recap li { grid-template-columns: 48px minmax(0, 1fr); }
+  .nat-recap-zones { grid-column: 2; justify-items: start; }
+}

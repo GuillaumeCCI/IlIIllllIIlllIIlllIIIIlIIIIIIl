@@ -19,9 +19,13 @@
 
   const pick = () => (zones.some(z => z.id === ex.value('pick')) ? ex.value('pick') : '');
 
+  /* Classer ; la dernière réaction classée valide l'exercice et ouvre le
+   * corrigé, sans écran de relecture. */
   function classify(zone) {
     kit.deckPlace(total, zone);
     ex.setValue('pick', '');
+    kit.commit();
+    if (kit.deckCurrent(total) === null) ex.submit();
   }
 
   function sortScreen(index) {
@@ -42,19 +46,50 @@
     })}`;
   }
 
+  /* Le corrigé, d'après la maquette : une ligne par réaction (numéro
+   * teinté, citation et explication), votre case cochée ou barrée, et la
+   * case attendue quand elle diffère. Propre à cet exercice : kit.deckReview
+   * sert aux autres. */
+  const ROW_TONES = ['blue', 'coral', 'green'];
+  const ZONE_TONES = { pretexte: 'green', fondee: 'blue', malentendu: 'violet', reassurance: 'coral' };
+
+  function zonePill(id, mark = '') {
+    const zone = zones.find(z => z.id === id) || {};
+    return `<span class="nat-pill tone-${ZONE_TONES[zone.id] || 'blue'}">${zone.id ? `<img src="${esc(core.asset(`assets/illustrations/s3/nature-${zone.id}.webp`))}" alt="">` : ''}<span>${esc(zone.label || 'Non classée')}</span>${mark}</span>`;
+  }
+
+  function reviewScreen() {
+    const placed = kit.deckPlaced(total);
+    return `<img class="nat-signpost" src="${esc(core.asset('assets/illustrations/s3/nature-panneau.webp'))}" alt="" decoding="async">
+      <ol class="nat-recap">${cards.map((card, i) => {
+        const ok = placed[i] === card.answer;
+        return `<li class="tone-${ROW_TONES[i % ROW_TONES.length]} ${ok ? 'is-ok' : 'is-ko'}">
+          <span class="nat-recap-n">${String(i + 1).padStart(2, '0')}</span>
+          <span class="nat-recap-text"><strong>« ${esc(card.text)} »</strong>${card.why ? `<small>${esc(card.why)}</small>` : ''}</span>
+          <span class="nat-recap-zones">
+            ${zonePill(placed[i], `<span class="nat-mark" aria-label="${ok ? 'correct' : 'incorrect'}">${icon(ok ? 'check' : 'close', { size: 13, strokeWidth: 3 })}</span>`)}
+            ${ok ? '' : `<span class="nat-expected">Attendu : ${zonePill(card.answer)}</span>`}
+          </span>
+        </li>`;
+      }).join('')}</ol>
+      ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
+  }
+
   function screen() {
     const reviewing = ex.reviewing();
     const index = kit.deckCurrent(total);
     const placed = kit.deckPlaced(total);
     const right = cards.filter((card, i) => placed[i] === card.answer).length;
+    // Tout classé mais pas encore validé (brouillon d'avant) : un bouton suffit.
     const body = reviewing
-      ? `${kit.result(right, total, 'réactions bien classées')}${kit.deckReview(cards, zones)}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
+      ? reviewScreen()
       : index === null
-        ? `<h2>Relisez votre classement</h2><p class="k-muted">Cliquez sur une ligne pour la modifier, puis validez.</p>${kit.deckRecap(cards, zones, 'Valider mon classement')}`
+        ? `<p class="nat-instruction">Toutes les réactions sont classées.</p><div class="nat-recap-actions">${kit.submit('Voir le corrigé')}</div>`
         : sortScreen(index);
-    return `<div class="k-page nat-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: reviewing ? '' : kit.deckDots(total, index) })}
+    return `<div class="k-page nat-page ${reviewing ? 'is-recap' : ''}">
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title,
+        subtitle: reviewing ? `${right} réaction${right > 1 ? 's' : ''} sur ${total} bien classée${right > 1 ? 's' : ''}. Voici le corrigé.` : content.subtitle,
+        aside: reviewing || index === null ? '' : kit.deckDots(total, index) })}
       <form class="nat-form" novalidate>${body}${reviewing ? '' : core.errorsBox()}</form>
       ${reviewing ? '' : kit.utility('Corrigé disponible après les 6 réactions')}
     </div>`;
@@ -73,11 +108,10 @@
 
   kit.on({
     pick: el => { ex.setValue('pick', el.dataset.zone); kit.commit(); },
-    classify: () => { if (pick()) { classify(pick()); kit.commit(); } },
-    'deck-undo': () => { kit.deckUndo(total); ex.setValue('pick', ''); kit.commit(); },
-    'deck-reopen': el => { kit.deckReopen(total, Number(el.dataset.index)); kit.commit(); }
+    classify: () => { if (pick()) classify(pick()); },
+    'deck-undo': () => { kit.deckUndo(total); ex.setValue('pick', ''); kit.commit(); }
   });
-  kit.onDrop((id, zone) => { classify(zone); kit.commit(); });
+  kit.onDrop((id, zone) => classify(zone));
 
   ex.mount('s3-2.1', { screen, validate, feedback, compactFeedback: true });
 })();
