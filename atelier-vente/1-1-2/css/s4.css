@@ -250,3 +250,8 @@
 .mc-solo-picture { justify-self: center; width: min(100%, 360px); margin-top: auto; pointer-events: none; }
 .mc-solo-question { margin: 0; font-size: clamp(1.1rem, 1.35vw, 1.3rem); font-weight: 600; color: var(--navy); }
 @media (max-width: 900px) { #main .mc-solo.k-panel { grid-template-columns: minmax(0, 1fr); } }
+
+/* 3.2 · les portraits peints du client et du commercial (mêmes que le crash-test, 1-1-3). */
+.over-avatar { width: 58px; height: 58px; background: none; }
+.over-line.is-seller .over-avatar { background: none; }
+.over-avatar img { width: 100%; height: 100%; border-radius: 50%; }

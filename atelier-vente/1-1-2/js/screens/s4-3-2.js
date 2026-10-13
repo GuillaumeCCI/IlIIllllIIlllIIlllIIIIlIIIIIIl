@@ -19,7 +19,7 @@
         <div class="k-columns is-wide-left">
         <section class="k-panel" aria-label="Extrait de l’entretien">
           <div class="over-chat">${content.exchange.map(line => `<div class="over-line is-${line.who}">
-            <span class="over-avatar">${icon('user', { size: 24 })}</span>
+            <span class="over-avatar"><img src="${esc(core.asset(`assets/illustrations/s4/portrait-${line.who === 'client' ? 'client' : 'commercial'}.webp`))}" alt="" decoding="async"></span>
             <div><span class="over-who">${line.who === 'client' ? 'Client' : 'Commercial'}</span>
             <p class="over-bubble">${esc(line.text)}</p></div>
           </div>`).join('')}</div>
