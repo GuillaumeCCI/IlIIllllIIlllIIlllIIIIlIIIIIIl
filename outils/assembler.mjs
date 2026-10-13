@@ -150,16 +150,16 @@ writeFileSync(join(repo, 'index.html'), home);
 const data = JSON.stringify(modules);
 const integrate = page('L’Atelier Vente · Intégrer', `<main>
   <h1>Intégrer les exercices</h1>
-  <p class="lede">Trois façons de placer les exercices dans une autre plateforme (LMS, Moodle, site, Notion…) : un module entier, avec sa navigation, un thème du module (ses seuls exercices, avec leur navigation), ou un exercice seul, sans en-tête ni navigation. Copiez le lien, ou le code d’intégration à coller dans un bloc HTML.</p>
+  <p class="lede">Deux façons de placer les exercices dans une autre plateforme (LMS, Moodle, site, Notion…) : un module entier, ou un seul thème du module (ses exercices, avec leur navigation). Copiez le lien, ou le code d’intégration à coller dans un bloc HTML.</p>
   <section class="card how">
     <h2>Mode d’emploi</h2>
     <ol>
-      <li><strong>Lien</strong> : à coller tel quel dans un bouton ou une activité « URL ». L’exercice s’ouvre en plein écran, sans en-tête.</li>
+      <li><strong>Lien</strong> : à coller tel quel dans un bouton ou une activité « URL ». Les exercices s’ouvrent en plein écran.</li>
       <li><strong>Code d’intégration</strong> : à coller dans un bloc HTML (« intégrer », « iframe », « code source »). La hauteur du cadre s’ajuste toute seule quand la plateforme accepte les scripts ; sinon, elle reste à 900 pixels, avec une barre de défilement.</li>
-      <li>Les réponses de l’apprenant restent dans son navigateur. Certains navigateurs bloquent cette mémoire dans un cadre intégré : l’exercice fonctionne, mais le brouillon n’est pas gardé d’une visite à l’autre.</li>
+      <li>Les réponses de l’apprenant restent dans son navigateur. Certains navigateurs bloquent cette mémoire dans un cadre intégré : les exercices fonctionnent, mais le brouillon n’est pas gardé d’une visite à l’autre.</li>
     </ol>
   </section>
-  <p class="filter"><label for="filter">Rechercher un exercice</label><input id="filter" type="search" placeholder="Titre, série, numéro…"></p>
+  <p class="filter"><label for="filter">Rechercher un thème ou un exercice</label><input id="filter" type="search" placeholder="Titre, série, numéro…"></p>
   <div id="modules"></div>
 </main>
 <style>
@@ -177,11 +177,11 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
   .serie h3 { font-size: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 0; }
   .serie-head .note { color: var(--muted); font-size: .9rem; }
   .serie[hidden] { display: none; }
-  .row { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+  .row { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
   .row .id { font-weight: 800; color: var(--accent); }
   .row[hidden] { display: none; }
   .copied { background: #1b6b47 !important; border-color: #1b6b47 !important; color: #fff !important; }
-  @media (max-width: 760px) { .row { grid-template-columns: 44px minmax(0, 1fr); } .row .actions { grid-column: 2; } }
+  @media (max-width: 760px) { .row { grid-template-columns: 44px minmax(0, 1fr); } }
 </style>`, `<script>
 (function () {
   'use strict';
@@ -206,9 +206,7 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
         var themeUrl = base + m.code + '/index.html?embed=module&theme=' + s.id;
         var themeTitle = 'L’Atelier Vente ' + m.code + ' · ' + s.label;
         return '<div class="serie"><div class="serie-head"><h3>' + esc(s.label) + '</h3><span class="note">Le thème entier · ' + s.exercises.length + ' exercice' + (s.exercises.length > 1 ? 's' : '') + '</span>' + actions(themeUrl, themeTitle) + '</div>' + s.exercises.map(function (x) {
-          var url = base + m.code + '/exercices/' + x.file + '.html?embed=solo';
-          var title = 'L’Atelier Vente ' + m.code + ' · ' + s.label + ' · ' + x.label;
-          return '<div class="row" data-search="' + esc((m.code + ' ' + s.label + ' ' + x.id + ' ' + x.label).toLowerCase()) + '"><span class="id">' + esc(x.id) + '</span><span>' + esc(x.label) + '</span>' + actions(url, title) + '</div>';
+          return '<div class="row" data-search="' + esc((m.code + ' ' + s.label + ' ' + x.id + ' ' + x.label).toLowerCase()) + '"><span class="id">' + esc(x.id) + '</span><span>' + esc(x.label) + '</span></div>';
         }).join('') + '</div>';
       }).join('') + '</section>';
   }).join('');
