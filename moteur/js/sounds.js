@@ -464,7 +464,7 @@
   // l'exercice », qui éteint justement la musique du menu.
   ['pointerdown', 'keydown', 'touchstart'].forEach(type =>
     document.addEventListener(type, event => {
-      if (event.target && event.target.closest && event.target.closest('[data-entrance="off"], [data-action="start-exercise"]')) return;
+      if (event.target && event.target.closest && event.target.closest('[data-entrance="off"], [data-entrance-screen], [data-action="start-exercise"]')) return;
       startMusic();
     }, { capture: true }));
   // La musique continue quand on passe sur un autre onglet : seul le
@@ -487,8 +487,8 @@
     document.addEventListener('atelier:briefing-shown', () => want('menu'));
     document.addEventListener('atelier:exercise-launch', silence);
     document.addEventListener('atelier:exercise-shown', () => want(exerciseTrack()));
-  } else if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => want('menu'));
-  else setTimeout(() => want('menu'));
+  } else if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => { want('menu'); showEntrance(); });
+  else setTimeout(() => { want('menu'); showEntrance(); });
 
   /* Le navigateur attend un geste : le bouton Musique clignote doucement
    * et l'annonce, jusqu'au premier clic. */
@@ -499,17 +499,53 @@
     button.title = on ? 'La musique démarre au premier clic sur la page' : (musicOff ? 'Activer la musique' : 'Couper la musique');
   }
 
-  /* L'ÉCRAN D'ACCUEIL. Sur un accueil, si le navigateur refuse la musique
-   * faute de geste, un écran couvre la page et demande si l'on veut de la
-   * musique. « Avec musique » est le geste qui la lance ; « Sans musique »
-   * la coupe, comme le bouton Musique, et l'écran ne revient plus. Un clic simulé par le code ne
-   * compterait pas : le navigateur ne retient que les vrais. Les pages
-   * suivantes de la visite sont en général autorisées d'office, et l'écran
-   * ne revient alors pas. Styles intégrés : l'écran vaut aussi sur les
-   * pages d'accueil hors module (Go Live, GitHub). */
+  /* LE PLEIN ÉCRAN, voulu pour toute la visite. Le navigateur ne l'accorde
+   * que sur un clic, et le quitte à chaque changement de page : le choix est
+   * donc gardé le temps de la visite, et rétabli au premier clic sur la page
+   * suivante. Quitter le plein écran (Échap, bouton de l'en-tête) le retire. */
+  const FULLSCREEN_STORE = 'atelier-vente-plein-ecran';
+  const canFullscreen = Boolean(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+  const isFullscreen = () => Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+  function enterFullscreen() {
+    if (!canFullscreen || isFullscreen()) return;
+    const page = document.documentElement;
+    try {
+      const asked = page.requestFullscreen ? page.requestFullscreen() : page.webkitRequestFullscreen && page.webkitRequestFullscreen();
+      if (asked && asked.catch) asked.catch(() => {});
+    } catch { /* refusé : la page reste en fenêtre */ }
+  }
+  let leaving = false;
+  root.addEventListener('beforeunload', () => { leaving = true; });
+  root.addEventListener('pagehide', () => { leaving = true; });
+  root.addEventListener('pageshow', () => { leaving = false; });
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(type => document.addEventListener(type, () => {
+    if (leaving) return;
+    try { root.sessionStorage.setItem(FULLSCREEN_STORE, isFullscreen() ? 'oui' : 'non'); } catch { /* choix non gardé */ }
+  }));
+  if (canFullscreen) {
+    let wanted = false;
+    try { wanted = root.sessionStorage.getItem(FULLSCREEN_STORE) === 'oui'; } catch { /* pas de choix gardé */ }
+    // Pas sur le bouton Plein écran de l'en-tête : il basculerait aussitôt dans l'autre sens.
+    if (wanted) ['pointerdown', 'keydown'].forEach(type => document.addEventListener(type, function resume(event) {
+      if (event.target && event.target.closest && event.target.closest('[data-action="fullscreen"], [data-entrance], [data-entrance-screen]')) return;
+      ['pointerdown', 'keydown'].forEach(t => document.removeEventListener(t, resume, true));
+      enterFullscreen();
+    }, true));
+  }
+
+  /* L'ÉCRAN D'ACCUEIL. À la première arrivée de la visite sur un accueil
+   * (ou plus tard, si le navigateur refuse la musique faute de geste), un
+   * écran couvre la page, en deux temps. D'abord le plein écran : un seul
+   * bouton, sans échappatoire (sauf navigateur qui ne le permet pas, ou
+   * page déjà en plein écran : cette étape est alors sautée). Puis la
+   * musique : « Avec musique » est le geste qui la lance ; « Sans musique »
+   * la coupe, comme le bouton Musique. L'écran ne revient plus de la visite. Un
+   * clic simulé par le code ne compterait pas : le navigateur ne retient que
+   * les vrais. Styles intégrés : l'écran vaut aussi sur les pages d'accueil
+   * hors module (Go Live, GitHub). */
   let entrance = null;
   function showEntrance() {
-    if (entrance || musicOff || !document.body) return;
+    if (entrance || !document.body) return;
     // Déjà répondu pendant cette visite : on attend simplement un clic.
     try { if (root.sessionStorage.getItem(`${MUSIC_STORE}-choisie`)) return; } catch { /* on demande */ }
     const style = document.createElement('style');
@@ -527,14 +563,25 @@
       .av-entrance button.is-quiet { background: #fff; color: #134bd7; box-shadow: inset 0 0 0 1.5px #134bd7; }
       .av-entrance button.is-quiet:hover { background: #ecf4ff; }
       .av-entrance button:focus-visible { outline: 3px solid #ff936b; outline-offset: 3px; }
+      .av-entrance-card[hidden] { display: none; }
+      .av-entrance-card > .icon { width: 56px; height: 56px; color: #134bd7; }
       @media (prefers-reduced-motion: reduce) { .av-entrance, .av-entrance.is-leaving { transition: none; } }`;
     entrance = document.createElement('div');
     entrance.className = 'av-entrance';
     entrance.setAttribute('role', 'dialog');
     entrance.setAttribute('aria-modal', 'true');
     entrance.setAttribute('aria-labelledby', 'av-entrance-title');
-    entrance.innerHTML = `<div class="av-entrance-card">
+    const askScreen = canFullscreen && !isFullscreen();
+    entrance.innerHTML = `<div class="av-entrance-card" data-step="screen"${askScreen ? '' : ' hidden'}>
       <h1 id="av-entrance-title">L’Atelier Vente</h1>
+      ${svg(SCREEN)}
+      <p>Les exercices se font en plein écran,<br>pour profiter de toute la place.</p>
+      <div class="av-entrance-actions">
+        <button type="button" data-entrance-screen>${svg(SCREEN)}Passer en plein écran</button>
+      </div>
+    </div>
+    <div class="av-entrance-card" data-step="music"${askScreen ? ' hidden' : ''}>
+      <h1>L’Atelier Vente</h1>
       <p>Souhaitez-vous une musique de fond pendant les exercices ?<br>Vous pourrez changer d’avis à tout moment avec le bouton&nbsp;«&nbsp;Musique&nbsp;».</p>
       <div class="av-entrance-actions">
         <button type="button" data-entrance="on">${svg(NOTE)}Avec musique</button>
@@ -547,10 +594,20 @@
     // « Avec » : le geste a déjà lancé la musique (écoute en capture, plus
     // haut). « Sans » : la musique est coupée et le choix mémorisé.
     entrance.addEventListener('click', event => {
+      // Étape 1 : le plein écran, puis la question de la musique. Même
+      // refusé par le navigateur, on passe à la suite : pas d'impasse.
+      if (event.target.closest('[data-entrance-screen]')) {
+        enterFullscreen();
+        entrance.querySelector('[data-step="screen"]').hidden = true;
+        entrance.querySelector('[data-step="music"]').hidden = false;
+        entrance.querySelector('[data-entrance="on"]').focus();
+        return;
+      }
       const choice = event.target.closest('[data-entrance]');
       if (!choice) return;
       try { root.sessionStorage.setItem(`${MUSIC_STORE}-choisie`, 'oui'); } catch { /* on redemandera */ }
       if (choice.dataset.entrance === 'off') setMusic(false);
+      else if (musicOff) setMusic(true);
       else startMusic();
       waiting(false);
       entrance.classList.add('is-leaving');
@@ -560,6 +617,7 @@
 
   const NOTE = '<path d="M25 43V18L52 12V39"/><ellipse fill="#fff" cx="17" cy="46" rx="9.2" ry="8.2" transform="rotate(-23 17 46)"/><ellipse fill="#fff" cx="44" cy="42" rx="9.2" ry="8.2" transform="rotate(-23 44 42)"/>';
   const SLASH = '<path d="M8 8 56 56"/>';
+  const SCREEN = '<path d="M24 10H15Q10 10 10 15V24"/><path d="M40 10H49Q54 10 54 15V24"/><path d="M10 40V49Q10 54 15 54H24"/><path d="M54 40V49Q54 54 49 54H40"/>';
 
   function paintMusic(button) {
     button.innerHTML = `${svg(NOTE + (musicOff ? SLASH : ''))}<span class="sound-toggle-label">${musicOff ? 'Musique coupée' : 'Musique'}</span>`;

@@ -191,7 +191,11 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
 (function () {
   'use strict';
   var MODULES = ${data};
-  var base = location.href.replace(/[^/]*([?#].*)?$/, '');
+  /* Ouverte en local (Live Server, serveur de test, fichier), la page donne
+   * quand même les adresses publiques : un code pointant vers l'ordinateur
+   * ne marcherait que chez soi, et le LMS demanderait l'accès à l'appareil. */
+  var local = location.protocol === 'file:' || /^(localhost|127\\.|\\[::1\\]|0\\.0\\.0\\.0)/.test(location.hostname);
+  var base = local ? 'https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/atelier-vente/' : location.href.replace(/[^/]*([?#].*)?$/, '');
   var esc = function (v) { return String(v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var resize = '<script>if(!window.atelierVenteResize){window.atelierVenteResize=1;addEventListener("message",function(e){if(!e.data||e.data.type!=="atelier-vente:height")return;document.querySelectorAll("iframe[data-atelier-vente]").forEach(function(f){if(f.contentWindow===e.source)f.style.height=e.data.height+"px";});});}<' + '/script>';
   function iframe(url, title) {
