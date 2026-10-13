@@ -206,6 +206,22 @@
       ${spark(60, 386)}`);
   }
 
+  /* ── Illustrations ───────────────────────────────────────────────────── */
+  /* Les dessins tracés ci-dessus cèdent la place aux illustrations
+   * communes à tous les modules (moteur/assets/illustrations/apercus/),
+   * une par famille ; le choix distingue 2 réponses (a, b) de 3 et plus.
+   * Le chemin du moteur est lu sur un script déjà chargé depuis lui. */
+  const engine = ((root.document && root.document.querySelector('script[src*="moteur/js/"]')) || { getAttribute: () => '' })
+    .getAttribute('src').replace(/js\/[^/]*$/, '');
+  const picture = name =>
+    `<img class="preview-art is-picture" src="${engine}assets/illustrations/apercus/${name}.webp" alt="" decoding="async">`;
+  orderPreview = () => picture('ordre');
+  sortPreview = () => picture('trier');
+  matchPreview = () => picture('associer');
+  choicePreview = (options = 4) => picture(options <= 2 ? 'choix-2' : 'choix');
+  writePreview = () => picture('ecrire');
+  highlightPreview = () => picture('surligner');
+
   /* ── Correspondance exercice → aperçu ────────────────────────────────── */
   /* Chaque exercice reçoit sa famille et ses paramètres réels. */
   const MAP = {

@@ -189,7 +189,14 @@ test('chaque aperçu produit un dessin exploitable', () => {
   const problems = [];
   for (const exercise of catalog.all) {
     const art = previews.preview(exercise.key);
-    if (!art.startsWith('<svg')) { problems.push(`${exercise.key} : pas un SVG`); continue; }
+    // Une illustration de famille (moteur/assets/illustrations/apercus/) :
+    // son fichier doit exister. Sinon, un dessin tracé, assez fourni.
+    const picture = /^<img class="preview-art[^"]*" src="[^"]*assets\/illustrations\/apercus\/([\w-]+\.webp)"/.exec(art);
+    if (picture) {
+      if (!fs.existsSync(path.join(__dirname, '../../../moteur/assets/illustrations/apercus', picture[1]))) problems.push(`${exercise.key} : illustration ${picture[1]} introuvable`);
+      continue;
+    }
+    if (!art.startsWith('<svg')) { problems.push(`${exercise.key} : ni illustration ni SVG`); continue; }
     // Un dessin presque vide trahit une famille mal paramétrée.
     if (art.length < 600) problems.push(`${exercise.key} : dessin trop pauvre`);
     if (/undefined|NaN/.test(art)) problems.push(`${exercise.key} : valeur manquante dans le tracé`);
