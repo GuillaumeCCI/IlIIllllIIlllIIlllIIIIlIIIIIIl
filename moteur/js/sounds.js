@@ -504,11 +504,17 @@
    * donc gardé le temps de la visite, et rétabli au premier clic sur la page
    * suivante. Quitter le plein écran (Échap, bouton de l'en-tête) le retire. */
   const FULLSCREEN_STORE = 'atelier-vente-plein-ecran';
-  const canFullscreen = Boolean(document.fullscreenEnabled || document.webkitFullscreenEnabled);
-  const isFullscreen = () => Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+  // Dans le cadre d'intégration (cadre.html), c'est lui qui passe en plein
+  // écran : il ne change pas de page, le plein écran tient d'un exercice à l'autre.
+  const host = (() => {
+    try { if (root.parent !== root && root.parent.document.documentElement.hasAttribute('data-cadre')) return root.parent.document; } catch { /* autre origine */ }
+    return document;
+  })();
+  const canFullscreen = Boolean(host.fullscreenEnabled || host.webkitFullscreenEnabled);
+  const isFullscreen = () => Boolean(host.fullscreenElement || host.webkitFullscreenElement);
   function enterFullscreen() {
     if (!canFullscreen || isFullscreen()) return;
-    const page = document.documentElement;
+    const page = host.documentElement;
     try {
       const asked = page.requestFullscreen ? page.requestFullscreen() : page.webkitRequestFullscreen && page.webkitRequestFullscreen();
       if (asked && asked.catch) asked.catch(() => {});
@@ -518,7 +524,7 @@
   root.addEventListener('beforeunload', () => { leaving = true; });
   root.addEventListener('pagehide', () => { leaving = true; });
   root.addEventListener('pageshow', () => { leaving = false; });
-  ['fullscreenchange', 'webkitfullscreenchange'].forEach(type => document.addEventListener(type, () => {
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(type => host.addEventListener(type, () => {
     if (leaving) return;
     try { root.sessionStorage.setItem(FULLSCREEN_STORE, isFullscreen() ? 'oui' : 'non'); } catch { /* choix non gardé */ }
   }));
@@ -552,6 +558,9 @@
     style.textContent = `
       .av-entrance { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 24px; background: #f8f5f0 url('${urlOf('../assets/backgrounds/accueil.webp')}') center / cover no-repeat; font-family: 'Fira Sans', system-ui, sans-serif; color: #101448; text-align: center; opacity: 0; transition: opacity .35s ease; }
       .av-entrance.is-shown { opacity: 1; }
+      /* Intégré, le cadre peut être très haut (sa hauteur suit la page) : l'écran
+       * se cale en haut, là où l'apprenant regarde, plutôt qu'au milieu. */
+      html[data-embed] .av-entrance { place-items: start center; padding-top: 90px; }
       .av-entrance.is-leaving { opacity: 0; transition-duration: .6s; pointer-events: none; }
       .av-entrance-card { display: grid; justify-items: center; gap: 18px; max-width: 560px; }
       .av-entrance h1 { margin: 0; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 800; line-height: 1.05; }

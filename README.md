@@ -27,7 +27,7 @@ atelier-vente/            ← ce dépôt (Documents\atelier-vente)
 
 ## Les liens LMS
 
-Un thème d’un module : `https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/atelier-vente/1-1-2/index.html?embed=module&theme=s3`. La page `atelier-vente/integrer.html` donne tous les liens : module entier, thème par thème, exercice seul.
+Un thème d’un module : `https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/atelier-vente/cadre.html?module=1-1-2&theme=s3`. Le cadre (`atelier-vente/cadre.html`) garde le plein écran d’un exercice à l’autre : le navigateur le quitte à chaque changement de page, et ici seule la page intérieure change. La page `atelier-vente/integrer.html` donne tous les liens : module entier, thème par thème, exercice seul.
 
 ## Le moteur commun
 

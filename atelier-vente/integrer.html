@@ -96,11 +96,12 @@
       + '<button type="button" class="button small" data-copy="' + esc(iframe(url, title)) + '">Copier le code d’intégration</button></span>';
   }
   document.getElementById('modules').innerHTML = MODULES.map(function (m) {
-    var moduleUrl = base + m.code + '/index.html?embed=module';
+    // Le cadre garde le plein écran d'un exercice à l'autre (voir cadre.html).
+    var moduleUrl = base + 'cadre.html?module=' + m.code;
     return '<section class="card module" data-module="' + m.code + '"><div class="module-head"><span class="k">Module ' + m.code + '</span><h2>Tous les exercices d’un coup</h2>'
       + actions(moduleUrl, 'L’Atelier Vente, module ' + m.code) + '</div>'
       + m.series.map(function (s) {
-        var themeUrl = base + m.code + '/index.html?embed=module&theme=' + s.id;
+        var themeUrl = base + 'cadre.html?module=' + m.code + '&theme=' + s.id;
         var themeTitle = 'L’Atelier Vente ' + m.code + ' · ' + s.label;
         return '<div class="serie"><div class="serie-head"><h3>' + esc(s.label) + '</h3><span class="note">Le thème entier · ' + s.exercises.length + ' exercice' + (s.exercises.length > 1 ? 's' : '') + '</span>' + actions(themeUrl, themeTitle) + '</div><pre class="code">' + esc(iframe(themeUrl, themeTitle)) + '</pre>' + s.exercises.map(function (x) {
           return '<div class="row" data-search="' + esc((m.code + ' ' + s.label + ' ' + x.id + ' ' + x.label).toLowerCase()) + '"><span class="id">' + esc(x.id) + '</span><span>' + esc(x.label) + '</span></div>';

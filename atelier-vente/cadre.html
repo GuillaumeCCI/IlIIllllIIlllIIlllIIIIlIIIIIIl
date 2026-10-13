@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr" data-cadre>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1249d8">
+  <title>L’Atelier Vente</title>
+  <!-- LE CADRE · ce que le LMS intègre (cadre.html?module=1-1-1&theme=s1).
+       Le navigateur quitte le plein écran à chaque changement de page. Ici,
+       c'est cette page qui passe en plein écran, et elle ne change jamais :
+       les exercices défilent dans le cadre intérieur, le plein écran reste.
+       Les pages intérieures le demandent à ce cadre (attribut data-cadre),
+       et leur hauteur est relayée au LMS pour ajuster son iframe. -->
+  <style>
+    html, body { height: 100%; margin: 0; background: #f8f5f0; }
+    iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+    p { margin: 0; padding: 24px; font: 1rem/1.5 system-ui, sans-serif; color: #19264f; }
+  </style>
+</head>
+<body>
+  <script>
+  (function () {
+    'use strict';
+    var params = new URLSearchParams(location.search);
+    var module = params.get('module') || '';
+    var theme = params.get('theme') || '';
+    // Seulement un module et un thème de ce site : rien d'autre ne se charge ici.
+    if (!/^\d+-\d+-\d+$/.test(module) || (theme && !/^s\d+$/.test(theme))) {
+      document.body.innerHTML = '<p>Adresse incomplète : module introuvable.</p>';
+      return;
+    }
+    var frame = document.createElement('iframe');
+    frame.title = 'L’Atelier Vente ' + module;
+    frame.allow = 'autoplay; fullscreen; microphone; camera';
+    frame.src = module + '/index.html?embed=module' + (theme ? '&theme=' + theme : '');
+    document.body.appendChild(frame);
+
+    // La hauteur annoncée par la page intérieure remonte au LMS.
+    addEventListener('message', function (event) {
+      var data = event.data;
+      if (event.source !== frame.contentWindow || !data || data.type !== 'atelier-vente:height') return;
+      if (parent !== window) parent.postMessage(data, '*');
+    });
+  })();
+  </script>
+</body>
+</html>

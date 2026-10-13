@@ -477,7 +477,14 @@
   /* Le bouton bascule dans les deux sens ; la touche Échap sort aussi, par
    * le comportement natif du navigateur. L'icône suit l'état réel, qui peut
    * changer sans passer par le bouton. */
-  const isFullscreen = () => Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+  /* Dans le cadre d'intégration (atelier-vente/cadre.html), c'est le cadre
+   * qui passe en plein écran : il ne change jamais de page, le plein écran
+   * survit donc au passage d'un exercice à l'autre. */
+  const fullscreenHost = (() => {
+    try { if (window.parent !== window && window.parent.document.documentElement.hasAttribute('data-cadre')) return window.parent.document; } catch { /* autre origine */ }
+    return document;
+  })();
+  const isFullscreen = () => Boolean(fullscreenHost.fullscreenElement || fullscreenHost.webkitFullscreenElement);
 
   function paintFullscreen() {
     const control = $('[data-action="fullscreen"]');
@@ -491,8 +498,8 @@
 
   async function toggleFullscreen() {
     try {
-      if (isFullscreen()) await (document.exitFullscreen?.() ?? document.webkitExitFullscreen?.());
-      else await (document.documentElement.requestFullscreen?.() ?? document.documentElement.webkitRequestFullscreen?.());
+      if (isFullscreen()) await (fullscreenHost.exitFullscreen?.() ?? fullscreenHost.webkitExitFullscreen?.());
+      else await (fullscreenHost.documentElement.requestFullscreen?.() ?? fullscreenHost.documentElement.webkitRequestFullscreen?.());
     } catch {
       toast('Le plein écran est indisponible dans ce navigateur ou a été refusé.');
     }
@@ -503,8 +510,8 @@
     const control = $('[data-action="fullscreen"]');
     if (!control) return;
     control.addEventListener('click', toggleFullscreen);
-    document.addEventListener('fullscreenchange', paintFullscreen);
-    document.addEventListener('webkitfullscreenchange', paintFullscreen);
+    fullscreenHost.addEventListener('fullscreenchange', paintFullscreen);
+    fullscreenHost.addEventListener('webkitfullscreenchange', paintFullscreen);
     paintFullscreen();
   }
 
