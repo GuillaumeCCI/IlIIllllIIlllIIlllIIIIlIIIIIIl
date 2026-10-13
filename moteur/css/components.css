@@ -435,16 +435,14 @@
 
 .opening-pick {
   display: flex; align-items: center; gap: 12px;
-  width: 100%; margin-top: auto;
-  padding: 13px 16px;
-  border: 1px solid #c9d6f2; border-radius: 10px;
-  background: #f3f7ff;
+  width: fit-content; margin-top: auto;
+  padding: 6px 0;
   font-weight: 700; color: var(--navy);
   cursor: var(--cursor-hand, pointer);
 }
 .opening-pick input { width: 20px; height: 20px; accent-color: var(--accent); margin: 0; }
-.opening-card.selected .opening-pick { border-color: var(--accent); background: #e8efff; }
-.opening-pick:focus-within { outline: 3px solid #1249d855; outline-offset: 2px; }
+.opening-card.selected .opening-pick { color: var(--accent); }
+.opening-pick:focus-within { outline: 3px solid #1249d855; outline-offset: 4px; border-radius: 6px; }
 
 /* Étapes 2 et 3 : le rappel du choix, puis une carte d'écriture. */
 .compare-recall {
@@ -466,6 +464,7 @@
 .compare-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .compare-card .case-dot:disabled { opacity: .45; cursor: not-allowed; }
 .compare-card select { min-height: 47px; max-width: 420px; }
+.compare-card .pick { max-width: 420px; }
 .compare-card textarea { min-height: 170px; }
 .compare-card-tools { display: flex; gap: 18px; flex-wrap: wrap; }
 .compare-card-tools:empty { display: none; }

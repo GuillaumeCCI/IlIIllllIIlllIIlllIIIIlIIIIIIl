@@ -530,6 +530,8 @@
     const bars = $$('#main .k-bar, #main .form-actions');
     if (!bars || bars.length !== 1) return;
     const bar = bars[0];
+    // Un écran peut garder sa barre près du contenu : `data-bar-stays`.
+    if (bar.closest('[data-bar-stays]')) return;
     const main = $('#main');
     const page = bar.closest('.k-page') || [...main.children].find(child => child.contains(bar));
     if (!page) return;
@@ -785,9 +787,138 @@
     $('#feedback')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
 
+/* ───────────────────────── Menus déroulants ───────────────────────────   * La liste native du navigateur ne se met pas en forme : chaque <select>   * d'un exercice est doublé d'une liste à nous (bouton bleu pâle, liste   * claire, choix surligné). Le <select> reste dans la page, caché : c'est   * lui qui porte la valeur (sauvegarde, validation) ; la liste ne fait que   * le piloter. Styles : extras-commun.css (.pick). */
+  function enhanceSelect(select) {
+    const wrap = document.createElement('div');
+    wrap.className = 'pick';
+    select.before(wrap);
+    wrap.append(select);
+    select.tabIndex = -1;    select.dataset.picked = 'true';
+    const listId = `${select.id}-list`;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'pick-button';
+    button.setAttribute('aria-haspopup', 'listbox');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', listId);
+    button.setAttribute('aria-label', select.getAttribute('aria-label') || '');
+    const list = document.createElement('ul');
+    list.className = 'pick-list';
+    list.id = listId;
+    list.setAttribute('role', 'listbox');
+    list.hidden = true;
+    const items = [...select.options].map((option, i) => {
+      const li = document.createElement('li');
+      li.setAttribute('role', 'option');
+      li.id = `${listId}-${i}`;
+      li.dataset.value = option.value;
+      li.textContent = option.textContent;
+      list.append(li);
+      return li;
+    });
+    wrap.append(button, list);
+    let active = -1;
+
+    const paint = () => {
+      const chosen = select.selectedIndex;
+      button.innerHTML = `<span>${esc(select.options[chosen]?.textContent || '')}</span>${icon('chevronRight', { size: 20 })}`;
+      button.classList.toggle('is-empty', !select.value);
+      items.forEach((li, i) => li.setAttribute('aria-selected', String(i === chosen)));
+    };
+    const highlight = i => {
+      active = Math.max(0, Math.min(items.length - 1, i));
+      items.forEach((li, k) => li.classList.toggle('is-active', k === active));
+      button.setAttribute('aria-activedescendant', items[active].id);
+      items[active].scrollIntoView({ block: 'nearest' });
+    };
+    const open = () => {
+      $$('.pick-list:not([hidden])').forEach(other => { if (other !== list) other.closest('.pick').close(); });
+      list.hidden = false;
+      wrap.classList.add('is-open');
+      button.setAttribute('aria-expanded', 'true');
+      highlight(Math.max(0, select.selectedIndex));
+    };
+    const close = () => {
+      list.hidden = true;
+      wrap.classList.remove('is-open');
+      button.setAttribute('aria-expanded', 'false');
+      button.removeAttribute('aria-activedescendant');
+    };
+    wrap.close = close;
+    const choose = i => {
+      if (select.selectedIndex !== i) {
+        select.selectedIndex = i;
+        select.dispatchEvent(new Event('input', { bubbles: true }));
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      paint();
+      close();
+      button.focus();
+    };
+
+    button.addEventListener('click', () => (list.hidden ? open() : close()));
+    button.addEventListener('keydown', event => {
+      const isOpen = !list.hidden;
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (!isOpen) open();
+        else highlight(active + (event.key === 'ArrowDown' ? 1 : -1));
+      } else if ((event.key === 'Enter' || event.key === ' ') && isOpen) {
+        event.preventDefault();
+        choose(active);
+      } else if (event.key === 'Escape' && isOpen) {
+        event.preventDefault();
+        close();
+      } else if (event.key === 'Tab' && isOpen) close();
+    });
+    items.forEach((li, i) => {
+      li.addEventListener('mousedown', event => event.preventDefault());
+      li.addEventListener('click', () => choose(i));
+      li.addEventListener('mousemove', () => { if (active !== i) highlight(i); });
+    });
+    // La validation donne le focus au <select> fautif : on le renvoie au bouton.
+    select.addEventListener('focus', () => button.focus());
+    paint();
+  }
+
+
+  /* Tout <select> qui apparaît dans #main (rendu complet ou partiel) est
+   * doublé aussitôt ; un clic ailleurs referme la liste ouverte. */
+  function wirePickers() {
+    const main = $('#main');
+    if (!main) return;
+    const enhanceAll = () => $$('#main select:not([data-picked])').forEach(enhanceSelect);
+    // Absent du DOM simulé des tests : le premier passage suffit alors.
+    if (window.MutationObserver) new MutationObserver(enhanceAll).observe(main, { childList: true, subtree: true });
+    enhanceAll();
+    document.addEventListener('click', event => {
+      $$('.pick.is-open').forEach(pick => { if (!pick.contains(event.target)) pick.close(); });
+    });
+  }
+
+  /* Les zones d'écriture n'ont plus de poignée : elles grandissent avec
+   * le texte (jamais en dessous de leur hauteur prévue), à la saisie et à
+   * chaque rendu (brouillon rechargé). */
+  function fitTextarea(area) {
+    area.style.height = 'auto';
+    if (area.scrollHeight > area.clientHeight) area.style.height = `${area.scrollHeight + 2}px`;
+  }
+
+  function wireAutoGrow() {
+    const main = $('#main');
+    if (!main) return;
+    const fitAll = () => $$('#main textarea').forEach(fitTextarea);
+    if (window.MutationObserver) new MutationObserver(fitAll).observe(main, { childList: true, subtree: true });
+    document.addEventListener('input', event => { if (event.target.matches?.('#main textarea')) fitTextarea(event.target); });
+    window.addEventListener('resize', fitAll);
+    fitAll();
+  }
+
   /* ─────────────────────────── Branchements ─────────────────────────── */
 
   function wire() {
+    wirePickers();
+    wireAutoGrow();
     document.addEventListener('input', event => {
       const input = event.target.closest('[data-field]');
       if (!input) return;
@@ -879,6 +1010,7 @@
     render();
     core.wireFullscreen();
     core.wireKeyboardHelp();
+    core.wireScale();
   }
 
   root.AtelierExercise = Object.freeze({

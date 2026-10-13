@@ -16,6 +16,11 @@
   // L'ouverture 1 est celle attendue par le corrigé de la fiche.
   const expected = '1';
 
+  const ARGUE_ART = { image: 'assets/illustrations/s1/choix-reflexion.webp', alt: 'Une femme réfléchit, un stylo contre le menton, une bulle de pensée au-dessus d’elle.' };
+  // Provisoire : l'illustration de l'étape 2, en attendant celle de la maquette.
+  const BORROW_ART = { image: 'assets/illustrations/s1/choix-reflexion.webp', alt: 'Une femme réfléchit, un stylo contre le menton.' };
+  const art = ({ image, alt }) => `<img class="compare-art" src="${esc(core.asset(image))}" alt="${esc(alt)}">`;
+
   const stage = () => [2, 3].includes(Number(ex.value('stage'))) ? Number(ex.value('stage')) : 1;
   const argumentCount = () => Math.min(5, Math.max(3, Number(ex.value('argumentCount')) || 3));
   // L'argument affiché à l'étape 2, de 1 à argumentCount().
@@ -55,10 +60,14 @@
     </div>`;
   }
 
+  /* Le contexte en pastilles illustrées, chacune dans sa teinte. */
+  const facts = () => `<ul class="compare-facts">${[['briefcase', 'Premier RDV B2B'], ['building', 'PME'], ['clock', '30 min']]
+    .map(([name, label]) => `<li>${icon(name, { size: 20 })}<span>${esc(label)}</span></li>`).join('')}</ul>`;
+
   /* ── Étape 1 : choisir ─────────────────────────────────────────────── */
   function chooseScreen() {
     const choice = ex.value('choice');
-    return `${core.callout('Les deux ouvertures sont acceptables. Choisissez celle qui prépare le mieux l’échange.')}
+    return `<div class="wiz-note is-deco no-traits"><p>Les deux ouvertures sont acceptables. Choisissez celle qui prépare le mieux l’échange.</p></div>
       <fieldset class="opening-cards compare-openings" id="field-choice">
         <legend class="sr-only">Choisissez l’ouverture la plus efficace</legend>
         ${content.openings.map((text, index) => {
@@ -97,8 +106,7 @@
     }).join('');
     const last = i === count;
 
-    return `${recall()}
-      <section class="panel compare-card">
+    return `<section class="panel compare-card">
         <div class="compare-card-top">
           <span class="tag">Argument ${i} sur ${count}</span>
           <span class="case-dots">${dots}</span>
@@ -106,7 +114,8 @@
         <h2 class="explain-question">Pourquoi cette ouverture vous paraît-elle plus efficace ?</h2>
         <div class="field">
           <label for="field-criterion${i}">Critère mobilisé</label>
-          ${ex.select(`criterion${i}`, `Critère de l’argument ${i}`, content.criteria, 'Choisir un critère')}
+          <p class="field-help" id="help-criterion${i}">Parmi les critères d’une bonne ouverture, lequel cet argument met-il en avant ?</p>
+          ${ex.select(`criterion${i}`, `Critère de l’argument ${i}`, content.criteria, 'Choisir un critère').replace('<select ', `<select aria-describedby="help-criterion${i}" `)}
         </div>
         ${ex.field(`argument${i}`, `Argument ${i}`, {
           max: 400, rows: 6, hideLabel: true,
@@ -128,7 +137,7 @@
 
   /* ── Étape 3 : emprunter à l'autre ─────────────────────────────────── */
   function borrowScreen() {
-    return `${recall(true)}
+    return `<div class="borrow-layout">
       <section class="panel compare-card">
         <span class="tag">Dernière étape</span>
         <h2 class="explain-question">Identifiez un élément pertinent dans l’autre ouverture et expliquez comment vous l’intégreriez à la vôtre.</h2>
@@ -138,6 +147,8 @@
         })}
         ${ex.lockNote('Le corrigé modèle sera disponible après validation.')}
       </section>
+      ${art(BORROW_ART)}
+      </div>
       ${core.errorsBox()}
       <div class="form-actions">
         ${core.button(`${icon('arrowLeft', { size: 16 })}<span>Retour à mes arguments</span>`, 'back-to-arguments', 'text-button with-icon')}
@@ -191,12 +202,30 @@
         ][at - 1];
     const body = review ? reviewScreen() : at === 1 ? chooseScreen() : at === 2 ? argueScreen() : borrowScreen();
 
+    // Étape 2 : le titre, la consigne et le rappel à gauche, l'illustration
+    // à droite, posée sur la carte de l'argument.
+    // Étape 3 : même en-tête calé à gauche, l'illustration à côté de la carte.
+    if (!review && at > 1) {
+      return `<div class="compare-page">
+        <header class="compare-head is-split">
+          ${stepper(at)}
+          <div class="compare-head-text">
+            <h1>${esc(head.title)}</h1>
+            <p class="compare-sub">${esc(head.sub)}</p>
+            ${recall(at === 3)}
+          </div>
+          ${at === 2 ? art(ARGUE_ART) : ''}
+        </header>
+        <form novalidate>${body}</form>
+      </div>`;
+    }
+
     return `<div class="compare-page">
       <header class="compare-head">
         ${review ? '' : stepper(at)}
         <h1>${esc(head.title)}</h1>
         ${head.sub ? `<p class="compare-sub">${esc(head.sub)}</p>` : ''}
-        ${at === 1 || review ? core.chips(['Premier RDV B2B', 'PME', '30 min']) : ''}
+        ${at === 1 || review ? facts() : ''}
       </header>
       ${review ? body : `<form novalidate>${body}</form>`}
     </div>`;

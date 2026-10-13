@@ -20,3 +20,191 @@
 .scenario .note { border-radius: 14px; }
 
 #main .radio-card input[type="radio"] { width: 26px; height: 26px; }
+
+/* ── Corrigé de l'analyse (1-1-1 · A) ────────────────────────────────────
+   Pleine largeur : en-tête avec le lien vers la mise en situation, puis
+   une ligne par point, la réponse à gauche, le retour teinté à droite.
+   Le bouton Continuer se range à droite sous les lignes. */
+.an-review { display: grid; gap: 22px; max-width: 1240px; width: 100%; margin: 0 auto; }
+
+.an-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; }
+
+.an-head .page-title { margin: 0; }
+
+.an-head .button { display: inline-flex; align-items: center; gap: 10px; }
+
+.an-rows { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+
+.an-row { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(0, 2.2fr); gap: 20px; padding: 16px; border-radius: 18px; background: #fff; box-shadow: 0 8px 24px rgb(20 40 100 / 8%); --tone: #58b183; --tone-ink: #1f6348; --tone-bg: #eef8f2; }
+
+.an-row.tone-bad { --tone: #dd6b5c; --tone-ink: #b13a2b; --tone-bg: #fdf1ef; }
+
+.an-row.tone-neutral { --tone: #3c6be0; --tone-ink: #1f4fc4; --tone-bg: #eef3fd; }
+
+.an-yours { display: flex; align-items: flex-start; gap: 16px; padding: 6px 0 6px 6px; }
+
+.an-n { display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--tone-bg); color: var(--tone-ink); font-size: 1.3rem; font-weight: 800; }
+
+.an-yours h2 { margin: 6px 0 8px; font-size: 1.2rem; color: var(--navy); }
+
+.an-yours p { margin: 0; padding-left: 0; color: var(--muted); overflow-wrap: anywhere; }
+
+.an-yours p::after { content: ""; display: block; width: 3px; height: 34px; margin-top: 12px; border-radius: 2px; background: var(--tone); }
+
+.an-verdict { display: flex; align-items: flex-start; gap: 16px; padding: 18px 20px; border-radius: 14px; background: var(--tone-bg); }
+
+.an-mark { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: 50%; background: rgb(255 255 255 / 75%); color: var(--tone); }
+
+.an-verdict h3 { margin: 0 0 6px; font-size: 1.1rem; color: var(--tone-ink); }
+
+.an-verdict p { margin: 0; line-height: 1.55; color: var(--text); }
+
+#main .an-review .feedback.is-compact:not([hidden]) { align-items: flex-end; }
+
+@media (max-width: 760px) {
+  .an-row { grid-template-columns: 1fr; gap: 12px; }
+  .an-yours p::after { display: none; }
+  #main .an-review .feedback.is-compact:not([hidden]) { align-items: stretch; }
+}
+
+/* ── Note à l'ampoule de « Construisez votre ouverture » (1-1-1 · D) ─────
+   D'après la maquette : fond aquarelle bleu pâle, ampoule orange dans son
+   rond blanc à gauche, tirets orange sous le texte, feuille à droite. Le
+   fond est en trois morceaux (gauche, milieu étiré, droite) pour suivre
+   toutes les largeurs ; les tirets sont posés à part. */
+#main .wiz-note.is-deco { position: relative; display: flex; align-items: center; min-height: 100px; padding: 18px 36px 18px 110px; overflow: hidden; border-radius: 20px; background: none; }
+
+/* Le fond seul passe à 90 % d'opacité : le texte reste net. */
+#main .wiz-note.is-deco::before { content: ""; position: absolute; inset: 0; opacity: .9; pointer-events: none;
+  background: url('../assets/illustrations/s1/note-gauche.webp') left center / auto 100px no-repeat, url('../assets/illustrations/s1/note-droite.webp') right bottom / auto 100px no-repeat, url('../assets/illustrations/s1/note-milieu.webp') center / 100% 100% no-repeat, #eef3fb; }
+
+#main .wiz-note.is-deco::after { content: ""; position: absolute; left: 154px; bottom: 4px; width: 50px; height: 35px; background: url('../assets/illustrations/s1/note-traits.webp') center / contain no-repeat; opacity: .9; pointer-events: none; }
+
+#main .wiz-note.is-deco p { position: relative; z-index: 1; font-size: 1.05rem; font-weight: 700; }
+
+@media (max-width: 520px) { #main .wiz-note.is-deco { padding-right: 24px; } }
+
+/* ── Lignes d'écriture de « Construisez votre ouverture » (1-1-1 · D) ────
+   D'après la maquette, en moins arrondi : numéro dans un grand rond bleu
+   pâle, zone d'écriture blanche sans trait (ombre douce), fonction sur fond
+   bleu pâle. La zone d'écriture passe à la ligne et grandit avec le texte. */
+#main .writing-layout .writing-row { grid-template-columns: 44px minmax(0, 1fr) minmax(170px, .5fr) 36px; gap: 16px; margin-bottom: 18px; }
+@media (max-width: 850px) { #main .writing-layout .writing-row { grid-template-columns: 44px minmax(0, 1fr) 36px; } }
+
+#main .writing-layout .writing-row .step-number { width: 44px; height: 44px; background: #e3ebf8; color: var(--navy); font-size: 1.25rem; }
+
+#main .writing-layout .writing-row textarea { min-height: 66px; padding: 20px 20px 26px; resize: none; overflow: hidden; border: 0; border-radius: 14px; background: #fff; box-shadow: 0 4px 16px rgb(20 40 100 / 7%), inset 0 0 0 1px rgb(20 40 100 / 5%); font-size: 1.02rem; line-height: 1.45; }
+
+
+#main .writing-layout .writing-row textarea:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+#main .writing-layout .writing-row .counter { bottom: 8px; }
+
+/* Le menu des fonctions (moteur : exercise.js, extras-commun.css .pick),
+   en plus grand sur cet écran pour suivre la hauteur des lignes. */
+#main .writing-layout .pick-button { min-height: 66px; padding: 0 16px 0 20px; border-radius: 14px; font-size: 1rem; }
+
+
+/* « Valider mon ouverture » : sous l'illustration, calé à gauche, à hauteur de la
+   note à l'ampoule (la colonne se cale en bas ; data-bar-stays : la barre
+   n'est pas détachée). */
+#main .writing-layout .wiz-aside { align-self: end; }
+#main .writing-layout .wiz-aside .form-actions { justify-content: flex-start; width: 100%; margin: 0; padding: 0; border-top: 0; }
+#main .writing-layout .form-actions .form-meta:empty { display: none; }
+
+/* ── « Le prospect coupe sa caméra » (1-1-1 · E1), mise en page ──────────
+   D'après la maquette : deux colonnes posées sur le fond, sans panneau.
+   À gauche la situation, à droite l'étape numérotée et la réponse. */
+.e1-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px); align-items: start; max-width: 1400px; margin: 0 auto; }
+.e1-scene .page-title { margin: 0 0 22px; }
+.e1-scene .page-title h1 { font-size: clamp(2rem, 3.2vw, 2.9rem); line-height: 1.08; }
+
+/* L'illustration entière, aux coins arrondis, sans cadre. */
+#main .e1-scene .call-scene { position: relative; overflow: hidden; border-radius: 26px; box-shadow: none; }
+#main .e1-scene .call-scene .illustration { margin: 0; border-radius: 0; box-shadow: none; }
+#main .e1-scene .call-scene .illustration img { display: block; width: 100%; height: auto; max-height: 52vh; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 40%; border-radius: 0; box-shadow: none; }
+#main .e1-scene .call-badge { left: auto; right: 14px; bottom: auto; top: 14px; display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; background: rgb(16 22 60 / 78%); font-size: .8rem; }
+
+.e1-label { margin: 26px 0 12px; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #4a587c; }
+.e1-facts { display: flex; flex-wrap: wrap; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.e1-facts li { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 999px; background: #e6eefc; color: #1d3f9a; font-weight: 600; }
+.e1-note { margin: 18px 0 0; font-size: .88rem; color: var(--muted); }
+
+/* La colonne de réponse : l'étape numérotée, puis les blocs espacés. */
+.e1-answer { display: grid; gap: 18px; padding-top: clamp(40px, 8vh, 110px); }
+.e1-head { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 20px; align-items: start; margin-bottom: 14px; }
+.e1-n { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: #e3ebf8; color: var(--accent); font-size: 1.9rem; font-weight: 800; }
+.e1-head h2 { position: relative; margin: 6px 0 22px; font-size: clamp(1.5rem, 2.2vw, 2rem); color: var(--navy); }
+.e1-head h2::after { content: ""; position: absolute; left: 0; bottom: -12px; width: 52px; height: 5px; border-radius: 3px; background: var(--coral, #ef7d63); }
+.e1-head p { margin: 0; font-size: 1.1rem; color: var(--muted); }
+.e1-answer .field > label { display: block; margin-bottom: 10px; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #4a587c; }
+#main .e1-answer textarea { min-height: 170px; }
+.e1-answer .oral-practice { margin: 0; }
+#record-button::before { content: ""; width: 18px; height: 18px; margin-right: 8px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Crect x='9' y='3' width='6' height='11' rx='3'/%3E%3Cpath d='M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Crect x='9' y='3' width='6' height='11' rx='3'/%3E%3Cpath d='M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3'/%3E%3C/svg%3E") center / contain no-repeat; }
+#record-button { display: inline-flex; align-items: center; }
+.e1-answer .think-box { margin: 0; border-radius: 18px; }
+#main .e1-answer .form-actions { justify-content: flex-end; margin: 4px 0 0; padding: 0; border-top: 0; }
+#main .e1-answer .form-actions .button.primary { min-height: 52px; padding: 12px 30px; border-radius: 999px; font-size: 1.05rem; }
+
+@media (max-width: 900px) {
+  .e1-layout { grid-template-columns: minmax(0, 1fr); }
+  .e1-answer { padding-top: 0; }
+}
+
+/* « Pensez à » : sous la question, avant d'écrire, en une ligne légère
+   (étiquette puis pastilles), sans encadré. */
+#main .e1-think { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 16px 0 0; padding: 0; background: none; }
+#main .e1-think h3 { margin: 0; font-size: .95rem; font-weight: 700; color: var(--navy); }
+#main .e1-think .chips { margin: 0; }
+#main .e1-think .chip { background: #f1ebfb; color: #5b2a91; }
+
+/* « Voir un indice » sur la ligne du libellé, au-dessus du coin droit de
+   la zone d'écriture. */
+.e1-field-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: -6px; }
+.e1-field-head .e1-label { margin: 0 0 4px; }
+
+/* ── « Quelle ouverture est la plus efficace ? » (1-1-1 · C) ────────────
+   D'après la maquette, sans les petits traits : le contexte en pastilles
+   illustrées (bleu, rose, vert), la consigne dans la note aquarelle de
+   l'écran D. */
+.compare-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 4px 0 0; padding: 0; list-style: none; }
+.compare-facts li { display: inline-flex; align-items: center; gap: 10px; padding: 9px 20px; border-radius: 999px; background: #e3ecfb; color: var(--navy); font-weight: 600; }
+.compare-facts li .icon { color: #1d4fd8; }
+.compare-facts li:nth-child(2) { background: #fde6e0; }
+.compare-facts li:nth-child(2) .icon { color: #e0705a; }
+.compare-facts li:nth-child(3) { background: #e6ede4; }
+.compare-facts li:nth-child(3) .icon { color: #557a5c; }
+
+/* La note aquarelle de l'écran D, sans ses tirets. */
+#main .wiz-note.is-deco.no-traits::after { display: none; }
+#main .compare-page > form > .wiz-note.is-deco { width: fit-content; max-width: 100%; margin: 0 auto; }
+
+/* Étape 2 « Pourquoi ce choix ? » : d'après la maquette, le titre, la
+   consigne et le rappel calés à gauche, l'illustration à droite, posée sur
+   la carte de l'argument. Le papier de l'illustration se fond dans le fond
+   (multiply). */
+.compare-head.is-split { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 0 24px; text-align: left; }
+.compare-head.is-split .compare-steps { grid-column: 1 / -1; justify-self: center; margin-bottom: 0; }
+.compare-head-text { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 0 0 28px 20px; }
+.compare-head.is-split h1 { font-size: clamp(2rem, 3.6vw, 3.2rem); }
+.compare-head.is-split .compare-sub { font-size: 1.15rem; }
+.compare-head.is-split .compare-recall { align-self: flex-start; margin-top: 14px; padding: 14px 26px; }
+.compare-art { position: relative; z-index: 0; display: block; width: clamp(240px, 26vw, 340px); height: auto; margin: 0 40px -78px 0; mix-blend-mode: multiply; pointer-events: none; }
+/* Le bas de l'illustration passe derrière la carte de l'argument. */
+.compare-head.is-split + form .compare-card { position: relative; z-index: 1; }
+
+@media (max-width: 760px) {
+  .compare-head.is-split { grid-template-columns: minmax(0, 1fr); }
+  .compare-head-text { padding: 0; }
+  .compare-art { display: none; }
+}
+
+/* Étape 3 « Ce que j'emprunterais à l'autre » : la carte d'écriture à
+   gauche, l'illustration à droite, calée en bas. */
+.compare-head.is-split:not(:has(.compare-art)) { grid-template-columns: minmax(0, 1fr); }
+.compare-head.is-split:not(:has(.compare-art)) .compare-head-text { padding-bottom: 0; }
+.borrow-layout { display: grid; grid-template-columns: minmax(0, 1fr) clamp(170px, 15vw, 210px); align-items: end; gap: 8px; }
+.borrow-layout .compare-card .explain-question { max-width: 48ch; }
+.borrow-layout .compare-art { width: clamp(280px, 27vw, 380px); max-width: none; margin: 0 0 50px; justify-self: start; }
+.borrow-layout .compare-card textarea { min-height: 240px; }
+@media (max-width: 760px) { .borrow-layout { grid-template-columns: minmax(0, 1fr); } .borrow-layout .compare-art { max-width: 300px; margin: 0; justify-self: center; } }

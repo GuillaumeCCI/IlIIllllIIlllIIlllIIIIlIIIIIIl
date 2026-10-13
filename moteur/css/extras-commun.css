@@ -481,3 +481,42 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
   .client-card-mark { width: 42px; }
   .client-card-quote blockquote .client-card-mark.is-closing { width: 32px; margin-left: 6px; }
 }
+
+/* ── Menus déroulants (exercise.js, enhanceSelect) ──────────────────────
+   Chaque <select> d'exercice est doublé d'une liste à nous : bouton bleu
+   pâle, puis une liste claire aux coins arrondis ; le choix en cours est
+   surligné de bleu avec un trait à gauche. Le <select> reste caché dessous. */
+.pick { position: relative; min-width: 0; width: 100%; }
+.pick select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
+.pick-button { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; min-height: 48px; padding: 0 14px 0 16px; border: 0; border-radius: 12px; background: #e6eefc; color: var(--navy); font: inherit; font-size: .95rem; font-weight: 700; text-align: left; cursor: var(--cursor-hand, pointer); }
+.pick-button.is-empty { color: #3d4a73; }
+.pick-button > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pick-button .icon { flex: none; transform: rotate(90deg); transition: transform .15s ease; }
+.pick.is-open .pick-button .icon { transform: rotate(-90deg); }
+.pick-button:hover { background: #dce7fb; }
+.pick-button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pick:has(select[aria-invalid="true"]) .pick-button { box-shadow: inset 0 0 0 2px #d4553f; }
+.pick-list { position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; min-width: 100%; width: max-content; max-width: min(380px, 90vw); max-height: 340px; overflow-y: auto; margin: 0; padding: 10px; list-style: none; border-radius: 16px; background: #fcfaf7; box-shadow: 0 14px 34px rgb(20 30 70 / 16%), 0 0 0 1px rgb(20 30 70 / 6%); }
+.pick-list li { position: relative; padding: 11px 16px; border-radius: 10px; color: var(--navy); font-size: 1.02rem; line-height: 1.3; cursor: var(--cursor-hand, pointer); }
+.pick-list li.is-active { background: #eef3fd; }
+.pick-list li[aria-selected="true"] { background: #dde8fb; }
+.pick-list li[aria-selected="true"]::before { content: ""; position: absolute; left: -10px; top: 0; bottom: 0; width: 4px; border-radius: 0 3px 3px 0; background: var(--accent); }
+
+/* ── Zones d'écriture, au style de « Construisez votre ouverture » ───────
+   Dans tous les exercices : blanches, sans trait, ombre douce, coins
+   arrondis, sans poignée de redimensionnement (la zone grandit d'elle-même
+   avec le texte : exercise.js, wireAutoGrow). Numéros d'étape des fiches
+   1-1-3 dans un rond bleu pâle. Les menus suivent le style commun (.pick). */
+#main :is(textarea, input[type="text"]) { border: 0; border-radius: 14px; background: #fff; box-shadow: 0 4px 16px rgb(20 40 100 / 7%), inset 0 0 0 1px rgb(20 40 100 / 7%); }
+#main textarea { resize: none; overflow: hidden; }
+#main :is(textarea, input[type="text"]):focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+#main :is(textarea, input[type="text"])[aria-invalid="true"] { box-shadow: 0 4px 16px rgb(20 40 100 / 7%), inset 0 0 0 2px #d4553f; }
+#main .lib-step { width: 40px; height: 40px; background: #e3ebf8; color: var(--navy); font-size: 1.1rem; }
+
+/* « Voir un indice » des écrans 1-1-1 (core.hintBlock) : le bouton à
+   l'ampoule garde sa largeur, même dans une colonne en grille. */
+#main .k-dialog-button[data-hint] { width: fit-content; justify-self: start; align-self: flex-start; }
+
+/* Le compteur « N éléments à compléter » (#completion-status) est retiré
+   de tous les exercices ; « Ce cas est traité » (sans id) reste affiché. */
+#main #completion-status { display: none; }

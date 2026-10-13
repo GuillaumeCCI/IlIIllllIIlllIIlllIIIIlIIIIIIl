@@ -207,8 +207,19 @@
   const errorsBox = () => '<div id="form-errors" class="form-errors" role="alert" hidden></div>';
   const feedbackBox = () => '<section id="feedback" class="feedback" tabindex="-1" aria-labelledby="feedback-title" hidden></section>';
 
+  /* « Voir un indice » : le bouton à l'ampoule des autres modules
+   * (.k-dialog-button), qui ouvre la fenêtre « Un indice » au gabarit des
+   * repères. Le texte voyage dans l'attribut data-hint. */
   const hintBlock = text =>
-    `<details class="hint"><summary>Voir un indice</summary><p>${esc(text)}</p><small>Repère pédagogique proposé.</small></details>`;
+    `<button type="button" class="button secondary k-dialog-button" data-hint="${esc(text)}">${icon('lightbulb', { size: 18 })}<span>Voir un indice</span></button>`;
+
+  if (root.document && typeof root.document.addEventListener === 'function') {
+    document.addEventListener('click', event => {
+      const control = event.target.closest?.('[data-hint]');
+      if (!control) return;
+      openDialog('Un indice', `<p>${esc(control.dataset.hint)}</p>`);
+    });
+  }
 
   const illustration = (ex, extraClass = '') => {
     if (!ex.image) return '';
@@ -515,6 +526,47 @@
     paintFullscreen();
   }
 
+  /* ───────────────────────── Échelle des exercices ───────────────────── */
+
+  /* Un bouton de l'en-tête réduit la zone d'exercice (90 % par défaut, puis 80 %, 100 %
+   * et retour). Seul #main change d'échelle : l'en-tête et ses
+   * boutons (sons, musique, plein écran…) restent tels quels. Le réglage
+   * est mémorisé pour tous les exercices. */
+  const SCALE_KEY = 'atelier-vente-echelle';
+  const SCALES = [1, 0.9, 0.8];
+  const SCALE_DEFAULT = 0.9;
+  let scale = (() => {
+    try { const v = Number(localStorage.getItem(SCALE_KEY)); return SCALES.includes(v) && localStorage.getItem(SCALE_KEY) !== null ? v : SCALE_DEFAULT; } catch { return SCALE_DEFAULT; }
+  })();
+
+  function paintScale() {
+    document.documentElement.style.setProperty('--echelle', String(scale));
+    const control = $('[data-action="scale"]');
+    if (!control) return;
+    const pct = `${Math.round(scale * 100)} %`;
+    control.innerHTML = `${headerSvg('<circle cx="27" cy="27" r="16"/><path d="M39 39 54 54M20 27h14"/>')}<span class="scale-label">${pct}</span>`;
+    control.setAttribute('aria-label', `Taille des exercices : ${pct}. Réduire ou rétablir`);
+    control.title = 'Réduire la taille des exercices';
+    control.classList.toggle('is-on', scale !== SCALE_DEFAULT);
+  }
+
+  function wireScale() {
+    const anchor = $('.topbar [data-action="keyboard-help"]');
+    if (anchor && !$('[data-action="scale"]')) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'header-button scale-button';
+      button.dataset.action = 'scale';
+      anchor.before(button);
+      button.addEventListener('click', () => {
+        scale = SCALES[(SCALES.indexOf(scale) + 1) % SCALES.length];
+        try { localStorage.setItem(SCALE_KEY, String(scale)); } catch { /* réglage perdu au rechargement */ }
+        paintScale();
+      });
+    }
+    paintScale();
+  }
+
   /* ──────────────────── Défilement de la page ───────────────────────── */
 
   /* La page défile d'un seul bloc : il n'y a plus de zone interne à
@@ -544,7 +596,7 @@
     errorsBox, feedbackBox, hintBlock, stepPill, clientCard, portraitFor, illustration, gallery, scene, rubricButton, wireRubric, icon,
     renderChrome, renderNav, renderFooterNav, nextUrl, applyBackground,
     wireImageFallbacks, wireDialog, revealActiveNav,
-    wireFullscreen, wireScrollAreas, markScrollables, toggleFullscreen, isFullscreen,
+    wireFullscreen, wireScale, wireScrollAreas, markScrollables, toggleFullscreen, isFullscreen,
     wireKeyboardHelp, toggleKeyboardHelp, keyboardHelpVisible
   });
 })(globalThis);

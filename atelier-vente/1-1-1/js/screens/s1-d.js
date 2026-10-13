@@ -42,7 +42,7 @@
       const n = i + 1;
       return `<div class="writing-row">
         <span class="step-number">${n}</span>
-        ${ex.field(lineKey(n), `Phrase ${n}`, { max: 300, type: 'input', placeholder: i ? 'Ajoutez la suite…' : 'Écrivez votre première phrase…', hideLabel: true })}
+        ${ex.field(lineKey(n), `Phrase ${n}`, { max: 300, rows: 1, placeholder: i ? 'Ajoutez la suite…' : 'Écrivez votre première phrase…', hideLabel: true })}
         ${ex.select(techniqueKey(n), `Fonction de la phrase ${n}`, content.techniques, 'Choisir une fonction')}
         ${i >= 4 ? core.button(icon('close', { size: 16 }), 'remove-line', 'icon-button', `data-index="${n}" aria-label="Supprimer la phrase ${n}"`) : ''}
       </div>`;
@@ -90,19 +90,19 @@
   const ART = { image: 'assets/illustrations/s1/ouverture-reflexion.webp', alt: 'Une vendeuse réfléchit à son ouverture devant son ordinateur, un stylo à la main.' };
 
   function writing() {
-    return `<form class="wiz-layout writing-layout" novalidate>
+    return `<form class="wiz-layout writing-layout" data-bar-stays novalidate>
       <section class="wiz-main">
         ${core.pageTitle('Mise en situation', 'Construisez votre ouverture', 'Rédigez une ouverture commerciale complète (4 à 6 phrases) pour la situation de votre choix. Écrivez une phrase par ligne et sélectionnez sa fonction.')}
         <div class="exercise-body">
           ${editableRows()}
           ${lineCount() < 6 ? core.button('+ Ajouter une ligne', 'add-line', 'text-button') : ''}
         </div>
-        <div class="wiz-note"><span class="wiz-bulb" aria-hidden="true">${icon('lightbulb', { size: 26 })}</span><p>Votre ouverture doit être fluide, adaptée à la situation et donner envie au client d’échanger.</p></div>
+        <div class="wiz-note is-deco"><p>Votre ouverture doit être fluide, adaptée à la situation et donner envie au client d’échanger.</p></div>
         ${core.errorsBox()}
-        ${ex.actions('Valider mon ouverture')}
       </section>
       <aside class="wiz-aside">
         <div class="wiz-art is-whole">${core.illustration(ART)}</div>
+        ${ex.actions('Valider mon ouverture')}
       </aside>
       ${core.feedbackBox()}
     </form>`;

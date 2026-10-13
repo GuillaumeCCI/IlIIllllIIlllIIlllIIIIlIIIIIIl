@@ -42,32 +42,37 @@
     </form>`;
   }
 
-  function screen() {
-    const current = core.findExercise('s1-B');
-    const review = ex.reviewing();
+  /* Le corrigé, comme celui de l'analyse (S1 A) : pleine largeur, une ligne
+   * par étape, la réponse à gauche, le retour teinté à droite. La mise en
+   * situation reste à portée dans une fenêtre. Styles : extras.css (.an-*). */
+  const VERDICTS = [
+    { key: 'opening', title: 'Votre entrée en matière', tone: 'neutral', label: 'Corrigé modèle', symbol: 'sparkle' },
+    { key: 'adjustment', title: 'Votre réglage majeur', tone: 'good', label: 'Réglage attendu', symbol: 'check' }
+  ];
+
+  function reviewScreen() {
     const notes = content.feedback.B;
-    if (!review) return wizard(current);
-    return `<div class="two-columns">
-      <section class="scenario">
-        ${core.pageTitle('Mise en situation', 'Vente en boutique · le client pressé et distant')}
-        ${core.callout('Un client entre dans votre magasin d’un pas rapide. Il jette des coups d’œil réguliers à sa montre, se montre particulièrement sur la réserve et évite le contact visuel prolongé. Il a manifestement un besoin précis, mais craint d’être accaparé par un discours commercial trop lourd.')}
-        <div class="signals"><strong>Signaux observés</strong>${core.chips(['Pressé', 'Réservé', 'Besoin précis'])}</div>
-        ${core.illustration(current)}
-        ${core.note('Montrez rapidement au client que vous avez compris son rythme et son besoin d’autonomie.')}
-      </section>
-      <form class="panel answer-panel" novalidate>
-        ${core.panelTitle('Préparez votre approche', core.rubricButton())}
-        <p class="panel-intro">Rédigez votre entrée en matière en 3 à 4 phrases, puis précisez le réglage majeur effectué pour vous synchroniser avec le client.</p>
-        ${review
-          ? `${core.step(1, 'Votre entrée en matière', `<p class="own-line">« ${esc(ex.value('opening'))} »</p>${ex.inlineNote(notes[0], 'good')}`)}
-             ${core.step(2, 'Votre réglage majeur', `<p class="own-line">« ${esc(ex.value('adjustment'))} »</p>${ex.inlineNote(notes[1], 'neutral')}`)}`
-          : `${core.step(1, 'Votre entrée en matière', ex.field('opening', 'Votre entrée en matière', { placeholder: 'Écrivez ce que vous diriez au client…', max: 600, rows: 5, hideLabel: true }), '3 à 4 phrases')}
-             ${core.step(2, 'Votre réglage majeur', core.chips(['Rythme', 'Ton', 'Distance', 'Précision']) + ex.field('adjustment', 'Votre réglage majeur', { placeholder: 'Expliquez le principal ajustement effectué…', max: 250, rows: 4, hideLabel: true }), 'Une phrase suffit')}`}
-        ${core.errorsBox()}
-        ${ex.actions('Valider mon approche')}
-        ${core.feedbackBox()}
-      </form>
-    </div>`;
+    return `<section class="an-review">
+      <header class="an-head">
+        ${core.pageTitle('Corrigé', 'Votre approche', 'Voici votre approche, étape par étape, avec un retour sur chacune.')}
+        ${core.button(`${icon('document', { size: 20 })}<span>Voir la mise en situation</span>`, 'scenario', 'subtle with-icon')}
+      </header>
+      <ol class="an-rows">${VERDICTS.map((row, i) => `<li class="an-row tone-${row.tone}">
+        <div class="an-yours">
+          <span class="an-n" aria-hidden="true">${i + 1}</span>
+          <div><h2>${esc(row.title)}</h2><p>« ${esc(ex.value(row.key))} »</p></div>
+        </div>
+        <div class="an-verdict">
+          <span class="an-mark" aria-hidden="true">${icon(row.symbol, { size: 20, strokeWidth: 3 })}</span>
+          <div><h3>${esc(row.label)}</h3><p>${esc(notes[i])}</p></div>
+        </div>
+      </li>`).join('')}</ol>
+      ${core.feedbackBox()}
+    </section>`;
+  }
+
+  function screen() {
+    return ex.reviewing() ? reviewScreen() : wizard(core.findExercise('s1-B'));
   }
 
   const validate = values => [
@@ -75,13 +80,18 @@
     required(values, 'adjustment', 'Votre réglage majeur', 250)
   ].filter(Boolean);
 
-  /* Le corrigé modèle et le réglage attendu sont affichés sous les deux
-   * étapes : la synthèse ne garde que le critère à vérifier. */
-  const feedback = () => [content.feedback.B[2]];
+  /* Le corrigé modèle et le réglage attendu sont posés dans le corrigé : le
+   * bilan ne garde que le bouton de suite. */
+  const feedback = () => [];
 
   function onMount() {
+    core.$('[data-action="scenario"]')?.addEventListener('click', () => core.openDialog(
+      'Vente en boutique · le client pressé et distant',
+      `${core.callout('Un client entre dans votre magasin d’un pas rapide. Il jette des coups d’œil réguliers à sa montre, se montre particulièrement sur la réserve et évite le contact visuel prolongé. Il a manifestement un besoin précis, mais craint d’être accaparé par un discours commercial trop lourd.')}
+       <div class="signals"><strong>Signaux observés</strong>${core.chips(['Pressé', 'Réservé', 'Besoin précis'])}</div>
+       ${core.note('Montrez rapidement au client que vous avez compris son rythme et son besoin d’autonomie.')}`));
     core.wireRubric(content.rubric);
   }
 
-  ex.mount('s1-B', { screen, validate, feedback, onMount });
+  ex.mount('s1-B', { screen, validate, feedback, onMount, compactFeedback: true });
 })();

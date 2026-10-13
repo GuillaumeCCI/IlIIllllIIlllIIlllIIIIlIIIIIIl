@@ -459,7 +459,8 @@ test('une progression dans une série est visible depuis une autre page', () => 
 console.log('\nCorrection affichée en place');
 
 /* Chaque écran listé ici doit poser sa correction au contact des réponses :
- * pastille de verdict, remarque sous le champ, ou version modèle. Sans cela
+ * pastille de verdict, remarque sous le champ, version modèle, ou corrigé
+ * ligne à ligne (réponse à gauche, retour à droite : an-verdict, S1 A et B). Sans cela
  * la correction retomberait dans le pavé du bas, ce qu'on cherche à éviter. */
 const INLINE = {
   's1-a': engine => { engine.setValue('strengths', 'a'); engine.setValue('improvements', 'b'); engine.setValue('rewrite', 'c'); },
@@ -489,7 +490,7 @@ for (const [file, fill] of Object.entries(INLINE)) {
     engine.submit();
     const main = sandbox.document.querySelector('#main').innerHTML;
     assert.ok(!/form-errors[^>]*>\s*<strong/.test(main), 'la validation ne doit pas être refusée');
-    assert.match(main, /inline-note|model-block|mark-ok|option-review/,
+    assert.match(main, /inline-note|model-block|mark-ok|option-review|an-verdict/,
       'la correction doit figurer dans l’écran, pas seulement dans le pavé du bas');
   });
 }

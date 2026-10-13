@@ -330,7 +330,7 @@ dialog::backdrop { background: #0b133268; backdrop-filter: blur(3px); }
 @media (max-width: 1180px) {
   .topbar { gap: 18px; } .course-label { display: none; } .exercise-link { font-size: .79rem; }
   .panel { padding: 20px; } .two-columns { gap: 20px; } .step { gap: 10px; } .step-number { width: 32px; height: 32px; }
-  .form-actions > .primary { margin-left: auto; } .argument-row { grid-template-columns: minmax(0, 1fr) auto; } .argument-row select { grid-column: 1; } .argument-row .field { grid-column: 1; } .argument-row .icon-button { grid-column: 2; grid-row: 2; }
+  .form-actions > .primary { margin-left: auto; } .argument-row { grid-template-columns: minmax(0, 1fr) auto; } .argument-row :is(select, .pick) { grid-column: 1; } .argument-row .field { grid-column: 1; } .argument-row .icon-button { grid-column: 2; grid-row: 2; }
   .channel-mission .illustration { width: 185px; } .time-pill { display: none; }
 }
 @media (max-width: 850px) {
@@ -338,9 +338,9 @@ dialog::backdrop { background: #0b133268; backdrop-filter: blur(3px); }
   .exercise-nav { padding: 0 14px; } #exercise-links { gap: 2px; } .exercise-link { flex: 0 0 auto; padding: 11px 12px; } .exercise-link span:not(.exercise-code):not(.nav-check) { display: none; } .exercise-link.active span:not(.exercise-code) { display: inline; }
   #main { padding: 25px 20px 10px; } .two-columns, .ultimatum { grid-template-columns: minmax(0, 1fr); } .answer-panel { margin-top: 2px; }
   .scenario > .illustration img, .media-scene .illustration img { max-height: 390px; } .call-scene .illustration img { max-height: 420px; }
-  .writing-row { grid-template-columns: 32px minmax(0, 1fr) 36px; gap: 10px; } .writing-row select { grid-column: 2; height: auto; } .writing-row .icon-button { grid-column: 3; grid-row: auto; } .writing-row .step-number { align-self: start; margin-top: 10px; }
+  .writing-row { grid-template-columns: 32px minmax(0, 1fr) 36px; gap: 10px; } .writing-row :is(select, .pick) { grid-column: 2; height: auto; } .writing-row .icon-button { grid-column: 3; grid-row: auto; } .writing-row .step-number { align-self: start; margin-top: 10px; }
   .channel-mission { padding: 18px; gap: 14px; } .channel-mission .illustration { width: 180px; } .channel-mission .illustration img { height: 100px; }
-  .argument-row { grid-template-columns: minmax(0, .7fr) minmax(0, 1fr) auto; } .argument-row select { grid-column: auto; } .argument-row .field { grid-column: auto; } .argument-row .icon-button { grid-column: auto; grid-row: auto; }
+  .argument-row { grid-template-columns: minmax(0, .7fr) minmax(0, 1fr) auto; } .argument-row :is(select, .pick) { grid-column: auto; } .argument-row .field { grid-column: auto; } .argument-row .icon-button { grid-column: auto; grid-row: auto; }
   .affirmative > .panel { height: auto; } .site-footer { padding: 20px; } .form-actions > .primary { margin-left: 0; }
 }
 @media (max-width: 520px) {
@@ -348,7 +348,7 @@ dialog::backdrop { background: #0b133268; backdrop-filter: blur(3px); }
   #main { padding: 21px 14px 10px; } h1 { font-size: 1.8rem; } h2 { font-size: 1.45rem; } .panel { padding: 18px; } .panel-title { gap: 12px; } .step { gap: 9px; } .step-content { padding-top: 4px; } .step-number { width: 28px; height: 28px; font-size: .95rem; }
   .callout { padding: 14px; gap: 10px; } .callout-symbol { width: 28px; height: 28px; } .callout p { font-size: .94rem; }
   .media-actions { grid-template-columns: minmax(0, 1fr); gap: 8px; } .media-actions .button { padding: 12px; } .play-button { width: 60px; height: 60px; font-size: 1.4rem; }
-  .opening-cards { grid-template-columns: minmax(0, 1fr); } .argument-row { grid-template-columns: minmax(0, 1fr) auto; } .argument-row select, .argument-row .field { grid-column: 1; } .argument-row .icon-button { grid-column: 2; grid-row: 2; }
+  .opening-cards { grid-template-columns: minmax(0, 1fr); } .argument-row { grid-template-columns: minmax(0, 1fr) auto; } .argument-row :is(select, .pick), .argument-row .field { grid-column: 1; } .argument-row .icon-button { grid-column: 2; grid-row: 2; }
   .choice-group { gap: 7px; } .choice-group label { font-size: .85rem; padding: 12px 9px; gap: 7px; } .form-actions { align-items: stretch; } .form-actions > .primary { width: 100%; }
   .writing-workshop .page-title { margin: 0 0 20px; } .writing-row { grid-template-columns: 26px minmax(0, 1fr) 30px; gap: 7px; } .writing-row .icon-button { width: 30px; } .writing-row .step-number { width: 26px; }
   .mission { padding: 17px; gap: 12px; } .mission-symbol { width: 43px; height: 43px; font-size: 1.9rem; } .mission h2 { font-size: 1.15rem; } .mission p { font-size: .9rem; }
