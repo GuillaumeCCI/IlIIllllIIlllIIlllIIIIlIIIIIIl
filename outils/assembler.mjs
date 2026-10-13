@@ -150,12 +150,15 @@ writeFileSync(join(repo, 'index.html'), home);
 const data = JSON.stringify(modules);
 const integrate = page('L’Atelier Vente · Intégrer', `<main>
   <h1>Intégrer les exercices</h1>
-  <p class="lede">Deux façons de placer les exercices dans une autre plateforme (LMS, Moodle, site, Notion…) : un module entier, ou un seul thème du module (ses exercices, avec leur navigation). Copiez le lien, ou le code d’intégration à coller dans un bloc HTML.</p>
+  <p class="lede">Deux façons de placer les exercices dans une autre plateforme (LMS, Moodle, site, Notion…) : un module entier, ou un seul thème du module (ses exercices, avec leur navigation). Chaque thème a son code d’intégration, affiché en entier : copiez-le et collez-le dans un bloc HTML de votre LMS.</p>
   <section class="card how">
     <h2>Mode d’emploi</h2>
     <ol>
       <li><strong>Lien</strong> : à coller tel quel dans un bouton ou une activité « URL ». Les exercices s’ouvrent en plein écran.</li>
-      <li><strong>Code d’intégration</strong> : à coller dans un bloc HTML (« intégrer », « iframe », « code source »). La hauteur du cadre s’ajuste toute seule quand la plateforme accepte les scripts ; sinon, elle reste à 900 pixels, avec une barre de défilement.</li>
+      <li><strong>Code d’intégration</strong> : à coller dans un bloc HTML (« intégrer », « iframe », « code source »). Un thème = une activité du LMS. Le cadre mesure 900 pixels de haut, avec une barre de défilement si l’exercice est plus long.</li>
+      <li><strong>Hauteur automatique</strong> (facultatif) : collez aussi la ligne ci-dessous juste après le code d’intégration, dans le même bloc HTML. C’est la même pour tous les thèmes. Si la plateforme refuse les scripts, le code d’intégration seul fonctionne quand même.
+        <pre class="code" id="resize-code"></pre>
+        <button type="button" class="button small secondary" id="resize-copy">Copier la ligne de hauteur automatique</button></li>
       <li>Les réponses de l’apprenant restent dans son navigateur. Certains navigateurs bloquent cette mémoire dans un cadre intégré : les exercices fonctionnent, mais le brouillon n’est pas gardé d’une visite à l’autre.</li>
     </ol>
   </section>
@@ -177,6 +180,8 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
   .serie h3 { font-size: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 0; }
   .serie-head .note { color: var(--muted); font-size: .9rem; }
   .serie[hidden] { display: none; }
+  .code { margin: 8px 0; padding: 10px 12px; background: var(--soft, #f3f5fa); border: 1px solid var(--line); border-radius: 8px; font: .78rem/1.45 ui-monospace, Consolas, monospace; white-space: pre-wrap; word-break: break-all; user-select: all; cursor: text; }
+  .how .code { margin-top: 10px; }
   .row { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
   .row .id { font-weight: 800; color: var(--accent); }
   .row[hidden] { display: none; }
@@ -190,7 +195,7 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
   var esc = function (v) { return String(v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var resize = '<script>if(!window.atelierVenteResize){window.atelierVenteResize=1;addEventListener("message",function(e){if(!e.data||e.data.type!=="atelier-vente:height")return;document.querySelectorAll("iframe[data-atelier-vente]").forEach(function(f){if(f.contentWindow===e.source)f.style.height=e.data.height+"px";});});}<' + '/script>';
   function iframe(url, title) {
-    return '<iframe src="' + url + '" title="' + esc(title) + '" data-atelier-vente style="width:100%;height:900px;border:0;" loading="lazy" allow="autoplay; fullscreen; microphone; camera"></iframe>\\n' + resize;
+    return '<iframe src="' + url + '" title="' + esc(title) + '" data-atelier-vente style="width:100%;height:900px;border:0;" loading="lazy" allow="autoplay; fullscreen; microphone; camera"></iframe>';
   }
   function actions(url, title) {
     return '<span class="actions">'
@@ -205,11 +210,14 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
       + m.series.map(function (s) {
         var themeUrl = base + m.code + '/index.html?embed=module&theme=' + s.id;
         var themeTitle = 'L’Atelier Vente ' + m.code + ' · ' + s.label;
-        return '<div class="serie"><div class="serie-head"><h3>' + esc(s.label) + '</h3><span class="note">Le thème entier · ' + s.exercises.length + ' exercice' + (s.exercises.length > 1 ? 's' : '') + '</span>' + actions(themeUrl, themeTitle) + '</div>' + s.exercises.map(function (x) {
+        return '<div class="serie"><div class="serie-head"><h3>' + esc(s.label) + '</h3><span class="note">Le thème entier · ' + s.exercises.length + ' exercice' + (s.exercises.length > 1 ? 's' : '') + '</span>' + actions(themeUrl, themeTitle) + '</div><pre class="code">' + esc(iframe(themeUrl, themeTitle)) + '</pre>' + s.exercises.map(function (x) {
           return '<div class="row" data-search="' + esc((m.code + ' ' + s.label + ' ' + x.id + ' ' + x.label).toLowerCase()) + '"><span class="id">' + esc(x.id) + '</span><span>' + esc(x.label) + '</span></div>';
         }).join('') + '</div>';
       }).join('') + '</section>';
   }).join('');
+
+  document.getElementById('resize-code').textContent = resize;
+  document.getElementById('resize-copy').setAttribute('data-copy', resize);
 
   document.addEventListener('click', function (event) {
     var button = event.target.closest('[data-copy]');
