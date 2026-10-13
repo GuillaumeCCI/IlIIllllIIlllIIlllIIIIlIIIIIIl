@@ -8,6 +8,9 @@
  * préfixent automatiquement par « ../ » ; ne mettez donc jamais « ../ » ici.
  */
 window.ATELIER_CATALOG = {
+  code: '1-1-1',
+  title: 'Série 1-1-1',
+  intro: 'Vingt-trois exercices pour s’entraîner à la prise de contact, à l’écoute active, à la gestion des objections et à la manipulation des méthodes.',
   // Clé de sauvegarde commune : la progression est partagée entre toutes les
   // pages, qu'on ouvre un exercice seul ou le parcours complet.
   storageKey: 'atelier-vente-1-1-1-v2',

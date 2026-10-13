@@ -121,37 +121,9 @@
         </div>
       </li>`).join('')}</ol>`;
 
-  /* LA CARTE « CITATION CLIENT » · règle commune aux 4 modules.
-   * Le client illustré à gauche (toujours entier), un libellé, sa réplique
-   * entre guillemets dessinés. Styles : extras.css (variables --client-card-*).
-   *
-   * LE PORTRAIT : js/catalog.js, rubrique `portraits`, page par page :
-   *   's2-b': 'client-tasse'                       un portrait pour la page ;
-   *   's3-2-2': ['client-tasse', 'client-chignon']  un par cas, dans l'ordre ;
-   *   default: 'client-tasse'                       pour les pages non listées.
-   * Portraits disponibles : assets/illustrations/clients/*.webp. Sans réglage,
-   * l'écran garde le portrait qu'il propose (`portrait`). */
-  const PORTRAITS = 'assets/illustrations/clients/';
-  const portraitFor = (fallback, index = 0) => {
-    const map = (root.ATELIER_CATALOG && root.ATELIER_CATALOG.portraits) || {};
-    const page = String((root.location && root.location.pathname) || '').split('/').pop().replace(/.html$/, '');
-    const entry = map[page];
-    const pick = Array.isArray(entry) ? entry[index % entry.length] : (entry || fallback || map.default || 'client-tasse');
-    return /[/.]/.test(pick) ? pick : `${PORTRAITS}${pick}.webp`;
-  };
-  const clientCard = (text, portrait, label = 'Le client vous dit', index = 0) => {
-    const clean = String(text).replace(/^s*[«“]s*/, '').replace(/s*[»”]s*$/, '');
-    // Le dernier mot reste attaché au guillemet fermant : jamais seul à la ligne.
-    const cut = Math.max(0, clean.lastIndexOf(' ') + 1);
-    const art = name => esc(core().asset(`${PORTRAITS}${name}.webp`));
-    return `<div class="client-card-box"><section class="client-card">
-      <div class="client-card-who" aria-hidden="true"><img src="${esc(core().asset(portraitFor(portrait, index)))}" alt="" decoding="async"></div>
-      <div class="client-card-said">
-        <p class="client-card-label">${esc(label)}</p>
-        <div class="client-card-quote"><img class="client-card-mark" src="${art('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${esc(clean.slice(0, cut))}<span class="client-card-end">${esc(clean.slice(cut))}<img class="client-card-mark is-closing" src="${art('guillemet-fermant')}" alt="" aria-hidden="true"></span></blockquote></div>
-      </div>
-    </section></div>`;
-  };
+  /* La carte « citation client » : celle du moteur (core.js). */
+  const clientCard = (...args) => core().clientCard(...args);
+  const portraitFor = (...args) => core().portraitFor(...args);
 
   /* ───────────────────────────── Actions ────────────────────────────── */
 

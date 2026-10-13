@@ -1,6 +1,6 @@
 /* NOYAU PARTAGÉ · état, sauvegarde, en-tête, navigation, briques d'interface.
  *
- * Chargé par les 24 pages d'exercice et par le parcours complet. Aucune page
+ * Chargé par toutes les pages d'exercice et par le parcours complet. Aucune page
  * n'a besoin de connaître les autres : tout passe par le catalogue.
  *
  * Deux modes, un seul code :
@@ -144,6 +144,12 @@
   const note = (text, title = '') =>
     `<aside class="note"><span class="note-symbol">${icon('lightbulb', { size: 20 })}</span><div>${title ? `<strong>${esc(title)}</strong>` : ''}<p>${esc(text)}</p></div></aside>`;
 
+  /* La scène d'un cas : son illustration en grand, la réplique posée en
+   * bas de l'image sur un dégradé sombre. */
+  const scene = (item, text) => item
+    ? `<figure class="case-scene"><img src="${esc(webAsset(item.image))}" alt="${esc(item.alt || '')}" decoding="async"><figcaption><span class="case-scene-mark" aria-hidden="true">“</span><span>${esc(text)}</span><span class="case-scene-mark" aria-hidden="true">”</span></figcaption></figure>`
+    : quote(text);
+
   const callout = text =>
     `<div class="callout"><span class="callout-symbol">${icon('document', { size: 20 })}</span><p>${esc(text)}</p></div>`;
 
@@ -161,6 +167,38 @@
 
   const quote = (text, label = '') =>
     `<div class="client-quote">${label ? `<span class="quote-label">${esc(label)}</span>` : ''}<span class="quote-mark">${icon('quote', { size: 22 })}</span><p>${esc(text)}</p></div>`;
+
+  /* LA CARTE « CITATION CLIENT » · règle commune à tous les modules.
+   * Le client illustré à gauche (toujours entier), un libellé, sa réplique
+   * entre guillemets dessinés. Styles : extras.css (variables --client-card-*).
+   *
+   * LE PORTRAIT : js/catalog.js, rubrique `portraits`, page par page :
+   *   's2-b': 'client-tasse'                       un portrait pour la page ;
+   *   's3-2-2': ['client-tasse', 'client-chignon']  un par cas, dans l'ordre ;
+   *   default: 'client-tasse'                       pour les pages non listées.
+   * Portraits disponibles : assets/illustrations/clients/*.webp. Sans réglage,
+   * l'écran garde le portrait qu'il propose (`portrait`). */
+  const PORTRAITS = 'assets/illustrations/clients/';
+  const portraitFor = (fallback, index = 0) => {
+    const map = (root.ATELIER_CATALOG && root.ATELIER_CATALOG.portraits) || {};
+    const page = String((root.location && root.location.pathname) || '').split('/').pop().replace(/\.html$/, '');
+    const entry = map[page];
+    const pick = Array.isArray(entry) ? entry[index % entry.length] : (entry || fallback || map.default || 'client-tasse');
+    return /[/.]/.test(pick) ? pick : `${PORTRAITS}${pick}.webp`;
+  };
+  const clientCard = (text, portrait, label = 'Le client vous dit', index = 0) => {
+    const clean = String(text).replace(/^\s*[«“]\s*/, '').replace(/\s*[»”]\s*$/, '');
+    // Le dernier mot reste attaché au guillemet fermant : jamais seul à la ligne.
+    const cut = Math.max(0, clean.lastIndexOf(' ') + 1);
+    const art = name => esc(asset(`${PORTRAITS}${name}.webp`));
+    return `<div class="client-card-box"><section class="client-card">
+      <div class="client-card-who" aria-hidden="true"><img src="${esc(asset(portraitFor(portrait, index)))}" alt="" decoding="async"></div>
+      <div class="client-card-said">
+        <p class="client-card-label">${esc(label)}</p>
+        <div class="client-card-quote"><img class="client-card-mark" src="${art('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${esc(clean.slice(0, cut))}<span class="client-card-end">${esc(clean.slice(cut))}<img class="client-card-mark is-closing" src="${art('guillemet-fermant')}" alt="" aria-hidden="true"></span></blockquote></div>
+      </div>
+    </section></div>`;
+  };
 
   const errorsBox = () => '<div id="form-errors" class="form-errors" role="alert" hidden></div>';
   const feedbackBox = () => '<section id="feedback" class="feedback" tabindex="-1" aria-labelledby="feedback-title" hidden></section>';
@@ -492,7 +530,7 @@
     persist, markSaving, toast, openDialog,
     get storageAvailable() { return storageAvailable; },
     button, linkButton, chips, note, callout, pageTitle, panelTitle, step, mission, quote,
-    errorsBox, feedbackBox, hintBlock, illustration, gallery, rubricButton, wireRubric, icon,
+    errorsBox, feedbackBox, hintBlock, clientCard, portraitFor, illustration, gallery, scene, rubricButton, wireRubric, icon,
     renderChrome, renderNav, renderFooterNav, nextUrl, applyBackground,
     wireImageFallbacks, wireDialog, revealActiveNav,
     wireFullscreen, wireScrollAreas, markScrollables, toggleFullscreen, isFullscreen,

@@ -1,7 +1,7 @@
 /* ACCUEIL · menu des séries, reprise du parcours et bilan global.
  *
  * `index.html#bilan` affiche le bilan ; sans ancre, l'accueil liste les
- * quatre séries et leurs exercices. Chaque lien ouvre la page de l'exercice.
+ * séries du module et leurs exercices. Chaque lien ouvre la page de l'exercice.
  */
 (() => {
   'use strict';
@@ -29,7 +29,7 @@
     const resume = resumeTarget();
 
     return `<div class="home-hero">
-      ${core.pageTitle('Série 1-1-1', 'L’Atelier Vente', catalog.intro || 'Vingt-trois exercices pour s’entraîner à la prise de contact, à l’écoute active, à la gestion des objections et à la manipulation des méthodes.')}
+      ${core.pageTitle(catalog.title, 'L’Atelier Vente', catalog.intro)}
       <p class="muted">${done} exercice${done > 1 ? 's' : ''} terminé${done > 1 ? 's' : ''} sur ${total}. Vos réponses restent dans ce navigateur.</p>
       <div class="home-actions">
         ${core.linkButton(done ? 'Reprendre où je me suis arrêté' : 'Commencer le parcours', core.pageUrl(resume.file), 'primary')}
@@ -60,7 +60,7 @@
     const done = core.completedCount();
     const total = catalog.all.length;
     return `<div class="summary-page">
-      ${core.pageTitle('Votre parcours', done === total ? (catalog.theme ? 'Tous les exercices sont terminés.' : 'Les vingt-trois exercices sont terminés.') : 'Votre entraînement continue.',
+      ${core.pageTitle('Votre parcours', done === total ? 'Tous les exercices sont terminés.' : 'Votre entraînement continue.',
         `${done} exercice${done > 1 ? 's' : ''} terminé${done > 1 ? 's' : ''} sur ${total}. Retrouvez vos réponses pour les relire ou les compléter.`)}
       ${catalog.series.map(serie => {
         const keys = serie.exercises.map(exercise => `${serie.id}-${exercise.id}`);
@@ -86,7 +86,7 @@
   function render() {
     const atSummary = location.hash === '#bilan';
     $('#main').innerHTML = atSummary ? summary() : home();
-    document.title = atSummary ? 'Votre bilan · L’Atelier Vente' : 'L’Atelier Vente · Série 1-1-1';
+    document.title = atSummary ? 'Votre bilan · L’Atelier Vente' : `L’Atelier Vente · ${catalog.title}`;
     core.renderChrome(null);
     // L'accueil n'appartient à aucune série : pas de fond d'exercice.
     document.body.style.backgroundImage = `url(${JSON.stringify(core.asset(catalog.commonBackground))})`;
