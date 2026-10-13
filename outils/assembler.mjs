@@ -101,19 +101,22 @@ const STYLE = `
   .sound-toggle[aria-pressed="false"] { color: var(--muted); }
 `;
 
-const page = (title, body, script = '') => `<!doctype html>
+/* `hidden` : page réservée au formateur (Intégrer), ni liée depuis le menu
+ * ni référencée par les moteurs de recherche. */
+const page = (title, body, script = '', { hidden = false } = {}) => `<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1249d8">
+  ${hidden ? '<meta name="robots" content="noindex, nofollow">' : ''}
   <title>${esc(title)}</title>
   <link rel="icon" type="image/svg+xml" href="${favicon}">
   <style>${STYLE}</style>
 </head>
 <body>
   <header class="top"><span class="mark" aria-hidden="true"></span><strong>L’Atelier Vente</strong>
-    <nav><a href="index.html">Les modules</a><a href="integrer.html">Intégrer</a><span data-sound-anchor hidden></span></nav></header>
+    <nav><a href="index.html">Les modules</a><span data-sound-anchor hidden></span></nav></header>
   ${body}
   <footer>Vos réponses restent dans votre navigateur : rien n’est envoyé à un serveur.</footer>
   ${script}
@@ -243,7 +246,7 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
     document.querySelectorAll('.serie').forEach(function (serie) { serie.hidden = !serie.querySelector('.row:not([hidden])'); });
   });
 })();
-</script>`);
+</script>`, { hidden: true });
 writeFileSync(join(repo, 'integrer.html'), integrate);
 
 
