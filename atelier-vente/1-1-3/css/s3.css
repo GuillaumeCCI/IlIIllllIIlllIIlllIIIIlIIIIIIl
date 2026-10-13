@@ -197,9 +197,9 @@ button.crash-passage:hover { background: #fcdcd3; }
 
 /* 2.1 · d'après la maquette : la carte de réaction sur son fond illustré
    (taches, horloge), les quatre cases avec leur icône peinte. */
-/* Le fond peint est posé en dessous, à 80 % d'opacité. */
+/* Le fond peint est posé en dessous, à 65 % d'opacité. */
 .nat-card { background: #fbf8f2; border-color: #ece6da; overflow: hidden; }
-.nat-card::after { content: ''; position: absolute; inset: 0; z-index: 0; background: url('../assets/illustrations/s3/nature-carte.webp') right center / cover no-repeat; opacity: .8; pointer-events: none; }
+.nat-card::after { content: ''; position: absolute; inset: 0; z-index: 0; background: url('../assets/illustrations/s3/nature-carte.webp') right center / cover no-repeat; opacity: .65; pointer-events: none; }
 .nat-card > * { position: relative; z-index: 1; }
 .nat-card-body { padding-right: clamp(0px, 14%, 150px); }
 .nat-folder { position: relative; width: 80px; height: 80px; background: none; }

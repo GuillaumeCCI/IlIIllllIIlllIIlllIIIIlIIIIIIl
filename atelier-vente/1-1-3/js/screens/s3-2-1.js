@@ -25,7 +25,6 @@
   }
 
   function sortScreen(index) {
-    const done = kit.deckPlaced(total).filter(Boolean).length;
     return `<div class="nat-stack">
       <article class="nat-card" draggable="true" data-drag="${index}" tabindex="0" aria-label="Réaction ${index + 1} : ${esc(cards[index].text)}">
         <p class="nat-position">Réaction ${index + 1} / ${total}</p>
@@ -39,8 +38,6 @@
         <span><strong>${esc(z.label)}</strong><small>${esc(z.text)}</small></span>
       </button>`).join('')}</div>
     ${kit.bar({
-      left: kit.dialogButton('all', 'Voir les 6 réactions', 'text-button', 'list'),
-      center: `${done + 1} / ${total} en cours`,
       right: `${kit.act('deck-undo', `${icon('undo', { size: 17 })}<span>Annuler</span>`, 'secondary', Array.isArray(ex.value('history')) && ex.value('history').length ? '' : 'disabled')}${kit.act('classify', `<span>Classer et passer à la suivante</span>${icon('arrowRight', { size: 18 })}`, 'primary', pick() ? '' : 'disabled')}`
     })}`;
   }
@@ -57,7 +54,7 @@
         : sortScreen(index);
     return `<div class="k-page nat-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count"><strong>${placed.filter(Boolean).length} / ${total}</strong> classées</p>${reviewing ? '' : kit.deckDots(total, index)}` })}
+        aside: reviewing ? '' : kit.deckDots(total, index) })}
       <form class="nat-form" novalidate>${body}${reviewing ? '' : core.errorsBox()}</form>
       ${reviewing ? '' : kit.utility('Corrigé disponible après les 6 réactions')}
     </div>`;
@@ -81,13 +78,6 @@
     'deck-reopen': el => { kit.deckReopen(total, Number(el.dataset.index)); kit.commit(); }
   });
   kit.onDrop((id, zone) => { classify(zone); kit.commit(); });
-  kit.dialogs({
-    all: () => {
-      const placed = kit.deckPlaced(total);
-      const label = id => (zones.find(z => z.id === id) || {}).label;
-      return { title: 'Les 6 réactions', html: `<ol class="dialog-list">${cards.map((c, i) => `<li>« ${esc(c.text)} »${placed[i] ? ` <em>· ${esc(label(placed[i]))}</em>` : ''}</li>`).join('')}</ol>` };
-    }
-  });
 
   ex.mount('s3-2.1', { screen, validate, feedback, compactFeedback: true });
 })();
