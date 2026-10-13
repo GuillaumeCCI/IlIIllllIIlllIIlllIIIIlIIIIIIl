@@ -445,24 +445,27 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
   --client-card-bg: #fff;                         /* fond de la carte */
   --client-card-radius: 20px;                     /* arrondi des angles */
   --client-card-shadow: 0 14px 40px rgb(15 35 78 / 7%);
-  --client-card-portrait: 30%;                    /* largeur du portrait */
+  --client-card-portrait: 235px;                  /* largeur du portrait */
+  --client-card-portrait-max: 245px;              /* hauteur maximale du portrait */
   --client-card-label: #4c5f86;                   /* « Le client vous dit » */
   --client-card-accent: var(--coral, #ff936b);    /* petit trait sous le libellé */
   --client-card-text: var(--navy);                /* la réplique */
-  --client-card-size: clamp(1.3rem, 1.9vw, 1.75rem);
-  --client-card-mark: 68px;                       /* guillemet ouvrant */
+  --client-card-size: clamp(1.25rem, 1.75vw, 1.65rem);
+  --client-card-mark: 60px;                       /* guillemet ouvrant */
 }
 
 .client-card-box { container-type: inline-size; margin: 0 0 22px; }
 
-#main .client-card { display: grid; grid-template-columns: var(--client-card-portrait) minmax(0, 1fr); align-items: center; margin: 0; padding: 0 44px 0 0; overflow: hidden; border-radius: var(--client-card-radius); background: var(--client-card-bg); box-shadow: var(--client-card-shadow); }
+/* La carte s'ajuste à sa réplique : pas de grand vide à droite d'une
+   phrase courte ; une longue revient à la ligne dans la largeur disponible. */
+#main .client-card { width: fit-content; max-width: 100%; display: grid; grid-template-columns: var(--client-card-portrait) minmax(0, auto); align-items: center; margin: 0; padding: 0 44px 0 0; overflow: hidden; border-radius: var(--client-card-radius); background: var(--client-card-bg); box-shadow: var(--client-card-shadow); }
 
 /* Le portrait est toujours affiché en entier (jamais recadré). */
 .client-card-who { align-self: end; display: flex; align-items: flex-end; justify-content: center; padding: 14px 0 0 14px; }
 
-.client-card-who img { display: block; width: 100%; height: auto; object-fit: contain; box-shadow: none !important; }
+.client-card-who img { display: block; width: 100%; height: auto; max-height: var(--client-card-portrait-max); object-fit: contain; box-shadow: none !important; }
 
-.client-card-said { padding: 22px 0 22px 22px; }
+.client-card-said { padding: 16px 0 16px 22px; }
 
 #main .client-card-label { margin: 0 0 12px; font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--client-card-label); }
 

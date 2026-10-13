@@ -120,8 +120,9 @@ button.crash-passage:hover { background: #fcdcd3; }
 .fix-c { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #d8e3fa; color: var(--navy); font-size: 1.2rem; }
 .fix-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 18px; margin-top: 8px; }
 .fix-bad, .fix-good { padding: 20px 24px; border-radius: 14px; }
-.fix-bad { border: 1px solid #f6c4bb; background: #fff5f3; }
-.fix-good { border: 1px solid #b9cff7; background: #f3f7ff; }
+/* Sans contour : la teinte du fond suffit à distinguer les deux encadrés. */
+.fix-bad { background: #fff5f3; }
+.fix-good { background: #f3f7ff; }
 .fix-bad-title, .fix-good-title { display: flex; align-items: center; gap: 12px; font-weight: 800; text-transform: uppercase; }
 .fix-bad-title { color: #e5402f; }
 .fix-good-title { color: var(--accent); }
@@ -253,3 +254,7 @@ button.crash-passage:hover { background: #fcdcd3; }
   .nat-recap li { grid-template-columns: 48px minmax(0, 1fr); }
   .nat-recap-zones { grid-column: 2; justify-items: start; }
 }
+/* 2.2 · l'onglet dit ce que le client a dit, pas seulement un mot-clé. */
+.fix-tab-text { display: grid; gap: 2px; min-width: 0; }
+.fix-tab-text small { color: #6b7aa1; font-size: .78rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
+.fix-tab-text > span { font-size: 1rem; line-height: 1.3; }
