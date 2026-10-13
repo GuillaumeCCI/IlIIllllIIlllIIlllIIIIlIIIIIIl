@@ -333,6 +333,18 @@
     menu.querySelector('.av-menu-toggle').addEventListener('click', () => setMenuOpen(!menu.classList.contains('is-open')));
     menu.querySelector('.av-menu-close').addEventListener('click', () => setMenuOpen(false));
     menu.querySelector('.av-menu-backdrop').addEventListener('click', () => setMenuOpen(false, { focus: false }));
+    // Un exercice choisi dans le menu : le cadre d'intégration joue sa
+    // transition (logo CCI en fondu, atelier-vente/cadre.html), s'il existe.
+    menu.querySelector('.av-menu-list').addEventListener('click', event => {
+      const link = event.target.closest('a[href]');
+      if (!link || link.getAttribute('aria-current') || event.ctrlKey || event.metaKey || event.shiftKey || event.button) return;
+      let transition = null;
+      try { transition = window.parent !== window && window.parent.atelierTransition; } catch { /* autre origine */ }
+      if (typeof transition !== 'function') return;
+      event.preventDefault();
+      setMenuOpen(false, { focus: false });
+      transition(link.href);
+    });
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' && menu.classList.contains('is-open')) setMenuOpen(false);
     });
