@@ -65,6 +65,7 @@ for (const entry of MODULES) {
     code: entry.code,
     intro,
     series: catalog.series.map(serie => ({
+      id: serie.id,
       label: serie.label,
       exercises: serie.exercises.map(exercise => ({ id: exercise.id, file: exercise.file, label: exercise.label }))
     }))
@@ -149,7 +150,7 @@ writeFileSync(join(repo, 'index.html'), home);
 const data = JSON.stringify(modules);
 const integrate = page('L’Atelier Vente · Intégrer', `<main>
   <h1>Intégrer les exercices</h1>
-  <p class="lede">Deux façons de placer les exercices dans une autre plateforme (LMS, Moodle, site, Notion…) : un module entier, avec sa navigation, ou un exercice seul, sans en-tête ni navigation. Copiez le lien, ou le code d’intégration à coller dans un bloc HTML.</p>
+  <p class="lede">Trois façons de placer les exercices dans une autre plateforme (LMS, Moodle, site, Notion…) : un module entier, avec sa navigation, un thème du module (ses seuls exercices, avec leur navigation), ou un exercice seul, sans en-tête ni navigation. Copiez le lien, ou le code d’intégration à coller dans un bloc HTML.</p>
   <section class="card how">
     <h2>Mode d’emploi</h2>
     <ol>
@@ -171,7 +172,11 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
   .module-head h2 { margin: 0; font-size: 1.5rem; }
   .module-head .actions { margin-left: auto; }
   .actions { display: flex; gap: 8px; flex-wrap: wrap; }
-  .serie h3 { font-size: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 20px 0 6px; }
+  .serie-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 20px 0 6px; }
+  .serie-head .actions { margin-left: auto; }
+  .serie h3 { font-size: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 0; }
+  .serie-head .note { color: var(--muted); font-size: .9rem; }
+  .serie[hidden] { display: none; }
   .row { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
   .row .id { font-weight: 800; color: var(--accent); }
   .row[hidden] { display: none; }
@@ -198,7 +203,9 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
     return '<section class="card module" data-module="' + m.code + '"><div class="module-head"><span class="k">Module ' + m.code + '</span><h2>Tous les exercices d’un coup</h2>'
       + actions(moduleUrl, 'L’Atelier Vente, module ' + m.code) + '</div>'
       + m.series.map(function (s) {
-        return '<div class="serie"><h3>' + esc(s.label) + '</h3>' + s.exercises.map(function (x) {
+        var themeUrl = base + m.code + '/index.html?embed=module&theme=' + s.id;
+        var themeTitle = 'L’Atelier Vente ' + m.code + ' · ' + s.label;
+        return '<div class="serie"><div class="serie-head"><h3>' + esc(s.label) + '</h3><span class="note">Le thème entier · ' + s.exercises.length + ' exercice' + (s.exercises.length > 1 ? 's' : '') + '</span>' + actions(themeUrl, themeTitle) + '</div>' + s.exercises.map(function (x) {
           var url = base + m.code + '/exercices/' + x.file + '.html?embed=solo';
           var title = 'L’Atelier Vente ' + m.code + ' · ' + s.label + ' · ' + x.label;
           return '<div class="row" data-search="' + esc((m.code + ' ' + s.label + ' ' + x.id + ' ' + x.label).toLowerCase()) + '"><span class="id">' + esc(x.id) + '</span><span>' + esc(x.label) + '</span>' + actions(url, title) + '</div>';
@@ -222,6 +229,7 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
   document.getElementById('filter').addEventListener('input', function (event) {
     var q = event.target.value.trim().toLowerCase();
     document.querySelectorAll('.row').forEach(function (row) { row.hidden = q && row.getAttribute('data-search').indexOf(q) === -1; });
+    document.querySelectorAll('.serie').forEach(function (serie) { serie.hidden = !serie.querySelector('.row:not([hidden])'); });
   });
 })();
 </script>`);

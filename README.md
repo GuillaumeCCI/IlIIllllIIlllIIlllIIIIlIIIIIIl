@@ -1,6 +1,6 @@
 # L’Atelier Vente · les parcours
 
-Un dépôt, plusieurs parcours d’exercices interactifs. Publié par Netlify à chaque envoi sur GitHub (branche `main`).
+Un dépôt, plusieurs parcours d’exercices interactifs. Publié par GitHub Pages à chaque envoi sur GitHub (branche `main`, dossier racine) : https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/. Le dépôt doit rester public, sinon GitHub Pages (gratuit) s’arrête.
 
 ```
 atelier-vente/            ← ce dépôt (Documents\atelier-vente)
@@ -15,7 +15,7 @@ atelier-vente/            ← ce dépôt (Documents\atelier-vente)
 │   ├── 1-1-2/            tests (tests/) et outils (tools/) du module
 │   └── …
 ├── outils/               assembler.mjs (pages générées), tester.mjs (tests)
-└── _redirects            anciennes adresses → nouvelles (Netlify)
+└── _redirects            anciennes redirections Netlify, sans effet sur GitHub Pages
 ```
 
 ## Travailler
@@ -23,11 +23,11 @@ atelier-vente/            ← ce dépôt (Documents\atelier-vente)
 - **Modifier un exercice** : directement dans `atelier-vente/1-1-x/` (VS Code). Live Server à la racine du dépôt montre tout le site.
 - **Après un ajout de module ou un changement de titre** : `npm run assembler` (régénère les accueils et la page « Intégrer »).
 - **Tester tout** : `npm test` (ou `npm test -- atelier-vente` pour un seul parcours).
-- **Publier** : enregistrer (commit) puis envoyer (push) sur GitHub. Si les mises à jour Netlify sont en pause, le site en ligne ne change pas.
+- **Publier** : enregistrer (commit) puis envoyer (push) sur GitHub. Le site en ligne se met à jour seul, en une minute environ.
 
 ## Les liens LMS
 
-Un thème d’un module : `https://<site>/atelier-vente/1-1-2/index.html?embed=module&theme=s3`. La page `atelier-vente/integrer.html` donne tous les liens.
+Un thème d’un module : `https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/atelier-vente/1-1-2/index.html?embed=module&theme=s3`. La page `atelier-vente/integrer.html` donne tous les liens : module entier, thème par thème, exercice seul.
 
 ## Le moteur commun
 
