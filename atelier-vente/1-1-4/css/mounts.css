@@ -290,3 +290,6 @@ button.crash-passage:hover { background: #fff1d6; }
 .call-self { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 .call-self span { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 16px; background: #f1f3f8; color: #7c88a6; font-size: .85rem; font-weight: 700; }
 .call-self span.is-on { background: var(--tint); color: var(--accent); }
+
+/* Une description sous l'onglet (tabNote), plus discrète que le prix. */
+.fm-tab-text small.fm-tab-note { margin-top: 2px; color: #5b6a8f; font-size: .88rem; font-weight: 600; }

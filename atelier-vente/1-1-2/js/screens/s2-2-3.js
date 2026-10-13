@@ -30,7 +30,7 @@
   function tabs(at) {
     return `<div class="studio-tabs" role="tablist">${hooks.map((hook, i) =>
       `<button type="button" role="tab" class="studio-tab ${i === at ? 'is-active' : ''} ${filled(i) ? 'is-done' : ''}" data-act="hook" data-index="${i}" aria-selected="${i === at}">
-        <span class="studio-tab-n">${filled(i) && i !== at ? icon('check', { size: 16 }) : i + 1}</span><span>${esc(hook.tab)}</span>
+        <span class="studio-tab-n">${filled(i) && i !== at ? icon('check', { size: 16 }) : i + 1}</span><span class="studio-tab-text">${esc(hook.tab)}<small>${esc(hook.title)}</small></span>
       </button>`).join('')}</div>`;
   }
 

@@ -176,3 +176,7 @@
 .myth-zone-art { width: auto; height: 92px; }
 .say-symbol.has-art { width: 86px; }
 .say-symbol.has-art img { width: 86px; height: auto; }
+
+/* L'onglet nomme le type d'accroche et sa consigne courte. */
+.studio-tab-text { display: grid; gap: 2px; text-align: left; }
+.studio-tab-text small { color: #6b7aa1; font-size: .85rem; font-weight: 500; }

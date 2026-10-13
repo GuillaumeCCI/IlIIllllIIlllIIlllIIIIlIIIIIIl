@@ -449,7 +449,7 @@
     function tabs(at) {
       if (n < 2) return '';
       return `<div class="fm-tabs count-${n} ${content.sequential ? 'is-steps' : ''}">${cases.map((c, i) => `<button type="button" class="fm-tab ${i === at ? 'is-current' : ''} ${complete(i) ? 'is-done' : ''}" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'}>
-        <span class="fm-tab-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : content.sequential ? i + 1 : String(i + 1).padStart(2, '0')}</span><span class="fm-tab-text">${esc(c.tab)}${c.tabSub ? `<small>${esc(c.tabSub)}</small>` : ''}</span></button>`).join('')}</div>`;
+        <span class="fm-tab-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : content.sequential ? i + 1 : String(i + 1).padStart(2, '0')}</span><span class="fm-tab-text">${esc(c.tab)}${c.tabSub ? `<small>${esc(c.tabSub)}</small>` : ''}${c.tabNote ? `<small class="fm-tab-note">${esc(c.tabNote)}</small>` : ''}</span></button>`).join('')}</div>`;
     }
 
     function fieldBlock(i, f) {

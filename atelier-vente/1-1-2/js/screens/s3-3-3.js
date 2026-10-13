@@ -42,7 +42,7 @@
           return `<label class="say-option ${locked ? 'is-locked' : ''}">
             <input type="radio" class="sr-only" name="pick${i}" data-field="pick${i}" value="${o}" ${pick(i) === o ? 'checked' : ''} ${locked ? 'disabled' : ''}>
             <span class="say-radio"></span><span class="say-letter">${letters[o]}</span>
-            <span class="say-option-copy"><strong>${esc(text)}</strong>${locked ? `<small>Déjà retenu pour « ${esc(needs[owner].tab)} »</small>` : ''}</span>
+            <span class="say-option-copy"><strong>${esc(text)}</strong>${locked ? `<small>Déjà retenu pour le besoin ${owner + 1} · ${esc(needs[owner].tab)}</small>` : ''}</span>
           </label>`;
         }).join('')}</div>
         ${core.errorsBox()}

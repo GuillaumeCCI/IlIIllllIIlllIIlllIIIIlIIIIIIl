@@ -78,11 +78,11 @@ window.ATELIER_S3 = {
     ],
     hint: 'Lisez ce que fait le client : se projette-t-il dans la suite, hésite-t-il entre deux options, ou a-t-il tout validé ?',
     cases: [
-      { tab: 'Situation 1', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-A.png', alt: 'Une cliente demande si la livraison est possible avant la fin du mois.', caption: 'Le client demande : « Vous pourriez nous livrer avant la fin du mois ? »' },
+      { tab: 'Situation 1', tabNote: 'Livraison avant la fin du mois ?', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-A.png', alt: 'Une cliente demande si la livraison est possible avant la fin du mois.', caption: 'Le client demande : « Vous pourriez nous livrer avant la fin du mois ? »' },
         answers: { technique: 'directe' }, models: { text: 'Oui, une livraison avant la fin du mois est possible. Est-ce que vous souhaitez que nous partions sur ce calendrier ?' } },
-      { tab: 'Situation 2', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-B.png', alt: 'Un client compare deux maquettes posées sur la table : une implantation de 5 postes et une de 10 postes.', caption: 'Le client souhaite s’équiper, mais hésite encore entre 5 et 10 postes.' },
+      { tab: 'Situation 2', tabNote: 'Hésite entre 5 et 10 postes', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-B.png', alt: 'Un client compare deux maquettes posées sur la table : une implantation de 5 postes et une de 10 postes.', caption: 'Le client souhaite s’équiper, mais hésite encore entre 5 et 10 postes.' },
         answers: { technique: 'alternative' }, models: { text: 'Vous préférez commencer par les 5 postes prioritaires ou équiper directement les 10 ?' } },
-      { tab: 'Situation 3', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-C.png', alt: 'Le client et le commercial se serrent la main devant les éléments validés.', caption: 'Le client a validé la solution, son périmètre et son prix. Il ne formule plus d’objection.' },
+      { tab: 'Situation 3', tabNote: 'A tout validé, plus d’objection', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-C.png', alt: 'Le client et le commercial se serrent la main devant les éléments validés.', caption: 'Le client a validé la solution, son périmètre et son prix. Il ne formule plus d’objection.' },
         answers: { technique: ['recap', 'directe'] }, models: { text: 'Nous avons donc validé les 10 postes, l’installation et la garantie 5 ans. Est-ce que nous pouvons lancer la commande ?' } }
     ],
     keyPoint: 'À retenir : la bonne conclusion est celle qui s’appuie sur ce que le client vient réellement d’exprimer et lui propose clairement une prochaine étape.',
