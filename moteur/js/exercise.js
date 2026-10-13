@@ -33,6 +33,10 @@
   const values = () => core.entry(current.key).values;
   const value = key => values()[key] ?? '';
   const setValue = (key, v) => { values()[key] = v; };
+  /* Les exercices en étapes (une question à la fois) : l'étape affichée.
+   * Boutons : data-action="wizard-next" (data-require="champ" : le champ à
+   * remplir avant de passer) et data-action="wizard-prev". */
+  const wizardAt = () => Math.max(0, Number(values().wizard) || 0);
   const cursor = () => Number(value('cursor')) || 0;
   /* Vrai quand l'exercice a été validé : l'écran bascule alors en mode
    * relecture et place ses corrections au contact des réponses. */
@@ -827,6 +831,17 @@
         case 'next-case': setCursor(cursor() + 1); rebuild(); break;
         // Passer un cas repart de sa première étape.
         case 'skip-case': setCursor(cursor() + 1); setValue('stage', 1); rebuild(); break;
+        case 'wizard-next': {
+          const need = control.dataset.require;
+          if (need && !String(value(need) || '').trim()) {
+            core.toast('Complétez votre réponse pour continuer.');
+            $(`[data-field="${need}"]`)?.focus();
+            break;
+          }
+          setValue('wizard', wizardAt() + 1); core.persist(); rebuild(); window.scrollTo({ top: 0, behavior: 'instant' });
+          break;
+        }
+        case 'wizard-prev': setValue('wizard', Math.max(0, wizardAt() - 1)); core.persist(); rebuild(); break;
         default: break;
       }
     });
@@ -867,7 +882,7 @@
 
   root.AtelierExercise = Object.freeze({
     mount, render, rebuild, changed, submit, showFeedback,
-    values, value, setValue, cursor, setCursor, indexed,
+    values, value, setValue, cursor, setCursor, indexed, wizardAt,
     field, select, radioCards, checkList, caseTabs, caseProgress, lockNote, actions,
     caseBar, caseDots, caseActions,
     reviewing, verdictMark, inlineNote, modelBlock, reviewOptions,
