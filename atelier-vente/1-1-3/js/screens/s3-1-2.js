@@ -97,9 +97,16 @@
    * l'apprenant), à droite les conseils tirés de « ce que la réponse oublie
    * aussi ». L'explication de la fiche se coupe à son premier « : ». */
   const TONES = ['coral', 'green', 'blue', 'green'];
+  // Le corrigé a deux onglets : 1 · maladresses et conseils, 2 · réécriture.
+  // Non enregistré : il rouvre toujours sur le premier.
+  let reviewTab = 1;
   const TIP_ICONS = ['chat', 'lightbulb', 'users'];
 
   function reviewScreen() {
+    return reviewTab === 2 ? rewriteReview() : faultsReview();
+  }
+
+  function faultsReview() {
     const caught = passages.filter((_, i) => rowOf(i) !== undefined).length;
     const others = [0, 1, 2, 3].filter(r => flag(r) === null && kit.filled(ex.value(`error${r}`)));
     return `<div class="k-columns crash-corrige">
@@ -123,15 +130,24 @@
         }).join('')}</ol>
         ${others.length ? `<h3 class="k-small-title">Vos autres repérages</h3><ul class="crash-own">${others.map(r => `<li>${esc(ex.value(`error${r}`))}</li>`).join('')}</ul>` : ''}
       </section>
+      <div class="crash-side">
       ${content.missing ? `<aside class="k-panel crash-tips">
         <h2>Conseils pour progresser</h2>
         <p class="k-muted">Ce que la réponse du commercial oublie aussi.</p>
         <ul>${content.missing.map((m, i) => `<li><span class="crash-tip-icon tone-${['blue', 'coral', 'green'][i % 3]}">${icon(TIP_ICONS[i % TIP_ICONS.length], { size: 26 })}</span><div><strong>${esc(m.title)}</strong><p>${esc(m.text)}</p></div></li>`).join('')}</ul>
       </aside>` : ''}
+        <div class="crash-side-next">${kit.act('review-tab', `<span>Voir la réécriture</span>${icon('arrowRight', { size: 18 })}`, 'primary', 'data-tab="2"')}</div>
+      </div>
     </div>
-    <section class="k-panel">
+    <div class="k-utility">${kit.reset()}</div>`;
+  }
+
+  function rewriteReview() {
+    return `<section class="k-panel">
       <h2>La réécriture</h2>
+      <p class="k-muted">Comparez votre réponse au client avec le corrigé modèle.</p>
       <div class="k-columns is-even">${kit.yours('Votre réponse', ex.value('rewrite'))}${kit.model('Corrigé modèle', content.model)}</div>
+      <div class="crash-review-back">${kit.back('review-tab', 'Revenir aux maladresses')}</div>
     </section>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }
@@ -174,7 +190,12 @@
       }
       kit.commit();
     },
-    back: () => { kit.setStage(1); kit.commit(); }
+    back: () => { kit.setStage(1); kit.commit(); },
+    'review-tab': el => {
+      reviewTab = Number(el.dataset.tab) === 2 ? 2 : 1;
+      ex.rebuild();
+      window.scrollTo({ top: 0 });
+    }
   });
   kit.live(() => {
     const submit = core.$('.crash-actions .k-submit');
