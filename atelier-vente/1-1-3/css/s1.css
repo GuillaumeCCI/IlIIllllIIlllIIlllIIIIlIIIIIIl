@@ -375,3 +375,10 @@
 .hidden-scene { min-height: 0; aspect-ratio: 4 / 3; }
 .hidden-bubble { max-width: 42%; padding: 10px 14px 10px 12px; font-size: clamp(.85rem, 1vw, 1.02rem); }
 .hidden-n { width: 32px; height: 32px; margin-top: -20px; margin-left: -18px; }
+
+/* 1.1 · d'après la maquette : la carte sur son fond peint (papier, feuilles,
+   taches), sans contour ; « 4 restantes » seul en haut, sans la frise ; le
+   bouton « Revenir à la précédente » sans contour. */
+.xp-card { border: 0; background: #fbf8f2 url('../assets/illustrations/s1/reflexe-carte.webp') center / cover no-repeat; }
+.xp-top { display: flex; justify-content: flex-end; }
+.xp-page .k-bar .button.secondary { border-color: transparent; box-shadow: none; }

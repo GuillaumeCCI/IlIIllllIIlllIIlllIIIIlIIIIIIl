@@ -16,19 +16,11 @@
   const zones = content.zones;
   const total = cards.length;
 
-  const progress = current => {
-    const placed = kit.deckPlaced(total);
-    return `<span class="xp-progress" aria-hidden="true">${placed.map((zone, i) =>
-      `<span class="xp-seg ${i === current ? 'is-current' : zone !== null ? 'is-filled' : ''}"></span>`).join('')}</span>`;
-  };
-
   function sortScreen(index) {
     const left = kit.deckPlaced(total).filter(zone => zone === null).length;
     const history = ex.value('history');
     return `<div class="xp-board">
       <div class="xp-top">
-        <p class="xp-position">Situation <strong>${index + 1}</strong> sur <strong>${total}</strong></p>
-        ${progress(index)}
         <span class="xp-left">${kit.plural(left - 1, 'restante', 'restantes')}</span>
       </div>
       <div class="xp-stack">
