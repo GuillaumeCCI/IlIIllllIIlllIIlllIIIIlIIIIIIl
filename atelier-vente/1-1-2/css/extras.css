@@ -1,192 +1,5 @@
-/* ══════════════════════════════════════════════════════════════════════
-   SONS ET INTÉGRATION · commun aux modules 1-1-1 à 1-1-4.
-   Voir js/sounds.js et js/embed.js.
-   ══════════════════════════════════════════════════════════════════════ */
-
-/* ── Bouton Sons ──────────────────────────────────────────────────────── */
-.sound-toggle { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 650; font-size: .88rem; }
-.sound-toggle[aria-pressed="false"] { color: var(--muted); }
-/* Sans en-tête (exercice intégré seul) : Sons et Musique flottent ensemble. */
-.sound-dock { position: fixed; top: 10px; right: 10px; z-index: 50; display: flex; gap: 8px; }
-.sound-dock .sound-toggle { padding: 6px 12px; border: 1px solid var(--line); border-radius: 20px; background: #fff; box-shadow: var(--shadow); }
-/* Sur petit écran, les boutons d'en-tête sont masqués : celui-ci reste,
- * réduit à son icône. */
-@media (max-width: 760px) {
-  .topbar .sound-toggle { display: inline-flex; }
-  .sound-toggle-label { display: none; }
-}
-
-/* La musique attend un premier geste (règle des navigateurs) : le bouton
- * Musique pulse doucement pour le signaler. */
-.music-toggle.is-waiting { animation: music-wait 1.6s ease-in-out infinite; }
-@keyframes music-wait { 50% { opacity: .45; } }
-@media (prefers-reduced-motion: reduce) { .music-toggle.is-waiting { animation: none; text-decoration: underline dotted; } }
-
-/* ── Module intégré : sans pied de page ───────────────────────────────── */
-html[data-embed] .site-footer { display: none; }
-
-/* ── Exercice seul : l'exercice, son corrigé, et rien d'autre ─────────── */
-html[data-embed="solo"] .topbar,
-html[data-embed="solo"] .exercise-nav,
-html[data-embed="solo"] .series-bar,
-html[data-embed="solo"] .bottom-navigation,
-html[data-embed="solo"] #feedback a.button { display: none !important; }
-html[data-embed="solo"] #main { padding-top: 20px; }
-
-/* ── ÉCHELLE COMMUNE ────────────────────────────────────────────────────
-   Tous les exercices, dans tous les modules, à la même échelle : même
-   titre (43 px sur grand écran), même sous-titre. Certains écrans, refaits
-   d'après une maquette, avaient grossi leur titre (jusqu'à 58 px) ; ceux du
-   module 1-1-1 étaient un peu plus petits. La page de contexte garde son
-   grand titre éditorial. */
-#main *:not(.briefing-head) > h1 { font-size: clamp(1.8rem, 2.6vw, 2.7rem) !important; line-height: 1.12; }
-#main .k-subtitle, #main .subtitle { font-size: clamp(1rem, 1.25vw, 1.22rem) !important; }
-
-/* ── Surtitre en pastille ───────────────────────────────────────────────
-   Le surtitre d'un exercice (« Méthode CAP »…) est déplacé par exercise.js
-   dans l'angle haut gauche de la zone d'exercice, en pastille blanche comme
-   les boutons du bas. Le contenu descend pour lui laisser la place. */
-#main { position: relative; }
-#main > .page-tag { position: absolute; top: 14px; left: clamp(20px, 3vw, 64px); z-index: 2; display: inline-flex; align-items: center; margin: 0; padding: 7px 16px; border: 1.5px solid #afbddd; border-radius: 30px; background: #fff; color: var(--accent); font-size: .78rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; line-height: 1.2; box-shadow: 0 2px 8px rgb(35 40 80 / 6%); }
-#main > .page-tag + * { margin-top: 56px; } /* la bulle (≈ 34 px de haut, posée à 14 px) garde un vrai espace avant le titre */
-
-/* ── Apparition de l'écran (exercise.js, revealScreen) ──────────────────
-   La consigne en fondu, puis les blocs de l'exercice un à un, en remontant
-   de quelques pixels. */
-@keyframes reveal-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-@keyframes reveal-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-#main .is-revealing { animation: reveal-rise .7s cubic-bezier(.2, .7, .2, 1) var(--reveal-delay, 0s) both !important; }
-#main .is-revealing.is-reveal-head { animation: reveal-fade 1.3s ease-out var(--reveal-delay, 0s) both !important; }
-@media (prefers-reduced-motion: reduce) { #main .is-revealing, #main .is-revealing.is-reveal-head { animation: none !important; } }
-
-/* ── Fenêtre « Repère » ─────────────────────────────────────────────────
-   Fond crème, pastille illustrée devant le titre, le conseil en grand
-   derrière un trait corail, les clés en pastilles de couleur, et deux
-   taches aquarelle discrètes dans l'angle. */
-#info-dialog.is-tip { width: min(680px, calc(100vw - 32px)); padding: 24px 28px 28px; overflow: hidden; border-color: #ece7de; border-radius: 22px; background: #fcfaf6; }
-#info-dialog.is-tip::after { content: ''; position: absolute; right: 0; bottom: 0; width: 110px; height: 135px; background: url('../assets/illustrations/repere-coin.webp') right bottom / contain no-repeat; pointer-events: none; -webkit-mask-image: radial-gradient(circle at 100% 100%, #000 52%, transparent 74%); mask-image: radial-gradient(circle at 100% 100%, #000 52%, transparent 74%); }
-#info-dialog.is-tip #dialog-body > p:first-child { margin-right: 70px; padding-left: 16px; }
-#info-dialog.is-tip .dialog-top { align-items: center; margin-bottom: 14px; }
-#info-dialog.is-tip #dialog-title { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; line-height: 1.15; }
-.tip-badge { display: block; width: 48px; height: 46px; flex-shrink: 0; margin: -8px 0 -6px -6px; background: url('../assets/illustrations/repere-badge.webp') center / contain no-repeat; }
-.tip-badge svg { display: none; }
-#info-dialog.is-tip #dialog-body > p:first-child { position: relative; z-index: 1; padding-left: 22px; border-left: 3px solid var(--coral); font-size: 1.02rem; font-weight: 500; line-height: 1.55; color: var(--navy); }
-#info-dialog.is-tip #dialog-body > * + * { margin-top: 18px; }
-.tip-keys { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; color: var(--muted); }
-.tip-key { display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px 7px 12px; border-radius: 999px; background: #e6eefc; color: var(--navy); font-weight: 600; }
-.tip-key::before { content: ''; width: 11px; height: 11px; border-radius: 50%; background: #2f6fe0; }
-.tip-key.tone-coral { background: #fde6dd; }
-.tip-key.tone-coral::before { background: #ef7a5c; }
-.tip-key.tone-green { background: #e3f0e6; }
-.tip-key.tone-green::before { background: #5c9c76; }
-.tip-key + .tip-key::after { content: none; }
-.tip-sep { width: 4px; height: 4px; border-radius: 50%; background: #b9c3d6; }
-
-/* ── « Voir un repère » ─────────────────────────────────────────────────
-   À droite du titre de la zone de réponse (exercise.js, placeHintButtons),
-   habillé comme la maquette : ampoule illustrée, fond crème, bord bleu. */
-.hint-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.hint-row > :first-child { margin-bottom: 0; }
-.hint-row + * { margin-top: 10px; }
-#main .k-dialog-button { background: #fff; border: 0; border-radius: 16px; color: #1d3f9a; box-shadow: 0 6px 18px rgb(20 40 100 / 9%), 0 1px 3px rgb(20 40 100 / 6%); }
-#main .k-dialog-button:hover { background: #fff; box-shadow: 0 10px 24px rgb(20 40 100 / 13%), 0 1px 3px rgb(20 40 100 / 8%); transform: translateY(-1px); }
-#main .k-dialog-button .icon { display: none; }
-#main .k-dialog-button::before { content: ''; width: 22px; height: 24px; margin: -4px 2px -2px -2px; background: url('../assets/illustrations/repere-ampoule.webp') center / contain no-repeat; }
-.hint-spot { display: block; }
-
-/* ── Allègement commun (maquette « cartes réflexes ») ───────────────────
-   Onglets numérotés en cartes : sans bordure, ombre douce, l'onglet en
-   cours soulevé avec un fin liseré. Fils d'étapes compacts : segments
-   dans une pastille gris-bleu, l'étape en cours surlignée. */
-#main .fix-tab, #main .fm-tab { border: 0; border-radius: 16px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 7%); transition: box-shadow .15s, transform .15s; }
-#main .fix-tab:hover, #main .fm-tab:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgb(20 40 100 / 11%); }
-#main .fix-tab.is-current, #main .fm-tab.is-current { background: #fff; box-shadow: 0 12px 28px rgb(20 40 100 / 14%), inset 0 0 0 1.5px #c9d8fb; }
-#main .k-steps.is-compact { display: inline-flex; flex-wrap: nowrap; gap: 0; margin: 0; padding: 6px; border-radius: 14px; background: #f1f4fa; }
-#main .k-steps.is-compact .k-step { padding: 6px 16px 6px 8px; border-radius: 10px; white-space: nowrap; }
-#main .k-steps.is-compact .k-step + .k-step { border-left: 1px solid #d6deec; }
-#main .k-steps.is-compact .k-step + .k-step::before, #main .k-steps.is-compact .k-step::after { display: none; }
-#main .k-steps.is-compact .k-step.is-active { background: #e2eafb; border-left-color: transparent; }
-#main .k-steps.is-compact .k-step.is-active + .k-step { border-left-color: transparent; }
-#main .k-steps.is-compact .k-step-dot { width: 28px; height: 28px; font-size: .85rem; }
-#main .k-steps.is-compact .k-step-label { font-size: .92rem; }
-
-/* ── ENCADRÉS ALLÉGÉS ───────────────────────────────────────────────────
-   Tous les encadrés blancs des exercices (cartes, options, panneaux,
-   onglets) perdent leur trait de contour au profit d'une ombre douce,
-   comme sur la maquette des cartes réflexes. Un encadré dans un état
-   particulier (choisi, en cours, juste, faux, verrouillé…) garde son
-   propre style, défini par son exercice : on ne le touche pas. Les zones
-   de dépôt en pointillés et les champs de saisie gardent leur contour. */
-#main :where(.case-card, .k-tab, .case-tab, .attitude-card, .case-row, .draggable-card, .objection-card, .opening-card, .option-row, .own-answer, .panel, .placed-card, .radio-card, .recap-row, .result-row, .review-row, .sorter-choice, .summary-row, .scenario, .ar-row, .cap-option, .check-choice, .duel-card, .express-card, .fab-prospect, .fab-tab, .hl-tool, .intrus-card, .ladder-card, .moment-option, .myth-card, .say-option, .soncas-arg, .soncas-motive, .tree-branch, .tree-root-node, .verdict-item, .cgr-card, .cgr-legend, .cg-card, .deck-recap li, .k-box, .k-panel, .k-result, .ear-option, .ear-action, .nat-card, .path-card, .rb-item, .reflex-card, .role-verb, .six-choice, .xp-card, .xp-answer, .call-key, .cmp-option, .crash-rows li, .cmp-criterion, .dk-card, .fm-choice, .mt-card, .sc-email, .sw-tool, .pair-error, .pair-consequence, .role-review li, .mt-review li, .fix-tab, .fm-tab, .reflex-tab):not(:where(.is-chosen, .is-current, .is-active, .active, .is-on, .is-selected, .is-winner, .is-right, .is-wrong, .is-ok, .is-ko, .is-answer, .is-expected, .is-locked, .is-used, .is-correct, .is-incorrect, .is-filled, .is-dragging, [aria-pressed="true"], [aria-checked="true"], :has(input:checked), :disabled)) { border-color: transparent; box-shadow: 0 6px 18px rgb(20 40 100 / 7%), 0 1px 2px rgb(20 40 100 / 4%); }
-#main :where(.case-card, .k-tab, .case-tab, .attitude-card, .case-row, .draggable-card, .objection-card, .opening-card, .option-row, .own-answer, .panel, .placed-card, .radio-card, .recap-row, .result-row, .review-row, .sorter-choice, .summary-row, .scenario, .ar-row, .cap-option, .check-choice, .duel-card, .express-card, .fab-prospect, .fab-tab, .hl-tool, .intrus-card, .ladder-card, .moment-option, .myth-card, .say-option, .soncas-arg, .soncas-motive, .tree-branch, .tree-root-node, .verdict-item, .cgr-card, .cgr-legend, .cg-card, .deck-recap li, .k-box, .k-panel, .k-result, .ear-option, .ear-action, .nat-card, .path-card, .rb-item, .reflex-card, .role-verb, .six-choice, .xp-card, .xp-answer, .call-key, .cmp-option, .crash-rows li, .cmp-criterion, .dk-card, .fm-choice, .mt-card, .sc-email, .sw-tool, .pair-error, .pair-consequence, .role-review li, .mt-review li, .fix-tab, .fm-tab, .reflex-tab):where(button, label, a):not(:where(.is-chosen, .is-current, .is-active, .active, .is-on, .is-selected, .is-winner, .is-right, .is-wrong, .is-ok, .is-ko, .is-answer, .is-expected, .is-locked, .is-used, .is-correct, .is-incorrect, .is-filled, .is-dragging, [aria-pressed="true"], [aria-checked="true"], :has(input:checked), :disabled)):hover { border-color: transparent; box-shadow: 0 10px 24px rgb(20 40 100 / 12%), 0 1px 3px rgb(20 40 100 / 6%); }
-/* Un encadré posé dans un autre encadré : ombre plus discrète. */
-#main :where(.panel, .k-panel, .reflex-card, .k-box) :where(.attitude-card, .case-row, .draggable-card, .objection-card, .opening-card, .option-row, .own-answer, .panel, .placed-card, .radio-card, .recap-row, .result-row, .review-row, .sorter-choice, .summary-row, .scenario, .ar-row, .cap-option, .check-choice, .duel-card, .express-card, .fab-prospect, .fab-tab, .hl-tool, .intrus-card, .ladder-card, .moment-option, .myth-card, .say-option, .soncas-arg, .soncas-motive, .tree-branch, .tree-root-node, .verdict-item, .cgr-card, .cgr-legend, .cg-card, .deck-recap li, .k-box, .k-panel, .k-result, .ear-option, .ear-action, .nat-card, .path-card, .rb-item, .reflex-card, .role-verb, .six-choice, .xp-card, .xp-answer, .call-key, .cmp-option, .crash-rows li, .cmp-criterion, .dk-card, .fm-choice, .mt-card, .sc-email, .sw-tool, .pair-error, .pair-consequence, .role-review li, .mt-review li, .fix-tab, .fm-tab, .reflex-tab):not(:where(.is-chosen, .is-current, .is-active, .active, .is-on, .is-selected, .is-winner, .is-right, .is-wrong, .is-ok, .is-ko, .is-answer, .is-expected, .is-locked, .is-used, .is-correct, .is-incorrect, .is-filled, .is-dragging, [aria-pressed="true"], [aria-checked="true"], :has(input:checked), :disabled)) { box-shadow: 0 3px 10px rgb(20 40 100 / 7%), 0 0 0 1px rgb(20 40 100 / 4%); }
-
-/* Avancée des cas en anneau (exercise.js, caseBar). */
-.case-dot { border-radius: 50% !important; }
-.case-bar-count { display: inline-flex; align-items: center; gap: 10px; }
-.case-ring { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(var(--accent) var(--done, 0%), #dbe3f2 0); -webkit-mask: radial-gradient(circle, transparent 7px, #000 7.5px); mask: radial-gradient(circle, transparent 7px, #000 7.5px); }
-
-/* ── CHOIX DE RÉPONSE (maquette « Client novice », tous les exercices) ───
-   Options amples, sans contour, ombre douce ; pastille de lettre ronde bleu
-   clair ; l'option survolée ou choisie sur fond bleu très clair avec un fin
-   liseré. Les états de correction (juste, faux…) gardent leur style. Les
-   titres de panneau sont soulignés d'un trait corail. */
-#main :where(.radio-card, .say-option, .soncas-arg, .ear-option, .cmp-option:not(.is-static), .role-verb, .cap-option):not(:where(.is-right, .is-wrong, .is-answer, .is-used, .is-locked, :disabled)) { border-radius: 16px; transition: background .15s, box-shadow .15s; }
-#main :where(.radio-card, .say-option, .soncas-arg, .ear-option):not(:where(.is-right, .is-wrong, .is-answer, .is-used, .is-locked, :disabled)) { gap: 20px; padding: 18px 22px; }
-#main :where(.radio-card, .say-option, .soncas-arg, .ear-option, .cmp-option:not(.is-static), .role-verb, .cap-option):not(:where(.is-right, .is-wrong, .is-answer, .is-used, .is-locked, :disabled, :has(input:checked), .is-chosen, .is-on, .selected)):hover { background: #f5f8ff; }
-#main :where(.radio-card, .say-option, .soncas-arg, .ear-option, .cmp-option:not(.is-static), .role-verb, .cap-option):where(:has(input:checked), .is-chosen, .is-on, .selected):not(:where(.is-right, .is-wrong, .is-answer, .is-used, .is-locked, :disabled)) { border-color: transparent; background: #eef4ff; box-shadow: 0 8px 22px rgb(20 40 100 / 8%), inset 0 0 0 1.5px #b9cdf6; color: var(--navy); }
-#main :where(.radio-badge, .say-letter, .soncas-arg-letter, .ear-letter, .role-letter, .cap-letter) { display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0; border-radius: 50%; background: #e3ecfb; color: var(--accent); font-size: 1.15rem; font-weight: 700; }
-#main :where(.radio-card, .say-option, .soncas-arg, .ear-option, .cmp-option:not(.is-static), .role-verb, .cap-option):where(:has(input:checked), .is-chosen, .is-on, .selected) :where(.radio-badge, .say-letter, .soncas-arg-letter, .ear-letter, .role-letter, .cap-letter) { background: #e3ecfb; color: var(--accent); }
-#main :where(.radio-card, .say-option, .soncas-arg, .ear-option) :where(.radio-body strong, .say-option-copy strong) { font-size: 1.05rem; font-weight: 600; line-height: 1.4; }
-#main .panel-title h2 { position: relative; padding-bottom: 10px; }
-#main .panel-title h2::after { content: ''; position: absolute; left: 0; bottom: 0; width: 64px; height: 3px; border-radius: 3px; background: var(--coral, #ff936b); }
-/* Les boutons d'aide en lien texte (« Voir un indice », « Rappel »…) prennent
-   la même pastille blanche que « Voir un repère » : pas de soulignement. */
-#main .k-dialog-button, #main .k-dialog-button.text-button { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 10px 20px 10px 16px; border: 0; border-radius: 16px; background: #fff; color: #1d3f9a; font-weight: 700; text-decoration: none; box-shadow: 0 6px 18px rgb(20 40 100 / 9%), 0 1px 3px rgb(20 40 100 / 6%); }
-#main .k-dialog-button span { text-decoration: none; }
-
-/* ── Ombre portée en bas à droite ───────────────────────────────────────
-   Les illustrations de mise en situation et les bulles posées dessus
-   reçoivent une ombre décalée vers le bas et la droite. */
-#main :where(.illustration, .case-scene, .hidden-scene, .objection-scene, .sc-picture, .studio-picture, .tournoi-picture, .call-scene, .cmp-banner, .cmp-scene, .media-scene, .soncas-scene, .fm-review-scene) { box-shadow: 5px 7px 16px rgb(16 22 60 / 11%), 1px 2px 4px rgb(16 22 60 / 6%); }
-#main :where(.hidden-bubble, .cmp-bubble, .soncas-bubble, .sc-bubble, .over-bubble, .crash-bubble, .six-bubble, .repair-bubble) { box-shadow: 3px 5px 12px rgb(16 22 60 / 13%), 1px 1px 3px rgb(16 22 60 / 6%); }
-/* Partout : toute illustration de mise en situation (les .png / .jpg ; les
-   dessins détourés .webp n'ont pas de cadre) reçoit la même ombre en bas à
-   droite. Dans une carte qui la rogne, l'ombre est simplement cachée. */
-:where(#main, .briefing) img:where([src$=".png"], [src$=".jpg"], [src$=".jpeg"]) { box-shadow: 5px 7px 16px rgb(16 22 60 / 11%), 1px 2px 4px rgb(16 22 60 / 6%); }
-/* Une image qui forme le haut d’une carte en fait partie : pas d’ombre. */
-#main .case-card-picture img, #main .case-card img { box-shadow: none; }
-
-/* Pas d'ombre sur une ombre : quand un encadré teinté réunit une image et une
-   bulle (objection choisie…), c'est lui qui porte l'ombre, pas ce qu'il
-   contient. */
-#main :where(.six-objection, .fab-need-banner, .rb-client, .xp-card) { box-shadow: 5px 7px 16px rgb(16 22 60 / 11%), 1px 2px 4px rgb(16 22 60 / 6%); }
-#main :where(.six-objection, .fab-need-banner, .rb-client, .xp-card) :where(*) { box-shadow: none !important; }
-
-/* ── Cartes de choix vierges (« Commercial 1 / 2 »…) : fond de carte ─────
-   Papier blanc cassé, et dans les deux angles bas les décorations de la
-   maquette (feuilles, taches aquarelle), posées en fond : elles restent en
-   bas quelle que soit la hauteur de la carte. Le texte garde un peu d'air
-   au-dessus d'elles. */
-#main .cmp-option:not(.is-static) { padding-top: 26px; padding-bottom: 26px; align-content: center; align-items: center; background: url('../assets/illustrations/carte-deco-gauche.webp') left bottom / auto 96px no-repeat, url('../assets/illustrations/carte-deco-droite.webp') right bottom / auto 70px no-repeat, #fbfaf7; }
-#main .cmp-option:not(.is-static).is-chosen { background: url('../assets/illustrations/carte-deco-gauche.webp') left bottom / auto 96px no-repeat, url('../assets/illustrations/carte-deco-droite.webp') right bottom / auto 70px no-repeat, #f3f7ff; }
-/* Panneaux transparents (posés à même le fond) : ni ombre ni cadre. */
-#main :is(.xp-bare, .is-bare, .is-plain) { box-shadow: none !important; border-color: transparent !important; }
-
-/* ── Lisibilité sur les fonds décorés ───────────────────────────────────
-   Les textes posés à même le fond (bilan de correction, rappel d'ordre,
-   liens Réinitialiser) passent sur une plaque claire translucide : les
-   motifs du fond ne les rendent plus illisibles. */
-#main .feedback:not([hidden]) { border-radius: 16px; background: rgb(255 255 255 / 92%); box-shadow: 0 6px 18px rgb(20 40 100 / 7%); }
-#main .feedback.is-compact:not([hidden]) { padding: 14px 20px; }
-#main :is(.role-order, .k-utility, .lock-note) { width: fit-content; max-width: 100%; padding: 8px 16px; border-radius: 12px; background: rgb(255 255 255 / 88%); }
-/* Bilan compact : plus d'encadré. Le bouton Continuer est seul à droite ;
-   une éventuelle phrase de bilan garde sa petite plaque claire. */
-#main .feedback.is-compact:not([hidden]) { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px 20px; padding: 0; border: 0; background: none; box-shadow: none; }
-#main .feedback.is-compact p { margin: 0; padding: 8px 16px; border-radius: 12px; background: rgb(255 255 255 / 88%); }
-#main .feedback.is-compact .button { margin: 0; min-width: 240px; min-height: 56px; padding: 14px 40px; border-radius: 16px; font-size: 1.15rem; box-shadow: 0 10px 24px rgb(19 75 215 / 22%); }
-#main .feedback.is-compact:focus { outline: none; }
+/* Règles propres à ce module. Les règles communes sont dans
+   moteur/css/extras-commun.css, chargée juste avant. */
 
 /* ── Paquets de cartes à deux réponses (maquette « Bon réflexe ou à
    éviter ? ») ─────────────────────────────────────────────────────────
@@ -195,57 +8,99 @@ html[data-embed="solo"] #main { padding-top: 20px; }
    réponses en pastilles arrondies : rond teinté (croix / coche), mot en
    couleur, sous-titre gris, chevron. */
 :where(.dk-page, .express-page) :is(.deck-dots, .k-dots) { display: inline-flex; gap: 8px; }
+
 :where(.dk-page, .express-page) :is(.deck-dot, .k-dot) { width: 52px !important; height: 8px !important; border-radius: 6px !important; background: #e3e6ee; }
+
 :where(.dk-page, .express-page) :is(.deck-dot, .k-dot).is-current { background: var(--accent); }
+
 :where(.dk-page, .express-page) :is(.deck-dot, .k-dot):is(.is-filled, .is-done) { background: #9bb6f0; }
+
 .dk-page:has(.dk-zones.count-2) .k-head, .express-page .k-head { justify-content: center; text-align: center; }
+
 .dk-page:has(.dk-zones.count-2) .k-head-text, .express-page .k-head-text { justify-items: center; }
+
 .dk-board:has(.dk-zones.count-2) .dk-card, .express-card { width: min(100%, 880px); margin: 0 auto; padding: 22px 38px 26px; border: 1px solid #ebe5d9; border-radius: 18px; background: #fffffff2; box-shadow: 0 24px 50px -20px #2a33622a, 0 6px 16px #2a33620a; }
+
 .dk-board:has(.dk-zones.count-2) .dk-pos, .express-tag { display: inline-block; padding: 5px 14px; border-radius: 16px; background: var(--tint); color: var(--accent); font-weight: 700; font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; }
+
 .dk-board:has(.dk-zones.count-2) .dk-body, .express-body { justify-content: flex-start; gap: 0; min-height: 0; margin-top: 10px; }
+
 .dk-board:has(.dk-zones.count-2) .dk-symbol, .express-symbol { position: relative; width: 96px; height: 96px; border-radius: 50%; background: var(--tint); color: var(--accent); flex-shrink: 0; }
+
 .dk-board:has(.dk-zones.count-2) .dk-symbol::after, .express-symbol::after { content: ''; position: absolute; top: -6px; right: -16px; width: 26px; height: 26px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f2795a' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M11 7 19 2'/%3E%3Cpath d='M12 12h10'/%3E%3Cpath d='M11 17l8 5'/%3E%3C/svg%3E") center / contain no-repeat; transform: rotate(-90deg); }
+
 .dk-board:has(.dk-zones.count-2) .dk-words, .express-body > div { flex: 1; min-width: 0; margin-left: 24px; padding: 4px 24px 4px 34px; border-left: 1px solid #e6e2d8; text-align: left; }
+
 .dk-board:has(.dk-zones.count-2) .dk-text, .express-text { font-size: clamp(1.3rem, 2vw, 1.95rem); font-weight: 600; line-height: 1.16; letter-spacing: -.02em; color: #16205e; text-align: left; }
+
 .dk-question.is-inline, .express-question { margin-top: 10px; color: #4f5b82; font-size: 1.05rem; font-weight: 400; }
+
 .dk-zones.count-2, .express-zones { width: min(100%, 960px); margin: 0 auto; gap: 24px; }
+
 .dk-zones.count-2 .dk-zone, .express-zone { --z: #16205e; display: flex; align-items: center; gap: 22px; padding: 14px 26px 14px 16px; border: 1.5px solid color-mix(in srgb, var(--z) 24%, transparent); border-radius: 999px; background: #fff; color: var(--z); text-align: left; box-shadow: 0 16px 32px -18px color-mix(in srgb, var(--z) 45%, transparent), 0 2px 6px #2a33620a; transition: transform .12s, box-shadow .12s; }
+
 .dk-zones.count-2 .dk-zone.tone-bad, .express-zone.tone-bad { --z: #e5402f; }
+
 .dk-zones.count-2 .dk-zone.tone-good, .express-zone.tone-good { --z: #17855a; }
+
 .dk-zones.count-2 .dk-zone:hover, .dk-zones.count-2 .dk-zone.is-over, .express-zone:hover, .express-zone.is-over { transform: translateY(-2px); background: #fff; border-color: color-mix(in srgb, var(--z) 24%, transparent); box-shadow: 0 20px 36px -16px color-mix(in srgb, var(--z) 55%, transparent), 0 2px 6px #2a33620f; }
+
 .dk-zones.count-2 .dk-zone.is-chosen { background: color-mix(in srgb, var(--z) 6%, #fff); box-shadow: inset 0 0 0 2px var(--z), 0 16px 32px -18px color-mix(in srgb, var(--z) 45%, transparent); }
+
 .dk-zones.count-2 .dk-zone-mark, .express-zone-symbol { display: grid; place-items: center; width: 70px; height: 70px; border-radius: 50%; background: color-mix(in srgb, var(--z) 11%, #fff) !important; color: var(--z) !important; flex-shrink: 0; }
+
 .dk-zones.count-2 .dk-zone-mark .icon, .express-zone-symbol .icon { stroke-width: 2.6; }
+
 .dk-zone-words, .express-zone-words { flex: 1; min-width: 0; }
+
 .dk-zones.count-2 .dk-zone strong, .express-zone strong { display: block; font-size: clamp(1.3rem, 1.8vw, 1.7rem); font-weight: 600; line-height: 1.1; letter-spacing: -.02em; text-transform: none; color: var(--z); }
+
 .dk-zones.count-2 .dk-zone small, .express-zone-words > span { display: block; margin-top: 3px; font-size: 1.05rem; color: #4f5b82; }
+
 .dk-zone-go, .express-go { display: grid; color: var(--z); flex-shrink: 0; }
+
 @media (max-width: 760px) {
   .dk-zones.count-2, .express-zones { grid-template-columns: minmax(0, 1fr); }
   .dk-board:has(.dk-zones.count-2) .dk-symbol, .express-symbol { display: none; }
   .dk-board:has(.dk-zones.count-2) .dk-words, .express-body > div { margin-left: 0; padding: 0; border-left: 0; }
 }
+
 .dk-board:has(.dk-zones.count-2) .dk-body { padding: 0; border: 0; background: none; box-shadow: none; }
+
 .dk-board:has(.dk-zones.count-2) .dk-body:not(:has(.dk-symbol)) .dk-words { margin-left: 0; padding-left: 0; border-left: 0; }
+
 .express-zone.tone-bad, .express-zone.tone-good { background: #fff; border-color: color-mix(in srgb, var(--z) 24%, transparent); }
+
 /* Plus de contour autour des deux réponses : seule reste l’ombre colorée. */
 .express-page .express-zone, .express-page .express-zone:hover, .express-page .express-zone.is-over { border-color: transparent; }
+
 /* L'en-tête centré, la progression en dessous (comme la maquette). */
 .dk-page:has(.dk-zones.count-2) .k-head, .express-page .k-head { flex-direction: column; align-items: center; gap: 14px; }
+
 .dk-page:has(.dk-zones.count-2) .k-head-aside, .express-page .k-head-aside { position: static; justify-content: center; padding-top: 0; }
-.express-page .express-progress { display: flex; align-items: center; justify-content: flex-end; width: min(100%, 880px); margin: 0 auto; } /* même largeur que .express-card : la pastille s’aligne sur son bord droit */
+
+.express-page .express-progress { display: flex; align-items: center; justify-content: flex-end; width: min(100%, 880px); margin: 0 auto; }
+
+/* même largeur que .express-card : la pastille s’aligne sur son bord droit */
 .express-page .express-progress-count { display: flex; align-items: center; gap: 18px; }
 
 /* ── Relecture d'un paquet : deux colonnes à droite ─────────────────────
    « Votre réponse » (coche verte ou croix rouge, puis l'étiquette), et
    « Réponse attendue ». Les deux colonnes s'alignent d'une ligne à l'autre. */
 .deck-recap.has-columns > li { grid-template-columns: 44px minmax(0, 1fr) 190px 170px; }
+
 .deck-review-head { padding-top: 0 !important; padding-bottom: 0 !important; border: 0 !important; background: none !important; box-shadow: none !important; font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #6b7aa1; }
+
 .deck-review-head span:nth-child(n+3) { text-align: center; }
+
 .deck-review-yours, .deck-review-expected { display: flex; align-items: center; justify-content: center; gap: 8px; }
+
 .deck-recap .is-ok .deck-review-yours > .icon { color: var(--ok, #1f8a5a); }
+
 .deck-recap .is-ko .deck-review-yours > .icon { color: var(--ko, #d2412e); }
+
 .deck-recap .is-ko .deck-recap-zone.is-yours { text-decoration: line-through; text-decoration-thickness: 1.5px; opacity: .75; }
+
 @media (max-width: 900px) {
   .deck-recap.has-columns > li { grid-template-columns: 34px minmax(0, 1fr); }
   .deck-review-head { display: none !important; }
@@ -254,219 +109,138 @@ html[data-embed="solo"] #main { padding-top: 20px; }
   .deck-review-expected::before { content: 'Attendu :'; color: var(--muted); font-size: .85rem; }
 }
 
-/* ── Le menu (js/core.js, renderMenu) ───────────────────────────────────
-   Remplace la rangée d'onglets des exercices. Un rail bleu nuit à gauche :
-   bouton menu, accueil, progression du thème en jauge verticale. Le volet
-   s'ouvre par-dessus la page : exercices de la série, coche corail pour
-   chaque exercice terminé, exercice en cours en blanc. */
-.exercise-nav { display: none !important; }
-:root { --menu-rail: 68px; --menu-panel: min(360px, calc(100vw - var(--menu-rail) - 24px)); }
-body.has-menu { padding-left: var(--menu-rail); }
-.av-menu { position: fixed; inset: 0 auto 0 0; z-index: 60; display: flex; font-family: "Fira Sans", system-ui, sans-serif; pointer-events: none; }
-.av-menu-rail { position: relative; z-index: 2; width: var(--menu-rail); display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 14px 0 22px; background: var(--navy); color: #fff; pointer-events: auto; box-shadow: 2px 0 14px rgb(16 20 72 / 14%); }
-.av-menu-toggle, .av-menu-home, .av-menu-close { display: grid; place-items: center; width: 46px; height: 46px; border: 0; border-radius: 12px; background: none; color: inherit; cursor: var(--cursor-hand, pointer); text-decoration: none; transition: background .15s ease; }
-.av-menu-toggle:hover, .av-menu-home:hover { background: rgb(255 255 255 / 12%); }
-.av-menu-home { color: rgb(255 255 255 / 72%); }
-.av-menu :focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; }
-.av-menu-progress { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.av-menu-percent { display: grid; place-items: center; width: 44px; height: 44px; border: 2px solid rgb(255 255 255 / 30%); border-radius: 50%; font-size: .74rem; font-weight: 700; }
-.av-menu-track { position: relative; width: 10px; height: clamp(90px, 28vh, 220px); border-radius: 999px; background: rgb(255 255 255 / 16%); overflow: hidden; }
-.av-menu-fill { position: absolute; inset: auto 0 0; height: 0; border-radius: inherit; background: #ff936b; transition: height .5s ease; }
-
-.av-menu-panel { position: relative; z-index: 1; width: var(--menu-panel); display: flex; flex-direction: column; padding: 22px 26px 22px 28px; background: #1b2370; color: #fff; border-radius: 0 26px 26px 0; box-shadow: 10px 0 34px rgb(16 20 72 / 26%); transform: translateX(-105%); visibility: hidden; transition: transform .28s ease, visibility 0s linear .28s; pointer-events: auto; }
-.av-menu.is-open .av-menu-panel { transform: none; visibility: visible; transition: transform .28s ease; }
-.av-menu-title { margin: 6px 0 22px; font-size: 1.35rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
-.av-menu-nav { flex: 1; overflow-y: auto; margin: 0 -10px; }
-.av-menu-list { list-style: none; margin: 0; padding: 0 10px; display: grid; gap: 4px; }
-.av-menu-list a { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 11px 12px; border-radius: 12px; color: rgb(255 255 255 / 70%); font-weight: 600; line-height: 1.3; text-decoration: none; transition: background .15s ease, color .15s ease; }
-.av-menu-list a:hover { background: rgb(255 255 255 / 9%); color: #fff; }
-.av-menu-list a.active { background: rgb(255 255 255 / 12%); color: #fff; font-weight: 700; }
-.av-menu-check { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border: 2px solid rgb(255 255 255 / 32%); border-radius: 50%; }
-.av-menu-list a.is-done .av-menu-check { border-color: #ff936b; background: #ff936b; color: var(--navy); }
-.av-menu-foot { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgb(255 255 255 / 30%); display: grid; gap: 14px; font-size: .85rem; }
-.av-menu-module { display: flex; gap: 18px; color: rgb(255 255 255 / 72%); text-transform: uppercase; letter-spacing: .04em; }
-.av-menu-module span:first-child { white-space: nowrap; }
-.av-menu-links { display: flex; gap: 22px; }
-.av-menu-links a { color: #fff; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: .04em; }
-.av-menu-links a:hover { text-decoration: underline; }
-.av-menu-close { position: absolute; top: 50%; right: -26px; width: 44px; height: 64px; transform: translateY(-50%); border-radius: 0 16px 16px 0; background: #1b2370; box-shadow: 8px 0 18px rgb(16 20 72 / 18%); }
-.av-menu-close:hover { background: #26308a; }
-.av-menu-backdrop { position: fixed; inset: 0; z-index: 0; background: rgb(16 20 72 / 28%); opacity: 0; visibility: hidden; transition: opacity .28s ease, visibility 0s linear .28s; }
-.av-menu.is-open .av-menu-backdrop { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .28s ease; }
-@media (prefers-reduced-motion: reduce) { .av-menu-panel, .av-menu-backdrop, .av-menu-fill { transition: none !important; } }
-/* Petit écran : plus de rail, un bouton menu flottant en haut à gauche. */
-@media (max-width: 720px) {
-  :root { --menu-rail: 0px; --menu-panel: calc(100vw - 40px); }
-  .av-menu-rail { position: fixed; top: 10px; left: 10px; width: auto; padding: 0; background: var(--navy); border-radius: 14px; }
-  .av-menu-home, .av-menu-progress { display: none; }
-  .av-menu-panel { padding-top: 70px; }
-  .topbar { padding-left: 70px !important; }
-}
-/* Exercice seul (intégration « solo ») et impression : pas de menu. */
-html[data-embed="solo"] .av-menu { display: none !important; }
-html[data-embed="solo"] body.has-menu { padding-left: 0; }
-@media print { .av-menu { display: none !important; } body.has-menu { padding-left: 0; } }
-/* La barre de progression du module entier, dans l'en-tête, est retirée :
-   seule compte la jauge du thème, dans le rail du menu. L'élément reste
-   dans les pages (core.js le met à jour) mais n'est plus affiché. */
-.topbar .overall-progress > * { display: none !important; } /* le conteneur vide garde son margin-left: auto, qui cale les boutons à droite */
-/* Plus de logo « L'Atelier Vente » dans l'en-tête : le titre de la série
-   ouvre la barre, sans filet de séparation. */
-.topbar .brand { display: none !important; }
-.topbar .course-label { padding-left: 0; border-left: 0; }
-/* Plus de mention « Brouillon local / Sauvegardé ici » en haut à droite. */
-.topbar .save-status { display: none !important; }
-/* ── En-tête : barre blanche pleine largeur, collée en haut ───────────────
-   Barre blanche sans coins arrondis, icônes noires à contour blanc
-   (dessins clavier, plein écran, sons, musique), libellés en bleu. */
-body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1px solid #e3e6f4; border-radius: 0; background: #fff; box-shadow: 0 4px 14px rgb(16 20 72 / 5%); min-height: 64px; padding-top: 10px; padding-bottom: 10px; }
-.topbar .header-button, .sound-dock .sound-toggle { align-items: center; gap: 8px; padding: 6px 10px; border-radius: 12px; line-height: 1; }
-.header-button .header-icon, .sound-dock .header-icon { width: 30px; height: 30px; flex: none; color: #0a0a0a; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1.5px #fff); }
-.topbar .sound-toggle { color: var(--accent); font-weight: 800; font-size: 1rem; }
-.topbar .sound-toggle[aria-pressed="false"] { color: var(--muted); }
-.sound-toggle[aria-pressed="false"] .header-icon { color: var(--muted); }
-.topbar .header-button.is-on { background: var(--tint); color: var(--accent); }
-.topbar .header-button.is-on .header-icon { color: var(--accent); }
-.topbar .header-button:hover { background: var(--tint); }
-@media (max-width: 720px) { .topbar { margin: 0; } }
-.series-bar { background: transparent; border-bottom: 0; } /* sous l’en-tête en carte, la rangée des séries se pose sur le fond */
-/* Logo CCI en tête de la carte d'en-tête, juste avant le titre. Image
-   recadrée sur le logo (assets/logo-cci.webp, 497 × 96) : sans marge vide,
-   la hauteur fixée ici est celle du logo lui-même. */
-.topbar::before { content: ''; flex: none; width: 207px; height: 40px; background: url('../assets/logo-cci.webp') left center / contain no-repeat; }
-@media (max-width: 720px) {
-  .topbar::before { width: 124px; height: 24px; }
-  .topbar { flex-wrap: nowrap; gap: 6px; }
-  /* Pas de clavier physique sur téléphone : le bouton des commandes clavier part. */
-  .topbar [data-action="keyboard-help"] { display: none !important; }
-  .topbar .header-button { padding: 4px 6px; }
-  .topbar .header-icon { width: 26px; height: 26px; }
-}
-@media (min-width: 721px) { body .topbar { padding-left: 18px; } } /* logo et titre rapprochés du bord gauche de la carte */
+/* logo et titre rapprochés du bord gauche de la carte */
 /* 3.1 « À faire ou à éviter ? » : pas de petits traits au-dessus de
    l'icône de la carte, et de l'air entre la carte et les deux réponses. */
 .express-page .express-symbol::after { content: none; }
+
 .express-page .express-play .express-zones { margin-top: 36px; }
-/* Partout : plus de contour autour des tuiles de réponse colorées
-   (C / A / P, caractéristique / bénéfice…) ni des deux grands boutons de
-   tri. L'anneau de la réponse choisie et les couleurs du corrigé restent ;
-   au survol, une ombre légère ; les boutons de tri gardent leur ombre colorée. */
-#main .k-choice:not(:where(.is-chosen, .is-answer, .is-wrong, .is-right, .is-expected)):not(:has(:checked)) { border-color: transparent; }
-#main .k-choice:not(:where(.is-chosen, .is-answer, .is-wrong, .is-right, .is-expected, .cgr-card *)):not(:has(:checked)):hover { border-color: transparent; box-shadow: 0 6px 16px rgb(20 40 100 / 10%); }
-#main .dk-zone:not(:where(.is-chosen, .is-right, .is-wrong, .is-answer)), #main .dk-zone:not(:where(.is-chosen, .is-right, .is-wrong, .is-answer)):hover { border-color: transparent; }
 
 /* ── Le corrigé en étapes (kit.corrige) ──────────────────────────────────
    Pastille « Corrigé », grand titre, points numérotés dans des ronds bleus
    reliés par un trait, illustration de checklist à droite, encadré ampoule. */
 .corrige { position: relative; padding: 30px 40px 32px; }
+
 #main .corrige-tag { display: inline-flex; margin: 0 0 12px; padding: 5px 14px; border: 1.5px solid #c9d7f6; border-radius: 999px; background: #fff; color: var(--accent); font-size: .8rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+
 #main .corrige-title { margin: 0 0 22px; padding: 0; font-size: clamp(1.9rem, 2.6vw, 2.5rem); }
+
 #main .corrige-title::after { content: none; }
+
 .corrige-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: 32px; align-items: center; }
+
 .corrige-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+
 .corrige-steps li { position: relative; display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 26px; padding-bottom: 26px; }
+
 .corrige-steps li:last-child { padding-bottom: 6px; }
+
 .corrige-steps li:not(:last-child)::before { content: ''; position: absolute; left: 26px; top: 54px; bottom: 0; width: 2px; background: #d5e0f6; }
+
 .corrige-n { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: #e6eefc; color: var(--accent); font-size: 1.35rem; font-weight: 800; }
+
 .corrige-steps strong { display: block; margin-top: 4px; font-size: 1.2rem; color: var(--navy); }
+
 .corrige-steps li span:not(.corrige-n) { display: block; margin-top: 4px; color: #3d4a6e; line-height: 1.5; }
+
 .corrige-art { width: 100%; pointer-events: none; }
+
 .corrige-note { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 22px; align-items: center; margin-top: 22px; padding: 18px 26px; border-radius: 14px; background: #eef3fd; }
+
 .corrige-note p { margin: 0; padding-left: 22px; border-left: 1.5px solid #c9d4ea; color: var(--navy); line-height: 1.5; }
+
 .corrige-note .icon { color: var(--accent); }
+
 @media (max-width: 900px) {
   .corrige { padding: 24px 22px; }
   .corrige-body { grid-template-columns: minmax(0, 1fr); }
   .corrige-art { max-width: 260px; justify-self: center; order: -1; }
 }
-/* En-tête : le thème en gras, le nom de l'exercice (le <span>) en normal. */
-.topbar .course-label { font-weight: 800; color: var(--navy); }
-.topbar .course-label span { font-weight: 400; color: var(--muted); }
 
 /* ── Le corrigé réponse par réponse (kit.answerReview) ───────────────────
    Titre et lecteur illustré, puis une carte par question : numéro relié,
    étiquette, énoncé, et trois cases (votre réponse, bonne réponse,
    explication). */
 .arv-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px; margin-bottom: -6px; }
+
 .arv-head h1 { margin: 0; font-size: clamp(2.2rem, 3.4vw, 3.1rem); }
+
 .arv-subtitle { margin: 6px 0 0; font-size: 1.1rem; color: #3d4a6e; }
+
 #main .arv-score { margin: 10px 0 0; color: var(--muted); }
+
 .arv-score strong { color: var(--accent); font-size: 1.1rem; }
+
 .arv-art { width: clamp(200px, 22vw, 300px); margin-bottom: -8px; pointer-events: none; box-shadow: none !important; }
+
 .arv-list { position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+
 .arv-item { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 24px; padding: 24px 26px 24px 22px; border-radius: 18px; background: #fff; box-shadow: 0 10px 30px rgb(20 40 100 / 7%); }
+
 .arv-n { position: relative; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: #e6eefc; color: var(--accent); font-size: 1.4rem; font-weight: 800; }
+
 .arv-n::after { content: ''; position: absolute; top: 62px; left: 26px; width: 2px; height: calc(100% + 40px); background: #e1e8f6; }
+
 .arv-item { overflow: hidden; }
+
 #main .arv-tag { margin: 0 0 4px; font-size: .82rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #34528a; }
+
 #main .arv-text { margin: 0 0 16px; font-size: clamp(1.1rem, 1.4vw, 1.3rem); font-weight: 700; color: var(--navy); line-height: 1.35; }
+
 .arv-cells { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+
 .arv-cell { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: start; padding: 16px 18px; border-radius: 14px; background: #f4f6fb; line-height: 1.45; }
+
 .arv-cell strong { display: block; margin-bottom: 2px; font-size: .95rem; }
+
 .arv-cell span:not(.arv-mark) { color: var(--navy); }
+
 .arv-mark { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #fff; }
-.arv-cell.is-yours.is-ko { background: #fdeeec; } .arv-cell.is-yours.is-ko strong, .arv-cell.is-yours.is-ko .arv-mark { color: #d6452f; }
-.arv-cell.is-yours.is-ok, .arv-cell.is-expected { background: #e9f6ee; } .arv-cell.is-yours.is-ok strong, .arv-cell.is-expected strong, .arv-cell.is-yours.is-ok .arv-mark, .arv-cell.is-expected .arv-mark { color: #17794f; }
+
+.arv-cell.is-yours.is-ko { background: #fdeeec; }
+
+.arv-cell.is-yours.is-ko strong, .arv-cell.is-yours.is-ko .arv-mark { color: #d6452f; }
+
+.arv-cell.is-yours.is-ok, .arv-cell.is-expected { background: #e9f6ee; }
+
+.arv-cell.is-yours.is-ok strong, .arv-cell.is-expected strong, .arv-cell.is-yours.is-ok .arv-mark, .arv-cell.is-expected .arv-mark { color: #17794f; }
+
 .arv-cell.is-yours.is-ok .arv-mark, .arv-cell.is-expected:not(.is-quiet) .arv-mark { background: #1f9a62; color: #fff; }
+
 .arv-cell.is-yours.is-ko .arv-mark { background: #fbdcd6; }
-.arv-cell.is-expected.is-quiet { background: #f4f6fb; } .arv-cell.is-expected.is-quiet strong { color: #5b6886; } .arv-cell.is-expected.is-quiet .arv-mark { color: #9aa6bf; }
-.arv-cell.is-why { background: #eef3fd; } .arv-cell.is-why strong { color: var(--navy); } .arv-cell.is-why > .icon { color: var(--accent); }
+
+.arv-cell.is-expected.is-quiet { background: #f4f6fb; }
+
+.arv-cell.is-expected.is-quiet strong { color: #5b6886; }
+
+.arv-cell.is-expected.is-quiet .arv-mark { color: #9aa6bf; }
+
+.arv-cell.is-why { background: #eef3fd; }
+
+.arv-cell.is-why strong { color: var(--navy); }
+
+.arv-cell.is-why > .icon { color: var(--accent); }
+
 @media (max-width: 1000px) { .arv-cells { grid-template-columns: minmax(0, 1fr); } }
+
 @media (max-width: 760px) {
   .arv-head { grid-template-columns: 1fr; } .arv-art { justify-self: end; width: 180px; order: -1; margin: 0; }
   .arv-item { grid-template-columns: 1fr; gap: 10px; padding: 18px; } .arv-n { width: 42px; height: 42px; font-size: 1.1rem; } .arv-n::after { display: none; }
 }
+
 #main .arv-cell.is-why > svg.icon { width: 34px !important; height: 34px !important; margin: -3px -4px 0; }
 
 /* Tableau à cocher (kit.matrix) : une case vide se voit, en pointillés. */
 #main .k-matrix .k-box:not(.is-checked):not(.is-answer):not(.is-wrong) { border: 1.5px dashed #9aabd1 !important; box-shadow: none !important; background: #fff; }
+
 #main .k-matrix label:hover .k-box:not(.is-checked) { border-color: var(--accent) !important; }
- 
 
 /* Récapitulatif avant validation : plus de lien « Modifier », toute la ligne
    rouvre la carte (bouton invisible posé sur la ligne). */
 .deck-recap li { position: relative; }
-.deck-recap .deck-recap-reopen { position: absolute; inset: 0; z-index: 1; padding: 0; border: 0; border-radius: inherit; background: none; cursor: var(--cursor-hand, pointer); }
-.deck-recap li:has(.deck-recap-reopen:hover) { background: #f5f8ff; }
-.deck-recap .deck-recap-reopen:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-/* ══════════════════════════════════════════════════════════════════════
-   CARTE « CITATION CLIENT » · règle commune aux 4 modules
-   Pour changer l'apparence de TOUTES les cartes, modifiez seulement ces
-   variables. Le choix du portrait de chaque page se fait dans
-   js/catalog.js (rubrique `portraits`).
-   ══════════════════════════════════════════════════════════════════════ */
-:root {
-  --client-card-bg: #fff;                         /* fond de la carte */
-  --client-card-radius: 20px;                     /* arrondi des angles */
-  --client-card-shadow: 0 14px 40px rgb(15 35 78 / 7%);
-  --client-card-portrait: 30%;                    /* largeur du portrait */
-  --client-card-label: #4c5f86;                   /* « Le client vous dit » */
-  --client-card-accent: var(--coral, #ff936b);    /* petit trait sous le libellé */
-  --client-card-text: var(--navy);                /* la réplique */
-  --client-card-size: clamp(1.3rem, 1.9vw, 1.75rem);
-  --client-card-mark: 68px;                       /* guillemet ouvrant */
-}
-.client-card-box { container-type: inline-size; margin: 0 0 22px; }
-#main .client-card { display: grid; grid-template-columns: var(--client-card-portrait) minmax(0, 1fr); align-items: center; margin: 0; padding: 0 44px 0 0; overflow: hidden; border-radius: var(--client-card-radius); background: var(--client-card-bg); box-shadow: var(--client-card-shadow); }
-/* Le portrait est toujours affiché en entier (jamais recadré). */
-.client-card-who { align-self: end; display: flex; align-items: flex-end; justify-content: center; padding: 14px 0 0 14px; }
-.client-card-who img { display: block; width: 100%; height: auto; object-fit: contain; box-shadow: none !important; }
-.client-card-said { padding: 22px 0 22px 22px; }
-#main .client-card-label { margin: 0 0 12px; font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--client-card-label); }
-.client-card-label::after { content: ''; display: block; width: 46px; height: 3px; margin-top: 8px; border-radius: 3px; background: var(--client-card-accent); }
-.client-card-quote { display: grid; grid-template-columns: calc(var(--client-card-mark) + 10px) minmax(0, 1fr); gap: 10px; align-items: start; }
-.client-card-quote blockquote { margin: 0; font-size: var(--client-card-size); font-weight: 800; line-height: 1.25; color: var(--client-card-text); }
-.client-card-mark { width: var(--client-card-mark); height: auto; margin-top: -2px; box-shadow: none !important; }
-.client-card-end { white-space: nowrap; } /* le dernier mot reste avec le guillemet fermant */
-.client-card-quote blockquote .client-card-mark.is-closing { display: inline-block; width: calc(var(--client-card-mark) * .74); margin: 0 0 0 12px; vertical-align: -.05em; }
-/* Carte étroite (colonne, téléphone) : portrait entier au-dessus. */
-@container (max-width: 640px) {
-  #main .client-card { grid-template-columns: 1fr; padding: 0 22px; }
-  .client-card-who { padding: 16px 0 0; }
-  .client-card-who img { width: auto; max-width: 100%; max-height: 190px; }
-  .client-card-said { padding: 14px 0 22px; }
-  .client-card-quote { grid-template-columns: 46px minmax(0, 1fr); }
-  .client-card-mark { width: 42px; }
-  .client-card-quote blockquote .client-card-mark.is-closing { width: 32px; margin-left: 6px; }
-}
+.deck-recap .deck-recap-reopen { position: absolute; inset: 0; z-index: 1; padding: 0; border: 0; border-radius: inherit; background: none; cursor: var(--cursor-hand, pointer); }
+
+.deck-recap li:has(.deck-recap-reopen:hover) { background: #f5f8ff; }
+
+.deck-recap .deck-recap-reopen:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }

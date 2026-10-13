@@ -1,4 +1,4 @@
-/* BOÎTE À OUTILS DES ÉCRANS 1-1-3 · briques communes aux 18 exercices.
+/* BOÎTE À OUTILS DES ÉCRANS 1-1-2 · briques communes aux 24 exercices.
  *
  * Les maquettes du module partagent un vocabulaire : un en-tête (sur-titre,
  * grand titre, sous-titre, compteur à droite), un fil d'étapes numérotées,
@@ -98,10 +98,6 @@
       ${note ? `<div class="corrige-note">${icon('lightbulb', { size: 38 })}<p>${esc(note)}</p></div>` : ''}
     </section>`;
 
-  /* La carte « citation client » : celle du moteur (core.js). */
-  const clientCard = (...args) => core().clientCard(...args);
-  const portraitFor = (...args) => core().portraitFor(...args);
-
   /* LE CORRIGÉ RÉPONSE PAR RÉPONSE : pastille « Corrigé », grand titre,
    * lecteur illustré en haut à droite, puis une carte par question :
    * numéro, étiquette, énoncé, et trois cases « Votre réponse » (rouge si
@@ -124,6 +120,10 @@
           </div>
         </div>
       </li>`).join('')}</ol>`;
+
+  /* La carte « citation client » : celle du moteur (core.js). */
+  const clientCard = (...args) => core().clientCard(...args);
+  const portraitFor = (...args) => core().portraitFor(...args);
 
   /* ───────────────────────────── Actions ────────────────────────────── */
 
@@ -206,21 +206,50 @@
     }).join('')}</div>`;
   }
 
-  /* ───────────────── Grille de cartes à qualifier (S2 2.1) ──────────── */
+  /* ───────────────────────── Affichage progressif ──────────────────── */
+
+  /* Combien de blocs montrer : tous ceux jusqu'au plus avancé des blocs
+   * remplis, plus le suivant. En relecture, tout est visible. */
+  function reach(total, done) {
+    if (ex().reviewing()) return total;
+    let last = -1;
+    for (let i = 0; i < total; i++) if (done(i)) last = i;
+    return Math.min(total, last + 2);
+  }
+
+  /* Les blocs `selector` d'indice >= shown() sont rendus avec `hidden`.
+   * Dès qu'une saisie est terminée (« change » : un choix coché, un champ
+   * quitté), le bloc suivant apparaît et vient à l'écran. Un bloc montré
+   * ne disparaît plus, même si l'on efface sa réponse. */
+  function reveal(selector, shown) {
+    document.addEventListener('change', () => setTimeout(() => {
+      const limit = shown();
+      core().$$(selector).forEach((block, i) => {
+        if (i >= limit || !block.hidden) return;
+        block.hidden = false;
+        block.classList.add('is-new');
+        block.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      });
+    }, 0));
+  }
+
+  /* ──────────────── Grille de cartes à qualifier (S4 1.1, 2.1) ──────── */
 
   /* Un rappel des catégories, puis une carte par affirmation avec ses
    * boutons de réponse. `content` : eyebrow, title, subtitle, legend,
-   * instruction, items [{ text, answer, why }]. Les boutons ne portent que
-   * la lettre (B · P · O), la légende disant le reste ; `letterButtons: false`
-   * y remet le mot.
-   * Monte l'exercice. */
-  function mountChoiceGrid(key, content) {
+   * instruction, items [{ text, answer, why }]. Monte l'exercice.
+   * `progressive` : les cartes apparaissent une à une, la suivante dès
+   * que la précédente a sa réponse (la relecture les montre toutes). */
+  function mountChoiceGrid(key, content, { progressive = false } = {}) {
     const items = content.items;
+    // Par défaut, les tuiles ne portent que la lettre (C, A, P) : la légende
+    // au-dessus en donne le sens. `letterButtons: false` y remet le mot.
     const options = content.legend.map(l => content.letterButtons !== false
       ? { id: l.id, label: l.id, tone: l.tone }
       : { id: l.id, label: l.label, badge: l.id, tone: l.tone });
     const answers = items.map(item => item.answer);
     const count = () => answered('item', items.length);
+    const shown = () => progressive ? reach(items.length, i => filled(ex().value(`item${i}`))) : items.length;
 
     /* La correction : un écran à part, pour que chaque affirmation se lise
      * seule. Votre choix est cerclé de vert (juste) ou de rouge (faux) ; s'il
@@ -260,7 +289,7 @@
           `<div class="cg-legend-item tone-${l.tone}"><span class="cg-letter">${esc(l.id)}</span><span><strong>${esc(l.label)}</strong><span>${esc(l.text)}</span></span></div>`).join('')}</div>
         ${reviewing ? result(right, items.length, 'bonnes réponses') : `<p class="cg-instruction">${icon('pointer', { size: 22 })}<span>${esc(content.instruction)}</span></p>`}
         <form novalidate>
-          <div class="cg-grid">${items.map((item, i) => `<section class="cg-card ${reviewing ? (ex().value(`item${i}`) === item.answer ? 'is-ok' : 'is-ko') : ''}">
+          <div class="cg-grid">${items.map((item, i) => `<section class="cg-card ${reviewing ? (ex().value(`item${i}`) === item.answer ? 'is-ok' : 'is-ko') : ''}" data-card="${i}"${i < shown() ? '' : ' hidden'}>
             <p class="cg-text"><span class="cg-n">${i + 1}</span><span>${esc(item.text)}</span></p>
             ${choiceButtons(`item${i}`, options, reviewing ? item.answer : null)}
             ${reviewing ? `<p class="k-why">${esc(item.why)}</p>` : ''}
@@ -282,91 +311,8 @@
       return [`${right} réponse${right > 1 ? 's' : ''} juste${right > 1 ? 's' : ''} sur ${items.length}.`];
     };
 
+    if (progressive) reveal('.cg-card[data-card]', shown);
     live(() => ({ count: `${count()} sur ${items.length} réponses` }));
-    ex().mount(key, { screen, validate, feedback, compactFeedback: true });
-  }
-
-  /* ─────────────── Deux réponses à comparer (S1 1.5, S2 2.5) ────────── */
-
-  /* La réplique du client, deux réponses en cartes à cocher, puis le
-   * « pourquoi ce choix ? ». En relecture : la bonne réponse, l'analyse de
-   * chacune, la justification de l'apprenant et une justification proposée.
-   * `content` : eyebrow, title, subtitle, speaker, quote, options
-   * [{ id, label, text, analysis }], answer, whyLabel, whyHelp, hint, model ;
-   * `asideTitle`/`asideText` et `listTitle` facultatifs. `options.image`
-   * pose l'illustration du catalogue en bandeau ; `options.steps` affiche
-   * le fil Écouter · Choisir · Expliquer. */
-  function mountCompare(key, content, settings = {}) {
-    const picture = () => (ex().current.image ? core().webAsset(ex().current.image) : '');
-    const chosen = () => ex().value('pick');
-    const stageAt = () => (!chosen() ? 2 : 3);
-
-    function scene() {
-      const quote = `<span>« ${esc(content.quote)} »</span>`;
-      if (settings.image && picture()) {
-        return `<section class="cmp-banner">
-          <div class="cmp-banner-art"><img src="${esc(picture())}" alt="${esc(ex().current.alt || '')}" decoding="async" style="object-position:${esc(ex().current.imagePosition || 'center')}"><p class="cmp-bubble"><span class="k-label">${esc(content.speaker)}</span>${quote}</p></div>
-          <div class="cmp-banner-text"><h2>${esc(content.asideTitle)}</h2><p>${esc(content.asideText)}</p></div>
-        </section>`;
-      }
-      if (content.portrait) return clientCard(content.quote, content.portrait === true ? null : content.portrait);
-      return `<section class="k-panel cmp-client"><span class="cmp-avatar">${icon('users', { size: 34 })}<small>${esc(content.speaker)}</small></span><p class="cmp-bubble">${quote}</p></section>`;
-    }
-
-    function optionCard(option, reviewing) {
-      const isChosen = chosen() === option.id;
-      if (reviewing) {
-        const ok = option.id === content.answer;
-        return `<section class="cmp-option is-static ${ok ? 'is-answer' : ''} ${isChosen ? 'is-chosen' : ''}">
-          <header><span class="cmp-review-radio ${isChosen ? 'is-on' : ''}" aria-hidden="true"></span><strong>${esc(option.label)}</strong>${ok ? mark(true, isChosen ? 'Votre choix, le plus efficace' : 'La réponse la plus efficace') : isChosen ? mark(false, 'Votre choix') : ''}</header>
-          <p>« ${esc(option.text)} »</p>
-          <ul class="cmp-analysis ${ok ? 'is-good' : 'is-bad'}">${option.analysis.map(line => { const at = line.indexOf(' : '); return at > 0 && at < 40 ? `<li><strong>${esc(line.slice(0, at))}</strong> : ${esc(line.slice(at + 3))}</li>` : `<li>${esc(line)}</li>`; }).join('')}</ul>
-        </section>`;
-      }
-      return `<label class="cmp-option ${isChosen ? 'is-chosen' : ''}">
-        <input type="radio" class="sr-only" name="pick" data-field="pick" value="${esc(option.id)}" ${isChosen ? 'checked' : ''}>
-        <span class="cmp-radio" aria-hidden="true"></span>
-        <span class="cmp-option-body"><strong>${esc(option.label)}</strong><span>« ${esc(option.text)} »</span></span>
-      </label>`;
-    }
-
-    function screen() {
-      const reviewing = ex().reviewing();
-      const ok = chosen() === content.answer;
-      return `<div class="k-page cmp-page">
-        ${head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: settings.steps && !reviewing ? `<div data-live="cmp-steps">${steps(['Écouter', 'Choisir', 'Expliquer'], stageAt(), { compact: true })}</div>` : '' })}
-        ${scene()}
-        <form novalidate class="cmp-form">
-          <h2 class="cmp-list-title">${esc(content.listTitle)}</h2>
-          ${reviewing ? result(ok ? 1 : 0, 1, ok ? 'vous avez choisi la réponse la plus efficace' : 'la réponse la plus efficace était l’autre') : ''}
-          <div class="cmp-options" ${reviewing ? '' : 'role="radiogroup"'}>${content.options.map(option => optionCard(option, reviewing)).join('')}</div>
-          <section class="k-panel cmp-why">
-            ${reviewing
-              ? `${yours('Votre justification', ex().value('why'))}${model('Une justification possible', content.model)}`
-              : `<h2>${esc(content.whyLabel)}</h2><p class="k-muted">${esc(content.whyHelp)}</p>
-                ${ex().field('why', content.whyLabel, { placeholder: 'Expliquez ce qui rend cette réponse efficace…', max: 600, rows: 3, hideLabel: true })}
-                <div class="cmp-why-row">${dialogButton('hint', 'Voir un indice', 'text-button', 'lightbulb')}${submit('Valider ma réponse')}</div>`}
-          </section>
-          ${reviewing ? `${core().feedbackBox()}<div class="k-utility">${reset()}</div>` : core().errorsBox()}
-        </form>
-        ${reviewing ? '' : utility('Analyse des deux réponses après validation')}
-      </div>`;
-    }
-
-    function validate(values) {
-      const errors = [];
-      if (!values.pick) errors.push({ key: 'pick', message: 'Choisissez la réponse la plus efficace.' });
-      if (!filled(values.why)) errors.push({ key: 'why', message: 'Expliquez votre choix en une ou deux phrases.' });
-      return errors;
-    }
-
-    const feedback = () => [chosen() === content.answer
-      ? 'Bon choix. Comparez votre justification à l’analyse des deux réponses.'
-      : 'Ce n’était pas la réponse la plus efficace : relisez l’analyse des deux réponses.'];
-
-    live(() => (settings.steps ? { 'cmp-steps': steps(['Écouter', 'Choisir', 'Expliquer'], stageAt(), { compact: true }) } : {}));
-    dialogs({ hint: { title: 'Un indice', html: `<p>${esc(content.hint)}</p>` } });
     ex().mount(key, { screen, validate, feedback, compactFeedback: true });
   }
 
@@ -590,6 +536,90 @@
     });
   }
 
+  /* ─────────────── Deux réponses à comparer (S1 1.5, S2 2.5) ────────── */
+
+  /* La réplique du client, deux réponses en cartes à cocher, puis le
+   * « pourquoi ce choix ? ». En relecture : la bonne réponse, l'analyse de
+   * chacune, la justification de l'apprenant et une justification proposée.
+   * `content` : eyebrow, title, subtitle, speaker, quote, options
+   * [{ id, label, text, analysis }], answer, whyLabel, whyHelp, hint, model ;
+   * `asideTitle`/`asideText` et `listTitle` facultatifs. `options.image`
+   * pose l'illustration du catalogue en bandeau ; `options.steps` affiche
+   * le fil Écouter · Choisir · Expliquer. */
+  function mountCompare(key, content, settings = {}) {
+    const picture = () => (ex().current.image ? core().webAsset(ex().current.image) : '');
+    const chosen = () => ex().value('pick');
+    const stageAt = () => (!chosen() ? 2 : 3);
+
+    function scene() {
+      const quote = `<span>« ${esc(content.quote)} »</span>`;
+      if (settings.image && picture()) {
+        return `<section class="cmp-banner">
+          <div class="cmp-banner-art"><img src="${esc(picture())}" alt="${esc(ex().current.alt || '')}" decoding="async" style="object-position:${esc(ex().current.imagePosition || 'center')}"><p class="cmp-bubble"><span class="k-label">${esc(content.speaker)}</span>${quote}</p></div>
+          <div class="cmp-banner-text"><h2>${esc(content.asideTitle)}</h2><p>${esc(content.asideText)}</p></div>
+        </section>`;
+      }
+      if (content.portrait) return clientCard(content.quote, content.portrait === true ? null : content.portrait);
+      return `<section class="k-panel cmp-client"><span class="cmp-avatar">${icon('users', { size: 34 })}<small>${esc(content.speaker)}</small></span><p class="cmp-bubble">${quote}</p></section>`;
+    }
+
+    function optionCard(option, reviewing) {
+      const isChosen = chosen() === option.id;
+      if (reviewing) {
+        const ok = option.id === content.answer;
+        return `<section class="cmp-option is-static ${ok ? 'is-answer' : ''} ${isChosen ? 'is-chosen' : ''}">
+          <header><span class="cmp-review-radio ${isChosen ? 'is-on' : ''}" aria-hidden="true"></span><strong>${esc(option.label)}</strong>${ok ? mark(true, isChosen ? 'Votre choix, le plus efficace' : 'La réponse la plus efficace') : isChosen ? mark(false, 'Votre choix') : ''}</header>
+          <p>« ${esc(option.text)} »</p>
+          <ul class="cmp-analysis ${ok ? 'is-good' : 'is-bad'}">${option.analysis.map(line => { const at = line.indexOf(' : '); return at > 0 && at < 40 ? `<li><strong>${esc(line.slice(0, at))}</strong> : ${esc(line.slice(at + 3))}</li>` : `<li>${esc(line)}</li>`; }).join('')}</ul>
+        </section>`;
+      }
+      return `<label class="cmp-option ${isChosen ? 'is-chosen' : ''}">
+        <input type="radio" class="sr-only" name="pick" data-field="pick" value="${esc(option.id)}" ${isChosen ? 'checked' : ''}>
+        <span class="cmp-radio" aria-hidden="true"></span>
+        <span class="cmp-option-body"><strong>${esc(option.label)}</strong><span>« ${esc(option.text)} »</span></span>
+      </label>`;
+    }
+
+    function screen() {
+      const reviewing = ex().reviewing();
+      const ok = chosen() === content.answer;
+      return `<div class="k-page cmp-page">
+        ${head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
+          aside: settings.steps && !reviewing ? `<div data-live="cmp-steps">${steps(['Écouter', 'Choisir', 'Expliquer'], stageAt(), { compact: true })}</div>` : '' })}
+        ${scene()}
+        <form novalidate class="cmp-form">
+          <h2 class="cmp-list-title">${esc(content.listTitle)}</h2>
+          ${reviewing ? result(ok ? 1 : 0, 1, ok ? 'vous avez choisi la réponse la plus efficace' : 'la réponse la plus efficace était l’autre') : ''}
+          <div class="cmp-options" ${reviewing ? '' : 'role="radiogroup"'}>${content.options.map(option => optionCard(option, reviewing)).join('')}</div>
+          <section class="k-panel cmp-why">
+            ${reviewing
+              ? `${yours('Votre justification', ex().value('why'))}${model('Une justification possible', content.model)}`
+              : `<h2>${esc(content.whyLabel)}</h2><p class="k-muted">${esc(content.whyHelp)}</p>
+                ${ex().field('why', content.whyLabel, { placeholder: 'Expliquez ce qui rend cette réponse efficace…', max: 600, rows: 3, hideLabel: true })}
+                <div class="cmp-why-row">${dialogButton('hint', 'Voir un indice', 'text-button', 'lightbulb')}${submit('Valider ma réponse')}</div>`}
+          </section>
+          ${reviewing ? `${core().feedbackBox()}<div class="k-utility">${reset()}</div>` : core().errorsBox()}
+        </form>
+        ${reviewing ? '' : utility('Analyse des deux réponses après validation')}
+      </div>`;
+    }
+
+    function validate(values) {
+      const errors = [];
+      if (!values.pick) errors.push({ key: 'pick', message: 'Choisissez la réponse la plus efficace.' });
+      if (!filled(values.why)) errors.push({ key: 'why', message: 'Expliquez votre choix en une ou deux phrases.' });
+      return errors;
+    }
+
+    const feedback = () => [chosen() === content.answer
+      ? 'Bon choix. Comparez votre justification à l’analyse des deux réponses.'
+      : 'Ce n’était pas la réponse la plus efficace : relisez l’analyse des deux réponses.'];
+
+    live(() => (settings.steps ? { 'cmp-steps': steps(['Écouter', 'Choisir', 'Expliquer'], stageAt(), { compact: true }) } : {}));
+    dialogs({ hint: { title: 'Un indice', html: `<p>${esc(content.hint)}</p>` } });
+    ex().mount(key, { screen, validate, feedback, compactFeedback: true });
+  }
+
   /* Enregistre un changement fait au clic, puis redessine. */
   function commit() {
     ex().changed();
@@ -597,11 +627,11 @@
   }
 
   root.AtelierKit = Object.freeze({
-    corrige, clientCard, portraitFor, answerReview,
+    corrige, answerReview, clientCard, portraitFor,
     esc, icon, words, seconds, filled, plural, stage, setStage, list,
     head, steps, band, tip, help, submit, act, back, reset, dialogButton, bar, utility,
     matrix, answered, score, choiceButtons,
-    mountChoiceGrid, mountCompare,
+    mountChoiceGrid, mountCompare, reach, reveal,
     deckPlaced, deckCurrent, deckPlace, deckUndo, deckSkip, deckReopen, deckDots, deckRecap, deckReview,
     mark, yours, model, result,
     on, dialogs, live, onDrop, refreshLive, commit, openDialog
