@@ -1,0 +1,49 @@
+/* ACCUEIL D'UN THÈME · module intégré réduit à une série (?theme=…).
+ *
+ * Un grand titre, le décor du thème en haut à droite, une carte par
+ * exercice (pastille, titre, vignette, état), puis un seul bouton. Les
+ * vignettes ont un fond crème : `multiply` le fond dans la carte. Rendu par
+ * home.js (themeHome).
+ */
+.theme-home { position: relative; max-width: 1240px; margin: 0 auto; padding: 18px 0 30px; }
+
+.theme-home-cover { position: absolute; top: -34px; right: 0; width: min(38%, 470px); height: auto; pointer-events: none; -webkit-mask-image: radial-gradient(ellipse 56% 56% at 50% 50%, #000 70%, transparent 100%); mask-image: radial-gradient(ellipse 56% 56% at 50% 50%, #000 70%, transparent 100%); }
+.theme-home-head { position: relative; padding-top: 22px; }
+.theme-home.has-cover .theme-home-head { min-height: 170px; }
+.theme-home-head::before { content: ""; position: absolute; top: 0; left: 2px; width: 64px; height: 4px; border-radius: 2px; background: #ef7b55; }
+.theme-home-head h1 { margin: 0; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800; line-height: 1.02; letter-spacing: -.02em; color: var(--navy); }
+.theme-home-head p { margin: 8px 0 0; font-size: 1.35rem; font-weight: 600; color: var(--muted); }
+
+.theme-home-grid { position: relative; list-style: none; margin: 22px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+.theme-card { position: relative; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto 1fr auto; align-items: center; column-gap: 16px; height: 100%; padding: 22px 22px 18px; border: 1px solid #ece6dc; border-radius: 18px; background: #fdfbf7; box-shadow: 0 6px 22px rgb(33 50 92 / 6%); color: var(--text); text-decoration: none; transition: border-color .15s ease, background .15s ease, box-shadow .15s ease, transform .15s ease; }
+.theme-card:hover, .theme-card:focus-visible { background: #edf3ff; border-color: #8fb0f2; box-shadow: 0 8px 26px rgb(19 75 215 / 12%); transform: translateY(-2px); }
+.theme-card:focus-visible { outline: 3px solid #ff936b; outline-offset: 3px; }
+
+.theme-card-code { display: grid; place-items: center; min-width: 52px; height: 52px; padding: 0 8px; border-radius: 12px; font-size: 1.45rem; font-weight: 800; }
+.theme-card-code.tone-blue { background: #dde8fb; color: #1d47a8; }
+.theme-card-code.tone-red { background: #fbe0d8; color: #c2361b; }
+.theme-card-code.tone-green { background: #dfe9e2; color: #3e6b55; }
+.theme-card-title { font-size: 1.35rem; font-weight: 700; line-height: 1.2; color: var(--navy); }
+
+.theme-card-thumb { grid-column: 1 / -1; justify-self: center; width: 100%; max-width: 220px; aspect-ratio: 1; object-fit: contain; margin: -4px 0 -34px; mix-blend-mode: multiply; }
+.theme-card-state { grid-column: 1 / -1; justify-self: end; position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid #e3e6ee; border-radius: 999px; background: rgb(255 255 255 / 88%); font-size: .95rem; font-weight: 600; color: var(--text); }
+.theme-card-dot { width: 14px; height: 14px; border: 1.8px solid currentColor; border-radius: 50%; }
+.theme-card-state.done { color: #26766c; border-color: #bfdcd5; }
+.theme-card.no-thumb { grid-template-rows: auto auto; row-gap: 18px; }
+
+.theme-home-actions { display: flex; justify-content: center; margin-top: 32px; }
+.theme-home-start { display: inline-flex; align-items: center; gap: 14px; padding: 20px 64px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 1.35rem; font-weight: 700; text-decoration: none; box-shadow: 0 12px 28px rgb(19 75 215 / 28%); transition: background .15s ease, transform .15s ease; }
+.theme-home-start:hover { background: var(--accent-dark); transform: translateY(-1px); }
+.theme-home-start:focus-visible { outline: 3px solid #ff936b; outline-offset: 3px; }
+
+@media (max-width: 1100px) {
+  .theme-home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .theme-home-cover { width: min(48%, 420px); }
+}
+@media (max-width: 600px) {
+  .theme-home-grid { grid-template-columns: minmax(0, 1fr); }
+  .theme-home-cover { position: static; display: block; width: 80%; margin: 0 auto -20px; }
+  .theme-home-head { min-height: 0; }
+  .theme-home-start { padding: 16px 32px; font-size: 1.1rem; }
+}
+@media (prefers-reduced-motion: reduce) { .theme-card, .theme-home-start { transition: none; } .theme-card:hover { transform: none; } }

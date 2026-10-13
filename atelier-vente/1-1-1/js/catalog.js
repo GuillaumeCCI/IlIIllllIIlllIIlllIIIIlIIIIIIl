@@ -26,15 +26,18 @@ window.ATELIER_CATALOG = {
       // Corrigés issus de la fiche « Reconstruire une ouverture d'entretien réussie ».
       sourced: true,
       eyebrow: 'Série 1 · Prise de contact',
+      // Accueil du thème (intégration LMS, ?theme=s1) : le décor du titre, et
+      // la vignette de chaque exercice (champ `thumb` ci-dessous).
+      cover: 'assets/illustrations/s1/accueil/poignee-de-main.webp',
       exercises: [
-        { id: 'A', file: 's1-a', label: 'Analyser', theme: 'blue', image: 'assets/illustrations/s1/1-1-1-iB.png', alt: 'Une conseillère présente une offre à un client autour d’une table.', background: 'assets/backgrounds/s1/1-1-1-A.webp', imagePosition: 'center' },
-        { id: 'B', file: 's1-b', label: 'S’adapter', theme: 'blue', image: 'assets/illustrations/s1/1-1-1-iA.png', alt: 'Un client regarde sa montre à l’entrée d’une boutique, face à une vendeuse.', background: 'assets/backgrounds/s1/1-1-1-B.webp', imagePosition: 'center' },
-        { id: 'C', file: 's1-c', label: 'Comparer', theme: 'blue', background: 'assets/backgrounds/s1/1-1-1-C.webp' },
-        { id: 'D', file: 's1-d', label: 'Construire', theme: 'blue', background: 'assets/backgrounds/s1/1-1-1-D.webp' },
-        { id: 'E1', file: 's1-e1', label: 'Garder le lien', theme: 'purple', image: 'assets/illustrations/s1/1-1-1-iE1.png', alt: 'Une conseillère poursuit un échange en visioconférence alors que la caméra du prospect est coupée.', background: 'assets/backgrounds/s1/1-1-1-E1.webp', imagePosition: 'center' },
-        { id: 'E2', file: 's1-e2', label: 'Aller à l’essentiel', theme: 'magenta', image: 'assets/illustrations/s1/1-1-1-iE2.png', alt: 'Deux personnes échangent autour d’une table devant un grand chronomètre.', background: 'assets/backgrounds/s1/1-1-1-E2.webp', imagePosition: 'center' },
-        { id: 'E3', file: 's1-e3', label: 'Prendre l’initiative', theme: 'magenta', image: 'assets/illustrations/s1/1-1-1-iE3.png', alt: 'Une conseillère présente un nuancier à un client dans un espace accueillant.', background: 'assets/backgrounds/s1/1-1-1-E3.webp', imagePosition: 'center' },
-        { id: 'F', file: 's1-f', label: 'Changer de canal', theme: 'magenta', image: 'assets/illustrations/s1/1-1-1-iF.png', alt: 'Trois façons d’échanger : en face-à-face, par téléphone et par e-mail.', background: 'assets/backgrounds/s1/1-1-1-F.webp', imagePosition: 'center' }
+        { id: 'A', file: 's1-a', label: 'Analyser', thumb: 'assets/illustrations/s1/accueil/a.webp', theme: 'blue', image: 'assets/illustrations/s1/1-1-1-iB.png', alt: 'Une conseillère présente une offre à un client autour d’une table.', background: 'assets/backgrounds/s1/1-1-1-A.webp', imagePosition: 'center' },
+        { id: 'B', file: 's1-b', label: 'S’adapter', thumb: 'assets/illustrations/s1/accueil/b.webp', theme: 'blue', image: 'assets/illustrations/s1/1-1-1-iA.png', alt: 'Un client regarde sa montre à l’entrée d’une boutique, face à une vendeuse.', background: 'assets/backgrounds/s1/1-1-1-B.webp', imagePosition: 'center' },
+        { id: 'C', file: 's1-c', label: 'Comparer', thumb: 'assets/illustrations/s1/accueil/c.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-1-C.webp' },
+        { id: 'D', file: 's1-d', label: 'Construire', thumb: 'assets/illustrations/s1/accueil/d.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-1-D.webp' },
+        { id: 'E1', file: 's1-e1', label: 'Garder le lien', thumb: 'assets/illustrations/s1/accueil/e1.webp', theme: 'purple', image: 'assets/illustrations/s1/1-1-1-iE1.png', alt: 'Une conseillère poursuit un échange en visioconférence alors que la caméra du prospect est coupée.', background: 'assets/backgrounds/s1/1-1-1-E1.webp', imagePosition: 'center' },
+        { id: 'E2', file: 's1-e2', label: 'Aller à l’essentiel', thumb: 'assets/illustrations/s1/accueil/e2.webp', theme: 'magenta', image: 'assets/illustrations/s1/1-1-1-iE2.png', alt: 'Deux personnes échangent autour d’une table devant un grand chronomètre.', background: 'assets/backgrounds/s1/1-1-1-E2.webp', imagePosition: 'center' },
+        { id: 'E3', file: 's1-e3', label: 'Prendre l’initiative', thumb: 'assets/illustrations/s1/accueil/e3.webp', theme: 'magenta', image: 'assets/illustrations/s1/1-1-1-iE3.png', alt: 'Une conseillère présente un nuancier à un client dans un espace accueillant.', background: 'assets/backgrounds/s1/1-1-1-E3.webp', imagePosition: 'center' },
+        { id: 'F', file: 's1-f', label: 'Changer de canal', thumb: 'assets/illustrations/s1/accueil/f.webp', theme: 'magenta', image: 'assets/illustrations/s1/1-1-1-iF.png', alt: 'Trois façons d’échanger : en face-à-face, par téléphone et par e-mail.', background: 'assets/backgrounds/s1/1-1-1-F.webp', imagePosition: 'center' }
       ]
     },
     {
