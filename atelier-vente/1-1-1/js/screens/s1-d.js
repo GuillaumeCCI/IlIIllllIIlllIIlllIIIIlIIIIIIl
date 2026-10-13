@@ -85,32 +85,46 @@
 
   /* ── L'écran ─────────────────────────────────────────────────────────── */
 
+  /* La saisie, selon la maquette : consigne et lignes à gauche, la
+   * vendeuse en réflexion à droite, montrée entière. */
+  const ART = { image: 'assets/illustrations/s1/ouverture-reflexion.webp', alt: 'Une vendeuse réfléchit à son ouverture devant son ordinateur, un stylo à la main.' };
+
+  function writing() {
+    return `<form class="wiz-layout writing-layout" novalidate>
+      <section class="wiz-main">
+        ${core.pageTitle('Mise en situation', 'Construisez votre ouverture', 'Rédigez une ouverture commerciale complète (4 à 6 phrases) pour la situation de votre choix. Écrivez une phrase par ligne et sélectionnez sa fonction.')}
+        <div class="exercise-body">
+          ${editableRows()}
+          ${lineCount() < 6 ? core.button('+ Ajouter une ligne', 'add-line', 'text-button') : ''}
+        </div>
+        <div class="wiz-note"><span class="wiz-bulb" aria-hidden="true">${icon('lightbulb', { size: 26 })}</span><p>Votre ouverture doit être fluide, adaptée à la situation et donner envie au client d’échanger.</p></div>
+        ${core.errorsBox()}
+        ${ex.actions('Valider mon ouverture')}
+      </section>
+      <aside class="wiz-aside">
+        <div class="wiz-art is-whole">${core.illustration(ART)}</div>
+      </aside>
+      ${core.feedbackBox()}
+    </form>`;
+  }
+
   function screen() {
-    const review = ex.reviewing();
-    const missing = review ? missingFunctions() : [];
+    if (!ex.reviewing()) return writing();
+    const missing = missingFunctions();
     const many = missing.length > 1;
 
-    const body = review
-      ? `<div class="review-rows">${reviewedRows()}</div>
+    const body = `<div class="review-rows">${reviewedRows()}</div>
          ${missing.length
            ? ex.inlineNote(`Fonction${many ? 's' : ''} clé${many ? 's' : ''} absente${many ? 's' : ''} de votre ouverture : ${missing.join(', ')}.`, 'bad')
            : ex.inlineNote('Les quatre fonctions clés sont présentes : accueil, présentation, cadrage et transition vers l’écoute.', 'good')}
-         ${ex.modelBlock('La même ouverture, version modèle', modelRows(), correction.criterion)}`
-      : `${editableRows()}
-         ${lineCount() < 6 ? core.button('+ Ajouter une ligne', 'add-line', 'text-button') : ''}
-         <details class="techniques">
-           <summary>Voir les techniques disponibles</summary>
-           <dl>${content.techniques.map(fonction =>
-             `<dt>${esc(fonction)}</dt><dd>${esc(correction.guidance[fonction] || '')}</dd>`).join('')}</dl>
-           <small>Repères pédagogiques proposés.</small>
-         </details>`;
+         ${ex.modelBlock('La même ouverture, version modèle', modelRows(), correction.criterion)}`;
 
     return `<div class="writing-workshop">
       ${core.pageTitle('Atelier d’écriture', 'Construisez votre ouverture', 'Rédigez une ouverture commerciale complète (4 à 6 phrases) pour la situation de votre choix. Écrivez une phrase par ligne et sélectionnez sa fonction.')}
       <form class="panel" novalidate>
         <div class="panel-title">
           <h2>Votre ouverture</h2>
-          <span class="muted">${review ? 'Votre production, relue' : '4 à 6 lignes'}</span>
+          <span class="muted">Votre production, relue</span>
         </div>
         <div class="exercise-body">${body}</div>
         ${core.errorsBox()}

@@ -354,3 +354,15 @@ body { position: relative; }
 /* Cartes « Ouverture » (Comparer) : fond papier et décors en risographie,
    comme les cartes de choix. */
 #main .opening-card:not(.card-ok):not(.card-ko) { padding-bottom: 34px; background: url('../assets/illustrations/carte-deco-gauche.webp') left bottom / auto 96px no-repeat, url('../assets/illustrations/carte-deco-droite.webp') right bottom / auto 70px no-repeat, #fbfaf7; }
+
+/* Illustration montrée entière, sans découpe ni cadre (fond détouré). */
+#main .wiz-art.is-whole .illustration { aspect-ratio: auto; overflow: visible; border-radius: 0; background: none; }
+#main .wiz-art.is-whole .illustration img { height: auto; aspect-ratio: auto; object-fit: contain; }
+/* Note à l'ampoule sous la saisie. */
+.wiz-note { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: center; padding: 14px 18px; border-radius: 18px; background: #f2f6fd; }
+.wiz-note .wiz-bulb { width: 56px; height: 56px; }
+.wiz-note p { margin: 0; color: var(--navy); font-weight: 600; }
+.writing-layout .writing-row { grid-template-columns: 38px minmax(0, 1fr) minmax(170px, .5fr) 36px; }
+.writing-layout { grid-template-columns: minmax(0, 1.25fr) minmax(300px, 1fr); }
+.writing-layout .wiz-aside { align-self: center; justify-items: center; }
+@media (max-width: 900px) { .writing-layout { grid-template-columns: minmax(0, 1fr); } }
