@@ -156,6 +156,10 @@
   const pageTitle = (eyebrow, title, subtitle = '') =>
     `<div class="page-title">${eyebrow ? `<p class="eyebrow">${esc(eyebrow)}</p>` : ''}<h1>${esc(title)}</h1>${subtitle ? `<p class="subtitle">${esc(subtitle)}</p>` : ''}</div>`;
 
+  /* La pastille de progression d'un exercice en étapes : les points reliés
+   * (étape en cours en grand), puis « Étape 2 sur 3 ». Styles : extras.css. */
+  const stepPill = (at, total) => `<div class="step-pill" aria-label="Étape ${at + 1} sur ${total}"><span class="step-pill-dots" aria-hidden="true">${Array.from({ length: total }, (_, i) => `<span class="${i === at ? 'is-current' : i < at ? 'is-done' : ''}"></span>`).join('')}</span><span class="step-pill-label">Étape ${at + 1} sur ${total}</span></div>`;
+
   const panelTitle = (title, extra = '') =>
     `<div class="panel-title"><h2>${esc(title)}</h2>${extra}</div>`;
 
@@ -530,7 +534,7 @@
     persist, markSaving, toast, openDialog,
     get storageAvailable() { return storageAvailable; },
     button, linkButton, chips, note, callout, pageTitle, panelTitle, step, mission, quote,
-    errorsBox, feedbackBox, hintBlock, clientCard, portraitFor, illustration, gallery, scene, rubricButton, wireRubric, icon,
+    errorsBox, feedbackBox, hintBlock, stepPill, clientCard, portraitFor, illustration, gallery, scene, rubricButton, wireRubric, icon,
     renderChrome, renderNav, renderFooterNav, nextUrl, applyBackground,
     wireImageFallbacks, wireDialog, revealActiveNav,
     wireFullscreen, wireScrollAreas, markScrollables, toggleFullscreen, isFullscreen,

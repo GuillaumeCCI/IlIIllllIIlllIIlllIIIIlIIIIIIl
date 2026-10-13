@@ -308,3 +308,49 @@ body { position: relative; }
 @media (max-height: 900px) {
   .two-columns > .scenario { padding: 17px; }
 }
+
+/* ── Exercices en étapes (ex.wizardAt, core.stepPill) ─────────────────────
+   Une question à la fois : pastille « Étape x sur n » (points reliés),
+   consigne en titre, champ, puis « Continuer » ou la validation finale. */
+.step-pill { display: inline-flex; align-items: center; gap: 18px; padding: 12px 22px; border-radius: 999px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 8%); font-size: .82rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--navy); }
+.step-pill-dots { display: flex; align-items: center; gap: 22px; }
+.step-pill-dots span { position: relative; width: 10px; height: 10px; border-radius: 50%; background: #c9d6f1; }
+.step-pill-dots span.is-done { background: #9bb6f0; }
+.step-pill-dots span.is-current { width: 18px; height: 18px; background: var(--accent); }
+.step-pill-dots span + span::before { content: ''; position: absolute; right: calc(100% + 4px); top: 50%; width: 14px; height: 2px; background: #c9d6f1; transform: translateY(-50%); }
+.step-pill-label { padding-left: 18px; border-left: 1.5px solid #dfe5f1; }
+.wiz-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr); gap: clamp(24px, 4vw, 64px); align-items: start; }
+.wiz-main { display: grid; gap: 18px; }
+.wiz-aside { display: grid; gap: 24px; justify-items: end; position: sticky; top: 20px; }
+.wiz-aside-head { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.wiz-art { width: 100%; }
+/* L'illustration dans une forme arrondie, comme découpée à la main. */
+#main .wiz-art .illustration { margin: 0; aspect-ratio: 1; overflow: hidden; border-radius: 48% 52% 45% 55% / 55% 45% 55% 45%; box-shadow: none; }
+#main .wiz-art .illustration img { width: 100%; height: 100%; object-fit: cover; box-shadow: none; }
+.wiz-step { display: grid; gap: 16px; }
+.wiz-prompt { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 20px; align-items: center; margin-top: 8px; }
+.wiz-bulb { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 8%); color: var(--navy); }
+.wiz-prompt h2 { margin: 0; font-size: clamp(1.25rem, 1.6vw, 1.5rem); line-height: 1.3; color: var(--navy); }
+.wiz-prompt p { margin: 4px 0 0; color: var(--muted); }
+.wiz-step textarea, .wiz-panel textarea { min-height: 150px; }
+.wiz-actions { display: flex; justify-content: flex-end; align-items: center; gap: 16px; }
+.wiz-actions .text-button { margin-right: auto; }
+.wiz-back { margin-bottom: -8px; }
+.wiz-column { display: grid; gap: 16px; justify-items: end; align-content: start; }
+.wiz-column > .panel { width: 100%; justify-self: stretch; }
+.wiz-panel { display: grid; gap: 20px; padding: 28px 32px; }
+.wiz-panel-head { display: flex; justify-content: flex-end; margin-bottom: -12px; }
+.wiz-number { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 20px; align-items: center; }
+.wiz-number > span { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: #e6eefc; color: var(--accent); font-size: 1.8rem; font-weight: 800; }
+.wiz-number h2 { margin: 0; font-size: clamp(1.5rem, 2vw, 1.9rem); }
+.wiz-number p { margin: 2px 0 0; color: var(--muted); }
+@media (max-width: 900px) {
+  .wiz-layout { grid-template-columns: minmax(0, 1fr); }
+  .wiz-aside { position: static; justify-items: stretch; order: -1; }
+  .wiz-aside-head { align-items: flex-start; }
+  .wiz-art { max-width: 300px; justify-self: center; }
+}
+
+/* Cartes « Ouverture » (Comparer) : fond papier et décors en risographie,
+   comme les cartes de choix. */
+#main .opening-card:not(.card-ok):not(.card-ko) { padding-bottom: 34px; background: url('../assets/illustrations/carte-deco-gauche.webp') left bottom / auto 96px no-repeat, url('../assets/illustrations/carte-deco-droite.webp') right bottom / auto 70px no-repeat, #fbfaf7; }
