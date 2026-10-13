@@ -92,18 +92,43 @@
     </div>`;
   }
 
+  /* Le corrigé, d'après la maquette : à gauche une carte par maladresse
+   * (drapeau, passage, réponse attendue, explication, et la ligne de
+   * l'apprenant), à droite les conseils tirés de « ce que la réponse oublie
+   * aussi ». L'explication de la fiche se coupe à son premier « : ». */
+  const TONES = ['coral', 'green', 'blue', 'green'];
+  const TIP_ICONS = ['chat', 'lightbulb', 'users'];
+
   function reviewScreen() {
     const caught = passages.filter((_, i) => rowOf(i) !== undefined).length;
-    return `<section class="k-panel">
-      <h2>Les maladresses du corrigé</h2>
-      <p class="k-muted">Vous avez posé un drapeau sur ${caught} passage${caught > 1 ? 's' : ''} sur ${passages.length}.</p>
-      <ol class="crash-review">${passages.map((p, i) => `<li class="${rowOf(i) !== undefined ? 'is-ok' : ''}">
-        <p class="crash-quote">« ${esc(p.text)} »</p><p>${esc(p.error)}</p>
-        ${rowOf(i) !== undefined ? `<p class="crash-yours">Votre ligne ${rowOf(i) + 1} : ${esc(ex.value(`error${rowOf(i)}`))}</p>` : ''}
-      </li>`).join('')}</ol>
-      ${content.missing ? `<h3 class="k-small-title">Ce que la réponse oublie aussi</h3><ol class="crash-review">${content.missing.map(m => `<li><p class="crash-quote">${esc(m.title)}</p><p>${esc(m.text)}</p></li>`).join('')}</ol>` : ''}
-      ${[0, 1, 2, 3].some(r => flag(r) === null) ? `<h3 class="k-small-title">Vos autres repérages</h3><ul class="crash-own">${[0, 1, 2, 3].filter(r => flag(r) === null).map(r => `<li>${esc(ex.value(`error${r}`))}</li>`).join('')}</ul>` : ''}
-    </section>
+    const others = [0, 1, 2, 3].filter(r => flag(r) === null && kit.filled(ex.value(`error${r}`)));
+    return `<div class="k-columns crash-corrige">
+      <section class="k-panel crash-faults">
+        <h2>Les maladresses du commercial</h2>
+        <p class="k-muted">${caught === passages.length ? `Vous avez repéré les ${passages.length} maladresses.` : `Vous avez posé un drapeau sur ${caught} passage${caught > 1 ? 's' : ''} sur ${passages.length}.`} Voici les réponses attendues.</p>
+        <ol class="crash-fault-list">${passages.map((p, i) => {
+          const cut = p.error.indexOf(' : ');
+          const label = cut > 0 ? p.error.slice(0, cut) : p.error;
+          const detail = cut > 0 ? p.error.slice(cut + 3) : '';
+          const row = rowOf(i);
+          return `<li class="crash-fault">
+            <span class="crash-fault-flag tone-${TONES[i % TONES.length]}">${icon('flag', { size: 24 })}<b>${i + 1}</b></span>
+            <div>
+              <p class="crash-fault-quote">« ${esc(p.text)} »</p>
+              <p class="crash-fault-answer"><strong>Réponse attendue :</strong> ${esc(label)}.</p>
+              ${detail ? `<p class="crash-fault-detail">${esc(detail.charAt(0).toUpperCase() + detail.slice(1))}</p>` : ''}
+              <p class="crash-fault-yours">${row !== undefined ? `Votre réponse : « ${esc(ex.value(`error${row}`))} »` : 'Passage non repéré.'}</p>
+            </div>
+          </li>`;
+        }).join('')}</ol>
+        ${others.length ? `<h3 class="k-small-title">Vos autres repérages</h3><ul class="crash-own">${others.map(r => `<li>${esc(ex.value(`error${r}`))}</li>`).join('')}</ul>` : ''}
+      </section>
+      ${content.missing ? `<aside class="k-panel crash-tips">
+        <h2>Conseils pour progresser</h2>
+        <p class="k-muted">Ce que la réponse du commercial oublie aussi.</p>
+        <ul>${content.missing.map((m, i) => `<li><span class="crash-tip-icon tone-${['blue', 'coral', 'green'][i % 3]}">${icon(TIP_ICONS[i % TIP_ICONS.length], { size: 26 })}</span><div><strong>${esc(m.title)}</strong><p>${esc(m.text)}</p></div></li>`).join('')}</ul>
+      </aside>` : ''}
+    </div>
     <section class="k-panel">
       <h2>La réécriture</h2>
       <div class="k-columns is-even">${kit.yours('Votre réponse', ex.value('rewrite'))}${kit.model('Corrigé modèle', content.model)}</div>
@@ -115,7 +140,7 @@
     const reviewing = ex.reviewing();
     const at = stage();
     return `<div class="k-page crash-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: reviewing ? 'Voici les maladresses à repérer, et les réponses attendues.' : content.subtitle,
         aside: kit.steps(['Diagnostic', 'Réécriture'], reviewing ? 3 : at, { compact: true }) })}
       ${reviewing ? reviewScreen() : at === 1 ? diagnostic() : rewrite()}
       ${reviewing ? '' : kit.utility('Corrigé disponible après la réécriture')}

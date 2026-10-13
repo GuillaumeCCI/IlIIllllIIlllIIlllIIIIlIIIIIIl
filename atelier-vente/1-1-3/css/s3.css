@@ -164,3 +164,27 @@ button.crash-passage:hover { background: #fcdcd3; }
   .nat-letter { width: 52px; height: 52px; font-size: 1.4rem; }
   .fix-reflex { padding-left: 0; }
 }
+
+/* 1.2 · le corrigé, d'après la maquette : maladresses à gauche, conseils à droite. */
+.crash-corrige { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; }
+.crash-faults h2, .crash-tips h2 { font-size: 1.6rem; }
+.crash-fault-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 12px; }
+.crash-fault { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 14px; padding: 14px 18px 14px 12px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+.crash-fault-flag { display: inline-flex; align-items: center; justify-content: center; gap: 4px; width: 68px; height: 68px; border-radius: 50%; font-size: 1.3rem; font-weight: 800; }
+.crash-fault-flag.tone-coral { background: #fde3dc; color: #e5402f; }
+.crash-fault-flag.tone-green { background: #e3efe7; color: #2f6b4f; }
+.crash-fault-flag.tone-blue { background: #e3ebfb; color: #1d47a8; }
+.crash-fault-quote { display: inline-block; margin: 0 0 6px; padding: 5px 14px; border-radius: 999px; background: #fde3dc; color: var(--navy); font-size: 1.05rem; }
+.crash-fault-answer { margin: 0; color: #2f6b4f; }
+.crash-fault-answer strong { color: #1f5a3f; }
+.crash-fault-detail { margin: 2px 0 0; color: #46577d; }
+.crash-fault-yours { margin: 6px 0 0; color: var(--accent); font-size: .9rem; }
+.crash-tips ul { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 20px; }
+.crash-tips li { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: start; gap: 16px; }
+.crash-tip-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; }
+.crash-tip-icon.tone-blue { background: #e3ebfb; color: #1d47a8; }
+.crash-tip-icon.tone-coral { background: #fde3dc; color: #e5402f; }
+.crash-tip-icon.tone-green { background: #e3efe7; color: #2f6b4f; }
+.crash-tips strong { display: block; color: var(--navy); font-size: 1.05rem; }
+.crash-tips p { margin: 2px 0 0; color: #46577d; }
+@media (max-width: 900px) { .crash-corrige { grid-template-columns: minmax(0, 1fr); } }
