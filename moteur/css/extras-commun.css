@@ -286,13 +286,21 @@ body.has-menu { padding-left: var(--menu-rail); }
 
 .av-menu-home { color: rgb(255 255 255 / 72%); }
 
+/* Les éléments du rail, façon autocollant : intérieur blanc, contour noir,
+   liseré blanc. Menu et maison sont des images (assets/menu/) ; le cercle et
+   la barre, dont le contenu change, sont redessinés ici aux mêmes
+   proportions (liseré et contour d'environ 4 % du cercle, 10 % de la barre). */
+.av-menu-icon { display: block; background: center / contain no-repeat; }
+.av-menu-icon.is-burger { width: 31px; height: 26px; background-image: url('../assets/menu/burger.webp'); }
+.av-menu-icon.is-home { width: 28px; height: 27px; background-image: url('../assets/menu/accueil.webp'); }
+
 .av-menu :focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; }
 
 .av-menu-progress { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 8px; }
 
-.av-menu-percent { display: grid; place-items: center; width: 44px; height: 44px; border: 2px solid rgb(255 255 255 / 30%); border-radius: 50%; font-size: .74rem; font-weight: 700; }
+.av-menu-percent { display: grid; place-items: center; width: 46px; height: 46px; border: 2px solid #000; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px #fff; color: #000; font-size: .78rem; font-weight: 800; }
 
-.av-menu-track { position: relative; width: 10px; height: clamp(90px, 28vh, 220px); border-radius: 999px; background: rgb(255 255 255 / 16%); overflow: hidden; }
+.av-menu-track { position: relative; width: 15px; height: clamp(90px, 28vh, 220px); border: 2px solid #000; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1.5px #fff; overflow: hidden; }
 
 .av-menu-fill { position: absolute; inset: auto 0 0; height: 0; border-radius: inherit; background: #ff936b; transition: height .5s ease; }
 
