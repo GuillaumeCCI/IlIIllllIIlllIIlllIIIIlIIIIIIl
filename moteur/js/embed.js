@@ -23,6 +23,23 @@
 
   const params = new URLSearchParams(root.location.search);
   const raw = params.get('embed');
+
+  /* LE CADRE. Le navigateur quitte le plein écran à chaque changement de
+   * page. Une page de module ouverte hors du cadre (lien direct, ancien code
+   * d'intégration) s'y place donc d'elle-même, avant tout affichage : le
+   * cadre ne change plus de page, seules les pages intérieures changent, et
+   * le plein écran tient. Sauf l'aperçu et l'exercice seul, faits pour
+   * rester tels quels, et hors serveur web (fichier, tests). */
+  const inCadre = (() => {
+    try { return root.parent !== root && root.parent.document.documentElement.hasAttribute('data-cadre'); } catch { return false; }
+  })();
+  const place = /^(.*\/)(\d+-\d+-\d+\/(?:exercices\/[\w-]+\.html|index\.html)?)$/.exec(root.location.pathname);
+  if (!inCadre && place && /^https?:$/.test(root.location.protocol) && raw !== 'apercu' && raw !== 'solo') {
+    document.documentElement.style.visibility = 'hidden';
+    root.location.replace(`${place[1]}cadre.html?page=${encodeURIComponent(place[2] + root.location.search + root.location.hash)}`);
+    return;
+  }
+
   if (raw === null) return;
   const preview = raw === 'apercu';
   const mode = raw === 'solo' || preview ? 'solo' : 'module';
