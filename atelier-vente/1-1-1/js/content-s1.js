@@ -10,10 +10,10 @@
  */
 window.ATELIER_S1 = {
   audio: {
-    // Aucun audio n’était fourni. Pour activer le vôtre, remplacez null par
-    // 'assets/audio/1-1-1-A.mp3', puis adaptez transcript et mettez demo à false.
-    src: null,
-    demo: true,
+    // L'enregistrement fourni (10 s, mono, ramené à 22 kHz). La transcription
+    // ci-dessous doit reprendre mot pour mot ce qui est dit.
+    src: 'assets/audio/1-1-1-A.wav',
+    demo: false,
     transcript: 'Bonjour, je suis Camille Martin, conseillère chez Novéa. Je vais vous présenter nos solutions d’assurance professionnelle, on a des offres vraiment intéressantes en ce moment. On va voir ensemble ce qui pourrait vous convenir.'
   },
 
