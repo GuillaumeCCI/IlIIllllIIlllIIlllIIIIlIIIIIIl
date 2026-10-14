@@ -472,3 +472,36 @@ button.fab-col-head:hover { background: #f4f7fd; }
 .hl-tools:not(.is-legend) .hl-tool.tone-p { --tool-tone: var(--coral); }
 .hl-tools:not(.is-legend):has(.is-active) .hl-tool:not(.is-active) { opacity: .7; }
 .hl-tools:not(.is-legend) .hl-tool:not(.is-active):hover { opacity: 1; }
+
+/* S1 1.1 · corrigé « Votre analyse » (maquette) : en-tête avec scores et
+ * liste cochée, puis une bande par série. */
+.ir-review { gap: 18px; }
+.arv-head.ir-head { position: relative; grid-template-columns: minmax(0, 1fr) auto; align-items: center; padding-right: clamp(170px, 17vw, 240px); min-height: 150px; }
+.ir-stats { display: flex; gap: 14px; }
+#main .ir-stat { display: flex; align-items: center; gap: 12px; margin: 0; padding: 12px 18px; border-radius: 14px; background: rgb(255 255 255 / 92%); box-shadow: 0 6px 18px rgb(35 40 80 / 7%); }
+.ir-stat-symbol { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #e6eefc; color: var(--accent); }
+.ir-stat:nth-child(2) .ir-stat-symbol { background: #dff1e8; color: #1f7a55; }
+.ir-stat strong { display: block; font-size: 1.45rem; line-height: 1.1; color: var(--accent); }
+.ir-stat small { color: var(--muted); font-size: .9rem; }
+.arv-head .arv-art.ir-art { position: absolute; top: -40px; right: -10px; width: clamp(170px, 17vw, 240px); margin: 0; }
+.ir-serie { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 20px; padding: 18px 22px 18px 18px; border-radius: 18px; background: #fff; box-shadow: 0 8px 24px rgb(35 40 80 / 7%); overflow: hidden; }
+.ir-side { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.ir-pill { padding: 8px 20px; border-radius: 999px; background: #e3ebfc; color: var(--accent); font-weight: 800; font-size: 1.1rem; }
+.ir-side-art { width: 130px; margin: 10px 0 0; }
+.ir-main { display: grid; gap: 14px; }
+.ir-review .intrus-cards.is-review { max-width: none; margin: 0; gap: 14px; }
+.ir-review .intrus-card.is-static { min-height: 104px; padding: 14px; gap: 8px; border-radius: 12px; border: 1px solid #ece7de; background: #fff; box-shadow: 0 4px 12px rgb(35 40 80 / 6%); }
+.ir-review .intrus-card.is-answer { border: 2px solid #69c093; background: #f3fbf6; box-shadow: none; }
+.ir-review .intrus-card.is-wrong { border: 2px solid #f0a093; background: #fff4f1; box-shadow: none; }
+.ir-review .intrus-text { font-size: 1.05rem; font-weight: 750; text-align: center; }
+.ir-note { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 16px; padding: 14px 18px; border-radius: 12px; background: #eaf1fd; color: var(--navy); }
+.ir-bulb { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: #fff; color: var(--accent); }
+#main .ir-note p { margin: 0; line-height: 1.5; }
+#main .ir-note .ir-trio { margin-top: 6px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--muted); font-size: .95rem; }
+@media (max-width: 900px) {
+  .arv-head.ir-head { grid-template-columns: minmax(0, 1fr); padding-right: 0; }
+  .ir-art { display: none; }
+  .ir-serie { grid-template-columns: minmax(0, 1fr); }
+  .ir-side { flex-direction: row; align-items: center; }
+  .ir-side-art { width: 70px; margin: 0; }
+}

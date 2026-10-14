@@ -15,6 +15,8 @@
   const content = window.ATELIER_S1['1.1'];
   const series = content.series;
   const letters = ['A', 'B', 'C'];
+  // Vignettes peintes de la colonne gauche du corrigé, une par série.
+  const SIDE_ART = ['assets/illustrations/s3/accueil/3-1.webp', 'assets/illustrations/s2/accueil/2-4.webp', 'assets/illustrations/s3/accueil/3-5.webp'];
 
   const serie = () => Math.min(Math.max(0, Number(ex.value('serie')) || 0), series.length - 1);
   const intruder = i => { const v = ex.value(`intruder${i}`); return Number.isInteger(v) ? v : null; };
@@ -109,24 +111,36 @@
     const rightIntruders = series.filter((s, i) => intruder(i) === s.intruder).length;
     const rightCategories = series.filter((s, i) => category(i) === s.category).length;
 
-    return `<div class="k-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: 'Votre corrigé', subtitle: 'Les trois séries, avec l’intrus attendu et la nature du trio.' })}
-      <div class="k-results">${kit.result(rightIntruders, series.length, 'intrus repérés')}${kit.result(rightCategories, series.length, 'trios bien classés')}</div>
+    /* Maquette « Votre analyse » : pastille Corrigé, grand titre, les deux
+     * scores et la liste cochée en haut à droite ; puis une bande par série
+     * (pastille et vignette peinte à gauche, les quatre cartes, l'explication
+     * sous une ampoule). */
+    const stat = (symbol, right, text) => `<p class="ir-stat"><span class="ir-stat-symbol">${icon(symbol, { size: 26, strokeWidth: 2.4 })}</span><span><strong>${right} / ${series.length}</strong><small>${esc(text)}</small></span></p>`;
+    return `<div class="k-page ir-review">
+      <header class="arv-head ir-head">
+        <div class="arv-head-text"><p class="corrige-tag">Corrigé</p><h1>Votre analyse</h1><p class="arv-subtitle">Voici l’analyse de chaque trio, avec la bonne position et une explication.</p></div>
+        <div class="ir-stats">${stat('search', rightIntruders, 'intrus repérés')}${stat('check', rightCategories, 'trios bien classés')}</div>
+        <img class="arv-art ir-art" src="${esc(core.asset('assets/illustrations/corrige-checklist.webp'))}" alt="" decoding="async">
+      </header>
       ${series.map((s, i) => {
-        const okIntruder = intruder(i) === s.intruder;
         const okCategory = category(i) === s.category;
-        return `<section class="k-panel review-serie">
-          <h2>Série ${letters[i]}</h2>
-          <div class="intrus-cards is-review">${s.cards.map((text, n) => {
-            const isAnswer = n === s.intruder;
-            const isChosen = n === intruder(i);
-            return `<div class="intrus-card is-static ${isAnswer ? 'is-answer' : isChosen ? 'is-wrong' : ''}">
-              <span class="intrus-text">${esc(text)}</span>
-              ${isAnswer ? kit.mark(true, isChosen ? 'Votre intrus, correct' : 'L’intrus') : isChosen ? kit.mark(false, 'Votre choix') : ''}
-            </div>`;
-          }).join('')}</div>
-          <p class="review-line">Trio : ${esc(label(s.category))} ${okCategory ? kit.mark(true, 'votre réponse') : kit.mark(false, `vous aviez choisi : ${label(category(i)) || 'rien'}`)}</p>
-          ${ex.inlineNote(s.why, okIntruder && okCategory ? 'good' : 'neutral')}
+        const [, lead = '', rest = s.why] = /^(Intrus : la carte \d+\.)\s*(.*)$/s.exec(s.why) || [];
+        return `<section class="ir-serie">
+          <div class="ir-side"><span class="ir-pill">Série ${letters[i]}</span><img class="ir-side-art" src="${esc(core.asset(SIDE_ART[i % SIDE_ART.length]))}" alt="" decoding="async"></div>
+          <div class="ir-main">
+            <div class="intrus-cards is-review">${s.cards.map((text, n) => {
+              const isAnswer = n === s.intruder;
+              const isChosen = n === intruder(i);
+              return `<div class="intrus-card is-static ${isAnswer ? 'is-answer' : isChosen ? 'is-wrong' : ''}">
+                <span class="intrus-text">${esc(text)}</span>
+                ${isAnswer ? kit.mark(true, isChosen ? 'Votre intrus, correct' : 'L’intrus') : isChosen ? kit.mark(false, 'Votre choix') : ''}
+              </div>`;
+            }).join('')}</div>
+            <div class="ir-note"><span class="ir-bulb">${icon('lightbulb', { size: 26 })}</span>
+              <div><p>${lead ? `<strong>${esc(lead)}</strong> ` : ''}${esc(rest)}</p>
+              <p class="ir-trio">Trio : <strong>${esc(label(s.category))}</strong> ${okCategory ? kit.mark(true, 'votre réponse') : kit.mark(false, `vous aviez choisi : ${label(category(i)) || 'rien'}`)}</p></div>
+            </div>
+          </div>
         </section>`;
       }).join('')}
       ${core.feedbackBox()}
