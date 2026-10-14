@@ -40,17 +40,17 @@ window.ATELIER_CATALOG = {
       label: 'Défendre le prix',
       sourced: true,
       exercises: [
-        { id: '2.1', file: 's2-2-1', label: 'Défendre son prix sans le brader', theme: 'blue', mount: 'deck', background: 'assets/backgrounds/s2/1-1-4-S2-2-1.webp' },
-        { id: '2.2', file: 's2-2-2', label: 'Quel levier dans cette réponse ?', theme: 'blue', mount: 'match', background: 'assets/backgrounds/s2/1-1-4-S2-2-2.webp' },
-        { id: '2.3', file: 's2-2-3', label: 'Le prix, remis à l’échelle', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s2/1-1-4-S2-2-3.webp',
+        { id: '2.1', file: 's2-2-1', label: 'Défendre son prix sans le brader', thumb: 'assets/illustrations/s2/accueil/2-1.webp', theme: 'blue', mount: 'deck', background: 'assets/backgrounds/s2/1-1-4-S2-2-1.webp' },
+        { id: '2.2', file: 's2-2-2', label: 'Quel levier dans cette réponse ?', thumb: 'assets/illustrations/s2/accueil/2-2.webp', theme: 'blue', mount: 'match', background: 'assets/backgrounds/s2/1-1-4-S2-2-2.webp' },
+        { id: '2.3', file: 's2-2-3', label: 'Le prix, remis à l’échelle', thumb: 'assets/illustrations/s2/accueil/2-3.webp', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s2/1-1-4-S2-2-3.webp',
           gallery: [
             { image: 'assets/illustrations/s2/1-1-4-S2-i2-3-A.png', alt: 'Offre 1 : siège ergonomique à 690 €, soit environ 0,38 € par jour sur 5 ans.' },
             { image: 'assets/illustrations/s2/1-1-4-S2-i2-3-B.png', alt: 'Offre 2 : pack de 10 postes à 17 000 €, soit 1 700 € par poste.' }
           ] },
-        { id: '2.4', file: 's2-2-4', label: 'Quatre faux pas face au prix', theme: 'blue', background: 'assets/backgrounds/s2/1-1-4-S2-2-4.webp' },
-        { id: '2.5', file: 's2-2-5', label: 'Deux réponses, laquelle tient ?', theme: 'blue', mount: 'compare', background: 'assets/backgrounds/s2/1-1-4-S2-2-5.webp' },
-        { id: '2.6', file: 's2-2-6', label: 'Ton kit de défense du prix', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s2/1-1-4-S2-2-6.webp' },
-        { id: '2.7', file: 's2-2-7', label: 'Défendre la valeur', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s2/1-1-4-S2-2-7.webp' }
+        { id: '2.4', file: 's2-2-4', label: 'Quatre faux pas face au prix', thumb: 'assets/illustrations/s2/accueil/2-4.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-4-S2-2-4.webp' },
+        { id: '2.5', file: 's2-2-5', label: 'Deux réponses, laquelle tient ?', thumb: 'assets/illustrations/s2/accueil/2-5.webp', theme: 'blue', mount: 'compare', background: 'assets/backgrounds/s2/1-1-4-S2-2-5.webp' },
+        { id: '2.6', file: 's2-2-6', label: 'Ton kit de défense du prix', thumb: 'assets/illustrations/s2/accueil/2-6.webp', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s2/1-1-4-S2-2-6.webp' },
+        { id: '2.7', file: 's2-2-7', label: 'Défendre la valeur', thumb: 'assets/illustrations/s2/accueil/2-7.webp', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s2/1-1-4-S2-2-7.webp' }
       ]
     },
     {
