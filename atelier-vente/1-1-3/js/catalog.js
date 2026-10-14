@@ -29,15 +29,15 @@ window.ATELIER_CATALOG = {
       // chaque corrigé.
       sourced: true,
       exercises: [
-        { id: '1.1', file: 's1-1-1', label: 'Bon réflexe ou à éviter ?', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-1.webp' },
+        { id: '1.1', file: 's1-1-1', label: 'Bon réflexe ou à éviter ?', thumb: 'assets/illustrations/s1/accueil/1-1.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-1.webp' },
         { id: '1.2', file: 's1-1-2', label: 'À chaque étape, son rôle', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-2.webp' },
-        { id: '1.3', file: 's1-1-3', label: 'Écoutez le client', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-3.webp' },
-        { id: '1.4', file: 's1-1-4', label: 'Ce qui n’est pas dit', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-4.webp',
+        { id: '1.3', file: 's1-1-3', label: 'Écoutez le client', thumb: 'assets/illustrations/s1/accueil/1-3.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-3.webp' },
+        { id: '1.4', file: 's1-1-4', label: 'Ce qui n’est pas dit', thumb: 'assets/illustrations/s1/accueil/1-4.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-4.webp',
           image: 'assets/illustrations/s1/1-1-3-S1-i1-4.png', alt: 'Dans un magasin de décoration, un client quitte la boutique d’un geste de la main pendant que la commerciale, au téléphone, désigne un calendrier.', imagePosition: 'center 40%' },
-        { id: '1.5', file: 's1-1-5', label: 'Face au « C’est trop cher »', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-5.webp',
+        { id: '1.5', file: 's1-1-5', label: 'Face au « C’est trop cher »', thumb: 'assets/illustrations/s1/accueil/1-5.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-5.webp',
           image: 'assets/illustrations/s1/1-1-3-S1-i1-5.png', alt: 'Un client lève la main et désigne une lampe d’un air sceptique ; la vendeuse, derrière le comptoir, l’écoute.', imagePosition: 'center 35%' },
-        { id: '1.6', file: 's1-1-6', label: 'Répondre en 6 étapes', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-6.webp' },
-        { id: '1.7', file: 's1-1-7', label: 'Ma bibliothèque d’objections', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-7.webp' }
+        { id: '1.6', file: 's1-1-6', label: 'Répondre en 6 étapes', thumb: 'assets/illustrations/s1/accueil/1-6.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-6.webp' },
+        { id: '1.7', file: 's1-1-7', label: 'Ma bibliothèque d’objections', thumb: 'assets/illustrations/s1/accueil/1-7.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-7.webp' }
       ]
     },
     {
@@ -45,14 +45,14 @@ window.ATELIER_CATALOG = {
       label: 'Prospection téléphonique',
       sourced: true,
       exercises: [
-        { id: '2.1', file: 's2-2-1', label: 'Barrage, prétexte ou vraie objection ?', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-1.webp' },
-        { id: '2.2', file: 's2-2-2', label: 'À chaque erreur sa conséquence', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-2.webp' },
-        { id: '2.3', file: 's2-2-3', label: 'Franchir le standard en douceur', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-3.webp' },
-        { id: '2.4', file: 's2-2-4', label: 'Repérer les erreurs de prospection', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-4.webp',
+        { id: '2.1', file: 's2-2-1', label: 'Barrage, prétexte ou vraie objection ?', thumb: 'assets/illustrations/s2/accueil/2-1.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-1.webp' },
+        { id: '2.2', file: 's2-2-2', label: 'À chaque erreur sa conséquence', thumb: 'assets/illustrations/s2/accueil/2-2.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-2.webp' },
+        { id: '2.3', file: 's2-2-3', label: 'Franchir le standard en douceur', thumb: 'assets/illustrations/s2/accueil/2-3.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-3.webp' },
+        { id: '2.4', file: 's2-2-4', label: 'Repérer les erreurs de prospection', thumb: 'assets/illustrations/s2/accueil/2-4.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-4.webp',
           image: 'assets/illustrations/s2/1-1-3-S2-i2-4.png', alt: 'Une cliente au téléphone, dans un showroom de mobilier de bureau, fronce les sourcils et fait un geste d’incompréhension.', imagePosition: 'center 25%' },
-        { id: '2.5', file: 's2-2-5', label: 'Garder la main face à la demande de doc', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-5.webp' },
-        { id: '2.6', file: 's2-2-6', label: 'Le script de rebond', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-6.webp' },
-        { id: '2.7', file: 's2-2-7', label: 'Construisez vos cartes réflexes', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-7.webp' }
+        { id: '2.5', file: 's2-2-5', label: 'Garder la main face à la demande de doc', thumb: 'assets/illustrations/s2/accueil/2-5.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-5.webp' },
+        { id: '2.6', file: 's2-2-6', label: 'Le script de rebond', thumb: 'assets/illustrations/s2/accueil/2-6.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-6.webp' },
+        { id: '2.7', file: 's2-2-7', label: 'Construisez vos cartes réflexes', thumb: 'assets/illustrations/s2/accueil/2-7.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-3-S2-2-7.webp' }
       ]
     },
     {
@@ -60,10 +60,10 @@ window.ATELIER_CATALOG = {
       label: 'Manipulation',
       sourced: true,
       exercises: [
-        { id: '1.1', file: 's3-1-1', label: 'Dans le bon ordre', theme: 'blue', background: 'assets/backgrounds/s3/1-1-3-S3-1-1.webp' },
-        { id: '1.2', file: 's3-1-2', label: 'Le crash-test de l’objection prix', theme: 'blue', background: 'assets/backgrounds/s3/1-1-3-S3-1-2.webp' },
-        { id: '2.1', file: 's3-2-1', label: 'À chaque objection, sa nature', theme: 'blue', background: 'assets/backgrounds/s3/1-1-3-S3-2-1.webp' },
-        { id: '2.2', file: 's3-2-2', label: 'Passez en mode traitement', theme: 'blue', background: 'assets/backgrounds/s3/1-1-3-S3-2-2.webp' }
+        { id: '1.1', file: 's3-1-1', label: 'Dans le bon ordre', thumb: 'assets/illustrations/s3/accueil/1-1.webp', theme: 'blue', background: 'assets/backgrounds/s3/1-1-3-S3-1-1.webp' },
+        { id: '1.2', file: 's3-1-2', label: 'Le crash-test de l’objection prix', thumb: 'assets/illustrations/s3/accueil/1-2.webp', theme: 'blue', background: 'assets/backgrounds/s3/1-1-3-S3-1-2.webp' },
+        { id: '2.1', file: 's3-2-1', label: 'À chaque objection, sa nature', thumb: 'assets/illustrations/s3/accueil/2-1.webp', theme: 'blue', background: 'assets/backgrounds/s3/1-1-3-S3-2-1.webp' },
+        { id: '2.2', file: 's3-2-2', label: 'Passez en mode traitement', thumb: 'assets/illustrations/s3/accueil/2-2.webp', theme: 'blue', background: 'assets/backgrounds/s3/1-1-3-S3-2-2.webp' }
       ]
     }
   ]

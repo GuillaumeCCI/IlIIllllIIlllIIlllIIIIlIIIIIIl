@@ -28,11 +28,11 @@ window.ATELIER_CATALOG = {
       // chaque corrigé.
       sourced: true,
       exercises: [
-        { id: '1.1', file: 's1-1-1', label: 'L’art d’annoncer le prix', theme: 'blue', mount: 'deck', background: 'assets/backgrounds/s1/1-1-4-S1-1-1.webp' },
-        { id: '1.2', file: 's1-1-2', label: 'La méthode sandwich', theme: 'blue', background: 'assets/backgrounds/s1/1-1-4-S1-1-2.webp' },
-        { id: '1.4', file: 's1-1-4', label: 'Le prix arrive trop tôt', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s1/1-1-4-S1-1-4.webp' },
-        { id: '1.5', file: 's1-1-5', label: 'Le duel des annonces', theme: 'blue', mount: 'compare', background: 'assets/backgrounds/s1/1-1-4-S1-1-5.webp' },
-        { id: '1.7', file: 's1-1-7', label: 'Ma banque d’annonces', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s1/1-1-4-S1-1-7.webp' }
+        { id: '1.1', file: 's1-1-1', label: 'L’art d’annoncer le prix', thumb: 'assets/illustrations/s1/accueil/1-1.webp', theme: 'blue', mount: 'deck', background: 'assets/backgrounds/s1/1-1-4-S1-1-1.webp' },
+        { id: '1.2', file: 's1-1-2', label: 'La méthode sandwich', thumb: 'assets/illustrations/s1/accueil/1-2.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-4-S1-1-2.webp' },
+        { id: '1.4', file: 's1-1-4', label: 'Le prix arrive trop tôt', thumb: 'assets/illustrations/s1/accueil/1-4.webp', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s1/1-1-4-S1-1-4.webp' },
+        { id: '1.5', file: 's1-1-5', label: 'Le duel des annonces', thumb: 'assets/illustrations/s1/accueil/1-5.webp', theme: 'blue', mount: 'compare', background: 'assets/backgrounds/s1/1-1-4-S1-1-5.webp' },
+        { id: '1.7', file: 's1-1-7', label: 'Ma banque d’annonces', thumb: 'assets/illustrations/s1/accueil/1-7.webp', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s1/1-1-4-S1-1-7.webp' }
       ]
     },
     {
