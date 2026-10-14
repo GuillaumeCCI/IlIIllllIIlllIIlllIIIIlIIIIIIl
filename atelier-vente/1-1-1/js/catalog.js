@@ -48,15 +48,15 @@ window.ATELIER_CATALOG = {
       eyebrow: 'Série 2 · Écoute active',
       exercises: [
         // L'écran A affiche les trois illustrations côte à côte, une par client.
-        { id: 'A', file: 's2-a', label: 'Choisir la réponse juste', theme: 'blue', background: 'assets/backgrounds/s2/1-1-1-S2-A.webp',
+        { id: 'A', file: 's2-a', label: 'Choisir la réponse juste', thumb: 'assets/illustrations/s2/accueil/a.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-1-S2-A.webp',
           gallery: [
             { image: 'assets/illustrations/s2/1-1-1-S2-iA1.png', alt: 'Une cliente pressée traverse la boutique en regardant sa montre.' },
             { image: 'assets/illustrations/s2/1-1-1-S2-iA2.png', alt: 'Une cliente méfiante écoute un vendeur derrière son comptoir, les bras repliés.' },
             { image: 'assets/illustrations/s2/1-1-1-S2-iA3.png', alt: 'Une cliente hésitante tient un panier devant un rayon de petit électroménager.' }
           ] },
-        { id: 'B', file: 's2-b', label: 'Reformuler sans dévier', theme: 'blue', background: 'assets/backgrounds/s2/1-1-1-S2-B.webp' },
-        { id: 'D', file: 's2-d', label: 'Les 6 attitudes de Porter', theme: 'blue', background: 'assets/backgrounds/s2/1-1-1-S2-D.webp' },
-        { id: 'F', file: 's2-f', label: 'Adapter son écoute', theme: 'blue', background: 'assets/backgrounds/s2/1-1-1-S2-F.webp',
+        { id: 'B', file: 's2-b', label: 'Reformuler sans dévier', thumb: 'assets/illustrations/s2/accueil/b.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-1-S2-B.webp' },
+        { id: 'D', file: 's2-d', label: 'Les 6 attitudes de Porter', thumb: 'assets/illustrations/s2/accueil/d.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-1-S2-D.webp' },
+        { id: 'F', file: 's2-f', label: 'Adapter son écoute', thumb: 'assets/illustrations/s2/accueil/f.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-1-S2-F.webp',
           gallery: [
             { image: 'assets/illustrations/s2/1-1-1-S2-iC.png', alt: 'Un vendeur enthousiaste déroule son argumentaire pendant qu’un client s’éloigne, la main levée.' },
             { image: 'assets/illustrations/s2/1-1-1-S2-iE.png', alt: 'Une vendeuse présente un nuancier tandis qu’une cliente s’écarte du comptoir.' },
@@ -88,10 +88,10 @@ window.ATELIER_CATALOG = {
       sourced: true,
       eyebrow: 'Série 4 · Manipulation',
       exercises: [
-        { id: '1.1', file: 's4-1-1', label: 'Remettre dans l’ordre', theme: 'blue', background: 'assets/backgrounds/s4/1-1-1-S4-1-1.webp', image: "assets/illustrations/s4/1-1-1-S4-i1-1.png", alt: "Les phrases d’une ouverture d’entretien, à remettre dans l’ordre.", pending: true },
-        { id: '1.2', file: 's4-1-2', label: 'Repérer ce qui cloche', theme: 'blue', background: 'assets/backgrounds/s4/1-1-1-S4-1-2.webp', image: "assets/illustrations/s4/1-1-1-S4-i1-2.png", alt: "Une ouverture d’entretien maladroite, dont les passages fautifs sont à repérer.", pending: true },
-        { id: '2.1', file: 's4-2-1', label: 'Associer les attitudes', theme: 'blue', background: 'assets/backgrounds/s4/1-1-1-S4-2-1.webp', image: "assets/illustrations/s4/1-1-1-S4-i2-1.png", alt: "Six réponses de commercial, à classer selon les attitudes d’écoute de Porter.", pending: true },
-        { id: '2.2', file: 's4-2-2', label: 'Réparer la conversation', theme: 'blue', background: 'assets/backgrounds/s4/1-1-1-S4-2-2.webp', image: "assets/illustrations/s4/1-1-1-S4-i2-2.png", alt: "Un échange qui tourne court, à réparer par une reformulation.", pending: true }
+        { id: '1.1', file: 's4-1-1', label: 'Remettre dans l’ordre', thumb: 'assets/illustrations/s4/accueil/1-1.webp', theme: 'blue', background: 'assets/backgrounds/s4/1-1-1-S4-1-1.webp', image: "assets/illustrations/s4/1-1-1-S4-i1-1.png", alt: "Les phrases d’une ouverture d’entretien, à remettre dans l’ordre.", pending: true },
+        { id: '1.2', file: 's4-1-2', label: 'Repérer ce qui cloche', thumb: 'assets/illustrations/s4/accueil/1-2.webp', theme: 'blue', background: 'assets/backgrounds/s4/1-1-1-S4-1-2.webp', image: "assets/illustrations/s4/1-1-1-S4-i1-2.png", alt: "Une ouverture d’entretien maladroite, dont les passages fautifs sont à repérer.", pending: true },
+        { id: '2.1', file: 's4-2-1', label: 'Associer les attitudes', thumb: 'assets/illustrations/s4/accueil/2-1.webp', theme: 'blue', background: 'assets/backgrounds/s4/1-1-1-S4-2-1.webp', image: "assets/illustrations/s4/1-1-1-S4-i2-1.png", alt: "Six réponses de commercial, à classer selon les attitudes d’écoute de Porter.", pending: true },
+        { id: '2.2', file: 's4-2-2', label: 'Réparer la conversation', thumb: 'assets/illustrations/s4/accueil/2-2.webp', theme: 'blue', background: 'assets/backgrounds/s4/1-1-1-S4-2-2.webp', image: "assets/illustrations/s4/1-1-1-S4-i2-2.png", alt: "Un échange qui tourne court, à réparer par une reformulation.", pending: true }
       ]
     }
   ]

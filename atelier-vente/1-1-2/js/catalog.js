@@ -29,14 +29,14 @@ window.ATELIER_CATALOG = {
       // chaque corrigé.
       sourced: true,
       exercises: [
-        { id: '1.1', file: 's1-1-1', label: 'Trouvez l’intrus', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-1.webp' },
-        { id: '1.2', file: 's1-1-2', label: 'Décomposez l’argument', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-2.webp' },
-        { id: '1.3', file: 's1-1-3', label: 'La fabrique à arguments', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-3.webp' },
-        { id: '1.4', file: 's1-1-4', label: 'Le radar SONCAS', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-4.webp',
+        { id: '1.1', file: 's1-1-1', label: 'Trouvez l’intrus', thumb: 'assets/illustrations/s1/accueil/1-1.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-1.webp' },
+        { id: '1.2', file: 's1-1-2', label: 'Décomposez l’argument', thumb: 'assets/illustrations/s1/accueil/1-2.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-2.webp' },
+        { id: '1.3', file: 's1-1-3', label: 'La fabrique à arguments', thumb: 'assets/illustrations/s1/accueil/1-3.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-3.webp' },
+        { id: '1.4', file: 's1-1-4', label: 'Le radar SONCAS', thumb: 'assets/illustrations/s1/accueil/1-4.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-4.webp',
           image: 'assets/illustrations/s1/1-1-2-S1-i1-4.png', alt: 'Un dirigeant de PME, mains jointes, écoute avec attention derrière son bureau.', imagePosition: 'center 30%' },
-        { id: '1.5', file: 's1-1-5', label: 'Le tournoi des arguments', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-5.webp',
+        { id: '1.5', file: 's1-1-5', label: 'Le tournoi des arguments', thumb: 'assets/illustrations/s1/accueil/1-5.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-5.webp',
           image: 'assets/illustrations/s1/1-1-2-S1-i1-4.png', alt: 'Un dirigeant de PME, mains jointes, écoute avec attention derrière son bureau.', imagePosition: 'center 30%' },
-        { id: '1.6', file: 's1-1-6', label: 'Réparer un argumentaire', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-6.webp' }
+        { id: '1.6', file: 's1-1-6', label: 'Réparer un argumentaire', thumb: 'assets/illustrations/s1/accueil/1-6.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-6.webp' }
       ]
     },
     {
@@ -44,13 +44,13 @@ window.ATELIER_CATALOG = {
       label: 'Pitcher avec impact',
       sourced: true,
       exercises: [
-        { id: '2.1', file: 's2-2-1', label: 'Mythe ou méthode ?', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-1.webp' },
-        { id: '2.2', file: 's2-2-2', label: 'L’échelle de conviction', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-2.webp' },
-        { id: '2.3', file: 's2-2-3', label: 'Le studio d’accroches', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-3.webp',
+        { id: '2.1', file: 's2-2-1', label: 'Mythe ou méthode ?', thumb: 'assets/illustrations/s2/accueil/2-1.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-1.webp' },
+        { id: '2.2', file: 's2-2-2', label: 'L’échelle de conviction', thumb: 'assets/illustrations/s2/accueil/2-2.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-2.webp' },
+        { id: '2.3', file: 's2-2-3', label: 'Le studio d’accroches', thumb: 'assets/illustrations/s2/accueil/2-3.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-3.webp',
           image: 'assets/illustrations/s2/1-1-2-S2-i2-3.png', alt: 'Une gérante de boutique débordée remplit des formulaires à la main tout en attrapant le téléphone qui sonne.', imagePosition: 'center 30%' },
-        { id: '2.4', file: 's2-2-4', label: 'La chasse aux preuves', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-4.webp' },
-        { id: '2.5', file: 's2-2-5', label: 'L’audit du pitch', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-5.webp' },
-        { id: '2.6', file: 's2-2-6', label: 'Le pitch de 60 secondes', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-6.webp' }
+        { id: '2.4', file: 's2-2-4', label: 'La chasse aux preuves', thumb: 'assets/illustrations/s2/accueil/2-4.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-4.webp' },
+        { id: '2.5', file: 's2-2-5', label: 'L’audit du pitch', thumb: 'assets/illustrations/s2/accueil/2-5.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-5.webp' },
+        { id: '2.6', file: 's2-2-6', label: 'Le pitch de 60 secondes', thumb: 'assets/illustrations/s2/accueil/2-6.webp', theme: 'blue', background: 'assets/backgrounds/s2/1-1-2-S2-2-6.webp' }
       ]
     },
     {
@@ -58,12 +58,12 @@ window.ATELIER_CATALOG = {
       label: 'Argumenter avec justesse',
       sourced: true,
       exercises: [
-        { id: '3.1', file: 's3-3-1', label: 'Repérez l’intrus', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-1.webp' },
-        { id: '3.2', file: 's3-3-2', label: 'Action → Réaction', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-2.webp' },
-        { id: '3.3', file: 's3-3-3', label: 'Le bon argument au bon moment', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-3.webp' },
-        { id: '3.4', file: 's3-3-4', label: 'Le radar de dérive', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-4.webp' },
-        { id: '3.5', file: 's3-3-5', label: 'Vérifier avant d’avancer', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-5.webp' },
-        { id: '3.6', file: 's3-3-6', label: 'L’arbre des réactions', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-6.webp' }
+        { id: '3.1', file: 's3-3-1', label: 'Repérez l’intrus', thumb: 'assets/illustrations/s3/accueil/3-1.webp', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-1.webp' },
+        { id: '3.2', file: 's3-3-2', label: 'Action → Réaction', thumb: 'assets/illustrations/s3/accueil/3-2.webp', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-2.webp' },
+        { id: '3.3', file: 's3-3-3', label: 'Le bon argument au bon moment', thumb: 'assets/illustrations/s3/accueil/3-3.webp', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-3.webp' },
+        { id: '3.4', file: 's3-3-4', label: 'Le radar de dérive', thumb: 'assets/illustrations/s3/accueil/3-4.webp', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-4.webp' },
+        { id: '3.5', file: 's3-3-5', label: 'Vérifier avant d’avancer', thumb: 'assets/illustrations/s3/accueil/3-5.webp', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-5.webp' },
+        { id: '3.6', file: 's3-3-6', label: 'L’arbre des réactions', thumb: 'assets/illustrations/s3/accueil/3-6.webp', theme: 'blue', background: 'assets/backgrounds/s3/1-1-2-S3-3-6.webp' }
       ]
     },
     {
@@ -71,12 +71,12 @@ window.ATELIER_CATALOG = {
       label: 'Manipulation',
       sourced: true,
       exercises: [
-        { id: '1.1', file: 's4-1-1', label: 'C, A ou P ?', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-1-1.webp' },
-        { id: '1.2', file: 's4-1-2', label: 'Dérouler la chaîne CAP', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-1-2.webp' },
-        { id: '2.1', file: 's4-2-1', label: 'Caractéristique ou bénéfice ?', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-2-1.webp' },
-        { id: '2.2', file: 's4-2-2', label: 'Passez en mode client', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-2-2.webp' },
-        { id: '3.1', file: 's4-3-1', label: 'À faire ou à éviter ?', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-3-1.webp' },
-        { id: '3.2', file: 's4-3-2', label: 'Repérer la sur-argumentation', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-3-2.webp' }
+        { id: '1.1', file: 's4-1-1', label: 'C, A ou P ?', thumb: 'assets/illustrations/s4/accueil/1-1.webp', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-1-1.webp' },
+        { id: '1.2', file: 's4-1-2', label: 'Dérouler la chaîne CAP', thumb: 'assets/illustrations/s4/accueil/1-2.webp', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-1-2.webp' },
+        { id: '2.1', file: 's4-2-1', label: 'Caractéristique ou bénéfice ?', thumb: 'assets/illustrations/s4/accueil/2-1.webp', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-2-1.webp' },
+        { id: '2.2', file: 's4-2-2', label: 'Passez en mode client', thumb: 'assets/illustrations/s4/accueil/2-2.webp', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-2-2.webp' },
+        { id: '3.1', file: 's4-3-1', label: 'À faire ou à éviter ?', thumb: 'assets/illustrations/s4/accueil/3-1.webp', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-3-1.webp' },
+        { id: '3.2', file: 's4-3-2', label: 'Repérer la sur-argumentation', thumb: 'assets/illustrations/s4/accueil/3-2.webp', theme: 'blue', background: 'assets/backgrounds/s4/1-1-2-S4-3-2.webp' }
       ]
     }
   ]
