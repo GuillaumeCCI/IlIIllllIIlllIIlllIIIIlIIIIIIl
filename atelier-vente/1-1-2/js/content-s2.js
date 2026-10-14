@@ -141,7 +141,6 @@ window.ATELIER_S2 = {
     badge: 'Spécial Sécurité',
     subtitle: 'Rédigez, enregistrez puis auto-évaluez votre pitch de RelaCosy face à un prospect particulièrement soucieux de la sécurité.',
     structure: ['Une accroche', 'Un bénéfice + une preuve', 'Un bénéfice + une preuve', 'Une conclusion'],
-    parts: ['Accroche', 'Bénéfice + preuve', 'Bénéfice + preuve', 'Conclusion'],
     example: 'Votre priorité, c’est que les données de vos clients ne soient jamais en danger : c’est exactement ce que fait RelaCosy. Vos données sont chiffrées et sauvegardées en continu, conformes RGPD : plus de 5 000 PME l’utilisent sans le moindre incident. Et vous n’avez rien à gérer côté technique, l’assistance répond en 2 minutes, 7j/7. Concrètement, vous gagnez en sérénité sans y consacrer de temps. Je vous propose qu’on regarde ensemble comment le mettre en place chez vous.',
     criteria: [
       { title: 'Orientation bénéfice', text: 'Je parle des bénéfices pour le client, pas des seules caractéristiques.' },

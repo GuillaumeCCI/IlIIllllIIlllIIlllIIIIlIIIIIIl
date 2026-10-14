@@ -1,8 +1,7 @@
 /* S2 2.6 · Le pitch de 60 secondes.
  *
  * Trois temps :
- *   1 · RÉDIGER : le texte, avec son nombre de mots et sa durée estimée,
- *       puis la structure cochée (accroche, 2 bénéfices prouvés, conclusion) ;
+ *   1 · RÉDIGER : le texte, avec son nombre de mots et sa durée estimée ;
  *   2 · ENREGISTRER : une prise audio ou vidéo, arrêtée d'office à 60 s ;
  *   3 · S'ÉVALUER : réécouter, puis noter les 7 critères de 0 à 2.
  *
@@ -118,9 +117,6 @@
         <p class="k-instruction">Préparez un texte suffisamment court pour être prononcé en moins d’une minute.</p>
         ${ex.field('pitch', 'Votre pitch', { placeholder: 'Votre pitch…', max: 1200, rows: 8, hideLabel: true })}
         <p class="pitch-words" data-live="words">${esc(wordsLine())}</p>
-        <fieldset class="pitch-parts"><legend>Structure de votre discours</legend>${content.parts.map((part, i) => `
-          <label class="pitch-part"><input type="checkbox" data-field="part${i}" ${ex.value(`part${i}`) === true ? 'checked' : ''}><span>${esc(part)}</span></label>`).join('')}
-        </fieldset>
         ${core.errorsBox()}
         ${kit.bar({ left: kit.reset(), right: `${kit.dialogButton('example', 'Voir un exemple', 'secondary', '')}${kit.submit('Enregistrer mon texte et continuer')}` })}
       </form>
