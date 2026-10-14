@@ -472,6 +472,7 @@
       core.renderChrome(current);
       core.renderNav(current);
       core.wireImageFallbacks();
+      if (showingMenu) markSwitch();
       if (onMountFn) onMountFn();
       if (focus) { $('#main').focus(); window.scrollTo({ top: 0, behavior: 'instant' }); }
       return;
@@ -493,26 +494,50 @@
     if (focus) { $('#main').focus(); window.scrollTo({ top: 0, behavior: 'instant' }); }
   }
 
-  /* PASSAGE D'UN ÉLÉMENT À L'AUTRE (argument, série, carte…). Le repère
-   * courant (point ou onglet actif) donne la position ; quand elle change
-   * d'un rendu à l'autre, le contenu glisse depuis le côté où l'on va et le
-   * repère pulse. Rien au premier affichage ni sur un simple clic. */
-  let lastSpot = null;
+  /* PASSAGE D'UN ÉLÉMENT À L'AUTRE (argument, série, client, étape, carte…).
+   * La position se lit sur les repères de progression de l'écran (points,
+   * onglets, étapes : l'élément courant parmi ses frères de même classe) et
+   * sur le curseur et l'étape du moteur. Quand l'une d'elles change d'un
+   * rendu à l'autre du même exercice, le contenu arrive du côté où l'on va
+   * et le repère pulse. Rien au premier affichage ni sur un clic qui ne
+   * change pas de position. */
+  const MARKERS = ':is([class*="dot"], [class*="tab"], [class*="step"], [class*="pip"]):is(.is-current, .is-active, .is-now, [aria-current="step"], [aria-current="true"], [role="tab"][aria-selected="true"])';
+  const STILL = '.k-head, .k-bar, header, h1, .eyebrow, .k-subtitle, nav, script, style, .form-actions, [class*="rail"], [class*="stepper"], [class*="steps"], [class*="dots"], [class*="tabs"], [role="tablist"]';
+  let lastSpots = null;
+
+  function positions() {
+    const spots = { cursor: { index: cursor() }, wizard: { index: wizardAt() }, stage: { index: Number(value('stage')) || 1 }, case: { index: showingMenu ? -1 : (Number.isInteger(value('openCase')) ? value('openCase') : -1) } };
+    [...($$(`#main ${MARKERS}`) || [])].forEach(marker => {
+      const group = marker.classList[0];
+      if (!group || spots[group]) return;
+      const siblings = [...marker.parentElement.children].filter(el => el.classList.contains(group));
+      if (siblings.length > 1) spots[group] = { index: siblings.indexOf(marker), marker };
+    });
+    return spots;
+  }
+
   function markSwitch() {
-    const marker = $('#main :is(.k-dot, .deck-dot).is-current, #main .k-tab.is-active');
-    const index = marker ? [...marker.parentElement.children].filter(el => el.matches('.k-dot, .deck-dot, .k-tab')).indexOf(marker) : -1;
-    const spot = marker ? `${current.key}|${marker.className.split(' ')[0]}` : null;
-    const previous = lastSpot;
-    lastSpot = spot ? { spot, index } : null;
-    if (!spot || !previous || previous.spot !== spot || previous.index === index) return;
-    const forward = index > previous.index;
-    const content = $$('#main .k-page > :not(.k-head, .k-bar)');
-    [...content].forEach(el => {
+    const spots = positions();
+    const previous = lastSpots;
+    lastSpots = { key: current.key, spots };
+    if (!previous || previous.key !== current.key) return;
+    const moved = Object.keys(spots).find(name => previous.spots[name] && previous.spots[name].index !== spots[name].index);
+    if (!moved) return;
+    const forward = spots[moved].index > previous.spots[moved].index;
+    const page = $('#main .k-page') || [...$('#main').children].find(el => el.children.length > 1 && !el.matches(`${STILL}, .bottom-navigation`));
+    if (!page) return;
+    // Les repères restent en place : un bloc qui en contient un n'est pas
+    // animé en entier, on descend dans ses enfants (trois niveaux au plus).
+    const markers = Object.values(spots).map(spot => spot.marker).filter(Boolean);
+    const animate = (parent, depth) => [...parent.children].forEach(el => {
+      if (el.matches(STILL)) return;
+      if (markers.some(marker => el.contains(marker))) { if (depth < 3) animate(el, depth + 1); return; }
       el.classList.remove('k-switch-next', 'k-switch-prev');
       void el.offsetWidth;
       el.classList.add(forward ? 'k-switch-next' : 'k-switch-prev');
     });
-    marker.classList.add('k-switch-pulse');
+    animate(page, 0);
+    Object.values(spots).forEach(spot => { if (spot.marker && previous.spots[spot.marker.classList[0]]?.index !== spot.index) spot.marker.classList.add('k-switch-pulse'); });
   }
 
   /* « VOIR UN REPÈRE » À SA PLACE. Le bouton naît dans la barre du bas ; il

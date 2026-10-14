@@ -458,3 +458,17 @@ button.fab-col-head:hover { background: #f4f7fd; }
 .intrus-page.stage-2 .intrus-card.has-art { justify-content: flex-start; gap: 10px; padding: 18px 18px 22px; }
 .intrus-page.stage-2 .intrus-card.has-art .intrus-picture { width: 82%; }
 .intrus-page.stage-2 .intrus-card.has-art .intrus-text { font-size: 1.2rem; }
+
+/* Surligneur choisi : pas de contour, mais un aplat de sa couleur, une
+ * légère élévation et une pastille cochée ; les deux autres s'effacent. */
+.hl-tools:not(.is-legend) .hl-tool { position: relative; transition: background .15s, box-shadow .15s, transform .15s, opacity .15s; }
+.hl-tools:not(.is-legend) .hl-tool.is-active { border-color: transparent; box-shadow: 0 8px 18px rgb(30 40 80 / 14%); transform: translateY(-2px); }
+.hl-tools:not(.is-legend) .hl-tool.is-active.tone-c { background: #dfe8ff; }
+.hl-tools:not(.is-legend) .hl-tool.is-active.tone-a { background: #d8f1e5; }
+.hl-tools:not(.is-legend) .hl-tool.is-active.tone-p { background: #fde3db; }
+.hl-tools:not(.is-legend) .hl-tool.is-active::after { content: "✓"; position: absolute; top: -8px; right: -8px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--tool-tone, var(--accent)); color: #fff; font-size: .8rem; font-weight: 800; box-shadow: 0 0 0 2px #fff; }
+.hl-tools:not(.is-legend) .hl-tool.tone-c { --tool-tone: var(--c-tone); }
+.hl-tools:not(.is-legend) .hl-tool.tone-a { --tool-tone: var(--a-tone); }
+.hl-tools:not(.is-legend) .hl-tool.tone-p { --tool-tone: var(--coral); }
+.hl-tools:not(.is-legend):has(.is-active) .hl-tool:not(.is-active) { opacity: .7; }
+.hl-tools:not(.is-legend) .hl-tool:not(.is-active):hover { opacity: 1; }
