@@ -393,7 +393,12 @@ button.fab-col-head:hover { background: #f4f7fd; }
 .intrus-page .intrus-card.tone-green, .intrus-cards .intrus-card.tone-green { --tone: #e2eee3; --ink: #1f5e45; }
 .intrus-page .intrus-card.tone-lilac, .intrus-cards .intrus-card.tone-lilac { --tone: #e3e9fd; --ink: var(--accent); }
 .intrus-band { display: grid; place-items: center; align-self: stretch; height: 40px; margin: 0 -14px; background: var(--tone); border-radius: 0 0 50% 50% / 0 0 14px 14px; }
-.intrus-page.stage-1 .intrus-grip { color: #7f8fc6; }
+/* Clic seul (ni glisser ni corbeille) : la carte désignée reste en place,
+ * estompée, avec l’étiquette « Intrus » dans son bandeau. */
+.intrus-page.stage-1 .intrus-card { cursor: pointer; }
+.intrus-page.stage-1 .intrus-card.is-out { border-color: #f0a093; box-shadow: 0 0 0 2px #f08a7c, 0 10px 26px rgb(35 40 80 / 9%); --tone: #fde1da; }
+.intrus-page.stage-1 .intrus-card.is-out > :not(.intrus-band) { filter: grayscale(.85); opacity: .55; }
+.intrus-tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; background: #e0412c; color: #fff; font-size: .85rem; font-weight: 800; }
 .intrus-page.stage-1 .intrus-number { width: 40px; height: 40px; margin-top: 2px; background: var(--tone); color: var(--ink); font-size: 1.15rem; }
 .intrus-picture { display: grid; place-items: center; width: 88%; aspect-ratio: 730 / 451; }
 .intrus-picture img { width: 100%; height: 100%; object-fit: contain; }

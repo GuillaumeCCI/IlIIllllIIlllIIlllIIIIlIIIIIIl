@@ -247,7 +247,7 @@ test('chaque glisser-déposer a son équivalent au clic', () => {
   /* Le glisser-déposer est un confort : chaque dépôt doit aussi pouvoir se
    * faire par un bouton, donc au clavier. */
   const cases = {
-    's1-1-1': /data-act="discard"/,
+    // s1-1-1 : plus de glisser-déposer, on désigne l'intrus seulement au clic.
     's1-1-3': /data-act="toggle-card"/,
     's2-2-1': /data-act="place"/,
     's2-2-2': /data-act="slot"/,

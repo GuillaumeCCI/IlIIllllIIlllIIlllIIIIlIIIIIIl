@@ -19,7 +19,7 @@ window.ATELIER_BRIEFINGS = {
   's1-1.1': {
     lede: { key: 'Trois cartes vont ensemble.', rest: 'La quatrième se cache parmi elles.' },
     mission: 'Dans chacune des trois séries, écartez la carte intruse, puis dites si le trio restant réunit des caractéristiques, des avantages ou des preuves.',
-    method: 'Glissez la carte vers la corbeille, ou cliquez-la.',
+    method: 'Cliquez sur la carte intruse pour l’écarter.',
     situation: 'Vous préparez la présentation de RelaCosy, un logiciel CRM pour les PME. Vos notes mélangent ce que fait le produit, ce que le client y gagne et ce qui le prouve.',
     task: 'Pour chaque série de quatre cartes, repérez l’intrus, puis identifiez la catégorie commune aux trois autres.',
     criteria: ['Distinguer caractéristique, avantage et preuve', 'Justifier mentalement chaque choix avant de valider']

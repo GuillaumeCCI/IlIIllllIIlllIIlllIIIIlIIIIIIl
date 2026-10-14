@@ -1,8 +1,7 @@
 /* S1 1.1 · Trouvez l'intrus.
  *
  * Trois séries de quatre cartes. Pour chacune, deux temps :
- *   1. REPÉRER : écarter la carte qui n'appartient pas au trio (glisser
- *      vers la corbeille, ou cliquer la carte) ;
+ *   1. REPÉRER : cliquer la carte qui n'appartient pas au trio ;
  *   2. CLASSER : dire si le trio restant réunit des caractéristiques, des
  *      avantages ou des preuves.
  * Le corrigé s'affiche une fois les trois séries validées.
@@ -43,25 +42,19 @@
     return name ? `<span class="intrus-picture is-icon"><span class="intrus-blob">${icon(name, { size: 54, strokeWidth: 1.6 })}</span></span>` : '';
   }
 
-  /* Une carte : bandeau teinté avec la poignée, numéro, illustration, texte.
-   * Chaque position a sa teinte (bleu, corail, vert, lilas). */
+  /* Une carte : bandeau teinté, numéro, illustration, texte. Chaque position
+   * a sa teinte (bleu, corail, vert, lilas). Un clic désigne l'intrus : la
+   * carte reste en place, marquée « Intrus » ; un second clic l'annule. */
   function stepOne(i) {
     const cards = series[i].cards;
     const out = intruder(i);
-    return `<div class="intrus-cards">${cards.map((text, n) => n === out ? '' : `
-        <button type="button" class="intrus-card tone-${TONES[n % TONES.length]}" draggable="true" data-drag="${n}" data-act="discard" data-index="${n}" aria-label="Écarter la carte ${n + 1} : ${esc(text)}">
-          <span class="intrus-band"><span class="intrus-grip">${icon('grip', { size: 26 })}</span></span>
+    return `<div class="intrus-cards">${cards.map((text, n) => `
+        <button type="button" class="intrus-card tone-${TONES[n % TONES.length]} ${n === out ? 'is-out' : ''}" data-act="discard" data-index="${n}" aria-pressed="${n === out}" aria-label="${n === out ? 'Intrus choisi' : 'Désigner comme intrus'}, carte ${n + 1} : ${esc(text)}">
+          <span class="intrus-band">${n === out ? `<span class="intrus-tag">${icon('close', { size: 14 })}Intrus</span>` : ''}</span>
           <span class="intrus-number">${n + 1}</span>
           ${picture(i, n)}
           <span class="intrus-text">${esc(text)}</span>
-        </button>`).join('')}</div>
-      <div class="intrus-bin ${out !== null ? 'is-filled' : ''}" data-drop="bin">
-        ${out === null
-          ? `<span class="intrus-bin-symbol"><span class="intrus-spark is-left" aria-hidden="true"></span>${icon('trash', { size: 30 })}<span class="intrus-spark is-right" aria-hidden="true"></span></span><p class="intrus-bin-title">Déposez l’intrus ici</p><p class="intrus-bin-sub">La carte écartée apparaîtra ici.</p>`
-          : `<span class="intrus-bin-symbol">${icon('trash', { size: 26 })}</span><p class="intrus-bin-title">Intrus écarté</p>
-             <span class="intrus-card intrus-mini tone-${TONES[out % TONES.length]}" aria-label="Carte écartée ${out + 1} : ${esc(cards[out])}"><span class="intrus-band"></span><span class="intrus-number">${out + 1}</span>${picture(i, out)}<span class="intrus-text">${esc(cards[out])}</span></span>
-             <button type="button" class="text-button" data-act="restore">Remettre la carte</button>`}
-      </div>`;
+        </button>`).join('')}</div>`;
   }
 
   function stepTwo(i) {
@@ -86,7 +79,7 @@
     /* Étape 2 : titre propre, en-tête aligné à gauche (maquette). */
     const title = at === 1 ? content.title : 'Identifiez la bonne catégorie';
     const subtitle = at === 1
-      ? 'Écartez la carte qui n’appartient pas au trio, puis identifiez sa catégorie.'
+      ? 'Cliquez sur la carte qui n’appartient pas au trio, puis identifiez sa catégorie.'
       : 'L’intrus a été écarté. Choisissez la nature commune aux trois cartes.';
     const ready = at === 1 ? intruder(i) !== null : Boolean(category(i));
 
@@ -174,7 +167,7 @@
 
   function discard(n) {
     const i = serie();
-    ex.setValue(`intruder${i}`, n);
+    ex.setValue(`intruder${i}`, intruder(i) === n ? null : n);
     kit.commit();
   }
 
@@ -184,7 +177,6 @@
     'to-step1': () => { ex.setValue(`stage${serie()}`, 1); kit.commit(); },
     serie: el => { ex.setValue('serie', Number(el.dataset.index)); kit.commit(); }
   });
-  kit.onDrop((id, zone) => { if (zone === 'bin') discard(Number(id)); });
 
   ex.mount('s1-1.1', { screen, validate, intercept, feedback, compactFeedback: true });
 })();
