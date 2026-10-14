@@ -111,7 +111,17 @@
   }
 
   kit.on({
-    choose: el => { ex.setValue(`act${line()}`, el.dataset.choice); kit.commit(); },
+    choose: el => {
+      ex.setValue(`act${line()}`, el.dataset.choice);
+      kit.commit();
+      // « Pousse son argumentation » : on descend jusqu'à « Ma question de contrôle ».
+      if (el.dataset.choice === 'push') requestAnimationFrame(() => {
+        const box = core.$('.check-conditional');
+        if (!box) return;
+        box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        box.querySelector('textarea')?.focus({ preventScroll: true });
+      });
+    },
     line: el => { ex.setValue('line', Number(el.dataset.index)); kit.commit(); },
     prev: () => { ex.setValue('line', Math.max(0, line() - 1)); kit.commit(); },
     /* Efface le choix et la question de cette réplique seulement. */

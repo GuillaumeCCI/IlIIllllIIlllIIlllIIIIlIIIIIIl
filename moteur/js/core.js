@@ -192,14 +192,12 @@
   };
   const clientCard = (text, portrait, label = 'Le client vous dit', index = 0) => {
     const clean = String(text).replace(/^\s*[«“]\s*/, '').replace(/\s*[»”]\s*$/, '');
-    // Le dernier mot reste attaché au guillemet fermant : jamais seul à la ligne.
-    const cut = Math.max(0, clean.lastIndexOf(' ') + 1);
     const art = name => esc(asset(`${PORTRAITS}${name}.webp`));
     return `<div class="client-card-box"><section class="client-card">
       <div class="client-card-who" aria-hidden="true"><img src="${esc(asset(portraitFor(portrait, index)))}" alt="" decoding="async"></div>
       <div class="client-card-said">
         <p class="client-card-label">${esc(label)}</p>
-        <div class="client-card-quote"><img class="client-card-mark" src="${art('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${esc(clean.slice(0, cut))}<span class="client-card-end">${esc(clean.slice(cut))}<img class="client-card-mark is-closing" src="${art('guillemet-fermant')}" alt="" aria-hidden="true"></span></blockquote></div>
+        <div class="client-card-quote"><img class="client-card-mark" src="${art('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${esc(clean)}</blockquote><img class="client-card-mark is-closing" src="${art('guillemet-fermant')}" alt="" aria-hidden="true"></div>
       </div>
     </section></div>`;
   };
