@@ -208,3 +208,6 @@
 .borrow-layout .compare-art { width: clamp(280px, 27vw, 380px); max-width: none; margin: 0 0 50px; justify-self: start; }
 .borrow-layout .compare-card textarea { min-height: 240px; }
 @media (max-width: 760px) { .borrow-layout { grid-template-columns: minmax(0, 1fr); } .borrow-layout .compare-art { max-width: 300px; margin: 0; justify-self: center; } }
+
+/* C · toute la carte d’ouverture est cliquable. */
+.compare-openings .opening-card { cursor: var(--cursor-hand, pointer); }

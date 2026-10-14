@@ -311,6 +311,12 @@
     // La carte choisie s'éclaire dès le clic, sans attendre un nouveau rendu.
     core.$$('[data-choice-card] input').forEach(input => input.addEventListener('change', () =>
       core.$$('[data-choice-card]').forEach(card => card.classList.toggle('selected', card.dataset.choiceCard === input.value))));
+    // Un clic n'importe où sur la carte la choisit, pas seulement sur le bouton du bas.
+    core.$$('[data-choice-card]').forEach(card => card.addEventListener('click', event => {
+      if (event.target.closest('label, input')) return;
+      const input = card.querySelector('input[type="radio"]');
+      if (input && !input.checked) input.click();
+    }));
   }
 
   ex.mount('s1-C', { screen, validate, feedback, intercept, onMount });
