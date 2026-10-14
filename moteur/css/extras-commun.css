@@ -530,3 +530,6 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 /* Le compteur « N éléments à compléter » (#completion-status) est retiré
    de tous les exercices ; « Ce cas est traité » (sans id) reste affiché. */
 #main #completion-status { display: none; }
+
+/* Le bandeau du haut reste fixe au défilement (sous le rail du menu, z-index 60). */
+body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; }
