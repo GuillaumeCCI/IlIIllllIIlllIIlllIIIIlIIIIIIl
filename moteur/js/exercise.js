@@ -486,10 +486,33 @@
     requestAnimationFrame(() => core.markScrollables());
     updateCounters();
     updateCompletion();
+    markSwitch();
     if (core.isDone(current.key)) showFeedback();
     // Après le feedback : un écran peut ainsi enrichir la fiche de corrigé.
     if (onMountFn) onMountFn();
     if (focus) { $('#main').focus(); window.scrollTo({ top: 0, behavior: 'instant' }); }
+  }
+
+  /* PASSAGE D'UN ÉLÉMENT À L'AUTRE (argument, série, carte…). Le repère
+   * courant (point ou onglet actif) donne la position ; quand elle change
+   * d'un rendu à l'autre, le contenu glisse depuis le côté où l'on va et le
+   * repère pulse. Rien au premier affichage ni sur un simple clic. */
+  let lastSpot = null;
+  function markSwitch() {
+    const marker = $('#main :is(.k-dot, .deck-dot).is-current, #main .k-tab.is-active');
+    const index = marker ? [...marker.parentElement.children].filter(el => el.matches('.k-dot, .deck-dot, .k-tab')).indexOf(marker) : -1;
+    const spot = marker ? `${current.key}|${marker.className.split(' ')[0]}` : null;
+    const previous = lastSpot;
+    lastSpot = spot ? { spot, index } : null;
+    if (!spot || !previous || previous.spot !== spot || previous.index === index) return;
+    const forward = index > previous.index;
+    const content = $$('#main .k-page > :not(.k-head, .k-bar)');
+    [...content].forEach(el => {
+      el.classList.remove('k-switch-next', 'k-switch-prev');
+      void el.offsetWidth;
+      el.classList.add(forward ? 'k-switch-next' : 'k-switch-prev');
+    });
+    marker.classList.add('k-switch-pulse');
   }
 
   /* « VOIR UN REPÈRE » À SA PLACE. Le bouton naît dans la barre du bas ; il

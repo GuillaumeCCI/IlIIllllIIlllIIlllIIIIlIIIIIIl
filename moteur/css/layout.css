@@ -411,3 +411,17 @@ body { position: relative; }
    zone d'exercice est réduite, l'en-tête garde sa taille. */
 #main { zoom: var(--echelle, 1); }
 .scale-label { font-size: .82rem; font-weight: 700; color: var(--navy); white-space: nowrap; }
+
+/* Passage d'un élément à l'autre (argument, série…) : le contenu glisse
+ * depuis le côté où l'on va, le repère courant pulse (exercise.js, markSwitch). */
+@keyframes k-switch-next { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: none; } }
+@keyframes k-switch-prev { from { opacity: 0; transform: translateX(-80px); } to { opacity: 1; transform: none; } }
+@keyframes k-switch-pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgb(19 75 215 / 45%); } 45% { transform: scale(1.35); box-shadow: 0 0 0 8px rgb(19 75 215 / 0%); } 100% { transform: scale(1); } }
+.k-switch-next { animation: k-switch-next .55s cubic-bezier(.2, .8, .2, 1) both; }
+.k-switch-prev { animation: k-switch-prev .55s cubic-bezier(.2, .8, .2, 1) both; }
+.k-switch-pulse { animation: k-switch-pulse .6s ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .k-switch-next, .k-switch-prev { animation: k-switch-fade .3s ease both; }
+  .k-switch-pulse { animation: none; }
+}
+@keyframes k-switch-fade { from { opacity: 0; } to { opacity: 1; } }
