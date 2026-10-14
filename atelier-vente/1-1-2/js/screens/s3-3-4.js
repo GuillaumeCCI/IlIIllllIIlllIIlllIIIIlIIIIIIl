@@ -70,7 +70,7 @@
       <form class="k-panel" novalidate>
         ${reviewing ? '' : '<p class="k-muted">Cochez une seule réponse par ligne.</p>'}
         ${kit.matrix({ key: 'row', rows, columns: content.columns, head: 'Arguments du commercial', answers: reviewing ? answers : null })}
-        ${gauge(score)}
+        ${reviewing ? gauge(score) : ""}
         ${reviewing ? `${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
           : `${core.errorsBox()}${kit.bar({ left: kit.reset(), center: kit.dialogButton('need', 'Revoir le besoin', 'secondary', ''), right: kit.submit('Calculer mon score') })}`}
       </form>
