@@ -114,7 +114,8 @@
         <h2 class="explain-question">Pourquoi cette ouverture vous paraît-elle plus efficace ?</h2>
         <div class="field">
           <label for="field-criterion${i}">Critère mobilisé</label>
-          <p class="field-help" id="help-criterion${i}">Parmi les critères d’une bonne ouverture, lequel cet argument met-il en avant ?</p>
+          <p class="field-help" id="help-criterion${i}">Parmi les critères de la grille d’évaluation, lequel cet argument met-il en avant ?
+            ${core.button(`${icon('list', { size: 15 })}<span>Voir la grille</span>`, 'rubric', 'text-button with-icon')}</p>
           ${ex.select(`criterion${i}`, `Critère de l’argument ${i}`, content.criteria, 'Choisir un critère').replace('<select ', `<select aria-describedby="help-criterion${i}" `)}
         </div>
         ${ex.field(`argument${i}`, `Argument ${i}`, {

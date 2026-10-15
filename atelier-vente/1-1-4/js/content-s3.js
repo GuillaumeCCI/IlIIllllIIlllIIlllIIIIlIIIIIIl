@@ -138,7 +138,7 @@ window.ATELIER_S3 = {
     // l'engagement déjà exprimé par le client.
     answer: ['1', '2'],
     whyLabel: 'Justifiez votre choix',
-    whyHelp: 'Appuyez-vous sur au moins deux critères d’analyse.',
+    whyHelp: 'Appuyez-vous sur au moins deux critères : le signal saisi, l’engagement déjà exprimé par le client, la clarté de la proposition, la liberté de décider laissée au client.',
     whyPlaceholder: 'Votre justification…',
     hint: 'Les deux réponses saisissent le signal. Demandez-vous ce que le client a déjà exprimé : a-t-il validé le principe de l’achat ?',
     model: 'Les deux réponses peuvent être pertinentes. La réponse 1 vérifie directement si le client est prêt à s’engager. La réponse 2 est adaptée si le principe de l’achat semble déjà validé et que le calendrier est le dernier point à déterminer. Le choix dépend donc du niveau d’engagement exprimé précédemment par le client. Évaluer une conclusion, ce n’est pas chercher une « phrase magique » : est-elle adaptée à ce que le client a réellement exprimé ?',

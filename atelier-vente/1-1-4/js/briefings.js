@@ -162,7 +162,7 @@ window.ATELIER_BRIEFINGS = {
     method: 'Choisissez une réponse, puis expliquez.',
     quote: 'On pourrait démarrer quand ?',
     situation: 'Le client donne un signal d’achat clair. Deux réponses sont possibles.',
-    task: 'Appuyez-vous sur au moins deux critères d’analyse.',
+    task: 'Appuyez-vous sur au moins deux critères : signal saisi, engagement du client, clarté de la proposition, liberté de décider.',
     criteria: ['Le bon choix', 'Une justification argumentée']
   },
   's3-3.6': {

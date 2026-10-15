@@ -109,23 +109,23 @@ window.ATELIER_S2 = {
         analysis: ['Ne nie pas l’écart de prix et ne dénigre pas le concurrent.', 'Propose de vérifier les éléments comparés avant de justifier l’écart.', 'Prépare la valorisation des différences réellement constatées.'] }
     ],
     answer: '2',
-    whyLabel: 'Défends ton choix',
-    whyHelp: 'Appuie-toi sur au moins deux critères.',
+    whyLabel: 'Défendez votre choix',
+    whyHelp: 'Appuyez-vous sur au moins deux critères : reconnaissance de l’écart, respect du concurrent, vérification du périmètre comparé, valorisation des différences.',
     criteriaFields: 2,
-    hint: 'Avant de justifier un écart, vérifie que les deux offres sont comparables.',
+    hint: 'Avant de justifier un écart, vérifiez que les deux offres sont comparables.',
     model: 'La réponse 2 est la plus complète. Elle ne nie pas l’écart de prix et ne dénigre pas le concurrent ; surtout, elle propose de vérifier les éléments comparés avant de justifier l’écart, puis de valoriser les différences réellement constatées. La réponse 1 valorise déjà, mais suppose que l’écart est justifié sans vérifier ce que comprend l’offre concurrente. À retenir : avant de défendre un écart de prix, vérifiez que vous comparez réellement des offres équivalentes.'
   },
 
-  /* ── 2.6 · Ton kit de défense du prix ───────────────────────────────── */
+  /* ── 2.6 · Votre kit de défense du prix ───────────────────────────────── */
   '2.6': {
     eyebrow: 'Exercice 2.6 · S’entraîner',
-    title: 'Ton kit de défense du prix',
+    title: 'Votre kit de défense du prix',
     subtitle: '3 objections. 3 réponses prêtes pour le rendez-vous.',
     countLabel: 'réponses prêtes',
     caseNoun: 'Objection',
     checksLabel: 'Ma réponse',
     checks: ['Je creuse le frein', 'Je valorise l’offre', 'Sans remise immédiate'],
-    fields: [{ id: 'text', label: 'Ta réponse en rendez-vous', sub: 'En 2 à 3 phrases : comprends le frein, puis valorise l’offre.', placeholder: 'Je comprends votre remarque…', rows: 5 }],
+    fields: [{ id: 'text', label: 'Votre réponse en rendez-vous', sub: 'En 2 à 3 phrases : comprenez le frein, puis valorisez l’offre.', placeholder: 'Je comprends votre remarque…', rows: 5 }],
     hint: 'Une question pour comprendre la référence du client, puis un ou deux faits concrets de l’offre. Pas de remise à ce stade.',
     cases: [
       { tab: 'C’est trop cher.', scene: { quote: 'C’est trop cher.' },
@@ -149,18 +149,18 @@ window.ATELIER_S2 = {
     subtitle: 'Pack Ergolys · 10 postes · 17 000 €',
     scene: [
       { quote: '17 000 € pour équiper 10 postes ? Je trouve ça vraiment élevé. Je vais avoir du mal à justifier un tel investissement auprès de ma direction.', speaker: 'Client · Responsable informatique' },
-      { info: 'Ta mission : construis la réponse que tu dirais au client.', symbol: 'target' }
+      { info: 'Votre mission : construisez la réponse que vous diriez au client.', symbol: 'target' }
     ],
     cases: [
       { tab: 'Ma réponse', fields: [
-        { id: 'levers', type: 'chips', label: 'Choisis tes leviers', sub: 'Pioche ceux qui servent ta réponse ; inutile de tous les utiliser.', chipNoun: 'levier',
+        { id: 'levers', type: 'chips', label: 'Choisissez vos leviers', sub: 'Prenez ceux qui servent votre réponse ; inutile de tous les utiliser.', chipNoun: 'levier',
           options: window.ATELIER_LEVERS.map(l => ({ id: l.id, label: l.short, symbol: l.symbol })).concat({ id: 'rassurer', label: 'Rassurer', symbol: 'shield' }) },
-        { id: 'text', label: 'Ma réponse au client', placeholder: 'Ce que tu dirais au client…', rows: 5,
+        { id: 'text', label: 'Ma réponse au client', placeholder: 'Ce que vous diriez au client…', rows: 5,
           model: 'Je comprends. Quand vous dites que ce sera difficile à justifier, est-ce surtout le montant global qui vous pose question, ou le retour que votre direction peut en attendre ? Le pack représente 1 700 € par poste, installation et garantie comprises. On peut regarder ensemble les enjeux prioritaires pour vos équipes et les mettre en regard de l’investissement, afin que vous disposiez d’éléments concrets pour votre direction.' }
       ] }
     ],
     submitLabel: 'Vérifier ma réponse',
     keyPoint: 'À retenir : défendre son prix ne consiste pas à réciter tous ses arguments. Il s’agit de comprendre ce qui bloque, de sélectionner les bons leviers et de rendre la valeur visible sans surpromettre, ni inventer de chiffres ou de résultats.',
-    feedback: 'Ta réponse donne-t-elle au client de quoi convaincre sa direction, sans baisser le prix ?'
+    feedback: 'Votre réponse donne-t-elle au client de quoi convaincre sa direction, sans baisser le prix ?'
   }
 };

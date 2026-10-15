@@ -24,7 +24,9 @@ window.ATELIER_S1 = {
 
   faceToFace: 'Bonjour, merci de me recevoir. Je suis [Prénom Nom], conseiller chez [Entreprise]. Je vous propose 20 minutes : d’abord pour vous écouter sur votre projet, ensuite pour vous proposer des pistes. Pour commencer, qu’est-ce qui vous amène ?',
 
-  criteria: ['Cadrage', 'Écoute', 'Centrage client', 'Recherche d’accord', 'Crédibilité'],
+  // Les critères d'un argument (Comparer) : les titres de la grille ci-dessous,
+  // pour que l'apprenant retrouve les mêmes mots dans la fenêtre.
+  criteria: ['Accueil et climat', 'Présentation', 'Cadrage', 'Transition vers l’écoute', 'Posture centrée client', 'Adaptation'],
   techniques: ['Accueil / 4 × 20', 'Présentation', 'Cadrage', 'Transition vers l’écoute', 'Adaptation'],
 
   /* Grille commune « Mon ouverture est-elle réussie ? », reprise de la fiche. */
