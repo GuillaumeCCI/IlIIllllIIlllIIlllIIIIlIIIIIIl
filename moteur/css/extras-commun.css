@@ -507,6 +507,9 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 .pick-button:hover { background: #dce7fb; }
 .pick-button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .pick:has(select[aria-invalid="true"]) .pick-button { box-shadow: inset 0 0 0 2px #d4553f; }
+/* Une liste ouverte passe devant les blocs qui suivent, même pendant
+ * l'animation de passage (qui fait de chaque bloc un calque à part). */
+:is(.field, .argument-row, .writing-row, .answer-row, .review-row):has(.pick.is-open), :is(.k-switch-next, .k-switch-prev):has(.pick.is-open) { z-index: 40; }
 .pick-list { position: absolute; z-index: 30; top: calc(100% + 8px); left: 0; min-width: 100%; width: max-content; max-width: min(380px, 90vw); max-height: 340px; overflow-y: auto; margin: 0; padding: 10px; list-style: none; border-radius: 16px; background: #fcfaf7; box-shadow: 0 14px 34px rgb(20 30 70 / 16%), 0 0 0 1px rgb(20 30 70 / 6%); }
 .pick-list li { position: relative; padding: 11px 16px; border-radius: 10px; color: var(--navy); font-size: 1.02rem; line-height: 1.3; cursor: var(--cursor-hand, pointer); }
 .pick-list li.is-active { background: #eef3fd; }

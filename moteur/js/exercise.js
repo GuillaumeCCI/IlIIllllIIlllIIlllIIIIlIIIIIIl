@@ -535,6 +535,11 @@
       el.classList.remove('k-switch-next', 'k-switch-prev');
       void el.offsetWidth;
       el.classList.add(forward ? 'k-switch-next' : 'k-switch-prev');
+      // Animation finie, la classe part : sinon le bloc reste un calque à
+      // part et recouvre la liste déroulante ouverte du bloc précédent.
+      el.addEventListener('animationend', event => {
+        if (event.target === el && /^k-switch-(next|prev|fade)$/.test(event.animationName)) el.classList.remove('k-switch-next', 'k-switch-prev');
+      });
     });
     animate(page, 0);
     Object.values(spots).forEach(spot => { if (spot.marker && previous.spots[spot.marker.classList[0]]?.index !== spot.index) spot.marker.classList.add('k-switch-pulse'); });

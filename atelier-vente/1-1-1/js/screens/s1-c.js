@@ -86,7 +86,7 @@
       ${core.errorsBox()}
       <div class="form-actions">
         <div class="form-meta">
-          ${core.button(`${icon('list', { size: 17 })}<span>Voir les critères d’évaluation</span>`, 'rubric', 'text-button with-icon')}
+          ${core.button(`${icon('list', { size: 17 })}<span>Voir la grille d’évaluation</span>`, 'rubric', 'text-button with-icon')}
         </div>
         <button type="submit" class="button primary"><span>Continuer vers mes arguments</span>${icon('arrowRight', { size: 18 })}</button>
       </div>`;
@@ -258,7 +258,16 @@
       else ex.setValue('stage', 3);
       return true;
     }
-    return false;
+    /* Étape 3 : un oubli d'une étape précédente ne se signale pas ici, où
+     * il est invisible. On ramène l'apprenant à l'argument (ou au choix) en
+     * cause, où le message s'affiche à côté du champ à compléter. */
+    const missing = !['1', '2'].includes(values.choice) ? 0
+      : Array.from({ length: argumentCount() }, (_, k) => k + 1).find(i => argumentErrors(values, i).length);
+    if (missing === undefined) return false;
+    ex.setValue('stage', missing ? 2 : 1);
+    if (missing) ex.setValue('argIndex', missing);
+    setTimeout(() => ex.submit());
+    return true;
   }
 
   /* L'analyse est posée sous les deux ouvertures comparées. */

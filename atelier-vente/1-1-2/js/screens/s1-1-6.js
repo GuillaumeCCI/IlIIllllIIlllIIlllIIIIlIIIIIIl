@@ -154,7 +154,7 @@
     return true;
   }
 
-  const feedback = () => ['Comparez votre version réparée au corrigé modèle et à la grille de relecture ci-dessus.'];
+  const feedback = () => ['Comparez votre version réparée au corrigé modèle et à la grille d’évaluation ci-dessus.'];
 
   kit.on({
     draw: () => {
