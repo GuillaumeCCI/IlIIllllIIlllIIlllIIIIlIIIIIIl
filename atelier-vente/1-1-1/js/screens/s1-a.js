@@ -105,8 +105,10 @@
      <blockquote class="transcript">« ${esc(content.audio.transcript)} »</blockquote>`;
 
   function onMount() {
-    core.$('[data-action="listen"]')?.addEventListener('click', () => media.listen(content.audio));
-    core.$('.play-button')?.addEventListener('click', () => media.listen(content.audio));
+    // Le gros bouton ▶ et « Écouter l’accroche » portent tous deux data-action="listen" :
+    // un seul écouteur chacun, sinon le second clic arrête aussitôt la lecture.
+    document.querySelectorAll('[data-action="listen"]').forEach(button =>
+      button.addEventListener('click', () => media.listen(content.audio)));
     core.$('[data-action="transcript"]')?.addEventListener('click', () => core.openDialog(
       'Transcription de l’accroche',
       `${transcript()}
