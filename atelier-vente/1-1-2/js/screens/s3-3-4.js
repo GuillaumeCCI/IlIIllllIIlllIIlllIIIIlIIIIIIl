@@ -14,8 +14,6 @@
   const rows = content.rows;
   const answers = rows.map(row => row.answer);
 
-  const counter = () => `<p class="k-count"><strong>${kit.answered('row', rows.length)} / ${rows.length}</strong> arguments analysés</p>`;
-
   function gauge(score) {
     return `<div class="drift-score">
       <strong class="drift-label">Mon score de dérive</strong>
@@ -65,7 +63,7 @@
     if (reviewing) return reviewScreen(kit.score('row', answers));
     const score = reviewing ? kit.score('row', answers) : null;
     return `<div class="k-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: counter() })}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle })}
       ${kit.clientCard(content.priority, null, 'Priorité du client')}
       <form class="k-panel" novalidate>
         ${reviewing ? '' : '<p class="k-muted">Cochez une seule réponse par ligne.</p>'}
@@ -88,7 +86,6 @@
     return [`Score : ${right} / ${rows.length}. Un argument est pertinent s’il fait gagner du temps sur l’administratif ; tout le reste est une dérive.`];
   };
 
-  kit.live(() => ({ aside: counter() }));
   kit.dialogs({ need: { title: 'La priorité du client', html: `<p>« ${esc(content.priority)} »</p><p class="k-muted">Un argument pertinent lui fait gagner du temps sur ses tâches administratives. Le reste, même vrai, l’éloigne de sa priorité.</p>` } });
 
   ex.mount('s3-3.4', { screen, validate, feedback, compactFeedback: true });
