@@ -71,7 +71,7 @@
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: 'Vos analyses, réplique par réplique' })}
       ${kit.result(right, lines.length, 'répliques bien analysées')}
-      ${lines.map((l, i) => {
+      <div class="check-review-grid">${lines.map((l, i) => {
         const ok = act(i) === l.answer;
         return `<section class="k-panel">
           <p class="k-label">Prise de parole ${i + 1}</p>
@@ -81,7 +81,7 @@
           ${act(i) === 'push' ? kit.yours('Votre question de contrôle', ex.value(`q${i}`)) : ''}
           ${l.model ? kit.model('Question de contrôle possible', l.model) : ''}
         </section>`;
-      }).join('')}
+      }).join('')}</div>
       ${core.feedbackBox()}
       <div class="k-utility">${kit.reset()}</div>
     </div>`;
