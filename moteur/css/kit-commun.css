@@ -277,7 +277,8 @@
 .own-answer p { color: var(--navy); }
 
 .review-line { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 12px; color: var(--navy); font-weight: 600; }
-.k-expected { color: var(--ok); }
+/* La bonne réponse passe à la ligne, juste sous « Vous avez choisi ». */
+.k-expected { display: block; flex-basis: 100%; margin-top: -4px; color: var(--ok); }
 
 .dialog-list { padding-left: 20px; display: grid; gap: 8px; line-height: 1.5; }
 
