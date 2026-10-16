@@ -47,11 +47,11 @@ window.ATELIER_S2 = {
     zoneNoun: 'levier',
     zones: window.ATELIER_LEVERS.map(l => ({ label: l.label })),
     cards: [
-      { text: 'Par rapport à quoi trouvez-vous le prix élevé ?', answer: 0, why: 'Une question pour comprendre la référence du client.' },
-      { text: 'Ce tarif comprend la garantie 5 ans, la livraison, l’installation et le SAV.', answer: 1, why: 'On rappelle tout ce que le prix contient.' },
       { text: 'Ramené à sa durée d’utilisation, cela représente moins de 40 centimes par jour.', answer: 2, why: 'Le prix est rapporté à l’usage.' },
-      { text: 'Au-delà du prix de l’équipement, regardons aussi ce que peuvent coûter l’inconfort, les absences ou la désorganisation qu’ils peuvent entraîner.', answer: 3, why: 'On met en regard ce que coûte le statu quo.' },
-      { text: 'Comparons les deux offres sur le même périmètre : l’installation et la garantie sont-elles également incluses dans l’offre concurrente ?', answer: 4, why: 'On vérifie que les deux offres couvrent le même périmètre.' }
+      { text: 'Par rapport à quoi trouvez-vous le prix élevé ?', answer: 0, why: 'Une question pour comprendre la référence du client.' },
+      { text: 'Comparons les deux offres sur le même périmètre : l’installation et la garantie sont-elles également incluses dans l’offre concurrente ?', answer: 4, why: 'On vérifie que les deux offres couvrent le même périmètre.' },
+      { text: 'Ce tarif comprend la garantie 5 ans, la livraison, l’installation et le SAV.', answer: 1, why: 'On rappelle tout ce que le prix contient.' },
+      { text: 'Au-delà du prix de l’équipement, regardons aussi ce que peuvent coûter l’inconfort, les absences ou la désorganisation qu’ils peuvent entraîner.', answer: 3, why: 'On met en regard ce que coûte le statu quo.' }
     ],
     keyPoint: 'À retenir : face à une objection sur le prix, il n’existe pas une réponse unique. L’enjeu est de choisir le levier adapté à ce que le client exprime.'
   },

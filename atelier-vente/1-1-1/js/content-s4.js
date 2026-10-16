@@ -63,12 +63,12 @@ window.ATELIER_S4 = {
       { id: 'comprehension', label: 'Compréhension', symbol: 'ear' }
     ],
     cards: [
-      { text: 'Pourquoi dites-vous ça ? Qu’est-ce qui vous retient exactement ?', answer: 'investigation', why: 'On questionne pour obtenir plus d’informations.' },
-      { text: 'Vous avez tort d’hésiter, c’est vraiment le moment.', answer: 'evaluation', why: 'On approuve ou on désapprouve le client.' },
+      { text: 'Si je comprends bien, vous préférez prendre le temps de la réflexion.', answer: 'comprehension', why: 'On reformule pour montrer qu’on a compris : l’attitude à privilégier.' },
       { text: 'En fait, ce qui vous bloque, c’est le prix.', answer: 'interpretation', why: 'On explique à la place de l’autre.' },
-      { text: 'Ne vous inquiétez pas, tout le monde ressent ça au début.', answer: 'soutien', why: 'On rassure, on minimise.' },
+      { text: 'Pourquoi dites-vous ça ? Qu’est-ce qui vous retient exactement ?', answer: 'investigation', why: 'On questionne pour obtenir plus d’informations.' },
       { text: 'À votre place, je signerais maintenant.', answer: 'solution', why: 'On donne immédiatement une solution ou un conseil.' },
-      { text: 'Si je comprends bien, vous préférez prendre le temps de la réflexion.', answer: 'comprehension', why: 'On reformule pour montrer qu’on a compris : l’attitude à privilégier.' }
+      { text: 'Vous avez tort d’hésiter, c’est vraiment le moment.', answer: 'evaluation', why: 'On approuve ou on désapprouve le client.' },
+      { text: 'Ne vous inquiétez pas, tout le monde ressent ça au début.', answer: 'soutien', why: 'On rassure, on minimise.' }
     ],
     feedback: [
       'Les 6 attitudes ne sont pas « bonnes » ou « mauvaises » dans l’absolu : l’enjeu est de choisir celle qui est adaptée au moment. En prise de contact, on privilégie la compréhension : reformuler est ce qui installe le plus la confiance.',

@@ -25,14 +25,14 @@ window.ATELIER_S3 = {
     intro: 'Classez les 8 comportements en les glissant dans la bonne zone.',
     zones: [{ id: 'good', label: 'Bon réflexe' }, { id: 'bad', label: 'À éviter' }],
     cards: [
-      { text: 'Écouter l’objection jusqu’au bout sans interrompre.', answer: 'good', why: 'On écoute et on comprend avant de répondre : le client livre l’objection complète.' },
       { text: 'Répondre immédiatement pour « casser » l’objection.', answer: 'bad', why: 'Répondre avant d’avoir compris braque le client et vise souvent la mauvaise objection.' },
-      { text: 'Reformuler l’objection avant d’y répondre.', answer: 'good', why: 'La reformulation montre qu’on a compris et vérifie qu’on vise la vraie objection.' },
+      { text: 'Écouter l’objection jusqu’au bout sans interrompre.', answer: 'good', why: 'On écoute et on comprend avant de répondre : le client livre l’objection complète.' },
       { text: 'Prendre l’objection comme une attaque personnelle.', answer: 'bad', why: 'L’objection porte sur l’offre, pas sur vous : on l’accueille sans se braquer.' },
-      { text: 'Poser une question pour comprendre ce qui gêne vraiment.', answer: 'good', why: 'Questionner fait émerger la cause réelle : on traite alors le bon problème.' },
       { text: 'Baisser tout de suite le prix pour clore la discussion.', answer: 'bad', why: 'On ne brade pas : la remise immédiate dévalorise l’offre et laisse le vrai frein intact.' },
-      { text: 'Vérifier que la réponse a convaincu avant d’avancer.', answer: 'good', why: 'On vérifie avant d’avancer : sinon le doute ressurgit au moment de décider.' },
-      { text: 'Enchaîner sur la vente sans vérifier l’adhésion.', answer: 'bad', why: 'Sans contrôle, on avance sur une objection qu’on croit traitée alors qu’elle reste entière.' }
+      { text: 'Reformuler l’objection avant d’y répondre.', answer: 'good', why: 'La reformulation montre qu’on a compris et vérifie qu’on vise la vraie objection.' },
+      { text: 'Poser une question pour comprendre ce qui gêne vraiment.', answer: 'good', why: 'Questionner fait émerger la cause réelle : on traite alors le bon problème.' },
+      { text: 'Enchaîner sur la vente sans vérifier l’adhésion.', answer: 'bad', why: 'Sans contrôle, on avance sur une objection qu’on croit traitée alors qu’elle reste entière.' },
+      { text: 'Vérifier que la réponse a convaincu avant d’avancer.', answer: 'good', why: 'On vérifie avant d’avancer : sinon le doute ressurgit au moment de décider.' }
     ],
     feedback: 'Bons réflexes : 1, 3, 5, 7. À éviter : 2, 4, 6, 8. À retenir : on écoute et on comprend avant de répondre ; on vérifie avant d’avancer ; on ne brade pas.'
   },
@@ -151,24 +151,24 @@ window.ATELIER_S3 = {
     ],
     cards: [
       {
-        objection: 'C’est trop cher.',
-        answer: 'fondee',
-        feedback: 'Fondée. Creuser : « Par rapport à quoi ? » Réponse : la valeur, l’essai de 30 jours et la garantie de 5 ans ; la location est possible pour étaler le budget.'
-      },
-      {
-        objection: 'Nos chaises actuelles suffisent.',
-        answer: 'pretexte',
-        feedback: 'Prétexte, statu quo. Creuser : « Avez-vous des salariés gênés par le dos ? » Réponse : la prévention des TMS, la baisse des arrêts constatée chez nos clients, un diagnostic gratuit.'
-      },
-      {
         objection: 'Il faut que j’en parle à ma direction.',
         answer: 'processus',
         feedback: 'Fondée, liée au processus de décision. Creuser : « Qu’est-ce qui compterait pour eux ? » Réponse : fournir un argumentaire chiffré et proposer une présentation courte à la direction.'
       },
       {
+        objection: 'C’est trop cher.',
+        answer: 'fondee',
+        feedback: 'Fondée. Creuser : « Par rapport à quoi ? » Réponse : la valeur, l’essai de 30 jours et la garantie de 5 ans ; la location est possible pour étaler le budget.'
+      },
+      {
         objection: 'J’ai été déçu par un fournisseur.',
         answer: 'rassurance',
         feedback: 'Demande de réassurance. Creuser : « Qu’est-ce qui s’était mal passé ? » Réponse : la garantie de 5 ans, un SAV sous 48 h, l’essai de 30 jours satisfait ou remboursé, et plus de 1 200 entreprises équipées.'
+      },
+      {
+        objection: 'Nos chaises actuelles suffisent.',
+        answer: 'pretexte',
+        feedback: 'Prétexte, statu quo. Creuser : « Avez-vous des salariés gênés par le dos ? » Réponse : la prévention des TMS, la baisse des arrêts constatée chez nos clients, un diagnostic gratuit.'
       }
     ]
   }

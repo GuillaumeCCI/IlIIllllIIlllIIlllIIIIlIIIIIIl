@@ -39,14 +39,14 @@ window.ATELIER_S1 = {
       { id: 'good', label: 'Bon réflexe', sub: 'Attitude constructive', tone: 'good', symbol: 'check' }
     ],
     cards: [
-      { text: 'Écouter l’objection jusqu’au bout sans interrompre le client.', answer: 'good', why: 'On écoute et on comprend avant de répondre.' },
       { text: 'Répondre immédiatement pour « casser » l’objection.', answer: 'bad', why: 'Répondre trop tôt braque le client : on n’a pas encore compris ce qui le gêne.' },
-      { text: 'Reformuler l’objection avant d’y répondre.', answer: 'good', why: 'La reformulation montre qu’on a compris et vise la vraie objection.' },
+      { text: 'Écouter l’objection jusqu’au bout sans interrompre le client.', answer: 'good', why: 'On écoute et on comprend avant de répondre.' },
       { text: 'Prendre l’objection comme une attaque personnelle.', answer: 'bad', why: 'L’objection porte sur l’offre, pas sur vous : on l’accueille sans se braquer.' },
-      { text: 'Poser une question pour comprendre ce qui gêne vraiment.', answer: 'good', why: 'Questionner fait émerger la cause réelle : on traite alors le bon problème.' },
       { text: 'Baisser tout de suite le prix pour clore la discussion.', answer: 'bad', why: 'On ne brade pas : céder d’emblée dévalorise l’offre et laisse la vraie cause intacte.' },
-      { text: 'Vérifier que la réponse a convaincu avant d’avancer.', answer: 'good', why: 'On vérifie avant d’avancer : le doute ne ressurgira pas plus tard.' },
-      { text: 'Enchaîner sur la vente sans vérifier l’adhésion.', answer: 'bad', why: 'Sans contrôle, on avance sur un doute qui reviendra au moment de décider.' }
+      { text: 'Reformuler l’objection avant d’y répondre.', answer: 'good', why: 'La reformulation montre qu’on a compris et vise la vraie objection.' },
+      { text: 'Poser une question pour comprendre ce qui gêne vraiment.', answer: 'good', why: 'Questionner fait émerger la cause réelle : on traite alors le bon problème.' },
+      { text: 'Enchaîner sur la vente sans vérifier l’adhésion.', answer: 'bad', why: 'Sans contrôle, on avance sur un doute qui reviendra au moment de décider.' },
+      { text: 'Vérifier que la réponse a convaincu avant d’avancer.', answer: 'good', why: 'On vérifie avant d’avancer : le doute ne ressurgira pas plus tard.' }
     ]
   },
 

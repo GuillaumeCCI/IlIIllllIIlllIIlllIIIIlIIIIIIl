@@ -18,12 +18,12 @@ window.ATELIER_S4 = {
     ],
     instruction: 'Pour chaque affirmation, choisissez C, A ou P.',
     items: [
-      { text: 'Sauvegarde automatique toutes les 10 minutes.', answer: 'C', why: 'Elle décrit le fonctionnement du produit.' },
       { text: 'Vous ne perdez jamais vos données clients.', answer: 'A', why: 'Elle dit ce que le client y gagne.' },
-      { text: '99,9 % de disponibilité garantie par contrat.', answer: 'P', why: 'Un engagement chiffré et contractuel : la promesse devient vérifiable.' },
       { text: 'Assistance téléphonique 7j/7.', answer: 'C', why: 'Un service fourni, décrit sans son effet pour le client.' },
-      { text: 'Vous êtes dépanné même le week-end.', answer: 'A', why: 'Le bénéfice concret de l’assistance 7j/7.' },
-      { text: 'Utilisé par plus de 5 000 PME.', answer: 'P', why: 'Une preuve sociale chiffrée.' }
+      { text: 'Utilisé par plus de 5 000 PME.', answer: 'P', why: 'Une preuve sociale chiffrée.' },
+      { text: 'Sauvegarde automatique toutes les 10 minutes.', answer: 'C', why: 'Elle décrit le fonctionnement du produit.' },
+      { text: '99,9 % de disponibilité garantie par contrat.', answer: 'P', why: 'Un engagement chiffré et contractuel : la promesse devient vérifiable.' },
+      { text: 'Vous êtes dépanné même le week-end.', answer: 'A', why: 'Le bénéfice concret de l’assistance 7j/7.' }
     ]
   },
 
@@ -57,12 +57,12 @@ window.ATELIER_S4 = {
     ],
     instruction: 'Pour chaque formulation, choisissez C ou B.',
     items: [
-      { text: 'Ce matériau est traité anti-UV.', answer: 'C', why: 'Une propriété du matériau.' },
-      { text: 'Vos meubles ne jauniront pas au soleil.', answer: 'B', why: 'Le résultat vécu par l’utilisateur.' },
-      { text: 'Batterie de 5 000 mAh.', answer: 'C', why: 'Une donnée technique.' },
       { text: 'Vous tenez deux jours sans recharger.', answer: 'B', why: 'Ce que la batterie change au quotidien.' },
+      { text: 'Ce matériau est traité anti-UV.', answer: 'C', why: 'Une propriété du matériau.' },
       { text: 'Contrat sans engagement.', answer: 'C', why: 'Une condition de l’offre.' },
-      { text: 'Vous gardez la liberté d’arrêter quand vous voulez.', answer: 'B', why: 'La liberté que cette condition procure.' }
+      { text: 'Vos meubles ne jauniront pas au soleil.', answer: 'B', why: 'Le résultat vécu par l’utilisateur.' },
+      { text: 'Vous gardez la liberté d’arrêter quand vous voulez.', answer: 'B', why: 'La liberté que procure un contrat sans engagement.' },
+      { text: 'Batterie de 5 000 mAh.', answer: 'C', why: 'Une donnée technique.' }
     ]
   },
 
@@ -91,12 +91,12 @@ window.ATELIER_S4 = {
       { id: 'do', label: 'À faire', sub: 'Bonne pratique', symbol: 'thumbUp', tone: 'good' }
     ],
     cards: [
-      { text: 'Relier chaque argument au besoin exprimé.', answer: 'do', why: 'Un argument relié au besoin parle directement au client.' },
       { text: 'Enchaîner tous ses arguments d’affilée.', answer: 'avoid', why: 'Trop d’arguments tue l’argument : on cible ce qui répond au besoin exprimé.' },
+      { text: 'Relier chaque argument au besoin exprimé.', answer: 'do', why: 'Un argument relié au besoin parle directement au client.' },
       { text: 'Laisser le client réagir après un argument.', answer: 'do', why: 'Sa réaction permet de vérifier l’impact et d’ajuster la suite.' },
+      { text: 'Noyer le client sous les détails techniques.', answer: 'avoid', why: 'Le détail technique non traduit en bénéfice perd le client.' },
       { text: 'Monologuer sans laisser d’espace.', answer: 'avoid', why: 'Sans question ni vérification, le client décroche.' },
-      { text: 'Appuyer un argument par une preuve concrète.', answer: 'do', why: 'La preuve rend l’argument crédible.' },
-      { text: 'Noyer le client sous les détails techniques.', answer: 'avoid', why: 'Le détail technique non traduit en bénéfice perd le client.' }
+      { text: 'Appuyer un argument par une preuve concrète.', answer: 'do', why: 'La preuve rend l’argument crédible.' }
     ]
   },
 

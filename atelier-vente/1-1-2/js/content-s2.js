@@ -18,9 +18,9 @@ window.ATELIER_S2 = {
     cards: [
       { text: 'Plus on donne d’arguments, plus on convainc.', answer: 'myth', why: 'Trop d’arguments noient le client et diluent le plus fort. Mieux vaut quelques arguments choisis pour lui.' },
       { text: 'Un bénéfice client convainc plus qu’une caractéristique.', answer: 'method', why: 'Le client achète ce qu’il y gagne : le bénéfice lui parle directement, la caractéristique l’oblige à faire lui-même la traduction.' },
+      { text: 'Le jargon technique montre le professionnalisme.', answer: 'myth', why: 'Le jargon crée de la distance et de l’incompréhension. Le professionnalisme se montre en rendant les choses claires.' },
       { text: 'Il faut parler vite et fort pour paraître sûr de soi.', answer: 'myth', why: 'L’assurance passe par un débit posé et un ton affirmatif, pas par la vitesse ni le volume.' },
       { text: 'Une preuve concrète renforce la conviction.', answer: 'method', why: 'Un chiffre, un exemple, une démonstration transforment une promesse en fait vérifiable.' },
-      { text: 'Le jargon technique montre le professionnalisme.', answer: 'myth', why: 'Le jargon crée de la distance et de l’incompréhension. Le professionnalisme se montre en rendant les choses claires.' },
       { text: 'Une accroche capte l’attention dès le début.', answer: 'method', why: 'Les premières secondes décident de l’écoute : une question, un chiffre ou un bénéfice projeté donnent envie d’entendre la suite.' },
       { text: 'Mieux vaut tout dire pour ne rien oublier.', answer: 'myth', why: 'Tout dire noie l’essentiel : on sélectionne ce qui compte pour ce client.' },
       { text: 'Un langage affirmatif inspire confiance.', answer: 'method', why: 'Des formulations positives et assurées, sans « je pense », montrent que vous croyez à ce que vous proposez.' }
@@ -94,13 +94,13 @@ window.ATELIER_S2 = {
     eyebrow: 'Exercice · Argumentation',
     title: 'La chasse aux preuves',
     subtitle: 'Pour chaque affirmation, cochez si elle est étayée par une preuve concrète ou s’il s’agit d’un trou de preuve.',
-    pitch: 'RelaCosy est le CRM le plus fiable du marché. Vos données sont chiffrées et conformes RGPD (audit annuel). Nos clients gagnent un temps fou. 5 000 PME l’utilisent déjà. C’est aussi le plus simple à prendre en main.',
+    pitch: 'RelaCosy est le CRM le plus fiable du marché. Nos clients gagnent un temps fou. Vos données sont chiffrées et conformes RGPD (audit annuel). C’est aussi le plus simple à prendre en main. 5 000 PME l’utilisent déjà.',
     rows: [
       { text: 'RelaCosy est le CRM le plus fiable du marché.', answer: 'gap', why: 'Trou de preuve : superlatif gratuit, aucun classement, aucune source.' },
-      { text: 'Vos données sont chiffrées et conformes RGPD (audit annuel).', answer: 'proof', why: 'Étayée : l’audit annuel est un élément vérifiable.' },
       { text: 'Nos clients gagnent un temps fou.', answer: 'gap', why: 'Trou de preuve : affirmation vague, non chiffrée.' },
-      { text: '5 000 PME l’utilisent déjà.', answer: 'proof', why: 'Étayée : donnée chiffrée et vérifiable.' },
-      { text: 'C’est aussi le plus simple à prendre en main.', answer: 'gap', why: 'Trou de preuve : superlatif non étayé.' }
+      { text: 'Vos données sont chiffrées et conformes RGPD (audit annuel).', answer: 'proof', why: 'Étayée : l’audit annuel est un élément vérifiable.' },
+      { text: 'C’est aussi le plus simple à prendre en main.', answer: 'gap', why: 'Trou de preuve : superlatif non étayé.' },
+      { text: '5 000 PME l’utilisent déjà.', answer: 'proof', why: 'Étayée : donnée chiffrée et vérifiable.' }
     ],
     columns: [
       { id: 'proof', label: 'Étayée' },

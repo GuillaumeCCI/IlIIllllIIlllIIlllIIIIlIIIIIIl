@@ -23,8 +23,8 @@ window.ATELIER_S5 = {
     cards: [
       { text: '« Ça fait 2 400 €. »', answer: 'revoir', why: 'Le prix est annoncé seul : aucun bénéfice ne vient rappeler la valeur de l’offre.' },
       { text: '« Pour un accompagnement complet sur l’année, avec la garantie et le suivi, l’investissement est de 2 400 €, et vous êtes tranquille pendant 12 mois. »', answer: 'sandwich', why: 'Le prix est encadré par la valeur : accompagnement, garantie et suivi avant le prix, puis tranquillité pendant 12 mois après.' },
-      { text: '« C’est 2 400 €… mais bon, on peut voir. »', answer: 'revoir', why: 'Aucun bénéfice, et « mais bon, on peut voir » donne aussitôt l’impression qu’il faut justifier ou négocier le prix.' },
-      { text: '« Cette formule vous fait gagner du temps chaque semaine : elle est à 2 400 €, soit moins de 7 € par jour pour bénéficier de l’ensemble du service. »', answer: 'sandwich', why: 'Le bénéfice est rappelé avant le prix, puis celui-ci est remis en perspective au regard du service proposé.' }
+      { text: '« Cette formule vous fait gagner du temps chaque semaine : elle est à 2 400 €, soit moins de 7 € par jour pour bénéficier de l’ensemble du service. »', answer: 'sandwich', why: 'Le bénéfice est rappelé avant le prix, puis celui-ci est remis en perspective au regard du service proposé.' },
+      { text: '« C’est 2 400 €… mais bon, on peut voir. »', answer: 'revoir', why: 'Aucun bénéfice, et « mais bon, on peut voir » donne aussitôt l’impression qu’il faut justifier ou négocier le prix.' }
     ],
     keyPoint: 'À retenir : une annonce de prix efficace rappelle la valeur, annonce clairement le prix, puis le reconnecte à un bénéfice ou ouvre sur la suite.'
   },

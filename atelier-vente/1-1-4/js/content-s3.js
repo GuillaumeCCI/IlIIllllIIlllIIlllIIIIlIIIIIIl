@@ -29,12 +29,12 @@ window.ATELIER_S3 = {
       { id: 'NV', label: 'NV · J’observe', sub: 'Gestes et comportements', symbol: 'eye', tone: 'neutral' }
     ],
     cards: [
-      { text: '« On pourrait démarrer quand ? »', answer: 'V', why: 'Une question sur le délai : indice verbal.' },
       { text: 'Le client reprend la proposition commerciale et consulte attentivement les modalités.', answer: 'NV', why: 'Un comportement qui traduit un intérêt accru : indice non verbal.' },
+      { text: '« On pourrait démarrer quand ? »', answer: 'V', why: 'Une question sur le délai : indice verbal.' },
       { text: '« Le suivi est inclus ? »', answer: 'V', why: 'Une question sur les modalités : indice verbal.' },
+      { text: 'Le client examine à nouveau les différentes options proposées.', answer: 'NV', why: 'Il compare pour choisir : indice non verbal.' },
       { text: 'Le client prend des notes lorsque vous présentez les prochaines étapes.', answer: 'NV', why: 'Il se projette dans la suite : indice non verbal.' },
-      { text: '« Et si on équipait deux postes supplémentaires ? »', answer: 'V', why: 'Une question sur les quantités : indice verbal.' },
-      { text: 'Le client examine à nouveau les différentes options proposées.', answer: 'NV', why: 'Il compare pour choisir : indice non verbal.' }
+      { text: '« Et si on équipait deux postes supplémentaires ? »', answer: 'V', why: 'Une question sur les quantités : indice verbal.' }
     ],
     keyPoint: 'À retenir : les questions sur le délai, les modalités, les quantités ou la mise en œuvre peuvent montrer que le client commence à se projeter ; certains comportements non verbaux aussi. Mais un indice d’intérêt n’est pas encore un accord : il invite à vérifier si le client est prêt à avancer.'
   },
