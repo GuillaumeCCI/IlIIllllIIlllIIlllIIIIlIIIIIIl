@@ -2,7 +2,9 @@
  *
  * Deux clients. Pour chacun : repérer les indices dans ses propos (mots
  * cliquables), puis trois temps à droite :
- *   2 · la motivation dominante, parmi les six SONCAS ;
+ *   2 · la motivation dominante, parmi les six SONCAS (verrouillée tant
+ *       que MIN_CLUES indices ne sont pas repérés : l'étape 1 n'est pas
+ *       facultative) ;
  *   3 · exactement deux arguments qui lui correspondent ;
  *   4 · une justification courte.
  * Le corrigé s'affiche une fois les deux clients validés.
@@ -17,6 +19,7 @@
   const clients = content.clients;
   const motives = content.motives;
   const letters = 'abcdef';
+  const MIN_CLUES = 2;
 
   const client = () => Math.min(Math.max(0, Number(ex.value('client')) || 0), clients.length - 1);
   const stageOf = c => kit.stage(3, `stage${c}`);
@@ -24,6 +27,8 @@
   const motive = c => ex.value(`motive${c}`) || '';
   const args = c => { const v = ex.value(`args${c}`); return Array.isArray(v) ? v.filter(Number.isInteger) : []; };
   const done = c => ex.value(`done${c}`) === true;
+  const clueCount = c => clues(c).filter(Boolean).length;
+  const cluesReady = c => clueCount(c) >= MIN_CLUES;
   const motiveOf = id => motives.find(m => m.id === id);
   const exercise = () => ex.current;
 
@@ -38,11 +43,14 @@
   }
 
   function leftPanel(c) {
-    const n = clues(c).filter(Boolean).length;
+    const n = clueCount(c);
+    const ready = cluesReady(c);
     return `<section class="k-panel">
       <div class="k-panel-title"><span class="k-badge">1</span><h2>Analysez les propos</h2></div>
+      <p class="soncas-todo ${ready ? 'is-ok' : ''}">${icon(ready ? 'check' : 'pointer', { size: 20 })}<span>${ready
+        ? 'Indices repérés : vous pouvez choisir la motivation. D’autres mots vous mettent sur la piste ? Cliquez-les aussi.'
+        : `<strong>Commencez ici :</strong> cliquez sur les mots qui vous mettent sur la piste (au moins ${MIN_CLUES}).`}</span></p>
       ${picture(c)}
-      <p class="k-help">${icon('pointer', { size: 18 })}<span>Cliquez sur les mots qui vous mettent sur la piste.</span></p>
       <p class="soncas-clues">${icon('search', { size: 20 })}<span>Indices repérés : <strong>${n}</strong></span></p>
     </section>`;
   }
@@ -59,13 +67,15 @@
   function stageBody(c) {
     const at = stageOf(c);
     if (at === 1) {
-      return `<div class="soncas-question"><span class="soncas-big">2</span><div><h3>Quelle est sa motivation dominante ?</h3><p class="k-muted">Choisissez une seule motivation SONCAS.</p></div></div>
+      const locked = !cluesReady(c);
+      return `${locked ? `<p class="soncas-locked">${icon('lock', { size: 20 })}<span>Étape 1 d’abord : repérez au moins ${MIN_CLUES} indices dans les propos du client, à gauche.</span></p>` : ''}
+        <fieldset class="soncas-step2 ${locked ? 'is-locked' : ''}" ${locked ? 'disabled' : ''}><div class="soncas-question"><span class="soncas-big">2</span><div><h3>Quelle est sa motivation dominante ?</h3><p class="k-muted">Choisissez une seule motivation SONCAS.</p></div></div>
         <div class="soncas-motives" role="radiogroup">${motives.map((m, n) => `
           <label class="soncas-motive tone-${esc(m.tone || 'blue')} ${m.image ? 'has-picture' : ''} ${motive(c) === m.id ? 'is-chosen' : ''}">
             <input type="radio" class="sr-only" name="motive${c}" data-field="motive${c}" value="${m.id}" ${motive(c) === m.id ? 'checked' : ''}>
             <span class="soncas-motive-copy"><span class="soncas-motive-n">${n + 1}</span><strong>${esc(m.label)}</strong></span>
             ${m.image ? `<span class="soncas-motive-art"><img src="${esc(core.webAsset(m.image))}" alt="" decoding="async"></span>` : icon(m.symbol, { size: 38 })}
-          </label>`).join('')}</div>
+          </label>`).join('')}</div></fieldset>
         ${kit.tip('Appuyez-vous sur les mots employés par le client.')}`;
     }
     if (at === 2) {
@@ -140,7 +150,7 @@
   function reviewScreen() {
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: 'Votre radar, client par client', symbol: 'target' })}
-      ${clients.map((item, c) => {
+      <div class="k-review-grid">${clients.map((item, c) => {
         const expectedMotive = motiveOf(item.motive);
         const okMotive = motive(c) === item.motive;
         const expectedClues = item.quote.filter(([, clue]) => clue).map(([word]) => word.replace(/[.,]$/, ''));
@@ -161,7 +171,7 @@
           ${kit.yours('Votre justification', ex.value(`why${c}`))}
           ${kit.model('Corrigé modèle', item.model)}
         </section>`;
-      }).join('')}
+      }).join('')}</div>
       ${core.feedbackBox()}
       <div class="k-utility">${kit.reset()}</div>
     </div>`;
@@ -169,6 +179,7 @@
 
   function stageErrors(c) {
     const at = stageOf(c);
+    if (at === 1 && !cluesReady(c)) return [{ key: `clues${c}`, message: `Repérez d’abord au moins ${MIN_CLUES} indices dans les propos du client.` }];
     if (at === 1 && !motive(c)) return [{ key: `motive${c}`, message: 'Choisissez une motivation.' }];
     if (at === 2 && args(c).length !== 2) return [{ key: 'args', message: 'Sélectionnez exactement 2 arguments.' }];
     if (at === 3 && !kit.filled(ex.value(`why${c}`))) return [{ key: `why${c}`, message: 'Justifiez votre choix.' }];

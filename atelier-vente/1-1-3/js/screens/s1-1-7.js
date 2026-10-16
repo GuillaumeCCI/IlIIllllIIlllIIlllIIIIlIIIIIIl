@@ -60,7 +60,7 @@
       <p class="k-muted">Gardez-la sous la main : elle se relit en un coup d’œil avant un rendez-vous.</p>
       ${table(true)}
     </section>
-    ${fiches.map((f, i) => `<section class="k-panel lib-review">
+    <div class="k-review-grid">${fiches.map((f, i) => `<section class="k-panel lib-review">
       <p class="k-label">Fiche ${i + 1}</p>
       <h3 class="lib-title">« ${esc(f.text)} »</h3>
       <p class="review-line">Votre diagnostic : <strong>${esc(natureLabel(val('nature', i)))}</strong></p>
@@ -70,7 +70,7 @@
         ${kit.model('Une réponse possible', f.answer)}
         ${kit.model('Une preuve possible', f.proof)}
       </div>
-    </section>`).join('')}
+    </section>`).join('')}</div>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }
 

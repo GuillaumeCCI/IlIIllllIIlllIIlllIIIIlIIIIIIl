@@ -56,7 +56,7 @@
     return `<div class="k-page verdict-review">
       ${kit.head({ eyebrow: content.eyebrow, title: 'Vos verdicts', subtitle: 'L’erreur de chaque série, et pourquoi elle pénalise l’échange.',
         aside: `<div class="say-progress"><span><strong>${right} / ${series.length}</strong> erreurs repérées</span><span class="say-dots">${series.map((s, i) => `<span class="say-dot ${choice(i) === s.wrong ? 'is-current' : ''}"></span>`).join('')}</span></div>` })}
-      ${series.map((s, i) => `<section class="k-panel vr-serie">
+      <div class="k-review-grid is-3">${series.map((s, i) => `<section class="k-panel vr-serie">
         <h2>Série ${letters[i]}</h2>
         <ol class="vr-items">${s.items.map((text, n) => {
           const state = n === s.wrong ? 'is-answer' : n === choice(i) ? 'is-wrong' : '';
@@ -64,7 +64,7 @@
           return `<li class="vr-item ${state}"><span class="vr-n">${n + 1}</span><span>${esc(text)}</span>${state ? `<span class="vr-mark" title="${label}">${icon(state === 'is-answer' ? 'check' : 'close', { size: 18, label })}</span>` : ''}</li>`;
         }).join('')}</ol>
         <p class="vr-why">${icon('lightbulb', { size: 26 })}<span><strong>Pourquoi ?</strong> ${esc(s.why)}</span></p>
-      </section>`).join('')}
+      </section>`).join('')}</div>
       ${core.feedbackBox()}
       <div class="k-utility">${kit.reset()}</div>
     </div>`;

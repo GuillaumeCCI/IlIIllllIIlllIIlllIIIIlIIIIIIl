@@ -94,7 +94,7 @@
   function reviewScreen() {
     const right = cases.filter((c, i) => nature(i) === c.nature && gesture(i) === c.gesture).length;
     return `${kit.result(right, cases.length, 'cas entièrement justes')}
-      ${cases.map((c, i) => {
+      <div class="k-review-grid">${cases.map((c, i) => {
         const okN = nature(i) === c.nature;
         const okG = gesture(i) === c.gesture;
         return `<section class="k-panel ear-review">
@@ -104,7 +104,7 @@
           <p class="review-line"><span>Premier geste : <strong>${esc(gestureOf(c.gesture).label)}</strong></span> ${kit.mark(okG, okG ? 'votre geste' : `vous : ${gestureOf(gesture(i)).label || 'rien'}`)}</p>
           ${ex.inlineNote(c.why, okN && okG ? 'good' : 'neutral')}
         </section>`;
-      }).join('')}
+      }).join('')}</div>
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }
 

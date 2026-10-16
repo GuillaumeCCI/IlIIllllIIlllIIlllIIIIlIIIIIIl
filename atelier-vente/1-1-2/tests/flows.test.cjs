@@ -113,11 +113,26 @@ test('S1 1.4 : une seule carte d’argument ne suffit pas', () => {
   const sandbox = load('js/screens/s1-1-4.js');
   const engine = sandbox.window.AtelierExercise;
   engine.setValue('briefed', true);
+  engine.setValue('clues0', [true, true]);
   engine.setValue('motive0', 'S');
   engine.submit();
   engine.setValue('args0', [0]);
   engine.submit();
   assert.strictEqual(engine.value('stage0'), 2, 'il faut exactement deux arguments pour avancer');
+});
+
+test('S1 1.4 : sans indices repérés, la motivation reste verrouillée', () => {
+  const sandbox = load('js/screens/s1-1-4.js');
+  const engine = sandbox.window.AtelierExercise;
+  engine.setValue('briefed', true);
+  engine.render();
+  assert.match(sandbox.document.querySelector('#main').innerHTML, /soncas-step2 is-locked/, 'les motivations doivent être verrouillées');
+  engine.setValue('motive0', 'S');
+  engine.submit();
+  assert.notStrictEqual(engine.value('stage0'), 2, 'sans indice, on ne passe pas aux arguments');
+  engine.setValue('clues0', [true, true]);
+  engine.submit();
+  assert.strictEqual(engine.value('stage0'), 2, 'deux indices repérés ouvrent la suite');
 });
 
 test('S1 1.5 : sans justification, le tournoi n’est pas validé', () => {

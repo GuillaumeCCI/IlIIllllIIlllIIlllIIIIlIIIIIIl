@@ -327,6 +327,8 @@
 .lib-table tbody th { font-weight: 700; min-width: 160px; }
 .lib-review .lib-title { font-size: 1.5rem; margin: 2px 0 6px; }
 .lib-review-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+/* Dans le corrigé en 2 colonnes, les trois pistes se lisent l’une sous l’autre. */
+.k-review-grid .lib-review-grid { grid-template-columns: minmax(0, 1fr); }
 
 /* ── Adaptation aux écrans étroits ────────────────────────────────────── */
 @media (max-width: 1100px) {

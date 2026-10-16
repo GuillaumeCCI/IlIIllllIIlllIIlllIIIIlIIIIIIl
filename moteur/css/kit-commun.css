@@ -21,6 +21,12 @@
 /* ── Page et en-tête ──────────────────────────────────────────────────── */
 .k-page { display: grid; gap: 18px; }
 
+/* Corrigé en carrés plutôt qu'en longues bandes : 2 par ligne (3 avec
+ * `is-3`), une seule colonne sur petit écran. */
+.k-review-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+.k-review-grid.is-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { .k-review-grid, .k-review-grid.is-3 { grid-template-columns: minmax(0, 1fr); } }
+
 .k-head { display: flex; align-items: flex-start; gap: 18px; }
 
 .k-head-symbol { display: grid; place-items: center; width: 70px; height: 70px; border-radius: 50%; background: var(--tint); color: var(--accent); flex-shrink: 0; }

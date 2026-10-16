@@ -71,7 +71,7 @@
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: 'Vos analyses, réplique par réplique' })}
       ${kit.result(right, lines.length, 'répliques bien analysées')}
-      <div class="check-review-grid">${lines.map((l, i) => {
+      <div class="k-review-grid">${lines.map((l, i) => {
         const ok = act(i) === l.answer;
         return `<section class="k-panel">
           <p class="k-label">Prise de parole ${i + 1}</p>
