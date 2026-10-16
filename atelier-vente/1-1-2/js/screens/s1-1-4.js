@@ -161,7 +161,7 @@
             return `<span class="${clue ? (found ? 'is-found' : 'is-missed') : found ? 'is-extra' : ''}">${esc(word)}</span>`;
           }).join(' ')}</p>
           <p class="k-muted">Indices attendus : ${esc(expectedClues.join(', '))}. Surlignés en vert ceux que vous avez repérés, en pointillés ceux qui vous ont échappé.</p>
-          <p class="review-line">${kit.picked(okMotive, motiveOf(motive(c))?.label, expectedMotive.label, 'Motivation')}</p>
+          ${kit.picked(okMotive, motiveOf(motive(c))?.label, expectedMotive.label, 'Motivation')}
           <ul class="soncas-args-review">${item.arguments.map((text, i) => {
             const expected = item.answers.includes(i);
             const chosen = args(c).includes(i);

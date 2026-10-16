@@ -138,7 +138,7 @@
             }).join('')}</div>
             <div class="ir-note"><span class="ir-bulb">${icon('lightbulb', { size: 26 })}</span>
               <div><p>${lead ? `<strong>${esc(lead)}</strong> ` : ''}${esc(rest)}</p>
-              <p class="ir-trio">${kit.picked(okCategory, label(category(i)), label(s.category), 'Trio')}</p></div>
+              ${kit.picked(okCategory, label(category(i)), label(s.category), 'Trio')}</div>
             </div>
           </div>
         </section>`;

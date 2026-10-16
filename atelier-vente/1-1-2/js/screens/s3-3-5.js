@@ -73,11 +73,11 @@
       ${kit.result(right, lines.length, 'répliques bien analysées')}
       <div class="k-review-grid">${lines.map((l, i) => {
         const ok = act(i) === l.answer;
-        return `<section class="k-panel">
-          <p class="k-label">Prise de parole ${i + 1}</p>
-          <blockquote class="check-review-quote">“ ${esc(l.text)} ”</blockquote>
-          <p class="review-line">${kit.picked(ok, label(act(i)), label(l.answer))}</p>
-          ${ex.inlineNote(l.why, ok ? 'good' : 'neutral')}
+        return `<section class="k-panel check-review">
+          <p class="check-review-label">Prise de parole ${i + 1}</p>
+          <blockquote class="check-review-quote">« ${esc(l.text)} »</blockquote>
+          ${kit.picked(ok, label(act(i)), label(l.answer))}
+          ${kit.explain(l.why)}
           ${act(i) === 'push' ? kit.yours('Votre question de contrôle', ex.value(`q${i}`)) : ''}
           ${l.model ? kit.model('Question de contrôle possible', l.model) : ''}
         </section>`;

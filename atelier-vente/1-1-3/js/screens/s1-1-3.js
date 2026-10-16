@@ -100,9 +100,9 @@
         return `<section class="k-panel ear-review">
           <p class="k-label">Objection ${String(i + 1).padStart(2, '0')} · ${esc(c.topic)}</p>
           <blockquote class="ear-review-quote">“ ${esc(c.quote)} ”</blockquote>
-          <p class="review-line">${kit.picked(okN, natureOf(nature(i)).label, natureOf(c.nature).label, 'Nature')}</p>
-          <p class="review-line">${kit.picked(okG, gestureOf(gesture(i)).label, gestureOf(c.gesture).label, 'Premier geste')}</p>
-          ${ex.inlineNote(c.why, okN && okG ? 'good' : 'neutral')}
+          <div class="k-pick-pair">${kit.picked(okN, natureOf(nature(i)).label, natureOf(c.nature).label, 'Nature')}
+          ${kit.picked(okG, gestureOf(gesture(i)).label, gestureOf(c.gesture).label, 'Premier geste')}</div>
+          ${kit.explain(c.why)}
         </section>`;
       }).join('')}</div>
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;

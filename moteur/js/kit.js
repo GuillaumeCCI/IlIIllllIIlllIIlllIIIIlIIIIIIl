@@ -410,13 +410,23 @@
 
   const mark = (ok, label = '') => ex().verdictMark(ok, label);
 
-  /* Une réponse à choix dans le corrigé : d'abord le choix de l'apprenant,
-   * son verdict, puis la bonne réponse s'il s'est trompé.
-   * « Nature · vous avez choisi : X ✓ » ou « Vous avez choisi : X ✗ ·
-   * Bonne réponse : Y ». */
-  const picked = (ok, chosen, expected, topic = '') =>
-    `<span>${topic ? `${esc(topic)} · vous avez choisi` : 'Vous avez choisi'} : <strong>${esc(chosen || 'rien')}</strong></span>
-    ${mark(ok, ok ? 'bonne réponse' : 'à revoir')}${ok ? '' : `<span class="k-expected">Bonne réponse : <strong>${esc(expected)}</strong></span>`}`;
+  /* Une réponse à choix dans le corrigé, en deux tuiles : à gauche le choix
+   * de l'apprenant (vert s'il est juste, rouge sinon), à droite la réponse
+   * attendue, seulement s'il s'est trompé. `topic` précise la question
+   * quand il y en a plusieurs (« Nature », « Premier geste »…). */
+  const picked = (ok, chosen, expected, topic = '') => {
+    const tile = (state, label, value) => `<div class="k-pick-tile ${state}">
+      <span class="k-pick-icon">${icon(state === 'is-ko' ? 'close' : 'check', { size: 20, strokeWidth: 3 })}</span>
+      <span><small>${esc(label)}</small><strong>${esc(value)}</strong></span>
+    </div>`;
+    const about = topic ? `${topic} · ` : '';
+    return `<div class="k-pick">${ok
+      ? tile('is-ok', `${about}Votre choix, juste`, chosen)
+      : tile('is-ko', `${about}Votre choix`, chosen || 'Aucune réponse') + tile('is-ok', `${about}Réponse attendue`, expected)}</div>`;
+  };
+
+  /* L'explication du corrigé, avec son ampoule. */
+  const explain = text => `<div class="k-explain"><span class="k-explain-icon">${icon('lightbulb', { size: 22 })}</span><div><strong>Explication</strong><p>${esc(text)}</p></div></div>`;
 
   /* La production de l'apprenant, citée telle quelle. */
   const yours = (title, text) =>
@@ -641,7 +651,7 @@
     matrix, answered, score, choiceButtons,
     mountChoiceGrid, mountCompare, reach, reveal,
     deckPlaced, deckCurrent, deckPlace, deckUndo, deckSkip, deckReopen, deckDots, deckRecap, deckReview,
-    mark, picked, yours, model, result,
+    mark, picked, explain, yours, model, result,
     on, dialogs, live, onDrop, refreshLive, commit, openDialog
   });
 })(globalThis);

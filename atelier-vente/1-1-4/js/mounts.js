@@ -552,7 +552,7 @@
               const accepted = [].concat(f.answer || []);
               if (!accepted.length) return `<p class="review-line">${esc(f.label)} : <strong>${esc(opt(val(i, f)))}</strong></p>`;
               const ok = accepted.includes(val(i, f));
-              return `<p class="review-line">${kit().picked(ok, opt(val(i, f)), accepted.map(opt).join(' ou '), f.label)}</p>${f.why ? ex().inlineNote(f.why, ok ? 'good' : 'neutral') : ''}`;
+              return `${kit().picked(ok, opt(val(i, f)), accepted.map(opt).join(' ou '), f.label)}${f.why ? kit().explain(f.why) : ''}`;
             }
             if (f.type === 'chips') {
               const labels = chips(i, f).map(id => (f.options.find(o => o.id === id) || {}).label).filter(Boolean);

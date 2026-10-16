@@ -186,7 +186,7 @@ test('une réponse fausse est bien marquée fausse dans le corrigé', () => {
   const sandbox = load('js/screens/s3-3-3.js');
   const content = sandbox.window.ATELIER_S3['3.3'];
   complete(sandbox, engine => content.cases.forEach((_, i) => { engine.setValue(`c${i}_technique`, 'detail'); engine.setValue(`c${i}_text`, 'Texte.'); }));
-  assert.match(main(sandbox), /mark-ko/, 'les erreurs doivent apparaître');
+  assert.match(main(sandbox), /mark-ko|k-pick-tile is-ko/, 'les erreurs doivent apparaître');
 });
 
 console.log('\nSauvegarde');
