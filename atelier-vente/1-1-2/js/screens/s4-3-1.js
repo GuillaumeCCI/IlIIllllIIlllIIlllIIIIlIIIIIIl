@@ -57,11 +57,8 @@
     return left ? [{ key: 'placed', message: `Il reste ${kit.plural(left, 'carte')} à classer.` }] : [];
   }
 
-  function feedback() {
-    const placed = kit.deckPlaced(total);
-    const right = cards.filter((card, i) => placed[i] === card.answer).length;
-    return [`${right} carte${right > 1 ? 's' : ''} sur ${total} correctement classée${right > 1 ? 's' : ''}.`];
-  }
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   kit.on({
     place: el => { kit.deckPlace(total, el.dataset.zone); kit.commit(); },

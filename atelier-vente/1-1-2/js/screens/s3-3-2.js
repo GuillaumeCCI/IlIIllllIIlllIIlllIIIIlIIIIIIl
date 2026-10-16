@@ -80,10 +80,8 @@
     return left ? [{ key: 'match', message: `Associez encore ${kit.plural(left, 'réaction')}.` }] : [];
   }
 
-  function feedback() {
-    const right = reactions.filter((r, i) => matches()[i] === r.answer).length;
-    return [`${right} association${right > 1 ? 's' : ''} juste${right > 1 ? 's' : ''} sur ${reactions.length}.`];
-  }
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   kit.on({
     pick: el => { const n = Number(el.dataset.number); ex.setValue('picked', picked() === n ? null : n); kit.commit(); },

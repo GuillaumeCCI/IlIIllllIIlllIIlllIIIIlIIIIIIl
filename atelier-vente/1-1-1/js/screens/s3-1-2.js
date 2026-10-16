@@ -88,11 +88,8 @@
     return left ? [{ key: 'placed', message: `Il reste ${left} carte${left > 1 ? 's' : ''} à associer.` }] : [];
   }
 
-  function feedback() {
-    const list = placement.list();
-    const right = cards.filter((card, i) => list[i] === card.answer).length;
-    return [`Vous avez associé correctement ${right} carte${right > 1 ? 's' : ''} sur ${cards.length}.`];
-  }
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   ex.mount('s3-1.2', {
     screen, validate, feedback, compactFeedback: true,

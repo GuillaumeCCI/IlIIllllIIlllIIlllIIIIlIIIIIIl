@@ -88,9 +88,8 @@
   }
 
   function feedback() {
-    const list = placement.list();
-    const right = cards.filter((card, i) => list[i] === card.answer).length;
-    return [`Vous avez classé correctement ${right} réponse${right > 1 ? 's' : ''} sur ${cards.length}.`, content.feedback[0]];
+    // Le score est déjà en tête du corrigé : seule la leçon reste.
+    return [content.feedback[0]];
   }
 
   ex.mount('s4-2.1', {

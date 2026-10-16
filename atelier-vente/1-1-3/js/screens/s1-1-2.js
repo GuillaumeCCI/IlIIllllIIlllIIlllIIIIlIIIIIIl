@@ -108,10 +108,8 @@
     return left ? [{ key: 'pick', message: `Associez encore ${kit.plural(left, 'rôle')} à une étape.` }] : [];
   }
 
-  function feedback() {
-    const right = roles.filter((role, i) => pick(i) === role.answer).length;
-    return [`${right} rôle${right > 1 ? 's' : ''} sur ${roles.length} correctement associé${right > 1 ? 's' : ''}.`];
-  }
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   kit.on({
     verb: el => { choose(el.dataset.verb); kit.commit(); },

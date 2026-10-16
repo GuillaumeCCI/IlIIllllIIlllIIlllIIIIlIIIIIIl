@@ -95,10 +95,8 @@
     return true;
   }
 
-  function feedback() {
-    const right = series.filter((s, i) => choice(i) === s.wrong).length;
-    return [`${right} erreur${right > 1 ? 's' : ''} repérée${right > 1 ? 's' : ''} sur ${series.length}.`];
-  }
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   kit.on({ serie: el => { ex.setValue('serie', Number(el.dataset.index)); kit.commit(); } });
 

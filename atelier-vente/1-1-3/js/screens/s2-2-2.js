@@ -91,10 +91,8 @@
     return left ? [{ key: 'links', message: `Associez encore ${kit.plural(left, 'erreur')} à sa conséquence.` }] : [];
   }
 
-  function feedback() {
-    const right = errors.filter((e, i) => links()[i] === e.answer).length;
-    return [`${right} association${right > 1 ? 's' : ''} juste${right > 1 ? 's' : ''} sur ${errors.length}.`];
-  }
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   kit.on({
     error: el => {

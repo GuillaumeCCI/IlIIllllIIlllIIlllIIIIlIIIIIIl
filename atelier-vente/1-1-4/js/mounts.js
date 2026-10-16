@@ -140,11 +140,8 @@
       return left ? [{ key: 'placed', message: `Il reste ${kit().plural(left, 'carte')} à classer.` }] : [];
     }
 
-    function feedback() {
-      const placed = kit().deckPlaced(total);
-      const right = cards.filter((card, i) => placed[i] === card.answer).length;
-      return [`${right} réponse${right > 1 ? 's' : ''} juste${right > 1 ? 's' : ''} sur ${total}.`];
-    }
+    // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+    const feedback = () => [];
 
     kit().on({
       'dk-pick': el => { ex().setValue('pick', el.dataset.zone); kit().commit(); },
@@ -275,10 +272,8 @@
       return true;
     }
 
-    function feedback() {
-      const right = cards.filter((c, i) => link(i) === c.answer).length;
-      return [`${right} association${right > 1 ? 's' : ''} juste${right > 1 ? 's' : ''} sur ${n}.`];
-    }
+    // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+    const feedback = () => [];
 
     kit().on({
       'mt-zone': el => { assign(Number(el.dataset.zone)); kit().commit(); },

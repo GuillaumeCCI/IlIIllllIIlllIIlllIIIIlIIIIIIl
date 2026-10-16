@@ -82,8 +82,8 @@
   }
 
   const feedback = () => {
-    const right = kit.score('row', answers);
-    return [`Score : ${right} / ${rows.length}. Un argument est pertinent s’il fait gagner du temps sur l’administratif ; tout le reste est une dérive.`];
+    // Le score est déjà dans la jauge du corrigé : seule la leçon reste.
+    return [`Un argument est pertinent s’il fait gagner du temps sur l’administratif ; tout le reste est une dérive.`];
   };
 
   kit.dialogs({ need: { title: 'La priorité du client', html: `<p>« ${esc(content.priority)} »</p><p class="k-muted">Un argument pertinent lui fait gagner du temps sur ses tâches administratives. Le reste, même vrai, l’éloigne de sa priorité.</p>` } });

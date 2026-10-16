@@ -105,10 +105,8 @@
     return true;
   }
 
-  function feedback() {
-    const right = lines.filter((l, i) => act(i) === l.answer).length;
-    return [`${right} réplique${right > 1 ? 's' : ''} sur ${lines.length} correctement analysée${right > 1 ? 's' : ''}.`];
-  }
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   kit.on({
     choose: el => {

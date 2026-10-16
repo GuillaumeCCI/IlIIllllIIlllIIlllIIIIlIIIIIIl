@@ -72,7 +72,8 @@
     return errors;
   }
 
-  const feedback = () => [`Votre total : ${total()} / ${max}. Le corrigé propose ${reference} / ${max} : ce pitch énumère des caractéristiques sans bénéfice, sans preuve et sur un ton hésitant (« je pense »).`];
+  // Le total et le repère sont déjà en tête du corrigé : seule la leçon reste.
+  const feedback = () => [`Ce pitch énumère des caractéristiques sans bénéfice, sans preuve et sur un ton hésitant (« je pense »).`];
 
   kit.live(() => ({ total: esc(totalText()), score: esc(totalText().replace('Total : ', '')) }));
 

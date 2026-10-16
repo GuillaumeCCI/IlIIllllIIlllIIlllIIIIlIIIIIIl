@@ -64,10 +64,8 @@
     return left ? [{ key: 'mark0', message: `Surlignez encore ${kit.plural(left, 'passage')}.` }] : [];
   }
 
-  function feedback() {
-    const right = passages.filter((p, i) => marked(i) === p.part).length;
-    return [`${right} passage${right > 1 ? 's' : ''} sur ${passages.length} correctement repéré${right > 1 ? 's' : ''}.`];
-  }
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   kit.on({
     'sw-tool': el => { ex.setValue('tool', el.dataset.id); kit.commit(); },

@@ -103,14 +103,8 @@
   }
 
   function feedback() {
-    const list = placement.list();
-    const right = cards.filter((card, i) => Number(list[i]) === card.position).length;
-    return [
-      right === cards.length
-        ? 'Les cinq phrases sont dans l’ordre attendu.'
-        : `${right} phrase${right > 1 ? 's' : ''} sur ${cards.length} ${right > 1 ? 'sont' : 'est'} à la place attendue.`,
-      content.feedback[0]
-    ];
+    // Le score est déjà en tête du corrigé : seule la leçon reste.
+    return [content.feedback[0]];
   }
 
   ex.mount('s4-1.1', {

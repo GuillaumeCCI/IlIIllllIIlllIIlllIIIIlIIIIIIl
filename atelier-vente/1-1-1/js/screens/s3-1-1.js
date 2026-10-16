@@ -76,11 +76,8 @@
   }
 
   /* Le détail est déjà dans l'écran de relecture : le pavé reste court. */
-  function feedback() {
-    const list = placement.list();
-    const right = cards.filter((card, i) => list[i] === card.answer).length;
-    return [`Vous avez classé correctement ${right} carte${right > 1 ? 's' : ''} sur ${cards.length}.`];
-  }
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   ex.mount('s3-1.1', {
     screen, validate, feedback, compactFeedback: true,

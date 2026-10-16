@@ -129,10 +129,8 @@
     return left ? [{ key: 'case', message: `Il reste ${kit.plural(left, 'cas', 'cas')} à traiter.` }] : [];
   }
 
-  function feedback() {
-    const right = cases.filter((c, i) => nature(i) === c.nature && gesture(i) === c.gesture).length;
-    return [`${right} cas sur ${cases.length} entièrement juste${right > 1 ? 's' : ''} : nature et premier geste.`];
-  }
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   kit.on({
     nature: el => { const i = current(); ex.setValue(`nature${i}`, el.dataset.id); ex.setValue(`edit${i}`, false); ex.setValue('case', i); kit.commit(); },

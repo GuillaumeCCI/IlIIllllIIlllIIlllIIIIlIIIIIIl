@@ -38,8 +38,8 @@
   }
 
   const feedback = () => {
-    const right = kit.score('row', answers);
-    return [`${right} affirmation${right > 1 ? 's' : ''} sur ${rows.length} correctement qualifiée${right > 1 ? 's' : ''}. Un superlatif sans source est toujours un trou de preuve.`];
+    // Le score est déjà en tête du corrigé : seule la leçon reste.
+    return [`Un superlatif sans source est toujours un trou de preuve.`];
   };
 
   kit.live(() => ({ aside: counter() }));

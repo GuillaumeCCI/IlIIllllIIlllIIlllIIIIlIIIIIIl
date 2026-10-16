@@ -230,7 +230,8 @@
     return true;
   }
 
-  const feedback = () => [`Auto-évaluation : ${total()} / ${max}. Comparez votre texte au pitch modèle du corrigé.`];
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   kit.on({
     record: () => toggleRecording(),

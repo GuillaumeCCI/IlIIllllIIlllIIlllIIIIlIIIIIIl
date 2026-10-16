@@ -353,8 +353,7 @@ test('S3 1.1 : classer les 8 cartes, annuler, puis valider', () => {
   engine.submit();
   assert.ok(core.isDone('s3-1.1'), 'les 8 cartes classées terminent l’exercice');
 
-  const feedback = sandbox.document.querySelector('#feedback');
-  assert.match(feedback.innerHTML, /8 cartes? sur 8|correctement 8/, 'le corrigé doit annoncer le score');
+  assert.match(sandbox.document.querySelector('#main').innerHTML, /result-score">8 \/ 8/, 'le corrigé doit annoncer le score');
 });
 
 test('S4 1.1 : une position déjà prise libère la carte précédente', () => {
@@ -380,7 +379,7 @@ test('S4 1.1 : l’ordre correct est reconnu comme complet', () => {
   cards.forEach((card, i) => place.place(i, card.position));
   engine.submit();
   assert.ok(core.isDone('s4-1.1'), 'les 5 phrases placées terminent l’exercice');
-  assert.match(sandbox.document.querySelector('#feedback').innerHTML, /ordre attendu/, 'le corrigé doit montrer l’ordre');
+  assert.match(sandbox.document.querySelector('#main').innerHTML, /result-score">5 \/ 5 à la place attendue/, 'le corrigé doit montrer l’ordre');
 });
 
 test('S4 1.2 : moins de 4 maladresses bloque, 4 ouvrent la réécriture', () => {

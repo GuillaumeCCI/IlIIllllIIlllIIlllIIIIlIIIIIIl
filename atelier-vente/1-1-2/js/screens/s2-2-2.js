@@ -104,10 +104,8 @@
     return left ? [{ key: 'ranks', message: `Placez encore ${kit.plural(left, 'proposition')} sur l’échelle.` }] : [];
   }
 
-  function feedback() {
-    const right = cards.filter((card, i) => ranks()[i] === card.rank).length;
-    return [`${right} proposition${right > 1 ? 's' : ''} sur ${cards.length} à la place attendue.`];
-  }
+  // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
+  const feedback = () => [];
 
   kit.on({
     select: el => {
