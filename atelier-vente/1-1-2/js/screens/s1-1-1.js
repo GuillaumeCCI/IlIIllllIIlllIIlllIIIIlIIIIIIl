@@ -138,7 +138,7 @@
             }).join('')}</div>
             <div class="ir-note"><span class="ir-bulb">${icon('lightbulb', { size: 26 })}</span>
               <div><p>${lead ? `<strong>${esc(lead)}</strong> ` : ''}${esc(rest)}</p>
-              <p class="ir-trio">Trio : <strong>${esc(label(s.category))}</strong> ${okCategory ? kit.mark(true, 'votre réponse') : kit.mark(false, `vous aviez choisi : ${label(category(i)) || 'rien'}`)}</p></div>
+              <p class="ir-trio">${kit.picked(okCategory, label(category(i)), label(s.category), 'Trio')}</p></div>
             </div>
           </div>
         </section>`;

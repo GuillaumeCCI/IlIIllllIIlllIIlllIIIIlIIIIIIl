@@ -410,6 +410,14 @@
 
   const mark = (ok, label = '') => ex().verdictMark(ok, label);
 
+  /* Une réponse à choix dans le corrigé : d'abord le choix de l'apprenant,
+   * son verdict, puis la bonne réponse s'il s'est trompé.
+   * « Nature · vous avez choisi : X ✓ » ou « Vous avez choisi : X ✗ ·
+   * Bonne réponse : Y ». */
+  const picked = (ok, chosen, expected, topic = '') =>
+    `<span>${topic ? `${esc(topic)} · vous avez choisi` : 'Vous avez choisi'} : <strong>${esc(chosen || 'rien')}</strong></span>
+    ${mark(ok, ok ? 'bonne réponse' : 'à revoir')}${ok ? '' : `<span class="k-expected">Bonne réponse : <strong>${esc(expected)}</strong></span>`}`;
+
   /* La production de l'apprenant, citée telle quelle. */
   const yours = (title, text) =>
     `<div class="own-answer"><h4>${esc(title)}</h4><p>${filled(text) ? `« ${esc(text)} »` : '<em>Non renseigné.</em>'}</p></div>`;
@@ -633,7 +641,7 @@
     matrix, answered, score, choiceButtons,
     mountChoiceGrid, mountCompare, reach, reveal,
     deckPlaced, deckCurrent, deckPlace, deckUndo, deckSkip, deckReopen, deckDots, deckRecap, deckReview,
-    mark, yours, model, result,
+    mark, picked, yours, model, result,
     on, dialogs, live, onDrop, refreshLive, commit, openDialog
   });
 })(globalThis);
