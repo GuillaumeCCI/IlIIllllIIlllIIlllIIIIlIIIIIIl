@@ -392,12 +392,12 @@ button.crash-passage:hover { background: #fff1d6; }
 
 /* Courrier : lettre */
 .fm-skin[data-skin="mail"] { background: #fffefb; border-color: #e7e1d6; box-shadow: 0 8px 22px rgb(60 50 30 / 8%); }
-.sk-head.sk-mail { flex-direction: column; padding: 22px 28px 0; font-family: Georgia, 'Times New Roman', serif; color: #2b2a33; }
+.sk-head.sk-mail { flex-direction: column; padding: 22px 28px 0; color: #2b2a33; }
 .sk-mail .sk-to { align-self: flex-end; text-align: right; line-height: 1.5; }
 .sk-mail .sk-line { margin-top: 14px; }
 .fm-skin[data-skin="mail"] .sk-body { padding: 14px 28px; }
-#main .fm-skin[data-skin="mail"] textarea { font-family: Georgia, 'Times New Roman', serif; background: #fffefb; }
-.sk-foot.sk-mail { padding: 0 28px 22px; font-family: Georgia, 'Times New Roman', serif; color: #2b2a33; font-style: italic; }
+#main .fm-skin[data-skin="mail"] textarea { background: #fffefb; }
+.sk-foot.sk-mail { padding: 0 28px 22px; color: #2b2a33; font-style: italic; }
 
 /* ── Corrigé en accordéon (content.review) ────────────────────────────── */
 .rva { display: grid; gap: 10px; }
