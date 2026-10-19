@@ -220,6 +220,14 @@
 .fm-step .fm-intro { font-size: 1.08rem; }
 .fm-tip { display: flex; align-items: flex-start; gap: 12px; padding: 18px 20px; border-radius: 14px; background: #fff3e4; color: var(--navy); font-size: 1rem; line-height: 1.5; }
 .fm-tip .icon { flex-shrink: 0; }
+.fm-side-col { display: grid; gap: 16px; }
+.fm-res { display: grid; gap: 10px; padding: 20px; border-radius: 14px; background: #fff; box-shadow: var(--shadow); }
+.fm-res-title { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.05rem; color: var(--navy); }
+.fm-res-title .icon { color: var(--accent); flex-shrink: 0; }
+.fm-res-text { color: #4c5a7d; font-size: .95rem; line-height: 1.45; }
+#main .fm-res .k-dialog-button { justify-content: center; width: 100%; margin-top: 4px; background: var(--accent); color: #fff; box-shadow: 0 6px 16px rgb(31 79 216 / 25%); }
+#main .fm-res .k-dialog-button::before { display: none; }
+#main .fm-res .k-dialog-button:hover { background: #1a43bd; }
 .fm-tip .icon { color: #f0712f; }
 .fm-tip strong { display: block; margin-bottom: 2px; }
 .fm-step .fm-prev:disabled { opacity: .45; cursor: default; }
