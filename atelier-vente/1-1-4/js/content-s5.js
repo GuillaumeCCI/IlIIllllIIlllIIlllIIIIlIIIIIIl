@@ -189,7 +189,12 @@ window.ATELIER_S5 = {
     title: 'Rédigez votre relance',
     subtitle: 'Un mail court qui donne une nouvelle raison de reprendre l’échange.',
     tour: [
-      { target: '.fm-scene .sc-facts:first-child', title: 'La situation', text: 'Madame Riveau a reçu votre offre il y a 10 jours. Repérez ses priorités et l’élément nouveau : le retour positif d’une entreprise de son secteur.' },
+      { target: '.fm-scene .sc-facts:first-child', title: 'La situation',
+      items: [
+        { symbol: 'document', tone: 'blue', text: 'Madame Riveau a reçu votre offre il y a 10 jours.' },
+        { symbol: 'users', tone: 'blue', text: 'Repérez ses priorités.' },
+        { symbol: 'star', tone: 'gold', text: 'Et l’élément nouveau : le retour positif d’une entreprise de son secteur.' }
+      ] },
       { target: '.fm-scene .sc-facts:nth-child(2)', title: 'Votre mission', text: 'Votre mail doit contenir trois choses :',
         items: [
           { key: 'C', tone: 'blue', text: 'le contexte : pourquoi vous écrivez ;' },

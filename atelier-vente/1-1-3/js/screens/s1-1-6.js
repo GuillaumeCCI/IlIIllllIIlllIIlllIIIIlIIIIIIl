@@ -138,11 +138,23 @@
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   kit.tour('s1-1.6', [
-    { target: '.six-menu', title: 'Les 6 étapes', text: 'Voici les six étapes de la méthode. Vous les traitez une par une : l’étape en cours est surlignée, et chaque étape terminée est cochée.' },
-    { target: '.six-objection', title: 'L’objection du client', text: 'C’est l’objection à laquelle vous répondez. Cliquez sur « Changer » pour en choisir une autre : les phrases déjà écrites sont conservées.' },
+    { target: '.six-menu', title: 'Les 6 étapes', text: 'Voici les six étapes de la méthode, à traiter une par une.',
+      items: [
+        { symbol: 'target', tone: 'blue', text: 'L’étape en cours est surlignée.' },
+        { symbol: 'check', tone: 'green', text: 'Une étape terminée est cochée.' }
+      ] },
+    { target: '.six-objection', title: 'L’objection du client', text: 'C’est l’objection à laquelle vous répondez.',
+      items: [
+        { symbol: 'pencil', tone: 'blue', text: 'Pour en choisir une autre, cliquez sur « Changer ».' },
+        { symbol: 'check', tone: 'green', text: 'Vos phrases déjà écrites sont conservées.' }
+      ] },
     { target: '.six-main .field', title: 'Votre phrase', text: 'Écrivez ici ce que vous diriez au client pour cette étape, en une phrase précise, comme si vous lui parliez.' },
     { target: '.six-main .k-dialog-button', title: 'Un repère', text: 'Un doute ? Ce bouton ouvre un conseil pour l’étape en cours.' },
-    { target: '.six-actions .k-submit', title: 'Enregistrer et continuer', text: 'Votre phrase est enregistrée et vous passez à l’étape suivante. Après la sixième, vous relirez vos phrases pour vous auto-évaluer.' }
+    { target: '.six-actions .k-submit', title: 'Enregistrer et continuer',
+      items: [
+        { symbol: 'arrowRight', tone: 'blue', text: 'Votre phrase est enregistrée et vous passez à l’étape suivante.' },
+        { symbol: 'checkCircle', tone: 'green', text: 'Après la sixième étape, vous relisez vos phrases pour vous auto-évaluer.' }
+      ] }
   ]);
 
   ex.mount('s1-1.6', { screen, validate, intercept, feedback, compactFeedback: true });

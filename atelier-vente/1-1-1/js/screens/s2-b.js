@@ -129,10 +129,18 @@
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   if (window.AtelierKit) window.AtelierKit.tour('s2-B', [
     { target: '.replica-screen .client-card', title: 'La phrase du client', text: 'Le client vous dit : « Votre solution me paraît un peu chère. » C’est à cette phrase que le vendeur répond.' },
-    { target: '.replica-seller', title: 'La réplique du vendeur', text: 'Elle ressemble à une reformulation, mais elle dévie vers une autre attitude. Il y a quatre répliques à analyser, une à la fois.' },
+    { target: '.replica-seller', title: 'La réplique du vendeur',
+      items: [
+        { symbol: 'chat', tone: 'coral', text: 'Elle ressemble à une reformulation, mais elle dévie vers une autre attitude.' },
+        { symbol: 'list', tone: 'blue', text: 'Il y a quatre répliques à analyser, une à la fois.' }
+      ] },
     { target: '.replica-cards .replica-card:first-child', title: '1 · L’attitude identifiée', text: 'Choisissez l’attitude vers laquelle le vendeur dévie : jugement, interprétation, conseil…' },
     { target: '.replica-cards .replica-card:nth-child(2)', title: '2 · Votre reformulation', text: 'Écrivez une vraie reformulation : redites ce que le client exprime, sans rien ajouter ni interpréter.' },
-    { target: '.replica-progress', title: 'Votre avancement', text: 'La barre et les points montrent la réplique en cours. « Réponse suivante » passe à la réplique d’après.' }
+    { target: '.replica-progress', title: 'Votre avancement',
+      items: [
+        { symbol: 'chart', tone: 'blue', text: 'La barre et les points montrent la réplique en cours.' },
+        { symbol: 'arrowRight', tone: 'blue', text: '« Réponse suivante » passe à la réplique d’après.' }
+      ] }
   ]);
 
   ex.mount('s2-B', { screen, validate, feedback, onMount: () => core.wireRubric(window.ATELIER_S2.rubric) });

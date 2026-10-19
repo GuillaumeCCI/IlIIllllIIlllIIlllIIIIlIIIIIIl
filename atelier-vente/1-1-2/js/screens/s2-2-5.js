@@ -90,7 +90,11 @@
       after: 'Chaque note fait apparaître le critère suivant.' },
     { target: '.audit-total', title: 'Le total', text: 'Votre total sur 12 se calcule au fur et à mesure de vos notes.' },
     { target: '.audit-layout > .k-panel:nth-child(2)', title: 'Votre priorité', text: 'Écrivez LA modification qui rendrait ce pitch plus percutant : une seule, formulée concrètement.' },
-    { target: '.k-bar .k-submit', title: 'Valider mon audit', text: 'Vous découvrez ensuite le corrigé : vos notes comparées au repère, critère par critère. Un écart d’un point reste accepté.' }
+    { target: '.k-bar .k-submit', title: 'Valider mon audit', text: 'Vous découvrez ensuite le corrigé :',
+      items: [
+        { symbol: 'scales', tone: 'blue', text: 'vos notes sont comparées au repère, critère par critère ;' },
+        { symbol: 'check', tone: 'green', text: 'un écart d’un point reste accepté.' }
+      ] }
   ]);
 
   ex.mount('s2-2.5', { screen, validate, feedback, compactFeedback: true });

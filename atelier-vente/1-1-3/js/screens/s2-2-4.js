@@ -78,9 +78,17 @@
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   kit.tour('s2-2.4', [
     { target: '.spot-call', title: 'L’appel', text: 'Lisez cet appel de prospection du début à la fin. Le commercial y commet quatre maladresses.' },
-    { target: '.spot-inputs', title: 'Vos 4 repérages', text: 'Notez une erreur précise par ligne, en quelques mots. L’ordre n’a pas d’importance.' },
+    { target: '.spot-inputs', title: 'Vos 4 repérages',
+      items: [
+        { symbol: 'pencil', tone: 'blue', text: 'Notez une erreur précise par ligne, en quelques mots.' },
+        { symbol: 'info', tone: 'blue', text: 'L’ordre n’a pas d’importance.' }
+      ] },
     { target: '.spot-count', title: 'Votre avancement', text: 'Chaque ligne remplie allume une pastille. Il en faut quatre.' },
-    { target: '.spot-actions', title: 'Indice et vérification', text: 'Un doute ? « Voir un indice » vous oriente. Une fois vos quatre lignes écrites, vérifiez vos repérages pour découvrir le corrigé.' }
+    { target: '.spot-actions', title: 'Indice et vérification',
+      items: [
+        { symbol: 'lightbulb', tone: 'gold', text: 'Un doute ? « Voir un indice » vous oriente.' },
+        { symbol: 'checkCircle', tone: 'green', text: 'Une fois vos quatre lignes écrites, vérifiez vos repérages pour découvrir le corrigé.' }
+      ] }
   ]);
 
   ex.mount('s2-2.4', { screen, validate, feedback, compactFeedback: true });

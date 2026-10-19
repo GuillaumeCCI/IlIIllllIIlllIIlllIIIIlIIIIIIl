@@ -663,14 +663,19 @@
    * Suivant, Passer). Elle se lance d'elle-même la première fois que
    * l'écran d'exercice apparaît (mémorisé dans le navigateur), et
    * `tourButton()` permet de la revoir. `steps` : [{ target, title, text,
-   * items, after }] ; `items` ([{ key, text, tone }]) s'affiche en liste à
-   * pastilles entre `text` et `after`.
+   * items, after }] ; `items` ([{ key | symbol, text, tone }]) s'affiche en
+   * liste à pastilles (lettre ou icône) entre `text` et `after` : une ligne
+   * par information, jamais plusieurs idées à la suite.
    * `target` étant un sélecteur ; plusieurs, séparés par des virgules,
    * forment une seule zone qui les englobe. Une zone absente est sautée.
    * Styles : extras-commun.css (.tour-*). */
   let tourSteps = [];
   let tourKey = '';
   const tourButton = () => `<button type="button" class="text-button with-icon tour-replay" data-act="tour">${icon('question', { size: 18 })}<span>Visite guidée</span></button>`;
+
+  // Espace insécable devant « » : ? ! et après « : jamais un signe seul en
+  // début de ligne.
+  const tight = text => esc(text).replace(/« /g, '« ').replace(/ ([»:;?!])/g, ' $1');
 
   function tourStart() {
     const doc = root.document;
@@ -714,9 +719,9 @@
       const s = steps[at];
       const last = at === steps.length - 1;
       card.innerHTML = `<p class="tour-count">${at + 1} / ${steps.length}</p>
-        <h2 id="tour-title">${esc(s.title)}</h2>${s.text ? `<p>${esc(s.text)}</p>` : ''}
-        ${s.items ? `<ul class="tour-items">${s.items.map(item => `<li><span class="tour-key tone-${esc(item.tone || 'blue')}">${esc(item.key)}</span><span>${esc(item.text)}</span></li>`).join('')}</ul>` : ''}
-        ${s.after ? `<p class="tour-after">${esc(s.after)}</p>` : ''}
+        <h2 id="tour-title">${esc(s.title)}</h2>${s.text ? `<p>${tight(s.text)}</p>` : ''}
+        ${s.items ? `<ul class="tour-items">${s.items.map(item => `<li><span class="tour-key tone-${esc(item.tone || 'blue')}">${item.symbol ? icon(item.symbol, { size: 16 }) : esc(item.key)}</span><span>${tight(item.text)}</span></li>`).join('')}</ul>` : ''}
+        ${s.after ? `<p class="tour-after">${tight(s.after)}</p>` : ''}
         <div class="tour-actions"><button type="button" class="text-button" data-tour="skip">${last ? '' : 'Passer'}</button>
           <span>${at ? '<button type="button" class="button secondary" data-tour="prev">Précédent</button>' : ''}
           <button type="button" class="button primary" data-tour="next">${last ? 'C’est parti !' : 'Suivant'}</button></span></div>`;

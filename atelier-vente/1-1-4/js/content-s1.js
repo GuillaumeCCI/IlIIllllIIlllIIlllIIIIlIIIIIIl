@@ -69,7 +69,11 @@ window.ATELIER_S1 = {
       { target: '.fm-scene', title: 'La scène sur pause', text: 'Dès le début du rendez-vous, le client demande le prix, et le commercial l’annonce aussitôt. La scène s’arrête là.' },
       { target: '.fm-main > div.fm-field:nth-of-type(1)', title: '1 · Diagnostiquer', text: 'Quel risque prend le commercial en donnant le prix si tôt ? Écrivez votre analyse.' },
       { target: '.fm-main > div.fm-field:nth-of-type(2)', title: '2 · Rejouer', text: 'Écrivez ce que vous répondriez au client à la place du commercial, comme si vous lui parliez.' },
-      { target: '.fm-actions', title: 'Repère et test', text: 'Un doute ? « Voir un repère » vous oriente. « Tester ma nouvelle réponse » affiche le corrigé.' }
+      { target: '.fm-actions', title: 'Repère et test',
+      items: [
+        { symbol: 'lightbulb', tone: 'gold', text: 'Un doute ? « Voir un repère » vous oriente.' },
+        { symbol: 'checkCircle', tone: 'green', text: '« Tester ma nouvelle réponse » affiche le corrigé.' }
+      ] }
     ],
     scene: [
       { info: 'Début du rendez-vous. Pause : le prix vient d’être annoncé.', symbol: 'pauseCircle' },
