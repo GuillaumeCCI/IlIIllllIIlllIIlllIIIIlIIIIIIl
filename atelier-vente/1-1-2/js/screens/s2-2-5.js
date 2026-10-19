@@ -40,7 +40,7 @@
     const reviewing = ex.reviewing();
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, note: content.note,
-        aside: `<p class="k-count">Score : <strong data-live="score">${esc(totalText().replace('Total : ', ''))}</strong></p>` })}
+        aside: `<p class="k-count">Score : <strong data-live="score">${esc(totalText().replace('Total : ', ''))}</strong></p>${reviewing ? '' : kit.tourButton()}` })}
       <section class="k-panel audit-pitch"><p class="k-label">Le pitch à analyser</p><p>${esc(content.pitch)}</p></section>
       <form class="audit-layout" novalidate>
         <section class="k-panel">
@@ -77,6 +77,21 @@
   const feedback = () => ['Ce pitch parle bénéfices, sur un ton assuré, avec une question pour finir ; mais aucune preuve ne vient appuyer ses promesses.'];
 
   kit.live(() => ({ total: esc(totalText()), score: esc(totalText().replace('Total : ', '')) }));
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s2-2.5', [
+    { target: '.audit-pitch', title: 'Le pitch à analyser', text: 'Lisez attentivement ce discours : c’est lui que vous allez évaluer.' },
+    { target: '.audit-layout > .k-panel:first-child .k-matrix', title: 'Notez le pitch', text: 'Pour chacun des six critères, choisissez une note :',
+      items: [
+        { key: '0', tone: 'coral', text: 'à retravailler ;' },
+        { key: '1', tone: 'gold', text: 'en bonne voie ;' },
+        { key: '2', tone: 'green', text: 'maîtrisé.' }
+      ],
+      after: 'Chaque note fait apparaître le critère suivant.' },
+    { target: '.audit-total', title: 'Le total', text: 'Votre total sur 12 se calcule au fur et à mesure de vos notes.' },
+    { target: '.audit-layout > .k-panel:nth-child(2)', title: 'Votre priorité', text: 'Écrivez LA modification qui rendrait ce pitch plus percutant : une seule, formulée concrètement.' },
+    { target: '.k-bar .k-submit', title: 'Valider mon audit', text: 'Vous découvrez ensuite le corrigé : vos notes comparées au repère, critère par critère. Un écart d’un point reste accepté.' }
+  ]);
 
   ex.mount('s2-2.5', { screen, validate, feedback, compactFeedback: true });
 })();

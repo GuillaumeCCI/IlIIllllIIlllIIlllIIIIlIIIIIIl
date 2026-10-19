@@ -15,8 +15,23 @@
 
   const counter = () => `<p class="k-count"><strong>${kit.answered('row', rows.length)} / ${rows.length}</strong> réponses</p>`;
 
+  // Le corrigé détaillé : votre réponse, la bonne réponse, l'explication.
+  const label = id => (content.columns.find(c => c.id === id) || {}).label || '';
+  // « Étayée : … » / « Trou de preuve : … » : la bonne réponse est déjà dite.
+  const reason = why => why.replace(/^[^:]+:\s*/, '').replace(/^./, c => c.toUpperCase());
+
+  function reviewScreen() {
+    return `${kit.answerReview({ subtitle: 'Voici vos réponses, accompagnées des bonnes réponses et d’une explication pour chaque affirmation.',
+        aside: `<p class="arv-score"><strong>${kit.score('row', answers)} / ${rows.length}</strong> bonnes réponses</p>`,
+        items: rows.map((row, i) => ({ text: `« ${row.text} »`, yours: label(ex.value(`row${i}`)), expected: label(row.answer), ok: ex.value(`row${i}`) === row.answer, why: reason(row.why) })) })}
+      ${core.feedbackBox()}
+      <div class="k-utility">${kit.reset()}</div>
+    </div>`;
+  }
+
   function screen() {
     const reviewing = ex.reviewing();
+    if (reviewing) return reviewScreen();
     const [first, ...rest] = content.pitch.split(/(?<=\.)\s/);
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: counter() })}

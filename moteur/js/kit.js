@@ -681,10 +681,9 @@
     layer.className = 'tour';
     layer.innerHTML = `<div class="tour-hole"></div><div class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tour-title" tabindex="-1"></div>`;
     doc.body.appendChild(layer);
-    // De la marge sous la page le temps de la visite : une zone tout en bas
-    // (la barre des boutons) peut alors remonter au centre de l'écran.
+    // Une zone collée au bas de la page (la barre des boutons) reçoit juste
+    // la marge qu'il faut pour ne pas toucher le bord de l'écran.
     const padding = doc.body.style.paddingBottom;
-    doc.body.style.paddingBottom = '45vh';
     const hole = layer.querySelector('.tour-hole');
     const card = layer.querySelector('.tour-card');
     let at = 0;
@@ -722,7 +721,11 @@
           <span>${at ? '<button type="button" class="button secondary" data-tour="prev">Précédent</button>' : ''}
           <button type="button" class="button primary" data-tour="next">${last ? 'C’est parti !' : 'Suivant'}</button></span></div>`;
       const el = doc.querySelector(s.target);
+      doc.body.style.paddingBottom = padding;
       el.scrollIntoView({ block: 'center', behavior: 'instant' });
+      const r = zone(s.target);
+      const over = r ? Math.ceil(r.bottom - (root.innerHeight - 40)) : 0;
+      if (over > 0) { doc.body.style.paddingBottom = `${over}px`; root.scrollBy(0, over); }
       place();
       // La bulle réapparaît en douceur à chaque zone.
       card.classList.remove('is-in');

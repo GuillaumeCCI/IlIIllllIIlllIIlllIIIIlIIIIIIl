@@ -185,7 +185,7 @@ test('une réponse fausse est bien marquée fausse dans le corrigé', () => {
   const sandbox = load('js/screens/s2-2-4.js');
   const rows = sandbox.window.ATELIER_S2['2.4'].rows;
   complete(sandbox, engine => rows.forEach((r, i) => engine.setValue(`row${i}`, r.answer === 'gap' ? 'proof' : 'gap')));
-  assert.match(main(sandbox), /is-wrong/, 'les erreurs doivent apparaître');
+  assert.match(main(sandbox), /is-wrong|arv-item is-ko/, 'les erreurs doivent apparaître');
 });
 
 console.log('\nSauvegarde');
