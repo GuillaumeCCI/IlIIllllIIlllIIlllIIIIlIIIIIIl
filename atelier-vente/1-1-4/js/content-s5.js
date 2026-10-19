@@ -188,6 +188,18 @@ window.ATELIER_S5 = {
     eyebrow: 'Relancer efficacement · Exercice 4.2',
     title: 'Rédigez votre relance',
     subtitle: 'Un mail court qui donne une nouvelle raison de reprendre l’échange.',
+    tour: [
+      { target: '.fm-scene .sc-facts:first-child', title: 'La situation', text: 'Madame Riveau a reçu votre offre il y a 10 jours. Repérez ses priorités et l’élément nouveau : le retour positif d’une entreprise de son secteur.' },
+      { target: '.fm-scene .sc-facts:nth-child(2)', title: 'Votre mission', text: 'Votre mail doit contenir trois choses :',
+        items: [
+          { key: 'C', tone: 'blue', text: 'le contexte : pourquoi vous écrivez ;' },
+          { key: 'V', tone: 'coral', text: 'la valeur : le retour d’expérience ;' },
+          { key: 'A', tone: 'green', text: 'l’action : un prochain pas concret.' }
+        ] },
+      { target: '.fm-main > div.fm-field:nth-of-type(1)', title: 'L’objet', text: 'Écrivez un objet court, qui donne envie d’ouvrir le mail.' },
+      { target: '.fm-main > div.fm-field:nth-of-type(2)', title: 'Le message', text: 'Rédigez votre mail comme si vous l’envoyiez vraiment : court, centré sur Madame Riveau.' },
+      { target: '.fm-actions .k-submit', title: 'Valider mon mail', text: 'Vous découvrez ensuite un mail modèle pour comparer.' }
+    ],
     scene: [
       { facts: [
         { symbol: 'document', text: 'Offre envoyée il y a 10 jours à Madame Riveau : 10 postes ergonomiques.' },

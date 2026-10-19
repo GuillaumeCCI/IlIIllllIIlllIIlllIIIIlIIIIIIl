@@ -406,3 +406,9 @@
 @keyframes six-next { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
 @keyframes six-prev { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .six-step.is-next, .six-step.is-prev { animation: none; } }
+
+/* 1.3 · le panneau du client passe sur fond blanc (texte bleu marine). */
+.ear-client { background: #fff; color: var(--navy); border-right: 1px solid #e6eaf3; }
+.ear-eyebrow { color: var(--accent); }
+.ear-client h2, .ear-quote { color: var(--navy); }
+.ear-topic, .ear-diagnosis-label { color: #5b6a8f; }

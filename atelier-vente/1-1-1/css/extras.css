@@ -211,3 +211,6 @@
 
 /* C · toute la carte d’ouverture est cliquable. */
 .compare-openings .opening-card { cursor: var(--cursor-hand, pointer); }
+
+/* B · Reformuler sans dévier : le lien « Visite guidée » à droite du titre. */
+.replica-title { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }

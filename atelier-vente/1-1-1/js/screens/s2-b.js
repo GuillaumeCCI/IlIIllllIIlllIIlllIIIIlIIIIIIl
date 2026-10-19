@@ -33,7 +33,7 @@
     const left = cases.length - at - 1;
     const back = at ? core.button(`${icon('arrowLeft', { size: 17 })}<span>Réplique précédente</span>`, 'wizard-prev', 'text-button with-icon') : '';
     return `<form class="replica-screen" novalidate>
-      ${core.pageTitle(content.eyebrow, content.title)}
+      <div class="replica-title">${core.pageTitle(content.eyebrow, content.title)}${window.AtelierKit ? window.AtelierKit.tourButton() : ''}</div>
       ${core.mission('Consigne', content.intro, '', 'book')}
       ${core.clientCard(content.mission)}
       <div class="replica-progress">
@@ -125,6 +125,15 @@
       content.criterion
     ];
   }
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  if (window.AtelierKit) window.AtelierKit.tour('s2-B', [
+    { target: '.replica-screen .client-card', title: 'La phrase du client', text: 'Le client vous dit : « Votre solution me paraît un peu chère. » C’est à cette phrase que le vendeur répond.' },
+    { target: '.replica-seller', title: 'La réplique du vendeur', text: 'Elle ressemble à une reformulation, mais elle dévie vers une autre attitude. Il y a quatre répliques à analyser, une à la fois.' },
+    { target: '.replica-cards .replica-card:first-child', title: '1 · L’attitude identifiée', text: 'Choisissez l’attitude vers laquelle le vendeur dévie : jugement, interprétation, conseil…' },
+    { target: '.replica-cards .replica-card:nth-child(2)', title: '2 · Votre reformulation', text: 'Écrivez une vraie reformulation : redites ce que le client exprime, sans rien ajouter ni interpréter.' },
+    { target: '.replica-progress', title: 'Votre avancement', text: 'La barre et les points montrent la réplique en cours. « Réponse suivante » passe à la réplique d’après.' }
+  ]);
 
   ex.mount('s2-B', { screen, validate, feedback, onMount: () => core.wireRubric(window.ATELIER_S2.rubric) });
 })();
