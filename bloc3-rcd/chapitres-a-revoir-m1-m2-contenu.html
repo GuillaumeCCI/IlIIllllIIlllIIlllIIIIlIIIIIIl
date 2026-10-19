@@ -34,6 +34,11 @@
   td.chk label { display:flex; align-items:center; justify-content:center; gap:6px; min-height:24px; cursor:pointer; }
   td.chk span { display:none; }
   .actions button + button { margin-left:6px; }
+  /* critère oublié, signalé au clic sur « Afficher mes chapitres à revoir » */
+  tr.missing > td:not([rowspan]) { background:#fdecec; border-top:2px solid #c00; border-bottom:2px solid #c00; }
+  tr.missing > td.crit { border-left:2px solid #c00; }
+  tr.missing > td:last-child { border-right:2px solid #c00; }
+  #missing { color:#c00; font-weight:bold; }
   :fullscreen body { overflow:auto; }
 
   /* Téléphone / petite fenêtre (ou LMS étroit) : chaque ligne de tableau devient une carte */
@@ -60,6 +65,8 @@
     td.chk label:has(input:checked) { border-color:#000; background:#eee; font-weight:bold; }
     td.chk span { display:block; font-size:11.5px; line-height:1.1; text-align:center; }
     td.chk input { width:20px; height:20px; }
+    #results tr.missing { border:2px solid #c00; background:#fdecec; }
+    #results tr.missing > td:not([rowspan]) { border:0; }
     #plan table { border-top:1px solid #000; }
     #plan th { flex:1 0 100%; text-align:left; }
     #plan th:not(:first-child) { display:none; }
@@ -109,12 +116,11 @@
 </div>
 
 <!-- données rechargées à chaque ouverture : les mises à jour sont toujours prises en compte -->
-<script>document.write('<script src="matrice_data.js?t=' + Date.now() + '"><\/script>');</script>
+<script>document.write('<script src="matrice_data.js?t=' + Date.now() + '"></script>');</script>
 <script>
 // Version apprenant, modules 1 et 2 : on recopie la grille détaillée du jury (un résultat par critère)
 const BLOCS = COMPETENCES.slice(0, 2), MODS = MODULES.slice(0, 2);
 const ALL = BLOCS.flatMap(b => b.items);
-const NB_CRIT = ALL.reduce((s, c) => s + Object.keys(c.criteres).length, 0);
 const LABEL = { A: "Acquis", T: "À travailler", N: "Non acquis" };
 const LEVEL = { 3: "Prioritaire", 2: "À revoir", 1: "Conseillé" };
 
@@ -178,6 +184,8 @@ function update() {
     const r = result(c);
     document.getElementById('res' + c.id).textContent = r ? 'Résultat : ' + LABEL[r] : '';
   }
+  // un critère signalé qui vient d'être rempli n'est plus encadré
+  document.querySelectorAll('tr.missing').forEach(tr => { if (tr.querySelector('input:checked')) tr.classList.remove('missing'); });
   document.getElementById('planBlock').hidden = true;
   document.getElementById('missing').textContent = '';
 }
@@ -207,10 +215,12 @@ document.addEventListener('click', e => {
   update();
 });
 document.getElementById('go').addEventListener('click', () => {
-  const left = NB_CRIT - document.querySelectorAll('#results input[type=radio]:checked').length;
-  if (left) {
-    document.getElementById('missing').textContent = `Il reste ${left} critère(s) sans résultat.`;
+  const rows = [...document.querySelectorAll('#results tr')].filter(tr => tr.querySelector('input[type=radio]') && !tr.querySelector('input:checked'));
+  if (rows.length) {
+    rows.forEach(tr => tr.classList.add('missing'));
+    document.getElementById('missing').textContent = `Il reste ${rows.length} critère(s) sans résultat, encadré(s) en rouge ci-dessus.`;
     document.getElementById('planBlock').hidden = true;
+    rows[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
   document.getElementById('missing').textContent = '';
