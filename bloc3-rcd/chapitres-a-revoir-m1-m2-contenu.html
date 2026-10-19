@@ -40,6 +40,10 @@
   tr.missing > td.crit { border-left:2px solid #c00; }
   tr.missing > td:last-child { border-right:2px solid #c00; }
   #missing { color:#c00; font-weight:bold; }
+  #resetAsk { display:inline-flex; align-items:center; gap:6px; margin-left:6px; padding:2px 6px; border:2px solid #c00; border-radius:4px; color:#c00; }
+  #resetAsk[hidden] { display:none; }
+  #resetAsk button { margin:0; }
+  #resetYes { background:#c00; color:#fff; border:1px solid #c00; }
   :fullscreen body { overflow:auto; }
 
   /* Téléphone / petite fenêtre (ou LMS étroit) : chaque ligne de tableau devient une carte */
@@ -89,7 +93,7 @@
 </head>
 <body>
 <div class="page">
-  <div class="actions"><button id="fs" type="button">Plein écran</button><button onclick="window.print()">Imprimer</button><button id="reset" type="button">Effacer mes réponses</button></div>
+  <div class="actions"><button id="fs" type="button">Plein écran</button><button onclick="window.print()">Imprimer</button><button id="reset" type="button">Effacer mes réponses</button><span id="resetAsk" hidden><b>Tout effacer ?</b><button id="resetYes" type="button">Oui, effacer</button><button id="resetNo" type="button">Annuler</button></span></div>
   <div class="top">
     <h1>Mes chapitres à revoir – Bloc de compétences 3</h1>
     <p class="sub">Manager les équipes de l'unité de vente dans un contexte de vente multicanale<br>Titre : Responsable de commerces et de la distribution</p>
@@ -255,8 +259,13 @@ document.getElementById('go').addEventListener('click', () => {
   }
   showPlan(true);
 });
-document.getElementById('reset').addEventListener('click', () => {
-  if (!confirm('Effacer toutes tes réponses et les cases « Fait » ?')) return;
+// Confirmation dans la page (une fenêtre confirm() du navigateur sort de l'activité dans le LMS)
+const resetBtn = document.getElementById('reset'), resetAsk = document.getElementById('resetAsk');
+const askReset = on => { resetAsk.hidden = !on; resetBtn.hidden = on; };
+resetBtn.addEventListener('click', () => askReset(true));
+document.getElementById('resetNo').addEventListener('click', () => askReset(false));
+document.getElementById('resetYes').addEventListener('click', () => {
+  askReset(false);
   saved = { crit: {}, fait: {} };
   document.querySelectorAll('#results input[type=radio]').forEach(i => i.checked = false);
   document.querySelectorAll('tr.missing').forEach(tr => tr.classList.remove('missing'));
