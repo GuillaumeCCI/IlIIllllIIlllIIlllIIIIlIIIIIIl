@@ -78,7 +78,7 @@
     const reviewing = ex.reviewing();
     return `<div class="k-page crash-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: reviewing ? '' : `<div class="crash-score"><span class="k-count" data-live="named"><strong>${named()} / ${ROWS}</strong> erreurs repérées</span><span data-live="flags">${flags()}</span></div>` })}
+        aside: reviewing ? '' : `<div class="crash-score"><span class="k-count" data-live="named"><strong>${named()} / ${ROWS}</strong> erreurs repérées</span><span data-live="flags">${flags()}</span></div>${kit.tourButton()}` })}
       ${reviewing ? reviewScreen() : playScreen()}
       ${reviewing ? '' : kit.utility('Débrief disponible après validation')}
     </div>`;
@@ -110,6 +110,15 @@
     return { named: `<strong>${named()} / ${ROWS}</strong> erreurs repérées`, flags: flags() };
   });
   kit.dialogs({ hint: { title: 'Un indice', html: `<p>${esc(content.hint)}</p>` } });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s2-2.4', [
+    { target: '.crash-exchange', title: 'L’échange', text: 'Le client trouve le prix trop élevé. Lisez la réponse du commercial : elle contient quatre faux pas.' },
+    { target: '.crash-line.is-seller .crash-bubble', title: 'Repérez les passages', text: 'Cliquez sur un passage maladroit : un drapeau numéroté s’y pose. Cliquez à nouveau pour le retirer.' },
+    { target: '.crash-rows', title: 'Votre diagnostic', text: 'Le passage choisi s’affiche sur la ligne du même numéro. Écrivez ensuite l’erreur en quelques mots : c’est cette explication qui compte.' },
+    { target: '.crash-score', title: 'Votre avancement', text: 'Chaque erreur nommée allume un drapeau. Il en faut quatre.' },
+    { target: '.crash-actions', title: 'Indice et débrief', text: 'Un doute ? « Voir un indice » vous oriente. Quand les quatre erreurs sont nommées, « Voir mon débrief » affiche le corrigé.' }
+  ]);
 
   ex.mount('s2-2.4', { screen, validate, feedback, compactFeedback: true });
 })();
