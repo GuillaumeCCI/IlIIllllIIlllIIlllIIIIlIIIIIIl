@@ -364,3 +364,10 @@
 .k-matrix-text { display: block; overflow: hidden; }
 
 .k-matrix-text > small.k-why { padding-left: 0; }
+
+/* Grille progressive (kit.matrix progressive) : les lignes suivantes
+   attendent, la ligne dévoilée glisse en place. */
+.k-matrix tr.is-waiting { display: none; }
+.k-matrix tr.is-arriving { animation: matrix-row-in .4s ease-out; }
+@keyframes matrix-row-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .k-matrix tr.is-arriving { animation: none; } }

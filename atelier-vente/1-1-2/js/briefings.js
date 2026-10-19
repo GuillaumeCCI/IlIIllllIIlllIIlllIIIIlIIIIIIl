@@ -113,7 +113,7 @@ window.ATELIER_BRIEFINGS = {
     lede: { key: 'Passez le pitch à la grille.', rest: 'Puis trouvez LA correction qui change tout.' },
     mission: 'Notez un pitch sur les six critères de la grille commune, de 0 à 2, puis désignez la modification prioritaire.',
     method: 'Une note par critère, puis une priorité rédigée.',
-    situation: 'Un commercial présente RelaCosy en trois phrases : une liste de fonctions et un « je pense que ça peut vous convenir ».',
+    situation: 'Un commercial présente RelaCosy en quatre phrases : des bénéfices, un ton assuré, une question pour finir. Mais tient-il toutes ses promesses ?',
     task: 'Évaluez le pitch critère par critère, puis formulez concrètement la modification qui aurait le plus fort impact.',
     criteria: ['Des notes cohérentes avec le pitch', 'Une priorité unique, concrète et argumentée']
   },

@@ -1,7 +1,8 @@
 /* S2 2.5 · L'audit du pitch.
  *
- * Noter un pitch faible sur les six critères de la grille commune (0, 1
- * ou 2), puis désigner la modification prioritaire. Le total se calcule en
+ * Noter un pitch sur les six critères de la grille commune (0, 1 ou 2),
+ * un à un : chaque note dévoile le critère suivant. Puis désigner la
+ * modification prioritaire. Le total se calcule en
  * direct. En relecture, la note de l'apprenant est comparée au repère : un
  * écart d'un point reste une appréciation défendable.
  */
@@ -45,7 +46,7 @@
         <section class="k-panel">
           <h2>1. Notez le pitch</h2>
           ${reviewing ? `${kit.result(total(), max, `votre total, pour ${reference} / ${max} au repère`)}${reviewTable()}`
-            : kit.matrix({ key: 'note', rows: criteria, columns: content.levels.map(level => ({ id: level.id, label: level.id, sub: level.label })), head: 'Critère', round: true })}
+            : kit.matrix({ key: 'note', rows: criteria, columns: content.levels.map(level => ({ id: level.id, label: level.id, sub: level.label })), head: 'Critère', round: true, progressive: true })}
           ${reviewing ? '' : `<p class="audit-total" data-live="total">${esc(totalText())}</p>`}
         </section>
         <section class="k-panel">
@@ -73,7 +74,7 @@
   }
 
   // Le total et le repère sont déjà en tête du corrigé : seule la leçon reste.
-  const feedback = () => [`Ce pitch énumère des caractéristiques sans bénéfice, sans preuve et sur un ton hésitant (« je pense »).`];
+  const feedback = () => ['Ce pitch parle bénéfices, sur un ton assuré, avec une question pour finir ; mais aucune preuve ne vient appuyer ses promesses.'];
 
   kit.live(() => ({ total: esc(totalText()), score: esc(totalText().replace('Total : ', '')) }));
 

@@ -114,24 +114,24 @@ window.ATELIER_S2 = {
     title: 'L’audit du pitch',
     subtitle: 'Évaluez ce discours selon les 6 critères de la grille commune, de 0 à 2 points par critère.',
     note: 'Désignez ensuite LA modification prioritaire qui le rendrait plus percutant.',
-    pitch: 'Bonjour, RelaCosy c’est un CRM complet avec sauvegarde, chiffrement, accès mobile, plein de fonctions. Je pense que ça peut vous convenir. Il y a beaucoup d’options.',
-    // `reference` : la note du corrigé, de 0 à 2. Le corrigé attend des notes
-    // basses sur le bénéfice, la preuve et le langage affirmatif ; les autres
-    // notes sont indicatives.
+    pitch: 'Bonjour, RelaCosy est le CRM pensé pour faire gagner du temps à vos équipes tout en sécurisant vos données. Vos commerciaux accèdent à leurs dossiers de n’importe où sur mobile, avec la garantie que tout est sauvegardé et chiffré. C’est une solution clés en main. Quels sont vos défis actuels dans la gestion de vos clients ?',
+    // `reference` : la note du corrigé, de 0 à 2. Le pitch est solide sur le
+    // bénéfice, le ton et la structure ; il pèche surtout par l'absence de
+    // preuve. Un écart d'un point reste accepté.
     criteria: [
-      { title: 'Orientation bénéfice', text: 'Je parle des bénéfices pour le client, pas des seules caractéristiques.', reference: 0, why: 'Une liste de fonctions, aucun bénéfice exprimé.' },
-      { title: 'Preuve à l’appui', text: 'Mes affirmations sont étayées (chiffre, exemple, démonstration).', reference: 0, why: 'Aucun chiffre, aucun exemple.' },
-      { title: 'Langage affirmatif', text: 'Formulations positives et assurées, sans « je pense que peut-être ».', reference: 0, why: '« Je pense que ça peut vous convenir » : le doute est explicite.' },
-      { title: 'Clarté et structure', text: 'Accroche, corps, conclusion ; pas de jargon inutile.', reference: 1, why: 'Court et compréhensible, mais sans accroche ni conclusion.' },
-      { title: 'Adaptation au client', text: 'Les arguments mis en avant correspondent à ses motivations.', reference: 0, why: 'Rien ne fait référence au client ni à ses besoins.' },
-      { title: 'Force de conviction', text: 'Le propos donne envie ; l’engagement se ressent.', reference: 0, why: '« Plein de fonctions », « beaucoup d’options » : aucun élan.' }
+      { title: 'Orientation bénéfice', text: 'Je parle des bénéfices pour le client, pas des seules caractéristiques.', reference: 2, why: 'Gagner du temps, sécuriser les données, travailler de n’importe où : les fonctions sont traduites en bénéfices.' },
+      { title: 'Preuve à l’appui', text: 'Mes affirmations sont étayées (chiffre, exemple, démonstration).', reference: 0, why: 'Aucun chiffre, aucun exemple : « la garantie que tout est sauvegardé » reste une promesse.' },
+      { title: 'Langage affirmatif', text: 'Formulations positives et assurées, sans « je pense que peut-être ».', reference: 2, why: 'Des phrases assurées, sans « je pense » ni conditionnel.' },
+      { title: 'Clarté et structure', text: 'Accroche, corps, conclusion ; pas de jargon inutile.', reference: 2, why: 'Une accroche, deux bénéfices, puis une question pour engager l’échange.' },
+      { title: 'Adaptation au client', text: 'Les arguments mis en avant correspondent à ses motivations.', reference: 1, why: 'Il parle « de vos équipes », mais sans rien savoir encore du client : la question finale vient après le pitch.' },
+      { title: 'Force de conviction', text: 'Le propos donne envie ; l’engagement se ressent.', reference: 1, why: 'Le ton est engagé, mais « solution clés en main » reste une formule générale, sans élément qui marque.' }
     ],
     levels: [
       { id: '0', label: 'À retravailler' },
       { id: '1', label: 'En bonne voie' },
       { id: '2', label: 'Maîtrisé' }
     ],
-    priority: 'Transformer les caractéristiques en un ou deux bénéfices concrets appuyés d’une preuve, par exemple : « vous gagnez 3 h par semaine, comme nos 5 000 clients ». Supprimer « je pense » vient juste après.'
+    priority: 'Ajouter une preuve à chaque bénéfice : un chiffre ou un fait vérifiable, par exemple « comme les 5 000 PME qui l’utilisent déjà » ou « conforme RGPD, avec un audit de sécurité chaque année ». Sans preuve, la promesse reste une affirmation.'
   },
 
   /* ── 2.6 · Le pitch de 60 secondes ──────────────────────────────────── */

@@ -158,16 +158,19 @@
    * est un groupe de boutons radio, dessinés en cases à cocher comme sur
    * les maquettes. En relecture (`answers` fourni), la bonne case est verte
    * et le choix erroné rouge. */
-  function matrix({ key, rows, columns, head: heading = '', answers = null, numbered = true, round = false }) {
+  // `progressive` : les lignes apparaissent une à une, chaque réponse
+  // dévoilant la suivante (voir l'écouteur plus bas).
+  function matrix({ key, rows, columns, head: heading = '', answers = null, numbered = true, round = false, progressive = false }) {
     const reviewing = Array.isArray(answers);
-    return `<table class="k-matrix ${reviewing ? 'is-review' : ''} ${round ? 'is-round' : ''}">
+    const open = progressive && !reviewing ? rows.findIndex((_, i) => !filled(ex().value(`${key}${i}`))) : -1;
+    return `<table class="k-matrix ${reviewing ? 'is-review' : ''} ${round ? 'is-round' : ''} ${open !== -1 ? 'is-progressive' : ''}">
       <thead><tr><th scope="col" class="k-matrix-label">${esc(heading)}</th>${columns.map(column =>
         `<th scope="col"><strong>${esc(column.label)}</strong>${column.sub ? `<span>${esc(column.sub)}</span>` : ''}</th>`).join('')}</tr></thead>
       <tbody>${rows.map((row, i) => {
         const field = `${key}${i}`;
         const chosen = ex().value(field);
         const verdict = reviewing ? (chosen === answers[i] ? 'is-ok' : 'is-ko') : '';
-        return `<tr class="${verdict}">
+        return `<tr class="${verdict} ${open !== -1 && i > open ? 'is-waiting' : ''}">
           <th scope="row" class="k-matrix-label">${numbered ? `<span class="k-num">${i + 1}</span>` : ''}<span class="k-matrix-text">${row.title ? `<strong>${esc(row.title)}</strong><small>${esc(row.text)}</small>` : esc(row.text)}${reviewing && row.why ? `<small class="k-why">${esc(row.why)}</small>` : ''}</span></th>
           ${columns.map(column => {
             const isChosen = chosen === column.id;
@@ -181,6 +184,15 @@
         </tr>`;
       }).join('')}</tbody>
     </table>`;
+  }
+
+  // Grille progressive : une ligne notée dévoile la suivante, qui glisse en place.
+  if (root.document && typeof root.document.addEventListener === 'function') {
+    root.document.addEventListener('change', event => {
+      const row = event.target.closest && event.target.closest('.k-matrix.is-progressive tbody tr');
+      const next = row && row.nextElementSibling;
+      if (next && next.classList.contains('is-waiting')) { next.classList.remove('is-waiting'); next.classList.add('is-arriving'); }
+    });
   }
 
   /* Le nombre de lignes renseignées d'une grille. */
