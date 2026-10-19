@@ -504,3 +504,19 @@ button.crash-passage:hover { background: #fff1d6; }
 @keyframes fs-prev { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .fs-step.is-next, .fs-step.is-prev { animation: none; } }
 @media (max-width: 900px) { .fs-layout { grid-template-columns: minmax(0, 1fr); } .fs-nav li { padding-bottom: 8px; } .fs-nav li::before { display: none; } }
+
+/* ── Mise en page aérée (className: 'fm-airy') ────────────────────────
+   Une colonne moins large, centrée ; les onglets deviennent une frise
+   légère : l'étape en cours en pastille, les autres reliées par un trait. */
+.fm-airy { max-width: 1180px; margin-inline: auto; }
+.fm-tab-line { display: none; }
+#main .fm-airy .fm-tabs { display: flex; align-items: center; gap: 0; margin: 6px 0 18px; }
+#main .fm-airy .fm-tab { flex: 0 0 auto; gap: 14px; padding: 8px 22px 8px 8px; border: 0; border-radius: 999px; background: none; box-shadow: none; color: #4c5a7d; font-weight: 600; }
+#main .fm-airy .fm-tab.is-current { background: #e4ebfb; box-shadow: none; color: var(--navy); font-weight: 800; }
+#main .fm-airy .fm-tab:hover { transform: none; box-shadow: none; }
+#main .fm-airy .fm-tab-n { width: 48px; height: 48px; font-size: 1.05rem; }
+#main .fm-airy .fm-tab-line { display: block; flex: 1; min-width: 20px; height: 1px; margin: 0 14px; background: #c9d3e8; }
+.fm-airy .fm-panel { padding: 36px 56px 40px; }
+.fm-airy .fm-title { font-size: clamp(1.6rem, 2.3vw, 2.1rem); }
+.fm-airy .fm-main { gap: 18px; }
+@media (max-width: 900px) { #main .fm-airy .fm-tabs { flex-wrap: wrap; gap: 8px; } #main .fm-airy .fm-tab-line { display: none; } .fm-airy .fm-panel { padding: 24px; } }

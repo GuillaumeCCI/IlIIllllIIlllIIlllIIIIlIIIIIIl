@@ -171,6 +171,7 @@ window.ATELIER_S3 = {
     title: 'Construire sa boîte à conclusions',
     subtitle: 'Des phrases naturelles, que vous pourriez vraiment dire.',
     countLabel: 'cartes',
+    className: 'fm-airy',
     caseNoun: 'Situation',
     fields: [{ id: 'text', label: 'Ma formulation prête à l’emploi', help: 'Une phrase courte, dans vos mots.', placeholder: 'Ce que je dirais vraiment au client…', max: 280, rows: 4 }],
     cases: [

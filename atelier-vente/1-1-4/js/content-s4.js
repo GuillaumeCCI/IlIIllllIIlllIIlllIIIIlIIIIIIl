@@ -170,6 +170,14 @@ window.ATELIER_S4 = {
     countLabel: 'étapes complétées',
     caseNoun: 'Étape',
     stepper: true,
+    tour: [
+      { target: '.fm-stepper', title: 'Quatre étapes', text: 'Vous construisez votre plan de relance en quatre étapes : trois relances, puis un message de clôture. Une étape remplie se coche.' },
+      { target: '.fm-side-card', title: 'La situation', text: 'Madame Riveau est intéressée mais n’a pas répondu depuis l’envoi de l’offre. Gardez sa situation en tête à chaque étape.' },
+      { target: '.fm-step .fm-row', title: 'Quand et par quel canal', text: 'Indiquez quand vous relancez, en jours après l’envoi (J+3, J+10…), et par quel moyen. Espacez vos relances et variez les canaux.' },
+      { target: '.fm-skin', title: 'Ce que vous apportez', text: 'Écrivez l’information utile que vous partagez et l’action concrète que vous proposez. La zone prend l’apparence du canal choisi : e-mail, appel, rendez-vous…' },
+      { target: '.fm-side-col', title: 'Astuce et ressources', text: 'L’astuce rappelle la bonne pratique. « Voir mes 5 ressources » ouvre des idées pour donner de la valeur à chaque relance.' },
+      { target: '.fm-step .fm-actions', title: 'Étape suivante', text: 'Passez à la relance suivante, ou revenez en arrière avec « Précédent ». À la fin, vous découvrez le corrigé, étape par étape.' }
+    ],
     review: { when: 'when', channel: 'channel', written: ['value', 'next'], start: 3,
       symbols: { when: 'calendar', channel: 'mail', value: 'sparkle', next: 'arrowRight' } },
     skin: { field: 'channel', fields: ['value', 'next'], name: 'Madame Riveau', role: 'Responsable RH', initials: 'MR', subject: 'Notre proposition du 3 juin' },
