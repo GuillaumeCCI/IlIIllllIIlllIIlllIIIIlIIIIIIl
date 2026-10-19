@@ -514,15 +514,15 @@
       const label = next === -1 ? (content.submitLabel || 'Valider mes réponses') : (c.next || content.nextLabel || `Enregistrer et continuer`);
       if (content.stepper) {
         const prev = i > 0 ? `data-act="fm-case" data-index="${i - 1}"` : 'disabled';
-        return `<section class="k-panel fm-panel fm-step">
-          <div class="fm-step-body"><div class="fm-main">
-              ${content.side ? `<div class="fm-side-card">${scene(content.side)}</div>` : ''}
-              <div class="fm-step-head"><span class="fm-step-n">${String(i + 1).padStart(2, '0')}</span><div><h2 class="fm-step-title">${esc(c.tab)}</h2>${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}</div></div>
-              ${fieldRows(i, fields)}${core().errorsBox()}</div>
-            ${content.tip ? `<aside class="fm-aside"><div class="fm-tip">${icon('lightbulb', { size: 30 })}<p><strong>Astuce :</strong> ${esc(content.tip)}</p></div></aside>` : ''}</div>
+        // L'astuce se pose à côté du cadre blanc, sur le fond de la page.
+        return `<div class="fm-step-wrap ${content.tip ? 'has-tip' : ''}"><section class="k-panel fm-panel fm-step">
+          <div class="fm-main">
+            ${content.side ? `<div class="fm-side-card">${scene(content.side)}</div>` : ''}
+            <div class="fm-step-head"><span class="fm-step-n">${String(i + 1).padStart(2, '0')}</span><div><h2 class="fm-step-title">${esc(c.tab)}</h2>${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}</div></div>
+            ${fieldRows(i, fields)}${core().errorsBox()}</div>
           <div class="fm-actions"><button type="button" class="button secondary fm-prev" ${prev}>${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>
             ${content.resources ? kit().dialogButton('resources', content.resourcesLabel || 'Mes ressources', 'text-button', 'stack') : ''}${kit().submit(label)}</div>
-        </section>`;
+        </section>${content.tip ? `<aside class="fm-tip">${icon('lightbulb', { size: 30 })}<p><strong>Astuce :</strong> ${esc(content.tip)}</p></aside>` : ''}</div>`;
       }
       const form = `<div class="fm-main">
         ${c.title && n > 1 ? `<p class="k-label">${esc(content.caseNoun || 'Cas')} ${i + 1} / ${n}</p>` : ''}${c.title ? `<h2 class="fm-title">${esc(c.title)}</h2>` : ''}
