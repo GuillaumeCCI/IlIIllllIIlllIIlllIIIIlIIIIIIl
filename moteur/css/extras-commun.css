@@ -81,17 +81,17 @@ html[data-embed="solo"] #main { padding-top: 20px; }
    Fond blanc, et aux quatre coins les décors de la carte illustrée
    (taches aquarelle, feuillages, points), découpés à part pour ne pas se
    déformer quelle que soit la taille de la fenêtre. */
-#info-dialog:not(.is-tip) { padding: 40px 56px 64px; overflow: hidden; border-color: #ece7de; border-radius: 22px;
+#info-dialog:not(.is-tip) { padding: 40px 56px 64px; overflow: hidden; border-color: #fff; border-radius: 22px;
   background: url('../assets/illustrations/fenetre-coin-hg.webp') left top / 120px auto no-repeat,
     url('../assets/illustrations/fenetre-coin-hd.webp') right top / 96px auto no-repeat,
     url('../assets/illustrations/fenetre-coin-bg.webp') left bottom / 130px auto no-repeat,
     url('../assets/illustrations/fenetre-coin-bd.webp') right bottom / 142px auto no-repeat, #fff; }
 
 /* ── Fenêtre « Repère » ─────────────────────────────────────────────────
-   Fond crème, pastille illustrée devant le titre, le conseil en grand
+   Fond blanc, pastille illustrée devant le titre, le conseil en grand
    derrière un trait corail, les clés en pastilles de couleur, et deux
    taches aquarelle discrètes dans l'angle. */
-#info-dialog.is-tip { width: min(680px, calc(100vw - 32px)); padding: 24px 28px 28px; overflow: hidden; border-color: #ece7de; border-radius: 22px; background: #fcfaf6; }
+#info-dialog.is-tip { width: min(680px, calc(100vw - 32px)); padding: 24px 28px 28px; overflow: hidden; border-color: #fff; border-radius: 22px; background: #fff; }
 
 #info-dialog.is-tip::after { content: ''; position: absolute; right: 0; bottom: 0; width: 110px; height: 135px; background: url('../assets/illustrations/repere-coin.webp') right bottom / contain no-repeat; pointer-events: none; -webkit-mask-image: radial-gradient(circle at 100% 100%, #000 52%, transparent 74%); mask-image: radial-gradient(circle at 100% 100%, #000 52%, transparent 74%); }
 
