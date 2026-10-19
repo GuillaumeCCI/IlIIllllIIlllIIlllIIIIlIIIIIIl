@@ -48,7 +48,7 @@
     .top { padding:12px 8px; }
     h1 { font-size:15px; }
     .sub, .mods { font-size:12.5px; }
-    .actions { display:flex; justify-content:flex-end; gap:6px; }
+    .actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:6px; }
     .actions button + button { margin-left:0; }
     button { font-size:13px; padding:6px 12px; }
     #go { width:100%; }
@@ -89,7 +89,7 @@
 </head>
 <body>
 <div class="page">
-  <div class="actions"><button id="fs" type="button">Plein écran</button><button onclick="window.print()">Imprimer</button></div>
+  <div class="actions"><button id="fs" type="button">Plein écran</button><button onclick="window.print()">Imprimer</button><button id="reset" type="button">Effacer mes réponses</button></div>
   <div class="top">
     <h1>Mes chapitres à revoir – Bloc de compétences 3</h1>
     <p class="sub">Manager les équipes de l'unité de vente dans un contexte de vente multicanale<br>Titre : Responsable de commerces et de la distribution</p>
@@ -98,7 +98,7 @@
 
 
   <h2>1. Ma grille d'évaluation</h2>
-  <p class="legend">Recopier, critère par critère, ce que le jury a coché sur ta grille d'évaluation : <b>Acquis</b>, <b>À travailler</b> ou <b>Non acquis</b>. Le résultat de chaque compétence s'affiche tout seul.</p>
+  <p class="legend">Recopier, critère par critère, ce que le jury a coché sur ta grille d'évaluation : <b>Acquis</b>, <b>À travailler</b> ou <b>Non acquis</b>. Le résultat de chaque compétence s'affiche tout seul. Tes réponses sont enregistrées sur cet appareil : tu peux revenir plus tard et les modifier à tout moment.</p>
   <div class="wrap">
     <table id="results">
       <thead><tr><th style="width:30%">Compétence</th><th>Critères d'évaluation</th><th>Acquis</th><th>À travailler</th><th>Non acquis</th></tr></thead>
@@ -124,6 +124,13 @@ const BLOCS = COMPETENCES.slice(0, 2), MODS = MODULES.slice(0, 2);
 const ALL = BLOCS.flatMap(b => b.items);
 const LABEL = { A: "Acquis", T: "À travailler", N: "Non acquis" };
 const LEVEL = { 3: "Prioritaire", 2: "À revoir", 1: "Conseillé" };
+
+// Sauvegarde dans le navigateur : critères cochés, cases « Fait », liste affichée ou non
+const KEY = 'bloc3-rcd-m1m2-chapitres';
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+saved.crit = saved.crit || {}; saved.fait = saved.fait || {};
+function save() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} }
 
 const tb = document.querySelector('#results tbody');
 for (const b of BLOCS) {
@@ -153,6 +160,9 @@ function level(w, v) {
   return 0;
 }
 
+const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+const fait = key => `<input type="checkbox" data-fait="${esc(key)}"${saved.fait[key] ? ' checked' : ''}>`;
+
 function render() {
   let html = '';
   for (const m of MODS) {
@@ -171,12 +181,12 @@ function render() {
         const c = ALL.find(x => x.id === id);
         return `<b>${id}</b><ul>${ks.sort().map(k => `<li>${c.criteres[k]}</li>`).join('')}</ul>`;
       }).join('');
-      rows.push(`<tr><td class="comp">${lab}</td><td class="chap">${ch.t}</td><td class="prio">${LEVEL[best]}</td><td class="done"><input type="checkbox"></td></tr>`);
+      rows.push(`<tr><td class="comp">${lab}</td><td class="chap">${ch.t}</td><td class="prio">${LEVEL[best]}</td><td class="done">${fait(m.titre + ' | ' + ch.t)}</td></tr>`);
     }
     if (!rows.length) continue;
     html += `<table><tr><th class="mod" colspan="4">${m.titre}</th></tr>
       <tr class="cols"><th>Critère(s) concerné(s)</th><th>Chapitre à revoir</th><th>Priorité</th><th>Fait</th></tr>${rows.join('')}
-      <tr><td class="comp">—</td><td class="chap"><i>${m.quiz}</i> (à repasser)</td><td class="prio">—</td><td class="done"><input type="checkbox"></td></tr></table>`;
+      <tr><td class="comp">—</td><td class="chap"><i>${m.quiz}</i> (à repasser)</td><td class="prio">—</td><td class="done">${fait(m.titre + ' | quiz')}</td></tr></table>`;
   }
   document.getElementById('plan').innerHTML = html || '<p class="empty">Aucun chapitre à revoir : tous les critères sont acquis. Bravo !</p>';
 }
@@ -190,6 +200,10 @@ function update() {
   document.querySelectorAll('tr.missing').forEach(tr => { if (tr.querySelector('input:checked')) tr.classList.remove('missing'); });
   document.getElementById('planBlock').hidden = true;
   document.getElementById('missing').textContent = '';
+  saved.crit = {};
+  document.querySelectorAll('#results input[type=radio]:checked').forEach(i => saved.crit[i.name] = i.value);
+  saved.shown = false;
+  save();
 }
 // Plein écran ; si le navigateur ou le LMS le refuse (iPhone, iframe sans allowfullscreen) : ouverture dans un nouvel onglet
 const fsBtn = document.getElementById('fs'), root = document.documentElement;
@@ -216,8 +230,22 @@ document.addEventListener('click', e => {
   down = null;
   update();
 });
+document.addEventListener('change', e => {
+  if (!e.target.dataset.fait) return;
+  saved.fait[e.target.dataset.fait] = e.target.checked;
+  save();
+});
+const emptyRows = () => [...document.querySelectorAll('#results tr')].filter(tr => tr.querySelector('input[type=radio]') && !tr.querySelector('input:checked'));
+function showPlan(scroll) {
+  document.getElementById('missing').textContent = '';
+  render();
+  document.getElementById('planBlock').hidden = false;
+  saved.shown = true;
+  save();
+  if (scroll) document.getElementById('planBlock').scrollIntoView({ behavior: 'smooth' });
+}
 document.getElementById('go').addEventListener('click', () => {
-  const rows = [...document.querySelectorAll('#results tr')].filter(tr => tr.querySelector('input[type=radio]') && !tr.querySelector('input:checked'));
+  const rows = emptyRows();
   if (rows.length) {
     rows.forEach(tr => tr.classList.add('missing'));
     document.getElementById('missing').textContent = `Il reste ${rows.length} critère(s) sans résultat, encadré(s) en rouge ci-dessus.`;
@@ -225,11 +253,24 @@ document.getElementById('go').addEventListener('click', () => {
     rows[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
-  document.getElementById('missing').textContent = '';
-  render();
-  document.getElementById('planBlock').hidden = false;
-  document.getElementById('planBlock').scrollIntoView({ behavior: 'smooth' });
+  showPlan(true);
 });
+document.getElementById('reset').addEventListener('click', () => {
+  if (!confirm('Effacer toutes tes réponses et les cases « Fait » ?')) return;
+  saved = { crit: {}, fait: {} };
+  document.querySelectorAll('#results input[type=radio]').forEach(i => i.checked = false);
+  document.querySelectorAll('tr.missing').forEach(tr => tr.classList.remove('missing'));
+  update();
+});
+
+// Au chargement : on remet les réponses enregistrées, et la liste si elle était affichée
+const shown = saved.shown;
+for (const [name, v] of Object.entries(saved.crit)) {
+  const i = document.querySelector(`#results input[name="${name}"][value="${v}"]`);
+  if (i) i.checked = true;
+}
+update();
+if (shown && !emptyRows().length) showPlan(false);
 </script>
 </body>
 </html>
