@@ -28,6 +28,7 @@
   button { font:12px Arial, sans-serif; padding:3px 10px; cursor:pointer; }
   td.prio { width:105px; text-align:center; vertical-align:middle; font-weight:bold; }
   td.comp { width:38%; font-size:12px; }
+  th.mod { text-align:left; }
   td.comp ul { margin:1px 0 4px; padding-left:15px; }
   td.done { width:55px; text-align:center; vertical-align:middle; }
   .empty { font-style:italic; padding:8px 0; }
@@ -69,9 +70,9 @@
     #results tr.missing > td:not([rowspan]) { border:0; }
     #plan table { border-top:1px solid #000; }
     #plan th { flex:1 0 100%; text-align:left; }
-    #plan th:not(:first-child) { display:none; }
-    #plan td:first-child { flex:1 0 100%; font-weight:bold; padding-top:8px; }
-    #plan td.comp { flex:1 0 100%; width:auto; }
+    #plan tr.cols { display:none; }
+    #plan td.comp { flex:1 0 100%; width:auto; padding-top:8px; }
+    #plan td.chap { flex:1 0 100%; font-weight:bold; }
     #plan td.prio { flex:1 1 auto; width:auto; text-align:left; }
     #plan td.done { flex:0 0 auto; width:auto; }
     #plan td.done::before { content:"Fait "; font-size:12px; }
@@ -116,7 +117,7 @@
 </div>
 
 <!-- données rechargées à chaque ouverture : les mises à jour sont toujours prises en compte -->
-<script>document.write('<script src="matrice_data.js?t=' + Date.now() + '"><\/script>');</script>
+<script>document.write('<script src="matrice_data.js?t=' + Date.now() + '"></script>');</script>
 <script>
 // Version apprenant, modules 1 et 2 : on recopie la grille détaillée du jury (un résultat par critère)
 const BLOCS = COMPETENCES.slice(0, 2), MODS = MODULES.slice(0, 2);
@@ -170,11 +171,12 @@ function render() {
         const c = ALL.find(x => x.id === id);
         return `<b>${id}</b><ul>${ks.sort().map(k => `<li>${c.criteres[k]}</li>`).join('')}</ul>`;
       }).join('');
-      rows.push(`<tr><td>${ch.t}</td><td class="comp">${lab}</td><td class="prio">${LEVEL[best]}</td><td class="done"><input type="checkbox"></td></tr>`);
+      rows.push(`<tr><td class="comp">${lab}</td><td class="chap">${ch.t}</td><td class="prio">${LEVEL[best]}</td><td class="done"><input type="checkbox"></td></tr>`);
     }
     if (!rows.length) continue;
-    html += `<table><tr><th style="text-align:left">${m.titre}</th><th>Critère(s) concerné(s)</th><th>Priorité</th><th>Fait</th></tr>${rows.join('')}
-      <tr><td><i>${m.quiz}</i> (à repasser)</td><td class="comp">—</td><td class="prio">—</td><td class="done"><input type="checkbox"></td></tr></table>`;
+    html += `<table><tr><th class="mod" colspan="4">${m.titre}</th></tr>
+      <tr class="cols"><th>Critère(s) concerné(s)</th><th>Chapitre à revoir</th><th>Priorité</th><th>Fait</th></tr>${rows.join('')}
+      <tr><td class="comp">—</td><td class="chap"><i>${m.quiz}</i> (à repasser)</td><td class="prio">—</td><td class="done"><input type="checkbox"></td></tr></table>`;
   }
   document.getElementById('plan').innerHTML = html || '<p class="empty">Aucun chapitre à revoir : tous les critères sont acquis. Bravo !</p>';
 }
