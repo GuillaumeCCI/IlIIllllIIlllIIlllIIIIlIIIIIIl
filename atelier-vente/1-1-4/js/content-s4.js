@@ -123,7 +123,7 @@ window.ATELIER_S4 = {
     eyebrow: 'Exercice 4.5 · Relance',
     title: 'À vous de trancher !',
     subtitle: 'Lisez les deux relances, puis choisissez la plus efficace.',
-    context: 'Proposition pour 10 postes envoyée à Madame Riveau le 3 juin.',
+    context: 'Le 3 juin, vous avez envoyé à Madame Riveau une proposition pour équiper 10 postes de travail.',
     listTitle: 'Quelle relance choisissez-vous ?',
     options: [
       { id: 'A', label: 'Relance A', lines: [
@@ -159,14 +159,16 @@ window.ATELIER_S4 = {
     subtitle: 'Quatre étapes, de la première relance à la clôture.',
     countLabel: 'étapes complétées',
     caseNoun: 'Étape',
-    side: { info: 'Madame Riveau · RH d’une PME de 80 salariés · Proposition pour 10 postes envoyée le 3 juin. Intéressée, elle doit consulter sa direction. Depuis l’envoi de l’offre : aucune réponse.', symbol: 'calendar' },
+    stepper: true,
+    side: { info: 'Le 3 juin, vous avez envoyé une proposition à Madame Riveau, responsable RH d’une PME de 80 salariés : du mobilier ergonomique pour équiper 10 postes de travail, c’est-à-dire 10 salariés. Elle est intéressée, mais doit d’abord consulter sa direction. Depuis l’envoi de l’offre, elle n’a pas répondu.', symbol: 'calendar' },
+    tip: 'Espacez vos relances : laissez un peu plus de temps entre chacune. Et apportez à chaque fois une information utile, pas seulement une demande de nouvelles.',
     fields: [
-      { id: 'when', type: 'input', label: 'Quand ?', placeholder: 'J+…', max: 40, half: true },
-      { id: 'channel', type: 'select', label: 'Quel canal ?', placeholder: 'Choisir un canal', half: true, options: [
+      { id: 'when', type: 'input', label: 'Quand ?', sub: 'Combien de jours après l’envoi de l’offre ?', placeholder: 'Ex. : J+3, soit trois jours après l’envoi', max: 40, half: true },
+      { id: 'channel', type: 'select', label: 'Quel canal ?', sub: 'Par quel moyen contactez-vous Madame Riveau ?', placeholder: 'Choisir un canal', half: true, options: [
         { id: 'email', label: 'E-mail' }, { id: 'phone', label: 'Téléphone' }, { id: 'visit', label: 'Rendez-vous sur place' }, { id: 'linkedin', label: 'Message LinkedIn' }, { id: 'mail', label: 'Courrier' }
       ] },
-      { id: 'value', label: 'Quelle valeur apportée ?', placeholder: 'L’information utile à partager…', rows: 2 },
-      { id: 'next', label: 'Quel prochain pas ?', placeholder: 'L’action concrète à proposer…', rows: 2 }
+      { id: 'value', label: 'Quelle valeur apportée ?', sub: 'Quelle information utile lui apportez-vous ?', placeholder: 'L’information utile à partager…', rows: 2, half: true },
+      { id: 'next', label: 'Quel prochain pas ?', sub: 'Quelle action concrète lui proposez-vous ?', placeholder: 'Ex. : un échange de 15 minutes, un rendez-vous…', rows: 2, half: true }
     ],
     resources: [
       'Un témoignage d’une entreprise du même secteur.',
@@ -178,13 +180,13 @@ window.ATELIER_S4 = {
     resourcesLabel: 'Voir mes 5 ressources',
     resourcesTitle: 'Vos ressources, à mobiliser au choix',
     cases: [
-      { tab: 'Relance 1', models: { when: 'J+3', channel: 'E-mail', value: 'S’assurer de la bonne réception ; proposer de répondre aux questions ou de préciser certains éléments de l’offre.', next: 'Un court échange, si nécessaire.' } },
-      { tab: 'Relance 2', models: { when: 'J+10', channel: 'Téléphone', value: 'Le retour d’expérience d’une entreprise du même secteur ayant équipé ses postes.', next: 'Un échange de 15 minutes pour présenter les enseignements de cette expérience.' } },
-      { tab: 'Relance 3', models: { when: 'J+21', channel: 'E-mail', value: 'Un diagnostic ergonomique, ou l’option de location si le budget est un frein.', next: 'Un rendez-vous pour étudier l’option la plus adaptée.' } },
-      { tab: 'Clôture', models: { when: 'J+30', channel: 'E-mail', value: 'Clôturer la séquence sans fermer la relation.', next: 'Rester disponible et proposer de reprendre contact dans quelques mois.' },
+      { tab: 'Relance 1', intro: 'Préparez votre première relance.', models: { when: 'J+3', channel: 'E-mail', value: 'S’assurer de la bonne réception ; proposer de répondre aux questions ou de préciser certains éléments de l’offre.', next: 'Un court échange, si nécessaire.' } },
+      { tab: 'Relance 2', intro: 'Préparez votre deuxième relance, un peu plus tard.', models: { when: 'J+10', channel: 'Téléphone', value: 'Le retour d’expérience d’une entreprise du même secteur ayant équipé ses postes.', next: 'Un échange de 15 minutes pour présenter les enseignements de cette expérience.' } },
+      { tab: 'Relance 3', intro: 'Préparez votre troisième relance, encore plus espacée.', models: { when: 'J+21', channel: 'E-mail', value: 'Un diagnostic ergonomique, ou l’option de location si le budget est un frein.', next: 'Un rendez-vous pour étudier l’option la plus adaptée.' } },
+      { tab: 'Clôture', intro: 'Préparez le dernier message, qui clôt la séquence.', models: { when: 'J+30', channel: 'E-mail', value: 'Clôturer la séquence sans fermer la relation.', next: 'Rester disponible et proposer de reprendre contact dans quelques mois.' },
         lesson: 'Message possible : « Sans retour de votre part, je suppose que ce projet n’est peut-être plus prioritaire pour le moment. Je vous propose donc de ne pas multiplier les relances. Je reste bien entendu disponible si le sujet revient à l’ordre du jour. Si vous le souhaitez, je pourrai également reprendre contact avec vous dans quelques mois. »' }
     ],
-        nextLabel: 'Enregistrer cette étape',
+    nextLabel: 'Étape suivante',
     submitLabel: 'Valider ma stratégie',
     modelLabel: 'Corrigé modèle',
     keyPoint: 'Il n’existe pas une seule séquence parfaite : ce qui compte, c’est la cohérence de la stratégie. À retenir : un plan de relance n’est pas la répétition de la même demande ; il organise dans le temps des prises de contact qui apportent chacune une nouvelle valeur et une nouvelle occasion d’avancer. Pensez aussi à consigner vos actions et les retours dans votre outil de suivi.',

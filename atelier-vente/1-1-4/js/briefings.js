@@ -80,7 +80,7 @@ window.ATELIER_BRIEFINGS = {
     lede: { key: 'Un chiffre ne parle pas.', rest: 'Un usage, si.' },
     mission: 'Transformez le repère de calcul de chaque offre en argument utile au client.',
     method: 'Une offre à la fois. Vérifiez votre formulation avec les trois cases.',
-    situation: 'Deux offres Ergolys : un siège à 690 € (environ 0,38 € par jour sur 5 ans) et un pack de 10 postes à 17 000 € (1 700 € par poste).',
+    situation: 'Ergolys propose deux offres : un siège à 690 €, soit environ 0,38 € par jour sur 5 ans, et un pack de 10 postes de travail à 17 000 €, soit 1 700 € par poste.',
     task: 'Gardez le prix total visible, citez un repère juste et reliez-le à une valeur concrète.',
     criteria: ['Prix total visible', 'Repère juste', 'Valeur concrète']
   },
@@ -221,16 +221,16 @@ window.ATELIER_BRIEFINGS = {
     lede: { key: 'Deux relances.', rest: 'Une seule donne envie de répondre.' },
     mission: 'Lisez les deux relances, choisissez la plus efficace et justifiez votre choix.',
     method: 'Choisissez une relance, puis expliquez.',
-    situation: 'Proposition pour 10 postes envoyée à Madame Riveau le 3 juin. Deux façons de la relancer.',
+    situation: 'Le 3 juin, vous avez envoyé à Madame Riveau une proposition pour équiper 10 postes de travail. Voici deux façons de la relancer.',
     task: 'Appuyez-vous sur au moins deux critères : contexte, valeur apportée, ton, prochain pas.',
     criteria: ['Le bon choix', 'Au moins deux critères']
   },
   's4-4.6': {
     lede: { key: 'Quatre étapes,', rest: 'de la relance à la clôture.' },
-    mission: 'Construisez votre stratégie de relance : quand, par quel canal, avec quelle valeur, pour quel prochain pas.',
-    method: 'Une étape à la fois. Vos cinq ressources restent consultables.',
-    situation: 'Madame Riveau, RH d’une PME de 80 salariés, est intéressée mais doit consulter sa direction. Aucune réponse depuis l’envoi de l’offre.',
-    task: 'Trois relances et une clôture.',
+    mission: 'Construisez votre plan de relance. Pour chaque étape, choisissez le moment, le canal, l’information utile à apporter et le prochain pas à proposer.',
+    method: 'Vous avancez une étape à la fois. Vos cinq ressources restent consultables à tout moment.',
+    situation: 'Le 3 juin, vous avez proposé à Madame Riveau, responsable RH d’une PME de 80 salariés, du mobilier ergonomique pour équiper 10 postes de travail. Elle est intéressée, mais doit d’abord consulter sa direction. Depuis, elle n’a pas répondu.',
+    task: 'Prévoyez trois relances, de plus en plus espacées dans le temps, puis un message de clôture.',
     criteria: ['Des relances espacées', 'Des canaux variés', 'Une valeur nouvelle à chaque fois']
   },
   's4-4.7': {
@@ -308,7 +308,7 @@ window.ATELIER_BRIEFINGS = {
     lede: { key: 'Un mail court,', rest: 'une nouvelle raison d’échanger.' },
     mission: 'Rédigez un mail de relance à Madame Riveau, avec un objet et un message.',
     method: 'Contexte, valeur, action.',
-    situation: 'Offre envoyée il y a 10 jours. Nouveau : le retour positif d’une entreprise du même secteur.',
+    situation: 'Vous avez envoyé l’offre il y a 10 jours. Depuis, une entreprise du même secteur vous a fait un retour positif.',
     task: 'Un mail court, qui donne envie de répondre.',
     criteria: ['Contexte rappelé', 'Le retour d’expérience utilisé', 'Un prochain pas concret']
   }

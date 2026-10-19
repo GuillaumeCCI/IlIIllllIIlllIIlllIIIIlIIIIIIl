@@ -399,7 +399,8 @@
   /* content : eyebrow, title, subtitle, countLabel, caseNoun, sequential,
    * layout ('side' | 'stack'), scene (par défaut), fields (par défaut),
    * side (bloc de contexte affiché à gauche), resources (liste en fenêtre),
-   * hint, tokens (champs à insérer), cases [{ tab, title, scene, fields,
+   * hint, tokens (champs à insérer), stepper (frise d'étapes dans l'en-tête,
+   * étape numérotée, bouton « Précédent »), tip (astuce à droite), cases [{ tab, title, scene, fields,
    * answers, models, checks, model, next }].
    *
    * Un champ : { id, label, sub, type: 'textarea' | 'input' | 'select' |
@@ -441,8 +442,14 @@
     };
     let lastFocus = null;
 
+    /* La frise d'étapes de l'en-tête (content.stepper), à la place des onglets. */
+    function stepper(at) {
+      return `<div class="fm-stepper"><p class="fm-stepper-now">${esc(content.caseNoun || 'Étape')} ${at + 1} sur ${n}</p><p class="fm-stepper-count" data-live="fm-count">${countLine()}</p>
+        <ol>${cases.map((c, i) => `<li class="${i === at ? 'is-current' : ''} ${complete(i) ? 'is-done' : ''}"><button type="button" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === at ? 'aria-current="step"' : ''}><span class="fm-stepper-dot">${complete(i) && i !== at ? icon('check', { size: 16 }) : i + 1}</span><span class="fm-stepper-label">${esc(c.tab)}</span></button></li>`).join('')}</ol></div>`;
+    }
+
     function tabs(at) {
-      if (n < 2) return '';
+      if (n < 2 || content.stepper) return '';
       return `<div class="fm-tabs count-${n} ${content.sequential ? 'is-steps' : ''}">${cases.map((c, i) => `<button type="button" class="fm-tab ${i === at ? 'is-current' : ''} ${complete(i) ? 'is-done' : ''}" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'}>
         <span class="fm-tab-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : content.sequential ? i + 1 : String(i + 1).padStart(2, '0')}</span><span class="fm-tab-text">${esc(c.tab)}${c.tabSub ? `<small>${esc(c.tabSub)}</small>` : ''}${c.tabNote ? `<small class="fm-tab-note">${esc(c.tabNote)}</small>` : ''}</span></button>`).join('')}</div>`;
     }
@@ -505,6 +512,16 @@
       const after = cases.findIndex((_, j) => j > i && !complete(j));
       const next = after !== -1 ? after : cases.findIndex((_, j) => j !== i && !complete(j));
       const label = next === -1 ? (content.submitLabel || 'Valider mes réponses') : (c.next || content.nextLabel || `Enregistrer et continuer`);
+      if (content.stepper) {
+        const prev = i > 0 ? `data-act="fm-case" data-index="${i - 1}"` : 'disabled';
+        return `<section class="k-panel fm-panel fm-step">
+          <div class="fm-step-head"><span class="fm-step-n">${String(i + 1).padStart(2, '0')}</span><div><h2 class="fm-step-title">${esc(c.tab)}</h2>${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}</div></div>
+          <div class="fm-step-body"><div class="fm-main">${fieldRows(i, fields)}${core().errorsBox()}</div>
+            ${content.tip ? `<aside class="fm-tip">${icon('lightbulb', { size: 34 })}<p><strong>Astuce :</strong> ${esc(content.tip)}</p></aside>` : ''}</div>
+          <div class="fm-actions"><button type="button" class="button secondary fm-prev" ${prev}>${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>
+            ${content.resources ? kit().dialogButton('resources', content.resourcesLabel || 'Mes ressources', 'text-button', 'stack') : ''}${kit().submit(label)}</div>
+        </section>`;
+      }
       const form = `<div class="fm-main">
         ${c.title && n > 1 ? `<p class="k-label">${esc(content.caseNoun || 'Cas')} ${i + 1} / ${n}</p>` : ''}${c.title ? `<h2 class="fm-title">${esc(c.title)}</h2>` : ''}
         ${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}
@@ -568,8 +585,8 @@
       if (!reviewing && ex().value('case') !== at) ex().setValue('case', at);
       return `<div class="k-page fm-page ${content.className || ''}">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : '' })}
-        ${content.side && !reviewing ? `<div class="k-panel fm-side">${scene(content.side)}</div>` : ''}
+          aside: content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : '' })}
+        ${content.side && !reviewing ? `<div class="${content.stepper ? 'fm-side-band' : 'k-panel fm-side'}">${scene(content.side)}</div>` : ''}
         ${reviewing ? reviewScreen() : `${tabs(at)}<form novalidate class="fm-form">${casePanel(at)}</form>`}
         ${reviewing ? '' : kit().utility(content.lock || 'Corrigé disponible après validation')}
       </div>`;

@@ -183,6 +183,36 @@
 .fm-token { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid #c9d6f1; border-radius: 16px; background: #eef4ff; color: var(--accent); font-weight: 650; font-size: .9rem; }
 .fm-actions { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; padding-top: 12px; border-top: 1px solid var(--line); }
 .fm-actions .k-submit { margin-left: auto; }
+/* Étapes successives (content.stepper) : frise dans l'en-tête, étape
+ * numérotée, astuce à droite. */
+.fm-stepper { text-align: left; min-width: 440px; }
+.fm-stepper-now { color: var(--accent); font-weight: 800; font-size: 1.1rem; }
+.fm-stepper-count { color: #5b6a8f; font-size: .92rem; }
+.fm-stepper-count strong { font-weight: 600; }
+.fm-stepper ol { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); }
+.fm-stepper li { position: relative; display: flex; justify-content: center; }
+.fm-stepper li + li::before { content: ''; position: absolute; top: 19px; left: calc(-50% + 22px); right: calc(50% + 22px); height: 2px; background: #d6deec; }
+.fm-stepper li.is-done + li::before, .fm-stepper li.is-current + li::before { background: var(--accent); }
+.fm-stepper button { display: grid; justify-items: center; gap: 8px; padding: 0; border: 0; background: none; color: #5b6a8f; font-size: .92rem; font-weight: 600; cursor: var(--cursor-hand, pointer); }
+.fm-stepper-dot { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #e7ecf7; color: var(--accent); font-weight: 800; }
+.fm-stepper li.is-done .fm-stepper-dot { background: var(--ok-soft); color: var(--ok); }
+.fm-stepper li.is-current .fm-stepper-dot { background: var(--accent); color: #fff; box-shadow: 0 0 0 5px var(--tint); }
+.fm-stepper li.is-current button { color: var(--navy); font-weight: 800; }
+.fm-side-band .sc-info { box-shadow: var(--shadow); }
+.fm-side-band .sc-info span { font-weight: 500; }
+.fm-step { display: grid; gap: 18px; }
+.fm-step-head { display: flex; align-items: center; gap: 16px; }
+.fm-step-n { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 800; font-size: 1.35rem; flex-shrink: 0; }
+.fm-step-title { font-size: clamp(1.4rem, 2vw, 1.9rem); line-height: 1.15; }
+.fm-step-head .fm-intro { margin-top: 2px; }
+.fm-step-body { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 24px; align-items: start; }
+.fm-step-body:not(:has(.fm-tip)) { grid-template-columns: minmax(0, 1fr); }
+.fm-step .fm-row { align-items: start; }
+.fm-step .fm-sub { font-size: .92rem; }
+.fm-tip { display: grid; gap: 10px; padding: 20px; border-radius: 14px; background: #fff3e4; color: var(--navy); line-height: 1.45; }
+.fm-tip .icon { color: #f0712f; }
+.fm-tip strong { display: block; margin-bottom: 2px; }
+.fm-step .fm-prev:disabled { opacity: .45; cursor: default; }
 .fm-review { display: grid; gap: 10px; }
 .fm-review-title { font-size: 1.3rem; }
 .fm-review-scene { max-width: 900px; }
@@ -217,8 +247,9 @@ button.sw-passage:hover { background: #f1f4fb; }
 
 /* ── Adaptation aux écrans étroits ────────────────────────────────────── */
 @media (max-width: 1100px) {
-  .mt-board, .fm-panel.is-side { grid-template-columns: minmax(0, 1fr); }
+  .mt-board, .fm-panel.is-side, .fm-step-body { grid-template-columns: minmax(0, 1fr); }
   .cmp-criteria, .fm-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fm-stepper { min-width: 0; width: 100%; }
 }
 @media (max-width: 900px) {
   .cmp-options, .cmp-fields, .fm-review-pair, .sw-explain { grid-template-columns: minmax(0, 1fr); }
@@ -227,6 +258,7 @@ button.sw-passage:hover { background: #f1f4fb; }
 @media (max-width: 760px) {
   .dk-zones, .fm-choices, .sw-tools, .fm-chips, .cmp-criteria, .fm-row { grid-template-columns: minmax(0, 1fr); }
   .fm-tabs { --n: 1 !important; }
+  .fm-stepper-label { display: none; }
   .dk-card { padding: 18px; }
   .dk-symbol { display: none; }
   .sc-line { grid-template-columns: minmax(0, 1fr); }
