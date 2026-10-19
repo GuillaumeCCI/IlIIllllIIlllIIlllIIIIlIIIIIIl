@@ -87,6 +87,12 @@ html[data-embed="solo"] #main { padding-top: 20px; }
     url('../assets/illustrations/fenetre-coin-bg.webp') left bottom / 130px auto no-repeat,
     url('../assets/illustrations/fenetre-coin-bd.webp') right bottom / 142px auto no-repeat, #fff; }
 
+/* Le bouton de fermeture de toutes les fenêtres : une croix blanche sur
+   une pastille ronde bleu marine. */
+#info-dialog [data-action="close-dialog"] { display: grid; place-items: center; width: 34px; height: 34px; min-height: 34px; padding: 0 0 1px; border: 0; border-radius: 50%; background: var(--navy, #14214d); color: #fff; font: 600 1.7rem/1 system-ui, sans-serif; box-shadow: 0 4px 12px rgb(20 33 77 / 22%); transition: background .15s, transform .15s; }
+#info-dialog [data-action="close-dialog"]:hover { background: var(--accent, #1f4fd8); transform: scale(1.06); }
+#info-dialog [data-action="close-dialog"]:focus-visible { outline: 3px solid var(--accent, #1f4fd8); outline-offset: 2px; }
+
 /* ── Fenêtre « Repère » ─────────────────────────────────────────────────
    Fond blanc, pastille illustrée devant le titre, le conseil en grand
    derrière un trait corail, les clés en pastilles de couleur, et deux
