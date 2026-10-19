@@ -399,3 +399,10 @@
 .xp-card .xp-card-words { margin-left: 0; padding: 0; border-left: 0; }
 .xp-top { display: flex; justify-content: flex-end; }
 .xp-page .k-bar .button.secondary { border-color: transparent; box-shadow: none; }
+
+/* 1.6 · passage d'une étape à l'autre : la nouvelle étape glisse en place. */
+.six-step.is-next { animation: six-next .4s ease-out; }
+.six-step.is-prev { animation: six-prev .4s ease-out; }
+@keyframes six-next { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
+@keyframes six-prev { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .six-step.is-next, .six-step.is-prev { animation: none; } }

@@ -644,8 +644,107 @@
     ex().rebuild();
   }
 
+  /* ─────────────────────────── Visite guidée ───────────────────────────── */
+
+  /* Un projecteur qui présente l'écran, zone par zone : tout s'assombrit
+   * sauf la zone montrée, et une bulle l'explique (« 2 / 5 », Précédent,
+   * Suivant, Passer). Elle se lance d'elle-même la première fois que
+   * l'écran d'exercice apparaît (mémorisé dans le navigateur), et
+   * `tourButton()` permet de la revoir. `steps` : [{ target, title, text }],
+   * `target` étant un sélecteur ; une zone absente de l'écran est sautée.
+   * Styles : extras-commun.css (.tour-*). */
+  let tourSteps = [];
+  let tourKey = '';
+  const tourButton = () => `<button type="button" class="text-button with-icon tour-replay" data-act="tour">${icon('question', { size: 18 })}<span>Visite guidée</span></button>`;
+
+  function tourStart() {
+    const doc = root.document;
+    const steps = tourSteps.filter(s => doc.querySelector(s.target));
+    if (!steps.length || doc.querySelector('.tour')) return;
+    try { root.localStorage.setItem(tourKey, '1'); } catch {}
+    const layer = doc.createElement('div');
+    layer.className = 'tour';
+    layer.innerHTML = `<div class="tour-hole"></div><div class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tour-title" tabindex="-1"></div>`;
+    doc.body.appendChild(layer);
+    const hole = layer.querySelector('.tour-hole');
+    const card = layer.querySelector('.tour-card');
+    let at = 0;
+    const place = () => {
+      const el = doc.querySelector(steps[at].target);
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const pad = 8;
+      Object.assign(hole.style, { left: `${r.left - pad}px`, top: `${r.top - pad}px`, width: `${r.width + 2 * pad}px`, height: `${r.height + 2 * pad}px` });
+      const vw = root.innerWidth, vh = root.innerHeight, cw = card.offsetWidth, ch = card.offsetHeight, gap = 20;
+      let x, y;
+      if (r.right + gap + cw < vw - 12) { x = r.right + gap; y = r.top; }
+      else if (r.left - gap - cw > 12) { x = r.left - gap - cw; y = r.top; }
+      else if (r.bottom + gap + ch < vh - 12) { x = r.left; y = r.bottom + gap; }
+      else { x = r.left; y = r.top - gap - ch; }
+      card.style.left = `${Math.min(Math.max(12, x), vw - cw - 12)}px`;
+      card.style.top = `${Math.min(Math.max(12, y), vh - ch - 12)}px`;
+    };
+    const show = i => {
+      at = i;
+      const s = steps[at];
+      const last = at === steps.length - 1;
+      card.innerHTML = `<p class="tour-count">${at + 1} / ${steps.length}</p>
+        <h2 id="tour-title">${esc(s.title)}</h2><p>${esc(s.text)}</p>
+        <div class="tour-actions"><button type="button" class="text-button" data-tour="skip">${last ? '' : 'Passer'}</button>
+          <span>${at ? '<button type="button" class="button secondary" data-tour="prev">Précédent</button>' : ''}
+          <button type="button" class="button primary" data-tour="next">${last ? 'C’est parti !' : 'Suivant'}</button></span></div>`;
+      const el = doc.querySelector(s.target);
+      el.scrollIntoView({ block: 'center', behavior: 'instant' });
+      place();
+      // La bulle réapparaît en douceur à chaque zone.
+      card.classList.remove('is-in');
+      void card.offsetWidth;
+      card.classList.add('is-in');
+      card.querySelector('[data-tour="next"]').focus();
+    };
+    const close = () => {
+      layer.remove();
+      root.removeEventListener('resize', place);
+      root.removeEventListener('scroll', place, true);
+      doc.removeEventListener('keydown', keys, true);
+    };
+    const keys = event => {
+      if (event.key === 'Escape') { event.preventDefault(); close(); }
+      else if (event.key === 'ArrowRight') { event.preventDefault(); at < steps.length - 1 ? show(at + 1) : close(); }
+      else if (event.key === 'ArrowLeft' && at) { event.preventDefault(); show(at - 1); }
+    };
+    card.addEventListener('click', event => {
+      const act = event.target.closest('[data-tour]')?.dataset.tour;
+      if (act === 'next') at < steps.length - 1 ? show(at + 1) : close();
+      else if (act === 'prev') show(at - 1);
+      else if (act === 'skip') close();
+    });
+    root.addEventListener('resize', place);
+    root.addEventListener('scroll', place, true);
+    doc.addEventListener('keydown', keys, true);
+    show(0);
+  }
+
+  // Lancement automatique : on attend que la première zone soit à l'écran
+  // et que l'écran ait fini d'apparaître.
+  function tour(id, steps) {
+    tourSteps = steps;
+    tourKey = `atelier-visite-${id}`;
+    handlers = Object.assign({}, handlers, { tour: () => tourStart() });
+    let seen = false;
+    try { seen = root.localStorage.getItem(tourKey) === '1'; } catch {}
+    if (seen || !root.document) return;
+    const wait = setInterval(() => {
+      if (ex().reviewing()) return;
+      const first = root.document.querySelector(steps[0].target);
+      if (!first || !first.getClientRects().length) return;
+      clearInterval(wait);
+      setTimeout(tourStart, 2600);
+    }, 400);
+  }
+
   root.AtelierKit = Object.freeze({
-    corrige, answerReview, clientCard, portraitFor,
+    corrige, answerReview, clientCard, portraitFor, tour, tourButton,
     esc, icon, words, seconds, filled, plural, stage, setStage, list,
     head, steps, band, tip, help, submit, act, back, reset, dialogButton, bar, utility,
     matrix, answered, score, choiceButtons,

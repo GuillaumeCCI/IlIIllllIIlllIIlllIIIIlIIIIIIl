@@ -82,16 +82,21 @@
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }
 
+  // L'étape qui vient d'arriver glisse en place (pas à chaque redessin).
+  let shownStep = null;
+
   function screen() {
     const reviewing = ex.reviewing();
     const step = at();
+    const entering = shownStep !== null && shownStep !== step ? (step > shownStep ? 'is-next' : 'is-prev') : '';
+    shownStep = step;
     return `<div class="k-page six-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle })}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : kit.tourButton() })}
       ${reviewing ? reviewScreen() : `<div class="six-layout">
         ${menu(step)}
         <form class="k-panel six-main" novalidate>
           ${objectionCard()}
-          ${stepBody(step)}
+          <div class="six-step ${entering}">${stepBody(step)}</div>
           ${core.errorsBox()}
           <div class="six-actions">${step === SELF ? kit.back('go-back', 'Revenir à l’étape 6') : kit.dialogButton(`tip${step - 1}`, 'Voir un repère', 'secondary', 'lightbulb')}
             ${kit.submit(step === SELF ? 'Valider mon auto-évaluation' : step === 6 && written() >= 5 ? 'Enregistrer et s’auto-évaluer' : 'Enregistrer et continuer')}</div>
@@ -130,6 +135,15 @@
   });
   kit.live(() => ({ count: `${written()} / 6 phrases` }));
   kit.dialogs(Object.fromEntries(content.prompts.map((p, i) => [`tip${i}`, { title: `Repère · ${method[i].name}`, html: `<p>${esc(p.tip)}</p>` }])));
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s1-1.6', [
+    { target: '.six-menu', title: 'Les 6 étapes', text: 'Voici les six étapes de la méthode. Vous les traitez une par une : l’étape en cours est surlignée, et chaque étape terminée est cochée.' },
+    { target: '.six-objection', title: 'L’objection du client', text: 'C’est l’objection à laquelle vous répondez. Cliquez sur « Changer » pour en choisir une autre : les phrases déjà écrites sont conservées.' },
+    { target: '.six-main .field', title: 'Votre phrase', text: 'Écrivez ici ce que vous diriez au client pour cette étape, en une phrase précise, comme si vous lui parliez.' },
+    { target: '.six-main .k-dialog-button', title: 'Un repère', text: 'Un doute ? Ce bouton ouvre un conseil pour l’étape en cours.' },
+    { target: '.six-actions .k-submit', title: 'Enregistrer et continuer', text: 'Votre phrase est enregistrée et vous passez à l’étape suivante. Après la sixième, vous relirez vos phrases pour vous auto-évaluer.' }
+  ]);
 
   ex.mount('s1-1.6', { screen, validate, intercept, feedback, compactFeedback: true });
 })();
