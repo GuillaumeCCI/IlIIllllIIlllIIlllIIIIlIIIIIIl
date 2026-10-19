@@ -39,7 +39,7 @@
 
   const feedback = () => {
     // Le score est déjà en tête du corrigé : seule la leçon reste.
-    return [`Un superlatif sans source est toujours un trou de preuve.`];
+    return [`Une preuve doit couvrir toute la promesse : un audit RGPD prouve la conformité, pas une « sécurité totale ».`];
   };
 
   kit.live(() => ({ aside: counter() }));

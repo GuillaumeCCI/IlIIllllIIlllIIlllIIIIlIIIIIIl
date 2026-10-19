@@ -94,13 +94,13 @@ window.ATELIER_S2 = {
     eyebrow: 'Exercice · Argumentation',
     title: 'La chasse aux preuves',
     subtitle: 'Pour chaque affirmation, cochez si elle est étayée par une preuve concrète ou s’il s’agit d’un trou de preuve.',
-    pitch: 'RelaCosy est le CRM le plus fiable du marché. Nos clients gagnent un temps fou. Vos données sont chiffrées et conformes RGPD (audit annuel). C’est aussi le plus simple à prendre en main. 5 000 PME l’utilisent déjà.',
+    pitch: 'Déjà adopté par 5 000 PME, RelaCosy est un CRM conçu pour une prise en main immédiate : vos équipes sont opérationnelles en moins d’une heure. Résultat, elles économisent en moyenne 3 heures de saisie par semaine, avec la garantie d’une sécurité totale validée par notre audit RGPD annuel.',
     rows: [
-      { text: 'RelaCosy est le CRM le plus fiable du marché.', answer: 'gap', why: 'Trou de preuve : superlatif gratuit, aucun classement, aucune source.' },
-      { text: 'Nos clients gagnent un temps fou.', answer: 'gap', why: 'Trou de preuve : affirmation vague, non chiffrée.' },
-      { text: 'Vos données sont chiffrées et conformes RGPD (audit annuel).', answer: 'proof', why: 'Étayée : l’audit annuel est un élément vérifiable.' },
-      { text: 'C’est aussi le plus simple à prendre en main.', answer: 'gap', why: 'Trou de preuve : superlatif non étayé.' },
-      { text: '5 000 PME l’utilisent déjà.', answer: 'proof', why: 'Étayée : donnée chiffrée et vérifiable.' }
+      { text: 'Déjà adopté par 5 000 PME.', answer: 'proof', why: 'Étayée : donnée chiffrée et vérifiable.' },
+      { text: 'Vos équipes sont opérationnelles en moins d’une heure.', answer: 'proof', why: 'Étayée : une durée précise, qu’une démonstration permet de vérifier.' },
+      { text: 'Elles économisent en moyenne 3 heures de saisie par semaine.', answer: 'proof', why: 'Étayée : une moyenne chiffrée, mesurable chez les clients.' },
+      { text: 'La garantie d’une sécurité totale.', answer: 'gap', why: 'Trou de preuve : « totale » est une promesse absolue. L’audit prouve la conformité RGPD, pas une sécurité sans faille.' },
+      { text: 'Validée par notre audit RGPD annuel.', answer: 'proof', why: 'Étayée : un audit annuel est un élément vérifiable.' }
     ],
     columns: [
       { id: 'proof', label: 'Étayée' },

@@ -104,9 +104,9 @@ window.ATELIER_BRIEFINGS = {
     lede: { key: 'Une affirmation sans preuve', rest: 'n’est qu’une promesse.' },
     mission: 'Pour chacune des cinq affirmations d’un pitch, dites si elle est étayée par une preuve concrète ou s’il s’agit d’un trou de preuve.',
     method: 'Cochez une seule case par ligne.',
-    situation: 'Un commercial présente RelaCosy en cinq phrases. Certaines s’appuient sur des faits vérifiables, d’autres sur des superlatifs gratuits.',
+    situation: 'Un commercial présente RelaCosy avec beaucoup de chiffres. Presque tout est étayé, mais une promesse va plus loin que sa preuve.',
     task: 'Qualifiez chaque affirmation : étayée, ou trou de preuve.',
-    criteria: ['Reconnaître une preuve vérifiable', 'Repérer les superlatifs sans source']
+    criteria: ['Reconnaître une preuve vérifiable', 'Repérer une promesse plus large que sa preuve']
   },
 
   's2-2.5': {
