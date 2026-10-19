@@ -189,8 +189,7 @@ function render() {
     }
     if (!rows.length) continue;
     html += `<table><tr><th class="mod" colspan="4">${m.titre}</th></tr>
-      <tr class="cols"><th>Critère(s) concerné(s)</th><th>Chapitre à revoir</th><th>Priorité</th><th>Fait</th></tr>${rows.join('')}
-      <tr><td class="comp">—</td><td class="chap"><i>${m.quiz}</i> (à repasser)</td><td class="prio">—</td><td class="done">${fait(m.titre + ' | quiz')}</td></tr></table>`;
+      <tr class="cols"><th>Critère(s) concerné(s)</th><th>Chapitre à revoir</th><th>Priorité</th><th>Fait</th></tr>${rows.join('')}</table>`;
   }
   document.getElementById('plan').innerHTML = html || '<p class="empty">Aucun chapitre à revoir : tous les critères sont acquis. Bravo !</p>';
 }
