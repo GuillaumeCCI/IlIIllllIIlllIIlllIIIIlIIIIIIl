@@ -227,7 +227,7 @@
   kit.tour('s1-1.3', [
     { target: '.fab-prospect', title: 'Votre prospect', text: 'Voici le client : une PME de 12 salariés sans service informatique, et ses trois priorités. Vous construisez un argument pour chacune.' },
     { target: '.fab-cards', title: 'Les informations du produit', text: 'Ces cartes décrivent le produit. Faites glisser une carte, ou cliquez dessus, pour l’ajouter à votre argument. Toutes ne sont pas utiles : ne gardez que celles qui répondent au besoin.' },
-    { target: '.fab-need-banner', title: 'La priorité en cours', text: 'Votre argument répond à cette priorité du client. Les points en haut à droite montrent où vous en êtes : un argument par priorité.' },
+    { target: '.fab-build-head, .fab-need-banner', title: 'Un argument par priorité', text: 'Vous construisez trois arguments, un pour chaque priorité du client. Le bandeau indique la priorité à traiter maintenant. Les trois points, en haut à droite, montrent votre avancement : cliquez sur un point pour passer à un autre argument.' },
     { target: '.fab-cols', title: 'La méthode CAP', text: 'C : les caractéristiques qui répondent au besoin. A : ce que le client y gagne, à écrire vous-même en commençant par « Vous… ». P : la preuve qui rend la promesse crédible. Cliquez sur l’en-tête C ou P pour y envoyer les cartes.' },
     { target: '.k-bar .k-dialog-button', title: 'Un indice', text: 'Un doute ? Ce bouton rappelle ce qu’on attend dans chaque colonne.' },
     { target: '.k-bar .k-submit', title: 'Continuer', text: 'Votre argument est enregistré et vous passez à la priorité suivante. Après le troisième, vous validez vos arguments et découvrez le corrigé.' }

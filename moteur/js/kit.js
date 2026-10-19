@@ -663,7 +663,8 @@
    * Suivant, Passer). Elle se lance d'elle-même la première fois que
    * l'écran d'exercice apparaît (mémorisé dans le navigateur), et
    * `tourButton()` permet de la revoir. `steps` : [{ target, title, text }],
-   * `target` étant un sélecteur ; une zone absente de l'écran est sautée.
+   * `target` étant un sélecteur ; plusieurs, séparés par des virgules,
+   * forment une seule zone qui les englobe. Une zone absente est sautée.
    * Styles : extras-commun.css (.tour-*). */
   let tourSteps = [];
   let tourKey = '';
@@ -685,10 +686,17 @@
     const hole = layer.querySelector('.tour-hole');
     const card = layer.querySelector('.tour-card');
     let at = 0;
+    // Le rectangle qui englobe tous les éléments de la zone.
+    const zone = target => {
+      const rects = [...doc.querySelectorAll(target)].map(el => el.getBoundingClientRect()).filter(r => r.width || r.height);
+      if (!rects.length) return null;
+      const left = Math.min(...rects.map(r => r.left)), top = Math.min(...rects.map(r => r.top));
+      const right = Math.max(...rects.map(r => r.right)), bottom = Math.max(...rects.map(r => r.bottom));
+      return { left, top, right, bottom, width: right - left, height: bottom - top };
+    };
     const place = () => {
-      const el = doc.querySelector(steps[at].target);
-      if (!el) return;
-      const r = el.getBoundingClientRect();
+      const r = zone(steps[at].target);
+      if (!r) return;
       const pad = 8;
       Object.assign(hole.style, { left: `${r.left - pad}px`, top: `${r.top - pad}px`, width: `${r.width + 2 * pad}px`, height: `${r.height + 2 * pad}px` });
       const vw = root.innerWidth, vh = root.innerHeight, cw = card.offsetWidth, ch = card.offsetHeight, gap = 20;
