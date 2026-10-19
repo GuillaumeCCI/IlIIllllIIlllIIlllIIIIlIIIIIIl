@@ -461,3 +461,46 @@ button.crash-passage:hover { background: #fff1d6; }
 .fm-num.tone-green { background: #ddf5ee; color: #11806a; }
 .fm-num-card .fm-label { font-size: 1.15rem; }
 @media (max-width: 760px) { .fm-num-card { grid-template-columns: 1fr; } .fm-num { width: 44px; height: 44px; font-size: 1.2rem; } }
+
+/* ── Un cas champ par champ (content.fieldSteps) ──────────────────────── */
+.fs-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 32px; align-items: start; }
+.fs-nav { list-style: none; margin: 0; padding: 0; display: grid; }
+.fs-nav li { position: relative; padding-bottom: 18px; }
+.fs-nav li:not(:last-child)::before { content: ''; position: absolute; left: 23px; top: 48px; bottom: 0; width: 2px; background: #d6deec; }
+.fs-nav li.is-done:not(:last-child)::before { background: var(--accent); }
+.fs-nav button { display: flex; align-items: center; gap: 14px; width: 100%; padding: 0; border: 0; background: none; color: var(--navy); text-align: left; cursor: var(--cursor-hand, pointer); }
+.fs-nav button:disabled { cursor: default; opacity: .7; }
+.fs-n { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 2px solid #d6deec; background: #fff; color: #5b6a8f; font-weight: 800; font-size: 1.15rem; flex-shrink: 0; }
+.fs-nav li.is-done .fs-n { border-color: var(--ok-soft); background: var(--ok-soft); color: var(--ok); }
+.fs-nav li.is-current .fs-n { border-color: var(--accent); background: var(--accent); color: #fff; }
+.fs-text { display: grid; gap: 2px; padding: 10px 16px; border-radius: 14px; flex: 1; }
+.fs-text strong { font-size: 1.05rem; }
+.fs-text small { color: #5b6a8f; font-size: .9rem; }
+.fs-nav li.is-current .fs-text { background: #e4ebfb; }
+.fs-nav li.is-current .fs-text strong { color: var(--accent); }
+.fs-panel { display: grid; gap: 18px; padding: 30px 34px; }
+.fs-step { display: grid; gap: 20px; }
+.fs-head { display: flex; align-items: center; gap: 18px; }
+.fs-head h2 { margin: 0; font-size: clamp(1.5rem, 2vw, 1.9rem); }
+.fs-head p { margin: 2px 0 0; color: #46577d; font-size: 1.1rem; }
+.fs-symbol { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: #e4ebfb; color: var(--accent); flex-shrink: 0; }
+.fs-panel .fm-tokens .k-label { color: var(--navy); font-size: 1rem; letter-spacing: 0; text-transform: none; font-weight: 800; }
+.fs-panel .fm-tokens .k-label small { font-weight: 500; font-size: 1rem; }
+.fs-panel .fm-token { padding: 8px 16px; border: 0; border-radius: 999px; background: #e9effc; font-size: 1rem; }
+#main .fs-panel textarea { min-height: 150px; font-size: 1.05rem; }
+.fs-tip { display: flex; align-items: center; gap: 14px; margin: 0; padding: 16px 20px; border-radius: 14px; background: #eef4ff; color: var(--navy); }
+.fs-tip .icon { color: var(--accent); flex-shrink: 0; }
+.fs-dots { display: grid; justify-items: center; gap: 8px; }
+.fs-dots ol { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; }
+.fs-dots li { display: flex; align-items: center; }
+.fs-dots li + li::before { content: ''; width: 28px; height: 2px; background: #d6deec; }
+.fs-dots li.is-done + li::before { background: var(--accent); }
+.fs-dots span { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #e4ebfb; color: var(--accent); font-weight: 800; }
+.fs-dots li.is-current span { background: var(--accent); color: #fff; }
+.fs-dots p { margin: 0; color: #5b6a8f; font-size: .92rem; }
+.fs-step.is-next { animation: fs-next .4s ease-out; }
+.fs-step.is-prev { animation: fs-prev .4s ease-out; }
+@keyframes fs-next { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
+@keyframes fs-prev { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .fs-step.is-next, .fs-step.is-prev { animation: none; } }
+@media (max-width: 900px) { .fs-layout { grid-template-columns: minmax(0, 1fr); } .fs-nav li { padding-bottom: 8px; } .fs-nav li::before { display: none; } }

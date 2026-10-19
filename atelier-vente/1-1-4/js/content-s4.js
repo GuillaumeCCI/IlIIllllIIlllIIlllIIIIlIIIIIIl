@@ -212,13 +212,14 @@ window.ATELIER_S4 = {
     title: 'À vous de créer votre modèle !',
     subtitle: 'Écrivez une trame qui s’adapte à chaque client.',
     countLabel: 'parties',
+    fieldSteps: true,
     tokens: ['[Prénom du client]', '[Date de la proposition]', '[Offre]', '[Ma signature]'],
     cases: [
       { tab: 'Mon modèle', fields: [
-        { id: 'subject', type: 'input', label: 'Objet', placeholder: '[Objet de la relance]', max: 120, model: '[Projet / offre] : un point rapide' },
-        { id: 'context', label: '01 · Contexte', placeholder: 'Rappeler l’offre ou l’échange précédent…', rows: 2, model: 'Bonjour [Prénom], je reviens vers vous au sujet de [offre / proposition / projet], que je vous ai adressé(e) le [date].' },
-        { id: 'value', label: '02 · Valeur', placeholder: 'Apporter une information nouvelle ou utile…', rows: 2, model: 'Depuis notre dernier échange, [élément de valeur : retour d’expérience d’un client, nouvelle information, option complémentaire, donnée utile, évolution de l’offre]. Je souhaitais vous en faire part car [lien avec le besoin ou l’enjeu du client].' },
-        { id: 'next', label: '03 · Prochain pas', placeholder: 'Proposer une action simple et concrète…', rows: 2, model: 'Pour avancer, je vous propose [prochain pas : un échange de 15 minutes, une démonstration, un diagnostic, l’envoi d’un complément d’information]. Seriez-vous disponible [créneau A] ou [créneau B] ? Bien à vous, [Prénom, signature]' }
+        { id: 'subject', label: 'Objet', stepSub: 'Le sujet de la relance', symbol: 'document', intro: 'Indiquez le sujet de votre relance.', tip: 'L’objet doit être clair et inciter à l’ouverture.', placeholder: 'Objet de la relance…', rows: 3, max: 120, model: '[Projet / offre] : un point rapide' },
+        { id: 'context', label: 'Contexte', stepSub: 'Rappeler l’échange précédent', symbol: 'chat', intro: 'Rappelez l’offre ou l’échange précédent.', tip: 'Une phrase suffit : le client doit se souvenir tout de suite de quoi vous parlez.', placeholder: 'Rappeler l’offre ou l’échange précédent…', rows: 4, model: 'Bonjour [Prénom], je reviens vers vous au sujet de [offre / proposition / projet], que je vous ai adressé(e) le [date].' },
+        { id: 'value', label: 'Valeur', stepSub: 'Apporter une information utile', symbol: 'sparkle', intro: 'Apportez une information nouvelle ou utile.', tip: 'Donnez au client une vraie raison de répondre : un retour d’expérience, une donnée, une option nouvelle.', placeholder: 'Apporter une information nouvelle ou utile…', rows: 4, model: 'Depuis notre dernier échange, [élément de valeur : retour d’expérience d’un client, nouvelle information, option complémentaire, donnée utile, évolution de l’offre]. Je souhaitais vous en faire part car [lien avec le besoin ou l’enjeu du client].' },
+        { id: 'next', label: 'Prochain pas', stepSub: 'Proposer une action concrète', symbol: 'target', intro: 'Proposez une action simple et concrète.', tip: 'Proposez deux créneaux précis : il est plus facile de choisir que d’inventer.', placeholder: 'Proposer une action simple et concrète…', rows: 4, model: 'Pour avancer, je vous propose [prochain pas : un échange de 15 minutes, une démonstration, un diagnostic, l’envoi d’un complément d’information]. Seriez-vous disponible [créneau A] ou [créneau B] ? Bien à vous, [Prénom, signature]' }
       ] }
     ],
     keyPoint: 'À retenir : un modèle de relance est une trame, pas un copier-coller. Sa structure peut rester la même, mais le contexte, la valeur apportée et le prochain pas doivent être personnalisés pour donner au client une vraie raison de répondre.',

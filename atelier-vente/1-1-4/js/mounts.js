@@ -401,7 +401,9 @@
    * side (bloc de contexte affiché à gauche), resources (liste en fenêtre),
    * hint, tokens (champs à insérer), stepper (frise d'étapes dans l'en-tête,
    * étape numérotée, bouton « Précédent »), tip (astuce à droite),
-   * tour (bulles de la visite guidée, voir kit.tour), cases [{ tab, title, scene, fields,
+   * tour (bulles de la visite guidée, voir kit.tour), fieldSteps (un seul
+   * cas rempli champ par champ ; chaque champ porte stepSub, symbol, intro,
+   * tip), cases [{ tab, title, scene, fields,
    * answers, models, checks, model, next }].
    *
    * Un champ : { id, label, sub, type: 'textarea' | 'input' | 'select' |
@@ -508,7 +510,55 @@
 
     function tokens() {
       if (!content.tokens) return '';
-      return `<div class="fm-tokens"><span class="k-label">Insérer un champ</span>${content.tokens.map(t => `<button type="button" class="fm-token" data-act="fm-token" data-token="${esc(t)}">${icon('plus', { size: 14 })}<span>${esc(t)}</span></button>`).join('')}</div>`;
+      // En étapes, l'étiquette se lit sans crochets ; le champ inséré les garde.
+      const shown = t => (content.fieldSteps ? t.replace(/[[\]]/g, '') : t);
+      return `<div class="fm-tokens"><span class="k-label">Insérer un champ${content.fieldSteps ? ' <small>(facultatif)</small>' : ''}</span>${content.tokens.map(t => `<button type="button" class="fm-token" data-act="fm-token" data-token="${esc(t)}">${icon('plus', { size: 14 })}<span>${esc(shown(t))}</span></button>`).join('')}</div>`;
+    }
+
+    /* UN CAS REMPLI CHAMP PAR CHAMP (content.fieldSteps) : à gauche la liste
+     * des parties, à droite la partie en cours dans sa carte, avec son
+     * astuce. Une partie s'ouvre quand les précédentes sont remplies. */
+    const fieldAt = () => {
+      const fields = fieldsOf(0);
+      const asked = intOr(ex().value('fstep'));
+      const first = fields.findIndex(f => !filledField(0, f));
+      const at = asked === null ? (first === -1 ? 0 : first) : asked;
+      return Math.min(Math.max(0, at), fields.length - 1);
+    };
+    const fieldOpen = j => fieldsOf(0).slice(0, j).every(f => f.optional || filledField(0, f));
+    let shownField = null;
+
+    function fieldDots() {
+      const fields = fieldsOf(0);
+      const at = fieldAt();
+      return `<div class="fs-dots"><ol>${fields.map((f, j) => `<li class="${j === at ? 'is-current' : ''} ${filledField(0, f) ? 'is-done' : ''}"><span>${j + 1}</span></li>`).join('')}</ol><p>Étape ${at + 1} sur ${fields.length}</p></div>`;
+    }
+
+    function fieldStepsPanel() {
+      const fields = fieldsOf(0);
+      const at = fieldAt();
+      const f = fields[at];
+      const last = at === fields.length - 1;
+      // L’écran mémorise la partie affichée : la remplir ne fait pas glisser
+      // la validation vers la suivante.
+      if (!ex().reviewing() && ex().value('fstep') !== at) ex().setValue('fstep', at);
+      const entering = shownField !== null && shownField !== at ? (at > shownField ? 'is-next' : 'is-prev') : '';
+      shownField = at;
+      return `<div class="fs-layout">
+        <ol class="fs-nav">${fields.map((g, j) => `<li class="${j === at ? 'is-current' : ''} ${filledField(0, g) ? 'is-done' : ''}"><button type="button" data-act="fm-field" data-index="${j}" ${fieldOpen(j) ? '' : 'disabled'} ${j === at ? 'aria-current="step"' : ''}>
+          <span class="fs-n">${filledField(0, g) && j !== at ? icon('check', { size: 16 }) : j + 1}</span><span class="fs-text"><strong>${esc(g.label)}</strong>${g.stepSub ? `<small>${esc(g.stepSub)}</small>` : ''}</span></button></li>`).join('')}</ol>
+        <section class="k-panel fs-panel">
+          <div class="fs-step ${entering}">
+            <div class="fs-head"><span class="fs-symbol">${icon(f.symbol || 'pencil', { size: 26 })}</span><div><h2>${at + 1}. ${esc(f.label)}</h2>${f.intro ? `<p>${esc(f.intro)}</p>` : ''}</div></div>
+            ${tokens()}
+            ${fieldBlock(0, Object.assign({}, f, { label: '' }))}
+            ${f.tip ? `<p class="fs-tip">${icon('lightbulb', { size: 24 })}<span>${esc(f.tip)}</span></p>` : ''}
+          </div>
+          ${core().errorsBox()}
+          <div class="fm-actions">${at ? `<button type="button" class="button secondary" data-act="fm-field" data-index="${at - 1}">${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>` : '<span></span>'}
+            ${kit().submit(last ? (content.submitLabel || 'Valider mes réponses') : (content.nextLabel || 'Passer à l’étape suivante'))}</div>
+        </section>
+      </div>`;
     }
 
     /* L'aperçu du canal (content.skin) : les champs listés prennent l'allure
@@ -536,6 +586,7 @@
     }
 
     function casePanel(i) {
+      if (content.fieldSteps) return fieldStepsPanel();
       const c = cases[i];
       const fields = fieldsOf(i);
       const sceneHtml = scene(c.scene || content.scene);
@@ -695,7 +746,7 @@
       if (!reviewing && ex().value('case') !== at) ex().setValue('case', at);
       return `<div class="k-page fm-page ${content.className || ''}">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: `${content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : ''}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
+          aside: `${content.fieldSteps && !reviewing ? fieldDots() : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : ''}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
         ${content.side && !reviewing && !content.stepper ? `<div class="k-panel fm-side">${scene(content.side)}</div>` : ''}
         ${reviewing ? reviewScreen() : `${tabs(at)}<form novalidate class="fm-form">${casePanel(at)}</form>`}
         ${reviewing ? '' : kit().utility(content.lock || 'Corrigé disponible après validation')}
@@ -712,6 +763,10 @@
     }
 
     function validate(values) {
+      if (content.fieldSteps) {
+        const own = caseErrors(values, 0).filter(e => e.key === k(0, fieldsOf(0)[fieldAt()]));
+        return own.length ? own : caseErrors(values, 0);
+      }
       const at = current();
       const own = caseErrors(values, at);
       if (own.length) return own;
@@ -720,6 +775,19 @@
     }
 
     function intercept(values) {
+      if (content.fieldSteps) {
+        // La partie en cours remplie : on passe à la suivante, puis, depuis
+        // la dernière, au premier champ resté vide. Tout est rempli : on valide.
+        const fields = fieldsOf(0);
+        const j = fieldAt();
+        const open = g => g.optional || kit().filled(values[k(0, g)]);
+        if (!open(fields[j])) return false;
+        if (j < fields.length - 1) { ex().setValue('fstep', j + 1); return true; }
+        const gap = fields.findIndex(g => !open(g));
+        if (gap === -1) return false;
+        ex().setValue('fstep', gap);
+        return true;
+      }
       const at = current();
       if (caseErrors(values, at).length) return false;
       if (!fieldsOf(at).length) ex().setValue(k(at, 'read'), true);
@@ -735,6 +803,7 @@
 
     kit().on({
       'fm-case': el => { ex().setValue('case', Number(el.dataset.index)); kit().commit(); },
+      'fm-field': el => { ex().setValue('fstep', Number(el.dataset.index)); kit().commit(); },
       'fm-choice': el => { ex().setValue(el.dataset.key, el.dataset.id); kit().commit(); },
       'fm-chip': el => {
         const list = Array.isArray(ex().value(el.dataset.key)) ? ex().value(el.dataset.key).slice() : [];
