@@ -77,6 +77,16 @@ html[data-embed="solo"] #main { padding-top: 20px; }
 
 @media (prefers-reduced-motion: reduce) { #main .is-revealing, #main .is-revealing.is-reveal-head { animation: none !important; } }
 
+/* ── Fenêtres d'information (ressources, listes…) ─────────────────────────
+   Fond blanc, et aux quatre coins les décors de la carte illustrée
+   (taches aquarelle, feuillages, points), découpés à part pour ne pas se
+   déformer quelle que soit la taille de la fenêtre. */
+#info-dialog:not(.is-tip) { padding: 40px 56px 64px; overflow: hidden; border-color: #ece7de; border-radius: 22px;
+  background: url('../assets/illustrations/fenetre-coin-hg.webp') left top / 120px auto no-repeat,
+    url('../assets/illustrations/fenetre-coin-hd.webp') right top / 96px auto no-repeat,
+    url('../assets/illustrations/fenetre-coin-bg.webp') left bottom / 130px auto no-repeat,
+    url('../assets/illustrations/fenetre-coin-bd.webp') right bottom / 142px auto no-repeat, #fff; }
+
 /* ── Fenêtre « Repère » ─────────────────────────────────────────────────
    Fond crème, pastille illustrée devant le titre, le conseil en grand
    derrière un trait corail, les clés en pastilles de couleur, et deux
