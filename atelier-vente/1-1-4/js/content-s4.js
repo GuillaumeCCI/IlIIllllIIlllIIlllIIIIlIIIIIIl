@@ -160,7 +160,7 @@ window.ATELIER_S4 = {
     countLabel: 'étapes complétées',
     caseNoun: 'Étape',
     stepper: true,
-    side: { info: 'Le 3 juin, vous avez envoyé une proposition à Madame Riveau, responsable RH d’une PME de 80 salariés : du mobilier ergonomique pour équiper 10 postes de travail, c’est-à-dire 10 salariés. Elle est intéressée, mais doit d’abord consulter sa direction. Depuis l’envoi de l’offre, elle n’a pas répondu.', symbol: 'calendar' },
+    side: { info: 'Le 3 juin, Madame Riveau (RH d’une PME) a reçu votre offre de mobilier ergonomique pour 10 postes de travail. Intéressée, elle doit consulter sa direction. Depuis, elle n’a pas répondu.', symbol: 'calendar' },
     tip: 'Espacez vos relances : laissez un peu plus de temps entre chacune. Et apportez à chaque fois une information utile, pas seulement une demande de nouvelles.',
     fields: [
       { id: 'when', type: 'input', label: 'Quand ?', sub: 'Combien de jours après l’envoi de l’offre ?', placeholder: 'Ex. : J+3, soit trois jours après l’envoi', max: 40, half: true },

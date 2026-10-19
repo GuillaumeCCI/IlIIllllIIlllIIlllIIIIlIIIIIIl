@@ -209,6 +209,9 @@
 .fm-step-body:not(:has(.fm-tip)) { grid-template-columns: minmax(0, 1fr); }
 .fm-step .fm-row { align-items: start; }
 .fm-step .fm-sub { font-size: .92rem; }
+.fm-step textarea { min-height: 150px; }
+.fm-step input[type="text"], .fm-step input:not([type]) { min-height: 58px; }
+.fm-step select { min-height: 58px; }
 .fm-tip { display: grid; gap: 10px; padding: 20px; border-radius: 14px; background: #fff3e4; color: var(--navy); line-height: 1.45; }
 .fm-tip .icon { color: #f0712f; }
 .fm-tip strong { display: block; margin-bottom: 2px; }
