@@ -517,7 +517,7 @@
         return `<section class="k-panel fm-panel fm-step">
           <div class="fm-step-head"><span class="fm-step-n">${String(i + 1).padStart(2, '0')}</span><div><h2 class="fm-step-title">${esc(c.tab)}</h2>${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}</div></div>
           <div class="fm-step-body"><div class="fm-main">${fieldRows(i, fields)}${core().errorsBox()}</div>
-            ${content.tip ? `<aside class="fm-tip">${icon('lightbulb', { size: 34 })}<p><strong>Astuce :</strong> ${esc(content.tip)}</p></aside>` : ''}</div>
+            ${content.side || content.tip ? `<aside class="fm-aside">${content.side ? `<div class="fm-side-card">${scene(content.side)}</div>` : ''}${content.tip ? `<div class="fm-tip">${icon('lightbulb', { size: 30 })}<p><strong>Astuce :</strong> ${esc(content.tip)}</p></div>` : ''}</aside>` : ''}</div>
           <div class="fm-actions"><button type="button" class="button secondary fm-prev" ${prev}>${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>
             ${content.resources ? kit().dialogButton('resources', content.resourcesLabel || 'Mes ressources', 'text-button', 'stack') : ''}${kit().submit(label)}</div>
         </section>`;
@@ -586,7 +586,7 @@
       return `<div class="k-page fm-page ${content.className || ''}">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
           aside: content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : '' })}
-        ${content.side && !reviewing ? `<div class="${content.stepper ? 'fm-side-band' : 'k-panel fm-side'}">${scene(content.side)}</div>` : ''}
+        ${content.side && !reviewing && !content.stepper ? `<div class="k-panel fm-side">${scene(content.side)}</div>` : ''}
         ${reviewing ? reviewScreen() : `${tabs(at)}<form novalidate class="fm-form">${casePanel(at)}</form>`}
         ${reviewing ? '' : kit().utility(content.lock || 'Corrigé disponible après validation')}
       </div>`;

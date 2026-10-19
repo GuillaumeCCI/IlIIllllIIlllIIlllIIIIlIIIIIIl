@@ -103,7 +103,7 @@
 
 .hl-text.is-small { font-size: 1.12rem; line-height: 1.9; margin-top: 4px; }
 
-.hl-word { display: inline; padding: 1px 0; margin: 0; border: 0; border-bottom: 2px dotted #b9c8ea; border-radius: 4px; background: transparent; color: inherit; font: inherit; line-height: inherit; cursor: text; touch-action: none; }
+.hl-word { display: inline; padding: 1px 0; margin: 0; border: 0; border-bottom: 2px dotted #b9c8ea; border-radius: 4px; background: transparent; color: inherit; font: inherit; line-height: inherit; cursor: var(--cursor-text, text); touch-action: none; }
 
 span.hl-word { border-bottom: 0; cursor: inherit; }
 
