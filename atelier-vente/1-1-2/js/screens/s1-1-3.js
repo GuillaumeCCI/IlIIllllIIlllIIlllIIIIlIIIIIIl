@@ -92,14 +92,13 @@
           ${kit.tip(content.hint)}
         </section>
         <form class="k-panel" novalidate>
-          <div class="fab-build-head">
-            <span class="k-badge">${icon('target', { size: 24 })}</span>
-            <div><h2>Votre argument en cours</h2><p class="k-muted">Construisez votre argument en sélectionnant des informations à gauche.</p></div>
+          <div class="fab-build-head fab-current fab-step ${entering}">
+            <span class="fab-need-big">${n + 1}</span>
+            <div><p class="k-label">Votre argument en cours</p><h2>${esc(needs[n].label)}</h2><p class="k-muted">Construisez votre argument en sélectionnant des informations à gauche.</p></div>
             <div class="fab-build-count"><span>Argument ${n + 1} sur ${needs.length}</span>
               <span class="k-dots">${needs.map((item, i) => `<button type="button" class="k-dot ${i === n ? 'is-current' : done(i) ? 'is-done' : ''}" data-act="need" data-index="${i}" aria-label="Besoin ${i + 1} : ${esc(item.label)}"></button>`).join('')}</span>
             </div>
           </div>
-          <div class="fab-need-banner fab-step ${entering}"><span class="fab-need-big">${n + 1}</span><h3>${esc(needs[n].label)}</h3></div>
           <div class="fab-cols fab-step ${entering}">
             ${dropColumn(n, 'c', 'C', 'Caractéristique')}
             <div class="fab-col tone-a">
@@ -227,7 +226,7 @@
   kit.tour('s1-1.3', [
     { target: '.fab-prospect', title: 'Votre prospect', text: 'Voici le client : une PME de 12 salariés sans service informatique, et ses trois priorités. Vous construisez un argument pour chacune.' },
     { target: '.fab-cards', title: 'Les informations du produit', text: 'Ces cartes décrivent le produit. Faites glisser une carte, ou cliquez dessus, pour l’ajouter à votre argument. Toutes ne sont pas utiles : ne gardez que celles qui répondent au besoin.' },
-    { target: '.fab-build-head, .fab-need-banner', title: 'Un argument par priorité', text: 'Vous construisez trois arguments, un pour chaque priorité du client. Le bandeau indique la priorité à traiter maintenant. Les trois points, en haut à droite, montrent votre avancement : cliquez sur un point pour passer à un autre argument.' },
+    { target: '.fab-current', title: 'Un argument par priorité', text: 'Vous construisez trois arguments, un pour chaque priorité du client. Le bandeau indique la priorité à traiter maintenant. Les trois points, en haut à droite, montrent votre avancement : cliquez sur un point pour passer à un autre argument.' },
     { target: '.fab-cols', title: 'La méthode CAP', text: 'Votre argument se construit en trois colonnes :',
       items: [
         { key: 'C', tone: 'blue', text: 'les caractéristiques qui répondent au besoin ;' },
