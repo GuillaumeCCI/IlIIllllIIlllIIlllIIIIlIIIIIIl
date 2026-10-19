@@ -662,7 +662,9 @@
    * sauf la zone montrée, et une bulle l'explique (« 2 / 5 », Précédent,
    * Suivant, Passer). Elle se lance d'elle-même la première fois que
    * l'écran d'exercice apparaît (mémorisé dans le navigateur), et
-   * `tourButton()` permet de la revoir. `steps` : [{ target, title, text }],
+   * `tourButton()` permet de la revoir. `steps` : [{ target, title, text,
+   * items, after }] ; `items` ([{ key, text, tone }]) s'affiche en liste à
+   * pastilles entre `text` et `after`.
    * `target` étant un sélecteur ; plusieurs, séparés par des virgules,
    * forment une seule zone qui les englobe. Une zone absente est sautée.
    * Styles : extras-commun.css (.tour-*). */
@@ -713,7 +715,9 @@
       const s = steps[at];
       const last = at === steps.length - 1;
       card.innerHTML = `<p class="tour-count">${at + 1} / ${steps.length}</p>
-        <h2 id="tour-title">${esc(s.title)}</h2><p>${esc(s.text)}</p>
+        <h2 id="tour-title">${esc(s.title)}</h2>${s.text ? `<p>${esc(s.text)}</p>` : ''}
+        ${s.items ? `<ul class="tour-items">${s.items.map(item => `<li><span class="tour-key tone-${esc(item.tone || 'blue')}">${esc(item.key)}</span><span>${esc(item.text)}</span></li>`).join('')}</ul>` : ''}
+        ${s.after ? `<p class="tour-after">${esc(s.after)}</p>` : ''}
         <div class="tour-actions"><button type="button" class="text-button" data-tour="skip">${last ? '' : 'Passer'}</button>
           <span>${at ? '<button type="button" class="button secondary" data-tour="prev">Précédent</button>' : ''}
           <button type="button" class="button primary" data-tour="next">${last ? 'C’est parti !' : 'Suivant'}</button></span></div>`;
