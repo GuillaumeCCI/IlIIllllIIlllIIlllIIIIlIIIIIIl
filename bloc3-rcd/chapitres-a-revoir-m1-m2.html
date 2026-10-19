@@ -34,6 +34,49 @@
   td.comp ul { margin:1px 0 4px; padding-left:15px; }
   td.done { width:55px; text-align:center; vertical-align:middle; }
   .empty { font-style:italic; padding:8px 0; }
+  td.chk label { display:flex; align-items:center; justify-content:center; gap:6px; min-height:24px; cursor:pointer; }
+  td.chk span { display:none; }
+  .actions button + button { margin-left:6px; }
+  :fullscreen body { overflow:auto; }
+
+  /* Téléphone / petite fenêtre (ou LMS étroit) : chaque ligne de tableau devient une carte */
+  @media (max-width:700px) {
+    body { padding:12px; font-size:14px; }
+    .top { padding:12px 8px; }
+    h1 { font-size:15px; }
+    .sub, .mods { font-size:12.5px; }
+    .actions { display:flex; justify-content:flex-end; gap:6px; }
+    .actions button + button { margin-left:0; }
+    button { font-size:13px; padding:6px 12px; }
+    #go { width:100%; }
+    .info, .info tbody, .info tr, .info th, .info td { display:block; width:auto; }
+    .info th { border-bottom:0; }
+    .info td { border-top:0; }
+    .info tr + tr th, .info td + th { border-top:0; }
+    #results thead { display:none; }
+    #results, #results tbody, #plan table, #plan tbody { display:block; }
+    #results tr, #plan tr { display:flex; flex-wrap:wrap; border:1px solid #000; border-top:0; }
+    #results tr.sect { margin-top:14px; border-top:1px solid #000; }
+    #results tr.sect td { flex:1 0 100%; }
+    #results td, #plan td, #plan th { border:0; }
+    #results td[rowspan] { flex:1 0 100%; background:#f7f7f7; border-bottom:1px solid #000; font-size:13.5px; }
+    #results tr:has(td[rowspan]) { border-top:2px solid #000; margin-top:6px; }
+    td.crit { flex:1 0 100%; font-size:13.5px; padding:8px 8px 2px; }
+    td.chk { flex:1 1 0; width:auto; padding:4px 3px 8px; }
+    td.chk label { flex-direction:column; gap:3px; padding:6px 2px; border:1px solid #bbb; border-radius:6px; min-height:52px; }
+    td.chk label:has(input:checked) { border-color:#000; background:#eee; font-weight:bold; }
+    td.chk span { display:block; font-size:11.5px; line-height:1.1; text-align:center; }
+    td.chk input { width:20px; height:20px; }
+    #plan table { border-top:1px solid #000; }
+    #plan th { flex:1 0 100%; text-align:left; }
+    #plan th:not(:first-child) { display:none; }
+    #plan td:first-child { flex:1 0 100%; font-weight:bold; padding-top:8px; }
+    #plan td.comp { flex:1 0 100%; width:auto; }
+    #plan td.prio { flex:1 1 auto; width:auto; text-align:left; }
+    #plan td.done { flex:0 0 auto; width:auto; }
+    #plan td.done::before { content:"Fait "; font-size:12px; }
+    #plan td.comp:empty, #plan td.comp:only-child { display:none; }
+  }
   @media print {
     body { padding:0; }
     .page { max-width:none; }
@@ -45,7 +88,7 @@
 </head>
 <body>
 <div class="page">
-  <div class="actions"><button onclick="window.print()">Imprimer</button></div>
+  <div class="actions"><button id="fs" type="button">Plein écran</button><button onclick="window.print()">Imprimer</button></div>
   <div class="top">
     <h1>Mes chapitres à revoir – Bloc de compétences 3</h1>
     <p class="sub">Manager les équipes de l'unité de vente dans un contexte de vente multicanale<br>Titre : Responsable de commerces et de la distribution</p>
@@ -90,7 +133,7 @@ for (const b of BLOCS) {
   for (const c of b.items) {
     const ks = Object.keys(c.criteres);
     ks.forEach((k, i) => {
-      const r = ['A','T','N'].map(v => `<td class="chk"><input type="radio" name="c${c.id}${k}" value="${v}" aria-label="${LABEL[v]}"></td>`).join('');
+      const r = ['A','T','N'].map(v => `<td class="chk"><label><input type="radio" name="c${c.id}${k}" value="${v}" aria-label="${LABEL[v]}"><span>${LABEL[v]}</span></label></td>`).join('');
       const head = i ? '' : `<td rowspan="${ks.length}"><span class="num">${c.id}</span> ${c.label}<div class="res" id="res${c.id}"></div></td>`;
       tb.insertAdjacentHTML('beforeend', `<tr>${head}<td class="crit">${c.criteres[k]}</td>${r}</tr>`);
     });
@@ -147,9 +190,25 @@ function update() {
   document.getElementById('planBlock').hidden = true;
   document.getElementById('missing').textContent = '';
 }
+// Plein écran ; si le navigateur ou le LMS le refuse (iPhone, iframe sans allowfullscreen) : ouverture dans un nouvel onglet
+const fsBtn = document.getElementById('fs'), root = document.documentElement;
+const fsOn = () => document.fullscreenElement || document.webkitFullscreenElement;
+fsBtn.addEventListener('click', () => {
+  if (fsOn()) return (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+  const req = root.requestFullscreen || root.webkitRequestFullscreen;
+  if (req && (document.fullscreenEnabled || document.webkitFullscreenEnabled))
+    Promise.resolve(req.call(root)).catch(() => window.open(location.href, '_blank'));
+  else window.open(location.href, '_blank');
+});
+for (const ev of ['fullscreenchange', 'webkitfullscreenchange'])
+  document.addEventListener(ev, () => fsBtn.textContent = fsOn() ? 'Quitter le plein écran' : 'Plein écran');
+
 // clic sur un bouton déjà coché = décocher
 let down = null;
-document.addEventListener('mousedown', e => { if (e.target.type === 'radio') down = e.target.checked; });
+document.addEventListener('mousedown', e => {
+  const r = e.target.closest('td.chk')?.querySelector('input[type=radio]');
+  if (r) down = r.checked;
+});
 document.addEventListener('click', e => {
   if (e.target.type !== 'radio') return;
   if (down) e.target.checked = false;
