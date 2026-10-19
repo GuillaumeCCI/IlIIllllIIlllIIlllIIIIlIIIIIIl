@@ -167,8 +167,8 @@ window.ATELIER_S4 = {
       { id: 'channel', type: 'select', label: 'Quel canal ?', sub: 'Par quel moyen contactez-vous Madame Riveau ?', placeholder: 'Choisir un canal', half: true, options: [
         { id: 'email', label: 'E-mail' }, { id: 'phone', label: 'Téléphone' }, { id: 'visit', label: 'Rendez-vous sur place' }, { id: 'linkedin', label: 'Message LinkedIn' }, { id: 'mail', label: 'Courrier' }
       ] },
-      { id: 'value', label: 'Quelle valeur apportée ?', sub: 'Quelle information utile lui apportez-vous ?', placeholder: 'L’information utile à partager…', rows: 2 },
-      { id: 'next', label: 'Quel prochain pas ?', sub: 'Quelle action concrète lui proposez-vous ?', placeholder: 'Ex. : un échange de 15 minutes, un rendez-vous…', rows: 2 }
+      { id: 'value', label: 'Quelle valeur apportée ?', sub: 'Quelle information utile lui apportez-vous ?', placeholder: 'L’information utile à partager…', rows: 2, half: true },
+      { id: 'next', label: 'Quel prochain pas ?', sub: 'Quelle action concrète lui proposez-vous ?', placeholder: 'Ex. : un échange de 15 minutes, un rendez-vous…', rows: 2, half: true }
     ],
     resources: [
       'Un témoignage d’une entreprise du même secteur.',

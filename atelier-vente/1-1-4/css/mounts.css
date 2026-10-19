@@ -215,7 +215,7 @@
 .fm-step-body:not(:has(.fm-aside)) { grid-template-columns: minmax(0, 1fr); }
 .fm-step .fm-row { align-items: start; }
 .fm-step .fm-sub { font-size: 1rem; }
-.fm-step textarea { min-height: 130px; font-size: 1.05rem; }
+.fm-step textarea { min-height: 150px; font-size: 1.05rem; }
 .fm-step input[type="text"], .fm-step input:not([type]) { min-height: 64px; font-size: 1.05rem; }
 .fm-step select { min-height: 64px; font-size: 1.05rem; }
 .fm-step .fm-intro { font-size: 1.08rem; }
