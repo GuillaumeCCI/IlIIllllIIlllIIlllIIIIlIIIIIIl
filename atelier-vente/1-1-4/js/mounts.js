@@ -400,7 +400,8 @@
    * layout ('side' | 'stack'), scene (par défaut), fields (par défaut),
    * side (bloc de contexte affiché à gauche), resources (liste en fenêtre),
    * hint, tokens (champs à insérer), stepper (frise d'étapes dans l'en-tête,
-   * étape numérotée, bouton « Précédent »), tip (astuce à droite), cases [{ tab, title, scene, fields,
+   * étape numérotée, bouton « Précédent »), tip (astuce à droite),
+   * tour (bulles de la visite guidée, voir kit.tour), cases [{ tab, title, scene, fields,
    * answers, models, checks, model, next }].
    *
    * Un champ : { id, label, sub, type: 'textarea' | 'input' | 'select' |
@@ -493,6 +494,11 @@
       return html;
     }
 
+    /* Un cas `numbered` : chaque champ dans sa carte, avec un grand numéro
+     * rond dont la couleur alterne. */
+    const TONES = ['blue', 'coral', 'green'];
+    const numberedFields = (i, fields) => `<ol class="fm-numbered">${fields.map((f, j) => `<li class="fm-num-card"><span class="fm-num tone-${TONES[j % TONES.length]}">${j + 1}</span><div>${fieldBlock(i, f)}</div></li>`).join('')}</ol>`;
+
     function checksBlock(i) {
       const checks = cases[i].checks || content.checks;
       if (!checks) return '';
@@ -555,7 +561,7 @@
         ${c.title && n > 1 ? `<p class="k-label">${esc(content.caseNoun || 'Cas')} ${i + 1} / ${n}</p>` : ''}${c.title ? `<h2 class="fm-title">${esc(c.title)}</h2>` : ''}
         ${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}
         ${tokens()}
-        ${fieldRows(i, fields)}
+        ${c.numbered ? numberedFields(i, fields) : fieldRows(i, fields)}
         ${checksBlock(i)}
         ${core().errorsBox()}
         <div class="fm-actions">${content.hint || c.hint ? kit().dialogButton(`hint${c.hint ? i : ''}`, content.hintLabel || 'Voir un repère', 'secondary', 'lightbulb') : '<span></span>'}
@@ -689,7 +695,7 @@
       if (!reviewing && ex().value('case') !== at) ex().setValue('case', at);
       return `<div class="k-page fm-page ${content.className || ''}">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : '' })}
+          aside: `${content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : ''}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
         ${content.side && !reviewing && !content.stepper ? `<div class="k-panel fm-side">${scene(content.side)}</div>` : ''}
         ${reviewing ? reviewScreen() : `${tabs(at)}<form novalidate class="fm-form">${casePanel(at)}</form>`}
         ${reviewing ? '' : kit().utility(content.lock || 'Corrigé disponible après validation')}
@@ -771,6 +777,7 @@
     if (content.resources) dialogTable.resources = { title: content.resourcesTitle || 'Vos ressources', html: `<ul class="dialog-list">${content.resources.map(r => `<li>${esc(r)}</li>`).join('')}</ul>` };
     kit().dialogs(dialogTable);
 
+    if (content.tour) kit().tour(key, content.tour);
     ex().mount(key, { screen, validate, intercept, feedback, compactFeedback: true });
   }
 

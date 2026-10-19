@@ -531,3 +531,8 @@ button.fab-col-head:hover { background: #f4f7fd; }
 .fab-current h2 { margin: 0; font-size: 1.45rem; color: var(--navy); }
 .fab-current .k-muted { margin: 2px 0 0; }
 .fab-current .fab-need-big { width: 52px; height: 52px; font-size: 1.4rem; }
+
+/* 1.3 · les colonnes C, A, P prennent la hauteur disponible. */
+.fab-col .fab-drop { min-height: 380px; }
+#main .fab-col textarea { min-height: 380px; }
+@media (max-width: 900px) { .fab-col .fab-drop, #main .fab-col textarea { min-height: 200px; } }

@@ -451,3 +451,13 @@ button.crash-passage:hover { background: #fff1d6; }
   .rva-retain > strong { border: 0; }
   .rva-item:not([open]) .rva-title small { display: none; }
 }
+
+/* ── Champs numérotés en cartes (cas `numbered`) ──────────────────────── */
+.fm-numbered { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 16px; }
+.fm-num-card { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 20px; align-items: center; padding: 18px 22px; border-radius: 16px; background: #fff; box-shadow: var(--shadow); }
+.fm-num { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; font-size: 1.6rem; font-weight: 800; }
+.fm-num.tone-blue { background: #e4ebfb; color: #1d4ec2; }
+.fm-num.tone-coral { background: #ffe4df; color: #e2553c; }
+.fm-num.tone-green { background: #ddf5ee; color: #11806a; }
+.fm-num-card .fm-label { font-size: 1.15rem; }
+@media (max-width: 760px) { .fm-num-card { grid-template-columns: 1fr; } .fm-num { width: 44px; height: 44px; font-size: 1.2rem; } }

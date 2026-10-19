@@ -95,6 +95,16 @@ window.ATELIER_S4 = {
     countLabel: 'étapes',
     caseNoun: 'Étape',
     layout: 'stack',
+    tour: [
+      { target: '.fm-tabs', title: 'Deux étapes', text: 'L’exercice se fait en deux temps :',
+        items: [
+          { key: '1', tone: 'blue', text: 'lire l’e-mail de relance envoyé par Thomas ;' },
+          { key: '2', tone: 'coral', text: 'repérer ses quatre erreurs et expliquer leur effet sur la relation.' }
+        ],
+        after: 'La deuxième étape s’ouvre une fois l’e-mail lu.' },
+      { target: '.sc-email', title: 'L’e-mail à analyser', text: 'Lisez-le en entier, comme si vous étiez Madame Riveau : qu’est-ce qui vous donnerait envie de répondre, ou pas ?' },
+      { target: '.fm-actions .k-submit, .k-bar .k-submit', title: 'Passer à l’analyse', text: 'Quand vous avez lu l’e-mail, ce bouton ouvre l’étape 2 : quatre zones pour nommer chaque erreur.' }
+    ],
     scene: { email: { subject: 'Retour sur notre proposition', lines: [
       'Bonjour Madame Riveau,',
       'Je reviens une nouvelle fois vers vous concernant la proposition commerciale que je vous ai adressée il y a maintenant trois semaines pour l’équipement de vos postes de travail.',
@@ -106,7 +116,7 @@ window.ATELIER_S4 = {
     ] } },
     cases: [
       { tab: 'Lire l’e-mail', fields: [], next: 'Passer à l’analyse' },
-      { tab: 'Quatre erreurs à repérer', title: 'Quatre erreurs à repérer', intro: 'Pour chacune, nommez l’erreur et expliquez son effet sur la relation commerciale.', fields: [
+      { tab: 'Quatre erreurs à repérer', title: 'Quatre erreurs à repérer', numbered: true, intro: 'Pour chacune, nommez l’erreur et expliquez son effet sur la relation commerciale.', fields: [
         { id: 'e1', label: 'Erreur 1', placeholder: 'L’erreur et pourquoi elle nuit à la relation…', rows: 2, model: 'La relance fait culpabiliser la cliente : « Malgré mes précédents messages, je n’ai toujours pas reçu de retour de votre part » sonne comme un reproche. Une relance cherche à rouvrir la conversation, pas à placer le client en faute.' },
         { id: 'e2', label: 'Erreur 2', placeholder: 'L’erreur et pourquoi elle nuit à la relation…', rows: 2, model: 'Elle n’apporte aucune valeur nouvelle : « Notre offre présente de nombreux avantages » n’apprend rien de concret. La cliente n’a pas plus de raisons de répondre qu’au message précédent.' },
         { id: 'e3', label: 'Erreur 3', placeholder: 'L’erreur et pourquoi elle nuit à la relation…', rows: 2, model: 'Elle est centrée sur les besoins du commercial : « afin que nous puissions nous organiser de notre côté ». La raison de répondre bénéficie au commercial, pas à la cliente.' },
