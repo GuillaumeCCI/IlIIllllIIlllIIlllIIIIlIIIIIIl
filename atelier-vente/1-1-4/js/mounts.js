@@ -31,7 +31,7 @@
    *   { dialogue: [{ who, label, text, mark }] }   un échange ;
    *   { image, alt, bubble, caption } une illustration (chemin du projet) ;
    *   { email: { to, subject, lines } }            un e-mail ;
-   *   { info, symbol }                une phrase de contexte ;
+   *   { info, symbol, strong }        une phrase de contexte (strong : début en gras) ;
    *   { facts: [{ symbol, text }], title }         une liste de repères. */
   function scene(blocks) {
     const list = Array.isArray(blocks) ? blocks : blocks ? [blocks] : [];
@@ -64,7 +64,7 @@
         </article>`;
       }
       if (block.info) {
-        return `<p class="sc-info">${icon(block.symbol || 'info', { size: 22 })}<span>${esc(block.info)}</span></p>`;
+        return `<p class="sc-info">${icon(block.symbol || 'info', { size: 22 })}<span>${block.strong ? `<strong>${esc(block.strong)}</strong> ` : ''}${esc(block.info)}</span></p>`;
       }
       if (block.facts) {
         return `<div class="sc-facts">${block.title ? `<h3>${esc(block.title)}</h3>` : ''}<ul>${block.facts.map(f =>

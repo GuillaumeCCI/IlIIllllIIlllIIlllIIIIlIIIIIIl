@@ -198,9 +198,13 @@
 .fm-stepper li.is-done .fm-stepper-dot { background: var(--ok-soft); color: var(--ok); }
 .fm-stepper li.is-current .fm-stepper-dot { background: var(--accent); color: #fff; box-shadow: 0 0 0 5px var(--tint); }
 .fm-stepper li.is-current button { color: var(--navy); font-weight: 800; }
-.fm-side-band .sc-info { box-shadow: var(--shadow); }
-.fm-side-band .sc-info span { font-weight: 500; }
-.fm-step { display: grid; gap: 18px; }
+.fm-side-band .sc-info { box-shadow: var(--shadow); padding: 18px 24px; gap: 16px; }
+.fm-side-band .sc-info span { font-weight: 500; font-size: 1.08rem; line-height: 1.6; }
+.fm-side-band .sc-info strong { display: block; margin-bottom: 2px; font-weight: 800; font-size: 1.15rem; }
+.fm-step { display: grid; gap: 26px; padding: 28px 32px; }
+.fm-step .fm-main { gap: 26px; }
+.fm-step .fm-row { gap: 26px; }
+.fm-step .fm-label { font-size: 1.25rem; }
 .fm-step-head { display: flex; align-items: center; gap: 16px; }
 .fm-step-n { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 800; font-size: 1.35rem; flex-shrink: 0; }
 .fm-step-title { font-size: clamp(1.4rem, 2vw, 1.9rem); line-height: 1.15; }
@@ -208,10 +212,12 @@
 .fm-step-body { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 24px; align-items: start; }
 .fm-step-body:not(:has(.fm-tip)) { grid-template-columns: minmax(0, 1fr); }
 .fm-step .fm-row { align-items: start; }
-.fm-step .fm-sub { font-size: .92rem; }
-.fm-step textarea { min-height: 150px; }
-.fm-step input[type="text"], .fm-step input:not([type]) { min-height: 58px; }
-.fm-step select { min-height: 58px; }
+.fm-step .fm-sub { font-size: 1rem; }
+.fm-step textarea { min-height: 180px; font-size: 1.05rem; }
+.fm-step input[type="text"], .fm-step input:not([type]) { min-height: 64px; font-size: 1.05rem; }
+.fm-step select { min-height: 64px; font-size: 1.05rem; }
+.fm-step .fm-intro { font-size: 1.08rem; }
+.fm-tip { font-size: 1.05rem; padding: 24px; }
 .fm-tip { display: grid; gap: 10px; padding: 20px; border-radius: 14px; background: #fff3e4; color: var(--navy); line-height: 1.45; }
 .fm-tip .icon { color: #f0712f; }
 .fm-tip strong { display: block; margin-bottom: 2px; }
