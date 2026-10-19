@@ -612,7 +612,7 @@
         const badge = states.includes('ko') ? ['ko', 'À ajuster'] : states.includes('fix') ? ['fix', 'À améliorer'] : ['ok', 'Bien réalisée'];
         return { out, badge };
       });
-      const shownOf = (i, f) => (f.type === 'select' ? channelLabel(val(i, f)) : val(i, f)) || '—';
+      const shownOf = (i, f) => (f.type === 'select' ? channelLabel(val(i, f)) : val(i, f)) || 'rien';
       return `<div class="rva">${cases.map((c, i) => {
         const { out, badge } = verdicts[i];
         const r = c.review || {};
