@@ -17,15 +17,12 @@
   table { width:100%; border-collapse:collapse; margin-bottom:14px; }
   th, td { border:1px solid #000; padding:5px 7px; vertical-align:top; }
   th { background:#d9d9d9; font-weight:bold; text-align:center; vertical-align:middle; }
-  .info th { text-align:left; width:12%; }
-  .info td { width:38%; }
   tr.sect td { background:#f2f2f2; font-weight:bold; text-transform:uppercase; font-size:12.5px; }
   .num { font-weight:bold; }
   td.crit { font-size:12px; vertical-align:middle; }
   .res { margin-top:6px; font-weight:bold; font-size:12px; }
   td.chk { text-align:center; vertical-align:middle; width:75px; }
   td.chk input { width:16px; height:16px; margin:0; accent-color:#000; cursor:pointer; }
-  input[type=text] { width:100%; border:0; font:inherit; padding:5px 7px; background:transparent; outline:none; }
   .legend { font-size:12px; font-style:italic; margin:0 0 8px; }
   .actions { text-align:right; margin-bottom:8px; }
   button { font:12px Arial, sans-serif; padding:3px 10px; cursor:pointer; }
@@ -49,10 +46,6 @@
     .actions button + button { margin-left:0; }
     button { font-size:13px; padding:6px 12px; }
     #go { width:100%; }
-    .info, .info tbody, .info tr, .info th, .info td { display:block; width:auto; }
-    .info th { border-bottom:0; }
-    .info td { border-top:0; }
-    .info tr + tr th, .info td + th { border-top:0; }
     #results thead { display:none; }
     #results, #results tbody, #plan table, #plan tbody { display:block; }
     #results tr, #plan tr { display:flex; flex-wrap:wrap; border:1px solid #000; border-top:0; }
@@ -95,9 +88,6 @@
     <p class="mods">Module 1 : Recruter et intégrer des collaborateurs<br>Module 2 : Organiser le travail et le planning de l'équipe</p>
   </div>
 
-  <table class="info">
-    <tr><th>Apprenant</th><td><input type="text"></td><th>Date de l'évaluation</th><td><input type="text"></td></tr>
-  </table>
 
   <h2>1. Ma grille d'évaluation</h2>
   <p class="legend">Recopier, critère par critère, ce que le jury a coché sur ta grille d'évaluation : <b>Acquis</b>, <b>À travailler</b> ou <b>Non acquis</b>. Le résultat de chaque compétence s'affiche tout seul.</p>
