@@ -343,3 +343,58 @@ button.crash-passage:hover { background: #fff1d6; }
 
 /* Une description sous l'onglet (tabNote), plus discrète que le prix. */
 .fm-tab-text small.fm-tab-note { margin-top: 2px; color: #5b6a8f; font-size: .88rem; font-weight: 600; }
+
+/* ── Aperçu du canal (content.skin) ───────────────────────────────────── */
+.fm-skin { border: 1px solid #dfe5f2; border-radius: 16px; overflow: hidden; background: #fff; }
+.fm-skin > .sk-hint, .fm-skin > .sk-head, .fm-skin > .sk-foot { display: none; }
+.fm-skin[data-skin="none"] > .sk-none, .fm-skin[data-skin="email"] > .sk-email, .fm-skin[data-skin="phone"] > .sk-phone,
+.fm-skin[data-skin="visit"] > .sk-visit, .fm-skin[data-skin="linkedin"] > .sk-linkedin, .fm-skin[data-skin="mail"] > .sk-mail { display: flex; }
+.sk-body { padding: 18px 20px; }
+.sk-body .fm-row { gap: 20px; }
+.sk-avatar { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #e4e9f7; color: #1b2370; font-weight: 800; flex-shrink: 0; }
+.sk-who { display: grid; line-height: 1.25; } .sk-who small { opacity: .8; font-size: .85rem; }
+.sk-send { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 999px; font-weight: 700; font-size: .9rem; }
+
+/* Sans canal */
+.fm-skin[data-skin="none"] { border-style: dashed; border-color: #c9d3e8; }
+.sk-hint { align-items: center; gap: 8px; padding: 12px 20px 0; color: #5b6a8f; font-size: .92rem; }
+
+/* E-mail : fenêtre de nouveau message */
+.sk-head.sk-email { flex-direction: column; background: #f6f8fc; border-bottom: 1px solid #e3e8f3; }
+.sk-email .sk-bar { display: flex; align-items: center; gap: 6px; padding: 10px 16px; background: #eaeef7; font-size: .85rem; font-weight: 700; color: #4c5a7d; }
+.sk-email .sk-bar i { width: 10px; height: 10px; border-radius: 50%; background: #f26b5b; } .sk-email .sk-bar i:nth-child(2) { background: #f5bf4f; } .sk-email .sk-bar i:nth-child(3) { background: #5cc56b; }
+.sk-email .sk-bar span { margin-left: 10px; }
+.sk-email .sk-line { display: flex; align-items: center; gap: 12px; padding: 9px 20px; border-top: 1px solid #e3e8f3; font-size: .95rem; color: var(--navy); }
+.sk-email .sk-line b { width: 52px; color: #7a86a6; font-weight: 600; }
+.sk-chip { padding: 2px 10px; border-radius: 999px; background: #e4ebfb; color: #1b3fa8; font-weight: 600; font-size: .88rem; }
+.sk-foot.sk-email { justify-content: flex-end; padding: 0 20px 16px; } .sk-email .sk-send { background: var(--accent); color: #fff; }
+
+/* Téléphone : écran d'appel */
+.fm-skin[data-skin="phone"] { background: #f1f3fa; border-color: #d9def0; }
+.sk-head.sk-phone { align-items: center; gap: 12px; padding: 14px 20px; background: linear-gradient(120deg, #1b2370, #2f3ea6); color: #fff; }
+.sk-phone .sk-avatar { background: rgb(255 255 255 / 18%); color: #fff; }
+.sk-call { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; padding: 5px 12px; border-radius: 999px; background: rgb(92 197 107 / 22%); color: #b9f0c2; font-size: .85rem; font-weight: 700; }
+.sk-foot.sk-phone { justify-content: center; padding: 0 0 16px; }
+.sk-hang { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: #e5484d; color: #fff; } .sk-hang .icon { transform: rotate(135deg); }
+
+/* Rendez-vous : bloc-notes ligné */
+.fm-skin[data-skin="visit"] { background: #fffdf5; border-color: #ece3c4; }
+.sk-head.sk-visit { align-items: center; gap: 12px; padding: 14px 20px; background: #fff3cf; color: #5c4300; border-bottom: 2px solid #f0d88a; }
+#main .fm-skin[data-skin="visit"] textarea { background: repeating-linear-gradient(#fffef9 0 31px, #e9e1c6 31px 32px) 0 11px / 100% 32px local; background-color: #fffef9; line-height: 32px; padding-top: 8px; border-color: #ece3c4; }
+
+/* Messagerie professionnelle */
+.fm-skin[data-skin="linkedin"] { background: #f4f2ee; border-color: #dcd8d0; }
+.sk-head.sk-linkedin { flex-direction: column; background: #fff; border-bottom: 1px solid #e3dfd8; }
+.sk-linkedin .sk-bar { padding: 9px 20px; background: #0a66c2; color: #fff; font-weight: 700; font-size: .9rem; }
+.sk-linkedin .sk-line { display: flex; align-items: center; gap: 12px; padding: 10px 20px; color: var(--navy); }
+#main .fm-skin[data-skin="linkedin"] textarea { border-radius: 14px; }
+.sk-foot.sk-linkedin { justify-content: flex-end; padding: 0 20px 16px; } .sk-linkedin .sk-send { background: #0a66c2; color: #fff; }
+
+/* Courrier : lettre */
+.fm-skin[data-skin="mail"] { background: #fffefb; border-color: #e7e1d6; box-shadow: 0 8px 22px rgb(60 50 30 / 8%); }
+.sk-head.sk-mail { flex-direction: column; padding: 22px 28px 0; font-family: Georgia, 'Times New Roman', serif; color: #2b2a33; }
+.sk-mail .sk-to { align-self: flex-end; text-align: right; line-height: 1.5; }
+.sk-mail .sk-line { margin-top: 14px; }
+.fm-skin[data-skin="mail"] .sk-body { padding: 14px 28px; }
+#main .fm-skin[data-skin="mail"] textarea { font-family: Georgia, 'Times New Roman', serif; background: #fffefb; }
+.sk-foot.sk-mail { padding: 0 28px 22px; font-family: Georgia, 'Times New Roman', serif; color: #2b2a33; font-style: italic; }

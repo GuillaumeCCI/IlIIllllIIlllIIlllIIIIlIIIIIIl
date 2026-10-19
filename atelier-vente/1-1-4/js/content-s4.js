@@ -160,6 +160,7 @@ window.ATELIER_S4 = {
     countLabel: 'étapes complétées',
     caseNoun: 'Étape',
     stepper: true,
+    skin: { field: 'channel', fields: ['value', 'next'], name: 'Madame Riveau', role: 'Responsable RH', initials: 'MR', subject: 'Notre proposition du 3 juin' },
     side: { strong: 'Madame Riveau, responsable RH d’une PME de 80 salariés.', info: 'Le 3 juin, vous lui avez envoyé une proposition : du mobilier ergonomique pour équiper 10 postes de travail, c’est-à-dire 10 salariés. Elle est intéressée, mais doit d’abord consulter sa direction. Depuis l’envoi de l’offre, elle n’a pas répondu.', symbol: 'calendar' },
     tip: 'Espacez vos relances : laissez un peu plus de temps entre chacune. Et apportez à chaque fois une information utile, pas seulement une demande de nouvelles.',
     fields: [

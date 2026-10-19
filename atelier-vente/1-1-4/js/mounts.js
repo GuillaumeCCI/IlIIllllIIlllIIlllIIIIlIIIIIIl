@@ -505,6 +505,30 @@
       return `<div class="fm-tokens"><span class="k-label">Insérer un champ</span>${content.tokens.map(t => `<button type="button" class="fm-token" data-act="fm-token" data-token="${esc(t)}">${icon('plus', { size: 14 })}<span>${esc(t)}</span></button>`).join('')}</div>`;
     }
 
+    /* L'aperçu du canal (content.skin) : les champs listés prennent l'allure
+     * du canal choisi dans le champ `skin.field` (e-mail, appel, rendez-vous,
+     * messagerie, courrier). Tous les habillages sont dans la page ; le
+     * changement de canal ne fait que basculer `data-skin`. */
+    function skinBlock(i, fields) {
+      const sk = content.skin;
+      const on = val(i, { id: sk.field }) || 'none';
+      const deco = (cls, html) => `<div class="${cls}" aria-hidden="true">${html}</div>`;
+      const who = `<span class="sk-avatar">${esc(sk.initials || '')}</span><span class="sk-who"><strong>${esc(sk.name)}</strong><small>${esc(sk.role || '')}</small></span>`;
+      return `<div class="fm-skin" data-skin="${esc(on)}" data-skin-for="${esc(k(i, sk.field))}">
+        ${deco('sk-hint sk-none', `${icon('info', { size: 18 })}<span>Choisissez un canal : la zone d’écriture prendra son apparence.</span>`)}
+        ${deco('sk-head sk-email', `<p class="sk-bar"><i></i><i></i><i></i><span>Nouveau message</span></p><p class="sk-line"><b>À</b><span class="sk-chip">${esc(sk.name)}</span></p><p class="sk-line"><b>Objet</b><span>${esc(sk.subject || '')}</span></p>`)}
+        ${deco('sk-head sk-phone', `${who}<span class="sk-call">${icon('phone', { size: 16 })} Appel en cours</span>`)}
+        ${deco('sk-head sk-visit', `${icon('calendar', { size: 22 })}<span class="sk-who"><strong>Rendez-vous sur place</strong><small>Avec ${esc(sk.name)} · vos notes pour l’entretien</small></span>`)}
+        ${deco('sk-head sk-linkedin', `<p class="sk-bar"><span>Messagerie</span></p><div class="sk-line">${who}</div>`)}
+        ${deco('sk-head sk-mail', `<p class="sk-to"><strong>${esc(sk.name)}</strong><br>${esc(sk.role || '')}</p><p class="sk-line"><b>Objet :</b> <span>${esc(sk.subject || '')}</span></p>`)}
+        <div class="sk-body">${fieldRows(i, fields)}</div>
+        ${deco('sk-foot sk-email', `<span class="sk-send">Envoyer ${icon('arrowRight', { size: 16 })}</span>`)}
+        ${deco('sk-foot sk-phone', `<span class="sk-hang">${icon('phone', { size: 20 })}</span>`)}
+        ${deco('sk-foot sk-linkedin', `<span class="sk-send">Envoyer</span>`)}
+        ${deco('sk-foot sk-mail', `<span class="sk-sign">Bien cordialement,<br>Votre signature</span>`)}
+      </div>`;
+    }
+
     function casePanel(i) {
       const c = cases[i];
       const fields = fieldsOf(i);
@@ -519,7 +543,7 @@
           <div class="fm-main">
             ${content.side ? `<div class="fm-side-card">${scene(content.side)}</div>` : ''}
             <div class="fm-step-head"><span class="fm-step-n">${String(i + 1).padStart(2, '0')}</span><div><h2 class="fm-step-title">${esc(c.tab)}</h2>${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}</div></div>
-            ${fieldRows(i, fields)}${core().errorsBox()}</div>
+            ${content.skin ? fieldRows(i, fields.filter(f => !content.skin.fields.includes(f.id))) + skinBlock(i, fields.filter(f => content.skin.fields.includes(f.id))) : fieldRows(i, fields)}${core().errorsBox()}</div>
           <div class="fm-actions"><button type="button" class="button secondary fm-prev" ${prev}>${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>
             ${kit().submit(label)}</div>
         </section>${content.tip || content.resources ? `<aside class="fm-side-col">
@@ -650,6 +674,12 @@
       }
     });
     if (root.document && typeof root.document.addEventListener === 'function') {
+      // Nouveau canal choisi : l'aperçu bascule aussitôt.
+      root.document.addEventListener('change', event => {
+        const field = event.target && event.target.dataset && event.target.dataset.field;
+        if (!field) return;
+        root.document.querySelectorAll(`.fm-skin[data-skin-for="${field}"]`).forEach(el => { el.dataset.skin = event.target.value || 'none'; });
+      });
       root.document.addEventListener('focusin', event => {
         if (event.target.matches && event.target.matches('.fm-main textarea, .fm-main input[type="text"]')) lastFocus = event.target;
       });
