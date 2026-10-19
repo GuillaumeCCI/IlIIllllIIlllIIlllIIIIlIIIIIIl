@@ -71,14 +71,19 @@
     </div>`;
   }
 
+  let shownNeed = null;
+
   function screen() {
     if (ex.reviewing()) return reviewScreen();
     const n = need();
     const last = needs.every((_, i) => i === n || done(i));
+    // Le besoin qui vient d'arriver glisse en place (pas à chaque redessin).
+    const entering = shownNeed !== null && shownNeed !== n ? (n > shownNeed ? 'is-next' : 'is-prev') : '';
+    shownNeed = n;
     return `<div class="k-page fab-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title,
         subtitle: 'À partir du profil du prospect et de la fiche produit, sélectionnez les informations pertinentes et construisez 3 arguments sur mesure.',
-        aside: `<p class="k-count"><strong>${doneCount()} / ${needs.length}</strong> arguments validés</p>` })}
+        aside: `<p class="k-count"><strong>${doneCount()} / ${needs.length}</strong> arguments validés</p>${kit.tourButton()}` })}
       ${prospectBar()}
       <div class="k-columns fab-layout">
         <section class="k-panel">
@@ -94,8 +99,8 @@
               <span class="k-dots">${needs.map((item, i) => `<button type="button" class="k-dot ${i === n ? 'is-current' : done(i) ? 'is-done' : ''}" data-act="need" data-index="${i}" aria-label="Besoin ${i + 1} : ${esc(item.label)}"></button>`).join('')}</span>
             </div>
           </div>
-          <div class="fab-need-banner"><span class="fab-need-big">${n + 1}</span><h3>${esc(needs[n].label)}</h3></div>
-          <div class="fab-cols">
+          <div class="fab-need-banner fab-step ${entering}"><span class="fab-need-big">${n + 1}</span><h3>${esc(needs[n].label)}</h3></div>
+          <div class="fab-cols fab-step ${entering}">
             ${dropColumn(n, 'c', 'C', 'Caractéristique')}
             <div class="fab-col tone-a">
               <div class="fab-col-head"><span class="fab-col-letter">A</span><span><strong>Avantage</strong><small>Ce que le client y gagne</small></span></div>
@@ -217,6 +222,16 @@
         <p><strong>P ·</strong> une preuve est un fait vérifiable : un chiffre, un audit, une garantie, un nombre de clients.</p>`
     }
   });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s1-1.3', [
+    { target: '.fab-prospect', title: 'Votre prospect', text: 'Voici le client : une PME de 12 salariés sans service informatique, et ses trois priorités. Vous construisez un argument pour chacune.' },
+    { target: '.fab-cards', title: 'Les informations du produit', text: 'Ces cartes décrivent le produit. Faites glisser une carte, ou cliquez dessus, pour l’ajouter à votre argument. Toutes ne sont pas utiles : ne gardez que celles qui répondent au besoin.' },
+    { target: '.fab-need-banner', title: 'La priorité en cours', text: 'Votre argument répond à cette priorité du client. Les points en haut à droite montrent où vous en êtes : un argument par priorité.' },
+    { target: '.fab-cols', title: 'La méthode CAP', text: 'C : les caractéristiques qui répondent au besoin. A : ce que le client y gagne, à écrire vous-même en commençant par « Vous… ». P : la preuve qui rend la promesse crédible. Cliquez sur l’en-tête C ou P pour y envoyer les cartes.' },
+    { target: '.k-bar .k-dialog-button', title: 'Un indice', text: 'Un doute ? Ce bouton rappelle ce qu’on attend dans chaque colonne.' },
+    { target: '.k-bar .k-submit', title: 'Continuer', text: 'Votre argument est enregistré et vous passez à la priorité suivante. Après le troisième, vous validez vos arguments et découvrez le corrigé.' }
+  ]);
 
   ex.mount('s1-1.3', { screen, validate, intercept, feedback, compactFeedback: true });
 })();

@@ -666,6 +666,10 @@
     layer.className = 'tour';
     layer.innerHTML = `<div class="tour-hole"></div><div class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tour-title" tabindex="-1"></div>`;
     doc.body.appendChild(layer);
+    // De la marge sous la page le temps de la visite : une zone tout en bas
+    // (la barre des boutons) peut alors remonter au centre de l'écran.
+    const padding = doc.body.style.paddingBottom;
+    doc.body.style.paddingBottom = '45vh';
     const hole = layer.querySelector('.tour-hole');
     const card = layer.querySelector('.tour-card');
     let at = 0;
@@ -704,6 +708,7 @@
     };
     const close = () => {
       layer.remove();
+      doc.body.style.paddingBottom = padding;
       root.removeEventListener('resize', place);
       root.removeEventListener('scroll', place, true);
       doc.removeEventListener('keydown', keys, true);
