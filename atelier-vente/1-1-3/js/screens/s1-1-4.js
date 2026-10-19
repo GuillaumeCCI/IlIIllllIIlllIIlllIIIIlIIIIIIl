@@ -32,7 +32,7 @@
   function screen() {
     const reviewing = ex.reviewing();
     return `<div class="k-page hidden-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle })}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : kit.tourButton() })}
       <div class="hidden-layout">
         ${scene()}
         <form class="k-panel hidden-panel" novalidate>
@@ -72,6 +72,14 @@
   const feedback = () => ['Votre question est-elle ouverte, sans suggérer la réponse ? Comparez-la au corrigé.'];
 
   kit.dialogs({ hint: { title: 'Un indice', html: `<p>${esc(content.hint)}</p>` } });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s1-1.4', [
+    { target: '.hidden-scene', title: 'La scène', text: 'Lisez l’échange dans l’ordre des numéros. Le client se dérobe : « je vais réfléchir », « on verra ». Le passage souligné est un indice.' },
+    { target: '.hidden-field:first-of-type', title: '1 · L’objection silencieuse', text: 'Que cache cette dérobade ? Écrivez votre hypothèse : le prix, le moment, un doute sur le produit… Plusieurs explications sont possibles.' },
+    { target: '.hidden-field:nth-of-type(2)', title: '2 · La question pour la révéler', text: 'Écrivez la question ouverte que vous poseriez au client pour faire émerger son objection, sans présumer de sa réponse.' },
+    { target: '.hidden-actions', title: 'Indice et validation', text: 'Un doute ? « Voir un indice » vous oriente. « Valider ma réponse » affiche les objections probables et des questions possibles.' }
+  ]);
 
   ex.mount('s1-1.4', { screen, validate, feedback, compactFeedback: true });
 })();
