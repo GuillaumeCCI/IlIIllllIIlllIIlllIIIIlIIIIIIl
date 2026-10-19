@@ -565,7 +565,82 @@
       return `<section class="fm-panel ${content.layout === 'stack' ? 'is-stack' : 'is-side'}"><div class="k-panel fm-scene">${sceneHtml}</div><div class="k-panel">${form}</div></section>`;
     }
 
+    /* LE CORRIGÉ EN ACCORDÉON (content.review) : une ligne par étape, avec
+     * son badge ; la première est ouverte. Dans chaque étape, un tableau
+     * « Votre réponse / Une réponse possible / Notre avis » et un encadré
+     * « Ce qu'il faut retenir ». Seuls le délai et le canal sont jugés (ils
+     * se vérifient) ; les champs rédigés reçoivent une question pour se
+     * relire, jamais une fausse note. */
+    // Délai en jours depuis l'envoi : « J+3 », « 3 jours », « 2 semaines », « un mois », « le 6 juin ».
+    function daysOf(text) {
+      const t = String(text || '').toLowerCase();
+      const n = x => (/\d/.test(x) ? Number(x) : 1);
+      let m = t.match(/j\s*\+\s*(\d+)/);
+      if (m) return Number(m[1]);
+      m = t.match(/(\d+|un)\s*mois/);
+      if (m) return n(m[1]) * 30;
+      m = t.match(/(\d+|une)\s*(semaines?|sem\b)/);
+      if (m) return n(m[1]) * 7;
+      m = t.match(/(\d+)\s*(jours?|j\b)/);
+      if (m) return Number(m[1]);
+      m = content.review.start && t.match(/(\d{1,2})\s*(juin|juillet)/);
+      if (m) return (m[2] === 'juillet' ? 30 : 0) + Number(m[1]) - content.review.start;
+      return null;
+    }
+
+    function accordionReview() {
+      const rv = content.review;
+      const symbols = rv.symbols || {};
+      const tone = { ok: ['Bien vu', 'check'], fix: ['À préciser', 'info'], ko: ['À ajuster', 'close'], read: ['À vérifier', 'search'] };
+      const channelField = fieldsOf(0).find(f => f.id === rv.channel);
+      const channelLabel = id => ((channelField?.options || []).find(o => o.id === id) || {}).label || id || 'rien';
+      const verdicts = cases.map((c, i) => {
+        const r = c.review || {};
+        const out = {};
+        const days = daysOf(val(i, { id: rv.when }));
+        const before = i > 0 ? daysOf(val(i - 1, { id: rv.when })) : 0;
+        if (days === null) out[rv.when] = ['fix', 'Indiquez un délai précis, par exemple J+3 : trois jours après l’envoi.'];
+        else if (before !== null && days <= before) out[rv.when] = ['ko', 'Cette relance arrive avant la précédente, ou en même temps : espacez-les dans le temps.'];
+        else if (r.days && (days < r.days[0] || days > r.days[1])) out[rv.when] = ['fix', r.whenTip];
+        else out[rv.when] = ['ok', r.whenOk];
+        const chosen = val(i, { id: rv.channel });
+        if (i > 0 && chosen && chosen === val(i - 1, { id: rv.channel })) out[rv.channel] = ['ko', `Même canal qu’à l’étape précédente : variez pour relancer l’attention. ${r.channelWhy}`];
+        else if ((r.channels || []).includes(chosen)) out[rv.channel] = ['ok', r.channelWhy];
+        else out[rv.channel] = ['fix', `${channelLabel((r.channels || [])[0])} conviendrait mieux ici. ${r.channelWhy}`];
+        (rv.written || []).forEach(id => { out[id] = ['read', (r.check || {})[id] || '']; });
+        const states = Object.values(out).map(v => v[0]);
+        const badge = states.includes('ko') ? ['ko', 'À ajuster'] : states.includes('fix') ? ['fix', 'À améliorer'] : ['ok', 'Bien réalisée'];
+        return { out, badge };
+      });
+      const shownOf = (i, f) => (f.type === 'select' ? channelLabel(val(i, f)) : val(i, f)) || '—';
+      return `<div class="rva">${cases.map((c, i) => {
+        const { out, badge } = verdicts[i];
+        const r = c.review || {};
+        return `<details class="rva-item tone-${badge[0]}" ${i === 0 ? 'open' : ''}>
+          <summary><span class="rva-n">${i + 1}</span><span class="rva-title"><strong>${esc(c.tab)}</strong>${r.subtitle ? `<small>${esc(r.subtitle)}</small>` : ''}</span>
+            <span class="rva-badge tone-${badge[0]}"><i></i>${esc(badge[1])}</span><span class="rva-chev">${icon('chevronRight', { size: 20 })}</span></summary>
+          <div class="rva-body">
+            <div class="rva-grid" role="table">
+              <div class="rva-row rva-headrow" role="row"><span role="columnheader"></span><span role="columnheader">Votre réponse</span><span role="columnheader">Une réponse possible</span><span role="columnheader">Notre avis</span></div>
+              ${fieldsOf(i).map(f => {
+                const [state, text] = out[f.id] || ['read', ''];
+                return `<div class="rva-row" role="row">
+                  <span class="rva-field" role="rowheader"><span class="rva-symbol">${icon(symbols[f.id] || 'pencil', { size: 20 })}</span><strong>${esc(f.label)}</strong></span>
+                  <span class="rva-cell" role="cell">${esc(shownOf(i, f))}</span>
+                  <span class="rva-cell is-model" role="cell">${esc(f.model || '')}</span>
+                  <span class="rva-avis tone-${state}" role="cell"><span class="rva-mark">${icon(tone[state][1], { size: 14, strokeWidth: 3 })}</span><span><strong>${tone[state][0]}</strong>${text ? `<small>${esc(text)}</small>` : ''}</span></span>
+                </div>`;
+              }).join('')}
+            </div>
+            ${r.retain ? `<div class="rva-retain">${icon('lightbulb', { size: 30 })}<strong>Ce qu’il faut retenir</strong><ul>${r.retain.map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>` : ''}
+            ${c.lesson ? ex().inlineNote(c.lesson, 'neutral') : ''}
+          </div>
+        </details>`;
+      }).join('')}</div>${content.keyPoint ? ex().inlineNote(content.keyPoint, 'neutral') : ''}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
+    }
+
     function reviewScreen() {
+      if (content.review) return accordionReview();
       return cases.map((c, i) => {
         const fields = fieldsOf(i);
         if (!fields.length && !c.model && !c.lesson) return '';
