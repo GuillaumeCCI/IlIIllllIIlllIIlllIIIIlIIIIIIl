@@ -377,10 +377,10 @@ button.crash-passage:hover { background: #fff1d6; }
 .sk-foot.sk-phone { justify-content: center; padding: 0 0 16px; }
 .sk-hang { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: #e5484d; color: #fff; } .sk-hang .icon { transform: rotate(135deg); }
 
-/* Rendez-vous : bloc-notes ligné */
+/* Rendez-vous : bloc-notes */
 .fm-skin[data-skin="visit"] { background: #fffdf5; border-color: #ece3c4; }
 .sk-head.sk-visit { align-items: center; gap: 12px; padding: 14px 20px; background: #fff3cf; color: #5c4300; border-bottom: 2px solid #f0d88a; }
-#main .fm-skin[data-skin="visit"] textarea { background: repeating-linear-gradient(#fffef9 0 31px, #e9e1c6 31px 32px) 0 11px / 100% 32px local; background-color: #fffef9; line-height: 32px; padding-top: 8px; border-color: #ece3c4; }
+#main .fm-skin[data-skin="visit"] textarea { background: #fffef9; border-color: #ece3c4; }
 
 /* Messagerie professionnelle */
 .fm-skin[data-skin="linkedin"] { background: #f4f2ee; border-color: #dcd8d0; }
