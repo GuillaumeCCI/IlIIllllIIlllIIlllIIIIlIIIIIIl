@@ -114,7 +114,6 @@
         ${content.drag ? `<p class="dk-hint">${icon('pointer', { size: 18 })}<span>Glissez la carte sur une zone, ou choisissez une zone puis validez.</span></p>` : ''}
       </div>
       ${kit().bar({
-        left: kit().dialogButton('all', `Voir les ${total} ${content.cardsLabel || 'cartes'}`, 'text-button', 'list'),
         center: kit().act('deck-undo', `${icon('undo', { size: 17 })}<span>Annuler</span>`, 'secondary', Array.isArray(history) && history.length ? '' : 'disabled'),
         right: kit().act('dk-confirm', `<span>${esc(content.confirmLabel || 'Valider et continuer')}</span>${icon('arrowRight', { size: 18 })}`, 'primary', pick() ? '' : 'disabled')
       })}`;
@@ -154,13 +153,6 @@
       'deck-reopen': el => { kit().deckReopen(total, Number(el.dataset.index)); kit().commit(); }
     });
     kit().onDrop((id, zone) => { confirm(zone); kit().commit(); });
-    kit().dialogs({
-      all: () => {
-        const placed = kit().deckPlaced(total);
-        const zoneLabel = id => (zones.find(z => z.id === id) || {}).label;
-        return { title: `Les ${total} ${content.cardsLabel || 'cartes'}`, html: `<ol class="dialog-list">${cards.map((c, i) => `<li>${text(c)}${placed[i] ? ` <em>· ${esc(zoneLabel(placed[i]))}</em>` : ''}</li>`).join('')}</ol>` };
-      }
-    });
 
     ex().mount(key, { screen, validate, feedback, compactFeedback: true });
   }
