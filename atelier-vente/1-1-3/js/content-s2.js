@@ -11,6 +11,8 @@ window.ATELIER_S2 = {
   '2.1': {
     eyebrow: 'Exercice 2.1',
     title: 'Barrage, prétexte ou vraie objection ?',
+    context: 'Vous appelez une entreprise pour joindre un décideur. Vous allez lire 6 répliques entendues au téléphone, chacune dans l’une de ces catégories :',
+    itemNoun: 'réplique',
     subtitle: 'Classez chaque réplique entendue au téléphone.',
     legend: [
       { id: 'B', label: 'Barrage du standard', text: 'Fait obstacle à la mise en relation.', tone: 'c' },

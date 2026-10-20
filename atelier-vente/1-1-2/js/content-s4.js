@@ -10,6 +10,7 @@ window.ATELIER_S4 = {
   '1.1': {
     eyebrow: 'Exercice 1.1',
     title: 'Caractéristique, avantage ou preuve ?',
+    context: 'Vous allez lire 6 phrases tirées de l’argumentaire d’un commercial. Chacune relève d’une seule catégorie :',
     subtitle: 'Identifiez la nature de chaque argument commercial.',
     legend: [
       { id: 'C', label: 'Caractéristique', text: 'Ce que le produit fait', tone: 'c' },
@@ -50,6 +51,7 @@ window.ATELIER_S4 = {
   '2.1': {
     eyebrow: 'Exercice 2.1',
     title: 'Caractéristique ou bénéfice client ?',
+    context: 'Vous allez lire 6 phrases d’un commercial qui présente son produit. Chacune relève d’une seule catégorie :',
     subtitle: 'Distinguez ce que le produit possède de ce que l’utilisateur y gagne.',
     legend: [
       { id: 'C', label: 'Caractéristique', text: 'Une donnée sur le produit', tone: 'c' },

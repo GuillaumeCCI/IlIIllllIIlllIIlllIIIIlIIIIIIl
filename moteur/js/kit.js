@@ -251,7 +251,9 @@
    * boutons de réponse. `content` : eyebrow, title, subtitle, legend,
    * instruction, items [{ text, answer, why }]. Monte l'exercice.
    * `progressive` : les cartes apparaissent une à une, la suivante dès
-   * que la précédente a sa réponse (la relecture les montre toutes). */
+   * que la précédente a sa réponse (la relecture les montre toutes).
+   * `context` (et `itemNoun`, « phrase » par défaut) : une visite guidée
+   * courte, qui pose la situation puis montre les catégories. */
   function mountChoiceGrid(key, content, { progressive = false } = {}) {
     const items = content.items;
     // Par défaut, les tuiles ne portent que la lettre (C, A, P) : la légende
@@ -296,7 +298,7 @@
       if (reviewing) return reviewScreen();
       const right = score('item', answers);
       return `<div class="k-page cg-page">
-        ${head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle })}
+        ${head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: content.context ? tourButton() : '' })}
         <div class="cg-legend count-${content.legend.length}">${content.legend.map(l =>
           `<div class="cg-legend-item tone-${l.tone}"><span class="cg-letter">${esc(l.id)}</span><span><strong>${esc(l.label)}</strong><span>${esc(l.text)}</span></span></div>`).join('')}</div>
         ${reviewing ? result(right, items.length, 'bonnes réponses') : `<p class="cg-instruction">${icon('pointer', { size: 22 })}<span>${esc(content.instruction)}</span></p>`}
@@ -325,6 +327,18 @@
 
     if (progressive) reveal('.cg-card[data-card]', shown);
     live(() => ({ count: `${count()} sur ${items.length} réponses` }));
+    if (content.context) {
+      const noun = content.itemNoun || 'phrase';
+      const TONES = { c: 'blue', a: 'green', p: 'gold' };
+      tour(key, [
+        { target: '.cg-legend', title: 'Le contexte', text: content.context,
+          items: content.legend.map(l => ({ key: l.id, tone: TONES[l.tone] || 'blue', text: `${l.label} : ${l.text.charAt(0).toLowerCase()}${l.text.slice(1)}` })),
+          after: `Pour chaque ${noun}, choisissez la bonne catégorie.` },
+        { target: '.cg-grid', title: `Les ${noun}s`, text: `Cliquez sur la lettre qui correspond à chaque ${noun}.`,
+          after: progressive ? `La ${noun} suivante apparaît dès que vous avez répondu.` : '' },
+        { target: '.cg-page .k-bar', title: 'Vérifier', text: `Toutes les ${noun}s classées, vérifiez vos réponses : le corrigé s’affiche avec une explication pour chacune.` }
+      ]);
+    }
     ex().mount(key, { screen, validate, feedback, compactFeedback: true });
   }
 
