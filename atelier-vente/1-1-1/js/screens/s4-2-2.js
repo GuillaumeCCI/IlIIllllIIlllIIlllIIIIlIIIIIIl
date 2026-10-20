@@ -122,7 +122,7 @@
       ],
       after: 'Après validation, un exemple de reformulation s’affiche.' },
     { target: '.case-menu-count', title: 'Votre avancement', text: 'Ce compteur indique combien d’échanges vous avez réparés. Traitez les 3 pour terminer l’exercice.' },
-    { target: '.rc-card.is-client', title: 'Le client', text: 'Voici ce que vous dit le client.' },
+    { target: '.rc-card.is-client', title: 'Le client', text: 'Voici ce que le client dit au vendeur.' },
     { target: '.rc-card.is-reflex', title: 'Le réflexe à remplacer', text: 'Le vendeur a défendu son offre tout de suite. C’est cette réponse que vous remplacez.' },
     { target: '.repair-sheet .rc-sheet-head, .repair-sheet .field', title: 'Votre reformulation', text: 'Redites avec vos mots ce que le client exprime, pour montrer que vous l’avez compris.' },
     { target: '.repair .form-actions button[type="submit"]', title: 'Valider', text: 'Validez : un exemple de reformulation s’affiche, puis vous revenez aux autres échanges.' }
