@@ -24,7 +24,7 @@ window.ATELIER_S3 = {
       read: '6 situations : une phrase du client, ou ce que vous observez chez lui.',
       choose: 'Pour chacune, dites si vous l’entendez (signal verbal) ou si vous l’observez (signal non verbal).'
     },
-    subtitle: 'Glisse la carte ou touche une zone pour classer chaque situation.',
+    subtitle: 'Choisissez une zone pour classer chaque situation.',
     cardLabel: 'Situation',
     cardsLabel: 'cartes',
     letters: true,

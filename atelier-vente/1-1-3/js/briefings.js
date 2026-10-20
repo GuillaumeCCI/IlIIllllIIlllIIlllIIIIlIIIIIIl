@@ -19,7 +19,7 @@ window.ATELIER_BRIEFINGS = {
   's1-1.1': {
     lede: { key: 'Huit attitudes, deux réponses.', rest: 'Fiez-vous à votre premier réflexe.' },
     mission: 'Pour chacune des huit attitudes du commercial face à une objection, dites s’il s’agit d’un bon réflexe ou d’une attitude à éviter.',
-    method: 'Cliquez sur une réponse ou glissez la carte : la situation suivante apparaît.',
+    method: 'Cliquez sur une réponse : la situation suivante apparaît.',
     situation: 'Un client émet une objection en plein rendez-vous. Le commercial a plusieurs façons de réagir : certaines ouvrent l’échange, d’autres le ferment.',
     task: 'Classez les huit situations, relisez votre classement, puis validez pour découvrir le corrigé.',
     criteria: ['Distinguer une attitude constructive d’un mauvais réflexe', 'Repérer ce qui braque le client']

@@ -126,7 +126,7 @@ window.ATELIER_BRIEFINGS = {
   's3-3.1': {
     lede: { key: 'Le client se projette.', rest: 'L’avez-vous vu ?' },
     mission: 'Classez chaque signal d’achat : verbal (j’entends) ou non verbal (j’observe).',
-    method: 'Glissez la carte, ou choisissez une zone puis validez.',
+    method: 'Choisissez une zone, puis validez.',
     situation: 'Pendant le rendez-vous, le client envoie des signaux : des questions, des gestes, des comportements.',
     task: 'Six situations à classer.',
     criteria: ['Distinguer paroles et comportements']

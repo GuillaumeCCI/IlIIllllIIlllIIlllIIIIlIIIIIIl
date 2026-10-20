@@ -124,7 +124,7 @@
       // remplit à chaque réponse donnée.
       const answered = kit().deckPlaced(total).filter(zone => zone !== null).length;
       return `<div class="dk-board">
-        <article class="dk-card" draggable="true" data-drag="${index}" tabindex="0" aria-label="${esc(label(index))} : ${esc(cards[index].text)}">
+        <article class="dk-card" tabindex="0" aria-label="${esc(label(index))} : ${esc(cards[index].text)}">
           <span class="dk-progress" role="progressbar" aria-label="Réponses données" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${answered}"><span style="width:${Math.round(answered / total * 100)}%"></span></span>
           <p class="dk-pos">${esc(label(index))}</p>
           <div class="dk-body">${content.symbol ? `<span class="dk-symbol">${icon(content.symbol, { size: 34 })}</span>` : ''}<div class="dk-words"><p class="dk-text">${text(cards[index])}</p>${content.question && zones.length === 2 ? `<p class="dk-question is-inline">${esc(content.question)}</p>` : ''}</div></div>
@@ -136,7 +136,7 @@
             <span class="dk-zone-words"><strong>${esc(z.label)}</strong>${z.sub ? `<small>${esc(z.sub)}</small>` : ''}</span>
             ${zones.length === 2 ? `<span class="dk-zone-go">${icon('chevronRight', { size: 22 })}</span>` : ''}
           </button>`).join('')}</div>
-        ${content.drag ? `<p class="dk-hint">${icon('pointer', { size: 18 })}<span>Glissez la carte sur une zone, ou choisissez une zone puis validez.</span></p>` : ''}
+        ${content.drag ? `<p class="dk-hint">${icon('pointer', { size: 18 })}<span>Choisissez une zone, puis validez.</span></p>` : ''}
       </div>
       ${kit().bar({
         left: content.context ? kit().act('dk-context', `${icon('document', { size: 17 })}<span>Le contexte</span>`, 'text-button') : '',
@@ -180,7 +180,6 @@
       'dk-context': () => openContext(),
       'dk-context-go': () => document.querySelector('#info-dialog')?.close()
     });
-    kit().onDrop((id, zone) => { confirm(zone); kit().commit(); });
 
     ex().mount(key, { screen, validate, feedback, onMount, compactFeedback: true });
   }

@@ -1,8 +1,8 @@
 /* S1 1.1 · Bon réflexe ou à éviter ?
  *
  * Huit attitudes du commercial, une à la fois. Un clic sur « À éviter » ou
- * « Bon réflexe » classe la situation et fait apparaître la suivante ; on
- * peut aussi glisser la carte vers la réponse. Une fois tout classé, un
+ * « Bon réflexe » classe la situation et fait apparaître la suivante. Une
+ * fois tout classé, un
  * récapitulatif permet de relire avant de valider.
  */
 (() => {
@@ -24,7 +24,7 @@
         <span class="xp-left">${kit.plural(left - 1, 'restante', 'restantes')}</span>
       </div>
       <div class="xp-stack">
-        <article class="xp-card" draggable="true" data-drag="${index}" tabindex="0" aria-label="Situation ${index + 1} : ${esc(cards[index].text)}">
+        <article class="xp-card" tabindex="0" aria-label="Situation ${index + 1} : ${esc(cards[index].text)}">
           <span class="xp-tag">Situation ${String(index + 1).padStart(2, '0')}</span>
           <div class="xp-card-body">
             <span class="xp-symbol">${icon('chat', { size: 42 })}</span>
@@ -82,7 +82,6 @@
     'deck-skip': () => { kit.deckSkip(total); kit.commit(); },
     'deck-reopen': el => { kit.deckReopen(total, Number(el.dataset.index)); kit.commit(); }
   });
-  kit.onDrop((id, zone) => { kit.deckPlace(total, zone); kit.commit(); });
 
   ex.mount('s1-1.1', { screen, validate, feedback, compactFeedback: true });
 })();
