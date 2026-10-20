@@ -94,7 +94,7 @@
       : at === 2 ? kit.submit('Passer à la réparation')
       : `${kit.dialogButton('example', 'Voir un exemple', 'secondary', '')}${kit.submit('Comparer avant / après')}`;
     return `<div class="k-page repair-page stage-${at}">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, aside: kit.steps(['Construire le pire', 'Analyser les dégâts', 'Réparer'], at, { compact: true }) })}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, aside: `${kit.steps(['Construire le pire', 'Analyser les dégâts', 'Réparer'], at, { compact: true })}${kit.tourButton()}` })}
       <div class="k-columns">
         ${sidePanel(at)}
         <form class="k-panel" novalidate>
@@ -174,6 +174,42 @@
     diagnostic: () => ({ title: 'Mon diagnostic', html: `<ol class="dialog-list">${[0, 1, 2].map(i => `<li>${esc(ex.value(`error${i}`))}</li>`).join('')}</ol>` }),
     example: { title: 'Un exemple de réparation', html: `<p><strong>Avant :</strong> ${esc(content.worstExample)}</p><p><strong>Après :</strong> ${esc(content.model)}</p>` }
   });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  // Seules les zones présentes à l'étape en cours sont montrées.
+  kit.tour('s1-1.6', [
+    { target: '.repair-side .repair-block', title: 'Votre client', text: 'Voici le contexte de l’exercice.',
+      items: [
+        { symbol: 'target', tone: 'blue', text: 'Le produit : RelaCosy, un logiciel CRM pour les PME.' },
+        { symbol: 'document', tone: 'blue', text: 'Les 3 besoins prioritaires du client restent affichés pendant tout l’exercice.' }
+      ] },
+    { target: '.repair-challenge', title: 'Votre défi', text: 'Le défi change selon l’étape :',
+      items: [
+        { key: '1', tone: 'coral', text: 'aux étapes 1 et 2, faites exprès de mal faire ;' },
+        { key: '3', tone: 'green', text: 'à l’étape 3, répondez vraiment aux 3 besoins.' }
+      ] },
+    { target: '.k-steps', title: 'Trois étapes', text: 'L’exercice se fait à l’envers :',
+      items: [
+        { key: '1', tone: 'coral', text: 'vous écrivez le pire argumentaire possible ;' },
+        { key: '2', tone: 'blue', text: 'vous repérez 3 erreurs dans votre texte ;' },
+        { key: '3', tone: 'green', text: 'vous le réécrivez correctement.' }
+      ] },
+    { target: '#field-worst', title: 'Votre pire argumentaire', text: 'Écrivez ici un argumentaire volontairement raté : hors sujet, jargon, liste de caractéristiques, besoins ignorés.' },
+    { target: '.repair-inspiration', title: 'Besoin d’inspiration ?', text: 'Cliquez sur « Tirer une carte piège » : une erreur à commettre s’affiche au hasard.' },
+    { target: '.repair-error', title: 'Votre diagnostic', text: 'Nommez 3 erreurs de votre texte et expliquez pourquoi elles le rendent inefficace.' },
+    { target: '.repair-help', title: 'Un coup de pouce', text: 'Ce bouton affiche les pièges les plus fréquents.' },
+    { target: '.repair-links', title: 'Vos textes précédents', text: 'Ces deux liens rouvrent votre travail :',
+      items: [
+        { symbol: 'document', tone: 'blue', text: 'votre pire argumentaire ;' },
+        { symbol: 'search', tone: 'blue', text: 'votre diagnostic.' }
+      ] },
+    { target: '#field-fixed', title: 'Votre argumentaire réparé', text: 'Réécrivez votre texte pour répondre aux 3 besoins du client : un bénéfice concret et une preuve pour chacun.' },
+    { target: '.k-bar .k-submit', title: 'Continuer',
+      items: [
+        { symbol: 'arrowRight', tone: 'blue', text: 'Ce bouton vous fait passer à l’étape suivante.' },
+        { symbol: 'checkCircle', tone: 'green', text: 'Après l’étape 3, vous comparez votre texte avant et après, avec un corrigé.' }
+      ] }
+  ]);
 
   ex.mount('s1-1.6', { screen, validate, intercept, feedback, compactFeedback: true });
 })();
