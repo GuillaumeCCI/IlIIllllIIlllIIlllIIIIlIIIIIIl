@@ -139,10 +139,10 @@
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   if (window.AtelierKit) window.AtelierKit.tour('s3-1.2', [
     { target: '.rl-card', title: 'Le rôle à placer', text: 'Chaque carte décrit ce que fait une étape de la méthode de traitement des objections.' },
-    { target: '.rl-method', title: 'Les six étapes', text: 'Choisissez, parmi les six étapes de la méthode, celle qui remplit le rôle affiché.',
+    { target: '.rl-method', title: 'Les six étapes', text: 'Lisez le rôle affiché, puis sélectionnez l’étape de la méthode qui lui correspond le mieux.',
       items: [
-        { symbol: 'check', tone: 'green', text: 'Le rôle s’inscrit alors sous l’étape choisie.' },
-        { symbol: 'refresh', tone: 'gold', text: 'Une étape ne reçoit qu’un rôle : en choisir une déjà prise lui donne le nouveau.' }
+        { symbol: 'check', tone: 'green', text: 'Une fois choisie, l’étape affiche le rôle que vous lui avez donné : vous voyez où vous en êtes.' },
+        { symbol: 'refresh', tone: 'gold', text: 'Vous changez d’avis ? Cliquez simplement sur une autre étape.' }
       ] },
     { target: '.rl-deck', title: 'Les six rôles', text: 'Le rôle suivant s’affiche tout seul. Cliquez sur « Rôle 1 » à « Rôle 6 » pour revenir sur un rôle et changer votre choix.' },
     { target: '.rl-count', title: 'Votre avancement', text: 'Une fois les 6 rôles associés, vous relisez vos choix avant de valider.' }
