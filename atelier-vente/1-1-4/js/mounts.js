@@ -77,7 +77,7 @@
   /* ─────────────────────── Une carte, des zones ─────────────────────── */
 
   /* content : eyebrow, title, subtitle, context { situation, read, choose }
-   * (encadré au-dessus de la carte), legend (une ligne de rappel), question, cardLabel, letters (a, b, c…), symbol, quoted, zones
+   * (fenêtre ouverte à l'arrivée sur l'exercice), legend (une ligne de rappel), question, cardLabel, letters (a, b, c…), symbol, quoted, zones
    * [{ id, label, sub, tone, symbol, letter }], cards [{ text, answer, why }]. */
   function mountDeck(key, content) {
     const cards = content.cards;
@@ -93,8 +93,23 @@
       ex().setValue('pick', '');
     }
 
-    /* Le contexte, avant la première carte : la situation, ce qu'on va
-     * lire, et le choix à faire. Une information par ligne. */
+    /* Le contexte, dans une fenêtre qui s'ouvre à l'arrivée sur
+     * l'exercice, le fond flouté : la situation, ce qu'on va lire, et le
+     * choix à faire. Une information par ligne. « Le contexte », en bas à
+     * gauche, la rouvre. */
+    let contextSeen = false;
+    function openContext() {
+      core().openDialog('Le contexte', `${contextBox()}<p class="dk-context-go"><button type="button" class="button primary" data-act="dk-context-go">C’est parti</button></p>`);
+      const dialog = document.querySelector('#info-dialog');
+      if (!dialog) return;
+      dialog.classList.add('is-context');
+      dialog.addEventListener('close', () => dialog.classList.remove('is-context'), { once: true });
+    }
+    function onMount() {
+      if (contextSeen || !content.context || ex().reviewing() || kit().deckCurrent(total) === null) return;
+      contextSeen = true;
+      openContext();
+    }
     const contextBox = () => `<section class="dk-context" aria-label="Le contexte">
         <ul>${[
           ['target', 'La situation', content.context.situation],
@@ -124,6 +139,7 @@
         ${content.drag ? `<p class="dk-hint">${icon('pointer', { size: 18 })}<span>Glissez la carte sur une zone, ou choisissez une zone puis validez.</span></p>` : ''}
       </div>
       ${kit().bar({
+        left: content.context ? kit().act('dk-context', `${icon('document', { size: 17 })}<span>Le contexte</span>`, 'text-button') : '',
         center: kit().act('deck-undo', `${icon('undo', { size: 17 })}<span>Annuler</span>`, 'secondary', Array.isArray(history) && history.length ? '' : 'disabled'),
         right: kit().act('dk-confirm', `<span>${esc(content.confirmLabel || 'Valider et continuer')}</span>${icon('arrowRight', { size: 18 })}`, 'primary', pick() ? '' : 'disabled')
       })}`;
@@ -142,7 +158,6 @@
       return `<div class="k-page dk-page">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
           aside: reviewing || index !== null ? '' : `<p class="k-count"><strong>${placed.filter(Boolean).length} / ${total}</strong> réponses</p>` })}
-        ${content.context && !reviewing && index !== null ? contextBox() : ''}
         ${content.legend && !reviewing ? `<p class="dk-legend">${content.legend.map(l => `<span><strong>${esc(l.label)} :</strong> ${esc(l.text)}</span>`).join('')}</p>` : ''}
         <form class="dk-form" novalidate>${body}${reviewing ? '' : core().errorsBox()}</form>
         ${reviewing ? '' : kit().utility(`Corrigé disponible après les ${total} ${content.cardsLabel || 'cartes'}`)}
@@ -161,11 +176,13 @@
       'dk-pick': el => { ex().setValue('pick', el.dataset.zone); kit().commit(); },
       'dk-confirm': () => { if (pick()) { confirm(pick()); kit().commit(); } },
       'deck-undo': () => { kit().deckUndo(total); ex().setValue('pick', ''); kit().commit(); },
-      'deck-reopen': el => { kit().deckReopen(total, Number(el.dataset.index)); kit().commit(); }
+      'deck-reopen': el => { kit().deckReopen(total, Number(el.dataset.index)); kit().commit(); },
+      'dk-context': () => openContext(),
+      'dk-context-go': () => document.querySelector('#info-dialog')?.close()
     });
     kit().onDrop((id, zone) => { confirm(zone); kit().commit(); });
 
-    ex().mount(key, { screen, validate, feedback, compactFeedback: true });
+    ex().mount(key, { screen, validate, feedback, onMount, compactFeedback: true });
   }
 
   /* ────────────────── Une carte, une zone qui sert une fois ──────────── */
