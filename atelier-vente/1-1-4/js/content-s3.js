@@ -19,6 +19,11 @@ window.ATELIER_S3 = {
   '3.1': {
     eyebrow: 'Exercice 3.1 · Défi flash',
     title: 'Attrape le bon signal !',
+    context: {
+      situation: 'Pendant l’entretien, votre client vous envoie des signaux, par ses mots ou par son attitude.',
+      read: '6 situations : une phrase du client, ou ce que vous observez chez lui.',
+      choose: 'Pour chacune, dites si vous l’entendez (signal verbal) ou si vous l’observez (signal non verbal).'
+    },
     subtitle: 'Glisse la carte ou touche une zone pour classer chaque situation.',
     cardLabel: 'Situation',
     cardsLabel: 'cartes',

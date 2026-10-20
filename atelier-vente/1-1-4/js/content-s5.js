@@ -11,6 +11,11 @@ window.ATELIER_S5 = {
   '1.1': {
     eyebrow: 'Exercice 1.1 · Prix',
     title: 'Annoncer le prix avec assurance',
+    context: {
+      situation: 'Un client vous demande le prix de votre accompagnement sur l’année.',
+      read: '4 façons d’annoncer ce prix.',
+      choose: 'Pour chacune, dites si elle suit la méthode du sandwich ou si elle est à revoir.'
+    },
     subtitle: 'Cette annonce suit-elle la méthode du sandwich ?',
     cardLabel: 'Phrase',
     cardsLabel: 'phrases',
@@ -58,6 +63,11 @@ window.ATELIER_S5 = {
   '2.1': {
     eyebrow: 'Défendre la valeur · Exercice 2.1',
     title: 'Valoriser ou brader ?',
+    context: {
+      situation: 'Votre client vous dit : « C’est trop cher. »',
+      read: '5 réponses possibles du commercial.',
+      choose: 'Pour chacune, dites si le commercial valorise son offre ou s’il négocie le prix.'
+    },
     subtitle: 'Classez chaque réponse du commercial au client qui dit : « C’est trop cher. »',
     cardLabel: 'Réplique',
     cardsLabel: 'répliques',
@@ -110,6 +120,11 @@ window.ATELIER_S5 = {
   '3.1': {
     eyebrow: 'Conclure la vente · Exercice 3.1',
     title: 'Signal d’achat ou pas ?',
+    context: {
+      situation: 'Vous venez de présenter votre offre, et votre client réagit.',
+      read: '6 réactions du client.',
+      choose: 'Pour chacune, dites s’il s’agit d’un signal d’achat ou d’un signal de recul.'
+    },
     subtitle: 'Observez chaque réaction avant de décider.',
     cardLabel: 'Réaction',
     cardsLabel: 'réactions',
@@ -162,6 +177,11 @@ window.ATELIER_S5 = {
   '4.1': {
     eyebrow: 'Relancer efficacement · Exercice 4.1',
     title: 'Les bons réflexes de relance',
+    context: {
+      situation: 'Votre prospect a reçu votre offre, mais il ne vous a pas répondu.',
+      read: '6 pratiques de relance.',
+      choose: 'Pour chacune, dites si c’est un bon réflexe ou une pratique à éviter.'
+    },
     subtitle: 'Pour chaque pratique, choisissez : bon réflexe ou à éviter.',
     cardLabel: 'Pratique',
     cardsLabel: 'pratiques',

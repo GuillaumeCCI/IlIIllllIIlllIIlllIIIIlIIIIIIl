@@ -18,6 +18,11 @@ window.ATELIER_S1 = {
   '1.1': {
     eyebrow: 'Entretien de vente',
     title: 'L’art d’annoncer le prix',
+    context: {
+      situation: 'Vous préparez le moment où vous annoncerez votre prix au client.',
+      read: '6 affirmations sur la façon d’annoncer un prix.',
+      choose: 'Pour chacune, dites si elle est vraie ou fausse.'
+    },
     subtitle: 'Six affirmations. À vous de trancher.',
     cardLabel: 'Affirmation',
     cardsLabel: 'affirmations',

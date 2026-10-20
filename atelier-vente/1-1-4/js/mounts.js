@@ -76,8 +76,8 @@
 
   /* ─────────────────────── Une carte, des zones ─────────────────────── */
 
-  /* content : eyebrow, title, subtitle, legend (une ligne de rappel),
-   * question, cardLabel, letters (a, b, c…), symbol, quoted, zones
+  /* content : eyebrow, title, subtitle, context { situation, read, choose }
+   * (encadré au-dessus de la carte), legend (une ligne de rappel), question, cardLabel, letters (a, b, c…), symbol, quoted, zones
    * [{ id, label, sub, tone, symbol, letter }], cards [{ text, answer, why }]. */
   function mountDeck(key, content) {
     const cards = content.cards;
@@ -92,6 +92,16 @@
       kit().deckPlace(total, zone);
       ex().setValue('pick', '');
     }
+
+    /* Le contexte, avant la première carte : la situation, ce qu'on va
+     * lire, et le choix à faire. Une information par ligne. */
+    const contextBox = () => `<section class="dk-context" aria-label="Le contexte">
+        <ul>${[
+          ['target', 'La situation', content.context.situation],
+          ['document', 'Vous allez lire', content.context.read],
+          ['pointer', 'Votre choix', content.context.choose]
+        ].map(([symbol, label, line]) => `<li><span class="dk-context-icon">${icon(symbol, { size: 20 })}</span><span><strong>${label}</strong>${esc(line)}</span></li>`).join('')}</ul>
+      </section>`;
 
     function playScreen(index) {
       const history = ex().value('history');
@@ -132,6 +142,7 @@
       return `<div class="k-page dk-page">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
           aside: reviewing || index !== null ? '' : `<p class="k-count"><strong>${placed.filter(Boolean).length} / ${total}</strong> réponses</p>` })}
+        ${content.context && !reviewing && index !== null ? contextBox() : ''}
         ${content.legend && !reviewing ? `<p class="dk-legend">${content.legend.map(l => `<span><strong>${esc(l.label)} :</strong> ${esc(l.text)}</span>`).join('')}</p>` : ''}
         <form class="dk-form" novalidate>${body}${reviewing ? '' : core().errorsBox()}</form>
         ${reviewing ? '' : kit().utility(`Corrigé disponible après les ${total} ${content.cardsLabel || 'cartes'}`)}

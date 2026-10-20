@@ -18,6 +18,11 @@ window.ATELIER_S2 = {
   '2.1': {
     eyebrow: 'Vrai ou faux',
     title: 'Défendre son prix sans le brader',
+    context: {
+      situation: 'Votre client trouve votre offre trop chère et vous demande de faire un effort.',
+      read: '6 affirmations sur la façon de défendre votre prix.',
+      choose: 'Pour chacune, dites si elle est vraie ou fausse.'
+    },
     subtitle: 'Six pratiques à examiner. À vous de trancher.',
     cardLabel: 'Affirmation',
     cardsLabel: 'affirmations',

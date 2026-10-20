@@ -525,3 +525,10 @@ button.crash-passage:hover { background: #fff1d6; }
 .dk-card { overflow: hidden; }
 .dk-progress { position: absolute; inset: 0 0 auto; height: 7px; background: #e8edf7; }
 .dk-progress > span { display: block; height: 100%; border-radius: 0 7px 7px 0; background: var(--accent); transition: width .4s ease; }
+
+/* Le contexte d'un exercice à cartes : trois lignes au-dessus de la carte. */
+.dk-context { width: min(100%, 880px); margin: 6px auto 0; padding: 18px 26px; border-radius: 16px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 7%), 0 1px 2px rgb(20 40 100 / 4%); }
+.dk-context ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.dk-context li { display: flex; align-items: center; gap: 14px; font-size: 1.05rem; line-height: 1.45; color: var(--navy); }
+.dk-context strong { display: block; font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.dk-context-icon { display: grid; place-items: center; width: 38px; height: 38px; flex-shrink: 0; border-radius: 50%; background: var(--tint); color: var(--accent); }

@@ -19,6 +19,11 @@ window.ATELIER_S4 = {
   '4.1': {
     eyebrow: 'Exercice 4.1 · Relance',
     title: 'Le Vrai / Faux de la relance',
+    context: {
+      situation: 'Vous avez envoyé une offre à un prospect, et il ne vous a pas encore répondu.',
+      read: '6 affirmations sur la façon de le relancer.',
+      choose: 'Pour chacune, dites si elle est vraie ou fausse.'
+    },
     subtitle: 'Pour chaque affirmation, choisissez Vrai ou Faux.',
     cardLabel: 'Affirmation',
     cardsLabel: 'affirmations',
