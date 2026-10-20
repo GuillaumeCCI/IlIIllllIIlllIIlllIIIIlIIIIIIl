@@ -1,7 +1,8 @@
 /* S3 1.2 · Associer chaque étape à son rôle.
  *
- * Six rôles à rattacher aux six étapes de la méthode. Une carte à la
- * fois, les six étapes en boutons, puis un récapitulatif relisible avant
+ * Six rôles à rattacher aux six étapes de la méthode. Le rôle à placer à
+ * gauche ; à droite, la méthode en parcours vertical : chaque étape montre
+ * le rôle qu'on lui a donné. Puis un récapitulatif relisible avant
  * validation.
  */
 (() => {
@@ -39,14 +40,58 @@
           lock: 'Le corrigé apparaît après validation.',
           submitLabel: 'Valider mes associations'
         })}</form>`
-      : sorter.cardScreen({
-          ...common,
-          eyebrow: content.eyebrow,
-          title: content.title,
-          intro: 'Lisez la carte, puis choisissez l’étape correspondante.',
-          hint: 'Vous pourrez revoir vos six choix avant validation.',
-          lock: 'Le corrigé apparaît après les six cartes.'
-        });
+      : playScreen();
+  }
+
+  /* Les boutons reprennent les actions de AtelierSorter (sort-card,
+   * goto-card) : sorter.wire les branche. */
+  function playScreen() {
+    const list = placement.list();
+    const index = Math.min(ex.cursor(), cards.length - 1);
+    const done = placement.placedCount();
+    const holder = id => list.findIndex(zone => String(zone) === String(id));
+
+    const deck = cards.map((_, i) => {
+      const state = i === index ? 'is-current' : list[i] != null ? 'is-done' : '';
+      return `<button type="button" class="rl-deck-item ${state}" data-action="goto-card" data-index="${i}" aria-current="${i === index}">
+        ${list[i] != null && i !== index ? icon('check', { size: 14 }) : ''}<span>Rôle ${i + 1}</span></button>`;
+    }).join('');
+
+    const steps = choices.map((choice, k) => {
+      const at = holder(choice.id);
+      const mine = at === index;
+      return `<li><button type="button" class="rl-step ${at !== -1 ? 'is-filled' : ''} ${mine ? 'is-mine' : ''}" data-action="sort-card" data-zone="${esc(choice.id)}" aria-pressed="${mine}">
+        <span class="rl-step-n">${k + 1}</span>
+        <span class="rl-step-icon">${icon(choice.symbol, { size: 20 })}</span>
+        <span class="rl-step-body"><strong>${esc(method[k].step)}</strong>
+          <small>${at !== -1 ? `« ${esc(cards[at].text)} »` : 'Pas encore de rôle'}</small></span>
+        ${at !== -1 ? `<span class="rl-step-tag">Rôle ${at + 1}</span>` : ''}
+      </button></li>`;
+    }).join('');
+
+    return `<div class="rl">
+      <header class="rl-head">
+        <div>${core.pageTitle(content.eyebrow, content.title, 'Lisez le rôle, puis cliquez sur l’étape de la méthode qui le remplit.')}</div>
+        <p class="rl-count"><strong>${done} / ${cards.length}</strong> rôles associés</p>
+      </header>
+      <div class="rl-layout">
+        <section class="rl-side">
+          <article class="rl-card">
+            <p class="rl-card-tag">Rôle ${index + 1} sur ${cards.length}</p>
+            <span class="rl-card-quote" aria-hidden="true">${icon('quote', { size: 34 })}</span>
+            <p class="rl-card-text">${esc(cards[index].text)}</p>
+            <p class="rl-card-ask">${icon('pointer', { size: 18 })}<span>Quelle étape remplit ce rôle ?</span></p>
+          </article>
+          <nav class="rl-deck" aria-label="Les six rôles">${deck}</nav>
+          ${(window.ATELIER_BRIEFINGS || {})[ex.current.key] ? core.button('Revoir la consigne', 'show-briefing', 'text-button review-brief') : ''}
+          <p class="rl-note">${icon('lock', { size: 15 })}<span>Vous relisez vos six choix avant de valider ; le corrigé vient ensuite.</span></p>
+        </section>
+        <section class="panel rl-method">
+          <h2>La méthode en 6 étapes</h2>
+          <ol class="rl-steps">${steps}</ol>
+        </section>
+      </div>
+    </div>`;
   }
 
   /* Le corrigé suit l'ordre de la méthode, pas celui des cartes : c'est
