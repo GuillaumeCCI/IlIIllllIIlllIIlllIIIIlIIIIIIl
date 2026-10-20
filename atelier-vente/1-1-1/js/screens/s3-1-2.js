@@ -51,11 +51,11 @@
     const done = placement.placedCount();
     const holder = id => list.findIndex(zone => String(zone) === String(id));
 
-    const deck = cards.map((_, i) => {
-      const state = i === index ? 'is-current' : list[i] != null ? 'is-done' : '';
-      return `<button type="button" class="rl-deck-item ${state}" data-action="goto-card" data-index="${i}" aria-current="${i === index}">
-        ${list[i] != null && i !== index ? icon('check', { size: 14 }) : ''}<span>Rôle ${i + 1}</span></button>`;
-    }).join('');
+    // Reculer ou avancer d'un rôle, pour revenir sur un choix.
+    const move = (to, label, symbol, after) => to < 0 || to >= cards.length
+      ? `<span class="rl-nav-gap"></span>`
+      : `<button type="button" class="rl-nav-button" data-action="goto-card" data-index="${to}">${after ? '' : icon(symbol, { size: 18 })}<span>${label}</span>${after ? icon(symbol, { size: 18 }) : ''}</button>`;
+    const deck = `${move(index - 1, 'Rôle précédent', 'arrowLeft', false)}${move(index + 1, 'Rôle suivant', 'arrowRight', true)}`;
 
     const steps = choices.map((choice, k) => {
       const at = holder(choice.id);
@@ -81,7 +81,7 @@
             <p class="rl-card-text">${esc(cards[index].text)}</p>
             <p class="rl-card-ask">${icon('pointer', { size: 18 })}<span>Quelle étape remplit ce rôle ?</span></p>
           </article>
-          <nav class="rl-deck" aria-label="Les six rôles">${deck}</nav>
+          <nav class="rl-nav" aria-label="Changer de rôle">${deck}</nav>
           ${(window.ATELIER_BRIEFINGS || {})[ex.current.key] ? core.button('Revoir la consigne', 'show-briefing', 'text-button review-brief') : ''}
           <p class="rl-note">${icon('lock', { size: 15 })}<span>Vous relisez vos six choix avant de valider ; le corrigé vient ensuite.</span></p>
         </section>
@@ -144,7 +144,11 @@
         { symbol: 'check', tone: 'green', text: 'Une fois choisie, l’étape affiche le rôle que vous lui avez donné : vous voyez où vous en êtes.' },
         { symbol: 'refresh', tone: 'gold', text: 'Vous changez d’avis ? Cliquez simplement sur une autre étape.' }
       ] },
-    { target: '.rl-deck', title: 'Les six rôles', text: 'Le rôle suivant s’affiche tout seul. Cliquez sur « Rôle 1 » à « Rôle 6 » pour revenir sur un rôle et changer votre choix.' },
+    { target: '.rl-nav', title: 'Reculer ou avancer', text: 'Après votre choix, le rôle suivant s’affiche tout seul.',
+      items: [
+        { symbol: 'arrowLeft', tone: 'blue', text: '« Rôle précédent » : revenir sur un rôle pour changer votre choix.' },
+        { symbol: 'arrowRight', tone: 'blue', text: '« Rôle suivant » : passer un rôle et y revenir plus tard.' }
+      ] },
     { target: '.rl-count', title: 'Votre avancement', text: 'Une fois les 6 rôles associés, vous relisez vos choix avant de valider.' }
   ]);
 
