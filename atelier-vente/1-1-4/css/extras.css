@@ -180,3 +180,7 @@
 .dk-board:has(.dk-zones.count-2) { gap: 40px; padding-top: 30px; }
 .dk-form:has(.dk-zones.count-2) { gap: 56px; }
 .dk-page:has(.dk-zones.count-2) .k-bar { margin-top: 64px; }
+
+/* Fond illustré de la carte (aquarelle pastel), atténué pour laisser lire le texte. */
+.dk-card.has-banner, .express-card.has-banner { isolation: isolate; }
+.dk-card.has-banner::before, .express-card.has-banner::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--card-bg) center / 100% 100% no-repeat; opacity: .5; pointer-events: none; }

@@ -79,7 +79,11 @@
   /* content : eyebrow, title, subtitle, context { situation, read, choose }
    * (fenêtre ouverte à l'arrivée sur l'exercice), legend (une ligne de rappel), question, cardLabel, letters (a, b, c…), symbol, quoted, zones
    * [{ id, label, sub, tone, symbol, letter }], cards [{ text, answer, why }]. */
+  /* Un fond illustré différent pour la carte de chaque exercice. */
+  const DECK_BANNERS = { 's1-1.1': 1, 's2-2.1': 2, 's3-3.1': 3, 's4-4.1': 4, 's5-1.1': 5, 's5-2.1': 6, 's5-3.1': 7, 's5-4.1': 8 };
+
   function mountDeck(key, content) {
+    const banner = DECK_BANNERS[key];
     const cards = content.cards;
     const zones = content.zones;
     const total = cards.length;
@@ -124,7 +128,7 @@
       // remplit à chaque réponse donnée.
       const answered = kit().deckPlaced(total).filter(zone => zone !== null).length;
       return `<div class="dk-board">
-        <article class="dk-card" tabindex="0" aria-label="${esc(label(index))} : ${esc(cards[index].text)}">
+        <article class="dk-card ${banner ? 'has-banner' : ''}"${banner ? ` style="--card-bg: url(../assets/illustrations/cartes/carte-${String(banner).padStart(2, '0')}.webp)"` : ''} tabindex="0" aria-label="${esc(label(index))} : ${esc(cards[index].text)}">
           <span class="dk-progress" role="progressbar" aria-label="Réponses données" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${answered}"><span style="width:${Math.round(answered / total * 100)}%"></span></span>
           <p class="dk-pos">${esc(label(index))}</p>
           <div class="dk-body">${content.symbol ? `<span class="dk-symbol">${icon(content.symbol, { size: 34 })}</span>` : ''}<div class="dk-words"><p class="dk-text">${text(cards[index])}</p>${content.question && zones.length === 2 ? `<p class="dk-question is-inline">${esc(content.question)}</p>` : ''}</div></div>

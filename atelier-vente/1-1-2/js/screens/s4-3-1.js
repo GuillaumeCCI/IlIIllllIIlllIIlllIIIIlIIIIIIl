@@ -24,7 +24,7 @@
 
   function playScreen(index) {
     const history = ex.value('history');
-    return `${progress()}<article class="express-card">
+    return `${progress()}<article class="express-card has-banner" style="--card-bg: url(../assets/illustrations/cartes/carte-09.webp)">
         <span class="express-tag">Carte ${String(index + 1).padStart(2, '0')}</span>
         <div class="express-body"><span class="express-symbol">${icon('document', { size: 44 })}</span>
           <div><p class="express-text">“${esc(cards[index].text)}”</p><p class="express-question">Cette pratique renforce-t-elle la persuasion ?</p></div>
