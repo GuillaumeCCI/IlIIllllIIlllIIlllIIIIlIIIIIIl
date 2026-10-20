@@ -107,6 +107,14 @@
     return [content.feedback[0]];
   }
 
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  if (window.AtelierKit) window.AtelierKit.tour('s4-1.1', [
+    { target: '.sequence-card', title: 'La phrase à placer', text: 'Les 5 phrases arrivent une par une, dans le désordre.' },
+    { target: '.slot-list', title: 'La séquence', text: 'Cliquez sur la place qui revient à la phrase, de 01 (le début de l’ouverture) à 05 (la fin).',
+      after: 'Une place n’accueille qu’une phrase.' },
+    { target: '.sequence-count', title: 'Votre avancement', text: 'Le compteur indique combien de phrases sont placées. Après les 5, vous relisez votre séquence avant de valider.' }
+  ]);
+
   ex.mount('s4-1.1', {
     screen, validate, feedback, compactFeedback: true,
     onMount: () => sorter.wire(placement, cards)

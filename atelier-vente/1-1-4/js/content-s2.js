@@ -39,6 +39,17 @@ window.ATELIER_S2 = {
   '2.2': {
     eyebrow: 'Négociation · Prix',
     title: 'Quel levier se cache dans cette réponse ?',
+    tour: [
+      { target: '.mt-card', title: 'La réplique', text: 'Voici une réponse d’un vendeur à une objection sur le prix. Quel levier utilise-t-il ?' },
+      { target: '.mt-zones', title: 'La boîte à leviers',
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur le levier qui correspond à la réplique.' },
+          { symbol: 'grip', tone: 'blue', text: 'Ou faites glisser la réplique sur le levier.' }
+        ],
+        after: 'Chaque levier ne s’utilise qu’une fois.' },
+      { target: '.mt-page .k-count, .mt-dots', title: 'Les 5 répliques', text: 'La réplique suivante s’affiche d’elle-même. Les pastilles a à e permettent de revenir sur une réplique.' },
+      { target: '.mt-page .k-bar', title: 'Vérifier', text: 'Les 5 répliques associées, vérifiez vos associations pour voir le corrigé.' }
+    ],
     subtitle: 'Associez les 5 répliques aux 5 leviers de défense.',
     cardLabel: 'Réplique',
     cardsLabel: 'répliques',

@@ -36,7 +36,7 @@
     const right = reactions.filter((r, i) => list[i] === r.answer).length;
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, note: content.note,
-        aside: `<p class="k-count"><strong>${count()} / ${reactions.length}</strong> associations</p>` })}
+        aside: `<p class="k-count"><strong>${count()} / ${reactions.length}</strong> associations</p>${reviewing ? '' : kit.tourButton()}` })}
       ${reviewing ? kit.result(right, reactions.length, 'associations justes') : ''}
       <form class="k-columns is-even" novalidate>
         <section class="k-panel">
@@ -137,6 +137,29 @@
     kit.commit();
   });
   kit.dialogs({ rule: { title: 'La consigne', html: `<p>${esc(content.subtitle)}</p><p>${esc(content.note)}</p><p>${esc(content.rule)}</p>` } });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois. L'aperçu
+  // montre, sur un exemple, comment poser un numéro dans un emplacement.
+  kit.tour('s3-3.2', [
+    { target: '.k-columns > .k-panel:first-child', title: 'Les comportements', text: 'Chaque comportement du commercial porte un numéro, de 1 à 6.' },
+    { target: '.k-columns > .k-panel:nth-child(2)', title: 'Les réactions du client', text: 'Posez le bon numéro dans la case « N° » de chaque réaction. Un exemple :',
+      preview: kit.dragDemo({
+        pills: [{ label: '1', text: 'Parler trop vite.' }, { label: '2', text: 'Sourire au téléphone.' }],
+        slots: [{ key: 'a', text: 'Le client se sent bien accueilli.' }, { key: 'b', text: 'Le client ne suit plus.' }],
+        moves: [[1, 0], [0, 1]]
+      }),
+      items: [
+        { symbol: 'grip', tone: 'blue', text: 'Faites glisser une pastille numérotée dans la case.' },
+        { symbol: 'pointer', tone: 'blue', text: 'Ou cliquez sur la pastille, puis sur la case.' },
+        { symbol: 'keyboard', tone: 'gold', text: 'Vous pouvez aussi taper le numéro dans la case.' }
+      ],
+      after: 'Chaque numéro ne sert qu’une fois.' },
+    { target: '.k-page .k-bar', title: 'Valider',
+      items: [
+        { symbol: 'document', tone: 'blue', text: '« Voir la consigne » la rappelle.' },
+        { symbol: 'checkCircle', tone: 'green', text: 'Les 6 cases remplies, validez pour voir le corrigé.' }
+      ] }
+  ]);
 
   ex.mount('s3-3.2', { screen, validate, feedback, compactFeedback: true });
 })();

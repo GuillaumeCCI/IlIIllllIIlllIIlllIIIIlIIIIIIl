@@ -570,6 +570,9 @@ body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; 
 .tour-actions > span { display: flex; gap: 8px; }
 .tour-actions .button { min-height: 40px; padding: 8px 16px; }
 #main .tour-replay { font-size: .95rem; }
+/* Dans l'en-tête, le lien « Visite guidée » se pose tout en haut à droite, au-dessus du compteur. */
+#main .k-head-aside:has(.tour-replay) { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; padding-top: 0; }
+#main .k-head-aside .tour-replay { order: -1; }
 @media (prefers-reduced-motion: reduce) { .tour-hole, .tour-card { transition: none; } }
 .tour-card.is-in { animation: tour-in .35s ease-out; }
 @keyframes tour-in { from { opacity: 0; transform: translateY(8px) scale(.97); } to { opacity: 1; transform: none; } }
@@ -602,5 +605,18 @@ body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; 
 .tour-demo-tool.is-active.tone-coral { border-color: #d0452e; background: #ffece8; }
 .tour-demo-cursor { position: absolute; left: 0; top: 0; color: var(--navy); pointer-events: none; transform: translate(20px, 20px); transition: transform .45s ease-in-out; filter: drop-shadow(0 1px 1px rgb(255 255 255 / 90%)); }
 .tour-demo-cursor .icon { display: block; fill: #fff; }
-@media (prefers-reduced-motion: reduce) { .tour-demo-cursor, .tour-demo-part, .tour-demo-tool { transition: none; } }
+/* Aperçu animé d'un glisser-déposer (kit.dragDemo). */
+.tour-drag { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tour-drag-col { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.tour-drag-col li { display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 6px 8px; border-radius: 10px; background: #fff; font-size: .74rem; line-height: 1.3; color: var(--navy); }
+.tour-drag-col li > span:not([class]) { flex: 1; }
+.tour-drag-pill { display: grid; place-items: center; width: 26px; height: 26px; flex-shrink: 0; border-radius: 50%; border: 2px solid #2f5fd0; color: #2f5fd0; font-weight: 800; font-size: .85rem; background: #fff; transition: opacity .3s, background .3s; }
+.tour-drag-pill.is-picked { background: #e4ebfb; }
+.tour-drag-pill.is-used { opacity: .35; }
+.tour-drag-key { display: grid; place-items: center; width: 22px; height: 22px; flex-shrink: 0; border-radius: 50%; background: var(--navy); color: #fff; font-size: .72rem; }
+.tour-drag-slot { display: grid; place-items: center; width: 34px; height: 28px; flex-shrink: 0; border: 1.5px dashed #b9c4da; border-radius: 8px; color: #8a96ad; font-size: .7rem; font-weight: 700; transition: background .3s; }
+.tour-drag-slot.is-filled { border-style: solid; border-color: #2f5fd0; background: #e4ebfb; color: #1d4ec2; font-size: .85rem; font-weight: 800; }
+.tour-demo-ghost { position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 2px solid #2f5fd0; background: #fff; color: #2f5fd0; font-weight: 800; font-size: .85rem; box-shadow: 0 6px 14px rgb(20 40 100 / 25%); opacity: 0; pointer-events: none; transition: transform .45s ease-in-out, opacity .15s; }
+.tour-demo-ghost.is-on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .tour-demo-cursor, .tour-demo-part, .tour-demo-tool, .tour-demo-ghost { transition: none; } }
 .tour-preview { margin-top: 12px; padding: 12px; border-radius: 12px; background: #f6f8fc; border: 1px solid #e6eaf3; }

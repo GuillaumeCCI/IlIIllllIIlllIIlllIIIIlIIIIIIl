@@ -247,7 +247,7 @@
       const intro = !reviewing && stage === 1;
       return `<div class="k-page mt-page">
         ${kit().head({ eyebrow: content.eyebrow, title: intro ? content.intro.title : content.title, subtitle: intro ? content.intro.subtitle : content.subtitle,
-          aside: intro ? '' : `<p class="k-count"><strong>${count()} / ${n}</strong> associations</p>${reviewing ? '' : dots(current())}` })}
+          aside: intro ? '' : `<p class="k-count"><strong>${count()} / ${n}</strong> associations</p>${reviewing ? '' : dots(current())}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
         ${hasIntro && !intro && !reviewing ? `<p class="mt-reread">${kit().dialogButton('intro', content.intro.reread || 'Relire le document', 'text-button', 'document')}</p>` : ''}
         <form novalidate class="mt-form">
           ${reviewing ? reviewScreen() : intro ? introScreen() : `${playScreen()}${core().errorsBox()}${kit().bar({
@@ -281,6 +281,7 @@
     });
     kit().onDrop((id, z) => { ex().setValue('card', Number(id)); assign(Number(z)); kit().commit(); });
     if (hasIntro) kit().dialogs({ intro: { title: content.intro.title, html: scene(content.intro.scene) } });
+    if (content.tour) kit().tour(key, content.tour);
 
     ex().mount(key, { screen, validate, intercept, feedback, compactFeedback: true });
   }

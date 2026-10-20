@@ -73,7 +73,7 @@
     const n = count();
     return `<div class="k-page pair-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count"><strong>${n} / ${errors.length}</strong> associations</p>` })}
+        aside: `<p class="k-count"><strong>${n} / ${errors.length}</strong> associations</p>${reviewing ? '' : kit.tourButton()}` })}
       ${reviewing ? '' : kit.help(content.instruction)}
       <form class="k-panel" novalidate>
         ${reviewing ? `${reviewBoard()}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>` : `${playBoard()}${core.errorsBox()}${kit.bar({
@@ -114,6 +114,17 @@
     }
   });
   kit.onDrop((id, k) => { link(Number(id), Number(k)); kit.commit(); });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s2-2.2', [
+    { target: '.pair-board', title: 'Relier les deux colonnes',
+      items: [
+        { key: 'a', tone: 'blue', text: 'Cliquez sur une erreur, à gauche.' },
+        { key: '1', tone: 'green', text: 'Puis cliquez sur sa conséquence, à droite.' }
+      ],
+      after: 'Le numéro de la conséquence s’affiche à côté de l’erreur.' },
+    { target: '.pair-page .k-bar', title: 'Vérifier', text: 'Les 5 erreurs reliées, vérifiez vos associations pour voir le corrigé.' }
+  ]);
 
   ex.mount('s2-2.2', { screen, validate, feedback, compactFeedback: true });
 })();

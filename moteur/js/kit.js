@@ -670,7 +670,8 @@
    * forment une seule zone qui les englobe. Une zone absente est sautée.
    * `preview` (HTML écrit par l'exercice) montre en aperçu, sous `text`,
    * un écran à venir ; la bulle s'élargit alors. `hlDemo()` fournit un
-   * aperçu animé des surligneurs, qui se joue en boucle dans la bulle.
+   * aperçu animé des surligneurs, qui se joue en boucle dans la bulle ;
+   * `dragDemo()`, celui d'un glisser-déposer de pastilles.
    * Styles : extras-commun.css (.tour-*). */
   let tourSteps = [];
   let tourKey = '';
@@ -689,32 +690,83 @@
       <span class="tour-demo-cursor">${icon('pointer', { size: 20 })}</span>
     </div>`;
 
-  function playDemo(card) {
-    clearInterval(demoTimer);
-    const demo = card.querySelector('[data-demo]');
-    if (!demo) return;
+  /* Aperçu animé d'un glisser-déposer : des pastilles à gauche, des
+   * emplacements à droite ; le curseur prend une pastille et la dépose dans
+   * son emplacement. `pills` : [{ label, text }] ; `slots` : [{ key, text }] ;
+   * `moves` : [[pastille, emplacement], …] (index). */
+  const dragDemo = ({ pills, slots, moves, empty = 'N°' }) => `<div class="tour-demo is-drag" data-demo="drag" data-moves="${esc(JSON.stringify(moves))}">
+      <div class="tour-drag">
+        <ul class="tour-drag-col">${pills.map(p => `<li><span class="tour-drag-pill" data-label="${esc(p.label)}">${esc(p.label)}</span><span>${esc(p.text)}</span></li>`).join('')}</ul>
+        <ul class="tour-drag-col">${slots.map(s => `<li>${s.key ? `<b class="tour-drag-key">${esc(s.key)}</b>` : ''}<span>${esc(s.text)}</span><span class="tour-drag-slot" data-empty="${esc(empty)}">${esc(empty)}</span></li>`).join('')}</ul>
+      </div>
+      <span class="tour-demo-ghost" aria-hidden="true"></span>
+      <span class="tour-demo-cursor">${icon('pointer', { size: 20 })}</span>
+    </div>`;
+
+  /* Les gestes de l'aperçu : [{ el, act, carry }], et de quoi tout remettre
+   * à zéro avant de recommencer. */
+  function demoMoves(demo) {
+    if (demo.dataset.demo === 'drag') {
+      const pills = [...demo.querySelectorAll('.tour-drag-pill')];
+      const slots = [...demo.querySelectorAll('.tour-drag-slot')];
+      const moves = [];
+      JSON.parse(demo.dataset.moves || '[]').forEach(([from, to]) => {
+        const pill = pills[from], slot = slots[to];
+        moves.push({ el: pill, act: () => pill.classList.add('is-picked') });
+        moves.push({ el: slot, carry: pill.dataset.label, act: () => {
+          slot.textContent = pill.dataset.label;
+          slot.classList.add('is-filled');
+          pill.classList.remove('is-picked');
+          pill.classList.add('is-used');
+        } });
+      });
+      const reset = () => {
+        pills.forEach(p => p.classList.remove('is-picked', 'is-used'));
+        slots.forEach(s => { s.classList.remove('is-filled'); s.textContent = s.dataset.empty; });
+      };
+      return { moves, reset };
+    }
     const tools = [...demo.querySelectorAll('.tour-demo-tool')];
     const parts = [...demo.querySelectorAll('.tour-demo-part')];
-    const cursor = demo.querySelector('.tour-demo-cursor');
     const moves = [];
     tools.forEach((tool, t) => {
       moves.push({ el: tool, act: () => tools.forEach(x => x.classList.toggle('is-active', x === tool)) });
       parts.filter(p => Number(p.dataset.tool) === t).forEach(p => moves.push({ el: p, act: () => p.classList.add('is-marked') }));
     });
+    const reset = () => {
+      tools.forEach(x => x.classList.remove('is-active'));
+      parts.forEach(p => p.classList.remove('is-marked'));
+    };
+    return { moves, reset };
+  }
+
+  function playDemo(card) {
+    clearInterval(demoTimer);
+    const demo = card.querySelector('[data-demo]');
+    if (!demo) return;
+    const cursor = demo.querySelector('.tour-demo-cursor');
+    const ghost = demo.querySelector('.tour-demo-ghost');
+    const { moves, reset } = demoMoves(demo);
     let k = 0;
     const tick = () => {
       if (!demo.isConnected) { clearInterval(demoTimer); return; }
       // Deux temps de pause sur le résultat, puis tout recommence.
       if (k >= moves.length + 2) {
         k = 0;
-        tools.forEach(x => x.classList.remove('is-active'));
-        parts.forEach(p => p.classList.remove('is-marked'));
+        reset();
       }
       const move = moves[k++];
       if (!move) return;
       const r = move.el.getBoundingClientRect(), base = demo.getBoundingClientRect();
-      cursor.style.transform = `translate(${Math.round(r.left - base.left + Math.min(r.width / 2, 40))}px, ${Math.round(r.top - base.top + r.height / 2)}px)`;
-      setTimeout(() => { if (demo.isConnected) move.act(); }, 450);
+      const x = Math.round(r.left - base.left + Math.min(r.width / 2, 40)), y = Math.round(r.top - base.top + r.height / 2);
+      cursor.style.transform = `translate(${x}px, ${y}px)`;
+      // La pastille portée suit le curseur jusqu'à son emplacement.
+      if (ghost) {
+        ghost.textContent = move.carry || '';
+        ghost.classList.toggle('is-on', Boolean(move.carry));
+        ghost.style.transform = `translate(${x - 14}px, ${y - 14}px)`;
+      }
+      setTimeout(() => { if (!demo.isConnected) return; move.act(); if (ghost) ghost.classList.remove('is-on'); }, 450);
     };
     tick();
     demoTimer = setInterval(tick, 1200);
@@ -833,7 +885,7 @@
   }
 
   root.AtelierKit = Object.freeze({
-    corrige, answerReview, clientCard, portraitFor, tour, tourButton, hlDemo,
+    corrige, answerReview, clientCard, portraitFor, tour, tourButton, hlDemo, dragDemo,
     esc, icon, words, seconds, filled, plural, stage, setStage, list,
     head, steps, band, tip, help, submit, act, back, reset, dialogButton, bar, utility,
     matrix, answered, score, choiceButtons,

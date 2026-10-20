@@ -109,7 +109,7 @@
     return `<div class="k-page path-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title,
         subtitle: reviewing ? `${right} carte${right > 1 ? 's' : ''} sur ${SLOTS} à la bonne place. Voici votre parcours et les réponses attendues.` : content.subtitle,
-        aside: `<p class="k-count path-count"><strong>${n} / ${SLOTS}</strong> coups placés</p>` })}
+        aside: `<p class="k-count path-count"><strong>${n} / ${SLOTS}</strong> coups placés</p>${reviewing ? '' : kit.tourButton()}` })}
       <form novalidate class="path-form">
         <section class="path-board">
           <h2>${esc(content.pathTitle)}</h2>
@@ -152,6 +152,19 @@
     }
   });
   kit.onDrop((id, slot) => { put(id, Number(slot)); kit.commit(); });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s3-1.1', [
+    { target: '.path-cards', title: 'Vos cartes', text: 'Chaque carte est une étape du traitement d’une objection, dans le désordre.' },
+    { target: '.path-track', title: 'Le parcours', text: 'Remettez les cartes dans l’ordre, du départ à l’arrivée :',
+      items: [
+        { symbol: 'grip', tone: 'blue', text: 'faites glisser une carte sur une case ;' },
+        { symbol: 'pointer', tone: 'blue', text: 'ou cliquez sur la carte, puis sur la case.' }
+      ],
+      after: 'Vous pouvez déplacer une carte déjà posée pour changer l’ordre.' },
+    { target: '.path-count', title: 'Votre avancement', text: 'Le compteur indique combien de cartes sont posées sur le parcours.' },
+    { target: '.path-page .k-bar', title: 'Débloquer la méthode', text: 'Les 6 cartes posées, validez : le nom de chaque étape s’affiche, avec le détail de vos erreurs.' }
+  ]);
 
   ex.mount('s3-1.1', { screen, validate, feedback, compactFeedback: true });
 })();

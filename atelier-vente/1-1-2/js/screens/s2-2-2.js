@@ -73,7 +73,7 @@
     const right = cards.filter((card, i) => ranks()[i] === card.rank).length;
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count"><strong>${n} / ${cards.length}</strong> classées</p>` })}
+        aside: `<p class="k-count"><strong>${n} / ${cards.length}</strong> classées</p>${reviewing ? '' : kit.tourButton()}` })}
       <form class="k-panel" novalidate>
         ${reviewing ? `${kit.result(right, cards.length, 'propositions à leur place')}
           ${ladder(true)}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
@@ -130,6 +130,26 @@
   });
   kit.onDrop((id, level) => { place(Number(id), Number(level)); kit.commit(); });
   kit.dialogs({ hint: { title: 'Un indice', html: `<p>${esc(content.hint)}</p>` } });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s2-2.2', [
+    { target: '.ladder-cards', title: 'Les propositions', text: 'Cinq façons de dire la même chose, plus ou moins convaincantes.',
+      items: [
+        { symbol: 'grip', tone: 'blue', text: 'Faites glisser une proposition vers un échelon.' },
+        { symbol: 'pointer', tone: 'blue', text: 'Ou cliquez sur la proposition, puis sur l’échelon.' }
+      ] },
+    { target: '.ladder', title: 'L’échelle', text: 'Rangez les propositions de bas en haut :',
+      items: [
+        { key: '5', tone: 'green', text: 'en haut, la plus percutante ;' },
+        { key: '1', tone: 'coral', text: 'en bas, la moins convaincante.' }
+      ],
+      after: 'Un échelon n’accueille qu’une proposition. Cliquez sur une proposition placée pour la renvoyer dans la liste.' },
+    { target: '.k-page .k-bar', title: 'Valider',
+      items: [
+        { symbol: 'lightbulb', tone: 'gold', text: '« Voir un indice » vous oriente.' },
+        { symbol: 'checkCircle', tone: 'green', text: 'Les 5 propositions placées, validez votre classement pour voir le corrigé.' }
+      ] }
+  ]);
 
   ex.mount('s2-2.2', { screen, validate, feedback, compactFeedback: true });
 })();
