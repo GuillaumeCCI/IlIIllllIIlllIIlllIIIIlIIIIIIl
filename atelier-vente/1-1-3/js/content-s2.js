@@ -86,7 +86,7 @@ window.ATELIER_S2 = {
       { who: 'client', text: 'Euh… écoutez, envoyez-moi une doc.' },
       { who: 'seller', text: 'Ok je vous envoie ça, au revoir.' }
     ],
-    hint: 'Regardez ce que le commercial ne fait pas : se présenter, vérifier son interlocuteur, respirer, poser une vraie question, rebondir sur la demande de documentation.',
+    hint: 'Ne vous concentrez pas seulement sur ce que dit le commercial, mais sur ce qu’il oublie de faire. Pensez aux étapes clés d’une introduction téléphonique réussie et à la manière de traiter une objection.',
     errors: [
       { title: 'Un débit précipité', text: 'Aucune respiration ni accroche : la voix ne pose rien.' },
       { title: 'Un catalogue d’emblée', text: 'Des caractéristiques à la chaîne, sans besoin identifié ni bénéfice.' },
