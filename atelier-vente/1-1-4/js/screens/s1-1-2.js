@@ -51,7 +51,6 @@
           ${core.errorsBox()}
           ${kit.bar({
             left: kit.act('sw-clear', `${icon('refresh', { size: 17 })}<span>Effacer les surlignages</span>`, 'text-button'),
-            center: 'Vous pouvez modifier un passage avant de valider.',
             right: kit.submit('Vérifier mon découpage', count() === passages.length ? '' : 'data-pending="true"')
           })}`}
       </form>

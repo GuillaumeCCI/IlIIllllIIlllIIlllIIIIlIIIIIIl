@@ -75,7 +75,6 @@
             <span class="hl-pen">${icon('highlighter', { size: 26 })}</span>
             <strong class="hl-tool-letter">${p.id}</strong><span class="hl-tool-label">${p.label}</span>
           </button>`).join('')}</div>
-        <p class="k-center k-muted">Vous pouvez modifier un passage jusqu’à la validation. Maintenez le clic pour surligner plusieurs mots.</p>
         ${core.errorsBox()}
         ${kit.bar({
           left: kit.act('clear', `${icon('trash', { size: 17 })}<span>Effacer les surlignages</span>`, 'secondary', marks(a).some(Boolean) ? '' : 'disabled'),
