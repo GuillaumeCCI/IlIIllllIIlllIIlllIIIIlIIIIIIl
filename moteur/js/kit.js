@@ -232,16 +232,23 @@
   /* Les blocs `selector` d'indice >= shown() sont rendus avec `hidden`.
    * Dès qu'une saisie est terminée (« change » : un choix coché, un champ
    * quitté), le bloc suivant apparaît et vient à l'écran. Un bloc montré
-   * ne disparaît plus, même si l'on efface sa réponse. */
+   * ne disparaît plus, même si l'on efface sa réponse. La page défile
+   * jusqu'à la barre des boutons. */
   function reveal(selector, shown) {
     document.addEventListener('change', () => setTimeout(() => {
       const limit = shown();
-      core().$$(selector).forEach((block, i) => {
+      let added = null;
+      core().$(selector).forEach((block, i) => {
         if (i >= limit || !block.hidden) return;
         block.hidden = false;
         block.classList.add('is-new');
-        block.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        added = block;
       });
+      // La page descend jusqu'à la barre des boutons, juste sous le dernier
+      // bloc : le bouton de validation reste en vue, quel que soit le zoom.
+      // Une fois tout montré, chaque réponse la ramène aussi à l'écran.
+      const bar = core().$('.k-page .k-bar');
+      if (added || !core().$(selector).some(block => block.hidden)) (bar || added)?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }, 0));
   }
 
