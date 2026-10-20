@@ -214,3 +214,6 @@
 
 /* B · Reformuler sans dévier : le lien « Visite guidée » à droite du titre. */
 .replica-title { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* S3 1.6 : pastille d'étape et bouton de visite guidée sur une ligne */
+.step-sheet-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
