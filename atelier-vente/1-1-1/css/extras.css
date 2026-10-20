@@ -255,3 +255,28 @@
 
 /* S1 A · Analyser : le lien « Visite guidée » à gauche de la grille d'évaluation. */
 .wiz-panel-head { align-items: center; gap: 18px; }
+
+/* S1 A · Autoévaluation : l'analyse à gauche, la grille à droite. */
+.self-eval { width: 100%; max-width: 1240px; margin: 0 auto; }
+.self-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 24px; align-items: start; margin-top: 24px; }
+.self-recap, .self-form { padding: clamp(22px, 2.6vw, 32px); border-radius: 20px; }
+.self-recap h2, .self-form h2, .self-summary h2 { margin: 0 0 18px; font-size: 1.25rem; }
+.self-recap-item { display: flex; gap: 14px; align-items: flex-start; }
+.self-recap-item + .self-recap-item { margin-top: 18px; padding-top: 18px; border-top: 1px solid #e6eaf3; }
+.self-recap-item h3 { margin: 0 0 4px; font-size: 1rem; }
+.self-recap-item p { margin: 0; color: #46577d; overflow-wrap: anywhere; }
+.self-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.self-row { display: grid; gap: 12px; padding: 16px 18px; border-radius: 14px; background: #f6f8fc; }
+.self-criterion h3 { margin: 0 0 4px; font-size: 1.02rem; }
+.self-criterion p { margin: 0; color: #46577d; }
+.self-grade.radio-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.self-grade .radio-card { padding: 10px 14px; min-height: 0; }
+.self-form .wiz-actions { margin-top: 22px; }
+.self-summary { margin-top: 24px; padding: clamp(22px, 2.6vw, 32px); border-radius: 20px; }
+.self-summary-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
+.self-summary-list li { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 10px 14px; border-radius: 12px; background: #f6f8fc; }
+.self-pill { padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 700; white-space: nowrap; }
+.self-pill.is-oui { background: #ddf5ee; color: #11806a; } .self-pill.is-partie { background: #fff1c7; color: #9a6b00; } .self-pill.is-non, .self-pill.is-vide { background: #ffe4df; color: #c2433d; }
+@media (max-width: 900px) { .self-layout { grid-template-columns: minmax(0, 1fr); } }
+.self-recap { position: sticky; top: 20px; }
+.self-grade .radio-body strong { white-space: nowrap; }

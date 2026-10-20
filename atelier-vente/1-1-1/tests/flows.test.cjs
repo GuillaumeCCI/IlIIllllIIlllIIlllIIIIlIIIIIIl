@@ -34,6 +34,8 @@ test('S1 A : une analyse complète est acceptée', () => {
     engine.setValue('strengths', 'L’accueil est chaleureux et le ton engageant.');
     engine.setValue('improvements', 'Laisser la parole au client, raccourcir la présentation de l’offre.');
     engine.setValue('rewrite', 'Bonjour, je suis Camille. Qu’est-ce qui vous amène aujourd’hui ?');
+    // La grille d’autoévaluation, remplie avant le corrigé.
+    for (let i = 0; i < 6; i++) engine.setValue(`self${i}`, i % 2 ? 'partie' : 'oui');
   });
   assert.ok(done, 'l’exercice devrait être marqué terminé');
   const feedback = sandbox.document.querySelector('#feedback');
@@ -462,7 +464,12 @@ console.log('\nCorrection affichée en place');
  * ligne à ligne (réponse à gauche, retour à droite : an-verdict, S1 A et B). Sans cela
  * la correction retomberait dans le pavé du bas, ce qu'on cherche à éviter. */
 const INLINE = {
-  's1-a': engine => { engine.setValue('strengths', 'a'); engine.setValue('improvements', 'b'); engine.setValue('rewrite', 'c'); },
+  // S1 A : l’analyse, puis la grille d’autoévaluation déjà ouverte et remplie.
+  's1-a': engine => {
+    engine.setValue('strengths', 'a'); engine.setValue('improvements', 'b'); engine.setValue('rewrite', 'c');
+    engine.setValue('selfCheck', true);
+    for (let i = 0; i < 6; i++) engine.setValue(`self${i}`, 'oui');
+  },
   's1-b': engine => { engine.setValue('opening', 'a'); engine.setValue('adjustment', 'b'); },
   's1-d': engine => {
     for (let i = 1; i <= 4; i++) engine.setValue(`line${i}`, `Phrase ${i}`);

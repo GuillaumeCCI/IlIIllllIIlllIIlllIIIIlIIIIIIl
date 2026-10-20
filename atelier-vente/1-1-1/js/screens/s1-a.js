@@ -1,5 +1,7 @@
 /* S1 A · Analyser une accroche.
  * Écouter, relever les points forts et les axes d’amélioration, réécrire.
+ * Puis s'autoévaluer : pour chaque critère de la grille, l'apprenant dit si
+ * sa version y répond ; le corrigé ne vient qu'après.
  */
 (() => {
   'use strict';
@@ -35,6 +37,37 @@
     </div>`;
   }
 
+  /* L'autoévaluation, une fois les trois étapes écrites : l'analyse à
+   * gauche pour la relire, la grille à droite, critère par critère. */
+  const GRADES = [
+    { id: 'oui', label: 'Oui', symbol: 'check' },
+    { id: 'partie', label: 'En partie', symbol: 'refresh' },
+    { id: 'non', label: 'Non', symbol: 'close' }
+  ];
+  const selfKey = i => `self${i}`;
+  const selfShown = () => ex.value('selfCheck') === true;
+
+  function selfScreen() {
+    return `<section class="self-eval">
+      ${core.pageTitle('Autoévaluation', 'Votre version est-elle conforme à la grille ?', 'Relisez votre analyse. Pour chaque critère, dites si votre version améliorée y répond. Le corrigé s’affiche ensuite.')}
+      <div class="self-layout">
+        <aside class="panel self-recap">
+          <h2>Votre analyse</h2>
+          ${VERDICTS.map((row, i) => `<div class="self-recap-item"><span class="an-n" aria-hidden="true">${i + 1}</span><div><h3>${esc(row.title)}</h3><p>« ${esc(ex.value(row.key))} »</p></div></div>`).join('')}
+        </aside>
+        <form class="panel self-form" novalidate>
+          <h2>La grille d’autoévaluation</h2>
+          <ol class="self-list">${content.rubric.map(([title, description], i) => `<li class="self-row">
+            <div class="self-criterion"><h3>${esc(title)}</h3><p>${esc(description)}</p></div>
+            ${ex.radioCards(selfKey(i), GRADES, 'self-grade')}
+          </li>`).join('')}</ol>
+          ${core.errorsBox()}
+          <div class="wiz-actions">${core.button(`${icon('arrowLeft', { size: 17 })}<span>Modifier mon analyse</span>`, 'self-back', 'text-button with-icon')}<button type="submit" class="button primary">Voir le corrigé</button></div>
+        </form>
+      </div>
+    </section>`;
+  }
+
   /* Le corrigé, d'après la maquette : pleine largeur, une ligne par point.
    * À gauche le numéro, le titre et la réponse de l'apprenant ; à droite le
    * retour, teinté selon le verdict. La mise en situation reste à portée
@@ -62,6 +95,14 @@
           <div><h3>${esc(row.label)}</h3><p>${esc(notes[i])}</p></div>
         </div>
       </li>`).join('')}</ol>
+      <section class="panel self-summary">
+        <h2>Votre autoévaluation</h2>
+        <p class="muted">Vous jugez votre version conforme sur ${content.rubric.filter((_, i) => ex.value(selfKey(i)) === 'oui').length} critères sur ${content.rubric.length}. Comparez avec le retour ci-dessus.</p>
+        <ul class="self-summary-list">${content.rubric.map(([title], i) => {
+          const grade = GRADES.find(g => g.id === ex.value(selfKey(i))) || { label: 'Sans réponse', id: 'vide' };
+          return `<li><span>${esc(title)}</span><span class="self-pill is-${grade.id}">${esc(grade.label)}</span></li>`;
+        }).join('')}</ul>
+      </section>
       ${core.feedbackBox()}
     </section>`;
   }
@@ -69,6 +110,7 @@
   function screen() {
     const current = core.findExercise('s1-A');
     if (ex.reviewing()) return reviewScreen();
+    if (selfShown()) return selfScreen();
     return `<div class="two-columns">
       <section class="scenario">
         ${core.pageTitle('Mise en situation', 'Vente en boutique · le client pressé et distant')}
@@ -90,11 +132,24 @@
 
   const { required } = window.ExerciseRules;
 
-  const validate = values => [
+  const analysisErrors = values => [
     required(values, 'strengths', 'Ce qui fonctionne', 500),
     required(values, 'improvements', 'Axes d’amélioration', 500),
     required(values, 'rewrite', 'Votre version améliorée', 800)
   ].filter(Boolean);
+
+  // Sur la grille, chaque critère attend sa réponse.
+  const validate = values => selfShown()
+    ? content.rubric.map(([title], i) => (GRADES.some(g => g.id === values[selfKey(i)]) ? null : { key: selfKey(i), message: `« ${title} » : dites si votre version y répond.` })).filter(Boolean)
+    : analysisErrors(values);
+
+  /* Les trois étapes remplies, « Valider mon analyse » ouvre la grille
+   * au lieu du corrigé. */
+  function intercept(values) {
+    if (selfShown() || analysisErrors(values).length) return false;
+    ex.setValue('selfCheck', true);
+    return true;
+  }
 
   /* Les trois constats sont posés dans le corrigé : le bilan ne garde que
    * le bouton de suite. */
@@ -121,6 +176,11 @@
       core.$('#dialog-body [data-action="listen"]')?.addEventListener('click', () => media.listen(content.audio));
     });
     core.wireRubric(content.rubric);
+    core.$('[data-action="self-back"]')?.addEventListener('click', () => {
+      ex.setValue('selfCheck', false);
+      core.persist();
+      ex.render();
+    });
   }
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
@@ -144,14 +204,16 @@
         { key: '3', tone: 'blue', text: 'Votre version améliorée : vous réécrivez l’accroche.' }
       ],
       after: 'La pastille montre l’étape en cours.' },
-    { target: '.wiz-panel [data-action="rubric"]', title: 'La grille d’évaluation', text: 'Ce bouton affiche les critères sur lesquels votre analyse sera jugée.' },
+    { target: '.wiz-panel [data-action="rubric"]', title: 'La grille d’autoévaluation', text: 'Ce bouton affiche les critères de la grille.',
+      after: 'Une fois vos trois étapes écrites, vous vérifiez vous-même que votre version y répond, avant de voir le corrigé.' },
     { target: '.wiz-panel .field', title: 'Votre réponse', text: 'Écrivez ici votre réponse à l’étape en cours, avec des exemples précis tirés de l’accroche.' },
     { target: '.wiz-actions', title: 'Continuer',
       items: [
         { symbol: 'arrowRight', tone: 'blue', text: '« Continuer » ouvre l’étape suivante.' },
-        { symbol: 'checkCircle', tone: 'green', text: 'À la troisième étape, vous validez et découvrez le corrigé.' }
+        { symbol: 'checkCircle', tone: 'green', text: 'À la troisième étape, vous validez, puis vous remplissez la grille d’autoévaluation.' },
+        { symbol: 'document', tone: 'blue', text: 'Le corrigé s’affiche ensuite.' }
       ] }
   ]);
 
-  ex.mount('s1-A', { screen, validate, feedback, onMount, compactFeedback: true });
+  ex.mount('s1-A', { screen, validate, intercept, feedback, onMount, compactFeedback: true });
 })();

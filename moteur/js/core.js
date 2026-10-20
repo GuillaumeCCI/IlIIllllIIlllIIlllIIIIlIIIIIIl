@@ -433,12 +433,12 @@
   }
 
   /* Grille d'évaluation : même fenêtre sur tous les écrans qui l'affichent. */
-  const rubricButton = () => button(`${icon('list', { size: 17 })}<span>Grille d’évaluation</span>`, 'rubric', 'small subtle');
+  const rubricButton = () => button(`${icon('list', { size: 17 })}<span>Grille d’autoévaluation</span>`, 'rubric', 'small subtle');
 
   function wireRubric(rubric) {
     $('[data-action="rubric"]')?.addEventListener('click', () => openDialog(
-      'Grille d’évaluation',
-      `<p class="muted">Repères proposés pour l’auto-évaluation. Ils ne constituent pas une grille de notation officielle.</p>
+      'Grille d’autoévaluation',
+      `<p class="muted">Repères proposés pour l’autoévaluation. Ils ne constituent pas une grille de notation officielle.</p>
        <dl class="rubric">${rubric.map(([title, description]) => `<dt>${esc(title)}</dt><dd>${esc(description)}</dd>`).join('')}</dl>`));
   }
 
