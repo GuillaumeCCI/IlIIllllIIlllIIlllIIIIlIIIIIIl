@@ -309,9 +309,6 @@
         ).join('')}</div>`
       : previews && previews.has(current.key) ? previews.preview(current.key) : '';
 
-    const criteria = (brief.criteria || []).map(line =>
-      `<li>${icon('check', { size: 15 })}<span>${esc(line)}</span></li>`).join('');
-
     return `<div class="briefing">
       <header class="briefing-head">
         <p class="briefing-eyebrow"><strong>Exercice</strong><span aria-hidden="true">·</span><span>${esc(current.seriesLabel)}</span></p>
@@ -332,11 +329,6 @@
             ${core.button(`<span>Commencer l’exercice</span>${icon('arrowRight', { size: 19 })}`, 'start-exercise', 'primary')}
           </section>
 
-          <details class="briefing-criteria">
-            <summary>La situation et les critères</summary>
-            <p class="briefing-situation">${esc(brief.situation)}</p>
-            ${criteria ? `<p class="briefing-criteria-title">Vous serez relu sur :</p><ul>${criteria}</ul>` : ''}
-          </details>
         </div>
 
         <div class="briefing-preview">
