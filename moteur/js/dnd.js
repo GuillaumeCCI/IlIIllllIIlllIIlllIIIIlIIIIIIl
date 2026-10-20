@@ -275,8 +275,14 @@
     ghost.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
     ghost.classList.add('lift-ghost');
     ghost.setAttribute('aria-hidden', 'true');
-    Object.assign(ghost.style, { width: `${rect.width}px`, height: `${rect.height}px` });
-    doc.body.appendChild(ghost);
+    // Posée à côté de la carte (et non dans <body>), la copie garde les
+    // styles de son écran : même police, même taille, rien ne déborde.
+    // Hauteur minimale seulement, pour que le texte ne soit jamais coupé.
+    Object.assign(ghost.style, { width: `${rect.width}px`, minHeight: `${rect.height}px`, height: 'auto' });
+    (press.el.parentElement || doc.body).appendChild(ghost);
+    // Un ancêtre transformé fausserait la position fixe : on se rabat alors sur <body>.
+    const placed = ghost.getBoundingClientRect();
+    if (Math.abs(placed.left) > 1 || Math.abs(placed.top) > 1) doc.body.appendChild(ghost);
     // La prise se mesure là où le bouton a été enfoncé : mesurée au départ
     // du glisser (après quelques pixels), elle décalait la carte du pointeur.
     press.dx = press.x - rect.left;
