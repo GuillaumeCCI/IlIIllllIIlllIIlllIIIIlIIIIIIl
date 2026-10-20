@@ -11,7 +11,8 @@ window.ATELIER_S2 = {
   '2.1': {
     eyebrow: 'Exercice 2.1',
     title: 'Barrage, prétexte ou vraie objection ?',
-    context: 'Vous appelez une entreprise pour joindre un décideur. Vous allez lire 6 répliques entendues au téléphone, chacune dans l’une de ces catégories :',
+    context: 'Vous faites de la prospection téléphonique. Votre but est de réussir à parler à la personne qui prend les décisions (le responsable, le directeur, l’acheteur…).\nVous allez lire 6 réponses typiques entendues lors de vos appels. Rangez chacune d’elles dans l’une de ces catégories :',
+    contextAfter: '',
     itemNoun: 'réplique',
     subtitle: 'Classez chaque réplique entendue au téléphone.',
     legend: [

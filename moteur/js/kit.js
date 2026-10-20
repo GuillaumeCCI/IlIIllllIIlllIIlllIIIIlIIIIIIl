@@ -333,7 +333,7 @@
       tour(key, [
         { target: '.cg-legend', title: 'Le contexte', text: content.context,
           items: content.legend.map(l => ({ key: l.id, tone: TONES[l.tone] || 'blue', text: `${l.label} : ${l.text.charAt(0).toLowerCase()}${l.text.slice(1)}` })),
-          after: `Pour chaque ${noun}, choisissez la bonne catégorie.` },
+          after: content.contextAfter ?? `Pour chaque ${noun}, choisissez la bonne catégorie.` },
         { target: '.cg-grid', title: `Les ${noun}s`, text: `Cliquez sur la lettre qui correspond à chaque ${noun}.`,
           after: progressive ? `La ${noun} suivante apparaît dès que vous avez répondu.` : '' },
         { target: '.cg-page .k-bar', title: 'Vérifier', text: `Toutes les ${noun}s classées, vérifiez vos réponses : le corrigé s’affiche avec une explication pour chacune.` }
@@ -682,6 +682,7 @@
    * par information, jamais plusieurs idées à la suite.
    * `target` étant un sélecteur ; plusieurs, séparés par des virgules,
    * forment une seule zone qui les englobe. Une zone absente est sautée.
+   * Un saut de ligne dans le texte d'une bulle ouvre un nouveau paragraphe.
    * `preview` (HTML écrit par l'exercice) montre en aperçu, sous `text`,
    * un écran à venir ; la bulle s'élargit alors. `hlDemo()` fournit un
    * aperçu animé des surligneurs, qui se joue en boucle dans la bulle ;
@@ -834,7 +835,7 @@
       const last = at === steps.length - 1;
       card.classList.toggle('has-preview', Boolean(s.preview));
       card.innerHTML = `<p class="tour-count">${at + 1} / ${steps.length}</p>
-        <h2 id="tour-title">${esc(s.title)}</h2>${s.text ? `<p>${tight(s.text)}</p>` : ''}
+        <h2 id="tour-title">${esc(s.title)}</h2>${s.text ? s.text.split('\n').map(line => `<p>${tight(line)}</p>`).join('') : ''}
         ${s.preview ? `<div class="tour-preview" aria-hidden="true">${s.preview}</div>` : ''}
         ${s.items ? `<ul class="tour-items">${s.items.map(item => `<li><span class="tour-key tone-${esc(item.tone || 'blue')}">${item.symbol ? icon(item.symbol, { size: 16 }) : esc(item.key)}</span><span>${tight(item.text)}</span></li>`).join('')}</ul>` : ''}
         ${s.after ? `<p class="tour-after">${tight(s.after)}</p>` : ''}

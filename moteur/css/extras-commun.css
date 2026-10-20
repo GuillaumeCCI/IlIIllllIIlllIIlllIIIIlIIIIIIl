@@ -566,6 +566,7 @@ body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; 
 .tour-count { margin: 0 0 6px; color: var(--accent); font-size: .8rem; font-weight: 800; letter-spacing: .08em; }
 .tour-card h2 { margin: 0 0 8px; font-size: 1.3rem; line-height: 1.2; }
 .tour-card p { margin: 0; line-height: 1.5; }
+.tour-card h2 + p + p { margin-top: 10px; }
 .tour-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 18px; }
 .tour-actions > span { display: flex; gap: 8px; }
 .tour-actions .button { min-height: 40px; padding: 8px 16px; }
