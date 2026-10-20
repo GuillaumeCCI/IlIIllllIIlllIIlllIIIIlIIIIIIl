@@ -174,3 +174,9 @@
    ci-dessus la repeignait en blanc (la coche, blanche, disparaissait). */
 #main .k-matrix .k-box-input:checked + .k-box { background: var(--accent) !important; border: 2px solid var(--accent) !important; color: #fff; }
 #main .k-matrix.is-round .k-box-input:checked + .k-box { border-width: 1.5px !important; }
+
+/* Cartes à deux réponses (Vrai / Faux…) : écran aéré verticalement, la barre
+   des boutons descend sous les réponses. */
+.dk-board:has(.dk-zones.count-2) { gap: 40px; padding-top: 30px; }
+.dk-form:has(.dk-zones.count-2) { gap: 56px; }
+.dk-page:has(.dk-zones.count-2) .k-bar { margin-top: 64px; }

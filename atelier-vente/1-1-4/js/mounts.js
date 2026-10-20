@@ -95,8 +95,12 @@
 
     function playScreen(index) {
       const history = ex().value('history');
+      // L'avancement se lit sur la carte elle-même : sa bordure haute se
+      // remplit à chaque réponse donnée.
+      const answered = kit().deckPlaced(total).filter(zone => zone !== null).length;
       return `<div class="dk-board">
         <article class="dk-card" draggable="true" data-drag="${index}" tabindex="0" aria-label="${esc(label(index))} : ${esc(cards[index].text)}">
+          <span class="dk-progress" role="progressbar" aria-label="Réponses données" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${answered}"><span style="width:${Math.round(answered / total * 100)}%"></span></span>
           <p class="dk-pos">${esc(label(index))}</p>
           <div class="dk-body">${content.symbol ? `<span class="dk-symbol">${icon(content.symbol, { size: 34 })}</span>` : ''}<div class="dk-words"><p class="dk-text">${text(cards[index])}</p>${content.question && zones.length === 2 ? `<p class="dk-question is-inline">${esc(content.question)}</p>` : ''}</div></div>
         </article>
@@ -128,7 +132,7 @@
           : playScreen(index);
       return `<div class="k-page dk-page">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: `<p class="k-count"><strong>${placed.filter(Boolean).length} / ${total}</strong> réponses</p>${reviewing ? '' : kit().deckDots(total, index)}` })}
+          aside: reviewing || index !== null ? '' : `<p class="k-count"><strong>${placed.filter(Boolean).length} / ${total}</strong> réponses</p>` })}
         ${content.legend && !reviewing ? `<p class="dk-legend">${content.legend.map(l => `<span><strong>${esc(l.label)} :</strong> ${esc(l.text)}</span>`).join('')}</p>` : ''}
         <form class="dk-form" novalidate>${body}${reviewing ? '' : core().errorsBox()}</form>
         ${reviewing ? '' : kit().utility(`Corrigé disponible après les ${total} ${content.cardsLabel || 'cartes'}`)}
