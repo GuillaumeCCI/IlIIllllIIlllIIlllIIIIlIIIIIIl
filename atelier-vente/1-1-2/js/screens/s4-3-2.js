@@ -14,7 +14,7 @@
   function screen() {
     const reviewing = ex.reviewing();
     return `<div class="k-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle })}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : kit.tourButton() })}
       <form class="over-page" novalidate>
         <div class="k-columns is-wide-left">
         <section class="k-panel" aria-label="Extrait de l’entretien">
@@ -46,6 +46,17 @@
 
   // Le corrigé à l'écran dit tout : pas de phrase de bilan en plus.
   const feedback = () => [];
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s4-3.2', [
+    { target: '.over-chat', title: 'L’échange', text: 'Lisez cet échange entre le client et le commercial : le commercial en dit beaucoup trop.' },
+    { target: '.over-error', title: 'Votre diagnostic', text: 'Notez ici les 3 erreurs les plus importantes du commercial, une par case.' },
+    { target: '.k-bar', title: 'Le corrigé',
+      items: [
+        { symbol: 'info', tone: 'gold', text: 'L’indice en bas à gauche vous dit quoi observer.' },
+        { symbol: 'arrowRight', tone: 'blue', text: 'Une fois vos 3 erreurs notées, comparez-les avec le corrigé.' }
+      ] }
+  ]);
 
   ex.mount('s4-3.2', { screen, validate, feedback, compactFeedback: true });
 })();
