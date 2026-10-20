@@ -46,7 +46,7 @@
       </div>
       <div class="replica-cards">
         <section class="panel replica-card">
-          <h2><span class="replica-num">1</span>Attitude identifiée</h2>
+          <h2><span class="replica-num">1</span>Identifiez l’attitude du vendeur</h2>
           ${ex.radioCards(attitudeKey(at), attitudes.map(label => ({ id: label, label, symbol: SYMBOLS[label] })), 'attitude-tiles')}
         </section>
         <section class="panel replica-card">
@@ -134,7 +134,7 @@
         { symbol: 'chat', tone: 'coral', text: 'Elle ressemble à une reformulation, mais elle dévie vers une autre attitude.' },
         { symbol: 'list', tone: 'blue', text: 'Il y a quatre répliques à analyser, une à la fois.' }
       ] },
-    { target: '.replica-cards .replica-card:first-child', title: '1 · L’attitude identifiée', text: 'Choisissez l’attitude vers laquelle le vendeur dévie : jugement, interprétation, conseil…' },
+    { target: '.replica-cards .replica-card:first-child', title: '1 · Identifiez l’attitude du vendeur', text: 'Choisissez l’attitude vers laquelle le vendeur dévie : jugement, interprétation, conseil…' },
     { target: '.replica-cards .replica-card:nth-child(2)', title: '2 · Votre reformulation', text: 'Écrivez une vraie reformulation : redites ce que le client exprime, sans rien ajouter ni interpréter.' },
     { target: '.replica-progress', title: 'Votre avancement',
       items: [
