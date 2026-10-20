@@ -34,13 +34,13 @@
            <p>« ${esc(ex.value(repairKey(i)))} »</p>
            ${ex.inlineNote(`Reformulation attendue, à titre d’exemple : « ${situation.model} »`, 'good')}
          </div>`
-      : ex.field(repairKey(i), 'Votre réponse de compréhension', {
-          placeholder: 'Écrivez votre reformulation…', max: 240, rows: 4
+      : ex.field(repairKey(i), 'Votre reformulation de compréhension', {
+          placeholder: 'Écrivez votre reformulation…', max: 240, rows: 4, hideLabel: true
         });
 
-    /* Les deux répliques se font face : ce que dit le client à gauche,
-     * le réflexe à remplacer à droite. L'écart entre les deux est ce que
-     * l'exercice demande de combler. */
+    /* Les deux répliques se font face, chacune dans sa carte : ce que dit
+     * le client à gauche, le réflexe à remplacer à droite. L'écart entre
+     * les deux est ce que l'exercice demande de combler. */
     return `<div class="repair">
       <header class="repair-head">
         <div>
@@ -49,23 +49,30 @@
           <h1>${esc(content.title)}</h1>
           <p class="subtitle">${esc(content.intro)}</p>
         </div>
-        <p class="repair-count">Situation <strong>${i + 1}</strong> / ${situations.length}</p>
+        <div class="rc-head-side">
+          <p class="repair-count">Situation <strong>${i + 1}</strong> / ${situations.length}</p>
+          ${window.AtelierKit && !reviewed ? window.AtelierKit.tourButton() : ''}
+        </div>
       </header>
 
-      <div class="repair-exchange">
-        <div class="repair-bubble is-client">
-          <span class="avatar" aria-hidden="true">CL</span>
-          <div class="bubble client"><span class="who">Le client</span>${esc(situation.client)}</div>
+      <div class="rc-exchange">
+        <div class="rc-card is-client">
+          <span class="rc-avatar" aria-hidden="true">CL</span>
+          <p><span class="rc-who">Le client</span>${esc(situation.client)}</p>
         </div>
-        <span class="repair-link" aria-hidden="true">${icon('arrowRight', { size: 20 })}</span>
-        <div class="repair-bubble is-reflex">
-          <div class="bubble reflex"><span class="who">Réflexe à remplacer</span>${esc(situation.reflex)}</div>
-          <span class="avatar" aria-hidden="true">VO</span>
+        <span class="rc-link" aria-hidden="true">${icon('arrowRight', { size: 26 })}</span>
+        <div class="rc-card is-reflex">
+          <span class="rc-avatar" aria-hidden="true">VO</span>
+          <p><span class="rc-who">Réflexe à remplacer</span>${esc(situation.reflex)}</p>
         </div>
       </div>
 
       <form class="panel repair-sheet" novalidate>
-        <h2 class="repair-question">${icon('pencil', { size: 20 })}<span>Reformulez ce que le client exprime, sans défendre l’offre immédiatement.</span></h2>
+        <div class="rc-sheet-head">
+          <span class="rc-pencil" aria-hidden="true">${icon('pencil', { size: 22 })}</span>
+          <div><h2>Votre reformulation de compréhension</h2>
+          <p>Reformulez ce que le client exprime, sans défendre l’offre immédiatement.</p></div>
+        </div>
         ${answer}
         ${reviewed ? '' : ex.lockNote('Un exemple de reformulation apparaîtra après validation.')}
         ${core.errorsBox()}
@@ -88,6 +95,38 @@
   const allDone = () => situations.every((_, i) => caseDone(i));
 
   const feedback = () => allDone() ? [content.valued] : '';
+
+  /* Visite guidée, lancée d'elle-même la première fois sur le menu des
+   * échanges : elle montre en aperçu l'écran qui suit. Rejouée depuis un
+   * échange, elle présente ses zones (les zones absentes sont sautées). */
+  const first = situations[0];
+  const preview = `<div class="rc-mini">
+      <div class="rc-mini-row">
+        <span class="rc-mini-card is-client"><b>Le client</b>${esc(first.client)}</span>
+        <span class="rc-mini-link">${icon('arrowRight', { size: 14 })}</span>
+        <span class="rc-mini-card is-reflex"><b>Réflexe à remplacer</b>${esc(first.reflex)}</span>
+      </div>
+      <span class="rc-mini-field">Écrivez votre reformulation…</span>
+    </div>`;
+  if (window.AtelierKit) window.AtelierKit.tour('s4-2.2', [
+    { target: '.case-rows', title: 'Trois échanges à réparer', text: 'Dans chacun de ces échanges, le vendeur a répondu trop vite au client.',
+      items: [
+        { symbol: 'quote', tone: 'blue', text: 'Chaque ligne rappelle la phrase du client.' },
+        { symbol: 'pointer', tone: 'blue', text: '« Réparer cet échange » ouvre l’échange.' }
+      ] },
+    { target: '.case-rows .case-row:first-child', title: 'Ce qui vous attend', text: 'Voici, en aperçu, l’écran d’un échange :', preview,
+      items: [
+        { key: '1', tone: 'blue', text: 'à gauche, ce que dit le client ;' },
+        { key: '2', tone: 'coral', text: 'à droite, la réponse réflexe du vendeur, à remplacer ;' },
+        { key: '3', tone: 'green', text: 'en dessous, vous écrivez votre reformulation, sans défendre l’offre.' }
+      ],
+      after: 'Après validation, un exemple de reformulation s’affiche.' },
+    { target: '.case-menu-count', title: 'Votre avancement', text: 'Ce compteur indique combien d’échanges vous avez réparés. Traitez les 3 pour terminer l’exercice.' },
+    { target: '.rc-card.is-client', title: 'Le client', text: 'Voici ce que vous dit le client.' },
+    { target: '.rc-card.is-reflex', title: 'Le réflexe à remplacer', text: 'Le vendeur a défendu son offre tout de suite. C’est cette réponse que vous remplacez.' },
+    { target: '.repair-sheet .rc-sheet-head, .repair-sheet .field', title: 'Votre reformulation', text: 'Redites avec vos mots ce que le client exprime, pour montrer que vous l’avez compris.' },
+    { target: '.repair .form-actions button[type="submit"]', title: 'Valider', text: 'Validez : un exemple de reformulation s’affiche, puis vous revenez aux autres échanges.' }
+  ]);
 
   ex.mount('s4-2.2', {
     screen, validate, feedback, afterSubmit, allDone, cases,

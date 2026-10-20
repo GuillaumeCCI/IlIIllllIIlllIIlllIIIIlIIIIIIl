@@ -668,6 +668,8 @@
    * par information, jamais plusieurs idées à la suite.
    * `target` étant un sélecteur ; plusieurs, séparés par des virgules,
    * forment une seule zone qui les englobe. Une zone absente est sautée.
+   * `preview` (HTML écrit par l'exercice) montre en aperçu, sous `text`,
+   * un écran à venir ; la bulle s'élargit alors.
    * Styles : extras-commun.css (.tour-*). */
   let tourSteps = [];
   let tourKey = '';
@@ -718,8 +720,10 @@
       at = i;
       const s = steps[at];
       const last = at === steps.length - 1;
+      card.classList.toggle('has-preview', Boolean(s.preview));
       card.innerHTML = `<p class="tour-count">${at + 1} / ${steps.length}</p>
         <h2 id="tour-title">${esc(s.title)}</h2>${s.text ? `<p>${tight(s.text)}</p>` : ''}
+        ${s.preview ? `<div class="tour-preview" aria-hidden="true">${s.preview}</div>` : ''}
         ${s.items ? `<ul class="tour-items">${s.items.map(item => `<li><span class="tour-key tone-${esc(item.tone || 'blue')}">${item.symbol ? icon(item.symbol, { size: 16 }) : esc(item.key)}</span><span>${tight(item.text)}</span></li>`).join('')}</ul>` : ''}
         ${s.after ? `<p class="tour-after">${tight(s.after)}</p>` : ''}
         <div class="tour-actions"><button type="button" class="text-button" data-tour="skip">${last ? '' : 'Passer'}</button>
