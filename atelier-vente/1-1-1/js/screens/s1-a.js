@@ -24,7 +24,7 @@
     return `<div class="wiz-column">
       ${core.stepPill(at, STEPS.length)}
       <form class="panel answer-panel wiz-panel" novalidate>
-        <div class="wiz-panel-head">${core.rubricButton()}</div>
+        <div class="wiz-panel-head">${window.AtelierKit ? window.AtelierKit.tourButton() : ''}${core.rubricButton()}</div>
         <div class="wiz-number"><span>${at + 1}</span><div><h2>${esc(step.title)}</h2>${step.hint ? `<p>${esc(step.hint)}</p>` : ''}</div></div>
         ${step.body()}
         ${last
@@ -122,6 +122,30 @@
     });
     core.wireRubric(content.rubric);
   }
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  if (window.AtelierKit) window.AtelierKit.tour('s1-A', [
+    { target: '.scenario .callout', title: 'La consigne', text: 'Vous analysez l’accroche d’une vendeuse en boutique, en trois temps :',
+      items: [
+        { key: '1', tone: 'green', text: 'ce qui fonctionne ;' },
+        { key: '2', tone: 'coral', text: '2 à 3 axes d’amélioration ;' },
+        { key: '3', tone: 'blue', text: 'votre nouvelle version de l’accroche.' }
+      ] },
+    { target: '.media-scene, .media-actions', title: 'L’accroche', text: 'Commencez par écouter l’accroche.',
+      items: [
+        { symbol: 'play', tone: 'blue', text: 'Le bouton ▶ ou « Écouter l’accroche » lance l’écoute.' },
+        { symbol: 'document', tone: 'blue', text: '« Voir la transcription » affiche le texte de l’accroche.' }
+      ] },
+    { target: '.scenario .note', title: 'Le conseil', text: 'Ce conseil vous dit sur quoi porter votre attention.' },
+    { target: '.step-pill', title: 'Trois étapes', text: 'Vous répondez à une question à la fois. La pastille montre où vous en êtes.' },
+    { target: '.wiz-panel [data-action="rubric"]', title: 'La grille d’évaluation', text: 'Ce bouton affiche les critères sur lesquels votre analyse sera jugée.' },
+    { target: '.wiz-panel .field', title: 'Votre réponse', text: 'Écrivez ici votre réponse à l’étape en cours, avec des exemples précis tirés de l’accroche.' },
+    { target: '.wiz-actions', title: 'Continuer',
+      items: [
+        { symbol: 'arrowRight', tone: 'blue', text: '« Continuer » ouvre l’étape suivante.' },
+        { symbol: 'checkCircle', tone: 'green', text: 'À la troisième étape, vous validez et découvrez le corrigé.' }
+      ] }
+  ]);
 
   ex.mount('s1-A', { screen, validate, feedback, onMount, compactFeedback: true });
 })();

@@ -30,7 +30,7 @@ window.ATELIER_CATALOG = {
       // la vignette de chaque exercice (champ `thumb` ci-dessous).
       cover: 'assets/illustrations/s1/accueil/poignee-de-main.webp',
       exercises: [
-        { id: 'A', file: 's1-a', label: 'Analyser', thumb: 'assets/illustrations/s1/accueil/a.webp', theme: 'blue', image: 'assets/illustrations/s1/1-1-1-iB.png', alt: 'Une conseillère présente une offre à un client autour d’une table.', background: 'assets/backgrounds/s1/1-1-1-A.webp', imagePosition: 'center' },
+        { id: 'A', file: 's1-a', label: 'Analyser', thumb: 'assets/illustrations/s1/accueil/a.webp', theme: 'blue', image: 'assets/illustrations/s1/1-1-1-iB.png', alt: 'Une conseillère présente une offre à un client autour d’une table.', background: 'assets/backgrounds/s1/1-1-1-A.webp', imagePosition: '50% 22%' },
         { id: 'B', file: 's1-b', label: 'S’adapter', thumb: 'assets/illustrations/s1/accueil/b.webp', theme: 'blue', image: 'assets/illustrations/s1/1-1-1-iA.png', alt: 'Un client regarde sa montre à l’entrée d’une boutique, face à une vendeuse.', background: 'assets/backgrounds/s1/1-1-1-B.webp', imagePosition: 'center' },
         { id: 'C', file: 's1-c', label: 'Comparer', thumb: 'assets/illustrations/s1/accueil/c.webp', theme: 'blue', background: 'assets/backgrounds/commun.webp' },
         { id: 'D', file: 's1-d', label: 'Construire', thumb: 'assets/illustrations/s1/accueil/d.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-1-D.webp' },

@@ -252,3 +252,6 @@
 .rc-mini-card.is-reflex b { color: #c2433d; }
 .rc-mini-link { color: #9fb0cf; }
 .rc-mini-field { display: block; min-height: 44px; padding: 8px 10px; border: 1px solid #dfe5f1; border-radius: 10px; background: #fff; font-size: .74rem; color: #8a96ad; }
+
+/* S1 A · Analyser : le lien « Visite guidée » à gauche de la grille d'évaluation. */
+.wiz-panel-head { align-items: center; gap: 18px; }
