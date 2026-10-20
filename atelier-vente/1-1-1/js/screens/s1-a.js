@@ -137,7 +137,13 @@
         { symbol: 'document', tone: 'blue', text: '« Voir la transcription » affiche le texte de l’accroche.' }
       ] },
     { target: '.scenario .note', title: 'Le conseil', text: 'Ce conseil vous dit sur quoi porter votre attention.' },
-    { target: '.step-pill', title: 'Trois étapes', text: 'Vous répondez à une question à la fois. La pastille montre où vous en êtes.' },
+    { target: '.step-pill', title: 'Trois étapes', text: 'Vous répondez à une question à la fois :',
+      items: [
+        { key: '1', tone: 'green', text: 'Ce qui fonctionne : les points forts de l’accroche.' },
+        { key: '2', tone: 'coral', text: 'Axes d’amélioration : 2 à 3 points précis à corriger.' },
+        { key: '3', tone: 'blue', text: 'Votre version améliorée : vous réécrivez l’accroche.' }
+      ],
+      after: 'La pastille montre l’étape en cours.' },
     { target: '.wiz-panel [data-action="rubric"]', title: 'La grille d’évaluation', text: 'Ce bouton affiche les critères sur lesquels votre analyse sera jugée.' },
     { target: '.wiz-panel .field', title: 'Votre réponse', text: 'Écrivez ici votre réponse à l’étape en cours, avec des exemples précis tirés de l’accroche.' },
     { target: '.wiz-actions', title: 'Continuer',

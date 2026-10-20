@@ -36,7 +36,7 @@
     const right = passages.filter((p, i) => marked(i) === p.part).length;
     return `<div class="k-page sw-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count"><strong data-live="count">${count()} / ${passages.length}</strong> passages repérés</p>` })}
+        aside: `<p class="k-count"><strong data-live="count">${count()} / ${passages.length}</strong> passages repérés</p>${reviewing ? '' : kit.tourButton()}` })}
       <form class="k-panel" novalidate>
         ${kit.steps(markers.map(m => m.label), reviewing ? markers.length + 1 : 0, { compact: true })}
         ${reviewing ? `${kit.result(right, passages.length, 'passages bien repérés')}${sentence(true)}
@@ -84,6 +84,33 @@
     },
     'sw-clear': () => { passages.forEach((_, i) => ex.setValue(`mark${i}`, '')); ex.setValue('tool', markers[0].id); kit.commit(); }
   });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois. L'aperçu
+  // montre, sur une phrase d'exemple, comment passer d'un surligneur à l'autre.
+  kit.tour('s1-1.2', [
+    { target: '.sw-page .k-steps', title: 'La méthode sandwich', text: 'Le prix s’annonce entre deux éléments qui le font accepter :',
+      items: markers.map((m, i) => ({ key: String(i + 1), tone: ['blue', 'gold', 'green'][i], text: m.label })) },
+    { target: '.sw-instruction, .sw-tools', title: 'Les surligneurs', text: 'Un exemple, sur une autre phrase :',
+      preview: kit.hlDemo({
+        tools: markers.map((m, i) => ({ label: m.label, tone: ['blue', 'gold', 'green'][i] })),
+        parts: [
+          { text: 'Vous gagnez une heure par jour', tool: 0 },
+          { text: 'pour 49 € par mois,', tool: 1 },
+          { text: 'sans engagement.', tool: 2 }
+        ]
+      }),
+      items: [
+        { symbol: 'pointer', tone: 'blue', text: 'Choisissez un surligneur, puis cliquez sur le passage.' },
+        { symbol: 'highlighter', tone: 'gold', text: 'Chaque surligneur ne sert qu’à un passage.' },
+        { symbol: 'refresh', tone: 'green', text: 'Le surligneur suivant se choisit tout seul.' }
+      ] },
+    { target: '.sw-sentence', title: 'La réplique', text: 'Elle est découpée en passages : surlignez chacun avec la bonne couleur.' },
+    { target: '.sw-page .k-bar', title: 'Vérifier',
+      items: [
+        { symbol: 'refresh', tone: 'coral', text: '« Effacer les surlignages » recommence.' },
+        { symbol: 'checkCircle', tone: 'green', text: 'Les 3 passages surlignés, vérifiez votre découpage.' }
+      ] }
+  ]);
 
   ex.mount('s1-1.2', { screen, validate, feedback, compactFeedback: true });
 })();

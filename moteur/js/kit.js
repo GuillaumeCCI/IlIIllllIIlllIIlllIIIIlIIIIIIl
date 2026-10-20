@@ -669,10 +669,56 @@
    * `target` étant un sélecteur ; plusieurs, séparés par des virgules,
    * forment une seule zone qui les englobe. Une zone absente est sautée.
    * `preview` (HTML écrit par l'exercice) montre en aperçu, sous `text`,
-   * un écran à venir ; la bulle s'élargit alors.
+   * un écran à venir ; la bulle s'élargit alors. `hlDemo()` fournit un
+   * aperçu animé des surligneurs, qui se joue en boucle dans la bulle.
    * Styles : extras-commun.css (.tour-*). */
   let tourSteps = [];
   let tourKey = '';
+  let demoTimer = null;
+
+  /* Aperçu animé des surligneurs : une phrase d'exemple, les surligneurs
+   * dessous, et un curseur qui choisit un surligneur, colore son passage,
+   * puis passe au suivant. `tools` : [{ label, letter, tone }] ; `parts` :
+   * [{ text, tool }], `tool` étant l'index du surligneur (absent : texte
+   * laissé tel quel). Tons : blue, green, gold, coral. */
+  const hlDemo = ({ tools, parts }) => `<div class="tour-demo" data-demo>
+      <p class="tour-demo-text">${parts.map(p => Number.isInteger(p.tool)
+        ? `<span class="tour-demo-part tone-${esc(tools[p.tool].tone)}" data-tool="${p.tool}">${esc(p.text)}</span>`
+        : esc(p.text)).join(' ')}</p>
+      <div class="tour-demo-tools">${tools.map(t => `<span class="tour-demo-tool tone-${esc(t.tone)}">${icon('highlighter', { size: 15 })}${t.letter ? `<b>${esc(t.letter)}</b>` : ''}<span>${esc(t.label)}</span></span>`).join('')}</div>
+      <span class="tour-demo-cursor">${icon('pointer', { size: 20 })}</span>
+    </div>`;
+
+  function playDemo(card) {
+    clearInterval(demoTimer);
+    const demo = card.querySelector('[data-demo]');
+    if (!demo) return;
+    const tools = [...demo.querySelectorAll('.tour-demo-tool')];
+    const parts = [...demo.querySelectorAll('.tour-demo-part')];
+    const cursor = demo.querySelector('.tour-demo-cursor');
+    const moves = [];
+    tools.forEach((tool, t) => {
+      moves.push({ el: tool, act: () => tools.forEach(x => x.classList.toggle('is-active', x === tool)) });
+      parts.filter(p => Number(p.dataset.tool) === t).forEach(p => moves.push({ el: p, act: () => p.classList.add('is-marked') }));
+    });
+    let k = 0;
+    const tick = () => {
+      if (!demo.isConnected) { clearInterval(demoTimer); return; }
+      // Deux temps de pause sur le résultat, puis tout recommence.
+      if (k >= moves.length + 2) {
+        k = 0;
+        tools.forEach(x => x.classList.remove('is-active'));
+        parts.forEach(p => p.classList.remove('is-marked'));
+      }
+      const move = moves[k++];
+      if (!move) return;
+      const r = move.el.getBoundingClientRect(), base = demo.getBoundingClientRect();
+      cursor.style.transform = `translate(${Math.round(r.left - base.left + Math.min(r.width / 2, 40))}px, ${Math.round(r.top - base.top + r.height / 2)}px)`;
+      setTimeout(() => { if (demo.isConnected) move.act(); }, 450);
+    };
+    tick();
+    demoTimer = setInterval(tick, 1200);
+  }
   const tourButton = () => `<button type="button" class="text-button with-icon tour-replay" data-act="tour">${icon('question', { size: 18 })}<span>Visite guidée</span></button>`;
 
   // Espace insécable devant « » : ? ! et après « : jamais un signe seul en
@@ -741,8 +787,10 @@
       void card.offsetWidth;
       card.classList.add('is-in');
       card.querySelector('[data-tour="next"]').focus();
+      playDemo(card);
     };
     const close = () => {
+      clearInterval(demoTimer);
       layer.remove();
       doc.body.style.paddingBottom = padding;
       root.removeEventListener('resize', place);
@@ -785,7 +833,7 @@
   }
 
   root.AtelierKit = Object.freeze({
-    corrige, answerReview, clientCard, portraitFor, tour, tourButton,
+    corrige, answerReview, clientCard, portraitFor, tour, tourButton, hlDemo,
     esc, icon, words, seconds, filled, plural, stage, setStage, list,
     head, steps, band, tip, help, submit, act, back, reset, dialogButton, bar, utility,
     matrix, answered, score, choiceButtons,

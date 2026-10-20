@@ -62,7 +62,7 @@
      * surligneurs en dessous, sur une ligne ; pas de panneau autour. */
     return `<div class="k-page hl-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count"><strong>${tokens.filter((_, i) => done(i)).length} / ${tokens.length}</strong> arguments complétés ${dots(a)}</p>` })}
+        aside: `<p class="k-count"><strong>${tokens.filter((_, i) => done(i)).length} / ${tokens.length}</strong> arguments complétés ${dots(a)}</p>${kit.tourButton()}` })}
       <form class="hl-stage" novalidate>
         <div class="hl-argument">
           <span class="hl-tag">Argument ${a + 1}</span>
@@ -205,6 +205,33 @@
     tool: el => { ex.setValue('tool', el.dataset.part); kit.commit(); },
     clear: () => { ex.setValue(`marks${current()}`, tokens[current()].map(() => null)); kit.commit(); }
   });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois. L'aperçu
+  // montre, sur une phrase d'exemple, comment passer d'un surligneur à l'autre.
+  kit.tour('s1-1.2', [
+    { target: '.hl-argument', title: 'L’argument', text: 'Lisez l’argument : vous allez y surligner ses trois composantes.' },
+    { target: '.hl-tools .hl-tool', title: 'Les trois surligneurs', text: 'Un exemple, sur une autre phrase :',
+      preview: kit.hlDemo({
+        tools: PARTS.map((p, i) => ({ letter: p.id, label: p.label, tone: ['blue', 'green', 'gold'][i] })),
+        parts: [
+          { text: 'Notre siège se règle en hauteur', tool: 0 },
+          { text: ': votre dos est soulagé toute la journée.', tool: 1 },
+          { text: '9 clients sur 10 le recommandent.', tool: 2 }
+        ]
+      }),
+      items: [
+        { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur un surligneur pour le choisir.' },
+        { symbol: 'highlighter', tone: 'gold', text: 'Cliquez sur les mots, ou maintenez le clic pour en surligner plusieurs.' },
+        { symbol: 'refresh', tone: 'green', text: 'Changez de surligneur pour passer à la couleur suivante.' }
+      ] },
+    { target: '.hl-page .k-count', title: 'Deux arguments', text: 'Vous découpez 2 arguments. Les points montrent celui en cours.' },
+    { target: '.hl-page .k-bar', title: 'Avancer',
+      items: [
+        { symbol: 'trash', tone: 'coral', text: '« Effacer les surlignages » recommence l’argument.' },
+        { symbol: 'chart', tone: 'blue', text: 'Au centre, le nombre de composantes déjà repérées.' },
+        { symbol: 'arrowRight', tone: 'green', text: 'Les 3 composantes repérées, passez à l’argument suivant.' }
+      ] }
+  ]);
 
   ex.mount('s1-1.2', { screen, validate, intercept, feedback, onMount, compactFeedback: true });
 })();

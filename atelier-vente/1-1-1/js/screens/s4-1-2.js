@@ -59,6 +59,7 @@
         <div class="panel-title">
           ${steps}
           <span class="muted">${count} / ${content.minimum} maladresses repérées</span>
+          ${window.AtelierKit && !ex.reviewing() ? window.AtelierKit.tourButton() : ''}
         </div>
         ${at === 1 ? repair : rewrite}
         <div class="case-progress" style="margin-top:18px">
@@ -120,6 +121,33 @@
       ex.rebuild();
     });
   }
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois. L'aperçu
+  // montre, sur une phrase d'exemple, comment surligner.
+  if (window.AtelierKit) window.AtelierKit.tour('s4-1.2', [
+    { target: '.writing-workshop .stepper', title: 'Deux étapes',
+      items: [
+        { key: '1', tone: 'gold', text: `repérez au moins ${content.minimum} maladresses dans l’ouverture ;` },
+        { key: '2', tone: 'blue', text: 'réécrivez une ouverture plus juste.' }
+      ] },
+    { target: '.highlight-text, .highlighter-status', title: 'Le surligneur', text: 'Un exemple, sur une autre phrase :',
+      preview: window.AtelierKit.hlDemo({
+        tools: [{ label: 'Surligneur', tone: 'gold' }],
+        parts: [
+          { text: 'Alors voilà,', tool: 0 },
+          { text: 'je passais dans le coin' },
+          { text: 'et je me suis dit', tool: 0 },
+          { text: 'que vous auriez besoin de nous.' }
+        ]
+      }),
+      items: [
+        { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur un passage maladroit pour le surligner.' },
+        { symbol: 'refresh', tone: 'gold', text: 'Cliquez à nouveau pour retirer le surlignage.' }
+      ] },
+    { target: '.writing-workshop .case-progress', title: 'Votre avancement', text: 'Le compteur montre combien de maladresses vous avez repérées.',
+      after: '« Effacer ma sélection » retire tous vos surlignages.' },
+    { target: '.writing-workshop .form-actions button[type="submit"]', title: 'Passer à la réécriture', text: 'Une fois les maladresses repérées, vous réécrivez l’ouverture, puis vous découvrez le corrigé.' }
+  ]);
 
   ex.mount('s4-1.2', { screen, validate, feedback, answerKey, intercept, onMount });
 })();
