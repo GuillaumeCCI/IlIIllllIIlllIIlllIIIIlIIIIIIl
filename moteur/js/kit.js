@@ -331,7 +331,7 @@
       const noun = content.itemNoun || 'phrase';
       const TONES = { c: 'blue', a: 'green', p: 'gold' };
       tour(key, [
-        { target: '.cg-legend', title: 'Le contexte', text: content.context,
+        { target: '.cg-legend', title: 'Le contexte', text: content.context, wide: true,
           items: content.legend.map(l => ({ key: l.id, tone: TONES[l.tone] || 'blue', text: `${l.label} : ${l.text.charAt(0).toLowerCase()}${l.text.slice(1)}` })),
           after: content.contextAfter ?? `Pour chaque ${noun}, choisissez la bonne catégorie.` },
         { target: '.cg-grid', title: `Les ${noun}s`, text: `Cliquez sur la lettre qui correspond à chaque ${noun}.`,
@@ -683,6 +683,8 @@
    * `target` étant un sélecteur ; plusieurs, séparés par des virgules,
    * forment une seule zone qui les englobe. Une zone absente est sautée.
    * Un saut de ligne dans le texte d'une bulle ouvre un nouveau paragraphe.
+   * `wide` : bulle large, posée sous la zone (ou au-dessus), ses `items`
+   * côte à côte ; pour une zone très large qu'une bulle étroite cacherait.
    * `preview` (HTML écrit par l'exercice) montre en aperçu, sous `text`,
    * un écran à venir ; la bulle s'élargit alors. `hlDemo()` fournit un
    * aperçu animé des surligneurs, qui se joue en boucle dans la bulle ;
@@ -822,7 +824,12 @@
       Object.assign(hole.style, { left: `${r.left - pad}px`, top: `${r.top - pad}px`, width: `${r.width + 2 * pad}px`, height: `${r.height + 2 * pad}px` });
       const vw = root.innerWidth, vh = root.innerHeight, cw = card.offsetWidth, ch = card.offsetHeight, gap = 20;
       let x, y;
-      if (r.right + gap + cw < vw - 12) { x = r.right + gap; y = r.top; }
+      // Bulle large : sous la zone si elle tient, sinon au-dessus, centrée sur la zone.
+      if (steps[at].wide) {
+        x = r.left + r.width / 2 - cw / 2;
+        y = r.bottom + gap + ch < vh - 12 ? r.bottom + gap : r.top - gap - ch;
+      }
+      else if (r.right + gap + cw < vw - 12) { x = r.right + gap; y = r.top; }
       else if (r.left - gap - cw > 12) { x = r.left - gap - cw; y = r.top; }
       else if (r.bottom + gap + ch < vh - 12) { x = r.left; y = r.bottom + gap; }
       else { x = r.left; y = r.top - gap - ch; }
@@ -834,6 +841,7 @@
       const s = steps[at];
       const last = at === steps.length - 1;
       card.classList.toggle('has-preview', Boolean(s.preview));
+      card.classList.toggle('is-wide', Boolean(s.wide));
       card.innerHTML = `<p class="tour-count">${at + 1} / ${steps.length}</p>
         <h2 id="tour-title">${esc(s.title)}</h2>${s.text ? s.text.split('\n').map(line => `<p>${tight(line)}</p>`).join('') : ''}
         ${s.preview ? `<div class="tour-preview" aria-hidden="true">${s.preview}</div>` : ''}
