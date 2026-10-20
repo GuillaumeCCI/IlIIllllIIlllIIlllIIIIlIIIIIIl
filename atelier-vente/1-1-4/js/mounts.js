@@ -370,7 +370,7 @@
       const minNote = content.criteria ? `<span class="k-count cmp-min" data-live="cmp-min"><strong>${Math.min(ticked().length, 2)} / 2</strong> critères minimum</span>` : '';
       return `<div class="k-page cmp-page">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: content.badge ? `<p class="cmp-badge">${esc(content.badge)}</p>` : '' })}
+          aside: `${content.badge ? `<p class="cmp-badge">${esc(content.badge)}</p>` : ''}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
         ${sceneBlock()}
         <form novalidate class="cmp-form">
           ${content.listTitle ? `<h2 class="cmp-list-title">${esc(content.listTitle)}</h2>` : ''}
@@ -418,6 +418,7 @@
       }
     });
     if (content.hint) kit().dialogs({ hint: { title: 'Un repère', html: `<p>${esc(content.hint)}</p>` } });
+    if (content.tour) kit().tour(key, content.tour);
 
     ex().mount(key, { screen, validate, feedback, compactFeedback: true });
   }

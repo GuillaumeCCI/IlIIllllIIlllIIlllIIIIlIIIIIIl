@@ -1,8 +1,8 @@
 /* S3 1.2 · Associer chaque étape à son rôle.
  *
  * Six rôles à rattacher aux six étapes de la méthode. Le rôle à placer à
- * gauche ; à droite, la méthode en parcours vertical : chaque étape montre
- * le rôle qu'on lui a donné. Puis un récapitulatif relisible avant
+ * gauche ; à droite, les six étapes en tuiles à choisir (pas un parcours :
+ * on en choisit une), chacune montrant le rôle qu'on lui a donné. Puis un récapitulatif relisible avant
  * validation.
  */
 (() => {
@@ -61,8 +61,7 @@
       const at = holder(choice.id);
       const mine = at === index;
       return `<li><button type="button" class="rl-step ${at !== -1 ? 'is-filled' : ''} ${mine ? 'is-mine' : ''}" data-action="sort-card" data-zone="${esc(choice.id)}" aria-pressed="${mine}">
-        <span class="rl-step-n">${k + 1}</span>
-        <span class="rl-step-icon">${icon(choice.symbol, { size: 20 })}</span>
+        <span class="rl-step-icon">${icon(choice.symbol, { size: 22 })}</span>
         <span class="rl-step-body"><strong>${esc(method[k].step)}</strong>
           <small>${at !== -1 ? `« ${esc(cards[at].text)} »` : 'Pas encore de rôle'}</small></span>
         ${at !== -1 ? `<span class="rl-step-tag">Rôle ${at + 1}</span>` : ''}
@@ -72,7 +71,7 @@
     return `<div class="rl">
       <header class="rl-head">
         <div>${core.pageTitle(content.eyebrow, content.title, 'Lisez le rôle, puis cliquez sur l’étape de la méthode qui le remplit.')}</div>
-        <p class="rl-count"><strong>${done} / ${cards.length}</strong> rôles associés</p>
+        <div class="rl-head-side">${window.AtelierKit ? window.AtelierKit.tourButton() : ''}<p class="rl-count"><strong>${done} / ${cards.length}</strong> rôles associés</p></div>
       </header>
       <div class="rl-layout">
         <section class="rl-side">
@@ -87,7 +86,8 @@
           <p class="rl-note">${icon('lock', { size: 15 })}<span>Vous relisez vos six choix avant de valider ; le corrigé vient ensuite.</span></p>
         </section>
         <section class="panel rl-method">
-          <h2>La méthode en 6 étapes</h2>
+          <h2>Choisissez l’étape qui remplit ce rôle</h2>
+          <p class="k-muted rl-method-help">Les six étapes de la méthode : cliquez sur l’une d’elles.</p>
           <ol class="rl-steps">${steps}</ol>
         </section>
       </div>
@@ -135,6 +135,18 @@
 
   // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
   const feedback = () => [];
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  if (window.AtelierKit) window.AtelierKit.tour('s3-1.2', [
+    { target: '.rl-card', title: 'Le rôle à placer', text: 'Chaque carte décrit ce que fait une étape de la méthode de traitement des objections.' },
+    { target: '.rl-method', title: 'Les six étapes', text: 'Choisissez, parmi les six étapes de la méthode, celle qui remplit le rôle affiché.',
+      items: [
+        { symbol: 'check', tone: 'green', text: 'Le rôle s’inscrit alors sous l’étape choisie.' },
+        { symbol: 'refresh', tone: 'gold', text: 'Une étape ne reçoit qu’un rôle : en choisir une déjà prise lui donne le nouveau.' }
+      ] },
+    { target: '.rl-deck', title: 'Les six rôles', text: 'Le rôle suivant s’affiche tout seul. Cliquez sur « Rôle 1 » à « Rôle 6 » pour revenir sur un rôle et changer votre choix.' },
+    { target: '.rl-count', title: 'Votre avancement', text: 'Une fois les 6 rôles associés, vous relisez vos choix avant de valider.' }
+  ]);
 
   ex.mount('s3-1.2', {
     screen, validate, feedback, compactFeedback: true,

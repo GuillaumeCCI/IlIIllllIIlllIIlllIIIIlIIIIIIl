@@ -138,7 +138,24 @@ window.ATELIER_S4 = {
     eyebrow: 'Exercice 4.5 · Relance',
     title: 'À vous de trancher !',
     subtitle: 'Lisez les deux relances, puis choisissez la plus efficace.',
-    context: 'Le 3 juin, vous avez envoyé à Madame Riveau une proposition pour équiper 10 postes de travail.',
+    context: 'Le 3 juin, vous avez envoyé à Madame Riveau une proposition pour équiper 10 postes de travail. Elle n’a pas encore répondu.',
+    tour: [
+      { target: '.cmp-context', title: 'Le contexte', wide: true,
+        text: 'Vous êtes Thomas, commercial. Le 3 juin, vous avez envoyé à Madame Riveau une proposition pour équiper 10 postes de travail.\nElle n’a pas encore répondu : vous allez la relancer par e-mail.' },
+      { target: '.cmp-options', title: 'Les deux relances', text: 'Voici deux e-mails possibles pour relancer Madame Riveau.',
+        items: [
+          { symbol: 'mail', tone: 'blue', text: 'Lisez les deux relances en entier.' },
+          { symbol: 'pointer', tone: 'green', text: 'Cliquez sur « Choisir cette relance » sous celle qui vous semble la plus efficace.' }
+        ] },
+      { target: '.cmp-why', title: 'Justifiez votre choix', text: 'Expliquez votre choix avec au moins deux de ces critères :',
+        items: [
+          { symbol: 'document', tone: 'blue', text: 'le contexte rappelé ;' },
+          { symbol: 'sparkle', tone: 'gold', text: 'la valeur apportée ;' },
+          { symbol: 'chat', tone: 'coral', text: 'le ton employé ;' },
+          { symbol: 'arrowRight', tone: 'green', text: 'le prochain pas proposé.' }
+        ] },
+      { target: '.cmp-why-row', title: 'Valider', text: 'Validez : l’analyse des deux relances et le corrigé s’affichent.' }
+    ],
     listTitle: 'Quelle relance choisissez-vous ?',
     options: [
       { id: 'A', label: 'Relance A', lines: [
