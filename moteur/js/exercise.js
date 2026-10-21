@@ -685,6 +685,8 @@
         // Un bloc qui se voit lui-même (fond, bordure, ombre) apparaît d'un
         // seul tenant : découpé, son cadre vide serait là dès le départ.
         if (depth < 2 && child.matches(SPLIT) && child.children.length > 1 && !child.matches(HEAD) && !painted(child)) visit(child, depth + 1);
+        // Au corrigé, une liste (lignes de réponses) arrive ligne par ligne.
+        else if (clock && clock.deep && depth < 4 && child.matches('ol, ul, tbody, table') && child.children.length > 1 && !painted(child)) visit(child, depth + 1);
         else blocks.push(child);
       });
     };
@@ -695,7 +697,7 @@
     const elapsed = (now - clock.t0) / 1000;
     const start = clock.start - elapsed; // négatif : l'animation reprend en cours
     // Le temps de lire la consigne avant que l'exercice ne commence à venir.
-    const READ_DELAY = 1.3;
+    const READ_DELAY = clock.read ?? 1.3;
     const heads = blocks.filter(el => el.matches(HEAD));
     const rest = blocks.filter(el => !el.matches(HEAD));
     [tag, ...heads].filter(Boolean).forEach(el => { el.classList.add('is-revealing', 'is-reveal-head'); el.style.setProperty('--reveal-delay', `${start}s`); });
@@ -836,7 +838,9 @@
     core.entry(current.key).done = allDoneFn ? allDoneFn(values(), current) : true;
     core.persist();
     render();
+    // Le corrigé arrive en cascade : un bloc après l'autre, sans attendre.
     showFeedback(true);
+    if (core.isDone(current.key)) revealScreen({ t0: Date.now(), start: 0.05, read: 0.2, deep: true });
     $('#feedback')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
 
