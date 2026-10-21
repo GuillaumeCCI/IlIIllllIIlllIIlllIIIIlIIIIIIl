@@ -9,13 +9,13 @@
   const media = window.AtelierMedia;
   const content = window.ATELIER_S1;
   const { required, words } = window.ExerciseRules;
-  // Le bouton « Visite guidée » se pose à droite du titre (kit.js chargé par la page).
+  // Le bouton « Visite guidée », en haut à droite de l'écran (kit.js chargé par la page).
   const kit = window.AtelierKit;
-  const titled = html => (kit && !ex.reviewing() ? `<div class="tour-titled">${html}${kit.tourButton()}</div>` : html);
+  const corner = () => (kit && !ex.reviewing() ? `<div class="tour-corner">${kit.tourButton()}</div>` : '');
 
   function screen() {
     const current = core.findExercise('s1-E2');
-    return `${titled(core.pageTitle('', 'L’ultimatum', 'Vous avez 40 secondes pour donner envie au client de poursuivre.'))}
+    return `${corner()}${core.pageTitle('', 'L’ultimatum', 'Vous avez 40 secondes pour donner envie au client de poursuivre.')}
     ${core.mission('Votre défi', 'Allez à l’essentiel sans sacrifier le climat, le cadrage ni l’écoute.', '40 secondes')}
     <div class="two-columns ultimatum">
       <section class="panel context-panel">

@@ -8,16 +8,16 @@
   const { icon } = core;
   const content = window.ATELIER_S1;
   const { required, text } = window.ExerciseRules;
-  // Le bouton « Visite guidée » se pose à droite du titre (kit.js chargé par la page).
+  // Le bouton « Visite guidée », en haut à droite de l'écran (kit.js chargé par la page).
   const kit = window.AtelierKit;
-  const titled = html => (kit && !ex.reviewing() ? `<div class="tour-titled">${html}${kit.tourButton()}</div>` : html);
+  const corner = () => (kit && !ex.reviewing() ? `<div class="tour-corner">${kit.tourButton()}</div>` : '');
 
   function screen() {
     const current = core.findExercise('s1-E3');
-    return `<div class="two-columns affirmative">
+    return `${corner()}<div class="two-columns affirmative">
       <section class="panel scenario">
         <span class="tag coral">Approche affirmative</span>
-        ${titled(core.pageTitle('', 'Entrez en matière avec assurance', 'Rédigez une première phrase sans poser de question.'))}
+        ${core.pageTitle('', 'Entrez en matière avec assurance', 'Rédigez une première phrase sans poser de question.')}
         ${core.illustration(current)}
         <div class="objective">
           <span class="mission-symbol">${icon('target', { size: 26 })}</span>

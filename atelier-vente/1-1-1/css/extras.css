@@ -318,6 +318,7 @@
 @media (max-width: 900px) { .rl-layout { grid-template-columns: minmax(0, 1fr); } .rl-side { position: static; } }
 @media (max-width: 560px) { .rl-steps { grid-template-columns: minmax(0, 1fr); } }
 
-/* Titre d'exercice et bouton « Visite guidée » sur la même ligne (S1 D à F). */
-.tour-titled { display: flex; align-items: flex-start; justify-content: flex-start; gap: 20px; flex-wrap: wrap; }
-.tour-titled > .tour-replay { flex-shrink: 0; margin-top: 6px; }
+/* Bouton « Visite guidée » en haut à droite de l'écran (S1 D à F) : posé
+   sans prendre de hauteur, au-dessus du contenu. */
+.tour-corner { position: relative; z-index: 3; display: flex; justify-content: flex-end; align-items: flex-start; gap: 10px; height: 0; }
+.tour-corner > .tour-replay { flex-shrink: 0; margin-top: 4px; }

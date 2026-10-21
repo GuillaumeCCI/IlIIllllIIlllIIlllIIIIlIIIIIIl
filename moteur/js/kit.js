@@ -912,6 +912,39 @@
     show(0);
   }
 
+  /* LE CONTEXTE D'ARRIVÉE : pourquoi on est là, ce qui se passe, ce qui est
+   * demandé. Une fenêtre s'ouvre d'elle-même à l'arrivée sur l'exercice
+   * (après « Commencer » et son carton de titre), une fois par visite ; le
+   * bouton rendu par `contextButton()` la rouvre. `rows` : [[symbole,
+   * libellé, texte]]. La visite guidée attend que la fenêtre soit fermée.
+   * Styles : extras-commun.css (.k-context). */
+  let contextRows = null;
+  function openContext() {
+    if (!contextRows) return;
+    core().openDialog('Le contexte', `<section class="k-context"><ul>${contextRows.map(([symbol, label, line]) =>
+      `<li><span class="k-context-icon">${icon(symbol, { size: 20 })}</span><span><strong>${esc(label)}</strong>${esc(line)}</span></li>`).join('')}</ul></section>
+      <p class="k-context-go"><button type="button" class="button primary" data-act="k-context-go">C’est parti</button></p>`);
+    const dialog = root.document.querySelector('#info-dialog');
+    if (!dialog) return;
+    dialog.classList.add('is-context');
+    dialog.addEventListener('close', () => dialog.classList.remove('is-context'), { once: true });
+  }
+  function context(rows) {
+    contextRows = rows;
+    handlers = Object.assign({}, handlers, {
+      'k-context': () => openContext(),
+      'k-context-go': () => root.document.querySelector('#info-dialog')?.close()
+    });
+    if (!root.document) return;
+    const wait = setInterval(() => {
+      const doc = root.document;
+      if (ex().reviewing() || doc.body.classList.contains('is-briefing') || doc.querySelector('.launch-veil, .page-transition') || !doc.querySelector('#main form, #main .k-page')) return;
+      clearInterval(wait);
+      openContext();
+    }, 250);
+  }
+  const contextButton = () => `<button type="button" class="text-button with-icon tour-replay k-context-open" data-act="k-context">${icon('document', { size: 18 })}<span>Le contexte</span></button>`;
+
   // Lancement automatique : on attend que la première zone soit à l'écran
   // et que l'écran ait fini d'apparaître.
   function tour(id, steps) {
@@ -925,9 +958,13 @@
     const autoStart = (list, key, delay) => {
       if (!list.length || seenOf(key)) return;
       const wait = setInterval(() => {
-        if (ex().reviewing() || seenOf(key) || root.document.querySelector('.tour') || !shown(list[0].target)) return;
+        if (ex().reviewing() || seenOf(key) || root.document.querySelector('.tour, dialog[open]') || !shown(list[0].target)) return;
         clearInterval(wait);
-        setTimeout(() => tourStart(list, key), delay);
+        // Au moment de partir, une fenêtre (le contexte) peut s'être ouverte : on attend qu'elle se ferme.
+        setTimeout(function go() {
+          if (root.document.querySelector('dialog[open], .launch-veil')) { setTimeout(go, 400); return; }
+          tourStart(list, key);
+        }, delay);
       }, 400);
     };
     autoStart(steps.filter(s => !s.later), tourKey, 2600);
@@ -935,7 +972,7 @@
   }
 
   root.AtelierKit = Object.freeze({
-    corrige, answerReview, clientCard, portraitFor, tour, tourButton, hlDemo, dragDemo,
+    corrige, answerReview, clientCard, portraitFor, tour, tourButton, context, contextButton, hlDemo, dragDemo,
     esc, icon, words, seconds, filled, plural, stage, setStage, list,
     head, steps, band, tip, help, submit, act, back, reset, dialogButton, bar, utility,
     matrix, answered, score, choiceButtons,

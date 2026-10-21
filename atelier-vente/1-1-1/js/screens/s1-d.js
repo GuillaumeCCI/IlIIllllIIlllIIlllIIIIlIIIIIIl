@@ -14,9 +14,9 @@
   const content = window.ATELIER_S1;
   const correction = content.feedback.D;
   const { required } = window.ExerciseRules;
-  // Le bouton « Visite guidée » se pose à droite du titre (kit.js chargé par la page).
+  // Le bouton « Visite guidée », en haut à droite de l'écran (kit.js chargé par la page).
   const kit = window.AtelierKit;
-  const titled = html => (kit && !ex.reviewing() ? `<div class="tour-titled">${html}${kit.tourButton()}</div>` : html);
+  const corner = () => (kit && !ex.reviewing() ? `<div class="tour-corner">${kit.tourButton()}</div>` : '');
 
   const lineCount = () => Math.min(6, Math.max(4, Number(ex.value('lineCount')) || 4));
   const lineKey = i => `line${i}`;
@@ -93,9 +93,9 @@
   const ART = { image: 'assets/illustrations/s1/ouverture-reflexion.webp', alt: 'Une vendeuse réfléchit à son ouverture devant son ordinateur, un stylo à la main.' };
 
   function writing() {
-    return `<form class="wiz-layout writing-layout" data-bar-stays novalidate>
+    return `${corner()}<form class="wiz-layout writing-layout" data-bar-stays novalidate>
       <section class="wiz-main">
-        ${titled(core.pageTitle('Mise en situation', 'Construisez votre ouverture', 'Rédigez une ouverture commerciale complète (4 à 6 phrases) pour la situation de votre choix. Écrivez une phrase par ligne et sélectionnez sa fonction.'))}
+        ${core.pageTitle('Mise en situation', 'Construisez votre ouverture', 'Rédigez une ouverture commerciale complète (4 à 6 phrases) pour la situation de votre choix. Écrivez une phrase par ligne et sélectionnez sa fonction.')}
         <div class="exercise-body">
           ${editableRows()}
           ${lineCount() < 6 ? core.button('+ Ajouter une ligne', 'add-line', 'text-button') : ''}

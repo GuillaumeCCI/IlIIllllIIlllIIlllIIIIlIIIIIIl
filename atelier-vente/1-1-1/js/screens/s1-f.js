@@ -9,13 +9,13 @@
   const content = window.ATELIER_S1;
   const { required, words } = window.ExerciseRules;
   const { esc } = core;
-  // Le bouton « Visite guidée » se pose à droite du titre (kit.js chargé par la page).
+  // Le bouton « Visite guidée », en haut à droite de l'écran (kit.js chargé par la page).
   const kit = window.AtelierKit;
-  const titled = html => (kit && !ex.reviewing() ? `<div class="tour-titled">${html}${kit.tourButton()}</div>` : html);
+  const corner = () => (kit && !ex.reviewing() ? `<div class="tour-corner">${kit.tourButton()}</div>` : '');
 
   function screen() {
     const current = core.findExercise('s1-F');
-    return `<div class="stacked-screen">${titled(core.pageTitle('', 'Adaptez votre ouverture à chaque canal', 'Gardez l’intention, changez la forme.'))}
+    return `${corner()}<div class="stacked-screen">${core.pageTitle('', 'Adaptez votre ouverture à chaque canal', 'Gardez l’intention, changez la forme.')}
     <div class="mission channel-mission">
       <span class="mission-symbol">${icon('target', { size: 30 })}</span>
       <div><h2>Votre mission</h2><p>Transformez l’ouverture face-à-face en deux versions : téléphone et e-mail.</p></div>
