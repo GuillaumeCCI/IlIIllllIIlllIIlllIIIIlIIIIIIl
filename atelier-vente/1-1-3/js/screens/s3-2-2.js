@@ -2,8 +2,9 @@
  *
  * Trois répliques de prospect et, pour chacune, le mauvais réflexe d'un
  * commercial. On explique pourquoi ce réflexe bloque, puis on rédige la
- * réponse adaptée, en vérifiant qu'elle comporte un accueil, une question
- * et une suite. « Enregistrer » passe au cas suivant encore incomplet.
+ * réponse adaptée. « Enregistrer » passe au cas suivant encore incomplet ;
+ * les 3 cas faits, une auto-évaluation (accueil, question, suite) précède
+ * le corrigé.
  */
 (() => {
   'use strict';
@@ -13,17 +14,22 @@
   const { esc, icon } = kit;
   const content = window.ATELIER_S3['2.2'];
   const cases = content.cases;
+  const SELF = cases.length;
+  const scale = [{ id: '2', label: 'Oui' }, { id: '1', label: 'En partie' }, { id: '0', label: 'Pas encore' }];
 
   const complete = i => kit.filled(ex.value(`why${i}`)) && kit.filled(ex.value(`reply${i}`));
   const doneCount = () => cases.filter((_, i) => complete(i)).length;
+  const allDone = () => doneCount() === cases.length;
   const current = () => {
     const n = Number(ex.value('case'));
-    return Number.isInteger(n) && n >= 0 && n < cases.length ? n : 0;
+    return Number.isInteger(n) && n >= 0 && (n < cases.length || (n === SELF && allDone())) ? n : 0;
   };
 
   function tabs(at) {
     return `<div class="fix-tabs">${cases.map((c, i) => `<button type="button" class="fix-tab ${i === at ? 'is-current' : ''} ${complete(i) ? 'is-done' : ''}" data-act="case" data-index="${i}" aria-label="Réplique ${i + 1} · ${esc(c.tab)} : « ${esc(c.client)} »">
-      <span class="fix-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : String(i + 1).padStart(2, '0')}</span><span class="fix-tab-text">${esc(c.tab)}</span></button>`).join('')}</div>`;
+      <span class="fix-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : String(i + 1).padStart(2, '0')}</span><span class="fix-tab-text">${esc(c.tab)}</span></button>`).join('')}
+      <button type="button" class="fix-tab is-self ${at === SELF ? 'is-current' : ''}" data-act="case" data-index="${SELF}" ${allDone() ? '' : 'disabled'}>
+        <span class="fix-n">${icon(allDone() ? 'list' : 'lock', { size: 16 })}</span><span class="fix-tab-text">Auto-évaluation</span></button></div>`;
   }
 
   function caseBody(i) {
@@ -45,6 +51,16 @@
       </div>`;
   }
 
+  /* L'auto-évaluation, une fois les 3 cas faits : on relit ses réponses,
+   * puis on note chacun des trois critères. */
+  function selfBody() {
+    return `<p class="k-label">Auto-évaluation</p>
+      <h2 class="fix-self-title">Relisez vos 3 réponses</h2>
+      <ol class="fix-reread">${cases.map((c, i) => `<li><strong>${esc(c.tab)}</strong><span>« ${esc(ex.value(`reply${i}`))} »</span></li>`).join('')}</ol>
+      <p class="fix-self-question">Vos réponses contiennent-elles ces trois éléments ?</p>
+      ${kit.matrix({ key: 'self', rows: content.selfChecks, columns: scale, head: 'Critère', round: true })}`;
+  }
+
   function screen() {
     const reviewing = ex.reviewing();
     const at = current();
@@ -55,19 +71,21 @@
         aside: `<p class="k-count fix-count"><strong>${doneCount()} / ${cases.length}</strong> répliques réparées</p>${reviewing ? '' : kit.tourButton()}` })}
       ${reviewing ? reviewScreen() : `${tabs(at)}
         <form class="k-panel fix-panel" novalidate>
-          ${caseBody(at)}
+          ${at === SELF ? selfBody() : caseBody(at)}
           ${core.errorsBox()}
           <div class="fix-bar">
-            <div class="fix-checks"><strong>À vérifier :</strong>${content.checks.map((label, k) => `<label class="call-key"><input type="checkbox" data-field="check${at}${k}" ${ex.value(`check${at}${k}`) === true ? 'checked' : ''}><span class="call-key-box" aria-hidden="true">${icon('check', { size: 14 })}</span><span>${esc(label)}</span></label>`).join('')}</div>
-            <div class="fix-right">${kit.dialogButton(`tip${at}`, 'Voir un repère', 'secondary', 'search')}${kit.submit(next === -1 ? 'Enregistrer et terminer' : `Enregistrer et passer au cas ${next + 1}`)}</div>
+            ${at === SELF ? kit.act('case', `${icon('arrowLeft', { size: 18 })}<span>Revenir au cas ${SELF}</span>`, 'secondary', `data-index="${SELF - 1}"`) : '<span></span>'}
+            <div class="fix-right">${at === SELF ? kit.submit('Valider mon auto-évaluation') : `${kit.dialogButton(`tip${at}`, 'Voir un repère', 'secondary', 'search')}${kit.submit(next === -1 ? 'Enregistrer et s’auto-évaluer' : `Enregistrer et passer au cas ${next + 1}`)}`}</div>
           </div>
         </form>`}
-      ${reviewing ? '' : kit.utility('Corrigé disponible après les 3 cas')}
+      ${reviewing ? '' : kit.utility('Corrigé disponible après l’auto-évaluation')}
     </div>`;
   }
 
   function reviewScreen() {
-    return `${cases.map((c, i) => `<section class="k-panel fix-review">
+    const score = content.selfChecks.reduce((sum, _, i) => sum + (Number(ex.value(`self${i}`)) || 0), 0);
+    return `${kit.result(score, content.selfChecks.length * 2, 'votre auto-évaluation')}
+    ${cases.map((c, i) => `<section class="k-panel fix-review">
       <p class="k-label">Cas ${i + 1} · ${esc(c.tab)}</p>
       <p class="fix-client"><span class="fix-c">C</span><span>« ${esc(c.client)} »</span></p>
       <p class="fix-reflex is-review">${icon('close', { size: 16 })}<span>« ${esc(c.reflex)} »</span></p>
@@ -87,20 +105,27 @@
   }
 
   function validate(values) {
-    const own = caseErrors(values, current());
-    if (own.length) return own;
+    const at = current();
+    if (at < SELF) {
+      const own = caseErrors(values, at);
+      if (own.length) return own;
+    }
     const missing = cases.findIndex((_, i) => caseErrors(values, i).length);
-    return missing === -1 ? [] : [{ key: 'case', message: `Complétez aussi le cas ${missing + 1}.` }];
+    if (missing !== -1) return [{ key: 'case', message: `Complétez aussi le cas ${missing + 1}.` }];
+    if (at < SELF) return [];
+    const unrated = content.selfChecks.findIndex((_, i) => !values[`self${i}`]);
+    return unrated === -1 ? [] : [{ key: `self${unrated}`, message: `Évaluez chacune des ${content.selfChecks.length} lignes.` }];
   }
 
   function intercept(values) {
     const at = current();
-    if (caseErrors(values, at).length) return false;
+    if (at === SELF || caseErrors(values, at).length) return false;
     for (let step = 1; step < cases.length; step++) {
       const next = (at + step) % cases.length;
       if (caseErrors(values, next).length) { ex.setValue('case', next); return true; }
     }
-    return false;
+    ex.setValue('case', SELF);
+    return true;
   }
 
   const feedback = () => ['Vos réponses accueillent-elles la réplique, posent-elles une question et proposent-elles une suite ? Comparez au corrigé.'];
@@ -123,7 +148,7 @@
       items: [
         { symbol: 'lightbulb', tone: 'gold', text: 'La ligne en dessous rappelle la marche à suivre.' }
       ] },
-    { target: '.fix-checks', title: 'À vérifier', text: 'Avant d’enregistrer, cochez ce que votre réponse contient :',
+    { target: '.fix-tab.is-self', title: 'L’auto-évaluation', text: 'Après les 3 cas, vous relisez vos réponses et vous vérifiez qu’elles contiennent :',
       items: [
         { key: '1', tone: 'blue', text: 'un accueil de la réplique ;' },
         { key: '2', tone: 'coral', text: 'une question ;' },
@@ -133,7 +158,7 @@
       items: [
         { symbol: 'search', tone: 'gold', text: '« Voir un repère » donne une piste pour ce cas.' },
         { symbol: 'arrowRight', tone: 'blue', text: '« Enregistrer » passe au cas suivant.' },
-        { symbol: 'checkCircle', tone: 'green', text: 'Le corrigé s’affiche après les 3 cas.' }
+        { symbol: 'checkCircle', tone: 'green', text: 'Le corrigé s’affiche après l’auto-évaluation.' }
       ] }
   ]);
 

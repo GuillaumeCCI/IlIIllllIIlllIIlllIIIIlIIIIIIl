@@ -69,7 +69,12 @@ window.ATELIER_S3 = {
     title: 'Passez en mode traitement',
     subtitle: 'Transformez trois mauvais réflexes en réponses qui ouvrent l’échange.',
     help: 'Écoutez, clarifiez, puis proposez une suite concrète.',
-    checks: ['Accueil', 'Question', 'Suite'],
+    // L'auto-évaluation, une fois les 3 cas faits.
+    selfChecks: [
+      { title: 'Accueil', text: 'Mes réponses accusent réception de la réplique, sans contredire le client.' },
+      { title: 'Question', text: 'Elles posent une question pour comprendre sa situation.' },
+      { title: 'Suite', text: 'Elles proposent une suite concrète : un autre moment, un envoi ciblé, un échange.' }
+    ],
     // La réponse attendue accuse réception sans se braquer, cherche à comprendre
     // (question ou reformulation) et garde la relation ouverte.
     cases: [
