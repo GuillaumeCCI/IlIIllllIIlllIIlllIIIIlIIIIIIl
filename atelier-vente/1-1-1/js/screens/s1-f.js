@@ -9,10 +9,13 @@
   const content = window.ATELIER_S1;
   const { required, words } = window.ExerciseRules;
   const { esc } = core;
+  // Le bouton « Visite guidée » se pose à droite du titre (kit.js chargé par la page).
+  const kit = window.AtelierKit;
+  const titled = html => (kit && !ex.reviewing() ? `<div class="tour-titled">${html}${kit.tourButton()}</div>` : html);
 
   function screen() {
     const current = core.findExercise('s1-F');
-    return `<div class="stacked-screen">${core.pageTitle('', 'Adaptez votre ouverture à chaque canal', 'Gardez l’intention, changez la forme.')}
+    return `<div class="stacked-screen">${titled(core.pageTitle('', 'Adaptez votre ouverture à chaque canal', 'Gardez l’intention, changez la forme.'))}
     <div class="mission channel-mission">
       <span class="mission-symbol">${icon('target', { size: 30 })}</span>
       <div><h2>Votre mission</h2><p>Transformez l’ouverture face-à-face en deux versions : téléphone et e-mail.</p></div>
@@ -60,6 +63,17 @@
   }
 
   const feedback = () => content.feedback.F;
+
+  if (kit) kit.tour('s1-F', [
+    { target: '.base-opening', title: 'L’ouverture de départ', text: 'Elle est prévue pour un face-à-face. Gardez son intention, changez sa forme.' },
+    { target: '.channel-columns', title: 'Deux versions', wide: true,
+      items: [
+        { symbol: 'phone', tone: 'blue', text: 'Téléphone : 30 à 45 secondes, sur un ton naturel.' },
+        { symbol: 'mail', tone: 'coral', text: 'E-mail : un objet, puis 80 à 120 mots faciles à lire.' },
+        { symbol: 'check', tone: 'green', text: 'Sous chaque version, cochez ce qu’elle contient.' }
+      ] },
+    { target: '.form-actions', title: 'Valider mes deux versions', text: 'Le corrigé s’affiche, avec une version modèle pour chaque canal.' }
+  ]);
 
   ex.mount('s1-F', { screen, validate, feedback });
 })();

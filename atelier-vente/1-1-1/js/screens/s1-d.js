@@ -14,6 +14,9 @@
   const content = window.ATELIER_S1;
   const correction = content.feedback.D;
   const { required } = window.ExerciseRules;
+  // Le bouton « Visite guidée » se pose à droite du titre (kit.js chargé par la page).
+  const kit = window.AtelierKit;
+  const titled = html => (kit && !ex.reviewing() ? `<div class="tour-titled">${html}${kit.tourButton()}</div>` : html);
 
   const lineCount = () => Math.min(6, Math.max(4, Number(ex.value('lineCount')) || 4));
   const lineKey = i => `line${i}`;
@@ -92,7 +95,7 @@
   function writing() {
     return `<form class="wiz-layout writing-layout" data-bar-stays novalidate>
       <section class="wiz-main">
-        ${core.pageTitle('Mise en situation', 'Construisez votre ouverture', 'Rédigez une ouverture commerciale complète (4 à 6 phrases) pour la situation de votre choix. Écrivez une phrase par ligne et sélectionnez sa fonction.')}
+        ${titled(core.pageTitle('Mise en situation', 'Construisez votre ouverture', 'Rédigez une ouverture commerciale complète (4 à 6 phrases) pour la situation de votre choix. Écrivez une phrase par ligne et sélectionnez sa fonction.'))}
         <div class="exercise-body">
           ${editableRows()}
           ${lineCount() < 6 ? core.button('+ Ajouter une ligne', 'add-line', 'text-button') : ''}
@@ -175,6 +178,16 @@
     core.$$('[data-action="remove-line"]').forEach(node =>
       node.addEventListener('click', () => removeLine(Number(node.dataset.index))));
   }
+
+  if (kit) kit.tour('s1-D', [
+    { target: '.writing-row', title: 'Une phrase par ligne',
+      items: [
+        { symbol: 'pencil', tone: 'blue', text: 'À gauche, écrivez la phrase telle que vous la diriez au client.' },
+        { symbol: 'list', tone: 'coral', text: 'À droite, choisissez ce qu’elle fait dans l’ouverture : sa fonction.' }
+      ] },
+    { target: '[data-action="add-line"]', title: 'De 4 à 6 phrases', text: 'Il en faut au moins 4. Ce lien ajoute une ligne, jusqu’à 6.' },
+    { target: '.form-actions', title: 'Valider mon ouverture', text: 'Le corrigé reprend chacune de vos lignes, avec un repère sur la fonction choisie, puis une ouverture modèle.' }
+  ]);
 
   ex.mount('s1-D', { screen, validate, feedback, onMount });
 })();

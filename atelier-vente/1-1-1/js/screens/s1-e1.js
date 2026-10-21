@@ -9,6 +9,9 @@
   const media = window.AtelierMedia;
   const content = window.ATELIER_S1;
   const { required } = window.ExerciseRules;
+  // Le bouton « Visite guidée » se pose à droite du titre (kit.js chargé par la page).
+  const kit = window.AtelierKit;
+  const titled = html => (kit && !ex.reviewing() ? `<div class="tour-titled">${html}${kit.tourButton()}</div>` : html);
 
   /* D'après la maquette : rien en panneau, tout posé sur le fond. À gauche
    * la situation (titre, illustration entière aux coins arrondis, ce que
@@ -20,7 +23,7 @@
     const current = core.findExercise('s1-E1');
     return `<div class="e1-layout">
       <section class="e1-scene">
-        ${core.pageTitle('Mise en situation', 'Le prospect coupe sa caméra.', 'Vous perdez les signaux visuels. Comment gardez-vous le lien ?')}
+        ${titled(core.pageTitle('Mise en situation', 'Le prospect coupe sa caméra.', 'Vous perdez les signaux visuels. Comment gardez-vous le lien ?'))}
         <div class="call-scene">
           ${core.illustration(current)}
           <div class="call-badge">${icon('video', { size: 16 })}<span>Visioconférence · caméra du prospect désactivée</span></div>
@@ -55,6 +58,22 @@
   function onMount() {
     core.$('[data-action="record"]')?.addEventListener('click', () => media.toggleRecording());
   }
+
+  if (kit) kit.tour('s1-E1', [
+    { target: '.e1-facts', title: 'Ce que vous savez', text: 'Appuyez-vous sur ces trois éléments : votre réponse doit en tenir compte.' },
+    { target: '.e1-think', title: 'Pensez à', text: 'Votre réponse enchaîne trois temps :',
+      items: [
+        { key: '1', tone: 'blue', text: 'reconnaître la situation ;' },
+        { key: '2', tone: 'coral', text: 'rassurer le prospect ;' },
+        { key: '3', tone: 'green', text: 'rebondir sur la suite de l’échange.' }
+      ] },
+    { target: '.e1-answer .field', title: 'Votre réponse', text: 'Écrivez ce que vous diriez, en 2 ou 3 phrases.',
+      items: [
+        { symbol: 'lightbulb', tone: 'gold', text: '« Voir un indice » vous oriente si vous bloquez.' }
+      ] },
+    { target: '.oral-practice', title: 'S’entraîner à l’oral', text: 'Facultatif : enregistrez-vous pour réécouter votre ton. Rien n’est conservé.' },
+    { target: '.form-actions', title: 'Valider ma réponse', text: 'Le corrigé s’affiche, avec une réponse possible.' }
+  ]);
 
   ex.mount('s1-E1', { screen, validate, feedback, onMount });
 })();

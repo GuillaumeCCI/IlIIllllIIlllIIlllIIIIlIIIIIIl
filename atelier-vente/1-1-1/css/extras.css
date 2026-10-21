@@ -317,3 +317,7 @@
 .rl-step-tag { align-self: flex-start; flex-shrink: 0; padding: 4px 10px; border-radius: 999px; background: #fff; border: 1px solid #c9d6f1; color: var(--accent); font-size: .78rem; font-weight: 700; }
 @media (max-width: 900px) { .rl-layout { grid-template-columns: minmax(0, 1fr); } .rl-side { position: static; } }
 @media (max-width: 560px) { .rl-steps { grid-template-columns: minmax(0, 1fr); } }
+
+/* Titre d'exercice et bouton « Visite guidée » sur la même ligne (S1 D à F). */
+.tour-titled { display: flex; align-items: flex-start; justify-content: flex-start; gap: 20px; flex-wrap: wrap; }
+.tour-titled > .tour-replay { flex-shrink: 0; margin-top: 6px; }

@@ -9,10 +9,13 @@
   const media = window.AtelierMedia;
   const content = window.ATELIER_S1;
   const { required, words } = window.ExerciseRules;
+  // Le bouton « Visite guidée » se pose à droite du titre (kit.js chargé par la page).
+  const kit = window.AtelierKit;
+  const titled = html => (kit && !ex.reviewing() ? `<div class="tour-titled">${html}${kit.tourButton()}</div>` : html);
 
   function screen() {
     const current = core.findExercise('s1-E2');
-    return `${core.pageTitle('', 'L’ultimatum', 'Vous avez 40 secondes pour donner envie au client de poursuivre.')}
+    return `${titled(core.pageTitle('', 'L’ultimatum', 'Vous avez 40 secondes pour donner envie au client de poursuivre.'))}
     ${core.mission('Votre défi', 'Allez à l’essentiel sans sacrifier le climat, le cadrage ni l’écoute.', '40 secondes')}
     <div class="two-columns ultimatum">
       <section class="panel context-panel">
@@ -48,6 +51,18 @@
     core.$('[data-action="timer"]')?.addEventListener('click', () => media.toggleTimer());
     core.$('[data-action="reset-timer"]')?.addEventListener('click', () => media.resetTimer());
   }
+
+  if (kit) kit.tour('s1-E2', [
+    { target: '.answer-panel .field', title: 'Votre ouverture', text: 'Écrivez-la comme vous la diriez : 90 mots au plus, soit environ 40 secondes à l’oral.' },
+    { target: '.answer-panel .self-checks', title: 'Vérifiez-la', text: 'Cochez ce que contient votre ouverture :',
+      items: [
+        { key: '1', tone: 'blue', text: 'une accroche claire ;' },
+        { key: '2', tone: 'coral', text: 'une valeur pour le client ;' },
+        { key: '3', tone: 'green', text: 'une suite proposée.' }
+      ] },
+    { target: '.timer-widget', title: 'Le test des 40 secondes', text: 'Lancez le chrono et lisez votre ouverture à voix haute : tient-elle dans le temps ?' },
+    { target: '.form-actions', title: 'Valider ma proposition', text: 'Le corrigé s’affiche, avec une ouverture possible.' }
+  ]);
 
   ex.mount('s1-E2', { screen, validate, feedback, onMount });
 })();
