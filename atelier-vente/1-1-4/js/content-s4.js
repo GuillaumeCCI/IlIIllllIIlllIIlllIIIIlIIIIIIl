@@ -311,6 +311,21 @@ window.ATELIER_S4 = {
     countLabel: 'parties',
     fieldSteps: true,
     tokens: ['[Prénom du client]', '[Date de la proposition]', '[Offre]', '[Ma signature]'],
+    tour: [
+      { target: '.fs-nav', title: 'Quatre parties', text: 'Votre modèle se construit dans l’ordre d’un e-mail de relance.',
+        items: [
+          { symbol: 'lock', tone: 'blue', text: 'Une partie s’ouvre quand la précédente est remplie.' },
+          { symbol: 'check', tone: 'green', text: 'Une partie remplie est cochée ; cliquez dessus pour y revenir.' }
+        ] },
+      { target: '.fm-tokens', title: 'Les champs à insérer', text: 'Ils rendent votre modèle réutilisable : chaque client aura son prénom, sa date et son offre.',
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur un champ : il s’insère là où se trouve votre curseur.' }
+        ],
+        after: 'C’est facultatif : écrivez aussi en toutes lettres si vous préférez.' },
+      { target: '.fs-step .fm-field', title: 'Votre texte', text: 'Rédigez la partie en cours, comme vous l’écririez au client.' },
+      { target: '.fs-tip', title: 'Le conseil', text: 'Relisez-le avant de passer à la suite : il dit ce qui fait une bonne partie.' },
+      { target: '.fs-panel .fm-actions .k-submit', title: 'Passer à l’étape suivante', text: 'Après la quatrième partie, votre modèle complet s’affiche avec le corrigé.' }
+    ],
     cases: [
       { tab: 'Mon modèle', fields: [
         { id: 'subject', label: 'Objet', stepSub: 'Le sujet de la relance', symbol: 'document', intro: 'Indiquez le sujet de votre relance.', tip: 'L’objet doit être clair et inciter à l’ouverture.', placeholder: 'Objet de la relance…', rows: 3, max: 120, model: '[Projet / offre] : un point rapide' },

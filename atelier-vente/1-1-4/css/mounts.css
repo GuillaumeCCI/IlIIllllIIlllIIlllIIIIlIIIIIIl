@@ -475,9 +475,9 @@ button.crash-passage:hover { background: #fff1d6; }
 .fs-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 32px; align-items: start; }
 .fs-nav { list-style: none; margin: 0; padding: 0; display: grid; }
 .fs-nav li { position: relative; padding-bottom: 18px; }
-.fs-nav li:not(:last-child)::before { content: ''; position: absolute; left: 23px; top: 48px; bottom: 0; width: 2px; background: #d6deec; }
+.fs-nav li:not(:last-child)::before { content: ''; position: absolute; left: 23px; top: 54px; bottom: 6px; width: 2px; background: #d6deec; }
 .fs-nav li.is-done:not(:last-child)::before { background: var(--accent); }
-.fs-nav button { display: flex; align-items: center; gap: 14px; width: 100%; padding: 0; border: 0; background: none; color: var(--navy); text-align: left; cursor: var(--cursor-hand, pointer); }
+.fs-nav button { display: flex; align-items: flex-start; gap: 14px; width: 100%; padding: 0; border: 0; background: none; color: var(--navy); text-align: left; cursor: var(--cursor-hand, pointer); }
 .fs-nav button:disabled { cursor: default; opacity: .7; }
 .fs-n { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 2px solid #d6deec; background: #fff; color: #5b6a8f; font-weight: 800; font-size: 1.15rem; flex-shrink: 0; }
 .fs-nav li.is-done .fs-n { border-color: var(--ok-soft); background: var(--ok-soft); color: var(--ok); }
