@@ -56,7 +56,7 @@ const PERFECT = {
   },
   's3-1-2': e => { range(4).forEach(r => { e.setValue(`error${r}`, 'Il contredit.'); e.setValue(`flag${r}`, r); }); e.setValue('rewrite', 'Je comprends, par rapport à quoi ?'); },
   's3-2-1': (e, w) => e.setValue('placed', S(w, 'S3')['2.1'].reactions.map(r => r.answer)),
-  's3-2-2': e => range(3).forEach(i => { e.setValue(`why${i}`, 'Il insiste.'); e.setValue(`reply${i}`, 'Je comprends, quand puis-je rappeler ?'); })
+  's3-2-2': (e, w) => { range(3).forEach(i => { e.setValue(`why${i}`, 'Il insiste.'); e.setValue(`reply${i}`, 'Je comprends, quand puis-je rappeler ?'); }); S(w, 'S3')['2.2'].selfChecks.forEach((_, i) => e.setValue(`self${i}`, '2')); }
 };
 
 console.log('\nParcours complets, avec les réponses attendues');
