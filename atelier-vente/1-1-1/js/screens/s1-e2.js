@@ -50,7 +50,7 @@
     const current = core.findExercise('s1-E2');
     const reviewing = ex.reviewing();
     return `${corner()}${core.pageTitle('', 'L’ultimatum', 'Vous avez 40 secondes pour donner envie au client de poursuivre.')}
-    ${core.mission('Votre défi', 'Allez à l’essentiel sans sacrifier le climat, le cadrage ni l’écoute.', '40 secondes')}
+    ${core.mission('Votre défi', 'Allez à l’essentiel sans sacrifier le climat, le cadrage ni l’écoute.')}
     <div class="two-columns ultimatum">
       <section class="panel context-panel">
         ${core.illustration(current)}
