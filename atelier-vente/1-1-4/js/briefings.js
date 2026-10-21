@@ -79,7 +79,7 @@ window.ATELIER_BRIEFINGS = {
   's2-2.3': {
     lede: { key: 'Un chiffre ne parle pas.', rest: 'Un usage, si.' },
     mission: 'Transformez le repère de calcul de chaque offre en argument utile au client.',
-    method: 'Une offre à la fois. Vérifiez votre formulation avec les trois cases.',
+    method: 'Une offre à la fois. Vous évaluez ensuite vos deux formulations.',
     situation: 'Ergolys propose deux offres : un siège à 690 €, soit environ 0,38 € par jour sur 5 ans, et un pack de 10 postes de travail à 17 000 €, soit 1 700 € par poste.',
     task: 'Gardez le prix total visible, citez un repère juste et reliez-le à une valeur concrète.',
     criteria: ['Prix total visible', 'Repère juste', 'Valeur concrète']
@@ -105,7 +105,7 @@ window.ATELIER_BRIEFINGS = {
   's2-2.6': {
     lede: { key: 'Trois objections,', rest: 'trois réponses prêtes.' },
     mission: 'Préparez une réponse de 2 à 3 phrases pour chacune des trois objections sur le prix.',
-    method: 'Une objection à la fois. Cochez ce que votre réponse fait.',
+    method: 'Une objection à la fois. Vous évaluez ensuite vos trois réponses.',
     quote: 'J’ai trouvé moins cher ailleurs.',
     situation: 'Ces trois objections reviennent dans presque tous les rendez-vous.',
     task: 'Comprenez le frein, valorisez l’offre, sans remise immédiate.',

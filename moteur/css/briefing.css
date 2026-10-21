@@ -336,6 +336,11 @@ body.is-briefing .briefing {
   object-position: center 28%;
 }
 
+/* Deux illustrations (1-1-4 S2 2.3) : des affiches en paysage pleines de
+   texte. Elles se posent côte à côte, ENTIÈRES, sans recadrage. */
+.briefing-pictures.is-gallery.count-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.briefing-pictures.is-gallery.count-2 .briefing-picture img { max-height: none; aspect-ratio: auto; object-fit: contain; }
+
 .briefing-picture .image-error { min-height: 160px; display: grid; place-content: center; padding: 22px; color: #8d8477; }
 
 @media (max-height: 900px) {

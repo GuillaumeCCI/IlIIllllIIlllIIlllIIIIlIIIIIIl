@@ -79,8 +79,31 @@ window.ATELIER_S2 = {
     subtitle: 'Transformez un repère de calcul en argument utile au client.',
     countLabel: 'formulations',
     caseNoun: 'Offre',
-    checksLabel: 'Votre réponse doit inclure',
-    checks: ['Prix total visible', 'Repère juste', 'Valeur concrète'],
+    pills: true,
+    // L'auto-évaluation, une fois les 2 formulations écrites.
+    selfCheck: {
+      title: 'Relisez vos 2 formulations',
+      question: 'Chacune de vos formulations contient-elle ces trois éléments ?',
+      rows: [
+        { title: 'Prix total visible', text: 'Le prix total reste dit clairement, il n’est pas caché derrière le calcul.' },
+        { title: 'Repère juste', text: 'Le repère de calcul est cité sans erreur.' },
+        { title: 'Valeur concrète', text: 'Le chiffre est relié à ce que le client vit au quotidien.' }
+      ]
+    },
+    tour: [
+      { target: '.fm-tabs', title: 'Deux offres', text: 'Une formulation par offre : le siège, puis le pack de 10 postes.',
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur une offre pour passer de l’une à l’autre.' },
+          { symbol: 'check', tone: 'green', text: 'Une offre terminée est cochée.' }
+        ] },
+      { target: '.fm-scene', title: 'Le repère de calcul', text: 'L’affiche donne le prix de l’offre et le calcul qui le remet à l’échelle.' },
+      { target: '.fm-main .fm-field', title: 'Votre formulation', text: 'Écrivez ce que vous diriez au client pour relier ce coût à une valeur concrète.' },
+      { target: '.fm-actions .k-dialog-button', title: 'Un repère', text: 'Un doute ? Ce bouton rappelle ce que la formulation doit contenir.' },
+      { target: '.fm-tab.is-self', title: 'L’auto-évaluation', text: 'Après les 2 offres, vous relisez vos formulations et vous les évaluez.',
+        items: [
+          { symbol: 'checkCircle', tone: 'green', text: 'Le corrigé s’affiche ensuite.' }
+        ] }
+    ],
     fields: [{ id: 'text', label: 'Votre formulation', sub: 'Comment reliez-vous ce coût à un usage ou à une valeur concrète pour le client ?', placeholder: 'Ce que vous diriez au client…', rows: 5 }],
     hint: 'Gardez le prix total visible, citez le repère sans erreur, puis reliez-le à ce que le client vit au quotidien.',
     cases: [
@@ -139,16 +162,39 @@ window.ATELIER_S2 = {
     subtitle: '3 objections. 3 réponses prêtes pour le rendez-vous.',
     countLabel: 'réponses prêtes',
     caseNoun: 'Objection',
-    checksLabel: 'Ma réponse',
-    checks: ['Je creuse le frein', 'Je valorise l’offre', 'Sans remise immédiate'],
+    pills: true,
+    // L'auto-évaluation, une fois les 3 réponses écrites.
+    selfCheck: {
+      title: 'Relisez vos 3 réponses',
+      question: 'Chacune de vos réponses fait-elle ces trois choses ?',
+      rows: [
+        { title: 'Je creuse le frein', text: 'Je pose une question pour comprendre ce qui fait dire au client que c’est cher.' },
+        { title: 'Je valorise l’offre', text: 'Je rappelle un ou deux faits concrets de l’offre.' },
+        { title: 'Sans remise immédiate', text: 'Je ne propose aucune remise à ce stade.' }
+      ]
+    },
+    tour: [
+      { target: '.fm-tabs', title: 'Trois objections', text: 'Une réponse par objection du client.',
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur une objection pour passer de l’une à l’autre.' },
+          { symbol: 'check', tone: 'green', text: 'Une objection traitée est cochée.' }
+        ] },
+      { target: '.fm-scene', title: 'L’objection du client', text: 'Voici ce que le client vous dit en rendez-vous.' },
+      { target: '.fm-main .fm-field', title: 'Votre réponse', text: 'En 2 à 3 phrases : comprenez le frein, puis valorisez l’offre.' },
+      { target: '.fm-actions .k-dialog-button', title: 'Un repère', text: 'Un doute ? Ce bouton rappelle la marche à suivre.' },
+      { target: '.fm-tab.is-self', title: 'L’auto-évaluation', text: 'Après les 3 objections, vous relisez vos réponses et vous les évaluez.',
+        items: [
+          { symbol: 'checkCircle', tone: 'green', text: 'Le corrigé s’affiche ensuite.' }
+        ] }
+    ],
     fields: [{ id: 'text', label: 'Votre réponse en rendez-vous', sub: 'En 2 à 3 phrases : comprenez le frein, puis valorisez l’offre.', placeholder: 'Je comprends votre remarque…', rows: 5 }],
     hint: 'Une question pour comprendre la référence du client, puis un ou deux faits concrets de l’offre. Pas de remise à ce stade.',
     cases: [
-      { tab: 'C’est trop cher.', scene: { quote: 'C’est trop cher.' },
+      { tab: 'Trop cher', scene: { quote: 'C’est trop cher.' },
         models: { text: 'Je comprends. Qu’est-ce qui vous fait dire que le prix est trop élevé ? Regardons ce qui est important pour vous et ce que notre offre comprend.' } },
-      { tab: 'J’ai trouvé moins cher ailleurs.', scene: { quote: 'J’ai trouvé moins cher ailleurs.' },
+      { tab: 'Moins cher ailleurs', scene: { quote: 'J’ai trouvé moins cher ailleurs.' },
         models: { text: 'C’est possible. Regardons si nous comparons exactement le même périmètre : installation, garantie, SAV… Cela nous permettra de comprendre précisément l’écart.' } },
-      { tab: 'Je ne suis pas sûr que cela vaille 17 000 €.', scene: { quote: 'Je ne suis pas sûr que cela vaille 17 000 €.' },
+      { tab: 'Vaut-il 17 000 € ?', scene: { quote: 'Je ne suis pas sûr que cela vaille 17 000 €.' },
         models: { text: 'Regardons ce que représentent ces 17 000 € : 10 postes équipés, soit 1 700 € par poste, avec l’installation et la garantie comprises. L’enjeu est de vérifier si cette solution répond suffisamment à vos priorités pour justifier cet investissement.' } }
     ],
     keyPoint: 'À retenir : une objection sur le prix n’appelle pas une réponse automatique. On écoute, on questionne, on choisit son levier, on valorise.',

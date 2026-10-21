@@ -304,7 +304,7 @@
       : current.image ? [{ image: current.image, alt: current.alt }] : [];
 
     const art = pictures.length
-      ? `<div class="briefing-pictures ${pictures.length > 1 ? 'is-gallery' : ''}">${pictures.map(picture =>
+      ? `<div class="briefing-pictures ${pictures.length > 1 ? `is-gallery count-${pictures.length}` : ''}">${pictures.map(picture =>
           `<figure class="briefing-picture"><img src="${esc(core.webAsset(picture.image))}" alt="${esc(picture.alt)}" decoding="async" loading="eager"><figcaption class="image-error" hidden>Illustration indisponible.</figcaption></figure>`
         ).join('')}</div>`
       : previews && previews.has(current.key) ? previews.preview(current.key) : '';
