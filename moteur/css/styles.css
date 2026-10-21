@@ -79,6 +79,9 @@
 body { margin: 0; min-width: 320px; min-height: 100vh; background-color: #fff; background-size: max(100%, 177.78vh) auto, max(100%, 177.78vh) auto; background-position: center top, center top; background-repeat: no-repeat; background-attachment: scroll; }
 body[data-theme="purple"] { --accent: #7824b4; --accent-dark: #5c138f; --tint: #f3edfc; }
 body[data-theme="magenta"] { --accent: #92077d; --accent-dark: #70065f; --tint: #fcf0f8; }
+/* Boutons de l'en-tête (zoom, clavier, plein écran, sons, musique) : jamais le
+   cadre gris du navigateur, même si layout.css arrive en retard (cache). */
+.topbar button, .header-button { background: none; border: 0; }
 button, input, textarea, select { font: inherit; }
 button, a, input, textarea, select, summary { -webkit-tap-highlight-color: transparent; }
 button, select, summary, input[type="radio"], input[type="checkbox"] { cursor: var(--cursor-hand, pointer); }
