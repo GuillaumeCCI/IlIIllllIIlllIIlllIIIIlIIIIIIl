@@ -2,7 +2,8 @@
  *
  * À gauche, le contexte de la relance ; à droite, les trois éléments de
  * valeur en accordéon, un seul ouvert à la fois, avec une frise 1-2-3 au
- * dessus. L'élément ouvert montre sa consigne, des pistes et un repère.
+ * dessus. L'élément ouvert montre sa consigne ; les pistes et le repère
+ * s'ouvrent dans une fenêtre (« Voir un indice »).
  * « Enregistrer » ouvre l'élément suivant encore vide ; les trois écrits,
  * l'exercice se valide. Textes : js/content-s4.js, entrée « 4.3 ».
  * Les champs gardent les clés de l'écran commun (c0_v1, c0_v2, c0_v3).
@@ -54,10 +55,6 @@
       <div class="vf-head is-static"><span class="vf-n is-current">${i + 1}</span><div><strong>${esc(f.label)}</strong>
         <p class="vf-sub">${icon('target', { size: 15 })}<span>${esc(content.subs[i])}</span></p></div></div>
       ${ex.field(key(f), f.label, { placeholder: f.placeholder, max: 500, rows: 3, hideLabel: true })}
-      <p class="vf-ideas-title">Pistes pour vous inspirer</p>
-      <p class="vf-ideas">${content.ideas.map(t => `<span>${esc(t)}</span>`).join('')}</p>
-      <div class="vf-landmark">${icon('lightbulb', { size: 26 })}<div><strong>Bon repère</strong>
-        <ul>${content.landmarks.map(l => `<li>${icon('check', { size: 14 })}<span><b>${esc(l.strong)}</b>${esc(l.text)}</span></li>`).join('')}</ul></div></div>
     </li>`;
   }
 
@@ -86,7 +83,7 @@
           ${steps(at)}
           <ol class="vf-acc">${fields.map((f, i) => item(f, i, at)).join('')}</ol>
           ${core.errorsBox()}
-          <div class="vf-actions">${kit.submit(doneCount() >= n - 1 && !done(at) || doneCount() === n ? content.submitLabel : 'Enregistrer et passer au suivant')}</div>
+          <div class="vf-actions">${kit.dialogButton('hint', 'Voir un indice', 'secondary', 'lightbulb')}${kit.submit(doneCount() >= n - 1 && !done(at) || doneCount() === n ? content.submitLabel : 'Enregistrer et passer au suivant')}</div>
         </form>
       </div>`}
       ${reviewing ? '' : kit.utility('Pistes possibles après les 3 éléments')}
@@ -113,6 +110,11 @@
 
   kit.on({ 'vf-open': el => { ex.setValue('open', Number(el.dataset.index)); kit.commit(); } });
   kit.live(() => ({ 'vf-count': countLine() }));
+  // L'indice : les pistes, puis le repère.
+  kit.dialogs({ hint: { title: 'Un indice', html: `<p class="vf-ideas-title">Pistes pour vous inspirer</p>
+    <p class="vf-ideas">${content.ideas.map(t => `<span>${esc(t)}</span>`).join('')}</p>
+    <div class="vf-landmark">${icon('lightbulb', { size: 26 })}<div><strong>Bon repère</strong>
+      <ul>${content.landmarks.map(l => `<li>${icon('check', { size: 14 })}<span><b>${esc(l.strong)}</b>${esc(l.text)}</span></li>`).join('')}</ul></div></div>` } });
   kit.tour('s4-4.3', content.tour);
 
   ex.mount('s4-4.3', { screen, validate, intercept, feedback, compactFeedback: true });
