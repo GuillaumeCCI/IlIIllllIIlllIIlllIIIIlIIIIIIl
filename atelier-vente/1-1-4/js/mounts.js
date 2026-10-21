@@ -162,7 +162,7 @@
         ${content.drag ? `<p class="dk-hint">${icon('pointer', { size: 18 })}<span>Choisissez une zone, puis validez.</span></p>` : ''}
       </div>
       ${kit().bar({
-        center: kit().act('deck-undo', `${icon('undo', { size: 17 })}<span>Annuler</span>`, 'secondary', Array.isArray(history) && history.length ? '' : 'disabled'),
+        left: kit().act('deck-undo', `${icon('undo', { size: 17 })}<span>Annuler</span>`, 'secondary', Array.isArray(history) && history.length ? '' : 'disabled'),
         right: kit().act('dk-confirm', `<span>${esc(content.confirmLabel || 'Valider et continuer')}</span>${icon('arrowRight', { size: 18 })}`, 'primary', pick() ? '' : 'disabled')
       })}`;
     }

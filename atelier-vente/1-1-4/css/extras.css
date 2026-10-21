@@ -79,7 +79,7 @@
 
 .dk-board:has(.dk-zones.count-2) .dk-symbol, .express-symbol { position: relative; width: 96px; height: 96px; border-radius: 50%; background: var(--tint); color: var(--accent); flex-shrink: 0; }
 
-.dk-board:has(.dk-zones.count-2) .dk-symbol::after, .express-symbol::after { content: ''; position: absolute; top: -6px; right: -16px; width: 26px; height: 26px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f2795a' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M11 7 19 2'/%3E%3Cpath d='M12 12h10'/%3E%3Cpath d='M11 17l8 5'/%3E%3C/svg%3E") center / contain no-repeat; transform: rotate(-90deg); }
+.dk-board:has(.dk-zones.count-2) .dk-symbol::after, .express-symbol::after { content: none; position: absolute; top: -6px; right: -16px; width: 26px; height: 26px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f2795a' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M11 7 19 2'/%3E%3Cpath d='M12 12h10'/%3E%3Cpath d='M11 17l8 5'/%3E%3C/svg%3E") center / contain no-repeat; transform: rotate(-90deg); }
 
 .dk-board:has(.dk-zones.count-2) .dk-words, .express-body > div { flex: 1; min-width: 0; margin-left: 24px; padding: 4px 24px 4px 34px; border-left: 1px solid #e6e2d8; text-align: left; }
 
