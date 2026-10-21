@@ -109,11 +109,17 @@ window.ATELIER_S4 = {
       'Une autre raison, différente de la première, de reprendre l’échange.',
       'Une idée qui l’aide à avancer dans sa décision.'
     ],
-    ideas: ['résultat client', 'gain observé', 'question utile', 'point de réassurance', 'prochaine étape simple'],
-    landmarks: [
-      { strong: 'Apporter du nouveau', text: ' : une donnée, un exemple, une évolution récente.' },
-      { strong: 'Rester utile', text: ' pour le client : cela doit l’aider à avancer dans sa réflexion.' }
-    ],
+    // L'indice : des amorces de phrases concrètes, puis la règle d'or.
+    hint: {
+      title: 'Comment apporter de la valeur dans cette relance ?',
+      items: [
+        { label: 'Partager un résultat', example: 'Depuis notre dernier échange, un client de votre secteur a obtenu [résultat] grâce à…' },
+        { label: 'Poser une question utile', example: 'Avez-vous pu avancer sur [sujet évoqué ensemble] ?' },
+        { label: 'Apporter un point de réassurance', example: 'Pour rappel, l’installation ne demande que [durée] et…' },
+        { label: 'Proposer une prochaine étape simple', example: 'Je vous propose d’en parler 10 minutes mardi ou jeudi. Lequel vous convient ?' }
+      ],
+      rule: 'Ne relancez pas « juste pour prendre des nouvelles ». Apportez une information nouvelle (un chiffre, une évolution) qui aide le client à avancer.'
+    },
     tour: [
       { target: '.vf-context', title: 'Le contexte', text: 'Gardez-le en tête : chaque élément doit donner à ce client une bonne raison de reprendre l’échange.' },
       { target: '.vf-item.is-open', title: 'Un élément à la fois', text: 'Rédigez l’élément ouvert, comme une phrase que vous écririez au client.',

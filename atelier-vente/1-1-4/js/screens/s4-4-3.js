@@ -2,8 +2,8 @@
  *
  * À gauche, le contexte de la relance ; à droite, les trois éléments de
  * valeur en accordéon, un seul ouvert à la fois (un élément rédigé est
- * coché). L'élément ouvert montre sa consigne ; les pistes et le repère
- * s'ouvrent dans une fenêtre (« Voir un indice »).
+ * coché). L'élément ouvert montre sa consigne ; « Voir un indice » ouvre
+ * des amorces de phrases et la règle d'or.
  * « Enregistrer » ouvre l'élément suivant encore vide ; les trois écrits,
  * l'exercice se valide. Textes : js/content-s4.js, entrée « 4.3 ».
  * Les champs gardent les clés de l'écran commun (c0_v1, c0_v2, c0_v3).
@@ -104,11 +104,10 @@
 
   kit.on({ 'vf-open': el => { ex.setValue('open', Number(el.dataset.index)); kit.commit(); } });
   kit.live(() => ({ 'vf-count': countLine() }));
-  // L'indice : les pistes, puis le repère.
-  kit.dialogs({ hint: { title: 'Un indice', html: `<p class="vf-ideas-title">Pistes pour vous inspirer</p>
-    <p class="vf-ideas">${content.ideas.map(t => `<span>${esc(t)}</span>`).join('')}</p>
-    <div class="vf-landmark">${icon('lightbulb', { size: 26 })}<div><strong>Bon repère</strong>
-      <ul>${content.landmarks.map(l => `<li>${icon('check', { size: 14 })}<span><b>${esc(l.strong)}</b>${esc(l.text)}</span></li>`).join('')}</ul></div></div>` } });
+  // L'indice : une amorce de phrase par piste, puis la règle d'or.
+  kit.dialogs({ hint: { title: content.hint.title, html: `<ul class="vf-hints">${content.hint.items.map(h =>
+      `<li><strong>${esc(h.label)}</strong><span>« ${esc(h.example)} »</span></li>`).join('')}</ul>
+    <p class="vf-rule"><strong>Règle d’or :</strong> ${esc(content.hint.rule)}</p>` } });
   kit.tour('s4-4.3', content.tour);
 
   ex.mount('s4-4.3', { screen, validate, intercept, feedback, compactFeedback: true });

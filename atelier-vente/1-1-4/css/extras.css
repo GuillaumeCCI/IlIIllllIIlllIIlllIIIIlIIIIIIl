@@ -235,20 +235,17 @@
 .vf-chev { color: #8a96b5; transform: rotate(90deg); }
 .vf-sub { display: flex; gap: 6px; align-items: center; margin: 4px 0 0; color: #5d6785; font-size: .92rem; }
 .vf-sub .icon { color: var(--accent); flex-shrink: 0; }
-#info-dialog .vf-ideas { margin-bottom: 16px; }
-.vf-ideas-title { margin: 4px 0 10px; font-weight: 700; font-size: .92rem; color: var(--navy); }
-.vf-ideas { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
-.vf-ideas span { padding: 6px 16px; border-radius: 999px; background: #e8eefc; color: #23409a; font-weight: 600; font-size: .9rem; }
-.vf-landmark { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; border-radius: 12px; background: #eef4ff; border: 1px solid #dbe4f7; }
-.vf-landmark > .icon { flex-shrink: 0; color: var(--accent); }
-.vf-landmark strong { color: var(--accent); }
-.vf-landmark ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 4px; color: #46577d; font-size: .92rem; }
-.vf-landmark li { display: flex; gap: 8px; align-items: baseline; }
-.vf-landmark li .icon { color: var(--accent); flex-shrink: 0; }
-.vf-landmark b { color: var(--navy); }
 .vf-actions { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; padding-top: 6px; }
 .vf-review-row { margin-top: 18px; }
 @media (max-width: 900px) {
   .vf-layout { grid-template-columns: 1fr; }
   .vf-preview { display: none; }
 }
+
+/* L'indice de 4.3 : une piste par ligne avec son amorce de phrase, puis la règle d'or. */
+.vf-hints { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.vf-hints li { display: grid; gap: 4px; padding: 12px 16px; border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; background: #f5f7fc; }
+.vf-hints strong { color: var(--navy); }
+.vf-hints span { color: #46577d; font-style: italic; line-height: 1.45; }
+.vf-rule { margin: 16px 0 0; padding: 14px 18px; border-radius: 12px; background: #fff3e8; color: var(--navy); line-height: 1.5; }
+.vf-rule strong { color: #c4471f; }
