@@ -357,7 +357,10 @@ body.has-menu { padding-left: var(--menu-rail); }
 
 .av-menu-close { position: absolute; top: 50%; right: -26px; width: 44px; height: 64px; transform: translateY(-50%); border-radius: 0 16px 16px 0; background: #1b2370; box-shadow: 8px 0 18px rgb(16 20 72 / 18%); }
 
-.av-menu-close:hover { background: #26308a; }
+/* Au survol, la languette garde la couleur du panneau ; seule la flèche recule un peu. */
+#main .av-menu-close:hover, .av-menu-close:hover { background: #1b2370; }
+.av-menu-close svg { transition: transform .15s ease; }
+.av-menu-close:hover svg { transform: translateX(-3px); }
 
 .av-menu-backdrop { position: fixed; inset: 0; z-index: 0; background: rgb(16 20 72 / 28%); opacity: 0; visibility: hidden; transition: opacity .28s ease, visibility 0s linear .28s; }
 
