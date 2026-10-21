@@ -347,13 +347,9 @@ body.has-menu { padding-left: var(--menu-rail); }
 
 .av-menu-module { display: flex; gap: 18px; color: rgb(255 255 255 / 72%); text-transform: uppercase; letter-spacing: .04em; }
 
-.av-menu-module span:first-child { white-space: nowrap; }
 
-.av-menu-links { display: flex; gap: 22px; }
 
-.av-menu-links a { color: #fff; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: .04em; }
 
-.av-menu-links a:hover { text-decoration: underline; }
 
 .av-menu-close { position: absolute; top: 50%; right: -26px; width: 44px; height: 64px; transform: translateY(-50%); border-radius: 0 16px 16px 0; background: #1b2370; box-shadow: 8px 0 18px rgb(16 20 72 / 18%); }
 

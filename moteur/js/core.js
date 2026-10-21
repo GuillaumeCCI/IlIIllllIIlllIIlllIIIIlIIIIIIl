@@ -291,7 +291,6 @@
     home: '<span class="av-menu-icon is-home" aria-hidden="true"></span>',
     back: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m14.5 6-6 6 6 6"/></svg>'
   };
-  const moduleCode = () => catalog.code || (String(catalog.storageKey || '').match(/\d+-\d+-\d+/) || [''])[0];
   let menu = null;
 
   function setMenuOpen(open, { focus = true } = {}) {
@@ -322,8 +321,7 @@
         <p class="av-menu-title">Menu</p>
         <nav class="av-menu-nav"><ol class="av-menu-list"></ol></nav>
         <div class="av-menu-foot">
-          <div class="av-menu-module"><span>Module ${esc(moduleCode())}</span><span class="av-menu-serie"></span></div>
-          <div class="av-menu-links"><a href="${esc(homeUrl())}">Accueil</a><a href="${esc(homeUrl())}#bilan">Mon bilan</a></div>
+          <div class="av-menu-module"><span class="av-menu-serie"></span></div>
         </div>
         <button type="button" class="av-menu-close" aria-label="Fermer le menu">${MENU_SVG.back}</button>
       </div>
