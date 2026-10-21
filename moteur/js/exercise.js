@@ -276,8 +276,12 @@
     return openCase() === null;
   }
 
+  // Arrivée par « Exercice suivant » (#consigne) : la page de consigne
+  // s'affiche toujours, même pour un exercice déjà commencé.
+  let askedBrief = root.location && root.location.hash === '#consigne';
   function shouldBrief() {
     if (!briefingContent()) return false;
+    if (askedBrief) return true;
     // Aperçu (survol du menu) : toujours la page de contexte.
     if (root.document && root.document.documentElement && root.document.documentElement.dataset.preview) return true;
     if (briefingSeen()) return false;
@@ -609,6 +613,10 @@
   const announceShown = () => announce('atelier:exercise-shown');
 
   function openExercise() {
+    if (askedBrief) {
+      askedBrief = false;
+      try { root.history.replaceState(null, '', root.location.pathname + root.location.search); } catch { /* sans historique */ }
+    }
     setValue('briefed', true);
     // Un exercice à cas multiples passe par son menu ; les autres
     // ouvrent directement leur unique cas.
