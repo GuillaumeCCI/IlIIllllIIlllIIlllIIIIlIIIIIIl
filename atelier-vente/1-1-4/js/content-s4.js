@@ -93,6 +93,17 @@ window.ATELIER_S4 = {
     title: 'Trouver l’élément de valeur',
     subtitle: 'Pour chaque idée, apportez quelque chose de nouveau ou d’utile au client.',
     countLabel: 'éléments rédigés',
+    tour: [
+      { target: '.fm-scene', title: 'La situation', text: 'Votre offre est partie il y a une semaine, et le client n’a pas répondu. Vous préparez une relance.' },
+      { target: '.fm-main', title: 'Trois éléments de valeur', text: 'Pour chaque champ, notez une raison nouvelle de reprendre l’échange, par exemple :',
+        items: [
+          { symbol: 'chart', tone: 'blue', text: 'un retour chiffré d’un autre client ;' },
+          { symbol: 'clock', tone: 'coral', text: 'une échéance ;' },
+          { symbol: 'lightbulb', tone: 'gold', text: 'une information utile ou une proposition d’aide.' }
+        ],
+        after: 'Évitez « je reviens vers vous » : chaque élément doit apporter quelque chose au client.' },
+      { target: '.fm-actions .k-submit', title: 'Enregistrer', text: 'Les 3 éléments écrits, enregistrez-les pour voir des pistes possibles dans le corrigé.' }
+    ],
     scene: { info: 'L’offre Ergolys pour 10 postes complets a été envoyée il y a une semaine. Le client n’a pas répondu.', symbol: 'mail' },
     cases: [
       { tab: 'Mes 3 éléments de valeur', fields: [
