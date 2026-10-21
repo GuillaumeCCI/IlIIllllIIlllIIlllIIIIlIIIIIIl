@@ -659,7 +659,10 @@
       </div>`;
     }
 
+    // Le cas qui change glisse en place, comme les cartes.
+    const slide = slideFrom();
     function casePanel(i) {
+      const move = selfOn && i === SELF ? '' : slide(i);
       if (content.fieldSteps) return fieldStepsPanel();
       if (selfOn && i === SELF) return selfPanel();
       const c = cases[i];
@@ -671,7 +674,7 @@
       if (content.stepper) {
         const prev = i > 0 ? `data-act="fm-case" data-index="${i - 1}"` : 'disabled';
         // L'astuce se pose à côté du cadre blanc, sur le fond de la page.
-        return `<div class="fm-step-wrap ${content.tip || content.resources ? 'has-tip' : ''}"><section class="k-panel fm-panel fm-step">
+        return `<div class="fm-step-wrap ${content.tip || content.resources ? 'has-tip' : ''}"><section class="k-panel fm-panel fm-step ${move}">
           <div class="fm-main">
             ${content.side ? `<div class="fm-side-card">${scene(content.side)}</div>` : ''}
             <div class="fm-step-head"><span class="fm-step-n">${String(i + 1).padStart(2, '0')}</span><div><h2 class="fm-step-title">${esc(c.tab)}</h2>${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}</div></div>
@@ -693,8 +696,8 @@
         <div class="fm-actions">${content.hint || c.hint ? kit().dialogButton(`hint${c.hint ? i : ''}`, content.hintLabel || 'Voir un repère', 'secondary', 'lightbulb') : '<span></span>'}
           ${content.resources ? kit().dialogButton('resources', content.resourcesLabel || 'Mes ressources', 'text-button', 'stack') : ''}${kit().submit(label)}</div>
       </div>`;
-      if (!sceneHtml) return `<section class="k-panel fm-panel">${form}</section>`;
-      return `<section class="fm-panel ${content.layout === 'stack' ? 'is-stack' : 'is-side'}"><div class="k-panel fm-scene">${sceneHtml}</div><div class="k-panel">${form}</div></section>`;
+      if (!sceneHtml) return `<section class="k-panel fm-panel ${move}">${form}</section>`;
+      return `<section class="fm-panel ${content.layout === 'stack' ? 'is-stack' : 'is-side'} ${move}"><div class="k-panel fm-scene">${sceneHtml}</div><div class="k-panel">${form}</div></section>`;
     }
 
     /* LE CORRIGÉ EN ACCORDÉON (content.review) : une ligne par étape, avec

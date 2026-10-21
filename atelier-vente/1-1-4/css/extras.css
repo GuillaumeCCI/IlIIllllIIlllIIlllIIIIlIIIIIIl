@@ -263,3 +263,7 @@
 .vf-fact-icon { width: 30px; height: 30px; }
 .vf-fact-icon .icon { width: 16px; height: 16px; }
 .vf-facts small { font-size: .7rem; margin-bottom: 1px; }
+/* Passage d'une étape ou d'un cas à l'autre dans les écrans à plusieurs cas. */
+#main .fm-panel.is-next { animation: card-next .45s cubic-bezier(.2, .7, .2, 1) both; }
+#main .fm-panel.is-prev { animation: card-prev .45s cubic-bezier(.2, .7, .2, 1) both; }
+@media (prefers-reduced-motion: reduce) { #main .fm-panel.is-next, #main .fm-panel.is-prev { animation: none; } }
