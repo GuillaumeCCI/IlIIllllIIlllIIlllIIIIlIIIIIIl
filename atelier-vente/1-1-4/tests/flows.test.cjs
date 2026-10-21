@@ -41,14 +41,18 @@ const FILL = {
     if (c.criteria) e.setValue('criteria', c.criteria.slice(0, 2).map(x => x.id));
     for (let i = 0; i < (c.criteriaFields || 0); i++) e.setValue(`crit${i}`, 'Un critère.');
   },
-  form: (e, c) => c.cases.forEach((kase, i) => (kase.fields || c.fields || []).forEach(f => {
-    const answer = (kase.answers || {})[f.id] ?? f.answer;
-    const key = `c${i}_${f.id}`;
-    if (f.type === 'choice') e.setValue(key, [].concat(answer || f.options[0].id)[0]);
-    else if (f.type === 'chips') e.setValue(key, f.options.slice(0, f.min || 1).map(o => o.id));
-    else if (f.type === 'select') e.setValue(key, f.options[0].id);
-    else e.setValue(key, 'Une réponse.');
-  }))
+  form: (e, c) => {
+    c.cases.forEach((kase, i) => (kase.fields || c.fields || []).forEach(f => {
+      const answer = (kase.answers || {})[f.id] ?? f.answer;
+      const key = `c${i}_${f.id}`;
+      if (f.type === 'choice') e.setValue(key, [].concat(answer || f.options[0].id)[0]);
+      else if (f.type === 'chips') e.setValue(key, f.options.slice(0, f.min || 1).map(o => o.id));
+      else if (f.type === 'select') e.setValue(key, f.options[0].id);
+      else e.setValue(key, 'Une réponse.');
+    }));
+    // L'auto-évaluation qui précède le corrigé.
+    if (c.selfCheck) c.selfCheck.rows.forEach((_, i) => e.setValue(`self${i}`, '2'));
+  }
 };
 const CUSTOM = {
   's1-1-2': (e, c) => c.passages.forEach((p, i) => e.setValue(`mark${i}`, p.part)),

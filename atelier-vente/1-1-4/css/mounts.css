@@ -137,6 +137,16 @@
 .fm-tabs.count-2 { --n: 2; } .fm-tabs.count-3 { --n: 3; } .fm-tabs.count-4 { --n: 4; }
 .fm-tab { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border: 1.5px solid #e2e8f4; border-radius: 14px; background: #fff; color: var(--navy); font-weight: 700; text-align: left; box-shadow: var(--shadow); }
 .fm-tab:disabled { opacity: .6; cursor: not-allowed; }
+/* Onglets légers (content.pills) : pastilles avec le numéro et le nom. */
+#main .fm-tabs.is-pills { display: flex; flex-wrap: wrap; gap: 10px; width: fit-content; max-width: 100%; }
+#main .fm-tabs.is-pills .fm-tab { gap: 10px; padding: 6px 18px 6px 6px; border-radius: 999px; font-size: 1rem; }
+#main .fm-tabs.is-pills .fm-tab-n { width: 34px; height: 34px; font-size: .85rem; }
+#main .fm-tabs.is-pills .fm-tab-line { display: none; }
+/* L'auto-évaluation (content.selfCheck) : relecture des réponses, puis la grille. */
+.fm-reread { margin: 0 0 22px; padding: 0; list-style: none; display: grid; gap: 10px; }
+.fm-reread li { display: grid; gap: 4px; padding: 12px 16px; border-radius: 12px; background: #f5f7fc; color: var(--navy); line-height: 1.45; }
+.fm-reread strong { font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); }
+.fm-self-question { margin: 0 0 12px; font-weight: 700; font-size: 1.1rem; color: var(--navy); }
 .fm-tab.is-current { border-color: var(--accent); background: #eef4ff; }
 .fm-tab-n { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--tint); color: var(--accent); font-weight: 800; flex-shrink: 0; }
 .fm-tab.is-current .fm-tab-n { background: var(--accent); color: #fff; }

@@ -149,8 +149,39 @@ window.ATELIER_S1 = {
     subtitle: 'Créez trois formulations que vous pourrez reprendre en rendez-vous.',
     countLabel: 'cartes prêtes',
     caseNoun: 'Carte',
-    checksLabel: 'Bénéfice → Prix → Réassurance',
-    checks: ['Bénéfice', 'Prix', 'Réassurance'],
+    pills: true,
+    // L'auto-évaluation, une fois les 3 cartes écrites.
+    selfCheck: {
+      title: 'Relisez vos 3 annonces',
+      question: 'Chacune de vos annonces suit-elle ces trois temps ?',
+      rows: [
+        { title: 'Bénéfice', text: 'Elle commence par un bénéfice concret pour le client.' },
+        { title: 'Prix', text: 'Elle annonce le prix clairement, sans hésitation ni excuse.' },
+        { title: 'Réassurance', text: 'Elle se termine par une garantie ou un service inclus.' }
+      ]
+    },
+    tour: [
+      { target: '.fm-tabs', title: 'Trois annonces à créer', text: 'Une carte par offre : siège, poste complet, pack de 10 postes.',
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur une carte pour passer de l’une à l’autre.' },
+          { symbol: 'check', tone: 'green', text: 'Une carte terminée est cochée.' }
+        ] },
+      { target: '.fm-main .fm-field', title: 'Votre annonce', text: 'Rédigez l’annonce complète, telle que vous la diriez au client.',
+        items: [
+          { key: '1', tone: 'blue', text: 'un bénéfice ;' },
+          { key: '2', tone: 'coral', text: 'le prix ;' },
+          { key: '3', tone: 'green', text: 'une réassurance.' }
+        ] },
+      { target: '.fm-actions .k-dialog-button', title: 'Repère et éléments de l’offre',
+        items: [
+          { symbol: 'lightbulb', tone: 'gold', text: '« Voir un repère » rappelle la marche à suivre.' },
+          { symbol: 'stack', tone: 'blue', text: '« Consulter les éléments de l’offre » donne les prix, garanties et services.' }
+        ] },
+      { target: '.fm-tab.is-self', title: 'L’auto-évaluation', text: 'Après les 3 cartes, vous relisez vos annonces et vous les évaluez.',
+        items: [
+          { symbol: 'checkCircle', tone: 'green', text: 'Le corrigé modèle s’affiche ensuite.' }
+        ] }
+    ],
     fields: [{ id: 'text', label: 'Votre annonce', placeholder: 'Rédigez ici l’annonce complète, telle que vous la diriez au client…', rows: 6, max: 600 }],
     hint: 'Une formulation naturelle, claire et prête à être prononcée : un bénéfice concret, le prix sans hésitation, puis une garantie ou un service inclus.',
     resources: [

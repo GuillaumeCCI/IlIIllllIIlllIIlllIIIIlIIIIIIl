@@ -433,8 +433,10 @@
    * étape numérotée, bouton « Précédent »), tip (astuce à droite),
    * tour (bulles de la visite guidée, voir kit.tour), fieldSteps (un seul
    * cas rempli champ par champ ; chaque champ porte stepSub, symbol, intro,
-   * tip), cases [{ tab, title, scene, fields,
-   * answers, models, checks, model, next }].
+   * tip), pills (onglets légers : numéro et nom seulement), selfCheck
+   * ({ title, question, rows [{ title, text }] } : une auto-évaluation,
+   * ouverte une fois tous les cas faits, avant le corrigé), cases [{ tab,
+   * title, scene, fields, answers, models, checks, model, next }].
    *
    * Un champ : { id, label, sub, type: 'textarea' | 'input' | 'select' |
    * 'choice' | 'chips', placeholder, rows, max, options, answer, model,
@@ -462,6 +464,10 @@
       return `<strong>${fields.filter(f => filledField(0, f)).length} / ${fields.length}</strong> ${esc(content.countLabel || 'étapes')}`;
     };
     const reachable = i => !content.sequential || cases.slice(0, i).every((_, j) => complete(j));
+    // L'auto-évaluation se place après le dernier cas (index n).
+    const SELF = n;
+    const selfOn = !!content.selfCheck && !content.fieldSteps && !content.stepper;
+    const selfScale = [{ id: '2', label: 'Oui' }, { id: '1', label: 'En partie' }, { id: '0', label: 'Pas encore' }];
     /* Le cas affiché. Sans choix mémorisé, le premier ; un cas encore
      * fermé (étapes successives) renvoie au premier cas incomplet. L'écran
      * mémorise ensuite le cas qu'il affiche : remplir ce cas ne doit pas
@@ -469,6 +475,7 @@
     const current = () => {
       const asked = intOr(ex().value('case'));
       if (asked === null) return 0;
+      if (selfOn && asked === SELF && doneCount() === n) return SELF;
       if (asked >= 0 && asked < n && reachable(asked)) return asked;
       const free = cases.findIndex((_, i) => !complete(i));
       return free === -1 ? n - 1 : free;
@@ -483,9 +490,28 @@
 
     function tabs(at) {
       if (n < 2 || content.stepper) return '';
-      return `<div class="fm-tabs count-${n} ${content.sequential ? 'is-steps' : ''}">${cases.map((c, i) => `<button type="button" class="fm-tab ${i === at ? 'is-current' : ''} ${complete(i) ? 'is-done' : ''}" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'}>
-        <span class="fm-tab-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : content.sequential ? i + 1 : String(i + 1).padStart(2, '0')}</span><span class="fm-tab-text">${esc(c.tab)}${c.tabSub ? `<small>${esc(c.tabSub)}</small>` : ''}${c.tabNote ? `<small class="fm-tab-note">${esc(c.tabNote)}</small>` : ''}</span></button>`).join('<span class="fm-tab-line" aria-hidden="true"></span>')}</div>`;
+      return `<div class="fm-tabs count-${n} ${content.sequential ? 'is-steps' : ''} ${content.pills ? 'is-pills' : ''}">${cases.map((c, i) => `<button type="button" class="fm-tab ${i === at ? 'is-current' : ''} ${complete(i) ? 'is-done' : ''}" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'}>
+        <span class="fm-tab-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : content.sequential ? i + 1 : String(i + 1).padStart(2, '0')}</span><span class="fm-tab-text">${esc(c.tab)}${c.tabSub && !content.pills ? `<small>${esc(c.tabSub)}</small>` : ''}${c.tabNote ? `<small class="fm-tab-note">${esc(c.tabNote)}</small>` : ''}</span></button>`).join('<span class="fm-tab-line" aria-hidden="true"></span>')}${selfOn ? `
+        <button type="button" class="fm-tab is-self ${at === SELF ? 'is-current' : ''}" data-act="fm-case" data-index="${SELF}" ${doneCount() === n ? '' : 'disabled'}>
+        <span class="fm-tab-n">${icon(doneCount() === n ? 'list' : 'lock', { size: 16 })}</span><span class="fm-tab-text">Auto-évaluation</span></button>` : ''}</div>`;
     }
+
+    /* L'auto-évaluation (content.selfCheck) : on relit ses réponses, puis on
+     * note chaque critère (Oui, En partie, Pas encore). */
+    function selfPanel() {
+      const sc = content.selfCheck;
+      return `<section class="k-panel fm-panel"><div class="fm-main">
+        <p class="k-label">Auto-évaluation</p>
+        <h2 class="fm-title">${esc(sc.title || 'Relisez vos réponses')}</h2>
+        <ol class="fm-reread">${cases.map((c, i) => `<li><strong>${esc(c.tab)}</strong>${fieldsOf(i).map(f => `<span>« ${esc(val(i, f))} »</span>`).join('')}</li>`).join('')}</ol>
+        <p class="fm-self-question">${esc(sc.question || 'Vos réponses remplissent-elles ces critères ?')}</p>
+        ${kit().matrix({ key: 'self', rows: sc.rows, columns: selfScale, head: 'Critère', round: true })}
+        ${core().errorsBox()}
+        <div class="fm-actions">${kit().act('fm-case', `${icon('arrowLeft', { size: 18 })}<span>Revenir à : ${esc(cases[n - 1].tab)}</span>`, 'secondary', `data-index="${n - 1}"`)}
+          ${kit().submit(content.selfCheck.submit || 'Valider mon auto-évaluation')}</div>
+      </div></section>`;
+    }
+    const selfScore = () => content.selfCheck.rows.reduce((sum, _, i) => sum + (Number(ex().value(`self${i}`)) || 0), 0);
 
     function fieldBlock(i, f) {
       const key = k(i, f);
@@ -617,12 +643,13 @@
 
     function casePanel(i) {
       if (content.fieldSteps) return fieldStepsPanel();
+      if (selfOn && i === SELF) return selfPanel();
       const c = cases[i];
       const fields = fieldsOf(i);
       const sceneHtml = scene(c.scene || content.scene);
       const after = cases.findIndex((_, j) => j > i && !complete(j));
       const next = after !== -1 ? after : cases.findIndex((_, j) => j !== i && !complete(j));
-      const label = next === -1 ? (content.submitLabel || 'Valider mes réponses') : (c.next || content.nextLabel || `Enregistrer et continuer`);
+      const label = next === -1 ? (selfOn ? 'Enregistrer et s’auto-évaluer' : content.submitLabel || 'Valider mes réponses') : (c.next || content.nextLabel || `Enregistrer et continuer`);
       if (content.stepper) {
         const prev = i > 0 ? `data-act="fm-case" data-index="${i - 1}"` : 'disabled';
         // L'astuce se pose à côté du cadre blanc, sur le fond de la page.
@@ -728,7 +755,7 @@
 
     function reviewScreen() {
       if (content.review) return accordionReview();
-      return cases.map((c, i) => {
+      return (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
         const fields = fieldsOf(i);
         if (!fields.length && !c.model && !c.lesson) return '';
         const sceneHtml = c.reviewScene !== false ? scene((c.scene || content.scene) && [].concat(c.scene || content.scene).filter(b => b.quote || b.info || b.dialogue)) : '';
@@ -798,10 +825,13 @@
         return own.length ? own : caseErrors(values, 0);
       }
       const at = current();
-      const own = caseErrors(values, at);
+      const own = at === SELF ? [] : caseErrors(values, at);
       if (own.length) return own;
       const missing = cases.findIndex((_, i) => !complete(i) && i !== at);
-      return missing === -1 ? [] : [{ key: 'case', message: `Complétez aussi : ${cases[missing].tab}.` }];
+      if (missing !== -1) return [{ key: 'case', message: `Complétez aussi : ${cases[missing].tab}.` }];
+      if (!selfOn || at !== SELF) return [];
+      const unrated = content.selfCheck.rows.findIndex((_, i) => !values[`self${i}`]);
+      return unrated === -1 ? [] : [{ key: `self${unrated}`, message: `Évaluez chacune des ${content.selfCheck.rows.length} lignes.` }];
     }
 
     function intercept(values) {
@@ -819,11 +849,12 @@
         return true;
       }
       const at = current();
-      if (caseErrors(values, at).length) return false;
+      if (at === SELF || caseErrors(values, at).length) return false;
       if (!fieldsOf(at).length) ex().setValue(k(at, 'read'), true);
       // Le cas suivant encore incomplet, sinon le premier qui l'est.
       const after = cases.findIndex((_, j) => j > at && !complete(j));
       const target = after !== -1 ? after : cases.findIndex((_, j) => !complete(j));
+      if (target === -1 && selfOn) { ex().setValue('case', SELF); return true; }
       if (target === -1) return false;
       ex().setValue('case', target);
       return true;
@@ -867,6 +898,7 @@
     kit().live(() => {
       const at = current();
       const parts = { 'fm-count': countLine() };
+      if (at === SELF) return parts;
       fieldsOf(at).filter(f => f.type === 'chips').forEach(f => { parts[`chips-${k(at, f)}`] = chipsLine(at, f); });
       return parts;
     });

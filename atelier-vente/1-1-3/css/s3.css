@@ -110,7 +110,7 @@ button.crash-passage:hover { background: #fcdcd3; }
 /* ── 2.2 · Passez en mode traitement ──────────────────────────────────── */
 .fix-count { padding: 10px 22px; border-radius: 14px; background: #eef3fd; }
 /* Les trois répliques en onglets légers : numéro et nom court (la phrase du client est juste en dessous). */
-.fix-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+.fix-tabs { display: flex; flex-wrap: wrap; gap: 10px; width: fit-content; max-width: 100%; }
 .fix-tab { display: flex; align-items: center; gap: 10px; padding: 6px 18px 6px 6px; border: 1.5px solid #e2e8f4; border-radius: 999px; background: #fff; color: var(--navy); font-weight: 650; font-size: 1rem; text-align: left; }
 .fix-tab.is-current { border-color: var(--accent); background: #eef4ff; font-weight: 800; }
 .fix-n { display: grid; place-items: center; width: 34px; height: 34px; font-size: .85rem; border-radius: 50%; background: #eef1f7; color: #5b6a8f; font-weight: 800; flex-shrink: 0; }
