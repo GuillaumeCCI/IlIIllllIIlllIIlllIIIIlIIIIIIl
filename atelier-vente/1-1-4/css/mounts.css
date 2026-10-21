@@ -488,6 +488,7 @@ button.crash-passage:hover { background: #fff1d6; }
 .fs-nav li.is-current .fs-text { background: #e4ebfb; }
 .fs-nav li.is-current .fs-text strong { color: var(--accent); }
 .fs-panel { display: grid; gap: 18px; padding: 30px 34px; }
+.fs-panel .fm-actions { border-top: 0; padding-top: 0; }
 .fs-step { display: grid; gap: 20px; }
 .fs-head { display: flex; align-items: center; gap: 18px; }
 .fs-head h2 { margin: 0; font-size: clamp(1.5rem, 2vw, 1.9rem); }

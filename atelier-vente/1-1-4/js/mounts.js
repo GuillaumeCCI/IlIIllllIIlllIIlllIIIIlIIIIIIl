@@ -878,14 +878,17 @@
         kit().commit();
       },
       'fm-token': el => {
-        const target = lastFocus && root.document.body.contains(lastFocus) ? lastFocus : core().$('.fm-main textarea, .fm-main input[type="text"]');
+        const target = lastFocus && root.document.body.contains(lastFocus) ? lastFocus : core().$('.fm-main textarea, .fm-main input[type="text"], .fs-panel textarea, .fs-panel input[type="text"]');
         if (!target) return;
-        const token = el.dataset.token;
         const start = target.selectionStart ?? target.value.length;
-        target.value = `${target.value.slice(0, start)}${token}${target.value.slice(target.selectionEnd ?? start)}`;
+        const before = target.value.slice(0, start), after = target.value.slice(target.selectionEnd ?? start);
+        // Une espace sépare le champ des mots voisins ; le curseur se place après.
+        const token = `${before && !/\s$/.test(before) ? ' ' : ''}${el.dataset.token}${/^\s/.test(after) ? '' : ' '}`;
+        target.value = `${before}${token}${after}`;
         ex().setValue(target.dataset.field, target.value);
         ex().changed();
         target.focus();
+        target.setSelectionRange(before.length + token.length, before.length + token.length);
       }
     });
     if (root.document && typeof root.document.addEventListener === 'function') {
@@ -896,7 +899,7 @@
         root.document.querySelectorAll(`.fm-skin[data-skin-for="${field}"]`).forEach(el => { el.dataset.skin = event.target.value || 'none'; });
       });
       root.document.addEventListener('focusin', event => {
-        if (event.target.matches && event.target.matches('.fm-main textarea, .fm-main input[type="text"]')) lastFocus = event.target;
+        if (event.target.matches && event.target.matches('.fm-main textarea, .fm-main input[type="text"], .fs-panel textarea, .fs-panel input[type="text"]')) lastFocus = event.target;
       });
     }
     kit().live(() => {
