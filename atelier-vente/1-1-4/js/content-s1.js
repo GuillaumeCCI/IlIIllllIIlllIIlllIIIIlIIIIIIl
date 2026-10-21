@@ -107,6 +107,20 @@ window.ATELIER_S1 = {
     title: 'Le duel des annonces',
     subtitle: 'Même prix. Deux façons de le présenter.',
     badge: '690 € dans les deux cas',
+    tour: [
+      { target: '.cmp-options', title: 'Deux annonces, un même prix', text: 'Le même siège, au même prix : seule la façon de l’annoncer change.',
+        items: [
+          { symbol: 'chat', tone: 'blue', text: 'Lisez les deux annonces en entier.' },
+          { symbol: 'pointer', tone: 'green', text: 'Cliquez sur « Choisir cette annonce » sous la plus efficace.' }
+        ] },
+      { target: '.cmp-why', show: '.cmp-why', title: 'Votre verdict', wide: true,
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Ce cadre apparaît dès que vous avez choisi une annonce.' },
+          { symbol: 'list', tone: 'blue', text: 'Cochez au moins deux critères : posture, structure, vocabulaire, clarté.' },
+          { symbol: 'pencil', tone: 'gold', text: 'Expliquez en quelques mots pourquoi cette annonce est plus efficace.' },
+          { symbol: 'arrowRight', tone: 'green', text: '« Valider mon analyse » affiche l’analyse des deux annonces et le corrigé.' }
+        ] }
+    ],
     options: [
       { id: '1', label: 'Annonce 1', text: 'Alors… c’est 690 € le siège. C’est un peu cher, je sais, mais bon.',
         analysis: ['Posture hésitante : « Alors… », « mais bon ».', 'Le commercial qualifie lui-même son prix de cher.', 'Aucun bénéfice, aucune réassurance : le prix est nu.'] },
