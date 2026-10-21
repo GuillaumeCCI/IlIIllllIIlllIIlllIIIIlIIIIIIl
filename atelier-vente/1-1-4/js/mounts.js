@@ -109,10 +109,17 @@
       dialog.classList.add('is-context');
       dialog.addEventListener('close', () => dialog.classList.remove('is-context'), { once: true });
     }
+    // Elle attend l'exercice lui-même : pas sur la page de consigne, et
+    // seulement une fois le carton de titre de « Commencer » retiré.
     function onMount() {
       if (contextSeen || !content.context || ex().reviewing() || kit().deckCurrent(total) === null) return;
+      if (!root.document.querySelector('#main .dk-board')) return;
       contextSeen = true;
-      openContext();
+      const wait = setInterval(() => {
+        if (root.document.querySelector('.launch-veil')) return;
+        clearInterval(wait);
+        if (root.document.querySelector('#main .dk-board')) openContext();
+      }, 200);
     }
     const contextBox = () => `<section class="dk-context" aria-label="Le contexte">
         <ul>${[
