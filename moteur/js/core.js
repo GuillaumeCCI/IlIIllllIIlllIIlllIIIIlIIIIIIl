@@ -336,7 +336,8 @@
     // Un exercice choisi dans le menu, ou le bouton qui mène à la suite
     // (« Exercice suivant », « Continuer », liens de bas de page) : le cadre
     // d'intégration joue sa transition (logo CCI en fondu,
-    // atelier-vente/cadre.html), s'il existe.
+    // atelier-vente/cadre.html) ; hors cadre (page ouverte seule, fichier
+    // local), la page joue elle-même la même transition.
     document.addEventListener('click', event => {
       const link = event.target.closest('.av-menu-list a[href], #main a[href]');
       if (!link || link.getAttribute('aria-current') || link.target === '_blank' || event.ctrlKey || event.metaKey || event.shiftKey || event.button) return;
@@ -344,7 +345,10 @@
       if (!/^[^:]*\.html(#.*)?$/.test(link.getAttribute('href'))) return;
       let transition = null;
       try { transition = window.parent !== window && window.parent.atelierTransition; } catch { /* autre origine */ }
-      if (typeof transition !== 'function') return;
+      if (typeof transition !== 'function') {
+        if (window.parent !== window) return; // intégré ailleurs (LMS) : lien simple
+        transition = ownTransition;
+      }
       event.preventDefault();
       if (link.closest('.av-menu-list')) setMenuOpen(false, { focus: false });
       transition(link.href);
@@ -404,6 +408,48 @@
   }
 
   // L'exercice suivant s'ouvre sur sa page de consigne (#consigne).
+  /* LA TRANSITION SANS CADRE : le logo CCI couvre la page en fondu, le
+   * bruit de page tournée joue (sauf sons coupés), puis la page suivante
+   * s'ouvre, couverte à son tour, et le logo s'efface (voir coverOnArrival).
+   * Même rendu que atelier-vente/cadre.html. */
+  const COVER_KEY = 'atelier-vente-transition';
+  const logoUrl = () => `${inSubfolder ? '../' : ''}../../moteur/assets/logo-cci.webp`;
+  function coverLayer(on) {
+    const cover = document.createElement('div');
+    cover.className = `page-transition${on ? ' is-on' : ''}`;
+    cover.setAttribute('aria-hidden', 'true');
+    cover.innerHTML = `<img src="${esc(logoUrl())}" alt="">`;
+    document.body.appendChild(cover);
+    return cover;
+  }
+  function ownTransition(url) {
+    if (document.querySelector('.page-transition')) return;
+    const cover = coverLayer(false);
+    requestAnimationFrame(() => requestAnimationFrame(() => cover.classList.add('is-on')));
+    let muted = false;
+    try { muted = localStorage.getItem('atelier-vente-sons') === 'off'; } catch { /* son actif */ }
+    if (!muted) {
+      try {
+        const sound = new Audio(`${inSubfolder ? '../' : ''}../../moteur/assets/audio/transition-page.mp3`);
+        sound.volume = 0.22;
+        const played = sound.play();
+        if (played && played.catch) played.catch(() => {});
+      } catch { /* pas de son */ }
+    }
+    try { sessionStorage.setItem(COVER_KEY, String(Date.now())); } catch { /* sans stockage */ }
+    setTimeout(() => { window.location.href = url; }, 900);
+  }
+  // À l'arrivée par la transition : la page s'ouvre sous le logo, qui s'efface.
+  function coverOnArrival() {
+    let at = 0;
+    try { at = Number(sessionStorage.getItem(COVER_KEY)) || 0; sessionStorage.removeItem(COVER_KEY); } catch { /* sans stockage */ }
+    if (!at || Date.now() - at > 8000) return;
+    const cover = coverLayer(true);
+    setTimeout(() => { cover.classList.remove('is-on'); setTimeout(() => cover.remove(), 500); }, Math.max(600, at + 1900 - Date.now()));
+  }
+  if (document.body) coverOnArrival();
+  else document.addEventListener('DOMContentLoaded', coverOnArrival);
+
   function nextUrl(current) {
     const next = catalog.all[allKeys.indexOf(current.key) + 1];
     return next ? `${pageUrl(next.file)}#consigne` : `${homeUrl()}#bilan`;
