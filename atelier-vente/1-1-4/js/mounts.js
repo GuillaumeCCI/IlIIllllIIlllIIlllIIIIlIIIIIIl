@@ -279,7 +279,7 @@
       const intro = !reviewing && stage === 1;
       return `<div class="k-page mt-page">
         ${kit().head({ eyebrow: content.eyebrow, title: intro ? content.intro.title : content.title, subtitle: intro ? content.intro.subtitle : content.subtitle,
-          aside: intro ? '' : `<p class="k-count"><strong>${count()} / ${n}</strong> associations</p>${reviewing ? '' : dots(current())}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
+          aside: intro ? (content.tour ? kit().tourButton() : '') : `<p class="k-count"><strong>${count()} / ${n}</strong> associations</p>${reviewing ? '' : dots(current())}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
         ${hasIntro && !intro && !reviewing ? `<p class="mt-reread">${kit().dialogButton('intro', content.intro.reread || 'Relire le document', 'text-button', 'document')}</p>` : ''}
         <form novalidate class="mt-form">
           ${reviewing ? reviewScreen() : intro ? introScreen() : `${playScreen()}${core().errorsBox()}${kit().bar({
@@ -495,7 +495,7 @@
     function tabs(at) {
       if (n < 2 || content.stepper) return '';
       return `<div class="fm-tabs count-${n} ${content.sequential ? 'is-steps' : ''} ${content.pills ? 'is-pills' : ''}">${cases.map((c, i) => `<button type="button" class="fm-tab ${i === at ? 'is-current' : ''} ${complete(i) ? 'is-done' : ''}" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'}>
-        <span class="fm-tab-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : content.sequential ? i + 1 : String(i + 1).padStart(2, '0')}</span><span class="fm-tab-text">${esc(c.tab)}${c.tabSub && !content.pills ? `<small>${esc(c.tabSub)}</small>` : ''}${c.tabNote ? `<small class="fm-tab-note">${esc(c.tabNote)}</small>` : ''}</span></button>`).join('<span class="fm-tab-line" aria-hidden="true"></span>')}${selfOn ? `
+        <span class="fm-tab-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : content.sequential ? i + 1 : String(i + 1).padStart(2, '0')}</span><span class="fm-tab-text">${esc(c.tab)}${c.tabSub && !content.pills ? `<small>${esc(c.tabSub)}</small>` : ''}${c.tabNote && !content.pills ? `<small class="fm-tab-note">${esc(c.tabNote)}</small>` : ''}</span></button>`).join('<span class="fm-tab-line" aria-hidden="true"></span>')}${selfOn ? `
         <button type="button" class="fm-tab is-self ${at === SELF ? 'is-current' : ''}" data-act="fm-case" data-index="${SELF}" ${doneCount() === n ? '' : 'disabled'}>
         <span class="fm-tab-n">${icon(doneCount() === n ? 'list' : 'lock', { size: 16 })}</span><span class="fm-tab-text">Auto-évaluation</span></button>` : ''}</div>`;
     }

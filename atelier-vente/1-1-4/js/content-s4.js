@@ -56,6 +56,20 @@ window.ATELIER_S4 = {
     },
     cardLabel: 'Extrait',
     cardsLabel: 'extraits',
+    // Visite en deux temps : l'e-mail à lire, puis (`later`) les associations.
+    tour: [
+      { target: '.mt-intro', title: 'L’e-mail de relance', text: 'Lisez cet e-mail en entier : il est découpé en trois extraits que vous allez classer.' },
+      { target: '.mt-page .k-bar .k-submit', title: 'Passer aux associations', text: 'Quand vous avez lu l’e-mail, ce bouton ouvre l’exercice.' },
+      { later: true, target: '.mt-card', title: 'L’extrait', text: 'Voici un extrait de l’e-mail. À quelle partie d’une relance correspond-il ?' },
+      { later: true, target: '.mt-zones', title: 'Les trois parties',
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur la partie qui correspond à l’extrait.' },
+          { symbol: 'grip', tone: 'blue', text: 'Ou faites glisser l’extrait sur la partie.' }
+        ],
+        after: 'Chaque partie ne s’utilise qu’une fois.' },
+      { later: true, target: '.mt-reread', title: 'Relire l’e-mail', text: 'Un doute ? Ce bouton rouvre l’e-mail complet.' },
+      { later: true, target: '.mt-page .k-bar', title: 'Valider', text: 'Les 3 extraits placés, validez vos associations pour voir le corrigé.' }
+    ],
     zoneTitle: 'Où placer cet extrait ?',
     zoneNoun: 'partie',
     zones: [

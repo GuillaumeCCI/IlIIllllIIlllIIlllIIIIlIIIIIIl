@@ -91,17 +91,34 @@ window.ATELIER_S3 = {
     subtitle: 'Choisissez une technique, puis trouvez les mots justes.',
     countLabel: 'situations',
     caseNoun: 'Situation',
+    pills: true,
+    tour: [
+      { target: '.fm-tabs', title: 'Trois situations', text: 'Trois clients, trois moments où conclure.',
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur une situation pour passer de l’une à l’autre.' },
+          { symbol: 'check', tone: 'green', text: 'Une situation terminée est cochée.' }
+        ] },
+      { target: '.fm-scene', title: 'La scène', text: 'Observez ce que le client dit et ce qu’il fait : est-il prêt à décider ?' },
+      { target: '.fm-choices', title: 'Quelle carte jouez-vous ?', text: 'Choisissez la technique de conclusion adaptée à ce client.' },
+      { target: '.fm-main .fm-field:has(textarea)', title: 'Votre phrase au client', text: 'Une seule phrase, naturelle et concrète, comme si vous lui parliez.' },
+      { target: '.fm-actions', title: 'Repère et validation',
+        items: [
+          { symbol: 'lightbulb', tone: 'gold', text: '« Voir un repère » aide à lire ce que fait le client.' },
+          { symbol: 'arrowRight', tone: 'blue', text: 'Valider passe à la situation suivante.' },
+          { symbol: 'checkCircle', tone: 'green', text: 'Le corrigé s’affiche après les 3 situations.' }
+        ] }
+    ],
     fields: [
       { id: 'technique', type: 'choice', label: 'Quelle carte jouez-vous ?', options: window.ATELIER_CLOSINGS.map(c => ({ id: c.id, label: c.label, sub: c.sub, symbol: c.symbol, tone: c.tone })) },
       { id: 'text', label: 'Votre phrase au client', sub: 'Une seule phrase, naturelle et concrète.', placeholder: 'Écrivez ce que vous diriez vraiment…', max: 160, rows: 3 }
     ],
     hint: 'Lisez ce que fait le client : se projette-t-il dans la suite, hésite-t-il entre deux options, ou a-t-il tout validé ?',
     cases: [
-      { tab: 'Situation 1', tabNote: 'Livraison avant la fin du mois ?', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-A.png', alt: 'Une cliente demande si la livraison est possible avant la fin du mois.', caption: 'Le client demande : « Vous pourriez nous livrer avant la fin du mois ? »' },
+      { tab: 'Livraison rapide', tabNote: 'Livraison avant la fin du mois ?', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-A.png', alt: 'Une cliente demande si la livraison est possible avant la fin du mois.', caption: 'Le client demande : « Vous pourriez nous livrer avant la fin du mois ? »' },
         answers: { technique: 'directe' }, models: { text: 'Oui, une livraison avant la fin du mois est possible. Est-ce que vous souhaitez que nous partions sur ce calendrier ?' } },
-      { tab: 'Situation 2', tabNote: 'Hésite entre 5 et 10 postes', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-B.png', alt: 'Un client compare deux maquettes posées sur la table : une implantation de 5 postes et une de 10 postes.', caption: 'Le client souhaite s’équiper, mais hésite encore entre 5 et 10 postes.' },
+      { tab: 'Hésite entre 5 et 10', tabNote: 'Hésite entre 5 et 10 postes', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-B.png', alt: 'Un client compare deux maquettes posées sur la table : une implantation de 5 postes et une de 10 postes.', caption: 'Le client souhaite s’équiper, mais hésite encore entre 5 et 10 postes.' },
         answers: { technique: 'alternative' }, models: { text: 'Vous préférez commencer par les 5 postes prioritaires ou équiper directement les 10 ?' } },
-      { tab: 'Situation 3', tabNote: 'A tout validé, plus d’objection', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-C.png', alt: 'Le client et le commercial se serrent la main devant les éléments validés.', caption: 'Le client a validé la solution, son périmètre et son prix. Il ne formule plus d’objection.' },
+      { tab: 'Tout validé', tabNote: 'A tout validé, plus d’objection', scene: { image: 'assets/illustrations/s3/1-1-4-S3-i3-3-C.png', alt: 'Le client et le commercial se serrent la main devant les éléments validés.', caption: 'Le client a validé la solution, son périmètre et son prix. Il ne formule plus d’objection.' },
         answers: { technique: ['recap', 'directe'] }, models: { text: 'Nous avons donc validé les 10 postes, l’installation et la garantie 5 ans. Est-ce que nous pouvons lancer la commande ?' } }
     ],
     keyPoint: 'À retenir : la bonne conclusion est celle qui s’appuie sur ce que le client vient réellement d’exprimer et lui propose clairement une prochaine étape.',
@@ -192,6 +209,20 @@ window.ATELIER_S3 = {
     countLabel: 'cartes',
     className: 'fm-airy',
     caseNoun: 'Situation',
+    tour: [
+      { target: '.fm-tabs', title: 'Quatre cartes à écrire', text: 'Une carte par façon de conclure.',
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur une carte pour passer de l’une à l’autre.' },
+          { symbol: 'check', tone: 'green', text: 'Une carte terminée est cochée.' }
+        ] },
+      { target: '.fm-main .fm-title', title: 'Ce que vous voulez obtenir', text: 'Chaque carte part d’une intention : ce que vous voulez obtenir du client.' },
+      { target: '.fm-main .fm-field', title: 'Votre formulation', text: 'Une phrase courte, dans vos mots, que vous seriez à l’aise de dire à un client demain.' },
+      { target: '.fm-actions .k-submit', title: 'Enregistrer dans ma boîte',
+        items: [
+          { symbol: 'arrowRight', tone: 'blue', text: 'La carte suivante s’ouvre.' },
+          { symbol: 'checkCircle', tone: 'green', text: 'Après les 4 cartes, votre boîte s’affiche avec le corrigé.' }
+        ] }
+    ],
     fields: [{ id: 'text', label: 'Ma formulation prête à l’emploi', help: 'Une phrase courte, dans vos mots.', placeholder: 'Ce que je dirais vraiment au client…', max: 280, rows: 4 }],
     cases: [
       { tab: 'Vérifier directement', title: 'Je veux vérifier directement si le client est prêt à avancer.',
