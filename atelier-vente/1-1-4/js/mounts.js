@@ -588,12 +588,6 @@
     const fieldOpen = j => fieldsOf(0).slice(0, j).every(f => f.optional || filledField(0, f));
     let shownField = null;
 
-    function fieldDots() {
-      const fields = fieldsOf(0);
-      const at = fieldAt();
-      return `<div class="fs-dots"><ol>${fields.map((f, j) => `<li class="${j === at ? 'is-current' : ''} ${filledField(0, f) ? 'is-done' : ''}"><span>${j + 1}</span></li>`).join('')}</ol><p>Étape ${at + 1} sur ${fields.length}</p></div>`;
-    }
-
     function fieldStepsPanel() {
       const fields = fieldsOf(0);
       const at = fieldAt();
@@ -807,7 +801,7 @@
       if (!reviewing && ex().value('case') !== at) ex().setValue('case', at);
       return `<div class="k-page fm-page ${content.className || ''}">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: `${content.fieldSteps && !reviewing ? fieldDots() : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : ''}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
+          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : ''}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
         ${content.side && !reviewing && !content.stepper ? `<div class="k-panel fm-side">${scene(content.side)}</div>` : ''}
         ${reviewing ? reviewScreen() : `${tabs(at)}<form novalidate class="fm-form">${casePanel(at)}</form>`}
         ${reviewing ? '' : kit().utility(content.lock || 'Corrigé disponible après validation')}

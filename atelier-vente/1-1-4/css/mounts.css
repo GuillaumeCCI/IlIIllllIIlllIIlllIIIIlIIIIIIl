@@ -500,14 +500,6 @@ button.crash-passage:hover { background: #fff1d6; }
 #main .fs-panel textarea { min-height: 150px; font-size: 1.05rem; }
 .fs-tip { display: flex; align-items: center; gap: 14px; margin: 0; padding: 16px 20px; border-radius: 14px; background: #eef4ff; color: var(--navy); }
 .fs-tip .icon { color: var(--accent); flex-shrink: 0; }
-.fs-dots { display: grid; justify-items: center; gap: 8px; }
-.fs-dots ol { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; }
-.fs-dots li { display: flex; align-items: center; }
-.fs-dots li + li::before { content: ''; width: 28px; height: 2px; background: #d6deec; }
-.fs-dots li.is-done + li::before { background: var(--accent); }
-.fs-dots span { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #e4ebfb; color: var(--accent); font-weight: 800; }
-.fs-dots li.is-current span { background: var(--accent); color: #fff; }
-.fs-dots p { margin: 0; color: #5b6a8f; font-size: .92rem; }
 .fs-step.is-next { animation: fs-next .4s ease-out; }
 .fs-step.is-prev { animation: fs-prev .4s ease-out; }
 @keyframes fs-next { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
