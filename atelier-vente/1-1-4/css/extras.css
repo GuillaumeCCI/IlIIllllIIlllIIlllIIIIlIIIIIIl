@@ -256,3 +256,10 @@
 .vf-facts small { display: block; font-size: .75rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
 .vf-know ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; font-size: .92rem; }
 .vf-know b { color: var(--navy); }
+
+/* Passage d'une carte à l'autre (cartes à choix et cartes à associer). */
+@keyframes card-next { from { opacity: 0; transform: translateX(60px) rotate(1.5deg); } to { opacity: 1; transform: none; } }
+@keyframes card-prev { from { opacity: 0; transform: translateX(-60px) rotate(-1.5deg); } to { opacity: 1; transform: none; } }
+#main .dk-card.is-next, #main .mt-card.is-next { animation: card-next .45s cubic-bezier(.2, .7, .2, 1) both; }
+#main .dk-card.is-prev, #main .mt-card.is-prev { animation: card-prev .45s cubic-bezier(.2, .7, .2, 1) both; }
+@media (prefers-reduced-motion: reduce) { #main .dk-card.is-next, #main .dk-card.is-prev, #main .mt-card.is-next, #main .mt-card.is-prev { animation: none; } }

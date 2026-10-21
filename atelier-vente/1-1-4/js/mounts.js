@@ -74,6 +74,17 @@
     }).join('');
   }
 
+  /* La carte qui change glisse en place : depuis la droite pour la suivante,
+   * depuis la gauche quand on revient en arrière. Rien au simple redessin. */
+  function slideFrom() {
+    let shown = null;
+    return index => {
+      const cls = shown !== null && shown !== index ? (index > shown ? 'is-next' : 'is-prev') : '';
+      shown = index;
+      return cls;
+    };
+  }
+
   /* ─────────────────────── Une carte, des zones ─────────────────────── */
 
   /* content : eyebrow, title, subtitle, context { situation, read, choose }
@@ -129,13 +140,14 @@
         ].map(([symbol, label, line]) => `<li><span class="dk-context-icon">${icon(symbol, { size: 20 })}</span><span><strong>${label}</strong>${esc(line)}</span></li>`).join('')}</ul>
       </section>`;
 
+    const slide = slideFrom();
     function playScreen(index) {
       const history = ex().value('history');
       // L'avancement se lit sur la carte elle-même : sa bordure haute se
       // remplit à chaque réponse donnée.
       const answered = kit().deckPlaced(total).filter(zone => zone !== null).length;
       return `<div class="dk-board">
-        <article class="dk-card ${banner ? 'has-banner' : ''}"${banner ? ` style="--card-bg: url(../assets/illustrations/cartes/carte-${String(banner).padStart(2, '0')}.webp)"` : ''} tabindex="0" aria-label="${esc(label(index))} : ${esc(cards[index].text)}">
+        <article class="dk-card ${banner ? 'has-banner' : ''} ${slide(index)}"${banner ? ` style="--card-bg: url(../assets/illustrations/cartes/carte-${String(banner).padStart(2, '0')}.webp)"` : ''} tabindex="0" aria-label="${esc(label(index))} : ${esc(cards[index].text)}">
           <span class="dk-progress" role="progressbar" aria-label="Réponses données" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${answered}"><span style="width:${Math.round(answered / total * 100)}%"></span></span>
           <p class="dk-pos">${esc(label(index))}</p>
           <div class="dk-body">${content.symbol ? `<span class="dk-symbol">${icon(content.symbol, { size: 34 })}</span>` : ''}<div class="dk-words"><p class="dk-text">${text(cards[index])}</p>${content.question && zones.length === 2 ? `<p class="dk-question is-inline">${esc(content.question)}</p>` : ''}</div></div>
@@ -236,11 +248,12 @@
       return `<span class="mt-dots">${cards.map((_, k) => `<button type="button" class="mt-dot ${k === i ? 'is-current' : link(k) !== null ? 'is-filled' : ''}" data-act="mt-card" data-index="${k}" aria-label="${esc(content.cardLabel)} ${LETTERS[k]}">${LETTERS[k]}</button>`).join('')}</span>`;
     }
 
+    const slide = slideFrom();
     function playScreen() {
       const i = current();
       return `<div class="mt-board">
         <section class="mt-card-side">
-          <article class="mt-card ${banner ? 'has-banner' : ''}"${banner ? ` style="--card-bg: url(../assets/illustrations/cartes/carte-${String(banner).padStart(2, '0')}.webp)"` : ''} draggable="true" data-drag="${i}" tabindex="0">
+          <article class="mt-card ${banner ? 'has-banner' : ''} ${slide(i)}"${banner ? ` style="--card-bg: url(../assets/illustrations/cartes/carte-${String(banner).padStart(2, '0')}.webp)"` : ''} draggable="true" data-drag="${i}" tabindex="0">
             <p class="dk-pos">${esc(content.cardLabel)} ${i + 1} / ${n}</p>
             <span class="mt-letter">${LETTERS[i]}</span>
             <p class="mt-text">${content.quoted === false ? esc(cards[i].text) : `« ${esc(cards[i].text)} »`}</p>
