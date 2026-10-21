@@ -93,23 +93,42 @@ window.ATELIER_S4 = {
     title: 'Trouver l’élément de valeur',
     subtitle: 'Pour chaque idée, apportez quelque chose de nouveau ou d’utile au client.',
     countLabel: 'éléments rédigés',
-    tour: [
-      { target: '.fm-scene', title: 'La situation', text: 'Gardez-la en tête : chaque élément doit donner à ce client une bonne raison de reprendre l’échange.' },
-      { target: '.fm-main', title: 'Trois éléments de valeur', text: 'Pour chaque champ, notez une raison nouvelle de reprendre l’échange, par exemple :',
-        items: [
-          { symbol: 'chart', tone: 'blue', text: 'un retour chiffré d’un autre client ;' },
-          { symbol: 'clock', tone: 'coral', text: 'une échéance ;' },
-          { symbol: 'lightbulb', tone: 'gold', text: 'une information utile ou une proposition d’aide.' }
-        ],
-        after: 'Évitez « je reviens vers vous » : chaque élément doit apporter quelque chose au client.' },
-      { target: '.fm-actions .k-submit', title: 'Enregistrer', text: 'Les 3 éléments écrits, enregistrez-les pour voir des pistes possibles dans le corrigé.' }
+    // Écran propre (js/screens/s4-4-3.js) : le contexte à gauche, les trois
+    // éléments en accordéon à droite.
+    context: {
+      info: 'L’offre Ergolys pour 10 postes complets a été envoyée il y a une semaine. Le client n’a pas répondu.',
+      rows: [
+        { symbol: 'calendar', tone: 'blue', text: 'Offre envoyée' },
+        { symbol: 'chat', tone: 'coral', text: 'Pas de réponse' },
+        { symbol: 'target', tone: 'blue', text: 'Objectif : relancer avec valeur' }
+      ],
+      know: 'Cherchez une information utile, nouvelle ou rassurante.'
+    },
+    subs: [
+      'Une information concrète que le client n’a pas encore.',
+      'Une autre raison, différente de la première, de reprendre l’échange.',
+      'Une idée qui l’aide à avancer dans sa décision.'
     ],
-    scene: { info: 'L’offre Ergolys pour 10 postes complets a été envoyée il y a une semaine. Le client n’a pas répondu.', symbol: 'mail' },
+    ideas: ['résultat client', 'gain observé', 'question utile', 'point de réassurance', 'prochaine étape simple'],
+    landmarks: [
+      { strong: 'Apporter du nouveau', text: ' : une donnée, un exemple, une évolution récente.' },
+      { strong: 'Rester utile', text: ' pour le client : cela doit l’aider à avancer dans sa réflexion.' }
+    ],
+    tour: [
+      { target: '.vf-context', title: 'Le contexte', text: 'Gardez-le en tête : chaque élément doit donner à ce client une bonne raison de reprendre l’échange.' },
+      { target: '.vf-item.is-open', title: 'Un élément à la fois', text: 'Rédigez l’élément ouvert, comme une phrase que vous écririez au client.',
+        items: [
+          { symbol: 'lightbulb', tone: 'gold', text: 'Les pistes et le repère, en dessous, sont là pour vous inspirer.' },
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur un autre élément pour l’ouvrir.' }
+        ] },
+      { target: '.vf-steps', title: 'Votre progression', text: 'Un élément rédigé est coché.' },
+      { target: '.vf-actions .k-submit', title: 'Enregistrer', text: 'Il passe à l’élément suivant. Après le troisième, des pistes possibles s’affichent dans le corrigé.' }
+    ],
     cases: [
       { tab: 'Mes 3 éléments de valeur', fields: [
-        { id: 'v1', label: 'Élément 1', placeholder: 'Premier élément de valeur…', rows: 2, model: 'Le retour chiffré d’un client du même secteur (baisse des arrêts).' },
-        { id: 'v2', label: 'Élément 2', placeholder: 'Deuxième élément de valeur…', rows: 2, model: 'Une échéance : fin de l’offre d’essai de 30 jours étendue, ou disponibilité d’un créneau d’installation.' },
-        { id: 'v3', label: 'Élément 3', placeholder: 'Troisième élément de valeur…', rows: 2, model: 'Une information utile : nouveau coloris, option location pour étaler le budget, étude ergonomique offerte.' }
+        { id: 'v1', label: 'Élément 1', placeholder: 'Rédigez votre premier élément de valeur…', rows: 2, model: 'Le retour chiffré d’un client du même secteur (baisse des arrêts).' },
+        { id: 'v2', label: 'Élément 2', placeholder: 'Rédigez votre deuxième élément de valeur…', rows: 2, model: 'Une échéance : fin de l’offre d’essai de 30 jours étendue, ou disponibilité d’un créneau d’installation.' },
+        { id: 'v3', label: 'Élément 3', placeholder: 'Rédigez votre troisième élément de valeur…', rows: 2, model: 'Une information utile : nouveau coloris, option location pour étaler le budget, étude ergonomique offerte.' }
       ], lesson: 'Autre piste du corrigé : une proposition d’aide, comme un diagnostic gratuit de 2 ou 3 postes pour objectiver le besoin. Toute proposition pertinente est valable.' }
     ],
     submitLabel: 'Enregistrer mes 3 éléments',
