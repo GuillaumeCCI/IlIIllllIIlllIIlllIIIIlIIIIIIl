@@ -152,6 +152,29 @@ window.ATELIER_S2 = {
     whyHelp: 'Appuyez-vous sur au moins deux critères : reconnaissance de l’écart, respect du concurrent, vérification du périmètre comparé, valorisation des différences.',
     criteriaFields: 2,
     hint: 'Avant de justifier un écart, vérifiez que les deux offres sont comparables.',
+    // Visite en deux temps : le choix, puis (`later`) le cadre qui s'ouvre après le choix.
+    tour: [
+      { target: '.client-card', title: 'L’objection du client', text: 'Le client compare votre prix à celui d’un concurrent.' },
+      { target: '.cmp-options', title: 'Deux réponses possibles',
+        items: [
+          { symbol: 'chat', tone: 'blue', text: 'Lisez les deux réponses en entier.' },
+          { symbol: 'pointer', tone: 'green', text: 'Cliquez sur « Je choisis cette réponse » sous la plus pertinente.' }
+        ],
+        after: 'Un cadre s’ouvre ensuite pour défendre votre choix.' },
+      { later: true, target: '.cmp-why-head', title: 'Défendez votre choix', text: 'Appuyez-vous sur au moins deux de ces critères :',
+        items: [
+          { key: '1', tone: 'blue', text: 'reconnaître l’écart de prix ;' },
+          { key: '2', tone: 'coral', text: 'respecter le concurrent ;' },
+          { key: '3', tone: 'gold', text: 'vérifier le périmètre comparé ;' },
+          { key: '4', tone: 'green', text: 'valoriser les différences.' }
+        ] },
+      { later: true, target: '.cmp-fields', title: 'Vos deux critères', text: 'Un critère par champ : nommez-le, puis dites en quoi la réponse choisie le respecte.' },
+      { later: true, target: '.cmp-why-row', title: 'Repère et validation',
+        items: [
+          { symbol: 'book', tone: 'gold', text: '« Voir un repère » donne une piste.' },
+          { symbol: 'arrowRight', tone: 'blue', text: '« Valider mon analyse » affiche l’analyse des deux réponses et le corrigé.' }
+        ] }
+    ],
     model: 'La réponse 2 est la plus complète. Elle ne nie pas l’écart de prix et ne dénigre pas le concurrent ; surtout, elle propose de vérifier les éléments comparés avant de justifier l’écart, puis de valoriser les différences réellement constatées. La réponse 1 valorise déjà, mais suppose que l’écart est justifié sans vérifier ce que comprend l’offre concurrente. À retenir : avant de défendre un écart de prix, vérifiez que vous comparez réellement des offres équivalentes.'
   },
 
@@ -209,6 +232,16 @@ window.ATELIER_S2 = {
     eyebrow: 'Exercice 2.7 · Argumenter',
     title: 'Défendre la valeur, sans brader le prix',
     subtitle: 'Pack Ergolys · 10 postes · 17 000 €',
+    tour: [
+      { target: '.fm-scene', title: 'L’objection du client', text: 'Un responsable informatique trouve le pack de 10 postes trop cher pour convaincre sa direction.' },
+      { target: '.fm-chips', title: 'Vos leviers',
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur les leviers qui servent votre réponse.' },
+          { symbol: 'check', tone: 'green', text: 'Inutile de tous les utiliser.' }
+        ] },
+      { target: '.fm-main .fm-field:has(textarea)', title: 'Votre réponse', text: 'Écrivez ce que vous diriez au client, en vous appuyant sur vos leviers, sans baisser le prix.' },
+      { target: '.fm-actions .k-submit', title: 'Vérifier ma réponse', text: 'Le corrigé s’affiche ensuite, avec une réponse possible.' }
+    ],
     scene: [
       { quote: '17 000 € pour équiper 10 postes ? Je trouve ça vraiment élevé. Je vais avoir du mal à justifier un tel investissement auprès de ma direction.', speaker: 'Client · Responsable informatique' },
       { info: 'Votre mission : construisez la réponse que vous diriez au client.', symbol: 'target' }

@@ -690,6 +690,13 @@
    * `target` étant un sélecteur ; plusieurs, séparés par des virgules,
    * forment une seule zone qui les englobe. Une zone absente est sautée.
    * Un saut de ligne dans le texte d'une bulle ouvre un nouveau paragraphe.
+   * `show` : sélecteur d'un bloc masqué tant que l'apprenant n'a pas agi
+   * (un cadre qui apparaît après un choix) ; il est affiché le temps de la
+   * bulle. Sans `show`, une zone invisible est sautée.
+   * `later` : bulle de la SUITE de la visite, pour une zone qui apparaît
+   * après un choix. Elle ne fait pas partie du premier passage ; la suite
+   * se lance d'elle-même la première fois que sa zone s'affiche. Le bouton
+   * « Visite guidée » rejoue toutes les bulles dont la zone est visible.
    * `wide` : bulle large, posée sous la zone (ou au-dessus), ses `items`
    * côte à côte ; pour une zone très large qu'une bulle étroite cacherait.
    * `preview` (HTML écrit par l'exercice) montre en aperçu, sous `text`,
@@ -801,11 +808,12 @@
   // début de ligne.
   const tight = text => esc(text).replace(/« /g, '« ').replace(/ ([»:;?!])/g, ' $1');
 
-  function tourStart() {
+  function tourStart(list = tourSteps, key = tourKey) {
     const doc = root.document;
-    const steps = tourSteps.filter(s => doc.querySelector(s.target));
+    const visible = s => [...doc.querySelectorAll(s.target)].some(el => el.getClientRects().length);
+    const steps = list.filter(s => s.show ? doc.querySelector(s.show) : visible(s));
     if (!steps.length || doc.querySelector('.tour')) return;
-    try { root.localStorage.setItem(tourKey, '1'); } catch {}
+    try { root.localStorage.setItem(key, '1'); } catch {}
     const layer = doc.createElement('div');
     layer.className = 'tour';
     layer.innerHTML = `<div class="tour-hole"></div><div class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tour-title" tabindex="-1"></div>`;
@@ -843,9 +851,13 @@
       card.style.left = `${Math.min(Math.max(12, x), vw - cw - 12)}px`;
       card.style.top = `${Math.min(Math.max(12, y), vh - ch - 12)}px`;
     };
+    // Le bloc demandé par `show` est affiché le temps de sa bulle.
+    const unreveal = () => doc.querySelectorAll('.tour-shown').forEach(el => el.classList.remove('tour-shown'));
     const show = i => {
       at = i;
       const s = steps[at];
+      unreveal();
+      if (s.show) doc.querySelectorAll(s.show).forEach(el => el.classList.add('tour-shown'));
       const last = at === steps.length - 1;
       card.classList.toggle('has-preview', Boolean(s.preview));
       card.classList.toggle('is-wide', Boolean(s.wide));
@@ -864,6 +876,9 @@
       const over = r ? Math.ceil(r.bottom - (root.innerHeight - 40)) : 0;
       if (over > 0) { doc.body.style.paddingBottom = `${over}px`; root.scrollBy(0, over); }
       place();
+      // Une zone qui finit d'apparaître (animation d'entrée) bouge encore :
+      // on la recale une fois l'animation terminée.
+      setTimeout(() => { if (layer.isConnected && steps[at] === s) place(); }, 800);
       // La bulle réapparaît en douceur à chaque zone.
       card.classList.remove('is-in');
       void card.offsetWidth;
@@ -872,6 +887,7 @@
       playDemo(card);
     };
     const close = () => {
+      unreveal();
       clearInterval(demoTimer);
       layer.remove();
       doc.body.style.paddingBottom = padding;
@@ -902,16 +918,20 @@
     tourSteps = steps;
     tourKey = `atelier-visite-${id}`;
     handlers = Object.assign({}, handlers, { tour: () => tourStart() });
-    let seen = false;
-    try { seen = root.localStorage.getItem(tourKey) === '1'; } catch {}
-    if (seen || !root.document) return;
-    const wait = setInterval(() => {
-      if (ex().reviewing()) return;
-      const first = root.document.querySelector(steps[0].target);
-      if (!first || !first.getClientRects().length) return;
-      clearInterval(wait);
-      setTimeout(tourStart, 2600);
-    }, 400);
+    if (!root.document) return;
+    const seenOf = key => { try { return root.localStorage.getItem(key) === '1'; } catch { return false; } };
+    const shown = target => [...root.document.querySelectorAll(target)].some(el => el.getClientRects().length);
+    // Chaque passage attend que sa première zone soit à l'écran.
+    const autoStart = (list, key, delay) => {
+      if (!list.length || seenOf(key)) return;
+      const wait = setInterval(() => {
+        if (ex().reviewing() || seenOf(key) || root.document.querySelector('.tour') || !shown(list[0].target)) return;
+        clearInterval(wait);
+        setTimeout(() => tourStart(list, key), delay);
+      }, 400);
+    };
+    autoStart(steps.filter(s => !s.later), tourKey, 2600);
+    autoStart(steps.filter(s => s.later), `${tourKey}-suite`, 1600);
   }
 
   root.AtelierKit = Object.freeze({

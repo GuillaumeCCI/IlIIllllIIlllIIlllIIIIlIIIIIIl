@@ -193,7 +193,8 @@
   const clientCard = (text, portrait, label = 'Le client vous dit', index = 0) => {
     const clean = String(text).replace(/^\s*[«“]\s*/, '').replace(/\s*[»”]\s*$/, '');
     const art = name => esc(asset(`${PORTRAITS}${name}.webp`));
-    return `<div class="client-card-box"><section class="client-card">
+    // Une longue réplique (plus de 90 signes) passe en taille réduite.
+    return `<div class="client-card-box"><section class="client-card ${clean.length > 90 ? 'is-long' : ''}">
       <div class="client-card-who" aria-hidden="true"><img src="${esc(asset(portraitFor(portrait, index)))}" alt="" decoding="async"></div>
       <div class="client-card-said">
         <p class="client-card-label">${esc(label)}</p>

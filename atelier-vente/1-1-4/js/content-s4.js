@@ -147,14 +147,13 @@ window.ATELIER_S4 = {
           { symbol: 'mail', tone: 'blue', text: 'Lisez les deux relances en entier.' },
           { symbol: 'pointer', tone: 'green', text: 'Cliquez sur « Choisir cette relance » sous celle qui vous semble la plus efficace.' }
         ] },
-      { target: '.cmp-why', title: 'Justifiez votre choix', text: 'Expliquez votre choix avec au moins deux de ces critères :',
+      { target: '.cmp-why', show: '.cmp-why', title: 'Justifiez votre choix', wide: true,
         items: [
-          { symbol: 'document', tone: 'blue', text: 'le contexte rappelé ;' },
-          { symbol: 'sparkle', tone: 'gold', text: 'la valeur apportée ;' },
-          { symbol: 'chat', tone: 'coral', text: 'le ton employé ;' },
-          { symbol: 'arrowRight', tone: 'green', text: 'le prochain pas proposé.' }
-        ] },
-      { target: '.cmp-why-row', title: 'Valider', text: 'Validez : l’analyse des deux relances et le corrigé s’affichent.' }
+          { symbol: 'pointer', tone: 'blue', text: 'Ce cadre apparaît dès que vous avez choisi une relance.' },
+          { symbol: 'list', tone: 'blue', text: 'En haut, la consigne : appuyez-vous sur au moins deux critères (contexte, valeur apportée, ton employé, prochain pas proposé).' },
+          { symbol: 'pencil', tone: 'gold', text: 'Dans le champ « Votre justification… », écrivez pourquoi la relance choisie est la plus efficace.' },
+          { symbol: 'arrowRight', tone: 'green', text: '« Valider ma réponse » affiche ensuite l’analyse des deux relances et le corrigé.' }
+        ] }
     ],
     listTitle: 'Quelle relance choisissez-vous ?',
     options: [

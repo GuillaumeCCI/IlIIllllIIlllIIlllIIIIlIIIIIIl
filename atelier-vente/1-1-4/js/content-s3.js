@@ -48,7 +48,21 @@ window.ATELIER_S3 = {
   '3.2': {
     eyebrow: 'Exercice 3.2 · Associer',
     title: 'À chaque conclusion, sa réplique',
-    subtitle: 'Associe les 4 techniques aux phrases prononcées en rendez-vous.',
+    subtitle: 'Associez les 4 techniques aux phrases prononcées en rendez-vous.',
+    tour: [
+      { target: '.mt-card', title: 'La technique', text: 'Voici une technique de conclusion. Quelle phrase l’illustre ?' },
+      { target: '.mt-zones', title: 'Les phrases prononcées',
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur la phrase qui illustre la technique.' },
+          { symbol: 'grip', tone: 'blue', text: 'Ou faites glisser la technique sur la phrase.' }
+        ],
+        after: 'Chaque phrase ne s’utilise qu’une fois.' },
+      { target: '.mt-page .k-count, .mt-dots', title: 'Les 4 techniques', text: 'La technique suivante s’affiche d’elle-même.',
+        items: [
+          { symbol: 'pointer', tone: 'blue', text: 'Les pastilles a à d permettent de revenir sur une technique.' }
+        ] },
+      { target: '.mt-page .k-bar', title: 'Vérifier', text: 'Les 4 associations faites, vérifiez-les pour voir le corrigé.' }
+    ],
     cardLabel: 'Technique',
     cardsLabel: 'techniques',
     quoted: false,

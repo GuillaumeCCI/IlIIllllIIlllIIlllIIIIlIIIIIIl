@@ -195,7 +195,11 @@
    * cards [{ text, answer: index de zone, why }], zones [{ label, sub }],
    * intro (facultatif) : { title, subtitle, scene, next } lu avant de
    * commencer, puis rappelé par un lien. */
+  // Le fond aquarelle de la carte à associer, par exercice (4.2 : à fournir).
+  const MATCH_BANNERS = { 's2-2.2': 9, 's3-3.2': 10 };
+
   function mountMatch(key, content) {
+    const banner = MATCH_BANNERS[key];
     const cards = content.cards;
     const zones = content.zones;
     const n = cards.length;
@@ -229,7 +233,7 @@
       const i = current();
       return `<div class="mt-board">
         <section class="mt-card-side">
-          <article class="mt-card" draggable="true" data-drag="${i}" tabindex="0">
+          <article class="mt-card ${banner ? 'has-banner' : ''}"${banner ? ` style="--card-bg: url(../assets/illustrations/cartes/carte-${String(banner).padStart(2, '0')}.webp)"` : ''} draggable="true" data-drag="${i}" tabindex="0">
             <p class="dk-pos">${esc(content.cardLabel)} ${i + 1} / ${n}</p>
             <span class="mt-letter">${LETTERS[i]}</span>
             <p class="mt-text">${content.quoted === false ? esc(cards[i].text) : `« ${esc(cards[i].text)} »`}</p>

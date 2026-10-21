@@ -183,6 +183,9 @@
 
 /* Fond illustré de la carte (aquarelle pastel), atténué pour laisser lire le texte. */
 .dk-card.has-banner, .express-card.has-banner { isolation: isolate; }
+/* Même fond sur la carte à associer : en pleine largeur, posé en bas, jamais étiré. */
+.mt-card.has-banner { position: relative; isolation: isolate; }
+.mt-card.has-banner::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--card-bg) center bottom / 100% auto no-repeat; opacity: .5; pointer-events: none; }
 .dk-card.has-banner::before, .express-card.has-banner::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--card-bg) center / cover no-repeat; opacity: .5; pointer-events: none; }
 /* L'aquarelle fait 686 px de large : la carte s'en tient à cette largeur pour ne pas l'étirer. */
 .dk-board:has(.dk-zones.count-2) .dk-card.has-banner, .dk-card.has-banner, .express-card.has-banner { width: min(100%, 700px); }

@@ -501,6 +501,11 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 
 .client-card-quote .client-card-mark.is-closing { align-self: end; width: calc(var(--client-card-mark) * .74); margin: 0 0 -.2em 4px; }
 
+/* Longue réplique : texte, portrait et guillemets plus petits, pour
+   qu'elle tienne en quelques lignes au lieu d'une colonne étroite. */
+#main .client-card.is-long { --client-card-size: clamp(1.05rem, 1.25vw, 1.2rem); --client-card-mark: 44px; --client-card-portrait: 170px; --client-card-portrait-max: 190px; }
+#main .client-card.is-long .client-card-quote blockquote { font-weight: 700; line-height: 1.4; }
+
 /* Carte étroite (colonne, téléphone) : portrait entier au-dessus. */
 @container (max-width: 640px) {
   #main .client-card { grid-template-columns: 1fr; padding: 0 22px; }
@@ -588,8 +593,10 @@ body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; 
 .tour-card .tour-after { margin-top: 14px; padding-top: 12px; border-top: 1px solid #e6eaf3; color: #46577d; }
 .tour-key .icon { display: block; }
 .tour-card.has-preview { width: min(440px, calc(100vw - 24px)); }
+#main .tour-shown { display: block !important; animation: none !important; }
 .tour-card.is-wide { width: min(860px, calc(100vw - 24px)); padding: 24px 30px 20px; }
 .tour-card.is-wide .tour-items { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 16px; }
+.tour-card.is-wide .tour-items:has(> li:nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .tour-card.is-wide .tour-items li { padding: 12px 14px; border-radius: 12px; background: #f6f8fc; }
 /* Aperçu animé des surligneurs (kit.hlDemo). */
 .tour-demo { position: relative; display: grid; gap: 12px; }
