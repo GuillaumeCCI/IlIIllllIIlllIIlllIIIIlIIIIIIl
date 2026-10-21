@@ -33,8 +33,9 @@
     return `<aside class="k-panel vf-context">
       <h2>Contexte</h2>
       <p class="vf-info">${icon('mail', { size: 30 })}<span>${esc(c.info)}</span></p>
-      <ul class="vf-facts">${c.rows.map(r => `<li><span class="vf-fact-icon tone-${esc(r.tone)}">${icon(r.symbol, { size: 20 })}</span><span>${esc(r.text)}</span></li>`).join('')}</ul>
-      <p class="vf-know">${icon('lightbulb', { size: 26 })}<span><strong>Bon à savoir</strong>${esc(c.know)}</span></p>
+      <ul class="vf-facts">${c.rows.map(r => `<li><span class="vf-fact-icon tone-${esc(r.tone)}">${icon(r.symbol, { size: 20 })}</span><span><small>${esc(r.label)}</small>${esc(r.text)}</span></li>`).join('')}</ul>
+      <div class="vf-know">${icon('lightbulb', { size: 26 })}<div><strong>${esc(c.know.title)}</strong>
+        <ul>${c.know.items.map(k => `<li><b>${esc(k.label)}</b> ${esc(k.text)}</li>`).join('')}</ul></div></div>
     </aside>`;
   }
 

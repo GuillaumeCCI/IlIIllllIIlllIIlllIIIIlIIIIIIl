@@ -96,13 +96,22 @@ window.ATELIER_S4 = {
     // Écran propre (js/screens/s4-4-3.js) : le contexte à gauche, les trois
     // éléments en accordéon à droite.
     context: {
-      info: 'L’offre Ergolys pour 10 postes complets a été envoyée il y a une semaine. Le client n’a pas répondu.',
+      info: 'L’offre Ergolys pour 10 postes complets a été envoyée il y a une semaine. Madame Riveau n’a pas répondu.',
+      // Mêmes faits que le reste de la série 4 : Madame Riveau, PME de 80 salariés.
       rows: [
-        { symbol: 'calendar', tone: 'blue', text: 'Offre envoyée' },
-        { symbol: 'chat', tone: 'coral', text: 'Pas de réponse' },
-        { symbol: 'target', tone: 'blue', text: 'Objectif : relancer avec valeur' }
+        { symbol: 'users', tone: 'blue', label: 'La cliente', text: 'Madame Riveau, responsable RH d’une PME de 80 salariés.' },
+        { symbol: 'document', tone: 'blue', label: 'L’offre', text: '10 postes pour 17 000 €, installation et garantie 5 ans comprises.' },
+        { symbol: 'target', tone: 'green', label: 'Son enjeu', text: 'Soulager le mal de dos de ses équipes.' },
+        { symbol: 'chat', tone: 'coral', label: 'Son frein probable', text: 'Convaincre sa direction de la dépense.' }
       ],
-      know: 'Cherchez une information utile, nouvelle ou rassurante.'
+      know: {
+        title: 'Trois angles pour apporter de la valeur',
+        items: [
+          { label: 'Nouveau', text: 'pour relancer l’intérêt : l’exemple d’une entreprise comparable qui vient de s’équiper.' },
+          { label: 'Utile', text: 'pour l’aider à décider : un calendrier de déploiement, un calcul du coût par poste.' },
+          { label: 'Rassurant', text: 'pour lever un frein silencieux : commencer par 5 postes, une installation sans gêner le travail.' }
+        ]
+      }
     },
     subs: [
       'Une information concrète que le client n’a pas encore.',

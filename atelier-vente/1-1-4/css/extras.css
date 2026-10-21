@@ -249,3 +249,10 @@
 .vf-hints span { color: #46577d; font-style: italic; line-height: 1.45; }
 .vf-rule { margin: 16px 0 0; padding: 14px 18px; border-radius: 12px; background: #fff3e8; color: var(--navy); line-height: 1.5; }
 .vf-rule strong { color: #c4471f; }
+
+/* Contexte de 4.3 : chaque repère porte son libellé ; « Trois angles » en liste. */
+.vf-facts li { align-items: flex-start; font-weight: 500; line-height: 1.4; }
+.vf-facts li > span:last-child { padding-top: 2px; }
+.vf-facts small { display: block; font-size: .75rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
+.vf-know ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; font-size: .92rem; }
+.vf-know b { color: var(--navy); }
