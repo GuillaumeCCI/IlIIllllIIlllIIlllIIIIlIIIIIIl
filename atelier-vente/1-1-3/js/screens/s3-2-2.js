@@ -22,8 +22,8 @@
   };
 
   function tabs(at) {
-    return `<div class="fix-tabs">${cases.map((c, i) => `<button type="button" class="fix-tab ${i === at ? 'is-current' : ''} ${complete(i) ? 'is-done' : ''}" data-act="case" data-index="${i}">
-      <span class="fix-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : String(i + 1).padStart(2, '0')}</span><span class="fix-tab-text"><small>Réplique ${i + 1} · ${esc(c.tab)}</small><span>« ${esc(c.client)} »</span></span></button>`).join('')}</div>`;
+    return `<div class="fix-tabs">${cases.map((c, i) => `<button type="button" class="fix-tab ${i === at ? 'is-current' : ''} ${complete(i) ? 'is-done' : ''}" data-act="case" data-index="${i}" aria-label="Réplique ${i + 1} · ${esc(c.tab)} : « ${esc(c.client)} »">
+      <span class="fix-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : String(i + 1).padStart(2, '0')}</span><span class="fix-tab-text">${esc(c.tab)}</span></button>`).join('')}</div>`;
   }
 
   function caseBody(i) {
