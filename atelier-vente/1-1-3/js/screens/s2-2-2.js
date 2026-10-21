@@ -117,16 +117,10 @@
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   kit.tour('s2-2.2', [
-    { target: '.pair-board > section:first-child', title: 'Les erreurs', text: 'Cinq maladresses fréquentes au téléphone. Commencez par cliquer sur l’une d’elles : elle se met en surbrillance.' },
-    { target: '.pair-board > section:last-child', title: 'Leurs conséquences', text: 'Cliquez ensuite sur ce que cette erreur provoque chez le client.',
-      items: [
-        { symbol: 'check', tone: 'green', text: 'Le numéro de la conséquence s’affiche à côté de l’erreur.' },
-        { symbol: 'grip', tone: 'blue', text: 'Vous pouvez aussi faire glisser l’erreur sur sa conséquence.' }
-      ],
-      after: 'Chaque conséquence ne s’utilise qu’une fois.' },
-    { target: '.pair-board > section:first-child', title: 'Changer d’avis', text: 'Pour modifier une association, recliquez sur l’erreur, puis sur une autre conséquence.' },
-    { target: '.pair-page .k-count', title: 'Votre avancement', text: 'Le compteur indique combien d’erreurs sont déjà reliées.' },
-    { target: '.pair-page .k-bar', title: 'Vérifier', text: 'Les 5 erreurs reliées, vérifiez vos associations pour voir le corrigé.' }
+    { target: '.pair-board > section:first-child', title: '1. Choisissez une erreur', text: 'Cliquez sur une erreur.' },
+    { target: '.pair-board > section:last-child', title: '2. Choisissez sa conséquence', text: 'Cliquez sur ce que cette erreur provoque.' },
+    { target: '.pair-board > section:first-child', title: 'Pour changer', text: 'Recliquez sur l’erreur, puis sur une autre conséquence.' },
+    { target: '.pair-page .k-bar', title: '3. Vérifiez', text: 'Quand les 5 erreurs sont reliées, cliquez sur « Vérifier mes associations ».' }
   ]);
 
   ex.mount('s2-2.2', { screen, validate, feedback, compactFeedback: true });
