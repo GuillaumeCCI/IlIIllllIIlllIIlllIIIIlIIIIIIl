@@ -139,7 +139,7 @@
         { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur une réplique pour passer de l’une à l’autre.' },
         { symbol: 'check', tone: 'green', text: 'Une réplique terminée est cochée.' }
       ] },
-    { target: '.fix-panel .client-card', title: 'La réplique du client', text: 'Voici ce que le client vous dit au téléphone.' },
+    { target: '.fix-panel .client-card', title: 'La réplique du client', text: 'Une réplique fréquente en prospection : c’est à elle que votre réponse doit s’adresser, sans braquer le client.' },
     { target: '.fix-bad', title: 'Le réflexe à éviter', text: 'Le commercial a répondu ainsi, et l’échange se bloque.',
       items: [
         { symbol: 'pencil', tone: 'coral', text: 'Expliquez ce que cette réponse provoque chez le client.' }

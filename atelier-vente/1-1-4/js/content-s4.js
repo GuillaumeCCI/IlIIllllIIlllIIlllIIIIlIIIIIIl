@@ -94,7 +94,7 @@ window.ATELIER_S4 = {
     subtitle: 'Pour chaque idée, apportez quelque chose de nouveau ou d’utile au client.',
     countLabel: 'éléments rédigés',
     tour: [
-      { target: '.fm-scene', title: 'La situation', text: 'Votre offre est partie il y a une semaine, et le client n’a pas répondu. Vous préparez une relance.' },
+      { target: '.fm-scene', title: 'La situation', text: 'Gardez-la en tête : chaque élément doit donner à ce client une bonne raison de reprendre l’échange.' },
       { target: '.fm-main', title: 'Trois éléments de valeur', text: 'Pour chaque champ, notez une raison nouvelle de reprendre l’échange, par exemple :',
         items: [
           { symbol: 'chart', tone: 'blue', text: 'un retour chiffré d’un autre client ;' },

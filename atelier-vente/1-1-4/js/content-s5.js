@@ -40,7 +40,7 @@ window.ATELIER_S5 = {
     title: 'À vous d’annoncer le prix',
     subtitle: 'Composez votre réponse au client en trois temps.',
     tour: [
-      { target: '.fm-page .client-card, .fm-page .sc-info', title: 'La question du client', text: 'Le client vous demande le prix de votre solution.',
+      { target: '.fm-page .client-card, .fm-page .sc-info', title: 'La question du client', text: 'Tout ce qu’il faut pour répondre est ici :',
         items: [
           { symbol: 'users', tone: 'blue', text: 'En haut, sa question.' },
           { symbol: 'tag', tone: 'gold', text: 'Juste en dessous, le prix de l’offre : 2 400 €.' }

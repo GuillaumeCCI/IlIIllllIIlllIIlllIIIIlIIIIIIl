@@ -100,7 +100,7 @@ window.ATELIER_S3 = {
         ] },
       { target: '.fm-scene', title: 'La scène', text: 'Observez ce que le client dit et ce qu’il fait : est-il prêt à décider ?' },
       { target: '.fm-choices', title: 'Quelle carte jouez-vous ?', text: 'Choisissez la technique de conclusion adaptée à ce client.' },
-      { target: '.fm-main .fm-field:has(textarea)', title: 'Votre phrase au client', text: 'Une seule phrase, naturelle et concrète, comme si vous lui parliez.' },
+      { target: '.fm-main .fm-field:has(textarea)', title: 'Votre phrase au client', text: 'Écrivez la phrase que vous diriez à ce client, avec la technique choisie.' },
       { target: '.fm-actions', title: 'Repère et validation',
         items: [
           { symbol: 'lightbulb', tone: 'gold', text: '« Voir un repère » aide à lire ce que fait le client.' },
@@ -216,7 +216,7 @@ window.ATELIER_S3 = {
           { symbol: 'check', tone: 'green', text: 'Une carte terminée est cochée.' }
         ] },
       { target: '.fm-main .fm-title', title: 'Ce que vous voulez obtenir', text: 'Chaque carte part d’une intention : ce que vous voulez obtenir du client.' },
-      { target: '.fm-main .fm-field', title: 'Votre formulation', text: 'Une phrase courte, dans vos mots, que vous seriez à l’aise de dire à un client demain.' },
+      { target: '.fm-main .fm-field', title: 'Votre formulation', text: 'Le test : seriez-vous à l’aise de dire exactement cette phrase à un client demain ?' },
       { target: '.fm-actions .k-submit', title: 'Enregistrer dans ma boîte',
         items: [
           { symbol: 'arrowRight', tone: 'blue', text: 'La carte suivante s’ouvre.' },

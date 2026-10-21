@@ -154,7 +154,7 @@ window.ATELIER_S2 = {
     hint: 'Avant de justifier un écart, vérifiez que les deux offres sont comparables.',
     // Visite en deux temps : le choix, puis (`later`) le cadre qui s'ouvre après le choix.
     tour: [
-      { target: '.client-card', title: 'L’objection du client', text: 'Le client compare votre prix à celui d’un concurrent.' },
+      { target: '.client-card', title: 'L’objection du client', text: 'Gardez-la en tête : la bonne réponse est celle qui la traite sans nier l’écart ni dénigrer le concurrent.' },
       { target: '.cmp-options', title: 'Deux réponses possibles',
         items: [
           { symbol: 'chat', tone: 'blue', text: 'Lisez les deux réponses en entier.' },
@@ -202,8 +202,8 @@ window.ATELIER_S2 = {
           { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur une objection pour passer de l’une à l’autre.' },
           { symbol: 'check', tone: 'green', text: 'Une objection traitée est cochée.' }
         ] },
-      { target: '.fm-scene', title: 'L’objection du client', text: 'Voici ce que le client vous dit en rendez-vous.' },
-      { target: '.fm-main .fm-field', title: 'Votre réponse', text: 'En 2 à 3 phrases : comprenez le frein, puis valorisez l’offre.' },
+      { target: '.fm-scene', title: 'L’objection du client', text: 'Avant de valoriser l’offre, votre réponse cherche ce qui se cache derrière cette phrase.' },
+      { target: '.fm-main .fm-field', title: 'Votre réponse', text: 'Écrivez ce que vous diriez au client, comme si vous lui parliez.' },
       { target: '.fm-actions .k-dialog-button', title: 'Un repère', text: 'Un doute ? Ce bouton rappelle la marche à suivre.' },
       { target: '.fm-tab.is-self', title: 'L’auto-évaluation', text: 'Après les 3 objections, vous relisez vos réponses et vous les évaluez.',
         items: [
@@ -233,7 +233,7 @@ window.ATELIER_S2 = {
     title: 'Défendre la valeur, sans brader le prix',
     subtitle: 'Pack Ergolys · 10 postes · 17 000 €',
     tour: [
-      { target: '.fm-scene', title: 'L’objection du client', text: 'Un responsable informatique trouve le pack de 10 postes trop cher pour convaincre sa direction.' },
+      { target: '.fm-scene', title: 'L’objection du client', text: 'Repérez son vrai frein : il doit convaincre sa direction. Votre réponse doit lui en donner les moyens.' },
       { target: '.fm-chips', title: 'Vos leviers',
         items: [
           { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur les leviers qui servent votre réponse.' },
