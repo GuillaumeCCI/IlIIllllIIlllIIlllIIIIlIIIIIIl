@@ -73,7 +73,7 @@
     const n = count();
     return `<div class="k-page pair-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count"><strong>${n} / ${errors.length}</strong> associations</p>${reviewing ? '' : kit.tourButton()}` })}
+        aside: reviewing ? '' : kit.tourButton() })}
       ${reviewing ? '' : kit.help(content.instruction)}
       <form class="k-panel" novalidate>
         ${reviewing ? `${reviewBoard()}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>` : `${playBoard()}${core.errorsBox()}${kit.bar({
