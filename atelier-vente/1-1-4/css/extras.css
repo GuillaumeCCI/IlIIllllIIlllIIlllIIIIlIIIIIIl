@@ -183,4 +183,14 @@
 
 /* Fond illustré de la carte (aquarelle pastel), atténué pour laisser lire le texte. */
 .dk-card.has-banner, .express-card.has-banner { isolation: isolate; }
-.dk-card.has-banner::before, .express-card.has-banner::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--card-bg) center / 100% 100% no-repeat; opacity: .5; pointer-events: none; }
+.dk-card.has-banner::before, .express-card.has-banner::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--card-bg) center / cover no-repeat; opacity: .5; pointer-events: none; }
+/* L'aquarelle fait 686 px de large : la carte s'en tient à cette largeur pour ne pas l'étirer. */
+.dk-board:has(.dk-zones.count-2) .dk-card.has-banner, .dk-card.has-banner, .express-card.has-banner { width: min(100%, 700px); }
+
+/* « Le contexte », un vrai bouton en haut à droite de l'en-tête. */
+.dk-page .k-head { position: relative; }
+.dk-page .k-head-aside:has(.dk-context-open) { position: absolute !important; top: 0; right: 0; width: auto !important; }
+.dk-context-open { display: inline-flex; align-items: center; gap: 8px; }
+@media (max-width: 760px) {
+  .dk-page .k-head-aside:has(.dk-context-open) { position: static !important; }
+}

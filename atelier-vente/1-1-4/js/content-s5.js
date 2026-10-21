@@ -39,6 +39,21 @@ window.ATELIER_S5 = {
     eyebrow: 'Annoncer le prix · Exercice 1.2',
     title: 'À vous d’annoncer le prix',
     subtitle: 'Composez votre réponse au client en trois temps.',
+    tour: [
+      { target: '.fm-page .client-card, .fm-page .sc-info', title: 'La question du client', text: 'Le client vous demande le prix de votre solution.',
+        items: [
+          { symbol: 'users', tone: 'blue', text: 'En haut, sa question.' },
+          { symbol: 'tag', tone: 'gold', text: 'Juste en dessous, le prix de l’offre : 2 400 €.' }
+        ] },
+      { target: '.fm-page .sc-facts', title: 'Votre mission', text: 'Votre réponse suit trois temps :',
+        items: [
+          { key: '1', tone: 'blue', text: 'un bénéfice important pour le client ;' },
+          { key: '2', tone: 'coral', text: 'le prix, annoncé clairement ;' },
+          { key: '3', tone: 'green', text: 'un autre bénéfice ou une ouverture vers la suite.' }
+        ] },
+      { target: '.fm-page .fm-main .fm-field', title: 'Votre réponse', text: 'Écrivez ici ce que vous diriez au client, comme si vous lui parliez.' },
+      { target: '.fm-page .fm-actions', title: 'Valider', text: '« Valider ma formulation » affiche une réponse modèle, à comparer avec la vôtre.' }
+    ],
     scene: [
       { quote: 'Très bien, et combien coûte cette solution ?', speaker: 'Le client' },
       { info: 'Prix de l’offre · 2 400 €', symbol: 'tag' },

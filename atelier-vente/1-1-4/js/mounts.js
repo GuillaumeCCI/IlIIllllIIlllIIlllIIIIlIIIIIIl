@@ -99,8 +99,8 @@
 
     /* Le contexte, dans une fenêtre qui s'ouvre à l'arrivée sur
      * l'exercice, le fond flouté : la situation, ce qu'on va lire, et le
-     * choix à faire. Une information par ligne. « Le contexte », en bas à
-     * gauche, la rouvre. */
+     * choix à faire. Une information par ligne. « Le contexte », en haut à
+     * droite, la rouvre. */
     let contextSeen = false;
     function openContext() {
       core().openDialog('Le contexte', `${contextBox()}<p class="dk-context-go"><button type="button" class="button primary" data-act="dk-context-go">C’est parti</button></p>`);
@@ -143,7 +143,6 @@
         ${content.drag ? `<p class="dk-hint">${icon('pointer', { size: 18 })}<span>Choisissez une zone, puis validez.</span></p>` : ''}
       </div>
       ${kit().bar({
-        left: content.context ? kit().act('dk-context', `${icon('document', { size: 17 })}<span>Le contexte</span>`, 'text-button') : '',
         center: kit().act('deck-undo', `${icon('undo', { size: 17 })}<span>Annuler</span>`, 'secondary', Array.isArray(history) && history.length ? '' : 'disabled'),
         right: kit().act('dk-confirm', `<span>${esc(content.confirmLabel || 'Valider et continuer')}</span>${icon('arrowRight', { size: 18 })}`, 'primary', pick() ? '' : 'disabled')
       })}`;
@@ -161,7 +160,9 @@
           : playScreen(index);
       return `<div class="k-page dk-page">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: reviewing || index !== null ? '' : `<p class="k-count"><strong>${placed.filter(Boolean).length} / ${total}</strong> réponses</p>` })}
+          aside: reviewing ? '' : index !== null
+            ? (content.context ? kit().act('dk-context', `${icon('document', { size: 18 })}<span>Le contexte</span>`, 'secondary dk-context-open') : '')
+            : `<p class="k-count"><strong>${placed.filter(Boolean).length} / ${total}</strong> réponses</p>` })}
         ${content.legend && !reviewing ? `<p class="dk-legend">${content.legend.map(l => `<span><strong>${esc(l.label)} :</strong> ${esc(l.text)}</span>`).join('')}</p>` : ''}
         <form class="dk-form" novalidate>${body}${reviewing ? '' : core().errorsBox()}</form>
         ${reviewing ? '' : kit().utility(`Corrigé disponible après les ${total} ${content.cardsLabel || 'cartes'}`)}
