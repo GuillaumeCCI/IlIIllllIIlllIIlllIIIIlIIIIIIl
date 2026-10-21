@@ -118,10 +118,10 @@ window.ATELIER_S4 = {
       { target: '.vf-context', title: 'Le contexte', text: 'Gardez-le en tête : chaque élément doit donner à ce client une bonne raison de reprendre l’échange.' },
       { target: '.vf-item.is-open', title: 'Un élément à la fois', text: 'Rédigez l’élément ouvert, comme une phrase que vous écririez au client.',
         items: [
-          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur un autre élément pour l’ouvrir.' }
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur un autre élément pour l’ouvrir.' },
+          { symbol: 'check', tone: 'green', text: 'Un élément rédigé est coché.' }
         ] },
       { target: '.vf-actions .k-dialog-button', title: 'Un indice', text: 'À court d’idées ? Ce bouton propose des pistes et un repère pour trouver un élément qui compte pour le client.' },
-      { target: '.vf-steps', title: 'Votre progression', text: 'Un élément rédigé est coché.' },
       { target: '.vf-actions .k-submit', title: 'Enregistrer', text: 'Il passe à l’élément suivant. Après le troisième, des pistes possibles s’affichent dans le corrigé.' }
     ],
     cases: [

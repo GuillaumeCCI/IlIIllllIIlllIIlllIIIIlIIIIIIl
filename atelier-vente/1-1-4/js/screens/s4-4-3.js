@@ -1,8 +1,8 @@
 /* S4 4.3 · Trouver l’élément de valeur
  *
  * À gauche, le contexte de la relance ; à droite, les trois éléments de
- * valeur en accordéon, un seul ouvert à la fois, avec une frise 1-2-3 au
- * dessus. L'élément ouvert montre sa consigne ; les pistes et le repère
+ * valeur en accordéon, un seul ouvert à la fois (un élément rédigé est
+ * coché). L'élément ouvert montre sa consigne ; les pistes et le repère
  * s'ouvrent dans une fenêtre (« Voir un indice »).
  * « Enregistrer » ouvre l'élément suivant encore vide ; les trois écrits,
  * l'exercice se valide. Textes : js/content-s4.js, entrée « 4.3 ».
@@ -38,11 +38,6 @@
     </aside>`;
   }
 
-  function steps(at) {
-    return `<ol class="vf-steps">${fields.map((f, i) => `<li class="${i === at ? 'is-current' : ''} ${done(i) ? 'is-done' : ''}">
-      <button type="button" data-act="vf-open" data-index="${i}" ${i === at ? 'aria-current="step"' : ''}><span class="vf-dot">${done(i) && i !== at ? icon('check', { size: 15 }) : i + 1}</span><span>${esc(f.label)}</span></button></li>`).join('')}</ol>`;
-  }
-
   function item(f, i, at) {
     if (i !== at) {
       const text = ex.value(key(f));
@@ -53,7 +48,7 @@
     }
     return `<li class="vf-item is-open">
       <div class="vf-head is-static"><span class="vf-n is-current">${i + 1}</span><div><strong>${esc(f.label)}</strong>
-        <p class="vf-sub">${icon('target', { size: 15 })}<span>${esc(content.subs[i])}</span></p></div></div>
+        <p class="vf-sub">${esc(content.subs[i])}</p></div></div>
       ${ex.field(key(f), f.label, { placeholder: f.placeholder, max: 500, rows: 3, hideLabel: true })}
     </li>`;
   }
@@ -80,7 +75,6 @@
       ${reviewing ? reviewScreen() : `<div class="vf-layout">
         ${contextPanel()}
         <form class="k-panel vf-main" novalidate>
-          ${steps(at)}
           <ol class="vf-acc">${fields.map((f, i) => item(f, i, at)).join('')}</ol>
           ${core.errorsBox()}
           <div class="vf-actions">${kit.dialogButton('hint', 'Voir un indice', 'secondary', 'lightbulb')}${kit.submit(doneCount() >= n - 1 && !done(at) || doneCount() === n ? content.submitLabel : 'Enregistrer et passer au suivant')}</div>
