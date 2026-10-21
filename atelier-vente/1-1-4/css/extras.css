@@ -263,3 +263,24 @@
 #main .dk-card.is-next, #main .mt-card.is-next { animation: card-next .45s cubic-bezier(.2, .7, .2, 1) both; }
 #main .dk-card.is-prev, #main .mt-card.is-prev { animation: card-prev .45s cubic-bezier(.2, .7, .2, 1) both; }
 @media (prefers-reduced-motion: reduce) { #main .dk-card.is-next, #main .dk-card.is-prev, #main .mt-card.is-next, #main .mt-card.is-prev { animation: none; } }
+
+/* Contexte de 4.3 allégé : une seule fiche à filets fins (plus de cases
+   colorées par ligne), puis « Trois angles » sans encadré, une étiquette
+   de couleur par angle. Tous les textes restent. */
+.vf-context { gap: 16px; }
+.vf-info { padding: 14px 16px; gap: 12px; font-size: .95rem; }
+.vf-info .icon { width: 24px; height: 24px; }
+.vf-facts { gap: 0; padding: 0; border: 1px solid var(--line); border-radius: 14px; border-bottom: 1px solid var(--line); }
+.vf-facts li { gap: 12px; padding: 10px 14px; border-radius: 0; background: none; font-size: .95rem; }
+.vf-facts li + li { border-top: 1px solid var(--line); }
+.vf-fact-icon { width: 30px; height: 30px; }
+.vf-fact-icon .icon { width: 16px; height: 16px; }
+.vf-facts small { font-size: .7rem; margin-bottom: 1px; }
+.vf-know { padding: 0; background: none; }
+.vf-know > .icon { display: none; }
+.vf-know strong { font-size: 1rem; margin-bottom: 8px; }
+.vf-know ul { gap: 8px; margin: 0; }
+.vf-know li { display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: baseline; color: #46577d; line-height: 1.4; }
+.vf-know li b { justify-self: start; padding: 2px 10px; border-radius: 999px; font-size: .8rem; background: var(--tint); color: var(--accent); }
+.vf-know li b.tone-green { background: var(--ok-soft); color: var(--ok); }
+.vf-know li b.tone-coral { background: #ffe9e2; color: #c4471f; }
