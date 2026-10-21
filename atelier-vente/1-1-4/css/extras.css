@@ -210,9 +210,6 @@
 .vf-facts li { display: flex; align-items: center; gap: 14px; padding: 8px 14px 8px 8px; border-radius: 12px; background: #f5f7fc; color: var(--navy); font-weight: 600; }
 .vf-fact-icon { display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; background: var(--tint); color: var(--accent); }
 .vf-fact-icon.tone-coral { background: #ffe9e2; color: #e0573a; }
-.vf-know { display: flex; gap: 14px; align-items: flex-start; margin: 0; padding: 16px 18px; border-radius: 14px; background: #eef4ff; color: #46577d; line-height: 1.45; }
-.vf-know .icon { flex-shrink: 0; color: var(--accent); }
-.vf-know strong { display: block; margin-bottom: 4px; color: var(--accent); }
 .vf-main { display: grid; gap: 14px; padding: 22px 24px; }
 .vf-steps { list-style: none; margin: 0 0 6px; padding: 0; display: flex; justify-content: space-around; }
 .vf-steps li { flex: 1; display: flex; justify-content: center; position: relative; }
@@ -254,8 +251,6 @@
 .vf-facts li { align-items: flex-start; font-weight: 500; line-height: 1.4; }
 .vf-facts li > span:last-child { padding-top: 2px; }
 .vf-facts small { display: block; font-size: .75rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
-.vf-know ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; font-size: .92rem; }
-.vf-know b { color: var(--navy); }
 
 /* Passage d'une carte à l'autre (cartes à choix et cartes à associer). */
 @keyframes card-next { from { opacity: 0; transform: translateX(60px) rotate(1.5deg); } to { opacity: 1; transform: none; } }
@@ -276,11 +271,3 @@
 .vf-fact-icon { width: 30px; height: 30px; }
 .vf-fact-icon .icon { width: 16px; height: 16px; }
 .vf-facts small { font-size: .7rem; margin-bottom: 1px; }
-.vf-know { padding: 0; background: none; }
-.vf-know > .icon { display: none; }
-.vf-know strong { font-size: 1rem; margin-bottom: 8px; }
-.vf-know ul { gap: 8px; margin: 0; }
-.vf-know li { display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: baseline; color: #46577d; line-height: 1.4; }
-.vf-know li b { justify-self: start; padding: 2px 10px; border-radius: 999px; font-size: .8rem; background: var(--tint); color: var(--accent); }
-.vf-know li b.tone-green { background: var(--ok-soft); color: var(--ok); }
-.vf-know li b.tone-coral { background: #ffe9e2; color: #c4471f; }

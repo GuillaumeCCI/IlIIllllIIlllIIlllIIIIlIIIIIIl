@@ -103,15 +103,7 @@ window.ATELIER_S4 = {
         { symbol: 'document', tone: 'blue', label: 'L’offre', text: '10 postes pour 17 000 €, installation et garantie 5 ans comprises.' },
         { symbol: 'target', tone: 'green', label: 'Son enjeu', text: 'Soulager le mal de dos de ses équipes.' },
         { symbol: 'chat', tone: 'coral', label: 'Son frein probable', text: 'Convaincre sa direction de la dépense.' }
-      ],
-      know: {
-        title: 'Trois angles pour apporter de la valeur',
-        items: [
-          { label: 'Nouveau', text: 'pour relancer l’intérêt : l’exemple d’une entreprise comparable qui vient de s’équiper.' },
-          { label: 'Utile', text: 'pour l’aider à décider : un calendrier de déploiement, un calcul du coût par poste.' },
-          { label: 'Rassurant', text: 'pour lever un frein silencieux : commencer par 5 postes, une installation sans gêner le travail.' }
-        ]
-      }
+      ]
     },
     subs: [
       'Une information concrète que le client n’a pas encore.',
