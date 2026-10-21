@@ -211,18 +211,10 @@
 .vf-fact-icon { display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; background: var(--tint); color: var(--accent); }
 .vf-fact-icon.tone-coral { background: #ffe9e2; color: #e0573a; }
 .vf-main { display: grid; gap: 14px; padding: 22px 24px; }
-.vf-steps { list-style: none; margin: 0 0 6px; padding: 0; display: flex; justify-content: space-around; }
-.vf-steps li { flex: 1; display: flex; justify-content: center; position: relative; }
-.vf-steps li + li::before { content: ''; position: absolute; top: 17px; right: calc(50% + 26px); width: calc(100% - 52px); border-top: 2px dotted #c9d3e8; }
-.vf-steps button { display: grid; justify-items: center; gap: 6px; border: 0; background: none; color: #5d6785; font: inherit; font-weight: 700; cursor: pointer; }
-.vf-dot { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #eef1f7; color: #5b6a8f; font-weight: 800; }
-.vf-steps .is-current button { color: var(--accent); }
-.vf-steps .is-current .vf-dot { background: var(--accent); color: #fff; }
-.vf-steps .is-done .vf-dot { background: var(--ok-soft); color: var(--ok); }
 .vf-acc { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .vf-item { border: 1px solid #e2e8f4; border-radius: 14px; background: #fff; }
 .vf-item.is-open { padding: 16px 20px 20px; border-color: #c9d6f2; background: #f7f9fe; display: grid; gap: 12px; }
-.vf-head { display: flex; align-items: center; gap: 16px; width: 100%; padding: 12px 18px; border: 0; background: none; font: inherit; color: var(--navy); text-align: left; cursor: pointer; }
+.vf-head { display: flex; align-items: center; gap: 16px; width: 100%; padding: 12px 18px; border: 0; background: none; font: inherit; color: var(--navy); text-align: left; cursor: var(--cursor-hand, pointer); }
 .vf-head.is-static { padding: 0; align-items: flex-start; cursor: default; }
 .vf-head strong { font-size: 1.1rem; white-space: nowrap; }
 .vf-n { display: grid; place-items: center; width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%; background: #eef1f7; color: #5b6a8f; font-weight: 800; }

@@ -407,7 +407,7 @@ button.fab-col-head:hover { background: #f4f7fd; }
 .intrus-band { display: grid; place-items: center; align-self: stretch; height: 40px; margin: 0 -14px; background: var(--tone); border-radius: 0 0 50% 50% / 0 0 14px 14px; }
 /* Clic seul (ni glisser ni corbeille) : la carte désignée reste en place,
  * estompée, avec l’étiquette « Intrus » dans son bandeau. */
-.intrus-page.stage-1 .intrus-card { cursor: pointer; }
+.intrus-page.stage-1 .intrus-card { cursor: var(--cursor-hand, pointer); }
 .intrus-page.stage-1 .intrus-card.is-out { border-color: #f0a093; box-shadow: 0 0 0 2px #f08a7c, 0 10px 26px rgb(35 40 80 / 9%); --tone: #fde1da; }
 .intrus-page.stage-1 .intrus-card.is-out > :not(.intrus-band) { filter: grayscale(.85); opacity: .55; }
 .intrus-tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; background: #e0412c; color: #fff; font-size: .85rem; font-weight: 800; }
