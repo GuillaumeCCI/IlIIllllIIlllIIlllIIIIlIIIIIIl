@@ -157,7 +157,7 @@
     const at = stage();
     return `<div class="k-page crash-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: reviewing ? 'Voici les maladresses à repérer, et les réponses attendues.' : content.subtitle,
-        aside: kit.steps(['Diagnostic', 'Réécriture'], reviewing ? 3 : at, { compact: true }) })}
+        aside: `${kit.steps(['Diagnostic', 'Réécriture'], reviewing ? 3 : at, { compact: true })}${reviewing ? '' : kit.tourButton()}` })}
       ${reviewing ? reviewScreen() : at === 1 ? diagnostic() : rewrite()}
       ${reviewing ? '' : kit.utility('Corrigé disponible après la réécriture')}
     </div>`;
@@ -203,6 +203,25 @@
     return { named: `<strong>${named()} / ${ROWS}</strong> erreurs repérées`, flags: flags() };
   });
   kit.dialogs({ hint: { title: 'Un indice', html: `<p>${esc(content.hint)}</p>` } });
+
+  kit.tour('s3-1.2', [
+    { target: '.crash-exchange', title: 'L’échange à analyser', text: 'Le client trouve l’offre trop chère. Lisez la réponse du commercial.',
+      items: [
+        { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur un passage maladroit pour y poser un drapeau.' },
+        { symbol: 'undo', tone: 'coral', text: 'Recliquez-le pour retirer le drapeau.' }
+      ] },
+    { target: '.crash-diag .crash-score, .crash-rows', title: 'Votre diagnostic', text: 'Chaque drapeau posé remplit une ligne, de 1 à 4.',
+      items: [
+        { symbol: 'pencil', tone: 'blue', text: 'Sur chaque ligne, nommez précisément la maladresse.' },
+        { symbol: 'flag', tone: 'coral', text: 'En haut, un drapeau se colore à chaque erreur nommée.' }
+      ] },
+    { target: '.crash-actions .k-dialog-button', title: 'Un indice', text: 'Un doute ? Ce bouton rappelle les étapes de la méthode.' },
+    { target: '.crash-actions .k-submit', title: 'Passer à la réécriture',
+      items: [
+        { symbol: 'check', tone: 'blue', text: 'Le bouton s’active quand les 4 maladresses sont nommées.' },
+        { symbol: 'pencil', tone: 'green', text: 'Vous réécrivez ensuite la réponse que le commercial aurait dû faire.' }
+      ] }
+  ]);
 
   ex.mount('s3-1.2', { screen, validate, intercept, feedback, compactFeedback: true });
 })();

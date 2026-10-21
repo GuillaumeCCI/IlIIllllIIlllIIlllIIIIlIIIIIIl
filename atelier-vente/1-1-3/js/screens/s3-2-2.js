@@ -52,7 +52,7 @@
     const next = after !== -1 ? after : cases.findIndex((_, k) => k !== at && !complete(k));
     return `<div class="k-page fix-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count fix-count"><strong>${doneCount()} / ${cases.length}</strong> répliques réparées</p>` })}
+        aside: `<p class="k-count fix-count"><strong>${doneCount()} / ${cases.length}</strong> répliques réparées</p>${reviewing ? '' : kit.tourButton()}` })}
       ${reviewing ? reviewScreen() : `${tabs(at)}
         <form class="k-panel fix-panel" novalidate>
           ${caseBody(at)}
@@ -107,6 +107,35 @@
 
   kit.on({ case: el => { ex.setValue('case', Number(el.dataset.index)); kit.commit(); } });
   kit.dialogs(Object.fromEntries(cases.map((c, i) => [`tip${i}`, { title: `Repère · ${c.tab}`, html: `<p>${esc(c.tip)}</p>` }])));
+
+  kit.tour('s3-2.2', [
+    { target: '.fix-tabs', title: 'Trois répliques', text: 'Trois clients, trois répliques à traiter.',
+      items: [
+        { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur une réplique pour passer de l’une à l’autre.' },
+        { symbol: 'check', tone: 'green', text: 'Une réplique terminée est cochée.' }
+      ] },
+    { target: '.fix-panel .client-card', title: 'La réplique du client', text: 'Voici ce que le client vous dit au téléphone.' },
+    { target: '.fix-bad', title: 'Le réflexe à éviter', text: 'Le commercial a répondu ainsi, et l’échange se bloque.',
+      items: [
+        { symbol: 'pencil', tone: 'coral', text: 'Expliquez ce que cette réponse provoque chez le client.' }
+      ] },
+    { target: '.fix-good', title: 'Votre réponse adaptée', text: 'Écrivez ce que vous diriez au client à la place, comme si vous lui parliez.',
+      items: [
+        { symbol: 'lightbulb', tone: 'gold', text: 'La ligne en dessous rappelle la marche à suivre.' }
+      ] },
+    { target: '.fix-checks', title: 'À vérifier', text: 'Avant d’enregistrer, cochez ce que votre réponse contient :',
+      items: [
+        { key: '1', tone: 'blue', text: 'un accueil de la réplique ;' },
+        { key: '2', tone: 'coral', text: 'une question ;' },
+        { key: '3', tone: 'green', text: 'une suite concrète.' }
+      ] },
+    { target: '.fix-right', title: 'Repère et enregistrement',
+      items: [
+        { symbol: 'search', tone: 'gold', text: '« Voir un repère » donne une piste pour ce cas.' },
+        { symbol: 'arrowRight', tone: 'blue', text: '« Enregistrer » passe au cas suivant.' },
+        { symbol: 'checkCircle', tone: 'green', text: 'Le corrigé s’affiche après les 3 cas.' }
+      ] }
+  ]);
 
   ex.mount('s3-2.2', { screen, validate, intercept, feedback, compactFeedback: true });
 })();
