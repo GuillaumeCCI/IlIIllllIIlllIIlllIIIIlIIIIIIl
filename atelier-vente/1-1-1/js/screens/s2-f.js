@@ -14,6 +14,10 @@
   const replyKey = i => `reply${i}`;
   const postureKey = i => `posture${i}`;
   const doneKey = i => `done${i}`;
+  // L'autoévaluation du cas i : « self0_0 », « self0_1 »…, ouverte par « selfOpen0 ».
+  const selfKey = i => k => `self${i}_${k}`;
+  const selfOpen = i => ex.value(`selfOpen${i}`) === true;
+  const rubric = window.ATELIER_S2.rubric;
 
   const caseDone = i => ex.value(doneKey(i)) === true;
 
@@ -32,7 +36,16 @@
     const reviewed = caseDone(i);
     const current = core.findExercise('s2-F');
 
-    const body = reviewed
+    const body = !reviewed && selfOpen(i)
+      ? `<div class="own-answer">
+           <h4>Votre réponse d’écoute</h4>
+           <p>« ${esc(ex.value(replyKey(i)))} »</p>
+           <h4>Votre adaptation</h4>
+           <p>« ${esc(ex.value(postureKey(i)))} »</p>
+         </div>
+         <h3 class="self-case-title">Votre autoévaluation</h3>
+         ${ex.selfList(rubric, selfKey(i))}`
+      : reviewed
       ? `<div class="own-answer">
            <h4>Votre réponse d’écoute</h4>
            <p>« ${esc(ex.value(replyKey(i)))} »</p>
@@ -43,7 +56,8 @@
            <p>« ${esc(ex.value(postureKey(i)))} »</p>
            ${ex.inlineNote(`Adaptation attendue : ${profile.adaptation}`, 'neutral')}
          </div>
-         ${ex.inlineNote(content.criterion, 'neutral')}`
+         ${ex.inlineNote(content.criterion, 'neutral')}
+         ${ex.selfSummary(rubric, selfKey(i))}`
       : `${core.step(1, 'Votre réponse d’écoute', ex.field(replyKey(i), 'Votre réponse d’écoute', {
            placeholder: 'Écrivez votre réponse…', max: 320, rows: 4, hideLabel: true
          }), 'Répondez sans contredire ni vous justifier.')}
@@ -60,11 +74,12 @@
       </section>
       <form class="panel answer-panel" novalidate>
         ${ex.caseBar(cases(), i, 'profil')}
-        ${core.panelTitle(profile.label, core.rubricButton())}
+        ${core.panelTitle(profile.label)}
         <div class="exercise-body">${body}</div>
-        ${reviewed ? '' : ex.lockNote('La correction s’affiche dès que vous validez ce profil')}
+        ${reviewed ? '' : ex.lockNote(selfOpen(i) ? 'La correction s’affiche dès que vous validez votre autoévaluation' : 'Après validation, vous faites votre autoévaluation, puis la correction s’affiche')}
         ${core.errorsBox()}
-        ${ex.caseActions(cases(), i, 'Valider ma réponse')}
+        ${selfOpen(i) && !reviewed ? `<div class="wiz-back">${core.button(`${core.icon('arrowLeft', { size: 17 })}<span>Modifier ma réponse</span>`, 'self-back', 'text-button with-icon')}</div>` : ''}
+        ${ex.caseActions(cases(), i, selfOpen(i) ? 'Voir la correction' : 'Valider ma réponse')}
       </form>
     </div>`;
   }
@@ -72,10 +87,19 @@
   /* La validation ne porte que sur le profil ouvert. */
   function validate(values) {
     const i = ex.openCase() ?? 0;
+    if (selfOpen(i)) return ex.selfErrors(rubric, selfKey(i), values);
     const errors = [];
     if (!String(values[replyKey(i)] ?? '').trim()) errors.push({ key: replyKey(i), message: 'Formulez une réponse d’écoute.' });
     if (!String(values[postureKey(i)] ?? '').trim()) errors.push({ key: postureKey(i), message: 'Expliquez votre adaptation en une phrase.' });
     return errors;
+  }
+
+  // Le cas rempli, « Valider ma réponse » ouvre son autoévaluation au lieu de la correction.
+  function intercept(values) {
+    const i = ex.openCase() ?? 0;
+    if (caseDone(i) || selfOpen(i) || validate(values).length) return false;
+    ex.setValue(`selfOpen${i}`, true);
+    return true;
   }
 
   function afterSubmit() {
@@ -89,8 +113,12 @@
     : '';
 
   ex.mount('s2-F', {
-    screen, validate, feedback, afterSubmit, allDone, cases,
+    screen, validate, intercept, feedback, afterSubmit, allDone, cases,
     menuIntro: 'Trois profils d’interlocuteurs vous attendent. Choisissez celui que vous souhaitez traiter en premier.',
-    onMount: () => core.wireRubric(window.ATELIER_S2.rubric)
+    onMount: () => core.$('[data-action="self-back"]')?.addEventListener('click', () => {
+      ex.setValue(`selfOpen${ex.openCase() ?? 0}`, false);
+      core.persist();
+      ex.render();
+    })
   });
 })();

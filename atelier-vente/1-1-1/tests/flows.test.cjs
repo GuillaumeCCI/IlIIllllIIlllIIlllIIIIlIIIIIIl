@@ -99,9 +99,15 @@ test('S2 A : le menu des cas, puis un client à la fois', () => {
   assert.ok(!/case-cards/.test(main()), 'le cas doit remplacer le menu');
   assert.match(main(), /case-bar/, 'le fil de retour au menu doit être présent');
 
-  // Validation de ce seul client.
+  // Validation de ce seul client : d'abord son autoévaluation, puis la correction.
   engine.setValue('choice1', 'b');
   engine.setValue('why1', 'Elle accueille la réserve puis questionne.');
+  engine.submit();
+  assert.notStrictEqual(engine.value('done1'), true, 'l’autoévaluation doit précéder la correction');
+  assert.match(main(), /self-list/, 'la grille d’autoévaluation doit s’afficher');
+  engine.submit();
+  assert.notStrictEqual(engine.value('done1'), true, 'la grille vide doit être refusée');
+  for (let k = 0; k < 6; k++) engine.setValue(`self1_${k}`, 'oui');
   engine.submit();
   assert.strictEqual(engine.value('done1'), true, 'le client traité doit être marqué');
   assert.ok(!core.isDone('s2-A'), 'un client sur trois ne termine pas l’exercice');
@@ -123,6 +129,8 @@ test('S2 A : le menu des cas, puis un client à la fois', () => {
     engine.render();
     engine.setValue(`choice${index}`, choice);
     engine.setValue(`why${index}`, 'Ma justification.');
+    engine.submit();
+    for (let k = 0; k < 6; k++) engine.setValue(`self${index}_${k}`, 'oui');
     engine.submit();
   }
   assert.ok(core.isDone('s2-A'), 'les trois clients traités terminent l’exercice');
@@ -470,7 +478,12 @@ const INLINE = {
     engine.setValue('selfCheck', true);
     for (let i = 0; i < 6; i++) engine.setValue(`self${i}`, 'oui');
   },
-  's1-b': engine => { engine.setValue('opening', 'a'); engine.setValue('adjustment', 'b'); },
+  // S1 B : l'approche, puis la grille d'autoévaluation déjà ouverte et remplie.
+  's1-b': engine => {
+    engine.setValue('opening', 'a'); engine.setValue('adjustment', 'b');
+    engine.setValue('selfCheck', true);
+    for (let i = 0; i < 6; i++) engine.setValue(`self${i}`, 'oui');
+  },
   's1-d': engine => {
     for (let i = 1; i <= 4; i++) engine.setValue(`line${i}`, `Phrase ${i}`);
     engine.setValue('technique1', 'Accueil / 4 × 20');
@@ -480,7 +493,11 @@ const INLINE = {
   },
   // S2 F passe par le menu des cas : on ouvre le premier profil et on
   // ne remplit que celui-là, comme le ferait un apprenant.
-  's2-f': engine => { engine.setValue('openCase', 0); engine.setValue('reply0', 'r'); engine.setValue('posture0', 'p'); },
+  's2-f': engine => {
+    engine.setValue('openCase', 0); engine.setValue('reply0', 'r'); engine.setValue('posture0', 'p');
+    engine.setValue('selfOpen0', true);
+    for (let k = 0; k < 6; k++) engine.setValue(`self0_${k}`, 'oui');
+  },
   's3-1-4': engine => { engine.setValue('hypothesis', 'h'); engine.setValue('question', 'Quoi ?'); },
   's4-2-2': engine => { engine.setValue('openCase', 0); engine.setValue('repair0', 'r'); }
 };

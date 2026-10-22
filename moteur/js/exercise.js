@@ -86,6 +86,31 @@
     }).join('')}</div>`;
   }
 
+  /* Autoévaluation avant le corrigé : pour chaque critère d'une grille
+   * ([titre, description]), Oui / En partie / Non. `keyOf(i)` nomme le
+   * champ du critère i. Styles : extras.css du module (.self-*). */
+  const SELF_GRADES = [
+    { id: 'oui', label: 'Oui', symbol: 'check' },
+    { id: 'partie', label: 'En partie', symbol: 'refresh' },
+    { id: 'non', label: 'Non', symbol: 'close' }
+  ];
+  const selfList = (rubric, keyOf) => `<ol class="self-list">${rubric.map(([title, description], i) => `<li class="self-row">
+      <div class="self-criterion"><h3>${esc(title)}</h3><p>${esc(description)}</p></div>
+      ${radioCards(keyOf(i), SELF_GRADES, 'self-grade')}
+    </li>`).join('')}</ol>`;
+  const selfErrors = (rubric, keyOf, values, verb = 'dites si votre réponse y répond') => rubric
+    .map(([title], i) => (SELF_GRADES.some(g => g.id === values[keyOf(i)]) ? null : { key: keyOf(i), message: `« ${title} » : ${verb}.` }))
+    .filter(Boolean);
+  // Le rappel de l'autoévaluation, sous le corrigé.
+  const selfSummary = (rubric, keyOf, what = 'votre réponse') => `<section class="panel self-summary">
+      <h2>Votre autoévaluation</h2>
+      <p class="muted">Vous jugez ${esc(what)} conforme sur ${rubric.filter((_, i) => value(keyOf(i)) === 'oui').length} critères sur ${rubric.length}. Comparez avec le retour ci-dessus.</p>
+      <ul class="self-summary-list">${rubric.map(([title], i) => {
+        const grade = SELF_GRADES.find(g => g.id === value(keyOf(i))) || { label: 'Sans réponse', id: 'vide' };
+        return `<li><span>${esc(title)}</span><span class="self-pill is-${grade.id}">${esc(grade.label)}</span></li>`;
+      }).join('')}</ul>
+    </section>`;
+
   function checkList(prefix, labels) {
     return `<fieldset class="self-checks"><legend class="sr-only">Auto-vérification</legend>${labels.map((label, i) =>
       `<label><input type="checkbox" data-field="${prefix}${i}" ${value(`${prefix}${i}`) === true ? 'checked' : ''}><span>${esc(label)}</span></label>`
@@ -1073,7 +1098,7 @@
   root.AtelierExercise = Object.freeze({
     mount, render, rebuild, changed, submit, showFeedback,
     values, value, setValue, cursor, setCursor, indexed, wizardAt,
-    field, select, radioCards, checkList, caseTabs, caseProgress, lockNote, actions,
+    field, select, radioCards, checkList, selfGrades: SELF_GRADES, selfList, selfErrors, selfSummary, caseTabs, caseProgress, lockNote, actions,
     caseBar, caseDots, caseActions,
     reviewing, verdictMark, inlineNote, modelBlock, reviewOptions,
     openCase, hasMenu,

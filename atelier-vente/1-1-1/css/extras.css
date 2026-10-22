@@ -331,3 +331,9 @@
 /* Auto-évaluation de S1 E2 : l'ouverture relue, puis la grille. */
 .self-reread { margin: 4px 0 18px; padding: 14px 18px; border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; background: #f5f7fc; color: var(--navy); font-style: italic; line-height: 1.5; }
 .self-question { margin: 0 0 10px; font-weight: 700; font-size: 1.08rem; color: var(--navy); }
+
+/* S2 A, S2 F · L'autoévaluation d'un cas, dans le panneau, avant sa correction. */
+.self-case-title { margin: 22px 0 12px; font-size: 1.15rem; }
+.answer-panel .self-summary { margin-top: 18px; padding: 18px 20px; border-radius: 16px; background: #fbfcff; }
+.answer-panel .self-summary h2 { font-size: 1.1rem; }
+.answer-panel .own-answer p + h4 { margin-top: 12px; }

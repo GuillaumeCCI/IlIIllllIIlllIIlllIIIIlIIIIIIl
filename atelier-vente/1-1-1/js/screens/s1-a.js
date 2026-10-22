@@ -56,11 +56,6 @@
 
   /* L'autoévaluation, une fois les trois étapes écrites : l'analyse à
    * gauche pour la relire, la grille à droite, critère par critère. */
-  const GRADES = [
-    { id: 'oui', label: 'Oui', symbol: 'check' },
-    { id: 'partie', label: 'En partie', symbol: 'refresh' },
-    { id: 'non', label: 'Non', symbol: 'close' }
-  ];
   const selfKey = i => `self${i}`;
   const selfShown = () => ex.value('selfCheck') === true;
 
@@ -74,10 +69,7 @@
         </aside>
         <form class="panel self-form" novalidate>
           <h2>Les critères</h2>
-          <ol class="self-list">${content.rubric.map(([title, description], i) => `<li class="self-row">
-            <div class="self-criterion"><h3>${esc(title)}</h3><p>${esc(description)}</p></div>
-            ${ex.radioCards(selfKey(i), GRADES, 'self-grade')}
-          </li>`).join('')}</ol>
+          ${ex.selfList(content.rubric, selfKey)}
           ${core.errorsBox()}
           <div class="wiz-actions">${core.button(`${icon('arrowLeft', { size: 17 })}<span>Modifier mon analyse</span>`, 'self-back', 'text-button with-icon')}<button type="submit" class="button primary">Voir le corrigé</button></div>
         </form>
@@ -112,14 +104,7 @@
           <div><h3>${esc(row.label)}</h3><p>${esc(notes[i])}</p></div>
         </div>
       </li>`).join('')}</ol>
-      <section class="panel self-summary">
-        <h2>Votre autoévaluation</h2>
-        <p class="muted">Vous jugez votre version conforme sur ${content.rubric.filter((_, i) => ex.value(selfKey(i)) === 'oui').length} critères sur ${content.rubric.length}. Comparez avec le retour ci-dessus.</p>
-        <ul class="self-summary-list">${content.rubric.map(([title], i) => {
-          const grade = GRADES.find(g => g.id === ex.value(selfKey(i))) || { label: 'Sans réponse', id: 'vide' };
-          return `<li><span>${esc(title)}</span><span class="self-pill is-${grade.id}">${esc(grade.label)}</span></li>`;
-        }).join('')}</ul>
-      </section>
+      ${ex.selfSummary(content.rubric, selfKey, 'votre version')}
       ${core.feedbackBox()}
     </section>`;
   }
@@ -157,7 +142,7 @@
 
   // Sur la grille, chaque critère attend sa réponse.
   const validate = values => selfShown()
-    ? content.rubric.map(([title], i) => (GRADES.some(g => g.id === values[selfKey(i)]) ? null : { key: selfKey(i), message: `« ${title} » : dites si votre version y répond.` })).filter(Boolean)
+    ? ex.selfErrors(content.rubric, selfKey, values, 'dites si votre version y répond')
     : analysisErrors(values);
 
   /* Les trois étapes remplies, « Valider mon analyse » ouvre la grille

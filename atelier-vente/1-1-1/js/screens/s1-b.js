@@ -1,5 +1,6 @@
 /* S1 B · S’adapter au client pressé.
  * Formuler une entrée en matière, puis nommer le réglage majeur.
+ * Puis s'autoévaluer sur la grille, comme en S1 A ; le corrigé vient après.
  */
 (() => {
   'use strict';
@@ -35,11 +36,34 @@
         ${last ? `${core.errorsBox()}<div class="wiz-back">${core.button(`${icon('arrowLeft', { size: 17 })}<span>Étape précédente</span>`, 'wizard-prev', 'text-button with-icon')}</div>${ex.actions('Valider mon approche')}` : ''}
       </section>
       <aside class="wiz-aside">
-        <div class="wiz-aside-head">${core.stepPill(at, STEPS.length)}${core.rubricButton()}</div>
+        <div class="wiz-aside-head">${core.stepPill(at, STEPS.length)}</div>
         <div class="wiz-art">${core.illustration(current)}</div>
       </aside>
       ${core.feedbackBox()}
     </form>`;
+  }
+
+  /* L'autoévaluation, une fois les deux étapes écrites : l'approche à
+   * gauche pour la relire, la grille à droite. Styles : extras.css (.self-*). */
+  const selfKey = i => `self${i}`;
+  const selfShown = () => ex.value('selfCheck') === true;
+
+  function selfScreen() {
+    return `<section class="self-eval">
+      ${core.pageTitle('Autoévaluation', 'Votre approche répond-elle à ces critères ?', 'Relisez votre approche. Pour chaque critère, dites si elle y répond. Le corrigé s’affiche ensuite.')}
+      <div class="self-layout">
+        <aside class="panel self-recap">
+          <h2>Votre approche</h2>
+          ${VERDICTS.map((row, i) => `<div class="self-recap-item"><span class="an-n" aria-hidden="true">${i + 1}</span><div><h3>${esc(row.title)}</h3><p>« ${esc(ex.value(row.key))} »</p></div></div>`).join('')}
+        </aside>
+        <form class="panel self-form" novalidate>
+          <h2>Les critères</h2>
+          ${ex.selfList(content.rubric, selfKey)}
+          ${core.errorsBox()}
+          <div class="wiz-actions">${core.button(`${icon('arrowLeft', { size: 17 })}<span>Modifier mon approche</span>`, 'self-back', 'text-button with-icon')}<button type="submit" class="button primary">Voir le corrigé</button></div>
+        </form>
+      </div>
+    </section>`;
   }
 
   /* Le corrigé, comme celui de l'analyse (S1 A) : pleine largeur, une ligne
@@ -67,18 +91,31 @@
           <div><h3>${esc(row.label)}</h3><p>${esc(notes[i])}</p></div>
         </div>
       </li>`).join('')}</ol>
+      ${ex.selfSummary(content.rubric, selfKey, 'votre approche')}
       ${core.feedbackBox()}
     </section>`;
   }
 
   function screen() {
-    return ex.reviewing() ? reviewScreen() : wizard(core.findExercise('s1-B'));
+    if (ex.reviewing()) return reviewScreen();
+    if (selfShown()) return selfScreen();
+    return wizard(core.findExercise('s1-B'));
   }
 
-  const validate = values => [
+  const answerErrors = values => [
     required(values, 'opening', 'Votre entrée en matière', 600),
     required(values, 'adjustment', 'Votre réglage majeur', 250)
   ].filter(Boolean);
+
+  // Sur la grille, chaque critère attend sa réponse.
+  const validate = values => (selfShown() ? ex.selfErrors(content.rubric, selfKey, values, 'dites si votre approche y répond') : answerErrors(values));
+
+  // Les deux étapes remplies, « Valider mon approche » ouvre la grille au lieu du corrigé.
+  function intercept(values) {
+    if (selfShown() || answerErrors(values).length) return false;
+    ex.setValue('selfCheck', true);
+    return true;
+  }
 
   /* Le corrigé modèle et le réglage attendu sont posés dans le corrigé : le
    * bilan ne garde que le bouton de suite. */
@@ -90,8 +127,12 @@
       `${core.callout('Un client entre dans votre magasin d’un pas rapide. Il jette des coups d’œil réguliers à sa montre, se montre particulièrement sur la réserve et évite le contact visuel prolongé. Il a manifestement un besoin précis, mais craint d’être accaparé par un discours commercial trop lourd.')}
        <div class="signals"><strong>Signaux observés</strong>${core.chips(['Pressé', 'Réservé', 'Besoin précis'])}</div>
        ${core.note('Montrez rapidement au client que vous avez compris son rythme et son besoin d’autonomie.')}`));
-    core.wireRubric(content.rubric);
+    core.$('[data-action="self-back"]')?.addEventListener('click', () => {
+      ex.setValue('selfCheck', false);
+      core.persist();
+      ex.render();
+    });
   }
 
-  ex.mount('s1-B', { screen, validate, feedback, onMount, compactFeedback: true });
+  ex.mount('s1-B', { screen, validate, intercept, feedback, onMount, compactFeedback: true });
 })();
