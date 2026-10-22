@@ -43,7 +43,7 @@
     return `<div class="wiz-column">
       ${core.stepPill(at, STEPS.length)}
       <form class="panel answer-panel wiz-panel" novalidate>
-        <div class="wiz-panel-head">${window.AtelierKit ? window.AtelierKit.contextButton() + window.AtelierKit.tourButton() : ''}${core.rubricButton()}</div>
+        <div class="wiz-panel-head">${window.AtelierKit ? window.AtelierKit.contextButton() + window.AtelierKit.tourButton() : ''}</div>
         <div class="wiz-number"><span>${at + 1}</span><div><h2>${esc(step.title)}</h2>${step.hint ? `<p>${esc(step.hint)}</p>` : ''}</div></div>
         ${step.body()}
         ${last
@@ -66,14 +66,14 @@
 
   function selfScreen() {
     return `<section class="self-eval">
-      ${core.pageTitle('Autoévaluation', 'Votre version est-elle conforme à la grille ?', 'Relisez votre analyse. Pour chaque critère, dites si votre version améliorée y répond. Le corrigé s’affiche ensuite.')}
+      ${core.pageTitle('Autoévaluation', 'Votre version répond-elle à ces critères ?', 'Relisez votre analyse. Pour chaque critère, dites si votre version améliorée y répond. Le corrigé s’affiche ensuite.')}
       <div class="self-layout">
         <aside class="panel self-recap">
           <h2>Votre analyse</h2>
           ${VERDICTS.map((row, i) => `<div class="self-recap-item"><span class="an-n" aria-hidden="true">${i + 1}</span><div><h3>${esc(row.title)}</h3><p>« ${esc(ex.value(row.key))} »</p></div></div>`).join('')}
         </aside>
         <form class="panel self-form" novalidate>
-          <h2>La grille d’autoévaluation</h2>
+          <h2>Les critères</h2>
           <ol class="self-list">${content.rubric.map(([title, description], i) => `<li class="self-row">
             <div class="self-criterion"><h3>${esc(title)}</h3><p>${esc(description)}</p></div>
             ${ex.radioCards(selfKey(i), GRADES, 'self-grade')}
@@ -199,7 +199,6 @@
          <div class="media-actions">${core.button(`${icon('play', { size: 18 })}<span data-audio-label>Écouter l’accroche</span>`, 'listen', 'primary')}</div>`);
       core.$('#dialog-body [data-action="listen"]')?.addEventListener('click', () => media.listen(content.audio));
     });
-    core.wireRubric(content.rubric);
     core.$('[data-action="self-back"]')?.addEventListener('click', () => {
       ex.setValue('selfCheck', false);
       core.persist();
@@ -224,7 +223,6 @@
         { symbol: 'play', tone: 'blue', text: 'Le bouton ▶ ou « Écouter l’accroche » lance l’écoute.' },
         { symbol: 'document', tone: 'blue', text: '« Voir la transcription » affiche le texte de l’accroche.' }
       ] },
-    { target: '.scenario .note', title: 'Le conseil', text: 'Ce conseil vous dit sur quoi porter votre attention.' },
     { target: '.step-pill', title: 'Trois étapes', text: 'Vous répondez à une question à la fois :',
       items: [
         { key: '1', tone: 'green', text: 'Ce qui fonctionne : les points forts de l’accroche.' },
@@ -232,15 +230,11 @@
         { key: '3', tone: 'blue', text: 'Votre version améliorée : vous réécrivez l’accroche.' }
       ],
       after: 'La pastille montre l’étape en cours.' },
-    { target: '.wiz-panel [data-act="k-context"]', title: 'Le contexte', text: 'Une fenêtre explique chaque étape à son arrivée.',
-      after: 'Ce bouton la rouvre.' },
-    { target: '.wiz-panel [data-action="rubric"]', title: 'La grille d’autoévaluation', text: 'Ce bouton affiche les critères de la grille.',
-      after: 'Une fois vos trois étapes écrites, vous vérifiez vous-même que votre version y répond, avant de voir le corrigé.' },
     { target: '.wiz-panel .field', title: 'Votre réponse', text: 'Écrivez ici votre réponse à l’étape en cours, avec des exemples précis tirés de l’accroche.' },
     { target: '.wiz-actions', title: 'Continuer',
       items: [
         { symbol: 'arrowRight', tone: 'blue', text: '« Continuer » ouvre l’étape suivante.' },
-        { symbol: 'checkCircle', tone: 'green', text: 'À la troisième étape, vous validez, puis vous remplissez la grille d’autoévaluation.' },
+        { symbol: 'checkCircle', tone: 'green', text: 'À la troisième étape, vous validez, puis vous faites votre autoévaluation.' },
         { symbol: 'document', tone: 'blue', text: 'Le corrigé s’affiche ensuite.' }
       ] }
   ]);

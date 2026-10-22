@@ -824,9 +824,19 @@
     const hole = layer.querySelector('.tour-hole');
     const card = layer.querySelector('.tour-card');
     let at = 0;
+    // Une barre de boutons ne garde que ses boutons et ses textes : le
+    // cadre n'entoure pas le vide de la barre.
+    const CONTROLS = 'button, a, [data-act], [data-action]';
+    const barParts = el => {
+      if (el.matches(CONTROLS) || !el.querySelector(CONTROLS) || el.querySelector('textarea, input, select, img, video, canvas')) return [el];
+      const parts = [...el.querySelectorAll('*')].filter(node => node.matches(CONTROLS)
+        ? !node.parentElement.closest(CONTROLS) || node.parentElement.closest(CONTROLS) === el
+        : !node.closest(CONTROLS) && [...node.childNodes].some(child => child.nodeType === 3 && child.textContent.trim()));
+      return parts.length ? parts : [el];
+    };
     // Le rectangle qui englobe tous les éléments de la zone.
     const zone = target => {
-      const rects = [...doc.querySelectorAll(target)].map(el => el.getBoundingClientRect()).filter(r => r.width || r.height);
+      const rects = [...doc.querySelectorAll(target)].flatMap(barParts).map(el => el.getBoundingClientRect()).filter(r => r.width || r.height);
       if (!rects.length) return null;
       const left = Math.min(...rects.map(r => r.left)), top = Math.min(...rects.map(r => r.top));
       const right = Math.max(...rects.map(r => r.right)), bottom = Math.max(...rects.map(r => r.bottom));
