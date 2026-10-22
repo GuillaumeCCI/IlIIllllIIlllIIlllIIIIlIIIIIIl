@@ -466,6 +466,22 @@
     document.body.style.backgroundImage = layers.join(', ');
   }
 
+  /* Page bien plus haute que l'écran : le décor s'arrêterait en cours de
+   * défilement. On passe alors à un fond beige uni (body.is-tall-page, styles :
+   * extras-commun.css). La hauteur de l'écran, pas celle de la fenêtre :
+   * intégrée au LMS, la page a la hauteur de son contenu. */
+  function watchLength() {
+    const check = () => {
+      const screenHeight = Math.min(window.innerHeight, window.screen?.availHeight || window.innerHeight);
+      document.body.classList.toggle('is-tall-page', document.documentElement.scrollHeight > screenHeight * 1.3);
+    };
+    check();
+    if (window.ResizeObserver) new ResizeObserver(check).observe(document.body);
+    window.addEventListener('resize', check);
+  }
+  if (document.body) watchLength();
+  else document.addEventListener('DOMContentLoaded', watchLength);
+
   /* ──────────────────────── Comportements communs ───────────────────── */
 
   function wireImageFallbacks() {
