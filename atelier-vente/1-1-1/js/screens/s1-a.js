@@ -12,11 +12,18 @@
   const content = window.ATELIER_S1;
 
   /* L'analyse, une question à la fois : la pastille d'étapes au-dessus, un
-   * grand numéro, le champ, puis « Continuer » (ou la validation à la fin). */
+   * grand numéro, ce que l'étape demande, le champ, puis « Continuer » (ou
+   * la validation à la fin). */
   const STEPS = [
-    { key: 'strengths', title: 'Ce qui fonctionne', body: () => ex.field('strengths', 'Ce qui fonctionne', { placeholder: 'Notez les points forts de l’accroche…', rows: 6, hideLabel: true }) },
-    { key: 'improvements', title: 'Axes d’amélioration', hint: 'Ajoutez 2 à 3 points précis', body: () => core.chips(['Clarté', 'Adaptation au client']) + ex.field('improvements', 'Axes d’amélioration', { placeholder: 'Vos axes d’amélioration…', rows: 6, hideLabel: true }) },
-    { key: 'rewrite', title: 'Votre version améliorée', body: () => ex.field('rewrite', 'Votre version améliorée', { placeholder: 'Réécrivez l’accroche ici…', max: 800, rows: 6, hideLabel: true }) }
+    { key: 'strengths', title: 'Ce qui fonctionne',
+      about: ['Relevez ce que la conseillère réussit dans son accroche.', 'Pour chaque point fort, citez ses mots et dites pourquoi ils fonctionnent.'],
+      body: () => ex.field('strengths', 'Ce qui fonctionne', { placeholder: 'Notez les points forts de l’accroche…', rows: 6, hideLabel: true }) },
+    { key: 'improvements', title: 'Axes d’amélioration', hint: 'Ajoutez 2 à 3 points précis',
+      about: ['Un axe d’amélioration, c’est ce qui gêne dans l’accroche et ce qu’il faudrait changer.', 'Pour chaque axe, citez le passage concerné et dites ce que vous feriez à la place.', 'Pensez à la clarté du message et à l’adaptation à ce client pressé et distant.'],
+      body: () => core.chips(['Clarté', 'Adaptation au client']) + ex.field('improvements', 'Axes d’amélioration', { placeholder: 'Vos axes d’amélioration…', rows: 6, hideLabel: true }) },
+    { key: 'rewrite', title: 'Votre version améliorée',
+      about: ['Réécrivez l’accroche comme si vous étiez la conseillère.', 'Gardez ce qui fonctionne et corrigez les axes d’amélioration que vous avez relevés.'],
+      body: () => ex.field('rewrite', 'Votre version améliorée', { placeholder: 'Réécrivez l’accroche ici…', max: 800, rows: 6, hideLabel: true }) }
   ];
 
   function analysisStep() {
@@ -28,6 +35,7 @@
       <form class="panel answer-panel wiz-panel" novalidate>
         <div class="wiz-panel-head">${window.AtelierKit ? window.AtelierKit.tourButton() : ''}${core.rubricButton()}</div>
         <div class="wiz-number"><span>${at + 1}</span><div><h2>${esc(step.title)}</h2>${step.hint ? `<p>${esc(step.hint)}</p>` : ''}</div></div>
+        <div class="wiz-about">${step.about.map(line => `<p>${esc(line)}</p>`).join('')}</div>
         ${step.body()}
         ${last
           ? `${core.errorsBox()}<div class="wiz-actions">${core.button(`${icon('arrowLeft', { size: 17 })}<span>Étape précédente</span>`, 'wizard-prev', 'text-button with-icon')}<button type="submit" class="button primary">Valider mon analyse</button></div>`
