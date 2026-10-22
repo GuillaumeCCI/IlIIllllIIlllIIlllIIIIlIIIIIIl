@@ -36,7 +36,7 @@
         ${last ? `${core.errorsBox()}<div class="wiz-back">${core.button(`${icon('arrowLeft', { size: 17 })}<span>Étape précédente</span>`, 'wizard-prev', 'text-button with-icon')}</div>${ex.actions('Valider mon approche')}` : ''}
       </section>
       <aside class="wiz-aside">
-        <div class="wiz-aside-head">${core.stepPill(at, STEPS.length)}</div>
+        <div class="wiz-aside-head"><div class="wiz-aside-tools">${window.AtelierKit ? window.AtelierKit.tourButton() : ''}${core.stepPill(at, STEPS.length)}</div></div>
         <div class="wiz-art">${core.illustration(current)}</div>
       </aside>
       ${core.feedbackBox()}
@@ -133,6 +133,23 @@
       ex.render();
     });
   }
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  if (window.AtelierKit) window.AtelierKit.tour('s1-B', [
+    { target: '.wiz-main .callout, .wiz-main .signals', title: 'La situation', text: 'Lisez la situation et les signaux du client.' },
+    { target: '.step-pill', title: 'Deux étapes', text: 'Vous répondez à une question à la fois :',
+      items: [
+        { key: '1', tone: 'blue', text: 'votre entrée en matière, en 3 à 4 phrases ;' },
+        { key: '2', tone: 'coral', text: 'votre réglage majeur, en une phrase.' }
+      ] },
+    { target: '.wiz-step .field', title: 'Votre réponse', text: 'Écrivez ici ce que vous diriez au client.' },
+    { target: '.wiz-step .wiz-actions, .form-actions', title: 'Continuer',
+      items: [
+        { symbol: 'arrowRight', tone: 'blue', text: '« Continuer » ouvre l’étape suivante.' },
+        { symbol: 'checkCircle', tone: 'green', text: 'À la deuxième étape, vous validez, puis vous faites votre autoévaluation.' },
+        { symbol: 'document', tone: 'blue', text: 'Le corrigé s’affiche ensuite.' }
+      ] }
+  ]);
 
   ex.mount('s1-B', { screen, validate, intercept, feedback, onMount, compactFeedback: true });
 })();

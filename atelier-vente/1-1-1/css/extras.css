@@ -352,3 +352,4 @@
 #main .self-grade .radio-card:has(input:checked) .radio-body strong { color: var(--grade); }
 /* Le cadre des critères reste sans contour une fois une réponse cochée. */
 #main .self-form.panel, #main .answer-panel.panel:has(.self-list) { border-color: transparent; }
+.wiz-aside-tools { display: flex; align-items: center; gap: 10px; }
