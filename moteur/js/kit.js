@@ -916,12 +916,18 @@
    * demandé. Une fenêtre s'ouvre d'elle-même à l'arrivée sur l'exercice
    * (après « Commencer » et son carton de titre), une fois par visite ; le
    * bouton rendu par `contextButton()` la rouvre. `rows` : [[symbole,
-   * libellé, texte]]. La visite guidée attend que la fenêtre soit fermée.
+   * libellé, texte]], ou une fonction qui les rend (null : rien à montrer),
+   * pour un contexte qui change d'une étape à l'autre ; `title` de même.
+   * `contextOpen()` la rouvre depuis l'écran. La visite guidée attend que
+   * la fenêtre soit fermée.
    * Styles : extras-commun.css (.k-context). */
   let contextRows = null;
+  let contextTitle = 'Le contexte';
   function openContext() {
-    if (!contextRows) return;
-    core().openDialog('Le contexte', `<section class="k-context"><ul>${contextRows.map(([symbol, label, line]) =>
+    const rows = typeof contextRows === 'function' ? contextRows() : contextRows;
+    if (!rows) return;
+    const title = typeof contextTitle === 'function' ? contextTitle() : contextTitle;
+    core().openDialog(title, `<section class="k-context"><ul>${rows.map(([symbol, label, line]) =>
       `<li><span class="k-context-icon">${icon(symbol, { size: 20 })}</span><span><strong>${esc(label)}</strong>${esc(line)}</span></li>`).join('')}</ul></section>
       <p class="k-context-go"><button type="button" class="button primary" data-act="k-context-go">C’est parti</button></p>`);
     const dialog = root.document.querySelector('#info-dialog');
@@ -929,8 +935,9 @@
     dialog.classList.add('is-context');
     dialog.addEventListener('close', () => dialog.classList.remove('is-context'), { once: true });
   }
-  function context(rows) {
+  function context(rows, title = 'Le contexte') {
     contextRows = rows;
+    contextTitle = title;
     handlers = Object.assign({}, handlers, {
       'k-context': () => openContext(),
       'k-context-go': () => root.document.querySelector('#info-dialog')?.close()
@@ -972,7 +979,7 @@
   }
 
   root.AtelierKit = Object.freeze({
-    corrige, answerReview, clientCard, portraitFor, tour, tourButton, context, contextButton, hlDemo, dragDemo,
+    corrige, answerReview, clientCard, portraitFor, tour, tourButton, context, contextButton, contextOpen: openContext, hlDemo, dragDemo,
     esc, icon, words, seconds, filled, plural, stage, setStage, list,
     head, steps, band, tip, help, submit, act, back, reset, dialogButton, bar, utility,
     matrix, answered, score, choiceButtons,

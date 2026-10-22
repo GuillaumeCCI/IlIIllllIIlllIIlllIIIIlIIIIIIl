@@ -256,10 +256,6 @@
 /* S1 A · Analyser : le lien « Visite guidée » à gauche de la grille d'évaluation. */
 .wiz-panel-head { align-items: center; gap: 18px; }
 
-/* S1 A · Ce que l'étape demande, sous son titre : une idée par ligne. */
-.wiz-about { display: grid; gap: 8px; padding: 16px 20px; border-left: 4px solid var(--accent); border-radius: 0 14px 14px 0; background: #f2f6fd; }
-.wiz-about p { margin: 0; line-height: 1.5; }
-
 /* S1 A · Autoévaluation : l'analyse à gauche, la grille à droite. */
 .self-eval { width: 100%; max-width: 1240px; margin: 0 auto; }
 .self-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 24px; align-items: start; margin-top: 24px; }

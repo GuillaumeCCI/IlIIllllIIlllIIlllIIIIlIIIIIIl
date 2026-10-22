@@ -12,17 +12,27 @@
   const content = window.ATELIER_S1;
 
   /* L'analyse, une question à la fois : la pastille d'étapes au-dessus, un
-   * grand numéro, ce que l'étape demande, le champ, puis « Continuer » (ou
-   * la validation à la fin). */
+   * grand numéro, le champ, puis « Continuer » (ou la validation à la fin).
+   * `context` : ce que l'étape demande, dans la fenêtre « Le contexte ». */
   const STEPS = [
     { key: 'strengths', title: 'Ce qui fonctionne',
-      about: ['Relevez ce que la conseillère réussit dans son accroche.', 'Pour chaque point fort, citez ses mots et dites pourquoi ils fonctionnent.'],
+      context: [
+        ['target', 'Le but de l’étape', 'Relever ce que la conseillère réussit dans son accroche.'],
+        ['pencil', 'Comment faire', 'Pour chaque point fort, citez ses mots et dites pourquoi ils fonctionnent.']
+      ],
       body: () => ex.field('strengths', 'Ce qui fonctionne', { placeholder: 'Notez les points forts de l’accroche…', rows: 6, hideLabel: true }) },
     { key: 'improvements', title: 'Axes d’amélioration', hint: 'Ajoutez 2 à 3 points précis',
-      about: ['Un axe d’amélioration, c’est ce qui gêne dans l’accroche et ce qu’il faudrait changer.', 'Pour chaque axe, citez le passage concerné et dites ce que vous feriez à la place.', 'Pensez à la clarté du message et à l’adaptation à ce client pressé et distant.'],
+      context: [
+        ['target', 'Le but de l’étape', 'Un axe d’amélioration, c’est ce qui gêne dans l’accroche et ce qu’il faudrait changer.'],
+        ['pencil', 'Comment faire', 'Pour chaque axe, citez le passage concerné et dites ce que vous feriez à la place.'],
+        ['lightbulb', 'À quoi penser', 'La clarté du message et l’adaptation à ce client pressé et distant.']
+      ],
       body: () => core.chips(['Clarté', 'Adaptation au client']) + ex.field('improvements', 'Axes d’amélioration', { placeholder: 'Vos axes d’amélioration…', rows: 6, hideLabel: true }) },
     { key: 'rewrite', title: 'Votre version améliorée',
-      about: ['Réécrivez l’accroche comme si vous étiez la conseillère.', 'Gardez ce qui fonctionne et corrigez les axes d’amélioration que vous avez relevés.'],
+      context: [
+        ['target', 'Le but de l’étape', 'Réécrire l’accroche comme si vous étiez la conseillère.'],
+        ['pencil', 'Comment faire', 'Gardez ce qui fonctionne et corrigez les axes d’amélioration que vous avez relevés.']
+      ],
       body: () => ex.field('rewrite', 'Votre version améliorée', { placeholder: 'Réécrivez l’accroche ici…', max: 800, rows: 6, hideLabel: true }) }
   ];
 
@@ -33,9 +43,8 @@
     return `<div class="wiz-column">
       ${core.stepPill(at, STEPS.length)}
       <form class="panel answer-panel wiz-panel" novalidate>
-        <div class="wiz-panel-head">${window.AtelierKit ? window.AtelierKit.tourButton() : ''}${core.rubricButton()}</div>
+        <div class="wiz-panel-head">${window.AtelierKit ? window.AtelierKit.contextButton() + window.AtelierKit.tourButton() : ''}${core.rubricButton()}</div>
         <div class="wiz-number"><span>${at + 1}</span><div><h2>${esc(step.title)}</h2>${step.hint ? `<p>${esc(step.hint)}</p>` : ''}</div></div>
-        <div class="wiz-about">${step.about.map(line => `<p>${esc(line)}</p>`).join('')}</div>
         ${step.body()}
         ${last
           ? `${core.errorsBox()}<div class="wiz-actions">${core.button(`${icon('arrowLeft', { size: 17 })}<span>Étape précédente</span>`, 'wizard-prev', 'text-button with-icon')}<button type="submit" class="button primary">Valider mon analyse</button></div>`
@@ -167,7 +176,14 @@
     `<p class="tag">${content.audio.demo ? 'Texte de démonstration' : 'Accroche de l’exercice'}</p>
      <blockquote class="transcript">« ${esc(content.audio.transcript)} »</blockquote>`;
 
+  /* La fenêtre « Le contexte » s'ouvre à l'arrivée, puis à chaque
+   * nouvelle étape ; « Le contexte » la rouvre. */
+  const stepNow = () => (ex.reviewing() || selfShown() ? null : Math.min(ex.wizardAt(), STEPS.length - 1));
+  let contextStep = null;
   function onMount() {
+    const at = stepNow();
+    if (at !== null && contextStep !== null && at !== contextStep && window.AtelierKit) window.AtelierKit.contextOpen();
+    if (at !== null) contextStep = at;
     // Le gros bouton ▶ et « Écouter l’accroche » portent tous deux data-action="listen" :
     // un seul écouteur chacun, sinon le second clic arrête aussitôt la lecture.
     document.querySelectorAll('[data-action="listen"]').forEach(button =>
@@ -191,6 +207,10 @@
     });
   }
 
+  if (window.AtelierKit) window.AtelierKit.context(
+    () => (stepNow() === null ? null : STEPS[stepNow()].context),
+    () => `Étape ${stepNow() + 1} · ${STEPS[stepNow()].title}`);
+
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   if (window.AtelierKit) window.AtelierKit.tour('s1-A', [
     { target: '.scenario .callout', title: 'La consigne', text: 'Vous analysez l’accroche d’une vendeuse en boutique, en trois temps :',
@@ -212,6 +232,8 @@
         { key: '3', tone: 'blue', text: 'Votre version améliorée : vous réécrivez l’accroche.' }
       ],
       after: 'La pastille montre l’étape en cours.' },
+    { target: '.wiz-panel [data-act="k-context"]', title: 'Le contexte', text: 'Une fenêtre explique chaque étape à son arrivée.',
+      after: 'Ce bouton la rouvre.' },
     { target: '.wiz-panel [data-action="rubric"]', title: 'La grille d’autoévaluation', text: 'Ce bouton affiche les critères de la grille.',
       after: 'Une fois vos trois étapes écrites, vous vérifiez vous-même que votre version y répond, avant de voir le corrigé.' },
     { target: '.wiz-panel .field', title: 'Votre réponse', text: 'Écrivez ici votre réponse à l’étape en cours, avec des exemples précis tirés de l’accroche.' },
