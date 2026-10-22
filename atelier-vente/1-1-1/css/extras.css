@@ -278,7 +278,7 @@
 .self-summary-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
 .self-summary-list li { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 10px 14px; border-radius: 12px; background: #f6f8fc; }
 .self-pill { padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 700; white-space: nowrap; }
-.self-pill.is-oui { background: #ddf5ee; color: #11806a; } .self-pill.is-partie { background: #fff1c7; color: #9a6b00; } .self-pill.is-non, .self-pill.is-vide { background: #ffe4df; color: #c2433d; }
+.self-pill.is-oui { background: #ddf5ee; color: #11806a; } .self-pill.is-partie { background: #fff1e3; color: #d96a00; } .self-pill.is-non, .self-pill.is-vide { background: #ffe4df; color: #c2433d; }
 @media (max-width: 900px) { .self-layout { grid-template-columns: minmax(0, 1fr); } }
 .self-recap { position: sticky; top: 88px; }
 #main .self-grade .radio-body strong { white-space: normal; }
@@ -340,10 +340,10 @@
 .answer-panel .own-answer p + h4 { margin-top: 12px; }
 
 /* Autoévaluation : chaque réponse a sa couleur, celles des pastilles du
- * rappel (Oui vert, En partie jaune, Non rouge). Teinte légère au repos,
+ * rappel (Oui vert, En partie orange, Non rouge). Teinte légère au repos,
  * carte colorée une fois choisie, sans contour. */
 .self-grade .radio-card:has(input[value="oui"]) { --grade: #11806a; --grade-tint: #ddf5ee; }
-.self-grade .radio-card:has(input[value="partie"]) { --grade: #9a6b00; --grade-tint: #fff1c7; }
+.self-grade .radio-card:has(input[value="partie"]) { --grade: #d96a00; --grade-tint: #fff1e3; }
 .self-grade .radio-card:has(input[value="non"]) { --grade: #c2433d; --grade-tint: #ffe4df; }
 #main .self-grade .radio-card .radio-symbol { background: var(--grade-tint); color: var(--grade); }
 #main .self-grade .radio-card input { accent-color: var(--grade); }
