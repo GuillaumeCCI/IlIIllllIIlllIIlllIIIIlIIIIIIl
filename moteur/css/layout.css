@@ -321,7 +321,7 @@ body { position: relative; }
 .step-pill-label { padding-left: 18px; border-left: 1.5px solid #dfe5f1; }
 .wiz-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr); gap: clamp(24px, 4vw, 64px); align-items: start; }
 .wiz-main { display: grid; gap: 18px; }
-.wiz-aside { display: grid; gap: 24px; justify-items: end; position: sticky; top: 20px; }
+.wiz-aside { display: grid; gap: 24px; justify-items: end; position: sticky; top: 88px; }
 .wiz-aside-head { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
 .wiz-art { width: 100%; }
 /* L'illustration dans une forme arrondie, comme découpée à la main. */

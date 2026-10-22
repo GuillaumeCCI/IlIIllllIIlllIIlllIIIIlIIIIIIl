@@ -270,7 +270,9 @@
 .self-criterion h3 { margin: 0 0 4px; font-size: 1.02rem; }
 .self-criterion p { margin: 0; color: #46577d; }
 .self-grade.radio-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-.self-grade .radio-card { padding: 10px 14px; min-height: 0; }
+#main .self-grade .radio-card { gap: 10px; padding: 10px 12px; min-height: 0; }
+#main .self-grade .radio-card input { flex-shrink: 0; }
+#main .self-grade .radio-body { min-width: 0; }
 .self-form .wiz-actions { margin-top: 22px; }
 .self-summary { margin-top: 24px; padding: clamp(22px, 2.6vw, 32px); border-radius: 20px; }
 .self-summary-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
@@ -278,8 +280,8 @@
 .self-pill { padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 700; white-space: nowrap; }
 .self-pill.is-oui { background: #ddf5ee; color: #11806a; } .self-pill.is-partie { background: #fff1c7; color: #9a6b00; } .self-pill.is-non, .self-pill.is-vide { background: #ffe4df; color: #c2433d; }
 @media (max-width: 900px) { .self-layout { grid-template-columns: minmax(0, 1fr); } }
-.self-recap { position: sticky; top: 20px; }
-.self-grade .radio-body strong { white-space: nowrap; }
+.self-recap { position: sticky; top: 88px; }
+#main .self-grade .radio-body strong { white-space: normal; }
 
 /* S3 1.2 · Associer chaque étape à son rôle : le rôle à gauche, la méthode
    en parcours vertical à droite. */
@@ -289,7 +291,7 @@
 .rl-count { margin: 0 0 6px; padding: 8px 16px; border-radius: 999px; background: #fff; color: var(--navy); box-shadow: 0 6px 18px rgb(20 40 100 / 8%); }
 .rl-count strong { color: var(--accent); }
 .rl-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 28px; align-items: start; margin-top: 26px; }
-.rl-side { position: sticky; top: 20px; display: grid; gap: 18px; }
+.rl-side { position: sticky; top: 88px; display: grid; gap: 18px; }
 .rl-card { position: relative; padding: 30px 32px 26px; border-radius: 22px; background: #fff; box-shadow: 0 24px 50px -22px rgb(20 40 100 / 30%), 0 6px 16px rgb(20 40 100 / 6%); }
 .rl-card-tag { display: inline-block; margin: 0; padding: 5px 14px; border-radius: 999px; background: var(--tint); color: var(--accent); font-weight: 800; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; }
 .rl-card-quote { display: block; margin-top: 18px; color: #f08a6c; }
