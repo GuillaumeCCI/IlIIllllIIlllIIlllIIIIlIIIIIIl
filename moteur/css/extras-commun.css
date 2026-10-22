@@ -653,4 +653,4 @@ body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; 
 .k-context-go { display: flex; justify-content: flex-end; margin: 26px 0 0; }
 
 /* Page longue (core.js, watchLength) : fond beige uni, sans décor. */
-body.is-tall-page:not(.is-briefing) { background-image: none !important; background-color: #f8f4ec; }
+body.is-tall-page:not(.is-briefing) { background-image: none !important; background-color: #fbf8f2; }
