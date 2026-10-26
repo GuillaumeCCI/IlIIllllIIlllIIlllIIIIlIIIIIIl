@@ -91,7 +91,7 @@
     const n = count();
     return `<div class="k-page role-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: reviewing ? '' : `<p class="k-count">Rôle <strong>${current() + 1} sur ${roles.length}</strong></p>${dots(current())}` })}
+        aside: reviewing ? '' : `<span class="tour-pair">${kit.contextButton()}${kit.tourButton()}</span><p class="k-count">Rôle <strong>${current() + 1} sur ${roles.length}</strong></p>${dots(current())}` })}
       <form novalidate>
         ${reviewing ? reviewScreen() : `${playScreen()}${core.errorsBox()}${kit.bar({
           left: kit.reset(),
@@ -115,6 +115,22 @@
     verb: el => { choose(el.dataset.verb); kit.commit(); },
     role: el => { ex.setValue('role', Number(el.dataset.index)); kit.commit(); }
   });
+
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  kit.context([
+    ['list', 'La méthode', 'Six étapes pour traiter une objection, chacune désignée par un verbe.'],
+    ['target', 'Un rôle', 'Ce que fait une étape dans l’échange avec le client.'],
+    ['pencil', 'Ce qui vous est demandé', 'Pour chacun des 6 rôles, retrouver l’étape qui lui correspond.']
+  ], 'À chaque étape, son rôle');
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s1-1.2', [
+    { target: '.role-body', title: 'Le rôle', text: 'Lisez ce que fait cette étape.' },
+    { target: '.role-grid', title: 'Les 6 étapes', text: 'Cliquez sur l’étape qui a ce rôle.',
+      after: 'Le rôle suivant apparaît aussitôt. Chaque étape ne sert qu’une fois.' },
+    { target: '.role-dots', title: 'Six rôles', text: 'Chaque point est un rôle. Cliquez dessus pour y revenir.' },
+    { target: '.role-page .k-bar .k-submit', title: 'Valider', text: 'Les 6 rôles associés, validez pour voir le corrigé.' }
+  ]);
 
   ex.mount('s1-1.2', { screen, validate, feedback, compactFeedback: true });
 })();
