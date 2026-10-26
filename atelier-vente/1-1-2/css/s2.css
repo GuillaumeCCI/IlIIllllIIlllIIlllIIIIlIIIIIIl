@@ -55,7 +55,7 @@
 /* ── 2.3 · Le studio d'accroches ──────────────────────────────────────── */
 .studio-layout { grid-template-columns: minmax(0, .35fr) minmax(0, .65fr); }
 .studio-picture { margin: 10px 0 14px; border-radius: 10px; overflow: hidden; }
-.studio-picture img { display: block; width: 100%; aspect-ratio: 1.05; object-fit: cover; object-position: 48% 30%; }
+.studio-picture img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 48% 30%; }
 .studio-prospect h2 { font-size: 1.6rem; }
 .studio-software { color: var(--accent); margin-bottom: 10px; }
 .studio-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); margin-bottom: 20px; }

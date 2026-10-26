@@ -40,7 +40,7 @@
     const hook = hooks[at];
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count">Accroche <strong>${at + 1} sur ${hooks.length}</strong></p>` })}
+        aside: `<p class="k-count">Accroche <strong>${at + 1} sur ${hooks.length}</strong></p>${kit.tourButton()}` })}
       <div class="k-columns studio-layout">
         ${prospect()}
         <form class="k-panel" novalidate>
@@ -49,7 +49,6 @@
           <h2 class="studio-title">${esc(hook.title)}</h2>
           <p class="k-instruction">${esc(hook.prompt)}</p>
           ${ex.field(`hook${at}`, hook.title, { placeholder: hook.placeholder, max: 160, rows: 5, hideLabel: true })}
-          <p class="studio-criteria">${content.criteria.map(c => `<span>${esc(c)}</span>`).join('<span aria-hidden="true">·</span>')}</p>
           ${core.errorsBox()}
           ${kit.bar({ left: kit.reset(), right: `${kit.dialogButton('example', 'Voir un exemple', 'secondary', '')}${kit.submit(hooks.every((_, i) => i === at || filled(i)) ? 'Valider mes 3 accroches' : hook.next)}` })}
         </form>
@@ -91,6 +90,21 @@
 
   kit.on({ hook: el => { ex.setValue('hook', Number(el.dataset.index)); kit.commit(); } });
   kit.dialogs({ example: () => ({ title: `Un exemple · ${hooks[current()].tab}`, html: `<p>« ${esc(hooks[current()].example)} »</p><p class="k-muted">Un exemple parmi d’autres : écrivez votre propre version.</p>` }) });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s2-2.3', [
+    { target: '.studio-prospect', title: 'Votre prospect', text: 'Vos accroches s’adressent à elle : lisez qui elle est et son problème.' },
+    { target: '.studio-tabs', title: 'Trois accroches', text: 'Une par onglet, chacune d’une nature différente.' },
+    { target: '.studio-layout textarea', title: 'Votre accroche', text: 'Une bonne accroche est :',
+      items: [
+        { symbol: 'check', tone: 'green', text: 'courte : une ou deux phrases ;' },
+        { symbol: 'check', tone: 'green', text: 'concrète : un fait, un chiffre, une situation ;' },
+        { symbol: 'check', tone: 'green', text: 'centrée sur le client : elle parle de ses besoins.' }
+      ] },
+    { target: '.k-page .k-bar [data-dialog="example"]', title: 'Un exemple', text: 'Vous bloquez ? Voyez un modèle, puis écrivez votre version.' },
+    { target: '.k-page .k-bar .k-submit', title: 'Continuer', text: 'Ce bouton passe à l’accroche suivante.',
+      after: 'Après la 3e, vous comparez vos accroches aux exemples.' }
+  ]);
 
   ex.mount('s2-2.3', { screen, validate, intercept, feedback, compactFeedback: true });
 })();
