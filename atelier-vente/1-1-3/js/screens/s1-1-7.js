@@ -80,7 +80,7 @@
     const last = fiches.every((_, i) => i === at || complete(i));
     return `<div class="k-page lib-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count"><strong>${doneCount()} / ${fiches.length}</strong> fiches complétées</p>` })}
+        aside: `<p class="k-count"><strong>${doneCount()} / ${fiches.length}</strong> fiches complétées</p>${reviewing ? '' : kit.contextButton() + kit.tourButton()}` })}
       ${reviewing ? reviewScreen() : `<div class="lib-layout">
         ${list(at)}
         <form class="k-panel lib-sheet" novalidate>
@@ -123,6 +123,25 @@
 
   kit.on({ fiche: el => { ex.setValue('fiche', Number(el.dataset.index)); kit.commit(); } });
   kit.dialogs({ table: () => ({ title: 'Mes 4 fiches', html: table() }) });
+
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  kit.context([
+    ['list', 'Une bibliothèque d’objections', 'Des réponses préparées à l’avance aux objections que vous entendez souvent.'],
+    ['document', 'Une fiche', 'Pour une objection : sa nature, une question pour creuser, une réponse et sa preuve.'],
+    ['pencil', 'Ce qui vous est demandé', 'Remplir les 4 fiches, une par objection.']
+  ], 'Votre bibliothèque d’objections');
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s1-1.7', [
+    { target: '.lib-list', title: 'Les objections', text: 'Une fiche par objection. Cliquez pour passer de l’une à l’autre.' },
+    { target: '.lib-sheet .lib-row:nth-of-type(1)', title: '1. La nature', text: 'Choisissez dans la liste ce que cache l’objection.' },
+    { target: '.lib-sheet .lib-row:nth-of-type(2)', title: '2. La question', text: 'Écrivez la question que vous poseriez au client pour en savoir plus.' },
+    { target: '.lib-sheet .lib-row:nth-of-type(3)', title: '3. La réponse et sa preuve', text: 'Ce que vous diriez, puis un fait qui le prouve.',
+      after: 'Par exemple un chiffre, un essai ou un témoignage.' },
+    { target: '.lib-actions [data-dialog="table"]', title: 'Vos 4 fiches', text: 'Relisez toutes vos fiches dans un tableau.' },
+    { target: '.lib-actions .k-submit', title: 'Enregistrer', text: 'Ce bouton passe à la fiche suivante.',
+      after: 'Après la 4e fiche, vous voyez le corrigé.' }
+  ]);
 
   ex.mount('s1-1.7', { screen, validate, intercept, feedback, compactFeedback: true });
 })();
