@@ -26,16 +26,18 @@
     return free === -1 ? gestures.length - 1 : free;
   };
 
-  function tabs(current) {
-    return `<div class="reflex-tabs">${cards.map((c, i) => `<button type="button" class="reflex-tab ${i === current ? 'is-current' : ''} ${cardDone(i) ? 'is-done' : ''}" data-act="card" data-index="${i}">
-      <span class="reflex-n">${cardDone(i) && i !== current ? icon('check', { size: 18 }) : String(i + 1).padStart(2, '0')}</span><span>« ${esc(c.quote)} »</span></button>`).join('')}</div>`;
+  /* Le numéro de la carte et, à côté, un point par carte pour passer de
+   * l'une à l'autre (la phrase du client n'est montrée qu'une fois, en dessous). */
+  function position(current) {
+    return `<div class="reflex-position"><span>Carte ${String(current + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}</span>
+      <span class="k-dots">${cards.map((c, i) => `<button type="button" class="k-dot ${i === current ? 'is-current' : cardDone(i) ? 'is-done' : ''}" data-act="card" data-index="${i}" aria-label="Carte ${i + 1} : « ${esc(c.quote)} »"></button>`).join('')}</span></div>`;
   }
 
   function editor(c) {
     const g = gesture(c);
     const step = gestures[g];
     return `<section class="reflex-card">
-      <p class="reflex-position">Carte ${String(c + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}</p>
+      ${position(c)}
       ${kit.clientCard(cards[c].quote, null, 'Le client vous dit', c)}
       <ol class="k-steps is-compact reflex-steps">${gestures.map((s, k) => `<li class="k-step ${k === g ? 'is-active' : kit.filled(val(k, c)) ? 'is-done' : 'is-next'}">
         <button type="button" class="k-step-dot" data-act="gesture" data-index="${k}" aria-label="${esc(s.label)}">${kit.filled(val(k, c)) && k !== g ? icon('check', { size: 16 }) : k + 1}</button><span class="k-step-label">${esc(s.label)}</span></li>`).join('')}</ol>
@@ -71,8 +73,8 @@
     const c = card();
     return `<div class="k-page reflex-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count reflex-count"><strong>${ready()} / ${cards.length}</strong> cartes prêtes</p>` })}
-      ${reviewing ? reviewScreen() : `${tabs(c)}<form novalidate class="reflex-form">${editor(c)}</form>
+        aside: `<p class="k-count reflex-count"><strong>${ready()} / ${cards.length}</strong> cartes prêtes</p>${reviewing ? '' : kit.contextButton() + kit.tourButton()}` })}
+      ${reviewing ? reviewScreen() : `<form novalidate class="reflex-form">${editor(c)}</form>
         <p class="k-muted reflex-foot">Une fois les 3 cartes terminées, ouvrez votre fiche en mode appel.</p>`}
       ${reviewing ? '' : kit.utility('Corrigé disponible avec votre fiche')}
     </div>`;
@@ -114,6 +116,32 @@
     print: () => window.print()
   });
   kit.dialogs(Object.fromEntries(gestures.map((g, i) => [`tip${i}`, { title: `Repère · ${g.label}`, html: `<p>${esc(g.tip)}</p>` }])));
+
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  kit.context([
+    ['target', 'Une carte réflexe', 'Une fiche courte, à garder sous les yeux pendant vos appels de prospection.'],
+    ['chat', 'Une esquive', 'Une phrase toute faite du prospect pour écourter l’appel, comme « Je n’ai pas le temps ».'],
+    ['pencil', 'Ce qui vous est demandé', 'Pour chacune des 3 esquives, écrire votre posture, votre réponse et votre rebond.']
+  ], 'Vos cartes réflexes');
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s2-2.7', [
+    { target: '.reflex-card .client-card', title: 'L’esquive', text: 'Voici ce que vous dit le prospect.' },
+    { target: '.reflex-steps', title: 'Trois gestes, dans l’ordre',
+      items: [
+        { key: '1', tone: 'blue', text: 'la posture : votre voix et votre attitude ;' },
+        { key: '2', tone: 'blue', text: 'la réponse : la phrase que vous dites ;' },
+        { key: '3', tone: 'blue', text: 'le rebond : ce qui relance l’échange.' }
+      ] },
+    { target: '.reflex-card .field', title: 'Votre texte', text: 'Écrivez le geste en cours, court et utilisable pendant un appel.' },
+    { target: '.reflex-position', title: 'Trois cartes', text: 'Une carte par esquive.',
+      after: 'Chaque point est une carte. Cliquez dessus pour en changer.' },
+    { target: '.reflex-actions .k-submit', title: 'Continuer',
+      items: [
+        { symbol: 'arrowRight', tone: 'blue', text: 'Ce bouton passe au geste suivant, puis à la carte suivante.' },
+        { symbol: 'phone', tone: 'green', text: 'Les 3 cartes prêtes, votre fiche s’ouvre en mode appel.' }
+      ] }
+  ]);
 
   ex.mount('s2-2.7', { screen, validate, intercept, feedback, compactFeedback: true });
 })();

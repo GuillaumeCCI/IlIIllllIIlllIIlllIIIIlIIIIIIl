@@ -149,7 +149,12 @@
 .reflex-form { position: relative; width: min(100%, 1060px); margin: 12px auto 0; }
 .reflex-form::before { content: ''; position: absolute; inset: 14px -24px -10px; border: 1px solid #e2e8f4; border-radius: 20px; background: #f5f8fe; z-index: 0; transform: rotate(-.6deg); }
 .reflex-card { position: relative; z-index: 1; display: grid; gap: 8px; padding: 30px 56px; border: 1px solid #e2e8f4; border-radius: 20px; background: #fff; box-shadow: 0 16px 36px rgb(20 40 100 / 10%); }
-.reflex-position { color: #6b7aa1; font-weight: 600; letter-spacing: .04em; }
+.reflex-position { display: flex; align-items: center; gap: 14px; color: #6b7aa1; font-weight: 600; letter-spacing: .04em; }
+.reflex-position .k-dots { display: inline-flex; gap: 8px; margin: 0; }
+.reflex-position .k-dot { width: 13px; height: 13px; padding: 0; border: 0; border-radius: 50%; background: #d7deec; cursor: var(--cursor-hand, pointer); }
+.reflex-position .k-dot.is-done { background: #9bb6f0; }
+.reflex-position .k-dot.is-current { background: var(--accent); }
+.reflex-position .k-dot:hover { box-shadow: 0 0 0 3px #e6eeff; }
 .reflex-quote { font-size: clamp(1.8rem, 3vw, 2.9rem); }
 .reflex-steps { justify-content: flex-start; margin: 4px 0 8px; }
 .reflex-steps .k-step-dot { border: 0; }
