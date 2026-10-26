@@ -77,6 +77,11 @@
 .audit-layout { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 18px; align-items: start; }
 .audit-layout h2 { margin-bottom: 10px; }
 .audit-actions { grid-column: 1 / -1; }
+/* La priorité, visible mais grisée tant que les six critères ne sont pas notés. */
+.audit-lock { display: none; align-items: center; gap: 8px; margin-top: 10px; color: var(--accent); font-weight: 600; }
+.audit-priority.is-locked .audit-lock { display: flex; }
+#main .audit-priority.is-locked textarea { opacity: .5; cursor: not-allowed; }
+.audit-priority.is-locked .k-muted { display: none; }
 .audit-actions .k-bar { margin-top: 0; border-top: 0; padding-top: 0; }
 .audit-total { text-align: right; font-weight: 800; color: var(--navy); margin-top: 12px; font-size: 1.1rem; }
 .audit-note { font-size: 1.15rem; color: var(--navy); }

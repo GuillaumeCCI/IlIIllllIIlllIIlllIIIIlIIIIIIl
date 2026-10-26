@@ -44,17 +44,18 @@
       <section class="k-panel audit-pitch"><p class="k-label">Le pitch à analyser</p><p>${esc(content.pitch)}</p></section>
       <form class="audit-layout" novalidate>
         <section class="k-panel">
-          <h2>1. Notez le pitch à partir de l’exemple ci-dessus</h2>
+          <h2>1. Notez le pitch ci-dessus</h2>
           ${reviewing ? `${kit.result(total(), max, `votre total, pour ${reference} / ${max} au repère`)}${reviewTable()}`
             : kit.matrix({ key: 'note', rows: criteria, columns: content.levels.map(level => ({ id: level.id, label: level.id, sub: level.label })), head: 'Critère', round: true, progressive: true })}
           ${reviewing ? '' : `<p class="audit-total" data-live="total">${esc(totalText())}</p>`}
         </section>
-        <section class="k-panel">
+        <section class="k-panel audit-priority">
           <h2>2. Choisissez votre priorité</h2>
           ${reviewing ? `${kit.yours('Votre modification prioritaire', ex.value('priority'))}${kit.model('Corrigé modèle', content.priority)}`
             : `<p class="k-instruction">Quelle modification aurait le plus fort impact sur ce pitch ?</p>
               ${ex.field('priority', 'La modification prioritaire', { placeholder: 'La modification prioritaire…', max: 240, rows: 7, hideLabel: true })}
-              <p class="k-muted">Une seule priorité, formulée concrètement.</p>`}
+              <p class="k-muted">Une seule priorité, formulée concrètement.</p>
+              <p class="audit-lock">${kit.icon('lock', { size: 18 })}<span>Notez d’abord les ${criteria.length} critères pour écrire votre priorité.</span></p>`}
         </section>
         <div class="audit-actions">
           ${reviewing ? `${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
@@ -76,6 +77,18 @@
   // Le total et le repère sont déjà en tête du corrigé : seule la leçon reste.
   const feedback = () => ['Ce pitch parle bénéfices, sur un ton assuré, avec une question pour finir ; mais aucune preuve ne vient appuyer ses promesses.'];
 
+  /* La priorité reste visible, mais ne s’écrit qu’une fois les six critères
+   * notés. On lit les cases cochées, à jour dès le clic. */
+  function lockPriority() {
+    const panel = document.querySelector('.audit-priority');
+    const field = panel && panel.querySelector('textarea');
+    if (!field) return;
+    const rated = criteria.every((_, i) => document.querySelector(`input[name="note${i}"]:checked`));
+    panel.classList.toggle('is-locked', !rated);
+    field.disabled = !rated;
+  }
+  document.addEventListener('change', event => { if (event.target.closest && event.target.closest('.k-matrix')) lockPriority(); });
+
   kit.live(() => ({ total: esc(totalText()), score: esc(totalText().replace('Total : ', '')) }));
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
@@ -89,7 +102,8 @@
       ],
       after: 'Chaque note fait apparaître le critère suivant.' },
     { target: '.audit-total', title: 'Le total', text: 'Votre total sur 12 se calcule au fur et à mesure de vos notes.' },
-    { target: '.audit-layout > .k-panel:nth-child(2)', title: 'Votre priorité', text: 'Écrivez LA modification qui rendrait ce pitch plus percutant : une seule, formulée concrètement.' },
+    { target: '.audit-layout > .k-panel:nth-child(2)', title: 'Votre priorité', text: 'Écrivez LA modification qui rendrait ce pitch plus percutant : une seule, formulée concrètement.',
+      after: 'Elle s’ouvre une fois les six critères notés.' },
     { target: '.k-bar .k-submit', title: 'Valider mon audit', text: 'Vous découvrez ensuite le corrigé :',
       items: [
         { symbol: 'scales', tone: 'blue', text: 'vos notes sont comparées au repère, critère par critère ;' },
@@ -97,5 +111,5 @@
       ] }
   ]);
 
-  ex.mount('s2-2.5', { screen, validate, feedback, compactFeedback: true });
+  ex.mount('s2-2.5', { screen, validate, feedback, onMount: lockPriority, compactFeedback: true });
 })();
