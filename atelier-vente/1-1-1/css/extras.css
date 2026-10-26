@@ -290,24 +290,28 @@
 .rl-head-side { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
 .rl-count { display: flex; align-items: center; gap: 12px; margin: 0 0 6px; color: var(--navy); }
 .rl-dots { display: flex; gap: 6px; }
-.rl-dots i { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #c9d3ea; background: #fff; }
-.rl-dots i.is-on { border-color: var(--accent); background: var(--accent); }
+/* Un bouton numéroté par rôle : on y revient d'un clic pour changer son choix. */
+.rl-dot { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border-radius: 50%; border: 1.5px solid #c9d3ea; background: #fff; color: #6b7894; font: inherit; font-size: .8rem; font-weight: 700; cursor: var(--cursor-hand, pointer); }
+.rl-dot.is-on { border-color: var(--accent); background: var(--accent); color: #fff; }
+.rl-dot.is-current { box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--accent); }
+.rl-dot:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.rl-card-ask.is-chosen { color: #1d6b3f; }
+.rl-card-ask.is-chosen strong { color: #1d6b3f; }
 /* Une couleur par étape de la méthode. */
 #main .rl-step-icon.tone-coral { background: #fdeae5; color: #d9573f; }
 #main .rl-step-icon.tone-green { background: #e3f4ea; color: #1d8a4c; }
 #main .rl-step-icon.tone-gold { background: #fdf1dc; color: #c27a12; }
 /* L'illustration en bas à gauche, collée au bord de l'écran, bords fondus. */
-/* La mise en page réserve la hauteur de l'illustration (format 1086 × 1448),
- * pour qu'elle ne dépasse jamais sous le fond de page. */
 .rl-layout { position: relative; }
-@media (min-width: 901px) { .rl-layout:has(.rl-art) { min-height: calc(90px + clamp(320px, 30vw, 480px) * 1.334); } }
 .rl-side { z-index: 1; }
 .rl-note { justify-self: start; padding: 6px 12px; border-radius: 999px; background: rgb(255 255 255 / 88%); }
-.rl-art { position: absolute; top: 90px; left: calc(50% - 50vw - 90px); width: clamp(320px, 30vw, 480px); margin: 0; z-index: 0; pointer-events: none; }
-#main:has(.rl-art) { overflow-x: clip; }
+/* Fixe : posée en bas à gauche de l'écran, elle ne bouge pas au défilement. */
+/* Grande, posée sur le bas de l'écran : le bas de l'image peut être coupé. */
+.rl-art { position: fixed; bottom: calc(-1 * min(40vw, 640px) * .22); left: calc(var(--menu-rail, 0px) - min(5vw, 80px)); width: min(40vw, 640px); margin: 0; z-index: 0; pointer-events: none; }
+.rl { position: relative; z-index: 1; }
 .rl-side .rl-card { margin-left: clamp(0px, 4vw, 60px); }
 #main .rl-step-icon { width: 48px; height: 48px; border-radius: 50%; }
-.rl-art img { display: block; width: 100%; height: auto; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent), linear-gradient(to left, transparent, #000 18%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent), linear-gradient(to left, transparent, #000 18%); mask-composite: intersect; }
+.rl-art img { display: block; width: 100%; height: auto; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%), linear-gradient(to left, transparent, #000 18%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to bottom, transparent, #000 14%), linear-gradient(to left, transparent, #000 18%); mask-composite: intersect; }
 @media (max-width: 900px) { .rl-art { display: none; } }
 .rl-count strong { color: var(--accent); }
 .rl-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 28px; align-items: start; margin-top: 26px; }

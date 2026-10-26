@@ -76,7 +76,7 @@
    écran), et non sur toute la hauteur de la page : sinon, une page plus
    haute que l'écran agrandit l'image d'autant. Les fonds sont en 16:9,
    d'où 177.78vh. Sous l'image, une page longue reste sur fond blanc. */
-body { margin: 0; min-width: 320px; min-height: 100vh; background-color: #fff; background-size: max(100%, 177.78vh) auto, max(100%, 177.78vh) auto; background-position: center top, center top; background-repeat: no-repeat; background-attachment: scroll; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background-color: #fbf8f2; background-size: max(100%, 177.78vh) auto, max(100%, 177.78vh) auto; background-position: center top, center top; background-repeat: no-repeat; background-attachment: scroll; }
 body[data-theme="purple"] { --accent: #7824b4; --accent-dark: #5c138f; --tint: #f3edfc; }
 body[data-theme="magenta"] { --accent: #92077d; --accent-dark: #70065f; --tint: #fcf0f8; }
 /* Boutons de l'en-tête (zoom, clavier, plein écran, sons, musique) : jamais le

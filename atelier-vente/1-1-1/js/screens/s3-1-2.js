@@ -73,7 +73,7 @@
     return `<div class="rl">
       <header class="rl-head">
         <div>${core.pageTitle(content.eyebrow, content.title, 'Lisez le rôle, puis cliquez sur l’étape de la méthode qui le remplit.')}</div>
-        <div class="rl-head-side">${window.AtelierKit ? `<span class="tour-pair">${window.AtelierKit.contextButton()}${window.AtelierKit.tourButton()}</span>` : ''}<p class="rl-count"><span class="rl-dots" aria-hidden="true">${cards.map((_, i) => `<i class="${i < done ? 'is-on' : ''}"></i>`).join('')}</span><span><strong>${done} / ${cards.length}</strong> rôles associés</span></p></div>
+        <div class="rl-head-side">${window.AtelierKit ? `<span class="tour-pair">${window.AtelierKit.contextButton()}${window.AtelierKit.tourButton()}</span>` : ''}<p class="rl-count"><span class="rl-dots">${cards.map((_, i) => `<button type="button" class="rl-dot ${list[i] != null ? 'is-on' : ''} ${i === index ? 'is-current' : ''}" data-action="goto-card" data-index="${i}" aria-label="Rôle ${i + 1}${list[i] != null ? ` : ${esc(method[Number(list[i])].step)}` : ''}">${i + 1}</button>`).join('')}</span><span><strong>${done} / ${cards.length}</strong> rôles associés</span></p></div>
       </header>
       <div class="rl-layout">
         <section class="rl-side">
@@ -81,20 +81,22 @@
             <p class="rl-card-tag">Rôle ${index + 1} sur ${cards.length}</p>
             <span class="rl-card-quote" aria-hidden="true">${icon('quote', { size: 34 })}</span>
             <p class="rl-card-text">${esc(cards[index].text)}</p>
-            <p class="rl-card-ask">${icon('lightbulb', { size: 20 })}<span>Quelle étape remplit ce rôle ?</span></p>
+            ${list[index] != null
+              ? `<p class="rl-card-ask is-chosen">${icon('check', { size: 20 })}<span>Votre choix : <strong>${esc(method[Number(list[index])].step)}</strong>. Pour changer, cliquez sur une autre étape.</span></p>`
+              : `<p class="rl-card-ask">${icon('lightbulb', { size: 20 })}<span>Quelle étape remplit ce rôle ?</span></p>`}
           </article>
           <nav class="rl-nav" aria-label="Changer de rôle">${deck}</nav>
           ${(window.ATELIER_BRIEFINGS || {})[ex.current.key] ? core.button('Revoir la consigne', 'show-briefing', 'text-button review-brief') : ''}
           <p class="rl-note">${icon('lock', { size: 15 })}<span>Vous validez vos six choix avant de continuer : le corrigé vient ensuite.</span></p>
         </section>
-        ${ex.current.image && !ex.current.pending ? `<figure class="rl-art"><img src="${esc(core.webAsset(ex.current.image))}" alt="${esc(ex.current.alt || '')}" decoding="async"></figure>` : ''}
         <section class="panel rl-method">
           <h2>Choisissez l’étape qui remplit ce rôle</h2>
           <p class="k-muted rl-method-help">Les six étapes de la méthode : cliquez sur l’une d’elles.</p>
           <ol class="rl-steps">${steps}</ol>
         </section>
       </div>
-    </div>`;
+    </div>
+    ${ex.current.image && !ex.current.pending ? `<figure class="rl-art"><img src="${esc(core.webAsset(ex.current.image))}" alt="${esc(ex.current.alt || '')}" decoding="async"></figure>` : ''}`;
   }
 
   /* Le corrigé suit l'ordre de la méthode, pas celui des cartes : c'est
