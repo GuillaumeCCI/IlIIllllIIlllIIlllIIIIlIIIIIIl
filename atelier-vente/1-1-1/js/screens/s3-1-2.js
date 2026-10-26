@@ -57,11 +57,13 @@
       : `<button type="button" class="rl-nav-button" data-action="goto-card" data-index="${to}">${after ? '' : icon(symbol, { size: 18 })}<span>${label}</span>${after ? icon(symbol, { size: 18 }) : ''}</button>`;
     const deck = `${move(index - 1, 'Rôle précédent', 'arrowLeft', false)}${move(index + 1, 'Rôle suivant', 'arrowRight', true)}`;
 
+    // Une couleur par étape, comme sur la maquette.
+    const tones = ['blue', 'coral', 'green', 'gold', 'blue', 'green'];
     const steps = choices.map((choice, k) => {
       const at = holder(choice.id);
       const mine = at === index;
       return `<li><button type="button" class="rl-step ${at !== -1 ? 'is-filled' : ''} ${mine ? 'is-mine' : ''}" data-action="sort-card" data-zone="${esc(choice.id)}" aria-pressed="${mine}">
-        <span class="rl-step-icon">${icon(choice.symbol, { size: 22 })}</span>
+        <span class="rl-step-icon tone-${tones[k % tones.length]}">${icon(choice.symbol, { size: 22 })}</span>
         <span class="rl-step-body"><strong>${esc(method[k].step)}</strong>
           <small>${at !== -1 ? `« ${esc(cards[at].text)} »` : 'Pas encore de rôle'}</small></span>
         ${at !== -1 ? `<span class="rl-step-tag">Rôle ${at + 1}</span>` : ''}
@@ -71,7 +73,7 @@
     return `<div class="rl">
       <header class="rl-head">
         <div>${core.pageTitle(content.eyebrow, content.title, 'Lisez le rôle, puis cliquez sur l’étape de la méthode qui le remplit.')}</div>
-        <div class="rl-head-side">${window.AtelierKit ? `<span class="tour-pair">${window.AtelierKit.contextButton()}${window.AtelierKit.tourButton()}</span>` : ''}<p class="rl-count"><strong>${done} / ${cards.length}</strong> rôles associés</p></div>
+        <div class="rl-head-side">${window.AtelierKit ? `<span class="tour-pair">${window.AtelierKit.contextButton()}${window.AtelierKit.tourButton()}</span>` : ''}<p class="rl-count"><span class="rl-dots" aria-hidden="true">${cards.map((_, i) => `<i class="${i < done ? 'is-on' : ''}"></i>`).join('')}</span><span><strong>${done} / ${cards.length}</strong> rôles associés</span></p></div>
       </header>
       <div class="rl-layout">
         <section class="rl-side">
@@ -79,11 +81,12 @@
             <p class="rl-card-tag">Rôle ${index + 1} sur ${cards.length}</p>
             <span class="rl-card-quote" aria-hidden="true">${icon('quote', { size: 34 })}</span>
             <p class="rl-card-text">${esc(cards[index].text)}</p>
-            <p class="rl-card-ask">${icon('pointer', { size: 18 })}<span>Quelle étape remplit ce rôle ?</span></p>
+            <p class="rl-card-ask">${icon('lightbulb', { size: 20 })}<span>Quelle étape remplit ce rôle ?</span></p>
           </article>
           <nav class="rl-nav" aria-label="Changer de rôle">${deck}</nav>
           ${(window.ATELIER_BRIEFINGS || {})[ex.current.key] ? core.button('Revoir la consigne', 'show-briefing', 'text-button review-brief') : ''}
           <p class="rl-note">${icon('lock', { size: 15 })}<span>Vous relisez vos six choix avant de valider ; le corrigé vient ensuite.</span></p>
+          ${ex.current.image && !ex.current.pending ? `<figure class="rl-art"><img src="${esc(core.webAsset(ex.current.image))}" alt="${esc(ex.current.alt || '')}" decoding="async"></figure>` : ''}
         </section>
         <section class="panel rl-method">
           <h2>Choisissez l’étape qui remplit ce rôle</h2>
