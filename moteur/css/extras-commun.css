@@ -115,6 +115,8 @@ html[data-embed="solo"] #main { padding-top: 20px; }
 .tip-badge svg { display: none; }
 
 #info-dialog.is-tip #dialog-body > p:first-child { position: relative; z-index: 1; padding-left: 22px; border-left: 3px solid var(--coral); font-size: 1.02rem; font-weight: 500; line-height: 1.55; color: var(--navy); }
+/* Un indice en plusieurs paragraphes (C, A, P…) : pas de trait, les paragraphes restent égaux. */
+#info-dialog.is-tip #dialog-body > p:first-child:has(~ p) { padding-left: 0; border-left: 0; }
 
 #info-dialog.is-tip #dialog-body > * + * { margin-top: 18px; }
 
