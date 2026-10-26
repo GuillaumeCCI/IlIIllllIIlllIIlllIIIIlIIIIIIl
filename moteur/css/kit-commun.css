@@ -306,6 +306,11 @@
 
 .k-matrix-text small { display: block; color: var(--muted); font-size: .84rem; margin-top: 2px; }
 
+/* Ligne qui cite la phrase de l'apprenant (row.quote) : l'étape, la phrase, puis le critère. */
+.k-matrix-text strong:has(+ .k-matrix-quote) { font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.k-matrix-quote { display: block; margin: 6px 0 8px; padding: 8px 14px; border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; background: #eef3ff; color: var(--navy); font-weight: 650; quotes: "« " " »"; }
+.k-matrix-crit { display: block; color: #4c5f96; }
+
 .k-matrix.is-round tbody td { width: 13%; }
 
 .k-matrix.is-round tbody th, .k-matrix.is-round tbody td { padding: 8px 12px; }

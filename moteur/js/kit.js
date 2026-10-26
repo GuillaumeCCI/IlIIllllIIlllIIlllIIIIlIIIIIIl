@@ -171,7 +171,7 @@
         const chosen = ex().value(field);
         const verdict = reviewing ? (chosen === answers[i] ? 'is-ok' : 'is-ko') : '';
         return `<tr class="${verdict} ${open !== -1 && i > open ? 'is-waiting' : ''}">
-          <th scope="row" class="k-matrix-label">${numbered ? `<span class="k-num">${i + 1}</span>` : ''}<span class="k-matrix-text">${row.title ? `<strong>${esc(row.title)}</strong><small>${esc(row.text)}</small>` : esc(row.text)}${reviewing && row.why ? `<small class="k-why">${esc(row.why)}</small>` : ''}</span></th>
+          <th scope="row" class="k-matrix-label">${numbered ? `<span class="k-num">${i + 1}</span>` : ''}<span class="k-matrix-text">${row.quote ? `<strong>${esc(row.title)}</strong><q class="k-matrix-quote">${esc(row.quote)}</q><span class="k-matrix-crit">${esc(row.text)}</span>` : row.title ? `<strong>${esc(row.title)}</strong><small>${esc(row.text)}</small>` : esc(row.text)}${reviewing && row.why ? `<small class="k-why">${esc(row.why)}</small>` : ''}</span></th>
           ${columns.map(column => {
             const isChosen = chosen === column.id;
             if (reviewing) {

@@ -56,8 +56,7 @@
       return `<p class="k-label">Auto-évaluation</p>
         <h2 class="six-title">Relisez vos 6 phrases</h2>
         <p class="six-question">Pour chaque étape, votre phrase remplit-elle son rôle ?</p>
-        <ol class="six-reread">${method.map((s, i) => `<li><strong>${esc(s.name)}</strong><span>« ${esc(phrase(i))} »</span></li>`).join('')}</ol>
-        ${kit.matrix({ key: 'self', rows: content.checks.map(text => ({ text })), columns: scale, head: 'Critère', round: true })}`;
+        ${kit.matrix({ key: 'self', rows: content.checks.map((text, i) => ({ title: method[i].name, quote: phrase(i), text })), columns: scale, head: 'Votre phrase et son critère', round: true })}`;
     }
     const i = step - 1;
     return `<p class="k-label">Étape ${step} / 6</p>
@@ -91,7 +90,7 @@
     const entering = shownStep !== null && shownStep !== step ? (step > shownStep ? 'is-next' : 'is-prev') : '';
     shownStep = step;
     return `<div class="k-page six-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : kit.tourButton() })}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : kit.contextButton() + kit.tourButton() })}
       ${reviewing ? reviewScreen() : `<div class="six-layout">
         ${menu(step)}
         <form class="k-panel six-main" novalidate>
@@ -135,6 +134,13 @@
   });
   kit.live(() => ({ count: `${written()} / 6 phrases` }));
   kit.dialogs(Object.fromEntries(content.prompts.map((p, i) => [`tip${i}`, { title: `Repère · ${method[i].name}`, html: `<p>${esc(p.tip)}</p>` }])));
+
+  // À l'arrivée, avant la visite guidée : ce qu'est la méthode et ce qui est demandé.
+  kit.context([
+    ['target', 'La méthode', 'Pour traiter une objection, un commercial suit six étapes, toujours dans le même ordre.'],
+    ['list', 'Les six étapes', 'Accueillir, questionner, reformuler, traiter, contrôler, enchaîner.'],
+    ['pencil', 'Ce qui vous est demandé', 'Écrire, pour chaque étape, la phrase que vous diriez au client.']
+  ], 'La méthode en 6 étapes');
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   kit.tour('s1-1.6', [
