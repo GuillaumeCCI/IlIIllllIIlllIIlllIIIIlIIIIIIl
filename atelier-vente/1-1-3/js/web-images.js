@@ -10,6 +10,7 @@
 window.ATELIER_WEB_IMAGES = {
   "assets/illustrations/s1/1-1-3-S1-i1-4.png": "assets/illustrations/s1/1-1-3-S1-i1-4.web.png",
   "assets/illustrations/s1/1-1-3-S1-i1-5.png": "assets/illustrations/s1/1-1-3-S1-i1-5.web.png",
+  "assets/illustrations/s1/1-1-3-S1-i1-7.png": "assets/illustrations/s1/1-1-3-S1-i1-7.web.png",
   "assets/illustrations/s1/1-1-3-S1-portrait.png": "assets/illustrations/s1/1-1-3-S1-portrait.web.png",
   "assets/illustrations/s2/1-1-3-S2-i2-4.png": "assets/illustrations/s2/1-1-3-S2-i2-4.web.png"
 };

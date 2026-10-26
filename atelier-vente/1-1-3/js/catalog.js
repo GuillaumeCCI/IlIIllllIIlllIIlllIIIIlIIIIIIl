@@ -37,7 +37,7 @@ window.ATELIER_CATALOG = {
         { id: '1.5', file: 's1-1-5', label: 'Face au « C’est trop cher »', thumb: 'assets/illustrations/s1/accueil/1-5.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-5.webp',
           image: 'assets/illustrations/s1/1-1-3-S1-i1-5.png', alt: 'Un client lève la main et désigne une lampe d’un air sceptique ; la vendeuse, derrière le comptoir, l’écoute.', imagePosition: 'center 35%' },
         { id: '1.6', file: 's1-1-6', label: 'Répondre en 6 étapes', thumb: 'assets/illustrations/s1/accueil/1-6.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-6.webp' },
-        { id: '1.7', file: 's1-1-7', label: 'Ma bibliothèque d’objections', thumb: 'assets/illustrations/s1/accueil/1-7.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-3-S1-1-7.webp' }
+        { id: '1.7', file: 's1-1-7', label: 'Ma bibliothèque d’objections', thumb: 'assets/illustrations/s1/accueil/1-7.webp', theme: 'blue', image: 'assets/illustrations/s1/1-1-3-S1-i1-7.png', alt: 'Un fauteuil bleu avec une étiquette de prix en euros.', background: 'assets/backgrounds/s1/1-1-3-S1-1-7.webp' }
       ]
     },
     {

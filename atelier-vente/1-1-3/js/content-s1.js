@@ -215,9 +215,9 @@ window.ATELIER_S1 = {
 
   /* ── 1.7 · Ma bibliothèque d'objections ─────────────────────────────── */
   '1.7': {
-    eyebrow: 'Exercice 1.7',
-    title: 'Ma bibliothèque d’objections',
-    subtitle: 'Préparez quatre réponses utiles pour vos prochains rendez-vous.',
+    eyebrow: 'Situation commerciale',
+    title: 'Préparez quatre réponses utiles',
+    subtitle: 'Pour vos prochains rendez-vous, rédigez une réponse pour chaque objection.',
     fiches: [
       { text: 'C’est trop cher.', nature: 'fondee', natureNote: 'Une réserve réelle sur le prix : on creuse, puis on argumente la valeur.',
         question: 'Par rapport à quoi ?',

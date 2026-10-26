@@ -30,10 +30,21 @@
       <h2>Les objections</h2>
       <ol>${fiches.map((f, i) => `<li><button type="button" class="lib-item ${i === at ? 'is-current' : ''} ${complete(i) ? 'is-done' : ''}" data-act="fiche" data-index="${i}">
         <span class="lib-n">${complete(i) && i !== at ? icon('check', { size: 16 }) : i + 1}</span>
-        <span><strong>« ${esc(f.text)} »</strong><small>${complete(i) ? 'Complétée' : 'À compléter'}</small></span>
+        <span class="lib-item-text"><strong>« ${esc(f.text)} »</strong><small>${complete(i) ? 'Complétée' : 'À compléter'}</small></span>
+        <span class="lib-chevron" aria-hidden="true">${icon('chevronRight', { size: 20 })}</span>
       </button></li>`).join('')}</ol>
     </nav>`;
   }
+
+  // L'illustration, sous la liste des objections.
+  function art() {
+    const exercise = ex.current;
+    return exercise.image ? `<figure class="lib-art"><img src="${esc(core.webAsset(exercise.image))}" alt="${esc(exercise.alt || '')}" decoding="async"></figure>` : '';
+  }
+
+  // Le compteur et un point par fiche, en haut à droite.
+  const progress = at => `<div class="lib-progress"><p class="k-count"><strong>${doneCount()} / ${fiches.length}</strong> fiches complétées</p>
+    <span class="lib-dots" aria-hidden="true">${fiches.map((_, i) => `<i class="${i === at ? 'is-current' : complete(i) ? 'is-done' : ''}"></i>`).join('')}</span></div>`;
 
   function sheet(i) {
     return `<p class="k-label">Fiche ${i + 1} / ${fiches.length}</p>
@@ -80,16 +91,15 @@
     const last = fiches.every((_, i) => i === at || complete(i));
     return `<div class="k-page lib-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count"><strong>${doneCount()} / ${fiches.length}</strong> fiches complétées</p>${reviewing ? '' : kit.contextButton() + kit.tourButton()}` })}
+        aside: reviewing ? '' : `<div class="tour-pair">${kit.contextButton()}${kit.tourButton()}</div>${progress(at)}` })}
       ${reviewing ? reviewScreen() : `<div class="lib-layout">
-        ${list(at)}
+        <div class="lib-side">${list(at)}${art()}</div>
         <form class="k-panel lib-sheet" novalidate>
           ${sheet(at)}
           ${core.errorsBox()}
-          <div class="lib-actions">
-            <p class="k-muted">Vos réponses pourront être modifiées plus tard.</p>
-            ${kit.submit(last ? 'Enregistrer et terminer' : 'Enregistrer cette fiche')}
-          </div>
+          ${kit.bar({
+            left: at > 0 ? `<button type="button" class="button secondary with-icon lib-prev" data-act="fiche" data-index="${at - 1}">${icon('arrowLeft', { size: 18 })}<span>Fiche précédente</span></button>` : '',
+            right: kit.submit(last ? 'Enregistrer et terminer' : 'Enregistrer et passer à la suivante') })}
         </form>
       </div>`}
       ${reviewing ? '' : kit.utility('Corrigé disponible après les 4 objections')}
@@ -140,7 +150,7 @@
         { symbol: 'chat', tone: 'blue', text: 'la réponse : « Ce vélo électrique vous fait gagner du temps chaque matin. » ;' },
         { symbol: 'check', tone: 'green', text: 'la preuve : « Nos clients arrivent au travail 15 minutes plus tôt. »' }
       ] },
-    { target: '.lib-actions .k-submit', title: 'Enregistrer', text: 'Ce bouton passe à la fiche suivante.',
+    { target: '.k-page .k-bar .k-submit', title: 'Enregistrer', text: 'Ce bouton passe à la fiche suivante.',
       after: 'Après la 4e fiche, vous voyez le corrigé.' }
   ]);
 
