@@ -550,12 +550,29 @@
     // Les repères restent en place : un bloc qui en contient un n'est pas
     // animé en entier, on descend dans ses enfants (trois niveaux au plus).
     const markers = Object.values(spots).map(spot => spot.marker).filter(Boolean);
+    /* Le halo entoure la première carte arrondie du contenu (elle-même ou
+     * un descendant proche), jamais un bloc carré qui l'enveloppe. */
+    let haloDone = false;
+    const halo = el => {
+      if (haloDone) return;
+      const card = [el, ...el.querySelectorAll(':scope > *, :scope > * > *')].find(node => {
+        const style = getComputedStyle(node);
+        return parseFloat(style.borderTopLeftRadius) >= 8 && style.backgroundColor !== 'rgba(0, 0, 0, 0)' && node.offsetWidth > 200;
+      });
+      if (!card) return;
+      haloDone = true;
+      card.classList.remove('k-switch-halo');
+      void card.offsetWidth;
+      card.classList.add('k-switch-halo');
+      card.addEventListener('animationend', () => card.classList.remove('k-switch-halo'), { once: true });
+    };
     const animate = (parent, depth) => [...parent.children].forEach(el => {
       if (el.matches(STILL)) return;
       if (markers.some(marker => el.contains(marker))) { if (depth < 3) animate(el, depth + 1); return; }
       el.classList.remove('k-switch-next', 'k-switch-prev');
       void el.offsetWidth;
       el.classList.add(forward ? 'k-switch-next' : 'k-switch-prev');
+      halo(el);
       // Animation finie, la classe part : sinon le bloc reste un calque à
       // part et recouvre la liste déroulante ouverte du bloc précédent.
       el.addEventListener('animationend', event => {
