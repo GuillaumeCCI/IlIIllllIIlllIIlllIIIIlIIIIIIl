@@ -242,6 +242,11 @@ window.ATELIER_S4 = {
     countLabel: 'étapes complétées',
     caseNoun: 'Étape',
     stepper: true,
+    welcome: { title: 'Le plan de relance', rows: [
+      ['target', 'La situation', 'Madame Riveau est intéressée, mais elle n’a pas répondu depuis l’envoi de l’offre.'],
+      ['list', 'Un plan de relance', 'C’est une suite de prises de contact prévues à l’avance : trois relances, puis un message de clôture.'],
+      ['pencil', 'Ce qui vous est demandé', 'Pour chaque étape, choisir le moment, le canal, l’information utile et le prochain pas.']
+    ] },
     tour: [
       { target: '.fm-stepper', title: 'Quatre étapes', text: 'Vous construisez votre plan de relance en quatre étapes :',
       items: [
@@ -318,6 +323,11 @@ window.ATELIER_S4 = {
     countLabel: 'parties',
     fieldSteps: true,
     tokens: ['[Prénom du client]', '[Date de la proposition]', '[Offre]', '[Ma signature]'],
+    welcome: { title: 'Votre modèle de relance', rows: [
+      ['target', 'Un modèle', 'C’est un e-mail de relance type, que vous réutilisez en l’adaptant à chaque client.'],
+      ['list', 'Quatre parties', 'L’objet, le contexte, la valeur apportée, puis le prochain pas.'],
+      ['pencil', 'Ce qui vous est demandé', 'Écrire chaque partie, dans l’ordre.']
+    ] },
     tour: [
       { target: '.fs-nav', title: 'Quatre parties', text: 'Votre modèle se construit dans l’ordre d’un e-mail de relance.',
         items: [

@@ -71,7 +71,7 @@
     return `<div class="rl">
       <header class="rl-head">
         <div>${core.pageTitle(content.eyebrow, content.title, 'Lisez le rôle, puis cliquez sur l’étape de la méthode qui le remplit.')}</div>
-        <div class="rl-head-side">${window.AtelierKit ? window.AtelierKit.tourButton() : ''}<p class="rl-count"><strong>${done} / ${cards.length}</strong> rôles associés</p></div>
+        <div class="rl-head-side">${window.AtelierKit ? window.AtelierKit.contextButton() + window.AtelierKit.tourButton() : ''}<p class="rl-count"><strong>${done} / ${cards.length}</strong> rôles associés</p></div>
       </header>
       <div class="rl-layout">
         <section class="rl-side">
@@ -137,6 +137,12 @@
   const feedback = () => [];
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  if (window.AtelierKit) window.AtelierKit.context([
+    ['target', 'La méthode', 'Pour traiter une objection, le vendeur suit six étapes, toujours dans le même ordre.'],
+    ['list', 'Le rôle de chaque étape', 'Chaque étape a un rôle précis dans l’échange avec le client.'],
+    ['pencil', 'Ce qui vous est demandé', 'Relier chaque rôle à l’étape qui lui correspond.']
+  ], 'La méthode de traitement des objections');
   if (window.AtelierKit) window.AtelierKit.tour('s3-1.2', [
     { target: '.rl-card', title: 'Le rôle à placer', text: 'Chaque carte décrit ce que fait une étape de la méthode de traitement des objections.' },
     { target: '.rl-method', title: 'Les six étapes', text: 'Lisez le rôle affiché, puis sélectionnez l’étape de la méthode qui lui correspond le mieux.',

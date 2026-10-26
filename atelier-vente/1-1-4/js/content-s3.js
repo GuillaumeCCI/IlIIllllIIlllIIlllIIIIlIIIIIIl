@@ -49,6 +49,11 @@ window.ATELIER_S3 = {
     eyebrow: 'Exercice 3.2 · Associer',
     title: 'À chaque conclusion, sa réplique',
     subtitle: 'Associez les 4 techniques aux phrases prononcées en rendez-vous.',
+    welcome: { title: 'Les techniques de conclusion', rows: [
+      ['target', 'Conclure', 'C’est amener le client à prendre sa décision, à la fin de l’entretien.'],
+      ['list', 'Quatre techniques', 'La conclusion directe, alternative, récapitulative, ou par le dernier détail.'],
+      ['pencil', 'Ce qui vous est demandé', 'Associer chaque technique à la phrase qui l’illustre.']
+    ] },
     tour: [
       { target: '.mt-card', title: 'La technique', text: 'Voici une technique de conclusion. Quelle phrase l’illustre ?' },
       { target: '.mt-zones', title: 'Les phrases prononcées',

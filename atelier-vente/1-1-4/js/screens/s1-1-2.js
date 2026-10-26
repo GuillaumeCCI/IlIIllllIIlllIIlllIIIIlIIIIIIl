@@ -36,7 +36,7 @@
     const right = passages.filter((p, i) => marked(i) === p.part).length;
     return `<div class="k-page sw-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count"><strong data-live="count">${count()} / ${passages.length}</strong> passages repérés</p>${reviewing ? '' : kit.tourButton()}` })}
+        aside: `<p class="k-count"><strong data-live="count">${count()} / ${passages.length}</strong> passages repérés</p>${reviewing ? '' : kit.contextButton() + kit.tourButton()}` })}
       <form class="k-panel" novalidate>
         ${kit.steps(markers.map(m => m.label), reviewing ? markers.length + 1 : 0, { compact: true })}
         ${reviewing ? `${kit.result(right, passages.length, 'passages bien repérés')}${sentence(true)}
@@ -86,6 +86,13 @@
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois. L'aperçu
   // montre, sur une phrase d'exemple, comment passer d'un surligneur à l'autre.
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  kit.context([
+    ['target', 'Le principe', 'Un prix ne s’annonce pas seul : on le place entre deux éléments qui le font accepter.'],
+    ['list', 'Les trois temps', 'D’abord un bénéfice, puis le prix, enfin une réassurance.'],
+    ['pencil', 'Ce qui vous est demandé', 'Repérer ces trois temps dans la réplique du commercial.']
+  ], 'La méthode sandwich');
+
   kit.tour('s1-1.2', [
     { target: '.sw-page .k-steps', title: 'La méthode sandwich', text: 'Le prix s’annonce entre deux éléments qui le font accepter :',
       items: markers.map((m, i) => ({ key: String(i + 1), tone: ['blue', 'gold', 'green'][i], text: m.label })) },

@@ -21,6 +21,8 @@
   const kit = () => root.AtelierKit;
   const esc = (...a) => kit().esc(...a);
   const icon = (...a) => kit().icon(...a);
+  // Le bouton « Le contexte » des écrans qui ont une fenêtre d'introduction (content.welcome : { title, rows }).
+  const introButton = content => (content.welcome ? kit().contextButton() : '');
   const LETTERS = 'abcdefghij';
   const intOr = (v, fallback = null) => (Number.isInteger(v) ? v : fallback);
 
@@ -299,7 +301,7 @@
       const intro = !reviewing && stage === 1;
       return `<div class="k-page mt-page">
         ${kit().head({ eyebrow: content.eyebrow, title: intro ? content.intro.title : content.title, subtitle: intro ? content.intro.subtitle : content.subtitle,
-          aside: intro ? (content.tour ? kit().tourButton() : '') : `<p class="k-count"><strong>${count()} / ${n}</strong> associations</p>${reviewing ? '' : dots(current())}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
+          aside: intro ? (content.tour ? introButton(content) + kit().tourButton() : '') : `<p class="k-count"><strong>${count()} / ${n}</strong> associations</p>${reviewing ? '' : dots(current())}${content.tour && !reviewing ? introButton(content) + kit().tourButton() : ''}` })}
         ${hasIntro && !intro && !reviewing ? `<p class="mt-reread">${kit().dialogButton('intro', content.intro.reread || 'Relire le document', 'text-button', 'document')}</p>` : ''}
         <form novalidate class="mt-form">
           ${reviewing ? reviewScreen() : intro ? introScreen() : `${playScreen()}${core().errorsBox()}${kit().bar({
@@ -333,6 +335,7 @@
     });
     kit().onDrop((id, z) => { ex().setValue('card', Number(id)); assign(Number(z)); kit().commit(); });
     if (hasIntro) kit().dialogs({ intro: { title: content.intro.title, html: scene(content.intro.scene) } });
+    if (content.welcome) kit().context(content.welcome.rows, content.welcome.title);
     if (content.tour) kit().tour(key, content.tour);
 
     ex().mount(key, { screen, validate, intercept, feedback, compactFeedback: true });
@@ -395,7 +398,7 @@
       const minNote = content.criteria ? `<span class="k-count cmp-min" data-live="cmp-min"><strong>${Math.min(ticked().length, 2)} / 2</strong> critères minimum</span>` : '';
       return `<div class="k-page cmp-page">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: `${content.badge ? `<p class="cmp-badge">${esc(content.badge)}</p>` : ''}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
+          aside: `${content.badge ? `<p class="cmp-badge">${esc(content.badge)}</p>` : ''}${content.tour && !reviewing ? introButton(content) + kit().tourButton() : ''}` })}
         ${sceneBlock()}
         <form novalidate class="cmp-form">
           ${content.listTitle ? `<h2 class="cmp-list-title">${esc(content.listTitle)}</h2>` : ''}
@@ -443,6 +446,7 @@
       }
     });
     if (content.hint) kit().dialogs({ hint: { title: 'Un repère', html: `<p>${esc(content.hint)}</p>` } });
+    if (content.welcome) kit().context(content.welcome.rows, content.welcome.title);
     if (content.tour) kit().tour(key, content.tour);
 
     ex().mount(key, { screen, validate, feedback, compactFeedback: true });
@@ -824,7 +828,7 @@
       if (!reviewing && ex().value('case') !== at) ex().setValue('case', at);
       return `<div class="k-page fm-page ${content.className || ''}">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : ''}${content.tour && !reviewing ? kit().tourButton() : ''}` })}
+          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : ''}${content.tour && !reviewing ? introButton(content) + kit().tourButton() : ''}` })}
         ${content.side && !reviewing && !content.stepper ? `<div class="k-panel fm-side">${scene(content.side)}</div>` : ''}
         ${reviewing ? reviewScreen() : `${tabs(at)}<form novalidate class="fm-form">${casePanel(at)}</form>`}
         ${reviewing ? '' : kit().utility(content.lock || 'Corrigé disponible après validation')}
@@ -932,6 +936,7 @@
     if (content.resources) dialogTable.resources = { title: content.resourcesTitle || 'Vos ressources', html: `<ul class="dialog-list">${content.resources.map(r => `<li>${esc(r)}</li>`).join('')}</ul>` };
     kit().dialogs(dialogTable);
 
+    if (content.welcome) kit().context(content.welcome.rows, content.welcome.title);
     if (content.tour) kit().tour(key, content.tour);
     ex().mount(key, { screen, validate, intercept, feedback, compactFeedback: true });
   }

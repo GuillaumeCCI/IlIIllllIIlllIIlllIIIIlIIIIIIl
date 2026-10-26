@@ -109,7 +109,7 @@
     return `<div class="k-page path-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title,
         subtitle: reviewing ? `${right} carte${right > 1 ? 's' : ''} sur ${SLOTS} à la bonne place. Voici votre parcours et les réponses attendues.` : content.subtitle,
-        aside: `<p class="k-count path-count"><strong>${n} / ${SLOTS}</strong> coups placés</p>${reviewing ? '' : kit.tourButton()}` })}
+        aside: `<p class="k-count path-count"><strong>${n} / ${SLOTS}</strong> coups placés</p>${reviewing ? '' : kit.contextButton() + kit.tourButton()}` })}
       <form novalidate class="path-form">
         <section class="path-board">
           <h2>${esc(content.pathTitle)}</h2>
@@ -154,6 +154,13 @@
   kit.onDrop((id, slot) => { put(id, Number(slot)); kit.commit(); });
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  kit.context([
+    ['target', 'La méthode', 'Pour traiter une objection, un commercial suit six étapes, dans un ordre précis.'],
+    ['list', 'Vos cartes', 'Chaque carte décrit une de ces étapes. Elles sont mélangées.'],
+    ['pencil', 'Ce qui vous est demandé', 'Remettre les six étapes dans le bon ordre.']
+  ], 'Le traitement d’une objection');
+
   kit.tour('s3-1.1', [
     { target: '.path-cards', title: 'Vos cartes', text: 'Chaque carte est une étape du traitement d’une objection, dans le désordre.' },
     { target: '.path-track', title: 'Le parcours', text: 'Remettez les cartes dans l’ordre, du départ à l’arrivée :',

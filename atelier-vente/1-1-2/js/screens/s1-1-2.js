@@ -62,7 +62,7 @@
      * surligneurs en dessous, sur une ligne ; pas de panneau autour. */
     return `<div class="k-page hl-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count"><strong>${tokens.filter((_, i) => done(i)).length} / ${tokens.length}</strong> arguments complétés ${dots(a)}</p>${kit.tourButton()}` })}
+        aside: `<p class="k-count"><strong>${tokens.filter((_, i) => done(i)).length} / ${tokens.length}</strong> arguments complétés ${dots(a)}</p>${kit.contextButton()}${kit.tourButton()}` })}
       <form class="hl-stage" novalidate>
         <div class="hl-argument">
           <span class="hl-tag">Argument ${a + 1}</span>
@@ -207,6 +207,15 @@
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois. L'aperçu
   // montre, sur une phrase d'exemple, comment passer d'un surligneur à l'autre.
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  kit.context([
+    ['target', 'Un argument', 'Un argument de vente efficace se construit en trois parties.'],
+    ['document', 'La caractéristique', 'Ce qu’est le produit, ce qu’il a.'],
+    ['sparkle', 'L’avantage', 'Ce que le client y gagne.'],
+    ['award', 'La preuve', 'Ce qui montre que c’est vrai.'],
+    ['pencil', 'Ce qui vous est demandé', 'Surligner ces trois parties dans chaque argument.']
+  ], 'Les trois parties d’un argument');
+
   kit.tour('s1-1.2', [
     { target: '.hl-argument', title: 'L’argument', text: 'Lisez l’argument : vous allez y surligner ses trois composantes.' },
     { target: '.hl-tools .hl-tool', title: 'Les trois surligneurs', text: 'Un exemple, sur une autre phrase :',

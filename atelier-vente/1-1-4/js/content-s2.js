@@ -44,6 +44,11 @@ window.ATELIER_S2 = {
   '2.2': {
     eyebrow: 'Négociation · Prix',
     title: 'Quel levier se cache dans cette réponse ?',
+    welcome: { title: 'Les leviers face au prix', rows: [
+      ['target', 'Un levier', 'C’est une façon de répondre quand le client trouve le prix trop élevé.'],
+      ['list', 'Cinq leviers', 'Creuser l’objection, rappeler la valeur, ramener le prix à l’usage, montrer le coût de l’inaction, comparer à périmètre égal.'],
+      ['pencil', 'Ce qui vous est demandé', 'Retrouver le levier utilisé dans chacune des 5 répliques.']
+    ] },
     tour: [
       { target: '.mt-card', title: 'La réplique', text: 'Voici une réponse d’un vendeur à une objection sur le prix. Quel levier utilise-t-il ?' },
       { target: '.mt-zones', title: 'La boîte à leviers',
