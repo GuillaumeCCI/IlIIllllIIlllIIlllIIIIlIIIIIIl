@@ -46,7 +46,7 @@
     return `<div class="step-layout">
       ${rail}
       <form class="panel step-sheet" novalidate>
-        <div class="step-sheet-top"><span class="step-pill">Étape ${i + 1} / ${method.length}</span>${window.AtelierKit ? window.AtelierKit.tourButton() : ''}</div>
+        <div class="step-sheet-top"><span class="step-pill">Étape ${i + 1} / ${method.length}</span>${window.AtelierKit ? `<span class="tour-pair">${window.AtelierKit.contextButton()}${window.AtelierKit.tourButton()}</span>` : ''}</div>
         <h1>${esc(item.step)} l’objection</h1>
         <p class="subtitle">${esc(item.role)}</p>
 
@@ -166,17 +166,22 @@
     });
   }
 
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  if (window.AtelierKit) window.AtelierKit.context([
+    ['target', 'La méthode', 'Pour traiter une objection, le vendeur suit six étapes, toujours dans le même ordre.'],
+    ['chat', 'L’objection', 'Un client vous oppose une objection : c’est à elle que vous répondez.'],
+    ['pencil', 'Ce qui vous est demandé', 'Écrire, pour chaque étape, la phrase que vous diriez au client.']
+  ], 'La méthode en 6 étapes');
+
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   if (window.AtelierKit) window.AtelierKit.tour('s3-1.6', [
     { target: '.step-rail .client-card', title: 'L’objection du client', text: 'Voici ce que le client vous oppose. Toute votre réponse doit la traiter.' },
     { target: '.step-rail-list', title: 'Les six étapes', text: 'Vous traitez l’objection en six étapes, une phrase par étape.',
       items: [
-        { symbol: 'check', tone: 'green', text: 'Une coche apparaît sur chaque étape écrite.' },
         { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur une étape pour revenir dessus et modifier votre phrase.' }
       ] },
     { target: '.step-sheet h1, .step-sheet .subtitle', title: 'L’étape en cours', text: 'Le titre rappelle l’étape, et la phrase en dessous dit à quoi elle sert.' },
     { target: '.step-sheet .field, .step-sheet textarea', title: 'Votre phrase', text: 'Écrivez ici ce que vous diriez au client. Le début proposé vous aide à démarrer.' },
-    { target: '.step-sheet .advice', title: 'Le conseil', text: 'Un conseil change à chaque étape pour vous guider.' },
     { target: '.step-foot-actions', title: 'Continuer',
       items: [
         { symbol: 'arrowRight', tone: 'blue', text: '« Continuer » enregistre votre phrase et ouvre l’étape suivante.' },
