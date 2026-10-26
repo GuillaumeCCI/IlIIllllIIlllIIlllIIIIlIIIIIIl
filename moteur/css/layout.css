@@ -358,6 +358,13 @@ body { position: relative; }
 /* Illustration montrée entière, sans découpe ni cadre (fond détouré). */
 #main .wiz-art.is-whole .illustration { aspect-ratio: auto; overflow: visible; border-radius: 0; background: none; }
 #main .wiz-art.is-whole .illustration img { height: auto; aspect-ratio: auto; object-fit: contain; }
+/* Image entière aux bords fondus dans le fond de page, sans cadre. */
+#main .wiz-art.is-soft .illustration img {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%), linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 12%), linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent);
+  mask-composite: intersect;
+}
 /* Note à l'ampoule sous la saisie. */
 .wiz-note { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: center; padding: 14px 18px; border-radius: 18px; background: #f2f6fd; }
 .wiz-note .wiz-bulb { width: 56px; height: 56px; }

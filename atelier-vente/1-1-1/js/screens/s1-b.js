@@ -37,7 +37,7 @@
       </section>
       <aside class="wiz-aside">
         <div class="wiz-aside-head"><div class="wiz-aside-tools">${window.AtelierKit ? window.AtelierKit.tourButton() : ''}${core.stepPill(at, STEPS.length)}</div></div>
-        <div class="wiz-art">${core.illustration(current)}</div>
+        <div class="wiz-art is-whole is-soft">${core.illustration(current)}</div>
       </aside>
       ${core.feedbackBox()}
     </form>`;
