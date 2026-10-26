@@ -44,7 +44,7 @@
       <section class="k-panel audit-pitch"><p class="k-label">Le pitch à analyser</p><p>${esc(content.pitch)}</p></section>
       <form class="audit-layout" novalidate>
         <section class="k-panel">
-          <h2>1. Notez le pitch</h2>
+          <h2>1. Notez le pitch à partir de l’exemple ci-dessus</h2>
           ${reviewing ? `${kit.result(total(), max, `votre total, pour ${reference} / ${max} au repère`)}${reviewTable()}`
             : kit.matrix({ key: 'note', rows: criteria, columns: content.levels.map(level => ({ id: level.id, label: level.id, sub: level.label })), head: 'Critère', round: true, progressive: true })}
           ${reviewing ? '' : `<p class="audit-total" data-live="total">${esc(totalText())}</p>`}
