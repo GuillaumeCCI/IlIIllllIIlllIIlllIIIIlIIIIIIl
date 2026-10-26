@@ -95,11 +95,17 @@
         </div>
       </aside>
 
-      <section class="panel">
-        <h2 class="explain-question">Qu’est-ce qui rend cette réponse plus adaptée à l’objection du client ?</h2>
-        ${ex.field('why', 'Votre raisonnement', {
-          placeholder: 'Expliquez votre raisonnement…', max: 400, rows: 7, hideLabel: true
-        })}
+      <section class="panel explain-pair">
+        <div class="explain-chosen">
+          <p class="explain-chosen-label"><span class="explain-chosen-letter">${esc(chosen)}</span>La réponse que vous avez retenue</p>
+          <p class="explain-chosen-text">« ${esc((content.options.find(o => o.id === chosen) || {}).text || '')} »</p>
+        </div>
+        <div class="explain-write">
+          <h2 class="explain-question">Qu’est-ce qui rend cette réponse plus adaptée à l’objection du client ?</h2>
+          ${ex.field('why', 'Votre raisonnement', {
+            placeholder: 'Expliquez votre raisonnement…', max: 400, rows: 7, hideLabel: true
+          })}
+        </div>
       </section>
 
       ${core.errorsBox()}
