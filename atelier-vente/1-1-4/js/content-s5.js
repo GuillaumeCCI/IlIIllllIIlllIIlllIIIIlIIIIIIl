@@ -191,7 +191,13 @@ window.ATELIER_S5 = {
     ],
     keyPoint: 'À retenir : quand le client se projette, évitez de relancer votre argumentaire. Accompagnez son mouvement : répondez à sa question, proposez l’étape suivante et sécurisez la suite.',
     submitLabel: 'Valider ma réponse',
-    feedback: 'Votre réponse propose-t-elle la suite et rassure-t-elle la cliente ?'
+    feedback: 'Votre réponse propose-t-elle la suite et rassure-t-elle la cliente ?',
+    tour: [
+      { target: '.fm-scene img', title: 'La situation', text: 'La cliente demande quand démarrer : elle est prête.' },
+      { target: '.fm-main .fm-field:has(.fm-choices)', title: 'Votre approche', text: 'Cliquez sur la façon de proposer la suite qui vous semble la plus adaptée.' },
+      { target: '.fm-main .fm-field:has(textarea)', title: 'Votre réponse', text: 'Écrivez ce que vous lui diriez, et rassurez-la sur la suite.' },
+      { target: '.fm-actions .k-submit', title: 'Valider', text: 'Vous comparez ensuite avec une réponse modèle.' }
+    ]
   },
 
   /* ── 4.1 · Les bons réflexes de relance ─────────────────────────────── */
