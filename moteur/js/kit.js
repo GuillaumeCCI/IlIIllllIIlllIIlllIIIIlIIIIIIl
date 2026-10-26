@@ -845,7 +845,9 @@
         ? !node.parentElement.closest(CONTROLS) || node.parentElement.closest(CONTROLS) === el
         : !node.closest(CONTROLS) && [...node.childNodes].some(child => child.nodeType === 3 && child.textContent.trim()));
       // « Réinitialiser » n'est jamais ce que la bulle présente : on le laisse dans l'ombre.
-      const kept = parts.filter(node => !node.closest('.k-reset, [data-act="reset"], [data-action="reset"]'));
+      // Dans la barre du bas, seuls les boutons comptent (pas le compteur du milieu).
+      const kept = parts.filter(node => !node.closest('.k-reset, [data-act="reset"], [data-action="reset"]')
+        && (!el.matches('.k-bar') || node.matches(CONTROLS)));
       return kept.length ? kept : parts.length ? parts : [el];
     };
     // Le rectangle qui englobe tous les éléments de la zone.
