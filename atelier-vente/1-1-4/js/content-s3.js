@@ -158,7 +158,25 @@ window.ATELIER_S3 = {
     submitLabel: 'Valider mes réponses',
     hintLabel: 'Voir un indice',
     keyPoint: 'À retenir : quand le client commence à parler du « comment » ou du « quand », il peut être pertinent d’arrêter d’argumenter et de tester son envie d’avancer.',
-    feedback: 'Avez-vous repéré le signal, compris l’erreur du vendeur, et proposé une conclusion ?'
+    feedback: 'Avez-vous repéré le signal, compris l’erreur du vendeur, et proposé une conclusion ?',
+    welcome: { title: 'Le signal d’achat', rows: [
+      ['target', 'Un signal d’achat', 'Une phrase ou une question du client qui montre qu’il se voit déjà acheter.'],
+      ['chat', 'La situation', 'Une cliente donne ce signal, mais le vendeur continue son argumentaire.'],
+      ['pencil', 'Ce qui vous est demandé', 'Repérer le signal, comprendre l’erreur du vendeur, puis répondre à sa place.']
+    ] },
+    tour: [
+      { target: '.fm-page .sc-dialogue', title: 'L’échange', text: 'Lisez ce que dit la cliente, puis ce que répond le vendeur.' },
+      { target: '.fm-page .fm-tabs', title: 'Trois étapes', text: 'Elles s’ouvrent l’une après l’autre :',
+        items: [
+          { key: '1', tone: 'blue', text: 'repérer le signal ;' },
+          { key: '2', tone: 'blue', text: 'comprendre l’erreur du vendeur ;' },
+          { key: '3', tone: 'blue', text: 'répondre à la cliente.' }
+        ] },
+      { target: '.fm-main .fm-field', title: 'Votre réponse', text: 'Répondez à la question de l’étape en cours.' },
+      { target: '.fm-page [data-dialog^="hint"]', title: 'Un indice', text: 'Un doute ? L’indice vous met sur la piste.' },
+      { target: '.fm-actions .k-submit', title: 'Enregistrer et continuer', text: 'Ce bouton ouvre l’étape suivante.',
+        after: 'Après la 3e, vous comparez avec les réponses modèles.' }
+    ]
   },
 
   /* ── 3.5 · Comparer deux façons de conclure ─────────────────────────── */
@@ -183,7 +201,21 @@ window.ATELIER_S3 = {
     whyPlaceholder: 'Votre justification…',
     hint: 'Les deux réponses saisissent le signal. Demandez-vous ce que le client a déjà exprimé : a-t-il validé le principe de l’achat ?',
     model: 'Les deux réponses peuvent être pertinentes. La réponse 1 vérifie directement si le client est prêt à s’engager. La réponse 2 est adaptée si le principe de l’achat semble déjà validé et que le calendrier est le dernier point à déterminer. Le choix dépend donc du niveau d’engagement exprimé précédemment par le client. Évaluer une conclusion, ce n’est pas chercher une « phrase magique » : est-elle adaptée à ce que le client a réellement exprimé ?',
-    submitLabel: 'Valider ma réponse'
+    submitLabel: 'Valider ma réponse',
+    tour: [
+      { target: '.cmp-page .cmp-scene', title: 'La situation', text: 'Le client demande quand il pourrait démarrer.' },
+      { target: '.cmp-page .cmp-options', title: 'Deux réponses', text: 'Lisez-les, puis choisissez celle que vous diriez.' },
+      // Second temps : une réponse choisie, la justification.
+      { later: true, target: '.cmp-page:has(.cmp-option input:checked) .cmp-why textarea', title: 'Justifiez votre choix', text: 'Appuyez-vous sur au moins deux de ces critères :',
+        items: [
+          { symbol: 'target', tone: 'blue', text: 'le signal saisi ;' },
+          { symbol: 'handshake', tone: 'blue', text: 'l’engagement déjà exprimé par le client ;' },
+          { symbol: 'lightbulb', tone: 'blue', text: 'la clarté de la proposition ;' },
+          { symbol: 'compass', tone: 'blue', text: 'la liberté de décider laissée au client.' }
+        ] },
+      { later: true, target: '.cmp-page .cmp-why [data-dialog="hint"]', title: 'Un repère', text: 'Un doute ? Le repère vous met sur la piste.' },
+      { later: true, target: '.cmp-page .cmp-why .k-submit', title: 'Valider ma réponse', text: 'Vous découvrez ensuite l’analyse des deux réponses.' }
+    ]
   },
 
   /* ── 3.6 · Conduire la fin du rendez-vous ───────────────────────────── */
