@@ -36,8 +36,8 @@
     return `<div class="k-page cap-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
         note: 'Un avantage répond au « pourquoi c’est utile pour lui ? », une preuve au « comment en être sûr ? ».',
-        aside: `<div class="cap-progress"><span>Étape ${i + 1} sur ${lines.length}</span><span class="k-dots">${lines.map((_, n) =>
-          `<button type="button" class="k-dot ${n === i ? 'is-current' : lineDone(n) ? 'is-done' : ''}" data-act="line" data-index="${n}" aria-label="Caractéristique ${n + 1}"></button>`).join('')}</span></div>${kit.tourButton()}` })}
+        aside: `<div class="cap-progress"><span>Caractéristique ${i + 1} sur ${lines.length}</span><span class="k-dots">${lines.map((_, n) =>
+          `<button type="button" class="k-dot ${n === i ? 'is-current' : lineDone(n) ? 'is-done' : ''}" data-act="line" data-index="${n}" aria-label="Caractéristique ${n + 1}"></button>`).join('')}</span></div>${kit.contextButton()}${kit.tourButton()}` })}
       <form novalidate>
         <div class="cap-layout">
           <section class="k-panel cap-feature">
@@ -111,15 +111,28 @@
     }
   });
 
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  kit.context([
+    ['target', 'La chaîne CAP', 'Un argument de vente se construit en trois temps : la caractéristique, l’avantage, la preuve.'],
+    ['document', 'La caractéristique', 'Un fait sur votre offre. Elle vous est donnée.'],
+    ['pencil', 'Ce qui vous est demandé', 'Pour chaque caractéristique, écrire l’avantage pour le client, puis une preuve.']
+  ], 'La chaîne CAP');
+
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   kit.tour('s4-1.2', [
-    { target: '.cap-feature', title: 'La caractéristique', text: 'Votre point de départ : ce qu’est le produit.' },
+    { target: '.cap-feature', title: 'La caractéristique', text: 'C’est un fait sur votre offre. Elle vous est donnée.',
+      after: 'Vous partez d’elle pour écrire l’avantage, puis la preuve.' },
     { target: '.cap-fields', title: 'Vos deux réponses',
       items: [
         { key: 'A', tone: 'green', text: 'L’avantage : ce que le client y gagne.' },
         { key: 'P', tone: 'coral', text: 'La preuve : un fait qui le démontre.' }
       ] },
-    { target: '.cap-progress', title: 'Deux caractéristiques', text: 'Vous les traitez l’une après l’autre.' },
+    { target: '.cap-progress', title: 'Deux caractéristiques', text: 'L’exercice en compte deux, traitées l’une après l’autre :',
+      items: [
+        { key: '1', tone: 'blue', text: 'vous écrivez l’avantage et la preuve de la première ;' },
+        { key: '2', tone: 'blue', text: 'puis la deuxième prend sa place à gauche.' }
+      ],
+      after: 'Chaque point est une caractéristique. Cliquez dessus pour y revenir.' },
     { target: '.cap-page .k-bar', title: 'Valider',
       items: [
         { symbol: 'lightbulb', tone: 'gold', text: '« Voir un indice » vous aide si vous bloquez.' },

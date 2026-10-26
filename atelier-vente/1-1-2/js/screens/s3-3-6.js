@@ -51,7 +51,7 @@
       : `Cette réponse prolonge votre argument face à un client ${esc(step.label.toLowerCase())}.`;
     return `<div class="k-page tree-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: reviewing ? `<p class="k-count">Arbre terminé</p>` : '' })}
+        aside: reviewing ? `<p class="k-count">Arbre terminé</p>` : kit.contextButton() + kit.tourButton() })}
       ${tree(at, reviewing)}
       ${reviewing ? reviewBody() : `<form class="tree-panel" novalidate>
         <div class="tree-columns">
@@ -110,6 +110,31 @@
     back: () => { kit.setStage(Math.max(1, stage() - 1)); kit.commit(); }
   });
   kit.dialogs({ hint: () => ({ title: 'Un indice', html: `<p>${esc(steps[stage() - 1].hint)}</p>` }) });
+
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  kit.context([
+    ['target', 'Le besoin du client', content.need],
+    ['list', 'Un argument CAP', 'Une caractéristique, l’avantage qu’en tire le client, puis une preuve.'],
+    ['chat', 'La réaction du client', 'Il peut être convaincu ou rester sceptique : votre réponse change selon le cas.'],
+    ['pencil', 'Ce qui vous est demandé', 'Écrire votre argument, puis une réponse pour chaque réaction.']
+  ], 'L’arbre des réactions');
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s3-3.6', [
+    { target: '.tree', title: 'L’arbre', text: 'Il montre les étapes de votre réponse, dans l’ordre :',
+      items: [
+        { key: 'C', tone: 'blue', text: 'C, A, P : les trois temps de votre argument ;' },
+        { symbol: 'chat', tone: 'coral', text: 'puis vos réponses au client convaincu et au client sceptique.' }
+      ],
+      after: 'Une étape remplie s’allume. Cliquez dessus pour y revenir.' },
+    { target: '.tree-rootcard', title: 'Le besoin', text: 'Gardez-le en tête à chaque étape.' },
+    { target: '.tree-stepcard', title: 'Votre réponse', text: 'Répondez à la question de l’étape en cours.' },
+    { target: '.tree-page .k-bar', title: 'Ajouter à l’arbre',
+      items: [
+        { symbol: 'lightbulb', tone: 'gold', text: '« Voir un indice » vous aide si vous bloquez.' },
+        { symbol: 'arrowRight', tone: 'blue', text: 'Ce bouton ajoute votre réponse et passe à l’étape suivante.' }
+      ] }
+  ]);
 
   ex.mount('s3-3.6', { screen, validate, intercept, feedback, compactFeedback: true });
 })();
