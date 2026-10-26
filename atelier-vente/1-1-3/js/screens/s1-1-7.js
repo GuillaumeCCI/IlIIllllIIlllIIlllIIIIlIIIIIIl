@@ -87,7 +87,7 @@
           ${sheet(at)}
           ${core.errorsBox()}
           <div class="lib-actions">
-            <div>${kit.dialogButton('table', 'Voir les 4 fiches en tableau', 'text-button', 'list')}<p class="k-muted">Vos réponses pourront être modifiées plus tard.</p></div>
+            <p class="k-muted">Vos réponses pourront être modifiées plus tard.</p>
             ${kit.submit(last ? 'Enregistrer et terminer' : 'Enregistrer cette fiche')}
           </div>
         </form>
@@ -122,7 +122,6 @@
   const feedback = () => ['Comparez vos fiches au corrigé : une question ouverte, une réponse courte, une preuve vérifiable.'];
 
   kit.on({ fiche: el => { ex.setValue('fiche', Number(el.dataset.index)); kit.commit(); } });
-  kit.dialogs({ table: () => ({ title: 'Mes 4 fiches', html: table() }) });
 
   // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
   kit.context([
@@ -136,9 +135,11 @@
     { target: '.lib-list', title: 'Les objections', text: 'Une fiche par objection. Cliquez pour passer de l’une à l’autre.' },
     { target: '.lib-sheet .lib-row:nth-of-type(1)', title: '1. La nature', text: 'Choisissez dans la liste ce que cache l’objection.' },
     { target: '.lib-sheet .lib-row:nth-of-type(2)', title: '2. La question', text: 'Écrivez la question que vous poseriez au client pour en savoir plus.' },
-    { target: '.lib-sheet .lib-row:nth-of-type(3)', title: '3. La réponse et sa preuve', text: 'Ce que vous diriez, puis un fait qui le prouve.',
-      after: 'Par exemple un chiffre, un essai ou un témoignage.' },
-    { target: '.lib-actions [data-dialog="table"]', title: 'Vos 4 fiches', text: 'Relisez toutes vos fiches dans un tableau.' },
+    { target: '.lib-sheet .lib-row:nth-of-type(3)', title: '3. La réponse et sa preuve', text: 'Ce que vous diriez, puis un fait qui le prouve. Par exemple :',
+      items: [
+        { symbol: 'chat', tone: 'blue', text: 'la réponse : « Nos sièges soulagent le dos de vos équipes. » ;' },
+        { symbol: 'check', tone: 'green', text: 'la preuve : « Chez un client, les arrêts pour mal de dos ont baissé de 30 %. »' }
+      ] },
     { target: '.lib-actions .k-submit', title: 'Enregistrer', text: 'Ce bouton passe à la fiche suivante.',
       after: 'Après la 4e fiche, vous voyez le corrigé.' }
   ]);
