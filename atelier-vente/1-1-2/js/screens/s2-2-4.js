@@ -34,7 +34,7 @@
     if (reviewing) return reviewScreen();
     const [first, ...rest] = content.pitch.split(/(?<=\.)\s/);
     return `<div class="k-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: counter() })}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: counter() + kit.tourButton() })}
       <form class="k-panel" novalidate>
         <p class="k-label">Le pitch</p>
         <p class="proof-pitch">« <strong>${esc(first)}</strong> ${esc(rest.join(' '))} »</p>
@@ -57,7 +57,18 @@
     return [`Une preuve doit couvrir toute la promesse : un audit RGPD prouve la conformité, pas une « sécurité totale ».`];
   };
 
-  kit.live(() => ({ aside: counter() }));
+  kit.live(() => ({ aside: counter() + kit.tourButton() }));
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s2-2.4', [
+    { target: '.proof-pitch', title: 'Le pitch', text: 'Lisez-le en entier : les affirmations du tableau en sont extraites.' },
+    { target: '.k-matrix', title: 'Une case par affirmation',
+      items: [
+        { symbol: 'check', tone: 'green', text: 'Étayée : une preuve concrète l’appuie, comme un chiffre ou un audit.' },
+        { symbol: 'close', tone: 'coral', text: 'Trou de preuve : la promesse n’est pas prouvée.' }
+      ] },
+    { target: '.k-page .k-bar .k-submit', title: 'Valider', text: 'Les 5 lignes cochées, validez pour voir le corrigé.' }
+  ]);
 
   ex.mount('s2-2.4', { screen, validate, feedback, compactFeedback: true });
 })();
