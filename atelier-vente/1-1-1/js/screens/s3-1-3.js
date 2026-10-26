@@ -9,6 +9,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const { icon, esc } = core;
+  const kit = window.AtelierKit;
   const content = window.ATELIER_S3['1.3'];
   const cases = content.cases;
 
@@ -81,6 +82,7 @@
           <div class="case-sheet-aside">
             ${reviewed ? '' : steps}
             ${core.button(`${icon('list', { size: 17 })}<span>Voir le mémo</span>`, 'memo', 'text-button with-icon')}
+            ${kit && !reviewed ? `<span class="case-sheet-help">${kit.contextButton()}${kit.tourButton()}</span>` : ''}
           </div>
         </header>
 
@@ -145,6 +147,26 @@
        <dl>${content.gestures.map(gesture =>
         `<dt>${esc(gesture.label)}</dt><dd>${esc(gesture.description)}</dd>`).join('')}</dl>`));
   }
+
+  // Au tout début, sur le menu des objections : de quoi parle l'exercice.
+  if (kit) kit.context([
+    ['target', 'La situation', 'Quatre clients vous opposent chacun une objection.'],
+    ['list', 'Diagnostiquer', 'C’est reconnaître la nature de l’objection, puis choisir le premier geste pour y répondre.'],
+    ['pencil', 'Ce qui vous est demandé', 'Pour chaque objection, choisir sa nature, puis votre premier geste.']
+  ], 'Diagnostiquer une objection');
+
+  // La visite guidée part à l'ouverture de la première objection.
+  if (kit) kit.tour('s3-1.3', [
+    { target: '.case-panel .client-quote', title: 'L’objection', text: 'Lisez ce que vous dit le client.' },
+    { target: '.case-step-line', title: 'Deux étapes',
+      items: [
+        { key: '1', tone: 'blue', text: 'la nature de l’objection ;' },
+        { key: '2', tone: 'coral', text: 'votre premier geste.' }
+      ] },
+    { target: '.case-panel .radio-cards', title: '1. Choisissez sa nature', text: 'Cliquez sur la nature la plus probable.' },
+    { target: '.case-panel [data-action="memo"]', title: 'Le mémo', text: 'Un doute ? Le mémo rappelle chaque nature et chaque geste.' },
+    { target: '.form-actions', title: '2. Continuez', text: '« Continuer » ouvre l’étape du premier geste.' }
+  ]);
 
   ex.mount('s3-1.3', {
     screen, validate, feedback, answerKey, intercept, afterSubmit, allDone, onMount,

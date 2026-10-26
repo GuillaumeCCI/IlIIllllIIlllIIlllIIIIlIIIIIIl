@@ -955,7 +955,7 @@
     if (!root.document) return;
     const wait = setInterval(() => {
       const doc = root.document;
-      if (ex().reviewing() || doc.body.classList.contains('is-briefing') || doc.querySelector('.launch-veil, .page-transition') || !doc.querySelector('#main form, #main .k-page')) return;
+      if (ex().reviewing() || (doc.body.classList.contains('is-briefing') && !doc.querySelector('#main .case-menu')) || doc.querySelector('.launch-veil, .page-transition') || !doc.querySelector('#main form, #main .k-page, #main .case-menu')) return;
       clearInterval(wait);
       openContext();
     }, 250);
