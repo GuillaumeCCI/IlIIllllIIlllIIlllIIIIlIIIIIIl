@@ -137,18 +137,24 @@
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   if (window.AtelierKit) window.AtelierKit.tour('s1-B', [
     { target: '.wiz-main .callout, .wiz-main .signals', title: 'La situation', text: 'Lisez la situation et les signaux du client.' },
-    { target: '.wiz-step .field', title: 'Votre réponse', text: 'Écrivez ici ce que vous diriez au client.' },
+    { target: '.wiz-step .field', show: '.wiz-step .wiz-actions', title: 'Votre réponse', text: 'Écrivez ici ce que vous diriez au client.' },
     { target: '.step-pill', title: 'Deux étapes', text: 'Vous répondez à une question à la fois :',
       items: [
         { key: '1', tone: 'blue', text: 'votre entrée en matière, en 3 à 4 phrases ;' },
         { key: '2', tone: 'coral', text: 'votre réglage majeur, en une phrase.' }
       ] },
-    { target: '.wiz-step .wiz-actions, .form-actions', title: 'Continuer',
+    { target: '.wiz-step .wiz-actions', title: 'Continuer',
       items: [
         { symbol: 'arrowRight', tone: 'blue', text: '« Continuer » ouvre l’étape suivante.' },
         { symbol: 'checkCircle', tone: 'green', text: 'À la deuxième étape, vous validez, puis vous faites votre autoévaluation.' },
         { symbol: 'document', tone: 'blue', text: 'Le corrigé s’affiche ensuite.' }
-      ] }
+      ] },
+    // Second temps, à l'arrivée sur l'étape 2 : ce que l'on attend sur cette page.
+    { later: true, target: '.wiz-step .chips', title: 'Le réglage majeur', text: 'C’est ce que vous avez adapté pour suivre ce client.',
+      after: 'Ces quatre pistes peuvent vous aider à le nommer.' },
+    { later: true, target: '.wiz-step .field', title: 'Votre réponse', text: 'En une phrase : ce que vous avez réglé, et pourquoi.' },
+    { later: true, target: '.wiz-back', title: 'Étape précédente', text: 'Besoin de relire votre entrée en matière ? Revenez-y.' },
+    { later: true, target: '.form-actions', title: 'Valider mon approche', text: 'Vous vous autoévaluez, puis le corrigé s’affiche.' }
   ]);
 
   ex.mount('s1-B', { screen, validate, intercept, feedback, onMount, compactFeedback: true });
