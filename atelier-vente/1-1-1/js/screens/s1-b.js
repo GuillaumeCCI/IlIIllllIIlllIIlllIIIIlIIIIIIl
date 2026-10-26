@@ -149,12 +149,10 @@
         { symbol: 'checkCircle', tone: 'green', text: 'À la deuxième étape, vous validez, puis vous faites votre autoévaluation.' },
         { symbol: 'document', tone: 'blue', text: 'Le corrigé s’affiche ensuite.' }
       ] },
-    // Second temps, à l'arrivée sur l'étape 2 : ce que l'on attend sur cette page.
-    { later: true, target: '.wiz-step .chips', title: 'Le réglage majeur', text: 'C’est ce que vous avez adapté pour suivre ce client.',
-      after: 'Ces quatre pistes peuvent vous aider à le nommer.' },
-    { later: true, target: '.wiz-step .field', title: 'Votre réponse', text: 'En une phrase : ce que vous avez réglé, et pourquoi.' },
-    { later: true, target: '.wiz-back', title: 'Étape précédente', text: 'Besoin de relire votre entrée en matière ? Revenez-y.' },
-    { later: true, target: '.form-actions', title: 'Valider mon approche', text: 'Vous vous autoévaluez, puis le corrigé s’affiche.' }
+    // Second temps, à l'arrivée sur l'étape 2 : ce qui est nouveau par rapport à l'étape 1.
+    { later: true, target: '.wiz-step:has(.chips)', title: 'Étape 2 : le réglage majeur',
+      text: 'Votre entrée en matière est écrite. Dites maintenant, en une phrase, ce que vous avez adapté pour suivre ce client.',
+      after: 'Par exemple le rythme, le ton, la distance ou la précision.' }
   ]);
 
   ex.mount('s1-B', { screen, validate, intercept, feedback, onMount, compactFeedback: true });
