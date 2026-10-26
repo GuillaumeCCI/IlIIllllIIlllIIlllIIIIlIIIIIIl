@@ -54,7 +54,7 @@
         <ul class="call-keys-list">${keys.map(k => `<li><strong>${esc(k.label)}</strong><span>${esc(k.text)}</span></li>`).join('')}</ul>
         ${kit.tip('Deux tours de parole vous attendent : l’accueil vous répondra après votre première réplique.')}
         ${core.errorsBox()}
-        ${kit.bar({ right: kit.submit('Décrocher et écouter') })}
+        <div class="call-actions is-end">${kit.submit('Décrocher et écouter')}</div>
       </form>
     </div>`;
   }

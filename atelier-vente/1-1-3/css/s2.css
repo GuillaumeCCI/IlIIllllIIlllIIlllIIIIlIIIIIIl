@@ -39,7 +39,7 @@
 .call-page .k-head-aside { padding-top: 10px; }
 .call-layout { grid-template-columns: minmax(0, .95fr) minmax(0, 1fr); }
 .call-phone { display: grid; grid-template-rows: auto 1fr auto auto; min-height: 520px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: #fbfcff; box-shadow: var(--shadow); }
-.call-phone.is-intro { grid-template-rows: auto 1fr; }
+.call-phone.is-intro { grid-template-rows: auto 1fr; min-height: 0; }
 .call-bar { display: flex; align-items: center; gap: 14px; padding: 16px 24px; background: #0d1d4a; color: #fff; font-size: 1.05rem; }
 .call-bar strong { margin-left: auto; }
 .call-live { width: 12px; height: 12px; border-radius: 50%; background: #48d17a; }
@@ -70,6 +70,7 @@
 .call-keys-title { margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--line); }
 .call-keys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .call-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--line); }
+.call-actions.is-end { justify-content: flex-end; }
 .call-review { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--line); }
 
 /* ── 2.4 · Repérer les erreurs de prospection ─────────────────────────── */
