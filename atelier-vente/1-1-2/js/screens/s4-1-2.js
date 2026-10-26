@@ -37,7 +37,7 @@
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
         note: 'Un avantage répond au « pourquoi c’est utile pour lui ? », une preuve au « comment en être sûr ? ».',
         aside: `<div class="cap-progress"><span>Étape ${i + 1} sur ${lines.length}</span><span class="k-dots">${lines.map((_, n) =>
-          `<button type="button" class="k-dot ${n === i ? 'is-current' : lineDone(n) ? 'is-done' : ''}" data-act="line" data-index="${n}" aria-label="Caractéristique ${n + 1}"></button>`).join('')}</span></div>` })}
+          `<button type="button" class="k-dot ${n === i ? 'is-current' : lineDone(n) ? 'is-done' : ''}" data-act="line" data-index="${n}" aria-label="Caractéristique ${n + 1}"></button>`).join('')}</span></div>${kit.tourButton()}` })}
       <form novalidate>
         <div class="cap-layout">
           <section class="k-panel cap-feature">
@@ -110,6 +110,22 @@
       html: '<p><strong>Avantage :</strong> partez de « Vous… » et dites ce que le client y gagne au quotidien.</p><p><strong>Preuve :</strong> un chiffre, un engagement écrit, un fait vérifiable qui rend la promesse crédible.</p>'
     }
   });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s4-1.2', [
+    { target: '.cap-feature', title: 'La caractéristique', text: 'Votre point de départ : ce qu’est le produit.' },
+    { target: '.cap-fields', title: 'Vos deux réponses',
+      items: [
+        { key: 'A', tone: 'green', text: 'L’avantage : ce que le client y gagne.' },
+        { key: 'P', tone: 'coral', text: 'La preuve : un fait qui le démontre.' }
+      ] },
+    { target: '.cap-progress', title: 'Deux caractéristiques', text: 'Vous les traitez l’une après l’autre.' },
+    { target: '.cap-page .k-bar', title: 'Valider',
+      items: [
+        { symbol: 'lightbulb', tone: 'gold', text: '« Voir un indice » vous aide si vous bloquez.' },
+        { symbol: 'arrowRight', tone: 'blue', text: 'Ce bouton passe à la caractéristique suivante.' }
+      ] }
+  ]);
 
   ex.mount('s4-1.2', { screen, validate, intercept, feedback, compactFeedback: true });
 })();
