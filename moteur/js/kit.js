@@ -844,7 +844,9 @@
       const parts = [...el.querySelectorAll('*')].filter(node => node.matches(CONTROLS)
         ? !node.parentElement.closest(CONTROLS) || node.parentElement.closest(CONTROLS) === el
         : !node.closest(CONTROLS) && [...node.childNodes].some(child => child.nodeType === 3 && child.textContent.trim()));
-      return parts.length ? parts : [el];
+      // « Réinitialiser » n'est jamais ce que la bulle présente : on le laisse dans l'ombre.
+      const kept = parts.filter(node => !node.closest('.k-reset, [data-act="reset"], [data-action="reset"]'));
+      return kept.length ? kept : parts.length ? parts : [el];
     };
     // Le rectangle qui englobe tous les éléments de la zone.
     const zone = target => {
