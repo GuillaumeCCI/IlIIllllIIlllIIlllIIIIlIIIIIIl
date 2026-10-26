@@ -149,13 +149,7 @@
       items: [
         { symbol: 'check', tone: 'green', text: 'Une fois choisie, l’étape affiche le rôle que vous lui avez donné : vous voyez où vous en êtes.' },
         { symbol: 'refresh', tone: 'gold', text: 'Vous changez d’avis ? Cliquez simplement sur une autre étape.' }
-      ] },
-    { target: '.rl-nav', title: 'Reculer ou avancer', text: 'Après votre choix, le rôle suivant s’affiche tout seul.',
-      items: [
-        { symbol: 'arrowLeft', tone: 'blue', text: '« Rôle précédent » : revenir sur un rôle pour changer votre choix.' },
-        { symbol: 'arrowRight', tone: 'blue', text: '« Rôle suivant » : passer un rôle et y revenir plus tard.' }
-      ] },
-    { target: '.rl-count', title: 'Votre avancement', text: 'Une fois les 6 rôles associés, vous relisez vos choix avant de valider.' }
+      ] }
   ]);
 
   ex.mount('s3-1.2', {

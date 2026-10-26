@@ -992,11 +992,12 @@
     const autoStart = (list, key, delay) => {
       if (!list.length || seenOf(key)) return;
       const wait = setInterval(() => {
-        if (ex().reviewing() || seenOf(key) || root.document.querySelector('.tour, dialog[open]') || !shown(list[0].target)) return;
+        // Le menu latéral ouvert couvre l'écran : la visite attend qu'il se referme.
+        if (ex().reviewing() || seenOf(key) || root.document.querySelector('.tour, dialog[open]') || root.document.body.classList.contains('menu-open') || !shown(list[0].target)) return;
         clearInterval(wait);
         // Au moment de partir, une fenêtre (le contexte) peut s'être ouverte : on attend qu'elle se ferme.
         setTimeout(function go() {
-          if (root.document.querySelector('dialog[open], .launch-veil')) { setTimeout(go, 400); return; }
+          if (root.document.querySelector('dialog[open], .launch-veil') || root.document.body.classList.contains('menu-open')) { setTimeout(go, 400); return; }
           tourStart(list, key);
         }, delay);
       }, 400);
