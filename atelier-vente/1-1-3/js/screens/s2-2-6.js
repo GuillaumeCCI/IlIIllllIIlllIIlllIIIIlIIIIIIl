@@ -111,7 +111,7 @@
     const current = at();
     return `<div class="k-page rb-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count rb-count" data-live="count"><strong>${written()} / ${SELF}</strong> scripts</p>` })}
+        aside: `${reviewing ? '' : `<span class="tour-pair">${kit.contextButton()}${kit.tourButton()}</span>`}<p class="k-count rb-count" data-live="count"><strong>${written()} / ${SELF}</strong> scripts</p>` })}
       ${reviewing ? reviewScreen() : `<div class="rb-layout">
         ${menu(current)}
         <form class="k-panel rb-main" novalidate>
@@ -166,6 +166,27 @@
     return { count: `<strong>${written()} / ${SELF}</strong> scripts`, sentences: current < SELF ? sentencesLine(current) : '' };
   });
   kit.dialogs(Object.fromEntries(situations.map((s, i) => [`tip${i}`, { title: `Repère · ${s.title}`, html: `<p>${esc(s.tip)}</p><p class="tip-keys"><span>Les ${content.keys.length} clés :</span>${content.keys.map((k, j) => `${j ? '<span class="tip-sep" aria-hidden="true"></span>' : ''}<span class="tip-key tone-${['blue', 'coral', 'green'][j % 3]}">${esc(k)}</span>`).join('')}</p>` }])));
+
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  kit.context([
+    ['chat', 'Une esquive', 'Une phrase toute faite du prospect pour écourter l’appel, comme « Je n’ai pas le temps ».'],
+    ['target', 'Un script de rebond', 'Votre réponse courte, préparée à l’avance, pour garder l’échange ouvert.'],
+    ['pencil', 'Ce qui vous est demandé', 'Écrire un script pour chacune des 3 esquives, puis les lire à voix haute.']
+  ], 'Le script de rebond');
+
+  // Visite guidée en deux temps : les scripts, puis l'auto-évaluation.
+  kit.tour('s2-2.6', [
+    { target: '.rb-menu ol', title: 'Les 3 situations', text: 'Une esquive par situation. Cliquez pour passer de l’une à l’autre.' },
+    { target: '.rb-main .client-card', title: 'L’esquive', text: 'Voici ce que vous dit le prospect.' },
+    { target: '.rb-main .field', title: 'Votre script', text: 'Répondez en 2 ou 3 phrases, comme au téléphone :',
+      items: content.keys.map((k, j) => ({ key: String(j + 1), tone: 'blue', text: `${k.toLowerCase()}${j < content.keys.length - 1 ? ' ;' : '.'}` })) },
+    { target: '.rb-page [data-dialog^="tip"]', title: 'Un repère', text: 'Un doute ? Le repère vous met sur la piste.' },
+    { target: '.rb-actions .k-submit', title: 'Enregistrer', text: 'Ce bouton passe au script suivant.',
+      after: 'Après les 3 scripts, vous les lisez à voix haute.' },
+    { later: true, target: '.rb-reread', title: 'Lisez à voix haute', text: 'Relisez vos 3 scripts à voix haute, comme au téléphone.' },
+    { later: true, target: '.rb-rec', title: 'S’enregistrer', text: 'Facultatif : enregistrez-vous pour vous réécouter.' },
+    { later: true, target: '.rb-main .k-matrix', title: 'Votre voix', text: 'Notez chaque critère de 0 à 2.' }
+  ]);
 
   window.addEventListener('pagehide', () => { if (recorder?.state === 'recording') { recorder.onstop = null; recorder.stop(); } stream?.getTracks().forEach(t => t.stop()); if (takeUrl) URL.revokeObjectURL(takeUrl); });
 
