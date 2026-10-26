@@ -70,7 +70,8 @@
         ${ex.field(`reply${t}`, 'Votre réponse au téléphone', { placeholder: 'Écrivez exactement ce que vous diriez au téléphone…', max: content.max, rows: 4, hideLabel: true })}
         <p class="k-label call-keys-title">Les 3 clés du défi</p>
         <div class="call-keys">${keys.map((k, i) => `<label class="call-key"><input type="checkbox" data-field="key${t}${i}" ${ex.value(`key${t}${i}`) === true ? 'checked' : ''}><span class="call-key-box" aria-hidden="true">${icon('check', { size: 14 })}</span><span>${esc(k.label)}</span></label>`).join('')}</div>
-        <p class="k-muted">Cochez les clés que votre réponse respecte. Elle sera relue sur ces trois points.</p>
+        <p class="k-muted call-keys-help">Cochez les clés que votre réponse respecte. Elle sera relue sur ces trois points.</p>
+        <p class="call-keys-lock">${icon('lock', { size: 18 })}<span>Écrivez d’abord votre réponse pour cocher les clés.</span></p>
         ${core.errorsBox()}
         <div class="call-actions">${kit.dialogButton('hint', 'Voir un indice', 'text-button', 'lightbulb')}${kit.submit(t < turns.length - 1 ? 'Tester ma réponse' : 'Tester et voir le retour')}</div>
       </form>
@@ -137,6 +138,17 @@
     return true;
   }
 
+  /* Les clés ne se cochent qu'une réponse écrite : on juge ce qu'on a dit. */
+  function lockKeys() {
+    const form = document.querySelector('.call-answer');
+    const field = form && form.querySelector('textarea');
+    if (!field) return;
+    const empty = !field.value.trim();
+    form.classList.toggle('is-locked', empty);
+    form.querySelectorAll('.call-key input').forEach(box => { box.disabled = empty; });
+  }
+  document.addEventListener('input', event => { if (event.target.closest && event.target.closest('.call-answer')) lockKeys(); });
+
   const feedback = () => ['Relisez vos deux réponses avec les trois clés : courtoise, brève, et qui donne une issue simple à votre interlocutrice.'];
 
   kit.dialogs({ hint: { title: 'Un indice', html: `<p>${esc(content.hint)}</p>` } });
@@ -149,10 +161,11 @@
       after: 'L’accueil vous parle, vous lui répondez : deux fois.' },
     { later: true, target: '.call-lines', title: 'L’accueil', text: 'Lisez ce que vous dit l’accueil.' },
     { later: true, target: '.call-answer textarea', title: 'Votre réponse', text: 'Écrivez exactement ce que vous diriez au téléphone.' },
-    { later: true, target: '.call-keys', title: 'Les 3 clés', text: 'Cochez les clés que votre réponse respecte.' },
+    { later: true, target: '.call-keys', title: 'Les 3 clés', text: 'Cochez les clés que votre réponse respecte.',
+      after: 'Elles s’ouvrent une fois votre réponse écrite.' },
     { later: true, target: '.call-answer [data-dialog="hint"]', title: 'Un indice', text: 'Un doute ? L’indice vous met sur la piste.' },
     { later: true, target: '.call-answer .k-submit', title: 'Tester ma réponse', text: 'L’accueil vous répond. Après le 2e tour, vous voyez le retour.' }
   ]);
 
-  ex.mount('s2-2.3', { screen, validate, intercept, feedback, compactFeedback: true });
+  ex.mount('s2-2.3', { screen, validate, intercept, feedback, onMount: lockKeys, compactFeedback: true });
 })();

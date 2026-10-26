@@ -71,6 +71,11 @@
 .call-keys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .call-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--line); }
 .call-actions.is-end { justify-content: flex-end; }
+/* Clés verrouillées tant que la réponse n'est pas écrite. */
+.call-keys-lock { display: none; align-items: center; gap: 8px; color: var(--accent); font-weight: 600; }
+.call-answer.is-locked .call-keys-lock { display: flex; }
+.call-answer.is-locked .call-keys-help { display: none; }
+.call-answer.is-locked .call-key { opacity: .5; cursor: not-allowed; }
 /* Le retour : un onglet par tour, deux cartes, puis les trois clés. */
 .call-feedback { display: grid; align-content: start; gap: 16px; }
 .call-fb-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
