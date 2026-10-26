@@ -37,17 +37,17 @@ window.ATELIER_S2 = {
       { id: 'a', text: 'Vos données clients sont protégées en continu : 5 000 PME nous font confiance, zéro incident en 2024.', rank: 5 },
       { id: 'b', text: 'On a de la sécurité.', rank: 1 },
       { id: 'c', text: 'Vos données sont protégées.', rank: 3 },
-      { id: 'd', text: 'Le logiciel est sécurisé, je pense que c’est bien.', rank: 2 },
+      { id: 'd', text: 'Au niveau de la sécurité, le système est plutôt bien conçu, on essaie vraiment d’éviter les problèmes techniques donc vous n’avez normalement pas à vous inquiéter.', rank: 2 },
       { id: 'e', text: 'Vos données sont protégées en continu, chiffrées et conformes RGPD.', rank: 4 }
     ],
     explanation: [
       '1 · b : creuse, elle ne dit rien de concret.',
-      '2 · d : elle ajoute du doute avec « je pense ».',
+      '2 · d : elle ajoute du doute (« plutôt », « on essaie », « normalement ») et fait penser à des problèmes.',
       '3 · c : correcte, mais nue : ni précision ni preuve.',
       '4 · e : elle ajoute des éléments concrets (chiffrées, conformes RGPD).',
       '5 · a : elle couronne le tout d’une preuve (5 000 PME, zéro incident en 2024).'
     ],
-    hint: 'Trois critères font monter une proposition : elle parle du client (« vous »), elle est précise, et elle s’appuie sur une preuve. Une hésitation (« je pense ») la fait au contraire chuter.'
+    hint: 'Trois critères font monter une proposition : elle parle du client (« vous »), elle est précise, et elle s’appuie sur une preuve. Une hésitation (« plutôt », « normalement ») la fait au contraire chuter.'
   },
 
   /* ── 2.3 · Le studio d'accroches ────────────────────────────────────── */
