@@ -15,8 +15,8 @@
   const STEPS = [
     { key: 'opening', title: 'Montrez rapidement au client que vous avez compris son rythme et son besoin d’autonomie.', hint: 'Votre entrée en matière · 3 à 4 phrases',
       body: () => ex.field('opening', 'Votre entrée en matière', { placeholder: 'Écrivez ce que vous diriez au client…', max: 600, rows: 5, hideLabel: true }) },
-    { key: 'adjustment', title: 'Précisez le réglage majeur effectué pour vous synchroniser avec le client.', hint: 'Votre réglage majeur · une phrase suffit',
-      body: () => core.chips(['Rythme', 'Ton', 'Distance', 'Précision']) + ex.field('adjustment', 'Votre réglage majeur', { placeholder: 'Expliquez le principal ajustement effectué…', max: 250, rows: 4, hideLabel: true }) }
+    { key: 'adjustment', title: 'Précisez le réglage majeur effectué pour vous synchroniser avec le client.', hint: 'Une phrase suffit · par exemple le rythme, le ton, la distance ou la précision',
+      body: () => ex.field('adjustment', 'Votre réglage majeur', { placeholder: 'Expliquez le principal ajustement effectué…', max: 250, rows: 4, hideLabel: true }) }
   ];
 
   function wizard(current) {
@@ -28,12 +28,14 @@
         ${core.pageTitle('Mise en situation', 'Vente en boutique · le client pressé et distant')}
         ${core.callout('Un client entre dans votre magasin d’un pas rapide. Il jette des coups d’œil réguliers à sa montre, se montre particulièrement sur la réserve et évite le contact visuel prolongé. Il a manifestement un besoin précis, mais craint d’être accaparé par un discours commercial trop lourd.')}
         <div class="signals"><strong>Signaux observés</strong>${core.chips(['Pressé', 'Réservé', 'Besoin précis'])}</div>
-        <div class="wiz-step">
+        <div class="wiz-step is-step-${at + 1}">
           <div class="wiz-prompt"><span class="wiz-bulb" aria-hidden="true">${icon('lightbulb', { size: 30 })}</span><div><h2>${esc(step.title)}</h2><p>${esc(step.hint)}</p></div></div>
           ${step.body()}
-          ${last ? '' : `<div class="wiz-actions">${core.button(`<span>Continuer</span>${icon('arrowRight', { size: 18 })}`, 'wizard-next', 'primary', `data-require="${step.key}"`)}</div>`}
+          ${last ? core.errorsBox() : ''}
+          ${last
+            ? `<div class="wiz-actions is-split">${core.button(`${icon('arrowLeft', { size: 17 })}<span>Étape précédente</span>`, 'wizard-prev', 'text-button with-icon')}<button type="submit" class="button primary">Valider mon approche</button></div>`
+            : `<div class="wiz-actions">${core.button(`<span>Continuer</span>${icon('arrowRight', { size: 18 })}`, 'wizard-next', 'primary', `data-require="${step.key}"`)}</div>`}
         </div>
-        ${last ? `${core.errorsBox()}<div class="wiz-back">${core.button(`${icon('arrowLeft', { size: 17 })}<span>Étape précédente</span>`, 'wizard-prev', 'text-button with-icon')}</div>${ex.actions('Valider mon approche')}` : ''}
       </section>
       <aside class="wiz-aside">
         <div class="wiz-aside-head"><div class="wiz-aside-tools">${window.AtelierKit ? window.AtelierKit.tourButton() : ''}${core.stepPill(at, STEPS.length)}</div></div>
@@ -137,22 +139,21 @@
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   if (window.AtelierKit) window.AtelierKit.tour('s1-B', [
     { target: '.wiz-main .callout, .wiz-main .signals', title: 'La situation', text: 'Lisez la situation et les signaux du client.' },
-    { target: '.wiz-step .field', show: '.wiz-step .wiz-actions', title: 'Votre réponse', text: 'Écrivez ici ce que vous diriez au client.' },
+    { target: '.wiz-step .field', show: '.wiz-step.is-step-1', title: 'Votre réponse', text: 'Écrivez ici ce que vous diriez au client.' },
     { target: '.step-pill', title: 'Deux étapes', text: 'Vous répondez à une question à la fois :',
       items: [
         { key: '1', tone: 'blue', text: 'votre entrée en matière, en 3 à 4 phrases ;' },
         { key: '2', tone: 'coral', text: 'votre réglage majeur, en une phrase.' }
       ] },
-    { target: '.wiz-step .wiz-actions', title: 'Continuer',
+    { target: '.wiz-step .wiz-actions', show: '.wiz-step.is-step-1', title: 'Continuer',
       items: [
         { symbol: 'arrowRight', tone: 'blue', text: '« Continuer » ouvre l’étape suivante.' },
         { symbol: 'checkCircle', tone: 'green', text: 'À la deuxième étape, vous validez, puis vous faites votre autoévaluation.' },
         { symbol: 'document', tone: 'blue', text: 'Le corrigé s’affiche ensuite.' }
       ] },
     // Second temps, à l'arrivée sur l'étape 2 : ce qui est nouveau par rapport à l'étape 1.
-    { later: true, target: '.wiz-step:has(.chips)', title: 'Étape 2 : le réglage majeur',
-      text: 'Votre entrée en matière est écrite. Dites maintenant, en une phrase, ce que vous avez adapté pour suivre ce client.',
-      after: 'Par exemple le rythme, le ton, la distance ou la précision.' }
+    { later: true, target: '.wiz-step.is-step-2', title: 'Étape 2 : le réglage majeur',
+      text: 'Votre entrée en matière est écrite. Dites maintenant, en une phrase, ce que vous avez adapté pour suivre ce client.' }
   ]);
 
   ex.mount('s1-B', { screen, validate, intercept, feedback, onMount, compactFeedback: true });
