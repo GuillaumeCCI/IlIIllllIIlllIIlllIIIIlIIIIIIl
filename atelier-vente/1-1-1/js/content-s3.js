@@ -113,7 +113,7 @@ window.ATELIER_S3 = {
     objectionTag: 'Prix',
     objectionContext: 'Le client exprime un frein lié au prix. Votre objectif est de traiter cette objection de manière constructive tout en valorisant la solution.',
     options: [
-      { id: 'A', text: 'Ce n’est pas cher, c’est normal pour de la qualité. En plus, je peux vous faire −10 %.' },
+      { id: 'A', text: 'Ce n’est pas si cher, c’est simplement le prix normal pour ce niveau de qualité. Nos équipements justifient pleinement ce positionnement sur le marché. Cependant, je vois que vous hésitez, alors pour vous aider à vous décider aujourd’hui, je peux exceptionnellement vous accorder une remise immédiate de 10 %.' },
       { id: 'B', text: 'Je comprends, c’est un budget. Par rapport à quoi trouvez-vous le prix élevé : une autre offre ou une enveloppe prévue ? Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine. Nos clients constatent une baisse des arrêts liés aux TMS, et l’essai de 30 jours vous permet de vérifier sans risque. Est-ce que cela répond à votre préoccupation ?' }
     ],
     answer: 'B',
