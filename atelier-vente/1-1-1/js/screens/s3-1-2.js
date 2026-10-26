@@ -65,7 +65,7 @@
       return `<li><button type="button" class="rl-step ${at !== -1 ? 'is-filled' : ''} ${mine ? 'is-mine' : ''}" data-action="sort-card" data-zone="${esc(choice.id)}" aria-pressed="${mine}">
         <span class="rl-step-icon tone-${tones[k % tones.length]}">${icon(choice.symbol, { size: 22 })}</span>
         <span class="rl-step-body"><strong>${esc(method[k].step)}</strong>
-          <small>${at !== -1 ? `« ${esc(cards[at].text)} »` : 'Pas encore de rôle'}</small></span>
+          <small>${at !== -1 ? `« ${esc(cards[at].text)} »` : 'Pas encore de rôle'}</small></span>
         ${at !== -1 ? `<span class="rl-step-tag">Rôle ${at + 1}</span>` : ''}
       </button></li>`;
     }).join('');
@@ -85,9 +85,9 @@
           </article>
           <nav class="rl-nav" aria-label="Changer de rôle">${deck}</nav>
           ${(window.ATELIER_BRIEFINGS || {})[ex.current.key] ? core.button('Revoir la consigne', 'show-briefing', 'text-button review-brief') : ''}
-          <p class="rl-note">${icon('lock', { size: 15 })}<span>Vous relisez vos six choix avant de valider ; le corrigé vient ensuite.</span></p>
-          ${ex.current.image && !ex.current.pending ? `<figure class="rl-art"><img src="${esc(core.webAsset(ex.current.image))}" alt="${esc(ex.current.alt || '')}" decoding="async"></figure>` : ''}
+          <p class="rl-note">${icon('lock', { size: 15 })}<span>Vous validez vos six choix avant de continuer : le corrigé vient ensuite.</span></p>
         </section>
+        ${ex.current.image && !ex.current.pending ? `<figure class="rl-art"><img src="${esc(core.webAsset(ex.current.image))}" alt="${esc(ex.current.alt || '')}" decoding="async"></figure>` : ''}
         <section class="panel rl-method">
           <h2>Choisissez l’étape qui remplit ce rôle</h2>
           <p class="k-muted rl-method-help">Les six étapes de la méthode : cliquez sur l’une d’elles.</p>
