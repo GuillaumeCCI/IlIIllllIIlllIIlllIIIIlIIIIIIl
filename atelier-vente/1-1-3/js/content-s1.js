@@ -127,11 +127,12 @@ window.ATELIER_S1 = {
     asideText: 'Laquelle aide vraiment à comprendre et à traiter l’objection ?',
     listTitle: 'Les deux réponses',
     options: [
-      { id: '1', label: 'Commercial 1', text: 'Ce n’est pas cher, c’est le prix normal pour de la qualité. En plus, je peux exceptionnellement vous faire une remise de 10 %.',
+      { id: '1', label: 'Commercial 1', text: 'Je vous assure que notre tarif est tout à fait justifié par rapport au marché. Si vous regardez en détail les caractéristiques de notre équipement, vous constaterez que les matériaux haut de gamme utilisés garantissent une durabilité bien supérieure. C’est ce qui explique ce positionnement. Toutefois, pour vous rassurer sur l’aspect financier et débloquer la situation, je suis prêt à faire un effort exceptionnel aujourd’hui et vous accorder une remise immédiate de 15 % si nous validons la commande. Qu’en dites-vous ?',
         analysis: [
-          'Contredit le client (« ce n’est pas cher ») au lieu d’accueillir sa remarque.',
+          'Se justifie (« notre tarif est tout à fait justifié ») au lieu d’accueillir la remarque du client.',
           'Ne pose aucune question : la cause réelle de l’objection reste inconnue.',
-          'Cède une remise d’emblée : le prix perd sa crédibilité, sans garantie que ce soit le vrai frein.'
+          'Parle des matériaux de l’équipement, pas de ce que le client y gagne.',
+          'Cède une remise de 15 % pour conclure : le prix perd sa crédibilité, sans garantie que ce soit le vrai frein.'
         ] },
       { id: '2', label: 'Commercial 2', text: 'Je comprends, c’est effectivement un budget. Par rapport à quoi trouvez-vous ce prix élevé : une autre offre, une enveloppe prévue ? Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine. Nos clients constatent une baisse des arrêts liés aux TMS, et l’essai de 30 jours vous permet de le vérifier sans risque. Est-ce que cela répond à votre préoccupation ?',
         analysis: [
@@ -146,7 +147,7 @@ window.ATELIER_S1 = {
     whyLabel: 'Pourquoi ce choix ?',
     whyHelp: 'Appuyez-vous sur les étapes du traitement de l’objection.',
     hint: 'Comptez les étapes de la méthode que chaque commercial respecte : accueillir, questionner, reformuler, traiter, contrôler.',
-    model: 'La réponse 2. Elle accueille, creuse (« par rapport à quoi ? »), reformule, traite avec une preuve (baisse des arrêts, essai de 30 jours) et contrôle l’adhésion. La réponse 1 contredit le client, ne creuse rien et brade d’emblée avec une remise : c’est de la négociation prématurée, qui affaiblit la valeur au lieu de traiter l’objection.'
+    model: 'La réponse 2. Elle accueille, creuse (« par rapport à quoi ? »), reformule, traite avec une preuve (baisse des arrêts, essai de 30 jours) et contrôle l’adhésion. La réponse 1 se justifie, ne creuse rien et brade avec une remise de 15 % : c’est de la négociation prématurée, qui affaiblit la valeur au lieu de traiter l’objection.'
   },
 
   /* ── 1.6 · Répondre en 6 étapes ─────────────────────────────────────── */

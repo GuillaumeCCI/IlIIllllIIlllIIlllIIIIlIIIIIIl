@@ -636,7 +636,7 @@
       const ok = chosen() === content.answer;
       return `<div class="k-page cmp-page">
         ${head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: settings.steps && !reviewing ? `<div data-live="cmp-steps">${steps(['Écouter', 'Choisir', 'Expliquer'], stageAt(), { compact: true })}</div>` : '' })}
+          aside: reviewing ? '' : `${settings.steps ? `<div data-live="cmp-steps">${steps(['Écouter', 'Choisir', 'Expliquer'], stageAt(), { compact: true })}</div>` : ''}${tourButton()}` })}
         ${scene()}
         <form novalidate class="cmp-form">
           <h2 class="cmp-list-title">${esc(content.listTitle)}</h2>
@@ -668,6 +668,18 @@
 
     live(() => (settings.steps ? { 'cmp-steps': steps(['Écouter', 'Choisir', 'Expliquer'], stageAt(), { compact: true }) } : {}));
     dialogs({ hint: { title: 'Un indice', html: `<p>${esc(content.hint)}</p>` } });
+
+    // Visite guidée de l'écran, lancée d'elle-même la première fois.
+    tour(key, [
+      { target: '.cmp-page .cmp-bubble, .cmp-page .client-card', title: 'Le client', text: `Il vous dit : « ${content.quote} »` },
+      { target: '.cmp-options', title: 'Deux réponses', text: 'Lisez-les, puis cliquez sur la plus efficace.',
+        after: 'Ensuite, vous expliquerez votre choix.' },
+      // Second temps : la justification n'apparaît qu'une réponse choisie.
+      { later: true, target: '.cmp-why textarea', title: 'Pourquoi ce choix ?', text: 'Expliquez en une ou deux phrases ce qui la rend efficace.' },
+      { later: true, target: '.cmp-why [data-dialog="hint"]', title: 'Un indice', text: 'Un doute ? L’indice vous met sur la piste.' },
+      { later: true, target: '.cmp-why .k-submit', title: 'Valider ma réponse', text: 'Vous découvrez ensuite l’analyse des deux réponses.' }
+    ]);
+
     ex().mount(key, { screen, validate, feedback, compactFeedback: true });
   }
 
