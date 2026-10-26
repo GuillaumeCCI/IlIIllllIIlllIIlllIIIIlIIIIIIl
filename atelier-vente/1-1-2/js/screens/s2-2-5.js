@@ -94,7 +94,8 @@
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   kit.tour('s2-2.5', [
     { target: '.audit-pitch', title: 'Le pitch à analyser', text: 'Lisez attentivement ce discours : c’est lui que vous allez évaluer.' },
-    { target: '.audit-layout > .k-panel:first-child .k-matrix', title: 'Notez le pitch', text: 'Pour chacun des six critères, choisissez une note :',
+    { target: '.audit-layout .k-matrix .k-matrix-label', title: 'Les critères', text: 'Ici s’affiche le critère à juger. Il y en a six.' },
+    { target: '.audit-layout .k-matrix th:not(.k-matrix-label), .audit-layout .k-matrix td', title: 'Notez le pitch', text: 'Pour chaque critère, choisissez une note :',
       items: [
         { key: '0', tone: 'coral', text: 'à retravailler ;' },
         { key: '1', tone: 'gold', text: 'en bonne voie ;' },

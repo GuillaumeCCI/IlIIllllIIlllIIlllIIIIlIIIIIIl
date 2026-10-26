@@ -62,7 +62,8 @@
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   kit.tour('s2-2.4', [
     { target: '.proof-pitch', title: 'Le pitch', text: 'Lisez-le en entier : les affirmations du tableau en sont extraites.' },
-    { target: '.k-matrix', title: 'Une case par affirmation',
+    { target: '.k-matrix .k-matrix-label', title: 'Les affirmations', text: 'Cinq phrases tirées du pitch. Jugez-les une par une.' },
+    { target: '.k-matrix th:not(.k-matrix-label), .k-matrix td', title: 'Une case par affirmation',
       items: [
         { symbol: 'check', tone: 'green', text: 'Étayée : une preuve concrète l’appuie, comme un chiffre ou un audit.' },
         { symbol: 'close', tone: 'coral', text: 'Trou de preuve : la promesse n’est pas prouvée.' }
