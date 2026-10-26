@@ -137,8 +137,8 @@
     { target: '.lib-sheet .lib-row:nth-of-type(2)', title: '2. La question', text: 'Écrivez la question que vous poseriez au client pour en savoir plus.' },
     { target: '.lib-sheet .lib-row:nth-of-type(3)', title: '3. La réponse et sa preuve', text: 'Ce que vous diriez, puis un fait qui le prouve. Par exemple :',
       items: [
-        { symbol: 'chat', tone: 'blue', text: 'la réponse : « Nos sièges soulagent le dos de vos équipes. » ;' },
-        { symbol: 'check', tone: 'green', text: 'la preuve : « Chez un client, les arrêts pour mal de dos ont baissé de 30 %. »' }
+        { symbol: 'chat', tone: 'blue', text: 'la réponse : « Ce vélo électrique vous fait gagner du temps chaque matin. » ;' },
+        { symbol: 'check', tone: 'green', text: 'la preuve : « Nos clients arrivent au travail 15 minutes plus tôt. »' }
       ] },
     { target: '.lib-actions .k-submit', title: 'Enregistrer', text: 'Ce bouton passe à la fiche suivante.',
       after: 'Après la 4e fiche, vous voyez le corrigé.' }
