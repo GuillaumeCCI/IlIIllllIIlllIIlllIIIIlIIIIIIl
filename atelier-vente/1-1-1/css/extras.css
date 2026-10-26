@@ -297,14 +297,17 @@
 #main .rl-step-icon.tone-green { background: #e3f4ea; color: #1d8a4c; }
 #main .rl-step-icon.tone-gold { background: #fdf1dc; color: #c27a12; }
 /* L'illustration en bas à gauche, collée au bord de l'écran, bords fondus. */
+/* La mise en page réserve la hauteur de l'illustration (format 1086 × 1448),
+ * pour qu'elle ne dépasse jamais sous le fond de page. */
 .rl-layout { position: relative; }
+@media (min-width: 901px) { .rl-layout:has(.rl-art) { min-height: calc(90px + clamp(320px, 30vw, 480px) * 1.334); } }
 .rl-side { z-index: 1; }
 .rl-note { justify-self: start; padding: 6px 12px; border-radius: 999px; background: rgb(255 255 255 / 88%); }
 .rl-art { position: absolute; top: 90px; left: calc(50% - 50vw - 90px); width: clamp(320px, 30vw, 480px); margin: 0; z-index: 0; pointer-events: none; }
 #main:has(.rl-art) { overflow-x: clip; }
 .rl-side .rl-card { margin-left: clamp(0px, 4vw, 60px); }
 #main .rl-step-icon { width: 48px; height: 48px; border-radius: 50%; }
-.rl-art img { display: block; width: 100%; height: auto; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%), linear-gradient(to left, transparent, #000 18%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to bottom, transparent, #000 14%), linear-gradient(to left, transparent, #000 18%); mask-composite: intersect; }
+.rl-art img { display: block; width: 100%; height: auto; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent), linear-gradient(to left, transparent, #000 18%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent), linear-gradient(to left, transparent, #000 18%); mask-composite: intersect; }
 @media (max-width: 900px) { .rl-art { display: none; } }
 .rl-count strong { color: var(--accent); }
 .rl-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 28px; align-items: start; margin-top: 26px; }
