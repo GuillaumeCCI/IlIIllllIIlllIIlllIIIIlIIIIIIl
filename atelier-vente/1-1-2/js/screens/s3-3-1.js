@@ -26,7 +26,7 @@
      * à droite de la carte de la série. */
     const tabs = `<div class="verdict-tabs" role="tablist">${series.map((_, n) => `${n ? '<span class="verdict-tab-line" aria-hidden="true"></span>' : ''}<button type="button" role="tab" class="verdict-tab ${n === i ? 'is-active' : ''} ${done(n) ? 'is-done' : ''}" data-act="serie" data-index="${n}" aria-selected="${n === i}">${done(n) ? icon('check', { size: 14 }) : ''}Série ${letters[n]}</button>`).join('')}</div>`;
     return `<div class="k-page verdict-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle })}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: kit.tourButton() })}
       <form class="k-columns is-wide-left verdict-layout" novalidate>
         <section class="k-panel">
           <div class="verdict-head"><h2>Série ${letters[i]}</h2>${tabs}</div>
@@ -99,6 +99,19 @@
   const feedback = () => [];
 
   kit.on({ serie: el => { ex.setValue('serie', Number(el.dataset.index)); kit.commit(); } });
+
+  // Visite guidée de l'écran, lancée d'elle-même la première fois.
+  kit.tour('s3-3.1', [
+    { target: '.verdict-items', title: '1. Trouvez l’erreur', text: 'Deux affirmations sont justes, une est fausse. Cliquez sur la fausse.' },
+    { target: '.verdict-side', title: '2. Expliquez', text: 'Dites en une ou deux phrases pourquoi elle pénalise l’échange.' },
+    { target: '.verdict-tabs', title: 'Trois séries', text: 'Vous les traitez l’une après l’autre.',
+      after: 'Cliquez sur une série pour y revenir.' },
+    { target: '.verdict-page .k-bar .k-submit', title: '3. Validez',
+      items: [
+        { symbol: 'arrowRight', tone: 'blue', text: 'Ce bouton enregistre la série et ouvre la suivante.' },
+        { symbol: 'checkCircle', tone: 'green', text: 'Après la troisième, vous découvrez le corrigé.' }
+      ] }
+  ]);
 
   ex.mount('s3-3.1', { screen, validate, intercept, feedback, compactFeedback: true });
 })();
