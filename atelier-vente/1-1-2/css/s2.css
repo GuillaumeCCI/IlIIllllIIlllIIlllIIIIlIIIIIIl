@@ -54,10 +54,17 @@
 
 /* ── 2.3 · Le studio d'accroches ──────────────────────────────────────── */
 .studio-layout { grid-template-columns: minmax(0, .35fr) minmax(0, .65fr); }
-.studio-picture { margin: 10px 0 14px; border-radius: 10px; overflow: hidden; }
-.studio-picture img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 48% 30%; }
-.studio-prospect h2 { font-size: 1.6rem; }
-.studio-software { color: var(--accent); margin-bottom: 10px; }
+.studio-picture { position: relative; margin: 10px 0 0; border-radius: 12px; overflow: hidden; }
+.studio-picture img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 48% 20%; }
+/* Le cas posé sur le bas de l'image : un dégradé sombre sous le texte. */
+.studio-case { position: absolute; inset: auto 0 0; display: grid; gap: 4px; padding: 90px 20px 18px; background: linear-gradient(to bottom, rgb(13 29 74 / 0%), rgb(13 29 74 / 78%) 38%, rgb(13 29 74 / 94%)); color: #fff; line-height: 1.4; }
+.studio-case h2 { margin: 0 0 2px; font-size: 1.6rem; color: #fff; }
+.studio-case p { margin: 0; color: #fff; }
+.studio-case strong { color: #fff; }
+.studio-case .studio-software { color: #c9d8ff; font-weight: 600; }
+.studio-case.is-plain { position: static; padding: 0; background: none; color: var(--navy); }
+.studio-case.is-plain :is(h2, p, strong) { color: var(--navy); }
+.studio-case.is-plain .studio-software { color: var(--accent); }
 .studio-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); margin-bottom: 20px; }
 .studio-tab { display: flex; align-items: center; gap: 12px; padding: 4px 4px 14px; border: 0; border-bottom: 3px solid transparent; background: none; color: var(--muted); font-size: 1.05rem; }
 .studio-tab-n { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #c9d3ea; background: #f3f6fc; font-weight: 700; }

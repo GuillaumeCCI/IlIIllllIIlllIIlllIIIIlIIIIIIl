@@ -16,14 +16,17 @@
   const current = () => Math.min(Math.max(0, Number(ex.value('hook')) || 0), hooks.length - 1);
   const filled = i => kit.filled(ex.value(`hook${i}`));
 
+  // Le cas, posé sur l'illustration (un dégradé sombre le rend lisible).
+  const caseText = () => `<h2>${esc(content.prospect.name)}</h2>
+    <p class="studio-software">Logiciel envisagé : ${esc(content.prospect.software)}</p>
+    <p><strong>Son problème :</strong> ${esc(content.prospect.problem)}</p>`;
+
   function prospect() {
     const exercise = ex.current;
     return `<aside class="k-panel studio-prospect">
       <p class="k-label">Votre prospect</p>
-      ${exercise.image ? `<figure class="studio-picture"><img src="${esc(core.webAsset(exercise.image))}" alt="${esc(exercise.alt)}" decoding="async"></figure>` : ''}
-      <h2>${esc(content.prospect.name)}</h2>
-      <p class="studio-software">Logiciel envisagé : ${esc(content.prospect.software)}</p>
-      <p><strong>Son problème :</strong> ${esc(content.prospect.problem)}</p>
+      ${exercise.image ? `<figure class="studio-picture"><img src="${esc(core.webAsset(exercise.image))}" alt="${esc(exercise.alt)}" decoding="async">
+        <figcaption class="studio-case">${caseText()}</figcaption></figure>` : `<div class="studio-case is-plain">${caseText()}</div>`}
     </aside>`;
   }
 
