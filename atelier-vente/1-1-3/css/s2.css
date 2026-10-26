@@ -71,6 +71,30 @@
 .call-keys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .call-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--line); }
 .call-actions.is-end { justify-content: flex-end; }
+/* Le retour : un onglet par tour, deux cartes, puis les trois clés. */
+.call-feedback { display: grid; align-content: start; gap: 16px; }
+.call-fb-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.call-fb-head h2 { margin: 0; font-size: clamp(1.8rem, 2.6vw, 2.3rem); }
+.call-fb-count { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 12px; background: #e6f6ec; color: #1d6b3f; font-weight: 700; }
+.call-tabs { display: flex; border-bottom: 1px solid var(--line); }
+.call-tab { min-width: 120px; padding: 12px 20px; border: 0; border-bottom: 3px solid transparent; border-radius: 10px 10px 0 0; background: none; color: #6b7aa1; font: inherit; font-weight: 700; cursor: var(--cursor-hand, pointer); }
+.call-tab.is-current { border-bottom-color: var(--accent); background: #f3f7ff; color: var(--navy); }
+.call-tab:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.call-fb-card { display: flex; align-items: center; gap: 18px; padding: 18px 20px; border-radius: 14px; background: #f6f8fc; color: var(--navy); }
+.call-fb-card.is-model { background: #edf3fe; }
+.call-fb-card p { margin: 0; font-size: 1.08rem; line-height: 1.5; }
+.call-fb-card .call-fb-label { color: #6b7aa1; font-size: .92rem; font-weight: 600; }
+.call-fb-card.is-model .call-fb-label { color: var(--accent); font-weight: 700; }
+.call-fb-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #dfe8fb; color: var(--accent); flex-shrink: 0; }
+.call-fb-keys { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.call-fb-keys li { display: grid; grid-template-columns: auto 1fr auto; align-items: center; align-content: start; gap: 4px 12px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.call-fb-keys strong { color: var(--navy); }
+.call-fb-keys p { grid-column: 1 / -1; margin: 6px 0 0; color: #46577d; font-size: .92rem; line-height: 1.45; }
+.call-fb-key-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #fde8e4; color: #d9534f; }
+.call-fb-keys .is-bref .call-fb-key-icon { background: #e6edfc; color: var(--accent); }
+.call-fb-keys .is-facilitant .call-fb-key-icon { background: #fdeee2; color: #e0782f; }
+.call-fb-tick { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #f1f3f8; color: #9aa4bd; align-self: start; }
+.call-fb-keys .is-on .call-fb-tick { background: #e6f6ec; color: #1d8a4c; }
 .call-review { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--line); }
 
 /* ── 2.4 · Repérer les erreurs de prospection ─────────────────────────── */
@@ -190,7 +214,7 @@
   .pair-board, .rb-review-pair, .reflex-tabs { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 760px) {
-  .call-keys, .rb-keys-row { grid-template-columns: minmax(0, 1fr); }
+  .call-keys, .call-fb-keys, .rb-keys-row { grid-template-columns: minmax(0, 1fr); }
   .spot-thumb { display: none; }
   .spot-line { grid-template-columns: 60px minmax(0, 1fr); }
   .reflex-card { padding: 22px 18px; }

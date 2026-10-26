@@ -77,23 +77,38 @@
     </div>`;
   }
 
+  /* Le retour, un tour à la fois (onglets) : à gauche l'échange de ce tour,
+   * à droite votre réponse, une réponse possible et les trois clés. */
+  let shown = turns.length - 1;
+  const keyIcon = { courtois: 'handshake', bref: 'document', facilitant: 'users' };
+  const ticked = (t, i) => ex.value(`key${t}${i}`) === true;
+
   function reviewScreen() {
+    const t = Math.min(shown, turns.length - 1);
+    const tr = turns[t];
+    const count = keys.filter((_, i) => ticked(t, i)).length;
     return `<div class="k-columns call-layout">
-      ${phone(turns.length - 1, false)}
-      <section class="k-panel">
-        <h2>Le retour</h2>
-        ${turns.map((tr, t) => `<div class="call-review">
-          <p class="k-label">Tour ${t + 1} · « ${esc(tr.line)} »</p>
-          ${kit.yours('Votre réponse', reply(t))}
-          <p class="call-self">${keys.map((k, i) => `<span class="${ex.value(`key${t}${i}`) === true ? 'is-on' : ''}">${icon(ex.value(`key${t}${i}`) === true ? 'check' : 'close', { size: 14 })}${esc(k.label)}</span>`).join('')}</p>
-          ${kit.model('Une réponse possible', tr.model)}
-          ${tr.why ? ex.inlineNote(tr.why, 'neutral') : ''}
-        </div>`).join('')}
-        <ul class="call-keys-list">${keys.map(k => `<li><strong>${esc(k.label)}</strong><span>${esc(k.text)}</span></li>`).join('')}</ul>
+      <section class="call-phone">
+        <header class="call-bar">${icon('phone', { size: 22 })}<span class="call-live"></span><span>Appel en cours</span><strong>Tour ${t + 1} sur ${turns.length}</strong></header>
+        <ol class="call-lines">${bubbleStd(tr.line)}${bubbleMe(reply(t))}</ol>
+        <p class="call-who">${icon('headset', { size: 18 })}<span>Accueil téléphonique</span></p>
+      </section>
+      <section class="k-panel call-feedback">
+        <header class="call-fb-head"><h2>Le retour</h2><p class="call-fb-count">${icon('chart', { size: 20 })}<span>${count} critère${count > 1 ? 's' : ''} validé${count > 1 ? 's' : ''}</span></p></header>
+        <div class="call-tabs" role="tablist">${turns.map((_, k) => `<button type="button" role="tab" class="call-tab ${k === t ? 'is-current' : ''}" aria-selected="${k === t}" data-act="review-turn" data-index="${k}">Tour ${k + 1}</button>`).join('')}</div>
+        <div class="call-fb-card"><span class="call-fb-icon">${icon('user', { size: 24 })}</span><div><p class="call-fb-label">Votre réponse</p><p>« ${esc(reply(t))} »</p></div></div>
+        <div class="call-fb-card is-model"><span class="call-fb-icon">${icon('sparkle', { size: 24 })}</span><div><p class="call-fb-label">Une réponse possible</p><p>${esc(tr.model)}</p></div></div>
+        ${tr.why ? ex.inlineNote(tr.why, 'neutral') : ''}
+        <ul class="call-fb-keys">${keys.map((k, i) => `<li class="is-${esc(k.id)} ${ticked(t, i) ? 'is-on' : ''}">
+          <span class="call-fb-key-icon">${icon(keyIcon[k.id] || 'check', { size: 22 })}</span><strong>${esc(k.label)}</strong>
+          <span class="call-fb-tick" aria-label="${ticked(t, i) ? 'Cochée' : 'Non cochée'}">${icon(ticked(t, i) ? 'check' : 'close', { size: 14 })}</span>
+          <p>${esc(k.text)}</p></li>`).join('')}</ul>
       </section>
     </div>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }
+
+  kit.on({ 'review-turn': el => { shown = Number(el.dataset.index); ex.rebuild(); } });
 
   function screen() {
     const reviewing = ex.reviewing();
