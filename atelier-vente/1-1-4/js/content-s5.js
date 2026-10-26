@@ -112,6 +112,12 @@ window.ATELIER_S5 = {
     eyebrow: 'Défendre la valeur · Exercice 2.2',
     title: 'Défendre le prix',
     subtitle: 'Votre défi : maintenir le prix sans remise immédiate.',
+    tour: [
+      { target: '.fm-scene img', title: 'La situation', text: 'La cliente trouve le prix plus élevé que prévu.' },
+      { target: '.fm-scene .sc-facts', title: 'Votre défi', text: 'Suivez ces trois temps, dans l’ordre, sans proposer de remise.' },
+      { target: '.fm-main .fm-field', title: 'Votre réponse', text: 'Écrivez ce que vous diriez à la cliente, comme à l’oral.' },
+      { target: '.fm-actions .k-submit', title: 'Valider', text: 'Vous comparez ensuite avec une réponse modèle.' }
+    ],
     scene: [
       { image: 'assets/illustrations/s5/1-1-4-S5-i2-2.png', alt: 'Une cliente lit un devis, songeuse : « C’est plus cher que ce que je pensais… »' },
       { facts: [
