@@ -266,6 +266,11 @@ button.k-dot:hover { box-shadow: 0 0 0 3px var(--tint); }
 .fab-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .fab-card { background: #fff; padding-right: 34px; min-height: 60px; }
 .fab-card-grip { top: 50%; transform: translateY(-50%); right: 10px; }
+/* Le « i » de chaque carte, posé à gauche de la poignée : il ouvre une explication. */
+.fab-card-wrap { position: relative; display: grid; }
+.fab-card-wrap .fab-card { padding-right: 66px; }
+.fab-card-info { position: absolute; top: 50%; right: 34px; transform: translateY(-50%); display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; background: #eef3ff; color: var(--accent); cursor: pointer; }
+.fab-card-info:hover, .fab-card-info:focus-visible { background: #d6e3ff; }
 .fab-card-symbol { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; }
 .fab-card-symbol.tone-blue { background: #e8efff; color: #1b55e2; }
 .fab-card-symbol.tone-coral { background: #fdebe7; color: #e0533e; }

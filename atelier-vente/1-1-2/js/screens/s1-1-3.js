@@ -47,11 +47,12 @@
     const used = [...picked(n, 'c'), ...picked(n, 'p')];
     return `<div class="fab-cards">${cards.map((c, i) => {
       const on = used.includes(c.id);
-      return `<button type="button" class="fab-card ${on ? 'is-on' : ''}" draggable="true" data-drag="${c.id}" data-act="toggle-card" data-id="${c.id}" aria-pressed="${on}">
+      // La carte et, à côté, son « i » : un bouton ne peut pas en contenir un autre.
+      return `<div class="fab-card-wrap"><button type="button" class="fab-card ${on ? 'is-on' : ''}" draggable="true" data-drag="${c.id}" data-act="toggle-card" data-id="${c.id}" aria-pressed="${on}">
         <span class="fab-card-symbol tone-${TONES[i % TONES.length]}">${icon(c.symbol, { size: 22 })}</span>
         <span class="fab-card-text">${esc(c.text)}</span>
         <span class="fab-card-grip">${on ? icon('check', { size: 16 }) : icon('grip', { size: 18 })}</span>
-      </button>`;
+      </button>${c.info ? `<button type="button" class="fab-card-info" data-act="card-info" data-id="${c.id}" aria-label="Que veut dire « ${esc(c.text)} » ?">${icon('info', { size: 18 })}</button>` : ''}</div>`;
     }).join('')}</div>`;
   }
 
@@ -209,6 +210,7 @@
       toggle(el.dataset.id, where || slot());
     },
     'remove-card': el => toggle(el.dataset.id, el.dataset.slot),
+    'card-info': el => { const c = card(el.dataset.id); core.openDialog(c.text, `<p>${esc(c.info)}</p>`); },
     slot: el => { ex.setValue('slot', el.dataset.slot); kit.commit(); },
     need: el => { ex.setValue('need', Number(el.dataset.index)); kit.commit(); }
   });
@@ -228,7 +230,8 @@
     { target: '.fab-cards', title: 'Les informations du produit', text: 'Ces cartes décrivent le produit.',
       items: [
         { symbol: 'pointer', tone: 'blue', text: 'Faites glisser une carte, ou cliquez dessus, pour l’ajouter à votre argument.' },
-        { symbol: 'info', tone: 'gold', text: 'Toutes ne sont pas utiles : ne gardez que celles qui répondent au besoin.' }
+        { symbol: 'info', tone: 'blue', text: 'Un terme inconnu ? Le « i » de la carte l’explique.' },
+        { symbol: 'lightbulb', tone: 'gold', text: 'Toutes ne sont pas utiles : ne gardez que celles qui répondent au besoin.' }
       ] },
     { target: '.fab-current', title: 'Un argument par priorité', text: 'Vous construisez trois arguments, un pour chaque priorité du client.',
       items: [

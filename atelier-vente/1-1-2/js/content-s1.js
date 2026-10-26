@@ -92,23 +92,24 @@ window.ATELIER_S1 = {
     // Les cartes de la fiche produit. `kind` : C (caractéristique), P (preuve)
     // ou null (hors sujet). `needs` : les besoins auxquels elle répond.
     // `optional` : acceptée, mais absente de la liste des cartes attendues.
+    // `info` : ce que veut dire la carte, en clair (bouton « i »).
     // `note` : l'analyse du corrigé, affichée si la carte est déposée hors de
     // son besoin (informations pertinentes mais non prioritaires, à écarter).
     cards: [
-      { id: 'aes', text: 'Chiffrement AES-256', symbol: 'lock', kind: 'C', needs: [0] },
-      { id: 'backup', text: 'Sauvegarde toutes les 10 min', symbol: 'cloud', kind: 'C', needs: [0] },
-      { id: 'rgpd', text: 'Conforme RGPD', symbol: 'document', kind: 'P', needs: [0] },
-      { id: 'audit', text: 'Audit de sécurité annuel', symbol: 'award', kind: 'P', needs: [0] },
-      { id: 'support', text: 'Assistance 7j/7', symbol: 'headset', kind: 'C', needs: [1] },
-      { id: 'reply', text: 'Réponse moyenne : 2 min', symbol: 'chat', kind: 'P', needs: [1] },
-      { id: 'access', text: 'Accès web + iOS + Android', symbol: 'smartphone', kind: 'C', needs: [], note: 'pertinente mais non prioritaire : utile si le client exprime un besoin de mobilité' },
-      { id: 'csv', text: 'Import CSV inclus', symbol: 'document', kind: 'C', needs: [], note: 'pertinente mais non prioritaire : facilite la mise en place sans équipe informatique' },
-      { id: 'price', text: 'À partir de 19 € / mois', symbol: 'coins', kind: 'C', needs: [2] },
-      { id: 'free', text: 'Sans engagement', symbol: 'ban', kind: 'C', needs: [2] },
-      { id: 'fixed', text: 'Tarif garanti 12 mois', symbol: 'tag', kind: 'P', needs: [2] },
-      { id: 'pme', text: 'Plus de 5 000 PME', symbol: 'users', kind: 'P', needs: [0, 1, 2], optional: true },
-      { id: 'size', text: 'Application : 45 Mo', symbol: 'smartphone', kind: null, needs: [], note: 'à écarter : ne répond à aucun besoin exprimé' },
-      { id: 'logo', text: 'Interface bleue · logo 2023', symbol: 'palette', kind: null, needs: [], note: 'à écarter : sans lien avec les besoins du client' }
+      { id: 'aes', text: 'Chiffrement AES-256', info: 'Une méthode de chiffrement très répandue : les données sont codées et restent illisibles sans la clé. 256 est la longueur de la clé, la plus élevée.', symbol: 'lock', kind: 'C', needs: [0] },
+      { id: 'backup', text: 'Sauvegarde toutes les 10 min', info: 'Une copie des données est faite automatiquement toutes les 10 minutes.', symbol: 'cloud', kind: 'C', needs: [0] },
+      { id: 'rgpd', text: 'Conforme RGPD', info: 'Le RGPD est le règlement européen sur la protection des données personnelles. Le logiciel en respecte les règles.', symbol: 'document', kind: 'P', needs: [0] },
+      { id: 'audit', text: 'Audit de sécurité annuel', info: 'Chaque année, un organisme indépendant vérifie la sécurité du logiciel.', symbol: 'award', kind: 'P', needs: [0] },
+      { id: 'support', text: 'Assistance 7j/7', info: 'Une équipe répond aux questions des utilisateurs tous les jours, week-end compris.', symbol: 'headset', kind: 'C', needs: [1] },
+      { id: 'reply', text: 'Réponse moyenne : 2 min', info: 'En moyenne, l’assistance répond en 2 minutes.', symbol: 'chat', kind: 'P', needs: [1] },
+      { id: 'access', text: 'Accès web + iOS + Android', info: 'Le logiciel s’utilise depuis un navigateur internet, un iPhone (iOS) ou un téléphone Android.', symbol: 'smartphone', kind: 'C', needs: [], note: 'pertinente mais non prioritaire : utile si le client exprime un besoin de mobilité' },
+      { id: 'csv', text: 'Import CSV inclus', info: 'Le CSV est un format de fichier tableau, comme ceux d’Excel. Vous pouvez y récupérer vos données existantes.', symbol: 'document', kind: 'C', needs: [], note: 'pertinente mais non prioritaire : facilite la mise en place sans équipe informatique' },
+      { id: 'price', text: 'À partir de 19 € / mois', info: 'L’abonnement le moins cher coûte 19 € par mois.', symbol: 'coins', kind: 'C', needs: [2] },
+      { id: 'free', text: 'Sans engagement', info: 'L’abonnement s’arrête quand vous voulez, sans durée minimale.', symbol: 'ban', kind: 'C', needs: [2] },
+      { id: 'fixed', text: 'Tarif garanti 12 mois', info: 'Le prix ne change pas pendant les 12 premiers mois.', symbol: 'tag', kind: 'P', needs: [2] },
+      { id: 'pme', text: 'Plus de 5 000 PME', info: 'Plus de 5 000 petites et moyennes entreprises utilisent déjà le logiciel.', symbol: 'users', kind: 'P', needs: [0, 1, 2], optional: true },
+      { id: 'size', text: 'Application : 45 Mo', info: 'L’application occupe 45 Mo (mégaoctets) de place sur le téléphone.', symbol: 'smartphone', kind: null, needs: [], note: 'à écarter : ne répond à aucun besoin exprimé' },
+      { id: 'logo', text: 'Interface bleue · logo 2023', info: 'L’interface du logiciel est bleue et son logo date de 2023.', symbol: 'palette', kind: null, needs: [], note: 'à écarter : sans lien avec les besoins du client' }
     ],
     needs: [
       {
