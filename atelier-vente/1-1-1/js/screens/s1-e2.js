@@ -56,7 +56,11 @@
         ${core.illustration(current)}
         <span class="tag rose">Ouverture orale</span>
         <h2>Le contexte</h2>
-        <p class="muted">Le client vous accorde 40 secondes avant de décider s’il continue.</p>
+        <ul class="ult-facts">
+          <li><strong>Vous</strong><span>Commercial chez Ergolys, qui vend des sièges de bureau ergonomiques.</span></li>
+          <li><strong>Le client</strong><span>La gérante d’une PME de 40 salariés, entre deux réunions.</span></li>
+          <li><strong>Sa décision</strong><span>Après 40 secondes, elle choisit : vous accorder un rendez-vous de 10 minutes, ou s’arrêter là.</span></li>
+        </ul>
       </section>
       <form class="panel answer-panel" novalidate>
         ${reviewing ? `${kit.result(score(), SELF.length * 2, 'votre auto-évaluation')}${core.panelTitle('Votre proposition')}<blockquote class="self-reread">« ${esc(ex.value('proposal'))} »</blockquote>`
@@ -94,7 +98,7 @@
     // À l'arrivée : pourquoi on est là, ce qui se passe, ce qui est demandé.
     kit.context([
       ['target', 'Pourquoi vous êtes là', 'Pour vous entraîner à aller à l’essentiel quand le temps manque, sans perdre le client.'],
-      ['clock', 'Ce qui se passe', 'Le client vous accorde 40 secondes avant de décider s’il poursuit l’échange avec vous.'],
+      ['clock', 'Ce qui se passe', 'Vous vendez des sièges de bureau ergonomiques. La gérante d’une PME vous accorde 40 secondes, puis décide si elle vous donne un rendez-vous.'],
       ['pencil', 'Ce qui vous est demandé', 'Écrire une ouverture de 90 mots maximum, la tester à voix haute au chrono, puis l’évaluer.']
     ]);
     kit.tour('s1-E2', [
