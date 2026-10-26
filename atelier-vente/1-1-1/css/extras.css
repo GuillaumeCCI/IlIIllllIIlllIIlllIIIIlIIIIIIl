@@ -307,7 +307,7 @@
 .rl-note { justify-self: start; padding: 6px 12px; border-radius: 999px; background: rgb(255 255 255 / 88%); }
 /* Fixe : posée en bas à gauche de l'écran, elle ne bouge pas au défilement. */
 /* Grande, posée sur le bas de l'écran : le bas de l'image peut être coupé. */
-.rl-art { position: fixed; bottom: calc(-1 * min(40vw, 640px) * .22); left: calc(var(--menu-rail, 0px) - min(5vw, 80px)); width: min(40vw, 640px); margin: 0; z-index: 0; pointer-events: none; }
+.rl-art { position: fixed; bottom: calc(-1 * min(36vw, 576px) * .22); left: calc(var(--menu-rail, 0px) - min(4.5vw, 72px)); width: min(36vw, 576px); margin: 0; z-index: 0; pointer-events: none; }
 .rl { position: relative; z-index: 1; }
 .rl-side .rl-card { margin-left: clamp(0px, 4vw, 60px); }
 #main .rl-step-icon { width: 48px; height: 48px; border-radius: 50%; }
