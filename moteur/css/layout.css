@@ -436,8 +436,12 @@ body { position: relative; }
 :is(.k-switch-next, .k-switch-prev) ~ :is(.k-switch-next, .k-switch-prev) ~ :is(.k-switch-next, .k-switch-prev) { animation-delay: .2s; }
 .k-switch-next > :first-child, .k-switch-prev > :first-child { animation: k-switch-glow 1.2s ease-out; }
 .k-switch-pulse { animation: k-switch-pulse .9s cubic-bezier(.3, 1.4, .5, 1); }
+/* La pastille d'un onglet : un rebond léger, sans déborder sur son texte. */
+@keyframes k-switch-pop { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgb(19 75 215 / 50%); } 40% { transform: scale(1.25); box-shadow: 0 0 0 8px rgb(19 75 215 / 18%); } 70% { transform: scale(.95); } 100% { transform: scale(1); box-shadow: 0 0 0 14px rgb(19 75 215 / 0%); } }
+.k-switch-pop { animation: k-switch-pop .9s cubic-bezier(.3, 1.4, .5, 1); }
+.k-switch-halo { animation: k-switch-glow 1.2s ease-out; }
 @media (prefers-reduced-motion: reduce) {
   .k-switch-next, .k-switch-prev { animation: k-switch-fade .3s ease both; }
-  .k-switch-next > :first-child, .k-switch-prev > :first-child, .k-switch-pulse { animation: none; }
+  .k-switch-next > :first-child, .k-switch-prev > :first-child, .k-switch-pulse, .k-switch-pop, .k-switch-halo { animation: none; }
 }
 @keyframes k-switch-fade { from { opacity: 0; } to { opacity: 1; } }

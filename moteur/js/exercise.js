@@ -563,7 +563,21 @@
       });
     });
     animate(page, 0);
-    Object.values(spots).forEach(spot => { if (spot.marker && previous.spots[spot.marker.classList[0]]?.index !== spot.index) spot.marker.classList.add('k-switch-pulse'); });
+    Object.values(spots).forEach(spot => { if (spot.marker && previous.spots[spot.marker.classList[0]]?.index !== spot.index) pulse(spot.marker); });
+  }
+
+  /* Un petit repère (point, pastille) pulse en grand. Un grand repère (un
+   * onglet avec son texte) ne grossit pas : seule sa pastille ronde pulse,
+   * doucement ; sans pastille, il s'entoure juste d'un halo. */
+  function pulse(marker) {
+    const small = el => { const r = el.getBoundingClientRect(); return r.width <= 64 && r.height <= 64; };
+    if (small(marker)) { marker.classList.add('k-switch-pulse'); return; }
+    const badge = [...marker.querySelectorAll('*')].find(el => {
+      const r = el.getBoundingClientRect();
+      return r.width >= 16 && small(el) && Math.abs(r.width - r.height) < 6;
+    });
+    if (badge) badge.classList.add('k-switch-pop');
+    else marker.classList.add('k-switch-halo');
   }
 
   /* « VOIR UN REPÈRE » À SA PLACE. Le bouton naît dans la barre du bas ; il
