@@ -2,7 +2,9 @@
  *
  * Quatre objections, traitées une par une depuis le menu des cas. Chaque
  * objection demande deux décisions successives : la nature probable, puis le
- * premier geste. La correction des deux s’affiche dès la validation du cas.
+ * premier geste. Une objection validée ouvre la suivante, sans correction.
+ * Les quatre faites, l’apprenant s’auto-évalue avec le mémo ; ensuite
+ * seulement, toutes les corrections s’affichent d’un coup.
  */
 (() => {
   'use strict';
@@ -18,6 +20,13 @@
   const doneKey = i => `done${i}`;
 
   const caseDone = i => ex.value(doneKey(i)) === true;
+  const answered = () => cases.every((_, i) => caseDone(i));
+
+  /* L’auto-évaluation s’ouvre après la quatrième objection ; une fois
+   * validée, l’exercice est terminé et les corrections sont visibles. */
+  const selfKey = i => `self${i}`;
+  const finished = () => ex.value('selfDone') === true;
+  const selfShown = () => ex.value('selfCheck') === true && !finished();
 
   /* Ce que lit le menu : le numéro, la réplique en aperçu, et l’état. */
   const caseList = () => cases.map((item, i) => ({
@@ -33,11 +42,78 @@
 
   const natureOptions = content.natures.map(n => ({ id: n.id, label: n.label }));
   const gestureOptions = content.gestures.map(g => ({ id: g.id, label: g.label }));
+  const labelOf = (list, id) => (list.find(option => option.id === id) || {}).label || 'sans réponse';
+
+  /* Une ligne de la grille par objection : la réplique, puis le diagnostic
+   * de l’apprenant, à juger d’après le mémo. */
+  const rubric = () => cases.map((item, i) => [`« ${item.quote} »`,
+    `Votre diagnostic : ${labelOf(content.natures, ex.value(natureKey(i)))}, puis ${labelOf(content.gestures, ex.value(gestureKey(i))).toLowerCase()}.`]);
+
+  // Le mémo, en fenêtre pendant l’exercice et à côté de la grille.
+  const memo = () => `<dl>${content.natures.map(nature =>
+      `<dt>${esc(nature.label)}</dt><dd>${esc(nature.description)}</dd>`).join('')}</dl>
+    <dl>${content.gestures.map(gesture =>
+      `<dt>${esc(gesture.label)}</dt><dd>${esc(gesture.description)}</dd>`).join('')}</dl>`;
+
+  /* La carte posée sur le fond : le retour au menu et le titre en haut. */
+  const sheet = (aside, body) => `<div class="case-sheet">
+      <form class="panel case-panel" novalidate>
+        <header class="case-sheet-head">
+          <div class="case-sheet-nav">
+            ${core.button(`${icon('arrowLeft', { size: 16 })}<span>Toutes les objections</span>`, 'back-to-menu', 'text-button with-icon')}
+            <h1>${esc(content.title)}</h1>
+          </div>
+          <div class="case-sheet-aside">${aside}</div>
+        </header>
+        ${body}
+      </form>
+    </div>`;
+
+  function selfScreen() {
+    return sheet('', `<section class="self-eval">
+        <p class="eyebrow">Auto-évaluation</p>
+        <h2>Vos diagnostics correspondent-ils au mémo ?</h2>
+        <p class="muted">Relisez chaque diagnostic avec le mémo. Les corrections s’affichent ensuite.</p>
+        <div class="self-layout">
+          <aside class="panel self-recap diag-memo">
+            <h2>Le mémo</h2>
+            ${memo()}
+          </aside>
+          <div class="self-form">
+            ${ex.selfList(rubric(), selfKey)}
+            ${core.errorsBox()}
+            ${ex.actions('Voir les corrections')}
+          </div>
+        </div>
+      </section>`);
+  }
+
+  /* Toutes les corrections d’un coup : pour chaque objection, les deux
+   * décisions relues, puis l’explication. L’auto-évaluation suit. */
+  function reviewScreen() {
+    return sheet('', `<section class="diag-review">
+        <h2>Les corrections</h2>
+        <ol class="diag-review-list">${cases.map((item, i) => {
+          const bothRight = ex.value(natureKey(i)) === item.nature && ex.value(gestureKey(i)) === item.gesture;
+          return `<li class="diag-review-item">
+            ${core.quote(item.quote)}
+            <h4 class="review-heading">La nature de l’objection</h4>
+            ${ex.reviewOptions(natureOptions, ex.value(natureKey(i)), item.nature)}
+            <h4 class="review-heading">Votre premier geste</h4>
+            ${ex.reviewOptions(gestureOptions, ex.value(gestureKey(i)), item.gesture)}
+            ${ex.inlineNote(item.feedback, bothRight ? 'good' : 'bad')}
+          </li>`;
+        }).join('')}</ol>
+        ${ex.selfSummary(rubric(), selfKey, 'vos diagnostics')}
+        ${core.feedbackBox()}
+      </section>`);
+  }
 
   function screen() {
+    if (finished()) return reviewScreen();
+    if (selfShown()) return selfScreen();
     const i = ex.openCase() ?? 0;
     const item = cases[i];
-    const reviewed = caseDone(i);
     const at = stage(i);
 
     /* Le fil des deux temps, discret, posé près du titre : un gros
@@ -45,17 +121,7 @@
     const steps = `<p class="case-step-line">Cas ${i + 1} sur ${cases.length} · Étape ${at} sur 2
       <span class="case-step-dots"><span class="case-step-dot filled"></span><span class="case-step-dot ${at >= 2 ? 'filled' : ''}"></span></span></p>`;
 
-    /* Une fois le cas validé, les deux décisions sont relues l’une sous
-     * l’autre, chacune marquée, puis l’explication de l’objection. */
-    const bothRight = ex.value(natureKey(i)) === item.nature && ex.value(gestureKey(i)) === item.gesture;
-    const body = reviewed
-      ? `<h2>Vos deux décisions, relues</h2>
-         <h4 class="review-heading">La nature de l’objection</h4>
-         ${ex.reviewOptions(natureOptions, ex.value(natureKey(i)), item.nature)}
-         <h4 class="review-heading">Votre premier geste</h4>
-         ${ex.reviewOptions(gestureOptions, ex.value(gestureKey(i)), item.gesture)}
-         ${ex.inlineNote(item.feedback, bothRight ? 'good' : 'bad')}`
-      : at === 1
+    const body = at === 1
       ? `<h2>Quelle est la nature probable de cette objection ?</h2>
          <p class="muted">Choisissez la réponse la plus vraisemblable.</p>
          ${ex.radioCards(natureKey(i), content.natures, 'two')}
@@ -64,40 +130,22 @@
          <p class="muted">Choisissez l’action qui ouvre le mieux la suite de l’échange.</p>
          ${ex.radioCards(gestureKey(i), content.gestures, 'two')}`;
 
-    /* Tant que l’objection n’est pas validée, le bouton fait avancer d’une
-     * étape ; une fois validée, la barre propose le cas suivant. */
-    const actions = reviewed
-      ? ex.caseActions(caseList(), i, 'Valider cette objection')
-      : ex.actions(at === 1 ? 'Continuer' : 'Valider cette objection');
-
-    /* Tout l'exercice tient dans une carte posée sur le fond : le retour
-     * au menu et le mémo en haut, la réplique, puis les réponses. */
-    return `<div class="case-sheet">
-      <form class="panel case-panel" novalidate>
-        <header class="case-sheet-head">
-          <div class="case-sheet-nav">
-            ${core.button(`${icon('arrowLeft', { size: 16 })}<span>Toutes les objections</span>`, 'back-to-menu', 'text-button with-icon')}
-            <h1>${esc(content.title)}</h1>
-          </div>
-          <div class="case-sheet-aside">
-            ${reviewed ? '' : steps}
-            ${core.button(`${icon('list', { size: 17 })}<span>Voir le mémo</span>`, 'memo', 'text-button with-icon')}
-            ${kit && !reviewed ? `<span class="case-sheet-help">${kit.contextButton()}${kit.tourButton()}</span>` : ''}
-          </div>
-        </header>
-
-        ${ex.caseDots(caseList(), i)}
+    // La dernière objection validée ouvre l’auto-évaluation.
+    const last = cases.every((_, n) => n === i || caseDone(n));
+    return sheet(`${steps}
+        ${core.button(`${icon('list', { size: 17 })}<span>Voir le mémo</span>`, 'memo', 'text-button with-icon')}
+        ${kit ? `<span class="tour-pair">${kit.contextButton()}${kit.tourButton()}</span>` : ''}`,
+      `${ex.caseDots(caseList(), i)}
         ${core.quote(item.quote)}
         ${body}
         ${core.errorsBox()}
-        ${actions}
-      </form>
-    </div>`;
+        ${ex.actions(at === 1 ? 'Continuer' : last ? 'Valider et m’auto-évaluer' : 'Valider cette objection')}`);
   }
 
-  /* La validation ne porte que sur l’objection ouverte, et seulement sur
-   * l’étape en cours : l’étape 1 n’exige pas encore le geste. */
+  /* La validation ne porte que sur l’écran en cours : l’étape 1 n’exige pas
+   * encore le geste ; la grille attend une réponse par objection. */
   function validate(values) {
+    if (selfShown()) return ex.selfErrors(rubric(), selfKey, values, 'dites si votre diagnostic correspond au mémo');
     const i = ex.openCase() ?? 0;
     if (stage(i) === 1) {
       return values[natureKey(i)] ? [] : [{ key: natureKey(i), message: 'Identifiez la nature de cette objection.' }];
@@ -105,47 +153,42 @@
     return values[gestureKey(i)] ? [] : [{ key: gestureKey(i), message: 'Choisissez votre premier geste.' }];
   }
 
-  /* Étape 1 : on passe à l’étape 2 sans rien conclure. */
-  function intercept() {
+  /* Étape 1 : on passe à l’étape 2. Étape 2 : l’objection est notée traitée
+   * et la suivante s’ouvre ; après la dernière, l’auto-évaluation. Seule la
+   * grille valide vraiment l’exercice. */
+  function intercept(values) {
+    if (finished() || selfShown()) return false;
     const i = ex.openCase() ?? 0;
-    if (caseDone(i) || stage(i) === 2) return false;
-    if (!ex.value(natureKey(i))) return false;
-    ex.setValue(stageKey(i), 2);
+    if (stage(i) === 1) {
+      if (!values[natureKey(i)]) return false;
+      ex.setValue(stageKey(i), 2);
+      return true;
+    }
+    if (!values[gestureKey(i)]) return false;
+    ex.setValue(doneKey(i), true);
+    const next = cases.findIndex((_, n) => !caseDone(n));
+    if (next !== -1) ex.setValue('openCase', next);
+    else ex.setValue('selfCheck', true);
     return true;
   }
 
   function afterSubmit() {
-    ex.setValue(doneKey(ex.openCase() ?? 0), true);
+    if (selfShown()) ex.setValue('selfDone', true);
   }
 
-  const allDone = () => cases.every((_, i) => caseDone(i));
+  const allDone = () => answered() && finished();
 
   function feedback() {
     if (!allDone()) return '';
     const right = cases.filter((item, i) =>
       ex.value(natureKey(i)) === item.nature && ex.value(gestureKey(i)) === item.gesture).length;
-    return [`${right} objection sur ${cases.length} entièrement correcte${right > 1 ? 's' : ''}. Rouvrez une objection pour relire ses deux décisions et son explication.`];
-  }
-
-  function answerKey() {
-    return `<div class="answer-key"><h4>Le détail, objection par objection</h4>${cases.map((item, i) => {
-      const ok = ex.value(natureKey(i)) === item.nature && ex.value(gestureKey(i)) === item.gesture;
-      const nature = content.natures.find(n => n.id === item.nature).label;
-      const gesture = content.gestures.find(g => g.id === item.gesture).label;
-      return `<div class="answer-key-row">
-        <span class="verdict ${ok ? 'ok' : 'ko'}">${icon(ok ? 'check' : 'close', { size: 14, label: ok ? 'correct' : 'incorrect' })}</span>
-        <span><strong>« ${esc(item.quote)} »</strong> ${esc(nature)}, puis ${esc(gesture).toLowerCase()}.</span>
-      </div>`;
-    }).join('')}</div>`;
+    return [`${right} objection${right > 1 ? "s" : ""} sur ${cases.length} entièrement correcte${right > 1 ? "s" : ""}.`];
   }
 
   function onMount() {
-    const memo = core.$('[data-action="memo"]');
-    if (memo) memo.addEventListener('click', () => core.openDialog('Mémo · diagnostiquer une objection',
-      `<p class="muted">Repères proposés pour l’auto-évaluation.</p><dl>${content.natures.map(nature =>
-        `<dt>${esc(nature.label)}</dt><dd>${esc(nature.description)}</dd>`).join('')}</dl>
-       <dl>${content.gestures.map(gesture =>
-        `<dt>${esc(gesture.label)}</dt><dd>${esc(gesture.description)}</dd>`).join('')}</dl>`));
+    const button = core.$('[data-action="memo"]');
+    if (button) button.addEventListener('click', () => core.openDialog('Mémo · diagnostiquer une objection',
+      `<p class="muted">Repères proposés pour l’auto-évaluation.</p>${memo()}`));
   }
 
   // Au tout début, sur le menu des objections : de quoi parle l'exercice.
@@ -165,11 +208,12 @@
       ] },
     { target: '.case-panel .radio-cards', title: '1. Choisissez sa nature', text: 'Cliquez sur la nature la plus probable.' },
     { target: '.case-panel [data-action="memo"]', title: 'Le mémo', text: 'Un doute ? Le mémo rappelle chaque nature et chaque geste.' },
-    { target: '.form-actions', title: '2. Continuez', text: '« Continuer » ouvre l’étape du premier geste.' }
+    { target: '.form-actions', title: '2. Continuez', text: '« Continuer » ouvre l’étape du premier geste.',
+      after: 'Les corrections s’affichent à la fin, après votre auto-évaluation.' }
   ]);
 
   ex.mount('s3-1.3', {
-    screen, validate, feedback, answerKey, intercept, afterSubmit, allDone, onMount,
+    screen, validate, feedback, intercept, afterSubmit, allDone, onMount,
     cases: caseList,
     menuIntro: 'Choisissez une situation à traiter. Vous pourrez revenir aux autres ensuite.', menuLayout: 'rows'
   });

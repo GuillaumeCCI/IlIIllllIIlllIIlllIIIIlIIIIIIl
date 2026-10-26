@@ -71,7 +71,7 @@
     return `<div class="rl">
       <header class="rl-head">
         <div>${core.pageTitle(content.eyebrow, content.title, 'Lisez le rôle, puis cliquez sur l’étape de la méthode qui le remplit.')}</div>
-        <div class="rl-head-side">${window.AtelierKit ? window.AtelierKit.contextButton() + window.AtelierKit.tourButton() : ''}<p class="rl-count"><strong>${done} / ${cards.length}</strong> rôles associés</p></div>
+        <div class="rl-head-side">${window.AtelierKit ? `<span class="tour-pair">${window.AtelierKit.contextButton()}${window.AtelierKit.tourButton()}</span>` : ''}<p class="rl-count"><strong>${done} / ${cards.length}</strong> rôles associés</p></div>
       </header>
       <div class="rl-layout">
         <section class="rl-side">

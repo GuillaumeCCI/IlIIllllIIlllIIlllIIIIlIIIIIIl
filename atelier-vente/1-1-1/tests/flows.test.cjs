@@ -160,14 +160,11 @@ test('S3 1.3 : le menu, puis nature et geste pour chaque objection', () => {
   assert.ok(!core.isDone('s3-1.3'), 'l’étape 1 ne termine rien');
 
   engine.setValue('gesture2', content.cases[2].gesture);
-  engine.submit();                                     // geste -> objection corrigée
+  engine.submit();                                     // geste -> objection suivante, sans correction
   assert.strictEqual(engine.value('done2'), true, 'l’objection traitée doit être marquée');
   assert.ok(!core.isDone('s3-1.3'), 'une objection sur quatre ne termine pas l’exercice');
-
-  // Les deux décisions sont relues au contact l'une de l'autre.
-  assert.strictEqual((main().match(/option-review/g) || []).length, 2,
-    'la nature et le geste doivent être relus tous les deux');
-  assert.match(main(), /inline-note/, 'l’explication doit suivre les deux décisions');
+  assert.strictEqual(engine.value('openCase'), 0, 'la première objection non traitée s’ouvre');
+  assert.doesNotMatch(main(), /option-review/, 'pas de correction avant la fin');
 
   // Retour au menu : l'objection traitée y est signalée.
   engine.setValue('openCase', null);
@@ -178,14 +175,21 @@ test('S3 1.3 : le menu, puis nature et geste pour chaque objection', () => {
   for (const i of [0, 3, 1]) {
     engine.setValue('openCase', i);
     engine.render();
-    engine.setValue(`nature${i}`, content.cases[i].nature);
+    engine.setValue('nature' + i, content.cases[i].nature);
     engine.submit();
-    engine.setValue(`gesture${i}`, content.cases[i].gesture);
+    engine.setValue('gesture' + i, content.cases[i].gesture);
     engine.submit();
   }
-  assert.ok(core.isDone('s3-1.3'), 'les quatre objections traitées terminent l’exercice');
-  assert.match(sandbox.document.querySelector('#feedback').innerHTML, /class="verdict ok"/,
-    'le corrigé doit marquer les bonnes réponses');
+  assert.ok(!core.isDone('s3-1.3'), 'l’auto-évaluation reste à faire');
+  assert.match(main(), /self-list/, 'la grille d’auto-évaluation s’affiche après la quatrième objection');
+  engine.submit();
+  assert.ok(!core.isDone('s3-1.3'), 'la grille vide ne valide rien');
+  content.cases.forEach((_, i) => engine.setValue('self' + i, 'oui'));
+  engine.submit();
+  assert.ok(core.isDone('s3-1.3'), 'l’auto-évaluation validée termine l’exercice');
+  assert.strictEqual((main().match(/option-review/g) || []).length, content.cases.length * 2,
+    'toutes les corrections s’affichent d’un coup');
+  assert.match(main(), /inline-note/, 'chaque objection a son explication');
 });
 
 test('S3 1.7 : une carte se construit en trois temps, dans le cas ouvert', () => {

@@ -575,12 +575,19 @@ body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; 
 .tour-actions > span { display: flex; gap: 8px; }
 .tour-actions .button { min-height: 40px; padding: 8px 16px; }
 /* Le lien « Visite guidée » : une pastille blanche bien visible sur les décors. */
-#main .tour-replay { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px 9px 14px; border: 1.5px solid #b3c7f4; border-radius: 999px; background: #e6eeff; color: var(--accent); font-size: .95rem; font-weight: 700; text-decoration: none; box-shadow: 0 6px 16px rgb(20 40 100 / 12%); transition: background .15s, border-color .15s, box-shadow .15s; }
-#main .tour-replay:hover, #main .tour-replay:focus-visible { background: #d6e3ff; border-color: var(--accent); box-shadow: 0 8px 20px rgb(20 40 100 / 18%); }
+#main .tour-replay { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px 9px 14px; border: 0; border-radius: 999px; background: #e6eeff; color: var(--accent); font-size: .95rem; font-weight: 700; text-decoration: none; box-shadow: 0 6px 16px rgb(20 40 100 / 12%); transition: background .15s, border-color .15s, box-shadow .15s; }
+#main .tour-replay:hover, #main .tour-replay:focus-visible { background: #d6e3ff; box-shadow: 0 8px 20px rgb(20 40 100 / 18%); }
 #main .tour-replay span { text-decoration: none; }
 /* Dans l'en-tête, le lien « Visite guidée » se pose tout en haut à droite, au-dessus du compteur. */
 #main .k-head-aside:has(.tour-replay) { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; padding-top: 0; }
 #main .k-head-aside .tour-replay { order: -1; }
+/* « Le contexte » et « Visite guidée » côte à côte sur la première ligne, le reste dessous. */
+#main .k-head-aside:has(.k-context-open) { display: grid; grid-template-columns: auto auto; justify-content: end; justify-items: end; align-items: center; column-gap: 10px; }
+#main .k-head-aside:has(.k-context-open) > * { grid-column: 1 / -1; }
+#main .k-head-aside:has(.k-context-open) > .k-context-open { grid-row: 1; grid-column: 1; }
+#main .k-head-aside:has(.k-context-open) > .tour-replay:not(.k-context-open) { grid-row: 1; grid-column: 2; }
+/* Ailleurs, les deux boutons groupés restent sur une même ligne. */
+.tour-pair { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
 @media (prefers-reduced-motion: reduce) { .tour-hole, .tour-card { transition: none; } }
 .tour-card.is-in { animation: tour-in .35s ease-out; }
 @keyframes tour-in { from { opacity: 0; transform: translateY(8px) scale(.97); } to { opacity: 1; transform: none; } }
