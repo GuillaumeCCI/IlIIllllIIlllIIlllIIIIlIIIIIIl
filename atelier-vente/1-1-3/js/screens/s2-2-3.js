@@ -100,7 +100,7 @@
     const at = reviewing ? 3 : stage();
     return `<div class="k-page call-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: kit.steps(['Écouter', 'Répondre', 'Retour'], at, { compact: true }) })}
+        aside: kit.steps(['Écouter', 'Répondre', 'Retour'], at, { compact: true }) + (reviewing ? '' : kit.tourButton()) })}
       ${reviewing ? reviewScreen() : stage() === 1 ? listenStep() : answerStep()}
       ${reviewing ? '' : kit.utility('Corrigé disponible au retour')}
     </div>`;
@@ -125,6 +125,19 @@
   const feedback = () => ['Relisez vos deux réponses avec les trois clés : courtoise, brève, et qui donne une issue simple à votre interlocutrice.'];
 
   kit.dialogs({ hint: { title: 'Un indice', html: `<p>${esc(content.hint)}</p>` } });
+
+  // Visite guidée en deux temps : avant l'appel, puis à la première réplique.
+  kit.tour('s2-2.3', [
+    { target: '.call-phone.is-intro', title: 'Avant l’appel', text: 'Lisez la situation et votre objectif.' },
+    { target: '.call-keys-list', title: 'Les 3 clés du défi', text: 'Votre réponse devra être courtoise, brève et facilitante.' },
+    { target: '.call-actions.is-end .k-submit', title: 'Décrocher', text: 'Ce bouton lance l’appel.',
+      after: 'L’accueil vous parle, vous lui répondez : deux fois.' },
+    { later: true, target: '.call-lines', title: 'L’accueil', text: 'Lisez ce que vous dit l’accueil.' },
+    { later: true, target: '.call-answer textarea', title: 'Votre réponse', text: 'Écrivez exactement ce que vous diriez au téléphone.' },
+    { later: true, target: '.call-keys', title: 'Les 3 clés', text: 'Cochez les clés que votre réponse respecte.' },
+    { later: true, target: '.call-answer [data-dialog="hint"]', title: 'Un indice', text: 'Un doute ? L’indice vous met sur la piste.' },
+    { later: true, target: '.call-answer .k-submit', title: 'Tester ma réponse', text: 'L’accueil vous répond. Après le 2e tour, vous voyez le retour.' }
+  ]);
 
   ex.mount('s2-2.3', { screen, validate, intercept, feedback, compactFeedback: true });
 })();
