@@ -279,6 +279,7 @@
 .review-line { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 12px; color: var(--navy); font-weight: 600; }
 /* Corrigé d'un choix : tuile « Votre choix », tuile « Réponse attendue ». */
 .k-pick { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.k-pick-topic { grid-column: 1 / -1; margin: 0; color: var(--navy); font-weight: 800; font-size: 1rem; }
 .k-pick-tile { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 12px; }
 .k-pick-tile.is-ko { background: var(--ko-soft); }
 .k-pick-tile.is-ok { background: var(--ok-soft); }

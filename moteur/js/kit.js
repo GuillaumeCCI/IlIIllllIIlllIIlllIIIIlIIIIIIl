@@ -452,10 +452,11 @@
       <span class="k-pick-icon">${icon(state === 'is-ko' ? 'close' : 'check', { size: 20, strokeWidth: 3 })}</span>
       <span><small>${esc(label)}</small><strong>${esc(value)}</strong></span>
     </div>`;
-    const about = topic ? `${topic} · ` : '';
-    return `<div class="k-pick">${ok
-      ? tile('is-ok', `${about}Votre choix, juste`, chosen)
-      : tile('is-ko', `${about}Votre choix`, chosen || 'Aucune réponse') + tile('is-ok', `${about}Réponse attendue`, expected)}</div>`;
+    // La question en titre, puis des libellés qui se lisent seuls : ce que
+    // l'on a choisi, et ce qu'il fallait choisir.
+    return `<div class="k-pick">${topic ? `<p class="k-pick-topic">${esc(topic)}</p>` : ''}${ok
+      ? tile('is-ok', 'Vous avez choisi la bonne réponse', chosen)
+      : tile('is-ko', 'Vous avez choisi', chosen || 'Aucune réponse') + tile('is-ok', 'Il fallait choisir', expected)}</div>`;
   };
 
   /* L'explication du corrigé, avec son ampoule. */

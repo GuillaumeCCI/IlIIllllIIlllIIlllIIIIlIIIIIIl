@@ -100,7 +100,7 @@
         return `<section class="k-panel ear-review">
           <p class="k-label">Objection ${String(i + 1).padStart(2, '0')} · ${esc(c.topic)}</p>
           <blockquote class="ear-review-quote">“ ${esc(c.quote)} ”</blockquote>
-          <div class="k-pick-pair">${kit.picked(okN, natureOf(nature(i)).label, natureOf(c.nature).label, 'Nature')}
+          <div class="k-pick-pair">${kit.picked(okN, natureOf(nature(i)).label, natureOf(c.nature).label, 'Nature de l’objection')}
           ${kit.picked(okG, gestureOf(gesture(i)).label, gestureOf(c.gesture).label, 'Premier geste')}</div>
           ${kit.explain(c.why)}
         </section>`;
@@ -112,7 +112,7 @@
     const reviewing = ex.reviewing();
     const at = current();
     const top = `<div class="ear-top"><p class="k-label">Gestion des objections</p>
-      <span class="ear-top-right">${kit.dialogButton('recall', 'Rappel', 'text-button', '')}<span class="ear-sep" aria-hidden="true"></span>
+      <span class="ear-top-right">${reviewing ? '' : `<span class="tour-pair">${kit.contextButton()}${kit.tourButton()}</span>`}${kit.dialogButton('recall', 'Rappel', 'text-button', '')}<span class="ear-sep" aria-hidden="true"></span>
       ${reviewing ? '<span>Corrigé</span>' : `<span>Cas ${recap() ? cases.length : at + 1} sur ${cases.length}</span>${caseDots(at)}`}</span></div>`;
     if (reviewing) return `<div class="k-page ear-page">${top}${reviewScreen()}</div>`;
     return `<div class="k-page ear-page">
@@ -150,6 +150,25 @@
       html: `<ul class="dialog-list">${natures.map(n => `<li><strong>${esc(n.label)}</strong> : ${esc(n.text)} Premier geste : <strong>${esc(n.gesture)}</strong>.</li>`).join('')}</ul>`
     }
   });
+
+  // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.
+  kit.context([
+    ['chat', 'La situation', 'Quatre clients vous opposent chacun une objection.'],
+    ['list', 'Sa nature', 'Ce qui se cache derrière : un prétexte, une vraie réserve, un malentendu ou un besoin d’être rassuré.'],
+    ['pencil', 'Ce qui vous est demandé', 'Pour chaque objection, choisir sa nature, puis votre premier geste.']
+  ], 'Écoutez le client');
+
+  // Visite guidée en deux temps : la nature, puis le premier geste.
+  kit.tour('s1-1.3', [
+    { target: '.ear-client .ear-quote', title: 'L’objection', text: 'Lisez ce que vous dit le client.' },
+    { target: '.ear-grid', title: '1. Sa nature', text: 'Cliquez sur la nature la plus probable.',
+      after: 'Votre choix ouvre la deuxième décision.' },
+    { target: '.ear-page [data-dialog="recall"]', title: 'Le rappel', text: 'Un doute ? Le rappel associe chaque nature à son premier geste.' },
+    { target: '.ear-dots', title: 'Quatre cas', text: 'Chaque point est un cas. Cliquez dessus pour y revenir.' },
+    { later: true, target: '.ear-list', title: '2. Votre premier geste', text: 'Cliquez sur ce que vous faites en premier.',
+      after: 'Votre choix valide le cas et ouvre le suivant.' },
+    { later: true, target: '.ear-retained', title: 'Changer d’avis', text: '« Modifier » vous ramène au choix de la nature.' }
+  ]);
 
   ex.mount('s1-1.3', { screen, validate, feedback, compactFeedback: true });
 })();
