@@ -74,20 +74,15 @@
       ? ex.caseActions(caseList(), i, 'Valider cette carte')
       : ex.actions(at < 3 ? 'Continuer' : 'Valider cette carte');
 
-    return `<div class="two-columns">
+    return `<div class="two-columns reflex-layout">
       <section class="panel scenario">
         ${core.pageTitle(content.eyebrow, content.title, content.intro)}
-        <div class="deck" style="margin-top:14px">
-          <article class="draggable-card" draggable="false" style="cursor:default">
-            <span class="tag">Objection ${i + 1}</span>
-            <p style="margin-top:12px">« ${esc(card.objection)} »</p>
-          </article>
-        </div>
+        <div class="reflex-objection">${core.clientCard(card.objection, null, `Objection ${i + 1} sur ${cards.length}`, i)}</div>
       </section>
-      <form class="panel answer-panel" novalidate>
+      <form class="panel answer-panel" novalidate data-bar-stays>
         ${ex.caseBar(caseList(), i, { noun: 'carte', feminine: true })}
         ${reviewed ? '' : steps}
-        ${body}
+        <div class="stage-body">${body}</div>
         ${reviewed ? '' : ex.lockNote('Le corrigé de cette carte s’affiche dès que vous l’avez construite')}
         ${core.errorsBox()}
         ${actions}
@@ -152,8 +147,24 @@
     }).join('')}</div>`;
   }
 
+  /* Changement de temps dans une même carte : le contenu arrive en
+   * glissant, la pastille du temps rebondit. Avec « réduire les
+   * animations », rien ne bouge. */
+  let last = null;
+  function onMount() {
+    const i = ex.openCase();
+    const now = i === null ? null : { i, at: stage(i), done: cardDone(i) };
+    const moved = last && now && last.i === now.i && !now.done && last.at !== now.at;
+    last = now;
+    if (!moved || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    const bodyEl = core.$('.stage-body');
+    if (bodyEl && bodyEl.animate) bodyEl.animate([{ opacity: 0, transform: 'translateX(48px)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.22, .9, .3, 1)' });
+    const dot = core.$('.stepper-item.active .stepper-dot');
+    if (dot) { dot.classList.remove('k-switch-pop'); void dot.offsetWidth; dot.classList.add('k-switch-pop'); }
+  }
+
   ex.mount('s3-1.7', {
-    screen, validate, feedback, answerKey, intercept, afterSubmit, allDone,
+    screen, onMount, validate, feedback, answerKey, intercept, afterSubmit, allDone,
     cases: caseList,
     menuIntro: 'Quatre cartes réflexes à construire. Choisissez l’objection que vous souhaitez travailler en premier.'
   });

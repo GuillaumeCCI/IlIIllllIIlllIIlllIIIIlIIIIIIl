@@ -440,3 +440,9 @@
 /* S3 1.6 · La colonne du contexte s'élargit : fiche et objection lisibles. */
 #main .step-layout { grid-template-columns: minmax(320px, 460px) minmax(0, 1fr); max-width: 1600px; }
 #main .step-rail .case-brief { font-size: .98rem; }
+/* S3 1.7 · Cartes réflexes : deux panneaux de même hauteur, la carte du
+ * client au centre de la colonne de gauche, Continuer dans le panneau de droite. */
+#main .reflex-layout { align-items: stretch; }
+#main .reflex-layout > .scenario { display: flex; flex-direction: column; }
+#main .reflex-layout .reflex-objection { flex: 1; display: flex; flex-direction: column; justify-content: center; margin-top: 18px; }
+#main .reflex-layout .answer-panel .form-actions { margin-top: 18px; padding-top: 0; border-top: 0; justify-content: flex-end; }

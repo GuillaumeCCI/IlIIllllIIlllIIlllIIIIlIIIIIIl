@@ -200,7 +200,7 @@
 
     return `<div class="case-bar">
       ${core.button(`${icon('arrowLeft', { size: 16 })}<span>${feminine ? 'Toutes les' : 'Tous les'} ${esc(plural)}</span>`, 'back-to-menu', 'text-button with-icon')}
-      <span class="case-dots">${dots}</span>
+      <span class="case-switch"><span class="case-switch-label">Changer ${/^[aeiouyéèêh]/i.test(word) ? 'd’' : 'de '}${esc(word)}</span><span class="case-dots">${dots}</span></span>
       <span class="case-bar-count"><span class="case-ring" style="--done:${(done / cases.length * 100).toFixed(0)}%" aria-hidden="true"></span>${done} sur ${cases.length} ${treated}${done > 1 ? 's' : ''}</span>
     </div>`;
   }

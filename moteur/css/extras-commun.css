@@ -703,3 +703,8 @@ html { background-color: #fbf8f2; }
 .ana-text mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
 .ana-text mark.is-warn { background: #ffd9d2; }
 .feedback.is-compact > .ana-score { flex: 0 0 100%; width: 100%; max-width: none; margin: 0; }
+
+/* La barre d'un cas : « Changer de carte » devant les pastilles numérotées. */
+.case-switch { display: inline-flex; align-items: center; gap: 10px; }
+.case-switch-label { color: var(--muted); font-size: .85rem; font-weight: 700; white-space: nowrap; }
+@media (max-width: 700px) { .case-switch-label { display: none; } }
