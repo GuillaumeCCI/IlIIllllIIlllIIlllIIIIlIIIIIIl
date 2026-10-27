@@ -255,7 +255,7 @@
     if (item.sentences !== undefined) {
       detail = item.sentences >= item.expected ? ''
         : item.sentences ? `${item.sentences} sur ${item.expected} pour l’instant.`
-        : 'Une majuscule, un verbe, un point final.';
+        : 'Écrivez la phrase entière, telle que vous la diriez au client.';
     } else if (item.texte) detail = item.texte;
     else if (item.kind === 'warn') detail = `Repéré : ${item.found.map(f => `« ${f} »`).join(', ')}.${item.conseil ? ` ${item.conseil}` : ''}`;
     // Un critère rempli se passe de commentaire : ses mots sont surlignés dans la réponse.
