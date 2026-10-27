@@ -55,12 +55,12 @@
     'vous avez besoin', 'est important pour vous', 'compte pour vous', 'vous tient à cœur', 'vous interpelle', 'vous fait hésiter',
     'vous inquiète', 'vous préoccupe', 'vous rend prudent', 'vous rend prudente', 'vous vous interrogez', 'vous vous demandez',
     'vous hésitez', 'vous doutez', 'vous craignez', 'vous attendez',
-    'si j’entends bien', 'si je vous comprends bien', 'si je saisis bien', 'en somme', 'en clair', 'donc vous', 'ainsi vous', 'vous voulez dire que', 'ce que vous me dites', 'ce que vous dites', 'ce que j’entends', 'ce que je comprends', 'vous avez peur', 'vous avez l’impression que', 'vous avez le sentiment', 'vous ne voyez pas', 'vous n’avez pas envie', 'vous avez envie', 'vous voulez être sûr', 'vous voulez être sûre', 'vous voulez être sûrs', 'vous voulez être certain', 'vous voulez être certaine', 'vous souhaitez être sûr', 'votre crainte', 'votre inquiétude', 'votre priorité', 'votre préoccupation', 'vous tenez à', 'vous préféreriez', 'vous ne souhaitez pas', 'vous ne voulez pas', 'pour vous c’est', 'c’est important pour vous', 'vous êtes inquiet', 'vous êtes inquiète', 'vous êtes déçu', 'vous êtes déçue', 'vous êtes content', 'vous êtes contente', 'vous êtes satisfait', 'vous êtes satisfaite', 'vous trouvez que', 'vous pensez que', 'vous estimez', 'vous jugez', 'je reformule', 'pour être sûr de bien comprendre', 'pour être sûre de bien comprendre', 'pour bien comprendre'];
+    'si j’entends bien', 'si je vous comprends bien', 'si je saisis bien', 'en somme', 'en clair', 'donc vous', 'ainsi vous', 'vous voulez dire que', 'ce que vous me dites', 'ce que vous dites', 'ce que j’entends', 'ce que je comprends', 'vous avez peur', 'vous avez l’impression que', 'vous avez le sentiment', 'vous ne voyez pas', 'vous n’avez pas envie', 'vous avez envie', 'vous voulez être sûr', 'vous voulez être sûre', 'vous voulez être sûrs', 'vous voulez être certain', 'vous voulez être certaine', 'vous souhaitez être sûr', 'votre crainte', 'votre inquiétude', 'votre priorité', 'votre préoccupation', 'vous tenez à', 'vous préféreriez', 'vous ne souhaitez pas', 'vous ne voulez pas', 'pour vous c’est', 'c’est important pour vous', 'vous êtes inquiet', 'vous êtes inquiète', 'vous êtes déçu', 'vous êtes déçue', 'vous êtes content', 'vous êtes contente', 'vous êtes satisfait', 'vous êtes satisfaite', 'vous trouvez que', 'vous pensez que', 'vous estimez', 'vous jugez', 'je reformule', 'pour être sûr de bien comprendre', 'pour être sûre de bien comprendre', 'pour bien comprendre', 'si je vous suis', 'si je vous comprends', 'vous êtes très occupé', 'vous êtes très occupée', 'votre agenda', 'passe après', 'vous restez', 'donc vous restez', 'vous comparez'];
 
   const QUESTION_OUVERTE = ['qu’est-ce qui', 'qu’est-ce que', 'quel', 'quelle', 'quels', 'quelles', 'comment', 'sur quoi', 'de quoi',
     'par rapport à quoi', 'dans quelle mesure', 'en quoi', 'à quel point', 'à quoi', 'que pensez-vous', 'qu’en pensez-vous',
     'racontez-moi', 'dites-moi', 'parlez-moi', 'expliquez-moi', 'pourriez-vous préciser', 'précisez',
-    'combien', 'savez-vous', 'pourquoi', 'lequel', 'laquelle', 'lesquels', 'lesquelles', 'que se passe', 'qu’arrive-t-il', 'comparez', 'vous le comparez', 'par rapport à', 'qu’attendez-vous', 'que recherchez-vous', 'qu’aimeriez-vous', 'que souhaiteriez-vous', 'que voulez-vous dire', 'c’est-à-dire', 'dites-m’en plus', 'expliquez-moi', 'racontez-moi', 'à quel moment', 'depuis quand', 'de quelle façon', 'de quelle manière', 'sous quelle forme'];
+    'combien', 'savez-vous', 'pourquoi', 'lequel', 'laquelle', 'lesquels', 'lesquelles', 'que se passe', 'qu’arrive-t-il', 'comparez', 'vous le comparez', 'par rapport à', 'qu’attendez-vous', 'que recherchez-vous', 'qu’aimeriez-vous', 'que souhaiteriez-vous', 'que voulez-vous dire', 'c’est-à-dire', 'dites-m’en plus', 'expliquez-moi', 'racontez-moi', 'à quel moment', 'depuis quand', 'de quelle façon', 'de quelle manière', 'sous quelle forme', 'que s’est-il passé', 's’est-il passé', 'avez-vous', 'y a-t-il', 'est-ce que', 'est-ce qu*', 'que pensez-vous', 'qu’en pensez-vous'];
 
   const PREUVE = ['garantie', 'garanti', '5 ans', 'cinq ans', 'essai', '30 jours', 'trente jours', 'satisfait ou remboursé', 'remboursé',
     'nos clients', 'clients constatent', 'entreprises équipées', 'références', 'référence', 'témoignage', 'témoignages', 'avis clients',
@@ -109,7 +109,7 @@
     'je peux passer', 'passer', 'on peut se voir', 'se voir', 'venez', 'je vous ouvre', 'on fixe', 'fixer', 'prenez-le', 'prenez-la', 'on en reparle', 'je reviens vers vous', 'je vous rappelle', 'je vous recontacte', 'je vous envoie', 'je vous prépare', 'je vous adresse', 'prochain rendez-vous', 'la semaine prochaine', 'ce soir', 'matin', 'après-midi', 'en fin de journée', 'quel jour', 'quelle date', 'quel moment', 'ça vous irait', 'cela vous irait', 'vous serait-il possible', 'seriez-vous disponible', 'êtes-vous disponible', 'on se rappelle', 'on se retrouve', 'retrouvons-nous', 'je bloque', 'je réserve', 'réservons', 'commençons par', 'première étape', 'pour avancer', 'pour aller plus loin', 'mettre en place', 'démarrer', 'lancer'];
 
   const RAISON = ['parce que', 'car', 'puisque', 'comme', 'ce qui', 'cela', 'ça permet', 'cela permet', 'permet de', 'permet', 'afin de',
-    'pour que', 'donc', 'ainsi', 'c’est pourquoi', 'en effet', 'grâce à', 'cela montre', 'ce qui montre', 'cela évite', 'ce qui évite'];
+    'pour que', 'donc', 'ainsi', 'c’est pourquoi', 'en effet', 'grâce à', 'cela montre', 'ce qui montre', 'cela évite', 'ce qui évite', 'parce qu*', 'puisqu*', 'alors que', 'tandis que', 'contrairement', 'au lieu de', 'sans', 'en restant', 'en le laissant', 'en la laissant', 'pour ne pas', 'pour respecter', 'pour l’*', 'pour le', 'pour la', 'pour en', 'pour recentrer', 'pour rassurer', 'de façon à', 'de manière à'];
 
   /* ── Pièges communs ─────────────────────────────────────────────────── */
 
@@ -204,9 +204,10 @@
             'au moindre besoin', 'si besoin', 'si vous avez besoin', 'n’hésitez pas', 'rapidement', 'en deux mots', 'je ne vous retiens pas',
             'je ne vous dérange pas', 'pas de souci', 'aucun souci'], conseil: 'Montrez que vous respectez son peu de temps.' },
           { nom: 'Présentation légère', mots: ['je suis', 'je m’appelle', 'conseiller', 'conseillère', 'vendeur', 'vendeuse', 'ici', 'du magasin', 'de la boutique'], conseil: 'Une présentation en quelques mots suffit.' },
-          { nom: 'Le choix laissé au client', mots: ['vous préférez', 'vous cherchez', 'quelque chose de précis', 'je peux vous aider', 'puis-je vous aider', 'voulez-vous', 'souhaitez-vous', 'si vous voulez', 'comme vous voulez'], conseil: 'Laissez-lui le choix : être aidé ou regarder seul.' }
+          { nom: 'Le choix laissé au client', mots: ['vous préférez', 'vous cherchez', 'quelque chose de précis', 'je peux vous aider', 'puis-je vous aider', 'voulez-vous', 'souhaitez-vous', 'si vous voulez', 'comme vous voulez', 'si vous avez besoin', 'faites-moi signe', 'n’hésitez pas', 'quelque chose de précis', 'juste à côté', 'au besoin', 'appelez-moi', 'je suis là si', 'je reste là', 'à votre service', 'vous me dites'], conseil: 'Laissez-lui le choix : être aidé ou regarder seul.' }
         ],
-        phrases: { attendues: 2, points: 1 },
+        // L'ouverture est courte par nature : une phrase complète suffit.
+        phrases: { attendues: 1, points: 1 },
         pieges: [PIEGE_PRODUIT, { nom: 'Trop insistant', points: 1, mots: ['pourquoi', 'vous devriez', 'il faut absolument', 'prenez le temps de regarder', 'vous avez tort'], conseil: 'Ne retenez pas un client pressé.' }] },
       { titre: 'Votre réglage majeur', champs: ['adjustment'],
         criteres: [
@@ -222,7 +223,7 @@
       { titre: 'Vos arguments', motif: 'argument',
         criteres: [
           { nom: 'Cadrage', mots: ['cadrage', 'cadre', 'durée', '30 minutes', 'minutes', 'déroulé', 'déroulement', 'd’abord', 'ensuite', 'structur*', 'annonce', 'à quoi s’attendre', 'organis*'], conseil: 'L’ouverture 1 annonce la durée et le déroulé.' },
-          { nom: 'Écoute avant présentation', mots: ['écoute', 'écouter', 'je vous écoute', 'parole', 'besoin*', 'découv*', 'situation', 'avant de présenter', 'avant de pousser', 'avant de parler', 'laisse parler', 'parler de sa situation'], conseil: 'Elle donne la parole avant de présenter.' },
+          { nom: 'Écoute avant présentation', mots: ['écoute', 'écouter', 'je vous écoute', 'parole', 'besoin*', 'découv*', 'situation', 'avant de présenter', 'avant de pousser', 'avant de parler', 'laisse parler', 'parler de sa situation', 'parle en premier', 'parler en premier', 'parle d’abord', 'donne la parole', 'laisse la parole', 'laisse parler', 'le client parle', 'centrée sur le client', 'centré sur le client', 'écoute d’abord', 'questionne', 'question'], conseil: 'Elle donne la parole avant de présenter.' },
           { nom: 'Recherche d’accord', mots: ['ça vous va', 'accord', 'valid*', 'consentement', 'avis', 'implique', 'impliquer', 'demande', 'vérifie', 'approbation'], conseil: '« Ça vous va ? » cherche l’accord du client.' },
           { nom: 'Posture centrée client', mots: ['centré', 'centrée', 'orienté client', 'orientée client', 'posture', 'parle de lui', 'parle d’elle', 'se met en avant', 'le vendeur', 'ses résultats', 'monopolise', 'client'], conseil: 'Comparez la place laissée au client.' },
           { nom: 'Comparaison', mots: ['alors que', 'contrairement', 'tandis que', 'à l’inverse', 'au contraire', 'ouverture 2', 'la deuxième', 'la seconde', 'l’autre', 'par rapport', 'plus', 'moins'], min: 2, conseil: 'Mettez les deux ouvertures face à face.' },
@@ -325,9 +326,9 @@
     ].map(([titre, sujet], i) => ({
       titre, champs: [`why${i}`],
       criteres: [
-        { nom: 'L’attitude nommée', mots: ['compréhension', 'reformul*', 'comprend*', 'écoute', 'respect*', 'empathie', 'empathique', 'bienveillan*'], conseil: 'Nommez l’attitude de la bonne réponse.' },
+        { nom: 'L’attitude nommée', mots: ['compréhension', 'reformul*', 'comprend*', 'écoute', 'respect*', 'empathie', 'empathique', 'bienveillan*', 'sans le juger', 'sans juger', 'sans minimiser', 'nomme', 'reconnaît', 'rassure', 'bienveillance', 'accompagne', 'libre', 'laisse libre', 'rythme', 'confiance', 'accueille'], conseil: 'Nommez l’attitude de la bonne réponse.' },
         { nom: 'Le lien avec ce client', mots: sujet, conseil: 'Reliez votre choix à ce que vit ce client.' },
-        { nom: 'Les autres réponses écartées', mots: ['juge*', 'jugement', 'minimis*', 'solution', 'intrusi*', 'prématur*', 'pousse*', 'interpr*', 'ferme', 'force', 'impose', 'trop tôt', 'les autres'], conseil: 'Dites pourquoi les autres réponses ferment la relation.' },
+        { nom: 'Les autres réponses écartées', mots: ['juge*', 'jugement', 'minimis*', 'solution', 'intrusi*', 'prématur*', 'pousse*', 'interpr*', 'ferme', 'force', 'impose', 'trop tôt', 'les autres', 'se défendre', 'se défend', 'critiquer', 'critique', 'les autres', 'interroge*', 'proposent', 'contrairement', 'alors que', 'au lieu de'], conseil: 'Dites pourquoi les autres réponses ferment la relation.' },
         raison
       ],
       phrases: { attendues: 1, points: 1 }
@@ -405,7 +406,7 @@
         criteres: [
           { nom: 'Les étapes repérées', mots: ['accueil*', 'creuse*', 'question*', 'reformul*', 'preuve', 'traite*', 'contrôle*', 'vérifie*', 'adhésion', 'par rapport à quoi', 'essai', 'arrêts'], min: 3, conseil: 'B accueille, creuse, reformule, prouve et contrôle.' },
           { nom: 'Les défauts de A', mots: ['contredit', 'contredire', 'remise', 'brade*', '10 %', 'réduction', 'négociation', 'prématuré*', 'dévalorise*', 'affaiblit', 'ne creuse pas', 'n’écoute pas', 'pas si cher'], conseil: 'A contredit le client et brade le prix.' },
-          { nom: 'La valeur défendue', mots: ['valeur', 'valoris*', 'sans brader', 'sans baisser', 'investissement', 'en vaut la peine'], conseil: 'B défend la valeur au lieu de baisser le prix.' },
+          { nom: 'La valeur défendue', mots: ['valeur', 'valoris*', 'sans brader', 'sans baisser', 'investissement', 'en vaut la peine', 'dévaloris*', 'la valeur', 'prouve la valeur', 'défend', 'justifie', 'ne baisse pas', 'sans remise'], conseil: 'B défend la valeur au lieu de baisser le prix.' },
           raison
         ],
         phrases: { attendues: 2, points: 1 } }
@@ -442,7 +443,7 @@
         ['prévention', 'prévenir', 'tms', 'arrêts', 'baisse', 'diagnostic', 'gratuit', 'étude', 'essai', 'coût', 'absences']]
     ].flatMap(([titre, creuser, prouver], i) => [
       { titre: `${titre} : votre question`, champs: [`dig${i}`],
-        criteres: [{ nom: 'Une question ouverte', mots: QUESTION_OUVERTE.concat(['pourquoi']), conseil: 'Creusez par une question ouverte.' }, { nom: 'Le bon angle', mots: creuser, conseil: 'Visez la cause probable de l’objection.' }],
+        criteres: [{ nom: 'Une question ouverte', mots: QUESTION_OUVERTE.concat(['pourquoi', 'que s’est-il passé', 'avez-vous', 'qui décide', 'comparé']), conseil: 'Creusez par une question ouverte.' }, { nom: 'Le bon angle', mots: creuser, conseil: 'Visez la cause probable de l’objection.' }],
         regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 1 }] },
       { titre: `${titre} : votre réponse`, champs: [`reply${i}`],
         criteres: [{ nom: 'Une preuve', mots: prouver, min: 2, conseil: 'Appuyez-vous sur une preuve : garantie, essai, chiffres…' }],

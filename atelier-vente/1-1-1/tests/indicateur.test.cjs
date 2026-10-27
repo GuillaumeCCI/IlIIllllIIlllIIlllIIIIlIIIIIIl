@@ -101,6 +101,16 @@ test('S2 D : 48 réponses justes (8 par attitude) sont reconnues ; une réponse 
   }
 });
 
+test('les autres exercices : des réponses justes, écrites de plusieurs façons, obtiennent au moins 8 / 10', () => {
+  const V = require('./reponses-variees-autres.cjs');
+  for (const [key, sets] of Object.entries(V)) {
+    sets.forEach((values, n) => {
+      const score = A.score(G[key], values).points;
+      assert.ok(score >= 8, `${key}, réponse ${n + 1} : ${score} / 10`);
+    });
+  }
+});
+
 test('les réponses réflexes obtiennent au plus 3 / 10', () => {
   assert.ok(points('s4-2.2', Object.fromEntries(S4['2.2'].situations.map((s, i) => [`repair${i}`, s.reflex]))) <= 3);
   assert.ok(points('s3-1.4', { hypothesis: 'Il a pas le temps', question: 'D’accord, je vous rappelle dans un mois.' }) <= 3);
