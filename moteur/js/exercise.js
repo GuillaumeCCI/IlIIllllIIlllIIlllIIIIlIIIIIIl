@@ -727,7 +727,8 @@
    * « réduire les animations », rien ne bouge (voir extras.css). */
   let revealed = false;
   const HEAD = '.k-head, .page-title, header, h1, .subtitle, .k-subtitle, .k-band, .instruction-band';
-  const SPLIT = 'form, .k-columns, .two-columns, .k-page, .intrus-stage, .duo-page, .stacked-screen';
+  // Le menu des cas aussi : ses cartes arrivent l'une après l'autre.
+  const SPLIT = 'form, .k-columns, .two-columns, .k-page, .intrus-stage, .duo-page, .stacked-screen, .case-menu, .case-cards, .case-rows';
   function painted(el) {
     const style = root.getComputedStyle ? root.getComputedStyle(el) : null;
     if (!style) return false;

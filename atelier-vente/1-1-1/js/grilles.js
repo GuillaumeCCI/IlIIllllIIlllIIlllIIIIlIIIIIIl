@@ -395,7 +395,8 @@
         regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 1 }] },
       { titre: '3. Reformuler', champs: [champ(2)], criteres: [reformulation, { nom: 'Ses mots repris', mots: cas.mots.reprise, conseil: 'Reprenez ses propres mots.' }] },
       { titre: '4. Traiter', champs: [champ(3)], criteres: [{ nom: 'Une preuve tirée de vos atouts', mots: cas.mots.preuve.concat(PREUVE_GENERALE), min: 2, conseil: 'Appuyez-vous sur un ou deux de vos atouts, chiffres à l’appui.' }],
-        pieges: [{ nom: 'Le prix bradé', points: 1, mots: ['remise', 'réduction', 'rabais', 'geste commercial', 'baisser le prix', 'moins cher pour vous'], conseil: 'On défend la valeur, on ne brade pas.' }] },
+        pieges: [{ nom: 'Le prix bradé', points: 1, mots: ['remise', 'réduction', 'rabais', 'geste commercial', 'baisser le prix', 'moins cher pour vous'], conseil: 'On défend la valeur, on ne brade pas.' },
+          { nom: 'Un argument hors sujet', points: 1, mots: cas.mots.horsSujet || [], conseil: 'Il ne répond pas à son objection : gardez les arguments qui la traitent.' }] },
       { titre: '5. Contrôler', champs: [champ(4)], criteres: [{ nom: 'L’adhésion vérifiée', mots: CONTROLE, conseil: 'Vérifiez : « Est-ce que cela vous parle ? ».' }],
         regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 1 }] },
       { titre: '6. Enchaîner', champs: [champ(5)], criteres: [{ nom: 'Une suite précise', mots: SUITE.concat(cas.mots.suite), conseil: 'Proposez une étape précise, avec une date.' }] }

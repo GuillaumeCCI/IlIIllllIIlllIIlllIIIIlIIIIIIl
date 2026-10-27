@@ -36,9 +36,9 @@
   const stepOf = c => Math.min(Math.max(Number(ex.value(stepKey(c))) || 0, 0), method.length - 1);
   const setStep = (c, i) => { ex.setValue(stepKey(c), i); ex.setCursor(i); };
 
-  /* Le récapitulatif s'ouvre quand tout est écrit, et se referme dès
-   * qu'on repart modifier une étape. */
-  const showingRecap = c => allWritten(c) && ex.value(recapKey(c)) !== false;
+  /* Le récapitulatif s'ouvre après la sixième phrase (Continuer le
+   * demande), et se referme dès qu'on repart modifier une étape. */
+  const showingRecap = c => allWritten(c) && ex.value(recapKey(c)) === true;
 
   const cases = () => contexts.map((cas, c) => ({ label: cas.label, hint: cas.objection, image: core.portraitFor(null, c), portrait: true, done: caseDone(c) }));
 
@@ -54,9 +54,16 @@
       <p><strong>La situation</strong>${esc(cas.situation)}</p>
     </div>`;
 
+  /* Les arguments du vendeur : ceux qui répondent à l'objection, mêlés à
+   * des arguments vrais mais hors sujet. L'ordre est mélangé, mais toujours
+   * le même pour un contexte donné (un tri sur une empreinte du texte). */
+  const stamp = text => [...text].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) % 9973, 7);
+  const argumentsOf = cas => [...cas.atouts, ...(cas.horsSujet || [])].sort((a, b) => stamp(a) - stamp(b));
+
   const atouts = cas => `<div class="case-atouts">
-      <p class="ana-expect">Ce que vous pouvez mettre en avant</p>
-      <ul>${cas.atouts.map(item => `<li>${icon('check', { size: 14 })}<span>${esc(item)}</span></li>`).join('')}</ul>
+      <p class="ana-expect">Vos arguments</p>
+      <p class="case-atouts-help">Tous ne répondent pas à cette objection : choisissez ceux qui comptent pour ce client.</p>
+      <ul>${argumentsOf(cas).map(item => `<li>${icon('chevronRight', { size: 14 })}<span>${esc(item)}</span></li>`).join('')}</ul>
     </div>`;
 
   function screen() {
@@ -124,10 +131,10 @@
       </header>
 
       <form novalidate>
-        <ol class="recap-list">${method.map((item, i) => `
+        <ol class="recap-list recap-tiles">${method.map((item, i) => `
           <li class="recap-row">
-            <span class="recap-number">${String(i + 1).padStart(2, '0')}</span>
-            <span class="recap-text"><strong class="recap-step">${esc(item.step)}</strong> « ${esc(ex.value(lineKey(c, i)))} »</span>
+            <span class="recap-tile-head"><span class="recap-number">${String(i + 1).padStart(2, '0')}</span><strong class="recap-step">${esc(item.step)}</strong></span>
+            <span class="recap-text">« ${esc(ex.value(lineKey(c, i)))} »</span>
             <button type="button" class="text-button with-icon recap-edit" data-action="goto-step" data-index="${i}">
               ${icon('pencil', { size: 15 })}<span>Modifier</span>
             </button>
@@ -304,7 +311,7 @@
       ['user', 'Vous', cas.vous],
       ['users', 'Le client', cas.client],
       ['chat', 'La situation', `${cas.situation} Il vous dit : « ${cas.objection} »`],
-      ['check', 'Ce que vous pouvez mettre en avant', cas.atouts.join('\n')]
+      ['check', 'Vos arguments (tous ne répondent pas à son objection)', argumentsOf(cas).join('\n')]
     ];
   }, () => (ex.openCase() === null ? 'La méthode en 6 étapes' : `Le contexte · ${contexts[ex.openCase()].label}`));
 

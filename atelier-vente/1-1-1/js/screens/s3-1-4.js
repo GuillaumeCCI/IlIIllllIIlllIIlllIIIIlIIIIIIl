@@ -1,5 +1,6 @@
 /* S3 1.4 · Derrière le prétexte.
  * Lire l’échange, formuler l’hypothèse du vrai frein, puis la question qui l’ouvre.
+ * Un contexte s'ouvre à l'arrivée (kit.context).
  */
 (() => {
   'use strict';
@@ -8,10 +9,13 @@
   const { icon } = core;
   const content = window.ATELIER_S3['1.4'];
   const { esc } = core;
+  // Le bouton « Le contexte », en haut à droite de l'écran (kit.js chargé par la page).
+  const kit = window.AtelierKit;
+  const corner = () => (kit && !ex.reviewing() ? `<div class="tour-corner">${kit.contextButton()}</div>` : '');
 
   function screen() {
     const review = ex.reviewing();
-    return `<div class="two-columns">
+    return `${corner()}<div class="two-columns">
       <section class="panel scenario">
         <h2>L’échange</h2>
         <div class="conversation">
@@ -32,7 +36,7 @@
                placeholder: 'Le client hésite peut-être parce que…', max: 240, rows: 4, hideLabel: true
              }), 'Formulez une hypothèse simple et précise.')}
              ${core.step(2, 'Question pour la révéler', ex.field('question', 'Question pour la révéler', {
-               placeholder: 'Qu’est-ce qui vous fait hésiter aujourd’hui ?', max: 240, rows: 4, hideLabel: true
+               placeholder: 'Votre question au client…', max: 240, rows: 4, hideLabel: true
              }), 'Posez une question ouverte, sans suggérer la réponse.')}`}
         ${ex.lockNote('Corrigé disponible après votre tentative')}
         ${core.errorsBox()}
@@ -54,6 +58,13 @@
 
   /* Les deux repères sont posés sous les deux champs. */
   const feedback = () => ['Comparez votre hypothèse et votre question aux repères affichés sous chacune.'];
+
+  // À l'arrivée : pourquoi on est là, ce qui se passe, ce qui est demandé.
+  if (kit) kit.context([
+    ['target', 'Pourquoi vous êtes là', 'Pour apprendre à repérer ce que cache un « je vais réfléchir », au lieu d’accepter un report vague.'],
+    ['chat', 'Ce qui se passe', 'Un commercial vient de présenter son offre à un client. Le client répond qu’il va réfléchir. Le commercial propose de le rappeler dans un mois, et l’échange s’arrête là.'],
+    ['pencil', 'Ce qui vous est demandé', 'Écrire ce qui freine probablement le client, puis la question que vous lui auriez posée pour le faire parler.']
+  ]);
 
   ex.mount('s3-1.4', { screen, validate, feedback });
 })();

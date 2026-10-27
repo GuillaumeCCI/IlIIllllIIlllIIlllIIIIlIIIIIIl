@@ -128,10 +128,12 @@ window.ATELIER_S3 = {
     feedback: 'Relisez votre traitement d’un seul tenant, à voix haute. Vérifiez que l’accueil ne contredit pas le client, que votre question ne suggère pas la réponse, que la reformulation reprend bien ses mots, que le traitement apporte une preuve plutôt qu’une promesse, que le contrôle laisse une vraie place à sa réponse et que l’enchaînement propose une suite précise.',
     /* Six contextes, un par secteur. Chacun : qui vous êtes, le client, où
      * en est l'échange, l'objection, vos atouts (de quoi prouver à l'étape
-     * « Traiter »), un corrigé type par étape, et les mots propres au cas
+     * « Traiter », mêlés à des arguments hors sujet, `horsSujet`, à écarter),
+     * un corrigé type par étape, et les mots propres au cas
      * que l'indicateur de points recherche (js/grilles.js) :
      * `sujet` (la bonne question), `reprise` (les mots du client à
-     * reformuler), `preuve` (les atouts cités), `suite` (la proposition).
+     * reformuler), `preuve` (les atouts cités), `suite` (la proposition),
+     * `horsSujet` (un argument hors sujet repris : il coûte un point).
      * Le premier contexte reprend le cas de la fiche (Ergolys). */
     cases: [
       {
@@ -141,11 +143,15 @@ window.ATELIER_S3 = {
         situation: 'Premier rendez-vous dans son bureau. Elle vous écoute poliment, puis coupe court.',
         objection: 'Nos chaises actuelles suffisent.',
         atouts: [
-          'Tous nos sièges sont garantis 5 ans.',
-          'La cliente peut les essayer gratuitement pendant 30 jours, et être remboursée si elle n’est pas satisfaite.',
-          'Plus de 1 200 entreprises sont déjà équipées de nos sièges.',
           'Chez nos clients, les arrêts de travail pour mal de dos ont baissé.',
-          'Nous proposons un diagnostic gratuit de 2 ou 3 postes de travail.'
+          'Nous proposons un diagnostic gratuit de 2 ou 3 postes de travail.',
+          'La cliente peut essayer les sièges gratuitement pendant 30 jours, et être remboursée si elle n’est pas satisfaite.'
+        ],
+        // Vrais, mais sans rapport avec l'objection : l'apprenant doit les écarter.
+        horsSujet: [
+          'Nos sièges existent en 12 coloris.',
+          'La livraison est gratuite à partir de 10 sièges.',
+          'Notre salle d’exposition est ouverte le samedi.'
         ],
         model: [
           'Je comprends : si personne ne se plaint, la question ne se pose pas tous les jours.',
@@ -159,7 +165,8 @@ window.ATELIER_S3 = {
           sujet: ['salariés', 'collaborateurs', 'équipes', 'dos', 'arrêts', 'plaintes', 'douleurs', 'confort', 'inconfort', 'gênés', 'absences', 'tms', 'fatigue', 'postes', 'fin de journée', 'se sentent', 'mal', 'douleur', 'assis', 'journée', 'plaignent', 'plaint', 'santé', 'bien-être', 'confortables', 'usées', 'âge', 'combien de temps', 'posture', 'télétravail'],
           reprise: ['suffisent', 'actuelles', 'chaises', 'dépenser', 'vrai problème', 'satisfait', 'fonctionnent', 'pas de besoin', 'pas nécessaire', 'convient', 'personne ne se plaint', 'plaint', 'changer', 'raison de changer', 'font le travail', 'suffit', 'en bon état', 'pas utile', 'pas la peine', 'besoin', 'pas prioritaire'],
           preuve: ['douleurs', 'mal de dos', 'tms', 'arrêts', 'absences', 'baisse', 'prévenir', 'prévention', 'clients constatent', 'étude', 'ergonom*', 'garantie', '5 ans', 'essai', '30 jours', 'remboursé', '1 200', '1200', 'entreprises équipées', 'diagnostic', 'garantis', 'tester', 'testez', 'diminué', 'moins d’arrêts', 'entreprises', 'santé'],
-          suite: ['diagnostic', 'gratuit', '2 ou 3 postes', 'deux ou trois postes', 'objectiver', 'essai', 'visite', 'passer', 'tester', 'semaine prochaine', 'passer', 'deux ou trois', 'vérifier', 'mesurer', 'regarder ensemble']
+          suite: ['diagnostic', 'gratuit', '2 ou 3 postes', 'deux ou trois postes', 'objectiver', 'essai', 'visite', 'passer', 'tester', 'semaine prochaine', 'passer', 'deux ou trois', 'vérifier', 'mesurer', 'regarder ensemble'],
+          horsSujet: ['coloris', 'couleurs', 'livraison', 'livré', 'salle d’exposition', 'exposition', 'showroom']
         }
       },
       {
@@ -171,9 +178,13 @@ window.ATELIER_S3 = {
         atouts: [
           'Avec notre agence, une maison se vend en 45 jours en moyenne ; dans le secteur, il en faut 90.',
           '92 % des maisons que nous vendons partent au prix affiché, ou presque.',
-          'Les photos sont faites par un photographe professionnel, et la visite virtuelle est comprise.',
-          'Plus de 300 personnes prêtes à acheter sont inscrites dans notre fichier.',
-          'Après chaque visite, nous envoyons un compte rendu écrit aux vendeurs.'
+          'Plus de 300 personnes prêtes à acheter sont inscrites dans notre fichier.'
+        ],
+        // Vrais, mais sans rapport avec l'objection : l'apprenant doit les écarter.
+        horsSujet: [
+          'L’agence est ouverte 6 jours sur 7.',
+          'Un parking est réservé aux clients devant l’agence.',
+          'Notre agence a ouvert ses portes en 1998.'
         ],
         model: [
           'Je comprends, les honoraires représentent une vraie somme sur une vente comme la vôtre.',
@@ -187,7 +198,8 @@ window.ATELIER_S3 = {
           sujet: ['prix final', 'prix de vente', 'délai', 'frais', 'compte le plus', 'priorité', 'important pour vous', 'autre agence', '3 %', 'comparé', 'net vendeur', 'attendez', 'vendre vite', 'meilleur prix', 'attentes', 'vite', 'prix', 'calendrier', 'déménagement', 'quand', 'objectif', 'combien'],
           reprise: ['honoraires', 'frais', 'payez', 'payer', 'coût', 'commission', 'trop élevés', 'autre agence', 'prix', 'touchez', 'net', 'valent', 'coûtent', 'cher', 'trop', 'comparer', 'agences', 'moins cher', 'économiser', 'valoir', 'rentable'],
           preuve: ['45 jours', 'délai', '90 jours', '92 %', 'prix affiché', 'prix du mandat', 'plus cher', 'écart', 'photos', 'visite virtuelle', 'acheteurs', 'acquéreurs', 'fichier', '300', 'compte rendu', 'net vendeur', 'négociation', 'estimation', 'moyenne', 'ailleurs', 'photographe', 'visite virtuelle', '300 personnes', 'différence', 'vendue', 'vendues', 'rapidement'],
-          suite: ['samedi', 'comparer', 'net vendeur', 'chiffres en main', 'rendez-vous', 'mandat', 'signer', 'revenir', 'date', 'proposition écrite', 'comparaison écrite', 'comparaison', 'revenir', 'estimation', 'confier', 'reste']
+          suite: ['samedi', 'comparer', 'net vendeur', 'chiffres en main', 'rendez-vous', 'mandat', 'signer', 'revenir', 'date', 'proposition écrite', 'comparaison écrite', 'comparaison', 'revenir', 'estimation', 'confier', 'reste'],
+          horsSujet: ['6 jours sur 7', 'ouverte', 'parking', '1998', 'ouvert ses portes', 'depuis 1998']
         }
       },
       {
@@ -199,9 +211,13 @@ window.ATELIER_S3 = {
         atouts: [
           'Nous comparons gratuitement son contrat actuel au nôtre, en 20 minutes.',
           'Si un sinistre l’empêche de travailler, notre contrat continue de lui verser un revenu.',
-          'Après un sinistre, il est remboursé sous 10 jours.',
-          'Une assistance répond jour et nuit, même quand il est sur un chantier.',
           'Trois artisans sur quatre n’ont aucune garantie qui leur verse un revenu pendant un arrêt.'
+        ],
+        // Vrais, mais sans rapport avec l'objection : l'apprenant doit les écarter.
+        horsSujet: [
+          'Nos bureaux sont situés en centre-ville.',
+          'Nous assurons aussi les voitures des particuliers.',
+          'Notre site internet a été entièrement refait cette année.'
         ],
         model: [
           'Très bien, c’est important d’être couvert quand on travaille chez les autres.',
@@ -215,7 +231,8 @@ window.ATELIER_S3 = {
           sujet: ['contrat', 'couvert', 'couverture', 'garanties', 'perte d’exploitation', 'arrêt', 'sinistre', 'dégât', 'immobilise', 'chantier', 'verse', 'rembourse', 'franchise', 'arrêt de travail', 'revenus', 'revenu', 'accident', 'empêche de travailler', 'travailler', 'un mois', 'que se passe', 'couvre', 'si demain', 'arrêté', 'malade'],
           reprise: ['déjà assuré', 'satisfait', 'ça vous va', 'changer', 'assureur', 'contrat actuel', 'content', 'pas besoin', 'content', 'envie de tout changer', 'pas envie', 'bien couvert', 'déjà couvert', 'tranquille', 'ailleurs'],
           preuve: ['comparer', 'comparaison', '20 minutes', 'gratuit', 'perte d’exploitation', 'revenu', 'revenus', 'versé', 'ne pouvez plus travailler', 'remboursé', 'assistance', '24 h', '24 heures', 'indemnis*', '10 jours', 'artisans', 'trois sur quatre', '3 sur 4', 'touchez', 'pendant l’arrêt', 'jour et nuit', 'artisans', 'gratuitement', 'remboursé'],
-          suite: ['jeudi', 'passer', 'rendez-vous', 'contrat actuel', 'comparer', 'comparaison', 'date', 'créneau', 'fin de journée', 'rappeler', 'jeudi soir', 'se voir', 'on peut se voir', 'votre contrat']
+          suite: ['jeudi', 'passer', 'rendez-vous', 'contrat actuel', 'comparer', 'comparaison', 'date', 'créneau', 'fin de journée', 'rappeler', 'jeudi soir', 'se voir', 'on peut se voir', 'votre contrat'],
+          horsSujet: ['centre-ville', 'bureaux', 'voitures', 'voiture', 'particuliers', 'site internet', 'refait']
         }
       },
       {
@@ -227,9 +244,14 @@ window.ATELIER_S3 = {
         atouts: [
           'Nos équipes transfèrent elles-mêmes ses devis, ses factures et ses clients dans le logiciel.',
           'Le logiciel est prêt à l’emploi en 2 heures.',
-          'Une formation d’une heure en visio est offerte.',
           'Nos clients gagnent en moyenne 4 heures par semaine sur leurs devis et leurs factures.',
           'Elle peut l’essayer gratuitement pendant 14 jours, sans engagement.'
+        ],
+        // Vrais, mais sans rapport avec l'objection : l'apprenant doit les écarter.
+        horsSujet: [
+          'Le logiciel existe en 5 langues.',
+          'Les couleurs de l’écran sont personnalisables.',
+          'Notre entreprise compte 40 salariés.'
         ],
         model: [
           'Je comprends, la saison doit être chargée, et changer d’outil fait peur quand on court déjà.',
@@ -243,7 +265,8 @@ window.ATELIER_S3 = {
           sujet: ['temps', 'heures', 'semaine', 'devis', 'factures', 'administratif', 'combien', 'aujourd’hui', 'outil actuel', 'saison', 'soirées', 'week-end', 'heures par semaine', 'combien de temps', 'temps passé', 'soir', 'paperasse', 'facturation'],
           reprise: ['pas le temps', 'changer', 'changement', 'crainte', 'craignez', 'perdre du temps', 'chargée', 'en ce moment', 'outil', 'peur', 'perdre du temps', 'beaucoup de travail', 'débordée', 'pas le moment', 'changer d’outil', 'surchargée', 'trop de travail'],
           preuve: ['transfèrent', 'transfert', 'prêt', 'reprise', 'données', '2 heures', 'deux heures', 'mise en route', 'prise en main', 'formation', '4 heures', 'quatre heures', 'gagnent', 'essai', '14 jours', 'sans engagement', 'nos clients', 'transférer', 'quatre heures', 'deux heures', 'prête', 'facile', 'simple'],
-          suite: ['essai', '14 jours', 'formation', 'prise en main', 'mardi', 'semaine prochaine', 'rendez-vous', 'visio', 'date', 'créneau', 'ouvrir', 'aujourd’hui', 'mardi', 'je vous ouvre', 'dès aujourd’hui', 'commencer']
+          suite: ['essai', '14 jours', 'formation', 'prise en main', 'mardi', 'semaine prochaine', 'rendez-vous', 'visio', 'date', 'créneau', 'ouvrir', 'aujourd’hui', 'mardi', 'je vous ouvre', 'dès aujourd’hui', 'commencer'],
+          horsSujet: ['5 langues', 'langues', 'couleurs', 'personnalis*', '40 salariés']
         }
       },
       {
@@ -256,8 +279,13 @@ window.ATELIER_S3 = {
           'Sur son trajet, il économisera environ 80 € par mois d’essence et de stationnement.',
           'La ville lui verse une prime de 300 € à l’achat.',
           'Il peut payer en 4 fois, sans frais.',
-          'La batterie est garantie 5 ans.',
-          'La première révision est gratuite, et il peut garder le vélo une journée pour l’essayer.'
+          'Il peut garder le vélo une journée pour l’essayer sur son vrai trajet.'
+        ],
+        // Vrais, mais sans rapport avec l'objection : l'apprenant doit les écarter.
+        horsSujet: [
+          'Le vélo existe en trois couleurs.',
+          'Le cadre est fabriqué en aluminium.',
+          'Le magasin vend aussi des casques et des antivols.'
         ],
         model: [
           'Je comprends, c’est une vraie somme pour un vélo.',
@@ -271,7 +299,8 @@ window.ATELIER_S3 = {
           sujet: ['par rapport à quoi', 'budget', 'prévu', 'autre modèle', 'compar*', 'trajet', 'km', 'utilisation', 'combien', 'voiture', 'comparez', 'comparer', 'autre vélo', 'fixé', 'combien', 'trajets'],
           reprise: ['cher', 'prix', 'somme', 'budget', 'rentable', 'rembourse', 'investissement', '2 400', 'vaut son prix', 'dépense', 'petite dépense', 'certain', 'sûr', 'vaut le coup', 'valoir'],
           preuve: ['80 €', '80 euros', 'essence', 'stationnement', 'parking', 'économ*', 'prime', '300', '4 fois', 'quatre fois', 'sans frais', 'garantie', 'batterie', '5 ans', 'révision', 'rentabilis*', 'par mois', 'euros', 'économiser', 'ville', 'essence', 'remboursé'],
-          suite: ['journée', 'essai', 'essayer', 'garder', 'trajet', 'réserver', 'samedi', 'demain', 'date', 'prêt', 'prenez-le', 'demain', 'on en reparle', 'votre trajet']
+          suite: ['journée', 'essai', 'essayer', 'garder', 'trajet', 'réserver', 'samedi', 'demain', 'date', 'prêt', 'prenez-le', 'demain', 'on en reparle', 'votre trajet'],
+          horsSujet: ['trois couleurs', 'couleurs', 'coloris', 'aluminium', 'cadre', 'casques', 'casque', 'antivols', 'antivol']
         }
       },
       {
@@ -284,8 +313,13 @@ window.ATELIER_S3 = {
           'Nous offrons une image en 3D de son futur salon.',
           'Elle peut emporter des échantillons de tissus et de peinture.',
           'Le devis reste valable 30 jours.',
-          'Nous pouvons la recevoir un samedi, avec son conjoint.',
-          'À la commande, elle ne paie que 30 % du montant.'
+          'Nous pouvons la recevoir un samedi, avec son conjoint.'
+        ],
+        // Vrais, mais sans rapport avec l'objection : l'apprenant doit les écarter.
+        horsSujet: [
+          'Nous travaillons avec plus de 50 fournisseurs de tissus.',
+          'L’agence a reçu un prix de décoration en 2023.',
+          'Nos poseurs interviennent dans toute la région.'
         ],
         model: [
           'Bien sûr, c’est un projet pour toute la maison, c’est normal de décider à deux.',
@@ -299,7 +333,8 @@ window.ATELIER_S3 = {
           sujet: ['conjoint', 'mari', 'femme', 'compagnon', 'compagne', 'comptera', 'budget', 'style', 'durée', 'délai', 'travaux', 'important pour lui', 'avis', 'goûts', 'préférences', 'important pour votre conjoint', 'son avis', 'ce qu’il aime', 'ce qu’elle aime', 'son goût', 'ses goûts', 'qu’est-ce qui'],
           reprise: ['conjoint', 'à deux', 'ensemble', 'décider', 'adhère', 'avis', 'd’accord', 'engager', 'en parler', 'd’accord avec le projet', 'signer', 'décider ensemble', 'son accord', 'lui en parler', 'tous les deux'],
           preuve: ['image', 'futur salon', 'planche', '3d', 'ambiance', 'échantillons', 'devis', '30 jours', 'valable', 'visuel', 'projeter', 'photos', 'réalisations', 'acompte', '30 %', 'image en 3d', 'emportez', 'emporter', 'montrer', 'voir le résultat'],
-          suite: ['samedi', 'revenir', 'tous les deux', 'rendez-vous', '10 h', 'présente', 'date', 'venir ensemble', 'ajuster', 'venez', 'samedi matin', 'montrerai', 'montrer', 'ensemble']
+          suite: ['samedi', 'revenir', 'tous les deux', 'rendez-vous', '10 h', 'présente', 'date', 'venir ensemble', 'ajuster', 'venez', 'samedi matin', 'montrerai', 'montrer', 'ensemble'],
+          horsSujet: ['50 fournisseurs', 'fournisseurs', 'prix de décoration', '2023', 'poseurs', 'toute la région', 'région']
         }
       }
     ]

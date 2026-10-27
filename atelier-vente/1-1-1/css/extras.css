@@ -452,3 +452,13 @@
 #main .step-rail-list.is-track .step-rail-item { width: auto; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; font-size: .9rem; }
 #main .step-rail-list.is-track .step-rail-dot { width: 28px; height: 28px; font-size: .78rem; }
 #main .step-rail .client-card-who img { max-height: 110px; }
+/* S3 1.6 · Les arguments à trier, et la relecture en six blocs. */
+.case-atouts-help { margin: -2px 0 2px; color: var(--muted); font-size: .88rem; }
+.case-atouts li .icon { color: var(--accent); }
+#main .recap-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+#main .recap-tiles .recap-row { display: flex; flex-direction: column; align-items: stretch; gap: 10px; padding: 16px 18px; }
+.recap-tile-head { display: flex; align-items: center; gap: 10px; }
+#main .recap-tiles .recap-text { flex: 1; overflow-wrap: anywhere; }
+#main .recap-tiles .recap-edit { align-self: flex-start; }
+@media (max-width: 1000px) { #main .recap-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { #main .recap-tiles { grid-template-columns: minmax(0, 1fr); } }
