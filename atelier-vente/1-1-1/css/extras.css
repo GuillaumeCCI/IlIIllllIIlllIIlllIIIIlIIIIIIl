@@ -414,6 +414,9 @@
 .result-model[open]:not(.is-closing) summary::before { transform: rotate(45deg) translate(-2px, -2px); }
 .result-model-body { overflow: hidden; }
 .result-model p { margin: 8px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
-.ana-score.is-head { margin: 0 0 16px; }
+.result-top { display: flex; align-items: stretch; gap: 16px; margin: 0 0 16px; }
+.result-top .ana-score.is-head { flex: 1; margin: 0; }
+.result-revise { align-self: center; flex-shrink: 0; gap: 8px; }
+@media (max-width: 760px) { .result-top { flex-direction: column; } .result-revise { align-self: flex-start; } }
 @media (max-width: 1000px) { #main .result-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 620px) { #main .result-tiles { grid-template-columns: minmax(0, 1fr); } }

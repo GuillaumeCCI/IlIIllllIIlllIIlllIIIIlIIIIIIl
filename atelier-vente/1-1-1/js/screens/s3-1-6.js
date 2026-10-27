@@ -113,7 +113,10 @@
         <h1>Votre traitement, d’un seul tenant</h1>
         <p class="subtitle">${esc(content.feedback)}</p>
       </header>
-      ${result ? `<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section>` : ''}
+      <div class="result-top">
+        ${result ? `<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section>` : ''}
+        <button type="button" class="text-button with-icon result-revise" data-action="revise">${icon('pencil', { size: 17 })}<span>Modifier mes phrases</span></button>
+      </div>
       <ol class="result-list result-tiles">${method.map((item, i) => `
         <li class="result-row">
           <div class="result-tile-head"><span class="result-number">${String(i + 1).padStart(2, '0')}</span>
@@ -172,6 +175,16 @@
   /* « Voir un corrigé type » : le pli s'ouvre et se referme en glissant.
    * Un seul écouteur sur la page : il vaut pour les blocs redessinés.
    * Avec « réduire les animations », le pli s'ouvre d'un coup. */
+  /* « Modifier mes phrases » : l'exercice se rouvre sur la relecture des
+   * six phrases, réponses gardées ; on corrige, puis on valide à nouveau. */
+  document.addEventListener('click', event => {
+    if (!event.target.closest || !event.target.closest('[data-action="revise"]')) return;
+    core.entry(ex.current.key).done = false;
+    ex.setValue('recap', true);
+    core.persist();
+    ex.render(true);
+  });
+
   document.addEventListener('click', event => {
     const summary = event.target.closest && event.target.closest('.result-model > summary');
     if (!summary) return;
