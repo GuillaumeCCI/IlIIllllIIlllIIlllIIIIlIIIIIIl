@@ -401,6 +401,8 @@
 #main .result-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 #main .result-tiles .result-row { display: flex; flex-direction: column; align-items: stretch; gap: 12px; padding: 18px 20px; }
 .result-tile-head { display: flex; align-items: center; gap: 12px; }
+.result-goal { margin: -4px 0 0; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+.result-yours-block { display: grid; gap: 6px; padding: 12px 14px; border-radius: 12px; background: #f6f8fc; }
 .result-answer-text { margin: 0; color: var(--navy); font-size: 1rem; font-weight: 650; line-height: 1.45; }
 .result-answer-text mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
 .result-answer-text mark.is-warn { background: #ffd9d2; }

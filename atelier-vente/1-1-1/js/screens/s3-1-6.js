@@ -118,12 +118,15 @@
         <li class="result-row">
           <div class="result-tile-head"><span class="result-number">${String(i + 1).padStart(2, '0')}</span>
             <span class="result-role">${icon(item.symbol, { size: 15 })}<span>${esc(item.step)}</span></span></div>
-          <p class="result-answer-text">« ${bloc(i) ? analyse.answer(bloc(i)) : esc(ex.value(lineKey(i)))} »</p>
+          <p class="result-goal">${esc(item.role)}</p>
+          <div class="result-yours-block">
+            <p class="ana-expect">Votre phrase</p>
+            <p class="result-answer-text">« ${bloc(i) ? analyse.answer(bloc(i)) : esc(ex.value(lineKey(i)))} »</p>
+          </div>
           ${bloc(i) ? analyse.lines(bloc(i), { withText: false }) : ''}
           <details class="result-model">
             <summary>Voir un corrigé type</summary>
             <div class="result-model-body">
-              <p class="result-why">${esc(item.role)}</p>
               ${content.model && content.model[i] ? `<p>« ${esc(content.model[i])} »</p>` : ''}
             </div>
           </details>

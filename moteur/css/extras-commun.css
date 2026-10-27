@@ -692,6 +692,7 @@ html { background-color: #fbf8f2; }
 .ana-legend { flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0; color: var(--muted); font-size: .85rem; }
 .ana-legend > span { display: inline-flex; align-items: center; gap: 8px; }
 .ana-legend .ana-symbol { width: 22px; height: 22px; font-size: .75rem; }
+.ana-expect span { color: var(--muted); font-weight: 700; }
 .ana-expect { margin: 0; color: var(--navy); font-size: .74rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
 .ana-symbol.is-ok, .ana-line.is-ok .ana-symbol { background: #e3f4ea; color: #1d8a4c; }
 .ana-line.is-part .ana-symbol { background: #fff1e3; color: #d96a00; }

@@ -186,7 +186,7 @@
       max += sentencePoints;
       const share = Math.min(1, phrases.complete / expected);
       earned += sentencePoints * share;
-      lines.push({ kind: share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: 'Phrases complètes', sentences: phrases.complete, expected, listOnly });
+      lines.push({ kind: share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: expected > 1 ? `${expected} phrases complètes` : 'Une phrase complète', sentences: phrases.complete, expected, listOnly });
     }
 
     for (const spec of bloc.regles || []) {
@@ -253,13 +253,13 @@
   function line(item) {
     let detail = '';
     if (item.sentences !== undefined) {
-      detail = item.listOnly
-        ? 'Aucune phrase complète : écrivez de vraies phrases, les mots-clés comptent alors en entier.'
-        : `${item.sentences} phrase${item.sentences > 1 ? 's' : ''} complète${item.sentences > 1 ? 's' : ''}${item.sentences < item.expected ? `, ${item.expected} attendue${item.expected > 1 ? 's' : ''}` : ''}.`;
+      detail = item.sentences >= item.expected ? ''
+        : item.sentences ? `${item.sentences} sur ${item.expected} pour l’instant.`
+        : 'Une majuscule, un verbe, un point final.';
     } else if (item.texte) detail = item.texte;
     else if (item.kind === 'warn') detail = `Repéré : ${item.found.map(f => `« ${f} »`).join(', ')}.${item.conseil ? ` ${item.conseil}` : ''}`;
-    else if (item.found?.length) detail = `Repéré : ${item.found.map(f => `« ${f} »`).join(', ')}.`;
-    else if (item.conseil) detail = item.conseil;
+    // Un critère rempli se passe de commentaire : ses mots sont surlignés dans la réponse.
+    else if (item.kind !== 'ok' && item.conseil) detail = item.conseil;
     return `<li class="ana-line is-${item.kind}"><span class="ana-symbol" aria-hidden="true">${SYMBOL[item.kind]}</span>
       <span><strong>${esc(item.nom)}</strong>${detail ? `<span class="ana-detail">${esc(detail)}</span>` : ''}</span></li>`;
   }
@@ -273,7 +273,9 @@
 
   // Le détail d'un bloc : les coches, puis le texte surligné. Un écran qui
   // montre lui-même la réponse (`withText: false`) ne garde que les coches.
-  const lines = (bloc, { withText = true } = {}) => `<p class="ana-expect">Ce qu’on attend</p>
+  const met = bloc => bloc.lines.filter(item => item.kind === 'ok').length;
+  const expected = bloc => bloc.lines.filter(item => item.kind !== 'warn').length;
+  const lines = (bloc, { withText = true } = {}) => `<p class="ana-expect">Ce qu’on attend <span>· ${met(bloc)} sur ${expected(bloc)}</span></p>
         <ul class="ana-lines">${bloc.lines.map(line).join('')}</ul>
         ${withText && bloc.marks.length ? `<p class="ana-text">${highlighted(bloc.text, bloc.marks)}</p>` : ''}`;
 
