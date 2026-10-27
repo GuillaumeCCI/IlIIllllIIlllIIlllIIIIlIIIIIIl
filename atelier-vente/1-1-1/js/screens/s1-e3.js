@@ -1,5 +1,6 @@
 /* S1 E3 · Entrer en matière avec assurance.
  * Une première phrase affirmative, sans question, en 280 caractères.
+ * Un contexte s'ouvre à l'arrivée (kit.context).
  */
 (() => {
   'use strict';
@@ -10,7 +11,7 @@
   const { required, text } = window.ExerciseRules;
   // Le bouton « Visite guidée », en haut à droite de l'écran (kit.js chargé par la page).
   const kit = window.AtelierKit;
-  const corner = () => (kit && !ex.reviewing() ? `<div class="tour-corner">${kit.tourButton()}</div>` : '');
+  const corner = () => (kit && !ex.reviewing() ? `<div class="tour-corner">${kit.contextButton()}${kit.tourButton()}</div>` : '');
 
   function screen() {
     const current = core.findExercise('s1-E3');
@@ -26,7 +27,7 @@
       </section>
       <form class="panel answer-panel" novalidate>
         ${core.panelTitle('Votre ouverture')}
-        <p class="panel-intro">Formulez une entrée en matière naturelle et directe.</p>
+        <p class="panel-intro">Une cliente vient refaire son salon dans votre agence de décoration. Elle s’assoit et attend que vous lanciez l’échange. Formulez une entrée en matière naturelle et directe.</p>
         ${ex.field('opening', 'Votre ouverture', { placeholder: 'Ex. Je vous propose de commencer par…', max: 280, rows: 12, hideLabel: true })}
         ${core.hintBlock(content.hints.E3)}
         ${core.errorsBox()}
@@ -45,6 +46,12 @@
 
   const feedback = () => content.feedback.E3;
 
+  // À l'arrivée : pourquoi on est là, ce qui se passe, ce qui est demandé.
+  if (kit) kit.context([
+    ['target', 'Pourquoi vous êtes là', 'Pour vous entraîner à lancer l’entretien vous-même, avec assurance, au lieu d’attendre que le client parle.'],
+    ['users', 'Ce qui se passe', 'Une cliente vient refaire son salon avec une agence de décoration. Elle s’assoit en face de vous et attend.'],
+    ['pencil', 'Ce qui vous est demandé', 'Écrire votre première phrase, sans aucune question. Elle doit rassurer la cliente et lui donner envie de parler.']
+  ]);
   if (kit) kit.tour('s1-E3', [
     { target: '.objective', title: 'L’objectif', text: 'Gardez-le en tête : vous ouvrez l’échange vous-même, dans un climat positif.' },
     { target: '.answer-panel .field', title: 'Votre ouverture', text: 'Une entrée en matière affirmative : aucune question, pas de point d’interrogation.',
