@@ -386,7 +386,7 @@
 
 /* S1 E3 · Entrer en matière : contenu centré dans la colonne de gauche,
  * bouton Valider dans le panneau de droite, liens du coin un peu plus bas. */
-.affirmative > .scenario { display: flex; flex-direction: column; justify-content: center; }
+.affirmative > .scenario { display: flex; flex-direction: column; }
 #main .affirmative .answer-panel .form-actions { justify-content: flex-end; margin: 14px 0 0; padding: 0; border-top: 0; }
 .affirmative > .scenario > .tag { align-self: flex-start; }
 .tour-corner:has(+ .affirmative) { padding-right: 16px; }
