@@ -666,7 +666,7 @@ body.is-tall-page:not(.is-briefing) { background-image: none !important; backgro
 /* Sous le décor, jamais de bande blanche : la page se prolonge en beige. */
 html { background-color: #fbf8f2; }
 
-/* Indicateur de points des réponses ouvertes (analyse.js), en tête du corrigé. */
+/* Indicateur de points des réponses ouvertes (indicateur.js), en tête du corrigé. */
 .ana-score { display: grid; gap: 16px; margin: 6px 0 18px; padding: 20px 22px; border-radius: 14px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 7%), 0 1px 2px rgb(20 40 100 / 4%); }
 .ana-head { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
 .ana-points { display: inline-flex; align-items: baseline; gap: 8px; margin: 0; }

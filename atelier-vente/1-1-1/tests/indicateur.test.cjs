@@ -1,4 +1,4 @@
-/* Indicateur de points des réponses ouvertes (moteur/js/analyse.js + js/grilles.js).
+/* Indicateur de points des réponses ouvertes (moteur/js/indicateur.js + js/grilles.js).
  *
  * Les corrigés modèles des fiches doivent obtenir un bon score, les réponses
  * réflexes ou hors sujet un score bas ; chaque grille doit lire des champs
@@ -13,7 +13,7 @@ const root = path.resolve(__dirname, '..');
 const sandbox = { window: {} };
 sandbox.globalThis = sandbox.window;
 vm.createContext(sandbox);
-for (const file of ['../../moteur/js/analyse.js', 'js/grilles.js', 'js/content-s1.js', 'js/content-s2.js', 'js/content-s3.js', 'js/content-s4.js']) {
+for (const file of ['../../moteur/js/indicateur.js', 'js/grilles.js', 'js/content-s1.js', 'js/content-s2.js', 'js/content-s3.js', 'js/content-s4.js']) {
   vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8').replace(/globalThis\);\s*$/, 'window);'), sandbox, { filename: file });
 }
 const { AtelierAnalyse: A, ATELIER_GRILLES: G, ATELIER_S1: S1, ATELIER_S3: S3, ATELIER_S4: S4 } = sandbox.window;

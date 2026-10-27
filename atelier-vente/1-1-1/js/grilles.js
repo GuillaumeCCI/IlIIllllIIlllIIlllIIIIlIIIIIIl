@@ -1,10 +1,10 @@
 /* GRILLES D'ANALYSE · réponses ouvertes du module 1-1-1.
  *
- * Lues par moteur/js/analyse.js, qui affiche un indicateur de points en
+ * Lues par moteur/js/indicateur.js, qui affiche un indicateur de points en
  * tête du corrigé. Une grille par exercice (clé du catalogue) ; chaque bloc
  * lit un ou plusieurs champs (`champs`, ou `motif` : « line » → line1,
  * line2…) et compte ses critères, ses phrases complètes, ses règles et ses
- * pièges. Le détail de l'écriture des expressions est en tête d'analyse.js.
+ * pièges. Le détail de l'écriture des expressions est en tête d'indicateur.js.
  *
  * Les familles de mots communes sont en tête : les enrichir profite à tous
  * les exercices qui les emploient.

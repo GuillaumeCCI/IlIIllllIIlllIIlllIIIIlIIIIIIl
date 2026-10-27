@@ -859,7 +859,7 @@
       const html = answerKeyFn(values(), current);
       if (html) node.querySelector('.feedback-anchor').insertAdjacentHTML('beforebegin', html);
     }
-    // Réponses ouvertes : l'indicateur de points (analyse.js), en tête du corrigé.
+    // Réponses ouvertes : l'indicateur de points (indicateur.js), en tête du corrigé.
     const analysis = root.AtelierAnalyse?.forExercise(current.key, values());
     if (analysis) {
       const title = node.querySelector('#feedback-title');

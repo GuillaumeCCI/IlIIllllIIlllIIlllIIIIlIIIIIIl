@@ -7,7 +7,7 @@
     "start": "node server.mjs",
     "dev": "node server.mjs",
     "build:pages": "node tools/build-pages.mjs",
-    "test": "node --test tests/rules.test.cjs && node tests/screens.test.cjs && node tests/flows.test.cjs && node tests/analyse.test.cjs",
+    "test": "node --test tests/rules.test.cjs && node tests/screens.test.cjs && node tests/flows.test.cjs && node tests/indicateur.test.cjs",
     "build": "node tools/build-pages.mjs && node tools/build-guides.mjs",
     "build:guides": "node tools/build-guides.mjs",
     "check:layout": "node tools/check-layout.mjs",
