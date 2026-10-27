@@ -55,7 +55,7 @@
     </div>`;
 
   const atouts = cas => `<div class="case-atouts">
-      <p class="ana-expect">Vos atouts pour ce client</p>
+      <p class="ana-expect">Ce que vous pouvez mettre en avant</p>
       <ul>${cas.atouts.map(item => `<li>${icon('check', { size: 14 })}<span>${esc(item)}</span></li>`).join('')}</ul>
     </div>`;
 
@@ -304,7 +304,7 @@
       ['user', 'Vous', cas.vous],
       ['users', 'Le client', cas.client],
       ['chat', 'La situation', `${cas.situation} Il vous dit : « ${cas.objection} »`],
-      ['check', 'Vos atouts', cas.atouts.join('\n')]
+      ['check', 'Ce que vous pouvez mettre en avant', cas.atouts.join('\n')]
     ];
   }, () => (ex.openCase() === null ? 'La méthode en 6 étapes' : `Le contexte · ${contexts[ex.openCase()].label}`));
 

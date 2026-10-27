@@ -141,80 +141,80 @@ window.ATELIER_S3 = {
         situation: 'Premier rendez-vous dans son bureau. Elle vous écoute poliment, puis coupe court.',
         objection: 'Nos chaises actuelles suffisent.',
         atouts: [
-          'Garantie de 5 ans sur tous les sièges',
-          'Essai gratuit de 30 jours, satisfait ou remboursé',
-          'Plus de 1 200 entreprises équipées',
-          'Nos clients constatent une baisse des arrêts liés au dos (TMS)',
-          'Diagnostic gratuit de 2 ou 3 postes de travail'
+          'Tous nos sièges sont garantis 5 ans.',
+          'La cliente peut les essayer gratuitement pendant 30 jours, et être remboursée si elle n’est pas satisfaite.',
+          'Plus de 1 200 entreprises sont déjà équipées de nos sièges.',
+          'Chez nos clients, les arrêts de travail pour mal de dos ont baissé.',
+          'Nous proposons un diagnostic gratuit de 2 ou 3 postes de travail.'
         ],
         model: [
           'Je comprends : si personne ne se plaint, la question ne se pose pas tous les jours.',
           'Vous arrive-t-il d’avoir des salariés gênés par le dos, ou des arrêts de ce type ?',
           'Si je comprends bien, vous préférez éviter de dépenser tant que ce n’est pas un vrai problème.',
-          'C’est justement l’objectif : prévenir les TMS avant l’arrêt. Nos clients constatent une baisse des absences, et l’étude ergonomique ne cible que les postes à risque.',
-          'Est-ce que cet angle prévention vous parle ?',
-          'Je vous propose un diagnostic gratuit de 2 ou 3 postes pour objectiver le besoin.'
+          'C’est justement l’objectif : éviter les douleurs de dos avant qu’elles ne deviennent des arrêts. Chez nos clients, ces arrêts ont baissé, et le diagnostic ne porte que sur les postes à risque.',
+          'Est-ce que cette idée de prévention vous parle ?',
+          'Je vous propose un diagnostic gratuit de 2 ou 3 postes, pour vérifier ensemble s’il y a un vrai besoin.'
         ],
         mots: {
           sujet: ['salariés', 'collaborateurs', 'équipes', 'dos', 'arrêts', 'plaintes', 'douleurs', 'confort', 'inconfort', 'gênés', 'absences', 'tms', 'fatigue', 'postes'],
           reprise: ['suffisent', 'actuelles', 'chaises', 'dépenser', 'vrai problème', 'satisfait', 'fonctionnent', 'pas de besoin', 'pas nécessaire', 'convient'],
-          preuve: ['tms', 'arrêts', 'absences', 'baisse', 'prévenir', 'prévention', 'clients constatent', 'étude', 'ergonom*', 'garantie', '5 ans', 'essai', '30 jours', 'remboursé', '1 200', '1200', 'entreprises équipées', 'diagnostic'],
+          preuve: ['douleurs', 'mal de dos', 'tms', 'arrêts', 'absences', 'baisse', 'prévenir', 'prévention', 'clients constatent', 'étude', 'ergonom*', 'garantie', '5 ans', 'essai', '30 jours', 'remboursé', '1 200', '1200', 'entreprises équipées', 'diagnostic'],
           suite: ['diagnostic', 'gratuit', '2 ou 3 postes', 'deux ou trois postes', 'objectiver', 'essai', 'visite', 'passer', 'tester']
         }
       },
       {
         label: 'Immobilier',
-        vous: 'Conseiller à l’agence Horizon Immobilier, qui cherche à obtenir le mandat de vente d’une maison.',
+        vous: 'Conseiller à l’agence Horizon Immobilier. Vous voulez que ce couple vous confie la vente de sa maison.',
         client: 'M. et Mme Roche, qui vendent leur maison familiale pour se rapprocher de leurs enfants.',
         situation: 'Vous venez de leur présenter votre estimation et votre offre de service, autour de la table du salon.',
         objection: 'Vos honoraires sont trop élevés, une autre agence nous propose 3 %.',
         atouts: [
-          'Délai de vente moyen : 45 jours, contre 90 dans le secteur',
-          '92 % des biens vendus au prix du mandat, à 3 % près',
-          'Photos professionnelles et visite virtuelle comprises',
-          'Plus de 300 acheteurs qualifiés dans le fichier de l’agence',
-          'Compte rendu écrit après chaque visite'
+          'Avec notre agence, une maison se vend en 45 jours en moyenne ; dans le secteur, il en faut 90.',
+          '92 % des maisons que nous vendons partent au prix affiché, ou presque.',
+          'Les photos sont faites par un photographe professionnel, et la visite virtuelle est comprise.',
+          'Plus de 300 personnes prêtes à acheter sont inscrites dans notre fichier.',
+          'Après chaque visite, nous envoyons un compte rendu écrit aux vendeurs.'
         ],
         model: [
           'Je comprends, les honoraires représentent une vraie somme sur une vente comme la vôtre.',
           'Qu’est-ce qui compte le plus pour vous dans cette vente : le prix final, le délai, ou les frais ?',
           'Si je comprends bien, vous voulez être sûrs que ce que vous payez se retrouve dans le prix que vous touchez au final.',
-          'Nos biens se vendent en 45 jours en moyenne, et 92 % au prix du mandat : un écart de 2 % sur le prix de votre maison couvre largement la différence d’honoraires.',
+          'Nos maisons se vendent en 45 jours en moyenne, et 92 % au prix affiché : si votre maison se vend seulement 2 % plus cher, la différence d’honoraires est largement couverte.',
           'Est-ce que cette façon de faire le calcul vous parle ?',
-          'Je vous propose de comparer les deux offres en net vendeur, chiffres en main, samedi matin ici même.'
+          'Je vous propose de comparer les deux offres sur ce qu’il vous restera vraiment après la vente, samedi matin ici même.'
         ],
         mots: {
           sujet: ['prix final', 'prix de vente', 'délai', 'frais', 'compte le plus', 'priorité', 'important pour vous', 'autre agence', '3 %', 'comparé', 'net vendeur', 'attendez'],
           reprise: ['honoraires', 'frais', 'payez', 'payer', 'coût', 'commission', 'trop élevés', 'autre agence', 'prix', 'touchez', 'net'],
-          preuve: ['45 jours', 'délai', '90 jours', '92 %', 'prix du mandat', 'écart', 'photos', 'visite virtuelle', 'acheteurs', 'acquéreurs', 'fichier', '300', 'compte rendu', 'net vendeur', 'négociation', 'estimation'],
+          preuve: ['45 jours', 'délai', '90 jours', '92 %', 'prix affiché', 'prix du mandat', 'plus cher', 'écart', 'photos', 'visite virtuelle', 'acheteurs', 'acquéreurs', 'fichier', '300', 'compte rendu', 'net vendeur', 'négociation', 'estimation'],
           suite: ['samedi', 'comparer', 'net vendeur', 'chiffres en main', 'rendez-vous', 'mandat', 'signer', 'revenir', 'date', 'proposition écrite']
         }
       },
       {
         label: 'Assurance des pros',
-        vous: 'Conseillère chez Novéa, qui assure les artisans : multirisque, responsabilité civile, perte d’exploitation.',
+        vous: 'Conseillère chez Novéa, qui assure les artisans : leur atelier, leur matériel, et leurs revenus en cas de coup dur.',
         client: 'Karim Benali, plombier à son compte depuis 8 ans, avec un apprenti.',
         situation: 'Vous l’appelez après sa demande de rappel sur le site. Il décroche entre deux chantiers.',
         objection: 'Je suis déjà assuré ailleurs, ça me va très bien.',
         atouts: [
-          'Comparaison gratuite du contrat actuel en 20 minutes',
-          'Perte d’exploitation incluse : revenus versés pendant un arrêt de travail',
-          'Indemnisation sous 10 jours après accord',
-          'Assistance chantier 24 h sur 24',
-          'Trois artisans sur quatre ne sont pas couverts en perte d’exploitation'
+          'Nous comparons gratuitement son contrat actuel au nôtre, en 20 minutes.',
+          'Si un sinistre l’empêche de travailler, notre contrat continue de lui verser un revenu.',
+          'Après un sinistre, il est remboursé sous 10 jours.',
+          'Une assistance répond jour et nuit, même quand il est sur un chantier.',
+          'Trois artisans sur quatre n’ont aucune garantie qui leur verse un revenu pendant un arrêt.'
         ],
         model: [
           'Très bien, c’est important d’être couvert quand on travaille chez les autres.',
           'Si demain un dégât des eaux vous immobilise un mois, savez-vous ce que votre contrat vous verse ?',
           'Si je vous suis bien, vous êtes satisfait de votre assureur et vous ne voulez pas tout changer pour rien.',
-          'Justement, je ne vous propose pas de changer à l’aveugle : en 20 minutes, je compare votre contrat au nôtre, en particulier la perte d’exploitation, qui manque à trois artisans sur quatre.',
+          'Justement, je ne vous propose pas de changer à l’aveugle : en 20 minutes, je compare votre contrat au nôtre, en particulier ce qui vous est versé si vous ne pouvez plus travailler, une garantie qui manque à trois artisans sur quatre.',
           'Cette comparaison vous semble utile ?',
           'Je vous propose de passer jeudi en fin de journée avec votre contrat actuel, et vous déciderez ensuite.'
         ],
         mots: {
           sujet: ['contrat', 'couvert', 'couverture', 'garanties', 'perte d’exploitation', 'arrêt', 'sinistre', 'dégât', 'immobilise', 'chantier', 'verse', 'rembourse', 'franchise', 'arrêt de travail'],
           reprise: ['déjà assuré', 'satisfait', 'ça vous va', 'changer', 'assureur', 'contrat actuel', 'content', 'pas besoin'],
-          preuve: ['comparer', 'comparaison', '20 minutes', 'gratuit', 'perte d’exploitation', 'revenus', 'assistance', '24 h', '24 heures', 'indemnis*', '10 jours', 'artisans', 'trois sur quatre', '3 sur 4'],
+          preuve: ['comparer', 'comparaison', '20 minutes', 'gratuit', 'perte d’exploitation', 'revenu', 'revenus', 'versé', 'ne pouvez plus travailler', 'remboursé', 'assistance', '24 h', '24 heures', 'indemnis*', '10 jours', 'artisans', 'trois sur quatre', '3 sur 4'],
           suite: ['jeudi', 'passer', 'rendez-vous', 'contrat actuel', 'comparer', 'comparaison', 'date', 'créneau', 'fin de journée', 'rappeler']
         }
       },
@@ -225,25 +225,25 @@ window.ATELIER_S3 = {
         situation: 'Démonstration en visio de 30 minutes. Elle trouve l’outil clair, mais regarde l’heure.',
         objection: 'Je n’ai pas le temps de changer d’outil en ce moment.',
         atouts: [
-          'Reprise des données faite par nos équipes',
-          'Mise en route en 2 heures',
-          'Prise en main d’une heure en visio, offerte',
-          'Nos clients gagnent en moyenne 4 heures par semaine sur l’administratif',
-          'Essai gratuit de 14 jours, sans engagement'
+          'Nos équipes transfèrent elles-mêmes ses devis, ses factures et ses clients dans le logiciel.',
+          'Le logiciel est prêt à l’emploi en 2 heures.',
+          'Une formation d’une heure en visio est offerte.',
+          'Nos clients gagnent en moyenne 4 heures par semaine sur leurs devis et leurs factures.',
+          'Elle peut l’essayer gratuitement pendant 14 jours, sans engagement.'
         ],
         model: [
           'Je comprends, la saison doit être chargée, et changer d’outil fait peur quand on court déjà.',
           'Combien de temps passez-vous aujourd’hui chaque semaine sur vos devis et vos factures ?',
           'Si je comprends bien, vous craignez que le changement vous prenne plus de temps qu’il ne vous en fait gagner.',
-          'C’est pour ça que nos équipes reprennent vos données elles-mêmes : la mise en route prend 2 heures, et nos clients gagnent en moyenne 4 heures par semaine.',
+          'C’est pour ça que nos équipes transfèrent vos données elles-mêmes : le logiciel est prêt en 2 heures, et nos clients gagnent en moyenne 4 heures par semaine.',
           'Est-ce que cela répond à votre crainte sur le temps ?',
-          'Je vous propose d’ouvrir l’essai gratuit aujourd’hui, et on cale l’heure de prise en main mardi prochain.'
+          'Je vous propose d’ouvrir l’essai gratuit aujourd’hui, et de fixer votre heure de formation mardi prochain.'
         ],
         mots: {
           sujet: ['temps', 'heures', 'semaine', 'devis', 'factures', 'administratif', 'combien', 'aujourd’hui', 'outil actuel', 'saison', 'soirées', 'week-end'],
           reprise: ['pas le temps', 'changer', 'changement', 'crainte', 'craignez', 'perdre du temps', 'chargée', 'en ce moment', 'outil'],
-          preuve: ['reprise', 'données', '2 heures', 'deux heures', 'mise en route', 'prise en main', 'formation', '4 heures', 'quatre heures', 'gagnent', 'essai', '14 jours', 'sans engagement', 'nos clients'],
-          suite: ['essai', '14 jours', 'prise en main', 'mardi', 'semaine prochaine', 'rendez-vous', 'visio', 'date', 'créneau', 'ouvrir', 'aujourd’hui']
+          preuve: ['transfèrent', 'transfert', 'prêt', 'reprise', 'données', '2 heures', 'deux heures', 'mise en route', 'prise en main', 'formation', '4 heures', 'quatre heures', 'gagnent', 'essai', '14 jours', 'sans engagement', 'nos clients'],
+          suite: ['essai', '14 jours', 'formation', 'prise en main', 'mardi', 'semaine prochaine', 'rendez-vous', 'visio', 'date', 'créneau', 'ouvrir', 'aujourd’hui']
         }
       },
       {
@@ -253,17 +253,17 @@ window.ATELIER_S3 = {
         situation: 'Il vient d’essayer un modèle à 2 400 € sur le parking du magasin. Il a aimé, mais il hésite.',
         objection: '2 400 €, c’est trop cher pour un vélo.',
         atouts: [
-          'Environ 80 € économisés par mois d’essence et de stationnement sur son trajet',
-          'Prime de la ville : 300 € à l’achat',
-          'Paiement en 4 fois sans frais',
-          'Garantie de la batterie : 5 ans',
-          'Révision gratuite au bout de 6 mois, prêt d’un vélo pour une journée'
+          'Sur son trajet, il économisera environ 80 € par mois d’essence et de stationnement.',
+          'La ville lui verse une prime de 300 € à l’achat.',
+          'Il peut payer en 4 fois, sans frais.',
+          'La batterie est garantie 5 ans.',
+          'La première révision est gratuite, et il peut garder le vélo une journée pour l’essayer.'
         ],
         model: [
           'Je comprends, c’est une vraie somme pour un vélo.',
           'Par rapport à quoi le trouvez-vous cher : un autre modèle, ou le budget que vous aviez prévu ?',
           'Si je comprends bien, vous voulez être sûr que cet achat se rembourse vraiment sur vos trajets.',
-          'Sur vos 12 km par jour, vous économisez environ 80 € par mois d’essence et de stationnement ; avec la prime de la ville de 300 € et le paiement en 4 fois, il est rentabilisé en deux ans environ.',
+          'Sur vos 12 km par jour, vous économisez environ 80 € par mois d’essence et de stationnement ; avec la prime de la ville de 300 € et le paiement en 4 fois, le vélo est remboursé en deux ans environ.',
           'Est-ce que ce calcul vous rassure ?',
           'Je vous propose de le garder une journée pour faire votre vrai trajet, et vous me direz ce que vous en pensez.'
         ],
@@ -281,24 +281,24 @@ window.ATELIER_S3 = {
         situation: 'Vous lui avez présenté un projet complet et son devis de 6 800 €. Elle a l’air séduite.',
         objection: 'Il faut que j’en parle à mon conjoint avant de décider.',
         atouts: [
-          'Planche d’ambiance en 3D offerte',
-          'Échantillons de tissus et de peintures à emporter',
-          'Devis valable 30 jours',
-          'Rendez-vous possibles le samedi',
-          'Acompte de 30 % seulement à la commande'
+          'Nous offrons une image en 3D de son futur salon.',
+          'Elle peut emporter des échantillons de tissus et de peinture.',
+          'Le devis reste valable 30 jours.',
+          'Nous pouvons la recevoir un samedi, avec son conjoint.',
+          'À la commande, elle ne paie que 30 % du montant.'
         ],
         model: [
           'Bien sûr, c’est un projet pour toute la maison, c’est normal de décider à deux.',
           'Qu’est-ce qui comptera le plus pour lui : le budget, le style, ou la durée des travaux ?',
           'Si je comprends bien, vous voulez qu’il adhère au projet autant que vous avant de vous engager.',
-          'Pour l’aider à se projeter, je vous prépare une planche d’ambiance en 3D et je vous confie les échantillons ; le devis reste valable 30 jours.',
+          'Pour l’aider à se projeter, je vous prépare une image en 3D de votre futur salon et je vous confie les échantillons ; le devis reste valable 30 jours.',
           'Est-ce que cela vous aiderait pour en parler ensemble ?',
-          'Je vous propose de revenir tous les deux samedi à 10 h : je vous présente la planche et on ajuste ensemble.'
+          'Je vous propose de revenir tous les deux samedi à 10 h : je vous présente l’image en 3D et on ajuste ensemble.'
         ],
         mots: {
           sujet: ['conjoint', 'mari', 'femme', 'compagnon', 'compagne', 'comptera', 'budget', 'style', 'durée', 'délai', 'travaux', 'important pour lui', 'avis', 'goûts', 'préférences'],
           reprise: ['conjoint', 'à deux', 'ensemble', 'décider', 'adhère', 'avis', 'd’accord', 'engager', 'en parler'],
-          preuve: ['planche', '3d', 'ambiance', 'échantillons', 'devis', '30 jours', 'valable', 'visuel', 'projeter', 'photos', 'réalisations', 'acompte', '30 %'],
+          preuve: ['image', 'futur salon', 'planche', '3d', 'ambiance', 'échantillons', 'devis', '30 jours', 'valable', 'visuel', 'projeter', 'photos', 'réalisations', 'acompte', '30 %'],
           suite: ['samedi', 'revenir', 'tous les deux', 'rendez-vous', '10 h', 'présente', 'date', 'venir ensemble', 'ajuster']
         }
       }
