@@ -187,7 +187,7 @@
     };
   }
 
-  function caseBar(cases, index, noun = 'cas') {
+  function caseBar(cases, index, noun = 'cas', { dots: withDots = true } = {}) {
     const { word, plural, feminine } = caseNoun(noun);
     const done = cases.filter(item => item.done).length;
     const treated = `traité${feminine ? 'e' : ''}`;
@@ -200,7 +200,7 @@
 
     return `<div class="case-bar">
       ${core.button(`${icon('arrowLeft', { size: 16 })}<span>${feminine ? 'Toutes les' : 'Tous les'} ${esc(plural)}</span>`, 'back-to-menu', 'text-button with-icon')}
-      <span class="case-switch"><span class="case-switch-label">Changer ${/^[aeiouyéèêh]/i.test(word) ? 'd’' : 'de '}${esc(word)}</span><span class="case-dots">${dots}</span></span>
+      ${withDots ? `<span class="case-switch"><span class="case-switch-label">Changer ${/^[aeiouyéèêh]/i.test(word) ? 'd’' : 'de '}${esc(word)}</span><span class="case-dots">${dots}</span></span>` : ''}
       <span class="case-bar-count"><span class="case-ring" style="--done:${(done / cases.length * 100).toFixed(0)}%" aria-hidden="true"></span>${done} sur ${cases.length} ${treated}${done > 1 ? 's' : ''}</span>
     </div>`;
   }
@@ -417,7 +417,7 @@
         ? `<span class="case-card-picture"><img src="${esc(core.webAsset(item.image))}" alt=""></span>`
         : '';
 
-      return `<button type="button" class="case-card ${item.done ? 'is-done' : ''}" data-action="open-case" data-index="${index}">
+      return `<button type="button" class="case-card ${item.done ? 'is-done' : ''} ${item.portrait ? 'has-portrait' : ''}" data-action="open-case" data-index="${index}">
         ${picture}
         <span class="case-card-body">
           <span class="case-card-top">
@@ -547,6 +547,8 @@
     const previous = lastSpots;
     lastSpots = { key: current.key, spots };
     if (!previous || previous.key !== current.key) return;
+    // Venir du menu n'est pas passer d'un cas à l'autre : l'apparition de l'écran suffit.
+    if (previous.spots.case && previous.spots.case.index === -1) return;
     const moved = Object.keys(spots).find(name => previous.spots[name] && previous.spots[name].index !== spots[name].index);
     if (!moved) return;
     const forward = spots[moved].index > previous.spots[moved].index;
@@ -1069,7 +1071,9 @@
           setValue('openCase', Number(control.dataset.index));
           setValue('stage', 1);
           core.persist();
-          render(true);
+          // Le cas s'ouvre aussitôt : pas le temps de lecture d'une consigne.
+          drawScreen(true);
+          if (!showingBriefing) { revealed = true; revealScreen({ t0: Date.now(), start: 0.05, read: 0.15 }); }
           break;
         case 'back-to-menu':
           setValue('openCase', null);

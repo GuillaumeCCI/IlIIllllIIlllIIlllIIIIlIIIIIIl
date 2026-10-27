@@ -107,7 +107,10 @@ window.ATELIER_CATALOG.portraits = {
   default: 'client-tasse',
   's2-b': 'client-cheveux-gris',
   's2-d': 'client-chignon',
-  's3-1-6': 'client-tasse',
+  // Un portrait par contexte : Sophie, les Roche, Karim, Nathalie, Paul, Claire.
+  's3-1-6': ['client-veste-verte', 'client-cheveux-gris', 'client-tasse', 'client-pull-clair', 'client-tasse', 'client-chignon'],
+  // Un portrait par carte : direction, prix, fournisseur décevant, chaises.
+  's3-1-7': ['client-veste-verte', 'client-tasse', 'client-cheveux-gris', 'client-chignon'],
 };
 
 /* Index pratique : liste à plat de tous les exercices, dans l'ordre du parcours.

@@ -446,7 +446,11 @@ body.is-briefing .briefing {
   background: #f4f0e8;
 }
 .case-card-label { font-size: 1.15rem; font-weight: 750; color: #16205e; line-height: 1.3; }
-.case-card-hint { font-size: .88rem; line-height: 1.5; color: #5c6686; font-style: italic; }
+.case-card-hint { font-size: .98rem; line-height: 1.45; color: #16205e; font-weight: 650; }
+/* Une carte de client : le portrait entier sur un fond doux, la réplique en vedette. */
+.case-card.has-portrait .case-card-picture { height: 150px; padding: 14px 14px 0; background: linear-gradient(180deg, #eef4ff, #f8fbff); border-bottom: 0; }
+.case-card.has-portrait .case-card-picture img { object-fit: contain; object-position: center bottom; }
+.case-card.has-portrait .case-card-hint { position: relative; padding: 10px 14px; border-radius: 12px; background: #f6f8fc; }
 
 /* Un cas traité se distingue sans crier victoire. */
 .case-card.is-done { border-color: #bfe2cf; }

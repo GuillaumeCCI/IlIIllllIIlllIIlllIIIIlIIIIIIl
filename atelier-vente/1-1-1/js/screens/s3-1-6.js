@@ -40,7 +40,7 @@
    * qu'on repart modifier une étape. */
   const showingRecap = c => allWritten(c) && ex.value(recapKey(c)) !== false;
 
-  const cases = () => contexts.map((cas, c) => ({ label: cas.label, hint: cas.objection, done: caseDone(c) }));
+  const cases = () => contexts.map((cas, c) => ({ label: cas.label, hint: cas.objection, image: core.portraitFor(null, c), portrait: true, done: caseDone(c) }));
 
   /* Le premier contexte traité termine l'exercice, pour de bon : une
    * nouvelle tentative ne retire pas la marque (`achieved`). */
@@ -74,7 +74,7 @@
     const rail = `<aside class="step-rail">
       ${core.button(`${icon('arrowLeft', { size: 16 })}<span>Tous les contextes</span>`, 'back-to-menu', 'text-button with-icon')}
       ${brief(cas)}
-      ${core.clientCard(cas.objection, null, 'Objection client')}
+      ${core.clientCard(cas.objection, null, 'Objection client', c)}
     </aside>`;
 
     return `<div class="step-layout">

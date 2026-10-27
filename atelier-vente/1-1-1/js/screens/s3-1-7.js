@@ -24,6 +24,8 @@
   const caseList = () => cards.map((card, i) => ({
     label: `Objection ${i + 1}`,
     hint: card.objection,
+    image: core.portraitFor(null, i),
+    portrait: true,
     done: cardDone(i)
   }));
 
@@ -80,7 +82,7 @@
         <div class="reflex-objection">${core.clientCard(card.objection, null, `Objection ${i + 1} sur ${cards.length}`, i)}</div>
       </section>
       <form class="panel answer-panel" novalidate data-bar-stays>
-        ${ex.caseBar(caseList(), i, { noun: 'carte', feminine: true })}
+        ${ex.caseBar(caseList(), i, { noun: 'carte', feminine: true }, { dots: false })}
         ${reviewed ? '' : steps}
         <div class="stage-body">${body}</div>
         ${reviewed ? '' : ex.lockNote('Le corrigé de cette carte s’affiche dès que vous l’avez construite')}
