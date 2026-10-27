@@ -84,6 +84,23 @@ test('1.4 : dix hypothèses et questions justes, toutes différentes, obtiennent
   }
 });
 
+test('S2 D : 48 réponses justes (8 par attitude) sont reconnues ; une réponse dans la mauvaise attitude ne compte pas', () => {
+  const V = require('./reponses-variees.cjs')['s2-D'];
+  const blocs = G['s2-D'].blocs;
+  V.attitudes.forEach((list, i) => list.forEach(text => {
+    const score = A.score({ blocs: [blocs[i]] }, { [`reply${i}`]: text }).points;
+    assert.ok(score >= 8, `${blocs[i].titre} : « ${text} » : ${score} / 10`);
+  }));
+  for (const [finalChoice, justification] of V.choix) {
+    const score = A.score({ blocs: [blocs[6]] }, { finalChoice, justification }).points;
+    assert.ok(score >= 8, `choix : « ${justification} » : ${score} / 10`);
+  }
+  for (const set of V.mauvaises) {
+    const score = A.score({ blocs: blocs.slice(0, 6) }, Object.fromEntries(set.map((t, i) => [`reply${i}`, t]))).points;
+    assert.ok(score <= 3, `attitudes mélangées : ${score} / 10`);
+  }
+});
+
 test('les réponses réflexes obtiennent au plus 3 / 10', () => {
   assert.ok(points('s4-2.2', Object.fromEntries(S4['2.2'].situations.map((s, i) => [`repair${i}`, s.reflex]))) <= 3);
   assert.ok(points('s3-1.4', { hypothesis: 'Il a pas le temps', question: 'D’accord, je vous rappelle dans un mois.' }) <= 3);

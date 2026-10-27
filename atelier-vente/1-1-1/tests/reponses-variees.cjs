@@ -3,6 +3,84 @@
  * indicateur.test.cjs). Une ligne par étape : accueillir, questionner,
  * reformuler, traiter, contrôler, enchaîner. */
 module.exports = {
+  // S2 D · « Je préfère prendre mon temps avant de me décider. »
+  // Huit réponses justes par attitude, dans l'ordre de ATELIER_S2.attitudes.
+  's2-D': {
+    attitudes: [
+      [ // Jugement / évaluation
+        'Vous avez bien raison de ne pas vous précipiter.',
+        'C’est très sage de prendre le temps de réfléchir.',
+        'C’est dommage, vous risquez de passer à côté d’une belle occasion.',
+        'Vous avez tort d’attendre, les prix vont augmenter.',
+        'C’est une bonne idée de bien peser votre décision.',
+        'Je trouve que c’est une attitude très raisonnable.',
+        'Ce serait une erreur de trop attendre.',
+        'Vous faites bien, on ne prend pas ce genre de décision à la légère.'
+      ],
+      [ // Interprétation
+        'En fait, vous n’êtes pas encore convaincu par notre offre.',
+        'Au fond, je pense que c’est le prix qui vous retient.',
+        'Si vous voulez attendre, c’est que quelque chose vous inquiète.',
+        'J’imagine que vous voulez comparer avec la concurrence.',
+        'Vous avez sûrement peur de vous tromper.',
+        'En réalité, vous devez en parler à quelqu’un avant de décider.',
+        'Je crois que vous doutez encore de l’utilité de notre solution.',
+        'C’est sans doute parce que vous avez déjà été déçu par le passé.'
+      ],
+      [ // Soutien / consolation
+        'Ne vous inquiétez pas, rien ne presse.',
+        'Prenez tout votre temps, il n’y a aucune urgence.',
+        'Pas de souci, c’est tout à fait normal.',
+        'Ne vous en faites pas, beaucoup de clients font comme vous.',
+        'Aucun problème, je reste à votre disposition quand vous serez prêt.',
+        'Rassurez-vous, vous n’avez aucune pression de ma part.',
+        'C’est bien normal, tout le monde a besoin de réfléchir.',
+        'Soyez tranquille, l’offre reste valable.'
+      ],
+      [ // Investigation / enquête
+        'Qu’est-ce qui vous ferait avancer plus vite ?',
+        'De combien de temps pensez-vous avoir besoin ?',
+        'Sur quels points souhaitez-vous encore réfléchir ?',
+        'Pourquoi préférez-vous attendre ?',
+        'Qu’est-ce qui vous fait hésiter aujourd’hui ?',
+        'Avez-vous besoin d’informations supplémentaires pour décider ?',
+        'Quand pensez-vous pouvoir prendre votre décision ?',
+        'Qui d’autre doit donner son avis sur ce projet ?'
+      ],
+      [ // Solution / décision
+        'Prenez la formule sans engagement, vous déciderez ensuite.',
+        'Je vous propose un essai gratuit de quinze jours.',
+        'Je vous conseille de réserver dès maintenant pour bloquer le tarif.',
+        'Vous pouvez commencer par la version de base et évoluer après.',
+        'Je vous envoie le devis, et vous signerez quand vous voudrez.',
+        'Le mieux serait de faire un test sur un mois.',
+        'Je vous recommande de démarrer avec un petit volume.',
+        'Signez aujourd’hui, vous aurez quatorze jours pour vous rétracter.'
+      ],
+      [ // Compréhension / reformulation
+        'Vous préférez avancer à votre rythme, je comprends.',
+        'Si je comprends bien, vous voulez prendre le temps de réfléchir avant de vous engager.',
+        'Vous avez besoin de temps pour être sûr de votre choix, c’est bien cela ?',
+        'Pour vous, il est important de ne pas décider dans la précipitation.',
+        'J’entends que vous souhaitez mûrir votre décision.',
+        'Autrement dit, vous ne voulez pas vous décider trop vite.',
+        'Vous tenez à prendre votre décision tranquillement, si je vous suis bien.',
+        'Ce que j’entends, c’est que vous voulez réfléchir avant de dire oui.'
+      ]
+    ],
+    // [choix, justification]
+    choix: [
+      ['Compréhension / reformulation', 'Elle respecte son rythme et montre que je l’ai écouté, sans le pousser. C’est ce qui installe la confiance au premier contact.'],
+      ['Compréhension / reformulation', 'Reformuler garde la relation ouverte, car le client se sent compris. Le jugement ou la solution le braqueraient trop tôt.'],
+      ['Compréhension / reformulation', 'Je choisis la compréhension parce qu’elle ne juge pas et ne force pas la décision. L’investigation pourra venir ensuite, une fois la confiance installée.'],
+      ['Compréhension / reformulation', 'Au premier contact, le client doit sentir qu’on l’écoute vraiment. La reformulation le permet, alors que le soutien minimise ce qu’il ressent.']
+    ],
+    // Une réponse juste, mais d'une autre attitude : elle ne doit pas compter.
+    mauvaises: [
+      ['Qu’est-ce qui vous fait hésiter ?', 'Prenez la formule sans engagement.', 'Vous avez raison d’attendre.', 'Vous préférez prendre votre temps, je comprends.', 'Ne vous inquiétez pas, rien ne presse.', 'En fait, vous n’êtes pas convaincu.']
+    ]
+  },
+
   // S3 1.4 · « Je vais réfléchir » : [hypothèse, question]. Les bonnes
   // couvrent chacune un frein différent ; les mauvaises acceptent le report,
   // soufflent la réponse ou restent vagues.
