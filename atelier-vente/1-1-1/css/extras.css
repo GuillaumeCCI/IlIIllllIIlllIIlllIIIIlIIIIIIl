@@ -472,3 +472,9 @@
 .answer-panel .result-answer-text { margin: 6px 0 14px; }
 .answer-panel .ana-expect + .ana-lines { margin-top: 8px; }
 .answer-panel .result-model { margin-top: 14px; }
+/* S3 1.4 · Au corrigé : la première réponse sous l'échange, les coches sur deux colonnes. */
+.scenario .review-step { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+#main .two-columns:has(.review-step) .ana-lines { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; }
+#main .two-columns:has(.review-step) .ana-line { font-size: .88rem; }
+.review-step .result-answer-text { margin: 6px 0 12px; }
+.review-step .result-model { margin-top: 12px; }

@@ -15,7 +15,9 @@
   function screen() {
     const review = ex.reviewing();
     /* Au corrigé, le score en tête, puis chaque réponse : la phrase (mots
-     * repérés surlignés), ce qu'on attend, et le corrigé type replié. */
+     * repérés surlignés), ce qu'on attend, et le corrigé type replié. La
+     * première réponse passe sous l'échange, la seconde reste à droite :
+     * tout tient à l'écran, sans défiler. */
     const analyse = window.AtelierAnalyse;
     const grid = window.ATELIER_GRILLES && window.ATELIER_GRILLES['s3-1.4'];
     const result = review && analyse && grid ? analyse.score(grid, ex.values()) : null;
@@ -34,13 +36,13 @@
           </div>`).join('')}
         </div>
         <div class="observation">${icon('lightbulb', { size: 19 })}<span>${esc(content.observation)}</span></div>
+        ${review ? `<div class="review-step">${core.step(1, 'Vraie objection probable', answer(0, 'hypothesis', content.hypothesisModel))}</div>` : ''}
       </section>
       <form class="panel answer-panel" novalidate>
         <div class="hint-row analyse-head">${core.panelTitle('Votre analyse')}${review ? '' : `<span class="analyse-tools">${kit ? kit.contextButton() : ''}${core.hintBlock(content.hint)}</span>`}</div>
         ${result ? `<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section>` : ''}
         ${review
-          ? `${core.step(1, 'Vraie objection probable', answer(0, 'hypothesis', content.hypothesisModel))}
-             ${core.step(2, 'Question pour la révéler', answer(1, 'question', content.questionModel, `<p class="result-avoid">${esc(content.avoid)}</p>`))}`
+          ? `${core.step(2, 'Question pour la révéler', answer(1, 'question', content.questionModel, `<p class="result-avoid">${esc(content.avoid)}</p>`))}`
           : `${core.step(1, 'Vraie objection probable', ex.field('hypothesis', 'Vraie objection probable', {
                placeholder: 'Le client hésite peut-être parce que…', max: 240, rows: 4, hideLabel: true
              }), 'Formulez une hypothèse simple et précise.')}
