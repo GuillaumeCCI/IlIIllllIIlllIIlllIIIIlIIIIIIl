@@ -289,7 +289,7 @@
       ['user', 'Vous', cas.vous],
       ['users', 'Le client', cas.client],
       ['chat', 'La situation', `${cas.situation} Il vous dit : « ${cas.objection} »`],
-      ['check', 'Vos arguments (tous ne répondent pas à son objection)', argumentsOf(cas).join('\n')]
+      ['check', 'Vos arguments (tous ne répondent pas à son objection)', argumentsOf(cas)]
     ];
   }, () => (ex.openCase() === null ? 'La méthode en 6 étapes' : `Le contexte · ${contexts[ex.openCase()].label}`));
 

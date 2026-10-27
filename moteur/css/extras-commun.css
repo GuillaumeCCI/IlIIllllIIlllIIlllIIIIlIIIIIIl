@@ -717,3 +717,7 @@ html { background-color: #fbf8f2; }
 /* Bande transparente : les décors des coins bas restent entiers. */
 #info-dialog.is-context .k-context-go { position: sticky; bottom: 0; z-index: 2; margin: 18px 0 0; padding: 0 0 36px; background: none; }
 @media (max-height: 760px) { #info-dialog.is-context .k-context li { font-size: .92rem; } #info-dialog.is-context .k-context-icon { width: 32px; height: 32px; } }
+/* Une liste dans la fenêtre de contexte : un élément par ligne, aéré, petite puce. */
+.k-context-list { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 9px; }
+.k-context .k-context-list li { display: block; position: relative; padding-left: 18px; font-size: inherit; line-height: 1.4; }
+.k-context .k-context-list li::before { content: ''; position: absolute; left: 2px; top: .58em; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: .55; }
