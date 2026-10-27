@@ -119,7 +119,7 @@
     return `<div class="sorter recap">
       <header class="sorter-head">
         <h1>Relisez votre réponse complète</h1>
-        <p class="subtitle">${esc(cas.label)} · « ${esc(cas.objection)} » Lisez vos six phrases d’un seul tenant avant de valider.</p>
+        <p class="subtitle">${esc(cas.label)} · « ${esc(cas.objection)} » Lisez vos six phrases d’un seul tenant avant de valider.</p>
         <p class="result-score">${writtenCount(c)} / ${method.length} phrases saisies</p>
       </header>
 
@@ -127,7 +127,7 @@
         <ol class="recap-list">${method.map((item, i) => `
           <li class="recap-row">
             <span class="recap-number">${String(i + 1).padStart(2, '0')}</span>
-            <span class="recap-text"><strong class="recap-step">${esc(item.step)}</strong> « ${esc(ex.value(lineKey(c, i)))} »</span>
+            <span class="recap-text"><strong class="recap-step">${esc(item.step)}</strong> « ${esc(ex.value(lineKey(c, i)))} »</span>
             <button type="button" class="text-button with-icon recap-edit" data-action="goto-step" data-index="${i}">
               ${icon('pencil', { size: 15 })}<span>Modifier</span>
             </button>
@@ -157,7 +157,7 @@
       <header class="sorter-head">
         ${core.button(`${icon('arrowLeft', { size: 16 })}<span>Tous les contextes</span>`, 'back-to-menu', 'text-button with-icon result-back')}
         <h1>Votre traitement, d’un seul tenant</h1>
-        <p class="subtitle"><strong>${esc(cas.label)}</strong> · « ${esc(cas.objection)} »</p>
+        <p class="subtitle"><strong>${esc(cas.label)}</strong> · « ${esc(cas.objection)} »</p>
       </header>
       <div class="result-top">
         ${result ? `<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section>` : ''}
@@ -173,13 +173,13 @@
           <p class="result-goal">${esc(item.role)}</p>
           <div class="result-yours-block">
             <p class="ana-expect">Votre phrase</p>
-            <p class="result-answer-text">« ${bloc(i) ? analyse.answer(bloc(i)) : esc(ex.value(lineKey(c, i)))} »</p>
+            <p class="result-answer-text">« ${bloc(i) ? analyse.answer(bloc(i)) : esc(ex.value(lineKey(c, i)))} »</p>
           </div>
           ${bloc(i) ? analyse.lines(bloc(i), { withText: false }) : ''}
           <details class="result-model">
             <summary>Voir un corrigé type</summary>
             <div class="result-model-body">
-              <p>« ${esc(cas.model[i])} »</p>
+              <p>« ${esc(cas.model[i])} »</p>
             </div>
           </details>
         </li>`).join('')}</ol>
@@ -303,7 +303,7 @@
     return [
       ['user', 'Vous', cas.vous],
       ['users', 'Le client', cas.client],
-      ['chat', 'La situation', `${cas.situation} Il vous dit : « ${cas.objection} »`],
+      ['chat', 'La situation', `${cas.situation} Il vous dit : « ${cas.objection} »`],
       ['check', 'Ce que vous pouvez mettre en avant', cas.atouts.join('\n')]
     ];
   }, () => (ex.openCase() === null ? 'La méthode en 6 étapes' : `Le contexte · ${contexts[ex.openCase()].label}`));
