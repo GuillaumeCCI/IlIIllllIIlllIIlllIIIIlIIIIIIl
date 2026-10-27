@@ -437,3 +437,6 @@
 /* Le menu des six contextes : deux rangées de trois. */
 #main .case-cards:has(> :nth-child(6):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 900px) { #main .case-cards:has(> :nth-child(6):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* S3 1.6 · La colonne du contexte s'élargit : fiche et objection lisibles. */
+#main .step-layout { grid-template-columns: minmax(320px, 460px) minmax(0, 1fr); max-width: 1600px; }
+#main .step-rail .case-brief { font-size: .98rem; }
