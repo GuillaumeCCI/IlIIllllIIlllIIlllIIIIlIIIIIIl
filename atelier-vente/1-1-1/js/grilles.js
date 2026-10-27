@@ -73,6 +73,28 @@
   // Les marques d'une preuve, quel que soit le secteur.
   const PREUVE_GENERALE = ['en moyenne', 'nos clients', 'clients', 'garantie', 'garanti', 'essai', 'chiffres', 'chiffre', 'résultats', 'concrètement', 'par exemple', 'références', 'témoignages', 'étude', 'gratuit', 'sans engagement', 'économ*', 'rentab*'];
 
+  // Les freins courants derrière un « je vais réfléchir » (S3 1.4).
+  const FREINS = [
+    // Le prix
+    'prix', 'budget', 'coût', 'cher', 'argent', 'tarif', 'moyens', 'financ*', 'trésorerie', 'dépense', 'investissement', 'rentab*', 'payer', 'facture', 'montant',
+    // Une décision qui ne lui appartient pas seul
+    'décider seul', 'seul', 'direction', 'hiérarchie', 'patron', 'chef', 'associé', 'associée', 'conjoint', 'conjointe', 'femme', 'mari', 'banque', 'banquier', 'comptable', 'conseil d’administration', 'en parler à', 'valider', 'validation', 'accord de', 'feu vert', 'qui d’autre', 'qui décide', 'interne',
+    // L'utilité, le besoin
+    'utile', 'utilité', 'besoin', 'pas convaincu', 'pas convaincue', 'convaincu', 'convaincue', 'intérêt', 'apporter', 'valeur', 'pertinent', 'nécessaire', 'pas sûr', 'pas sûre',
+    // La peur de se tromper
+    'peur', 'crainte', 'craint', 'se tromper', 'erreur', 'regretter', 'regret', 'risque', 'risqué', 'inquiet', 'inquiète', 'angoisse', 'engager', 'engagement',
+    // La concurrence
+    'comparer', 'compare', 'comparaison', 'concurrent', 'concurrence', 'autre offre', 'autre proposition', 'autre devis', 'ailleurs', 'autres fournisseurs',
+    // Le moment, les priorités
+    'priorité', 'prioritaire', 'urgence', 'urgences', 'moment', 'calendrier', 'pas le temps', 'débordé', 'débordée', 'occupé', 'occupée', 'charge', 'saison', 'plus tard',
+    // La mise en place
+    'mise en place', 'mise en œuvre', 'installation', 'compliqué', 'complexe', 'changement', 'changer', 'habitudes', 'temps à y consacrer', 'formation',
+    // La confiance
+    'confiance', 'méfiant', 'méfiante', 'méfiance', 'mauvaise expérience', 'déçu', 'déçue', 'fournisseur', 'promesses', 'sérieux',
+    // Les informations
+    'informations', 'information', 'renseignements', 'détails', 'précisions', 'comprendre', 'pas compris', 'flou', 'clair'
+  ];
+
   const CONTROLE = ['est-ce que cela répond', 'est-ce que ça répond', 'cela répond-il', 'cela répond à', 'ça répond à', 'cela vous rassure',
     'ça vous rassure', 'cela vous parle', 'ça vous parle', 'qu’en pensez-vous', 'qu’en dites-vous', 'est-ce plus clair', 'est-ce que c’est plus clair',
     'cela vous convient', 'ça vous convient', 'est-ce que cela vous convient', 'avez-vous d’autres questions', 'd’autres questions',
@@ -353,22 +375,27 @@
     ] },
 
     // S3 1.4 · « Je vais réfléchir » : l'hypothèse, puis la question.
-    's3-1.4': { blocs: [
+    // Une hypothèse simple suffit : un frein précis, formulé comme une
+    // supposition. Les familles de freins couvrent les causes courantes.
+    's3-1.4': { integre: true, blocs: [
       { titre: 'Vraie objection probable', champs: ['hypothesis'],
         criteres: [
-          { nom: 'Le prétexte repéré', mots: ['prétexte', 'excuse', 'dérobade', 'masque', 'cache', 'ne dit pas', 'non exprimé', 'non exprimée', 'vraie objection', 'frein', 'réel', 'vraie raison'], conseil: '« Je vais réfléchir » cache souvent autre chose.' },
-          { nom: 'Des causes possibles', mots: ['prix', 'budget', 'coût', 'utilité', 'doute', 'valider', 'direction', 'hiérarchie', 'décision', 'interne', 'peur', 'crainte', 'se tromper', 'risque', 'concurrent', 'comparaison', 'autre offre', 'moment', 'mise en œuvre', 'associé', 'patron'], min: 2, conseil: 'Citez des freins possibles : budget, décision, crainte…' }
+          { nom: 'Un frein précis', mots: FREINS, conseil: 'Nommez un frein : le budget, une décision à plusieurs, un doute, une peur…' },
+          { nom: 'Une hypothèse, pas une certitude', points: 1, mots: ['peut-être', 'sans doute', 'probablement', 'je pense', 'je crois', 'il est possible', 'il se peut', 'sûrement', 'certainement', 'je suppose', 'j’imagine', 'à mon avis', 'il semble', 'semble', 'on dirait', 'hésite', 'hésitation', 'parce que', 'car', 'cache', 'derrière', 'en réalité', 'vraie raison', 'vraie objection', 'prétexte', 'excuse', 'dérobade', 'masque', 'n’ose pas', 'ne dit pas', 'non exprimé', 'non exprimée', 'pas dit', 'frein', 'en fait'], conseil: 'Formulez-le comme une supposition : « Il hésite peut-être parce que… ».' }
         ],
         phrases: { attendues: 1, points: 1 } },
       { titre: 'Question pour la révéler', champs: ['question'],
         criteres: [
-          { nom: 'Une question ouverte', mots: QUESTION_OUVERTE, conseil: 'Commencez par « Qu’est-ce qui… ».' },
-          { nom: 'L’hésitation visée', mots: ['hésite*', 'freine*', 'retien*', 'bloque*', 'réfléchir', 'doute*', 'réserve*', 'inquiète*', 'préoccupe*', 'manque', 'aide à décider'], conseil: 'Visez ce qui le fait hésiter.' },
-          { nom: 'Avec tact', mots: ['bien sûr', 'je comprends', 'tout à fait', 'pour vous aider', 'pour être utile', 'd’accord', 'c’est normal', 'volontiers'], conseil: 'Accueillez d’abord : « Bien sûr… ».' }
+          { nom: 'Une question ouverte', mots: QUESTION_OUVERTE.concat(['qui', 'qui d’autre', 'sur quels points', 'quels points', 'de quelles', 'de quoi auriez-vous besoin', 'qu’est-ce qui vous manque', 'qu’est-ce qui passe avant', 'comment imaginez-vous', 'qu’est-ce qui vous ferait', 'que faudrait-il', 'qu’est-ce qu’il faudrait', 'à quoi pensez-vous']), conseil: 'Commencez par « Qu’est-ce qui… », « Comment… », « Qui… ».' },
+          { nom: 'Le frein visé', mots: FREINS.concat(['hésite*', 'freine*', 'retien*', 'bloque*', 'réfléchir', 'doute*', 'réserve*', 'inquiète*', 'inquiétude', 'préoccupe*', 'manque', 'convaincu', 'convaincue', 'confiance', 'avis', 'décision', 'décider', 'besoin', 'avancer', 'y voir clair', 'passe avant', 'aide à décider', 'compliqué', 'gêne']), conseil: 'Visez ce qui le fait hésiter.' },
+          { nom: 'Avec tact', points: 1, mots: ['bien sûr', 'je comprends', 'je vous comprends', 'je vous entends', 'tout à fait', 'bien entendu', 'c’est normal', 'c’est bien normal', 'volontiers', 'pour vous aider', 'pour vous aider à y voir clair', 'pour être utile', 'd’accord', 'évidemment', 'avec plaisir', 'entendu', 'très bien', 'je respecte', 'prenez le temps', 'sans vous presser'], conseil: 'Accueillez d’abord : « Bien sûr… ».' }
         ],
         phrases: { attendues: 1, points: 1 },
         regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 1 }],
-        pieges: [{ nom: 'Le report accepté', points: 2, mots: ['je vous rappelle', 'on verra', 'dans un mois', 'je vous laisse réfléchir', 'prenez le temps de réfléchir', 'rappelez-moi'], conseil: 'Accepter un report vague, c’est perdre la main.' }] }
+        pieges: [
+          { nom: 'Le report accepté', points: 2, mots: ['je vous rappelle', 'rappelez-moi', 'on verra', 'dans un mois', 'plus tard', 'je vous laisse réfléchir', 'prenez le temps de réfléchir', 'revenez vers moi', 'quand vous voulez', 'on en reparle plus tard', 'je repasse', 'à bientôt alors'], conseil: 'Accepter un report vague, c’est perdre la main.' },
+          { nom: 'Une question qui souffle la réponse', points: 1, mots: ['c’est le prix', 'c’est trop cher', 'est-ce le prix', 'est-ce le budget', 'c’est le budget', 'trop cher pour vous', 'c’est une question de budget', 'c’est une question d’argent', 'c’est à cause du prix', 'vous n’avez pas le budget'], conseil: 'Laissez-le nommer son frein lui-même.' }
+        ] }
     ] },
 
     // S3 1.5 · Expliquer pourquoi la réponse B est la plus juste.

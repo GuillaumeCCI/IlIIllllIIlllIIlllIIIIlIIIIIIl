@@ -524,7 +524,7 @@ for (const [file, fill] of Object.entries(INLINE)) {
     engine.submit();
     const main = sandbox.document.querySelector('#main').innerHTML;
     assert.ok(!/form-errors[^>]*>\s*<strong/.test(main), 'la validation ne doit pas être refusée');
-    assert.match(main, /inline-note|model-block|mark-ok|option-review|an-verdict/,
+    assert.match(main, /inline-note|model-block|mark-ok|option-review|an-verdict|result-model/,
       'la correction doit figurer dans l’écran, pas seulement dans le pavé du bas');
   });
 }

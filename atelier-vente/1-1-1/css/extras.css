@@ -462,3 +462,13 @@
 #main .recap-tiles .recap-edit { align-self: flex-start; }
 @media (max-width: 1000px) { #main .recap-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 620px) { #main .recap-tiles { grid-template-columns: minmax(0, 1fr); } }
+/* Dans le corrigé type replié : ce qu'il fallait éviter, en rouge discret. */
+.result-model .result-avoid { color: #a53b2a; }
+.answer-panel .ana-score.is-head { margin: 0 0 18px; }
+/* S3 1.4 · « Le contexte » et « Voir un indice », tout à droite du titre de l'analyse. */
+.analyse-head { align-items: flex-start; margin-bottom: 8px; }
+.analyse-tools { display: inline-flex; align-items: center; gap: 10px; margin-left: auto; }
+/* S3 1.4 · Au corrigé : de l'air entre la phrase, ce qu'on attend et le corrigé type. */
+.answer-panel .result-answer-text { margin: 6px 0 14px; }
+.answer-panel .ana-expect + .ana-lines { margin-top: 8px; }
+.answer-panel .result-model { margin-top: 14px; }

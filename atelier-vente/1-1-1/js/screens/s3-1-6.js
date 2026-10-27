@@ -255,28 +255,6 @@
     if (control) reopen(control.dataset.action === 'retry');
   });
 
-  /* « Voir un corrigé type » : le pli s'ouvre et se referme en glissant.
-   * Un seul écouteur sur la page : il vaut pour les blocs redessinés.
-   * Avec « réduire les animations », le pli s'ouvre d'un coup. */
-  document.addEventListener('click', event => {
-    const summary = event.target.closest && event.target.closest('.result-model > summary');
-    if (!summary) return;
-    const fold = summary.parentElement;
-    const body = fold.querySelector('.result-model-body');
-    const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (still || !body || !body.animate) return;
-    event.preventDefault();
-    if (fold.dataset.moving) return;
-    fold.dataset.moving = '1';
-    const opening = !fold.open;
-    if (opening) fold.open = true;
-    fold.classList.toggle('is-closing', !opening);
-    const height = `${body.scrollHeight}px`;
-    const frames = [{ height: '0px', opacity: 0 }, { height, opacity: 1 }];
-    const motion = body.animate(opening ? frames : frames.reverse(), { duration: opening ? 320 : 240, easing: 'cubic-bezier(.3, .7, .3, 1)' });
-    motion.onfinish = () => { if (!opening) fold.open = false; fold.classList.remove('is-closing'); delete fold.dataset.moving; };
-  });
-
   /* À l'ouverture d'un contexte pas encore traité, sa fiche s'ouvre en
    * fenêtre, une fois par visite : on lit le contexte avant d'écrire. */
   const shown = new Set();

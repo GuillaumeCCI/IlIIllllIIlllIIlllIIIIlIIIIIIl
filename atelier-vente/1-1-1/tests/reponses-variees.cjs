@@ -3,6 +3,30 @@
  * indicateur.test.cjs). Une ligne par étape : accueillir, questionner,
  * reformuler, traiter, contrôler, enchaîner. */
 module.exports = {
+  // S3 1.4 · « Je vais réfléchir » : [hypothèse, question]. Les bonnes
+  // couvrent chacune un frein différent ; les mauvaises acceptent le report,
+  // soufflent la réponse ou restent vagues.
+  's3-1.4': {
+    bonnes: [
+      ['Le client hésite peut-être parce que le prix dépasse le budget qu’il avait prévu.', 'Bien sûr. Qu’est-ce qui vous fait hésiter aujourd’hui ?'],
+      ['Il ne peut sans doute pas décider seul : il doit en parler à son associé ou à sa direction.', 'Je comprends. Qui d’autre doit donner son avis sur ce projet ?'],
+      ['Il n’est probablement pas convaincu que notre solution lui sera vraiment utile.', 'D’accord. Qu’est-ce qui vous manque pour être convaincu ?'],
+      ['Je pense qu’il a peur de se tromper et de regretter son choix.', 'Tout à fait. Qu’est-ce qui vous inquiète le plus dans cette décision ?'],
+      ['Il est peut-être en train de comparer avec une autre offre, chez un concurrent.', 'Bien entendu. Sur quels points comparez-vous les différentes propositions ?'],
+      ['Ce n’est pas une priorité pour lui en ce moment, il a d’autres urgences.', 'Je comprends. Qu’est-ce qui passe avant ce projet pour vous en ce moment ?'],
+      ['Le « je vais réfléchir » cache une objection qu’il n’ose pas dire, sans doute sur le coût.', 'Pour vous aider à y voir clair, qu’est-ce qui vous retient encore ?'],
+      ['Il craint que la mise en place soit compliquée et lui prenne trop de temps.', 'C’est normal. Comment imaginez-vous la mise en place de votre côté ?'],
+      ['Il a eu une mauvaise expérience avec un autre fournisseur et il reste méfiant.', 'Je vous comprends. Qu’est-ce qui vous ferait davantage confiance ?'],
+      ['Il lui manque probablement des informations pour se décider.', 'Volontiers. De quelles informations auriez-vous besoin pour avancer ?']
+    ],
+    mauvaises: [
+      ['Il n’a pas le temps.', 'D’accord, je vous rappelle dans un mois.'],
+      ['Je ne sais pas.', 'Très bien, prenez le temps de réfléchir et rappelez-moi.'],
+      ['Le client est pénible.', 'Vous êtes sûr que ce n’est pas trop cher pour vous ?'],
+      ['Il veut juste réfléchir, c’est normal.', 'On verra plus tard alors.']
+    ]
+  },
+
   // S3 1.6 · une réponse par contexte, dans l'ordre de content-s3.js.
   's3-1.6': [
     [ // Mobilier de bureau

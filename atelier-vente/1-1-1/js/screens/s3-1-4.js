@@ -9,13 +9,23 @@
   const { icon } = core;
   const content = window.ATELIER_S3['1.4'];
   const { esc } = core;
-  // Le bouton « Le contexte », en haut à droite de l'écran (kit.js chargé par la page).
+  // « Le contexte » et « Voir un indice », côte à côte en haut à droite de l'analyse (kit.js chargé par la page).
   const kit = window.AtelierKit;
-  const corner = () => (kit && !ex.reviewing() ? `<div class="tour-corner">${kit.contextButton()}</div>` : '');
 
   function screen() {
     const review = ex.reviewing();
-    return `${corner()}<div class="two-columns">
+    /* Au corrigé, le score en tête, puis chaque réponse : la phrase (mots
+     * repérés surlignés), ce qu'on attend, et le corrigé type replié. */
+    const analyse = window.AtelierAnalyse;
+    const grid = window.ATELIER_GRILLES && window.ATELIER_GRILLES['s3-1.4'];
+    const result = review && analyse && grid ? analyse.score(grid, ex.values()) : null;
+    const answer = (i, key, model, extra = '') => `<p class="result-answer-text">«\u00a0${result ? analyse.answer(result.blocs[i]) : esc(ex.value(key))}\u00a0»</p>
+      ${result ? analyse.lines(result.blocs[i], { withText: false }) : ''}
+      <details class="result-model">
+        <summary>Voir un corrigé type</summary>
+        <div class="result-model-body"><p>${esc(model)}</p>${extra}</div>
+      </details>`;
+    return `<div class="two-columns">
       <section class="panel scenario">
         <h2>L’échange</h2>
         <div class="conversation">
@@ -24,14 +34,13 @@
           </div>`).join('')}
         </div>
         <div class="observation">${icon('lightbulb', { size: 19 })}<span>${esc(content.observation)}</span></div>
-        ${core.hintBlock(content.hint)}
       </section>
       <form class="panel answer-panel" novalidate>
-        ${core.panelTitle('Votre analyse')}
+        <div class="hint-row analyse-head">${core.panelTitle('Votre analyse')}${review ? '' : `<span class="analyse-tools">${kit ? kit.contextButton() : ''}${core.hintBlock(content.hint)}</span>`}</div>
+        ${result ? `<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section>` : ''}
         ${review
-          ? `${core.step(1, 'Vraie objection probable', `<p class="own-line">« ${esc(ex.value('hypothesis'))} »</p>${ex.inlineNote(content.hypothesisModel, 'good')}`)}
-             ${core.step(2, 'Question pour la révéler', `<p class="own-line">« ${esc(ex.value('question'))} »</p>${ex.inlineNote(content.questionModel, 'good')}`)}
-             ${ex.inlineNote(content.avoid, 'bad')}`
+          ? `${core.step(1, 'Vraie objection probable', answer(0, 'hypothesis', content.hypothesisModel))}
+             ${core.step(2, 'Question pour la révéler', answer(1, 'question', content.questionModel, `<p class="result-avoid">${esc(content.avoid)}</p>`))}`
           : `${core.step(1, 'Vraie objection probable', ex.field('hypothesis', 'Vraie objection probable', {
                placeholder: 'Le client hésite peut-être parce que…', max: 240, rows: 4, hideLabel: true
              }), 'Formulez une hypothèse simple et précise.')}
@@ -57,7 +66,8 @@
   }
 
   /* Les deux repères sont posés sous les deux champs. */
-  const feedback = () => ['Comparez votre hypothèse et votre question aux repères affichés sous chacune.'];
+  // Le corrigé est dans les deux réponses : le pavé du bas ne garde que la suite.
+  const feedback = () => ['Relisez votre hypothèse et votre question avec leur corrigé type.'];
 
   // À l'arrivée : pourquoi on est là, ce qui se passe, ce qui est demandé.
   if (kit) kit.context([
@@ -66,5 +76,5 @@
     ['pencil', 'Ce qui vous est demandé', 'Écrire ce qui freine probablement le client, puis la question que vous lui auriez posée pour le faire parler.']
   ]);
 
-  ex.mount('s3-1.4', { screen, validate, feedback });
+  ex.mount('s3-1.4', { screen, validate, feedback, compactFeedback: true });
 })();
