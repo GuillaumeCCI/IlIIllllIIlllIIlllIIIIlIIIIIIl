@@ -156,10 +156,10 @@ window.ATELIER_S3 = {
           'Je vous propose un diagnostic gratuit de 2 ou 3 postes, pour vérifier ensemble s’il y a un vrai besoin.'
         ],
         mots: {
-          sujet: ['salariés', 'collaborateurs', 'équipes', 'dos', 'arrêts', 'plaintes', 'douleurs', 'confort', 'inconfort', 'gênés', 'absences', 'tms', 'fatigue', 'postes'],
-          reprise: ['suffisent', 'actuelles', 'chaises', 'dépenser', 'vrai problème', 'satisfait', 'fonctionnent', 'pas de besoin', 'pas nécessaire', 'convient'],
-          preuve: ['douleurs', 'mal de dos', 'tms', 'arrêts', 'absences', 'baisse', 'prévenir', 'prévention', 'clients constatent', 'étude', 'ergonom*', 'garantie', '5 ans', 'essai', '30 jours', 'remboursé', '1 200', '1200', 'entreprises équipées', 'diagnostic'],
-          suite: ['diagnostic', 'gratuit', '2 ou 3 postes', 'deux ou trois postes', 'objectiver', 'essai', 'visite', 'passer', 'tester']
+          sujet: ['salariés', 'collaborateurs', 'équipes', 'dos', 'arrêts', 'plaintes', 'douleurs', 'confort', 'inconfort', 'gênés', 'absences', 'tms', 'fatigue', 'postes', 'fin de journée', 'se sentent', 'mal', 'douleur', 'assis', 'journée', 'plaignent', 'plaint', 'santé', 'bien-être', 'confortables', 'usées', 'âge', 'combien de temps', 'posture', 'télétravail'],
+          reprise: ['suffisent', 'actuelles', 'chaises', 'dépenser', 'vrai problème', 'satisfait', 'fonctionnent', 'pas de besoin', 'pas nécessaire', 'convient', 'personne ne se plaint', 'plaint', 'changer', 'raison de changer', 'font le travail', 'suffit', 'en bon état', 'pas utile', 'pas la peine', 'besoin', 'pas prioritaire'],
+          preuve: ['douleurs', 'mal de dos', 'tms', 'arrêts', 'absences', 'baisse', 'prévenir', 'prévention', 'clients constatent', 'étude', 'ergonom*', 'garantie', '5 ans', 'essai', '30 jours', 'remboursé', '1 200', '1200', 'entreprises équipées', 'diagnostic', 'garantis', 'tester', 'testez', 'diminué', 'moins d’arrêts', 'entreprises', 'santé'],
+          suite: ['diagnostic', 'gratuit', '2 ou 3 postes', 'deux ou trois postes', 'objectiver', 'essai', 'visite', 'passer', 'tester', 'semaine prochaine', 'passer', 'deux ou trois', 'vérifier', 'mesurer', 'regarder ensemble']
         }
       },
       {
@@ -184,10 +184,10 @@ window.ATELIER_S3 = {
           'Je vous propose de comparer les deux offres sur ce qu’il vous restera vraiment après la vente, samedi matin ici même.'
         ],
         mots: {
-          sujet: ['prix final', 'prix de vente', 'délai', 'frais', 'compte le plus', 'priorité', 'important pour vous', 'autre agence', '3 %', 'comparé', 'net vendeur', 'attendez'],
-          reprise: ['honoraires', 'frais', 'payez', 'payer', 'coût', 'commission', 'trop élevés', 'autre agence', 'prix', 'touchez', 'net'],
-          preuve: ['45 jours', 'délai', '90 jours', '92 %', 'prix affiché', 'prix du mandat', 'plus cher', 'écart', 'photos', 'visite virtuelle', 'acheteurs', 'acquéreurs', 'fichier', '300', 'compte rendu', 'net vendeur', 'négociation', 'estimation'],
-          suite: ['samedi', 'comparer', 'net vendeur', 'chiffres en main', 'rendez-vous', 'mandat', 'signer', 'revenir', 'date', 'proposition écrite']
+          sujet: ['prix final', 'prix de vente', 'délai', 'frais', 'compte le plus', 'priorité', 'important pour vous', 'autre agence', '3 %', 'comparé', 'net vendeur', 'attendez', 'vendre vite', 'meilleur prix', 'attentes', 'vite', 'prix', 'calendrier', 'déménagement', 'quand', 'objectif', 'combien'],
+          reprise: ['honoraires', 'frais', 'payez', 'payer', 'coût', 'commission', 'trop élevés', 'autre agence', 'prix', 'touchez', 'net', 'valent', 'coûtent', 'cher', 'trop', 'comparer', 'agences', 'moins cher', 'économiser', 'valoir', 'rentable'],
+          preuve: ['45 jours', 'délai', '90 jours', '92 %', 'prix affiché', 'prix du mandat', 'plus cher', 'écart', 'photos', 'visite virtuelle', 'acheteurs', 'acquéreurs', 'fichier', '300', 'compte rendu', 'net vendeur', 'négociation', 'estimation', 'moyenne', 'ailleurs', 'photographe', 'visite virtuelle', '300 personnes', 'différence', 'vendue', 'vendues', 'rapidement'],
+          suite: ['samedi', 'comparer', 'net vendeur', 'chiffres en main', 'rendez-vous', 'mandat', 'signer', 'revenir', 'date', 'proposition écrite', 'comparaison écrite', 'comparaison', 'revenir', 'estimation', 'confier', 'reste']
         }
       },
       {
@@ -212,10 +212,10 @@ window.ATELIER_S3 = {
           'Je vous propose de passer jeudi en fin de journée avec votre contrat actuel, et vous déciderez ensuite.'
         ],
         mots: {
-          sujet: ['contrat', 'couvert', 'couverture', 'garanties', 'perte d’exploitation', 'arrêt', 'sinistre', 'dégât', 'immobilise', 'chantier', 'verse', 'rembourse', 'franchise', 'arrêt de travail'],
-          reprise: ['déjà assuré', 'satisfait', 'ça vous va', 'changer', 'assureur', 'contrat actuel', 'content', 'pas besoin'],
-          preuve: ['comparer', 'comparaison', '20 minutes', 'gratuit', 'perte d’exploitation', 'revenu', 'revenus', 'versé', 'ne pouvez plus travailler', 'remboursé', 'assistance', '24 h', '24 heures', 'indemnis*', '10 jours', 'artisans', 'trois sur quatre', '3 sur 4'],
-          suite: ['jeudi', 'passer', 'rendez-vous', 'contrat actuel', 'comparer', 'comparaison', 'date', 'créneau', 'fin de journée', 'rappeler']
+          sujet: ['contrat', 'couvert', 'couverture', 'garanties', 'perte d’exploitation', 'arrêt', 'sinistre', 'dégât', 'immobilise', 'chantier', 'verse', 'rembourse', 'franchise', 'arrêt de travail', 'revenus', 'revenu', 'accident', 'empêche de travailler', 'travailler', 'un mois', 'que se passe', 'couvre', 'si demain', 'arrêté', 'malade'],
+          reprise: ['déjà assuré', 'satisfait', 'ça vous va', 'changer', 'assureur', 'contrat actuel', 'content', 'pas besoin', 'content', 'envie de tout changer', 'pas envie', 'bien couvert', 'déjà couvert', 'tranquille', 'ailleurs'],
+          preuve: ['comparer', 'comparaison', '20 minutes', 'gratuit', 'perte d’exploitation', 'revenu', 'revenus', 'versé', 'ne pouvez plus travailler', 'remboursé', 'assistance', '24 h', '24 heures', 'indemnis*', '10 jours', 'artisans', 'trois sur quatre', '3 sur 4', 'touchez', 'pendant l’arrêt', 'jour et nuit', 'artisans', 'gratuitement', 'remboursé'],
+          suite: ['jeudi', 'passer', 'rendez-vous', 'contrat actuel', 'comparer', 'comparaison', 'date', 'créneau', 'fin de journée', 'rappeler', 'jeudi soir', 'se voir', 'on peut se voir', 'votre contrat']
         }
       },
       {
@@ -240,10 +240,10 @@ window.ATELIER_S3 = {
           'Je vous propose d’ouvrir l’essai gratuit aujourd’hui, et de fixer votre heure de formation mardi prochain.'
         ],
         mots: {
-          sujet: ['temps', 'heures', 'semaine', 'devis', 'factures', 'administratif', 'combien', 'aujourd’hui', 'outil actuel', 'saison', 'soirées', 'week-end'],
-          reprise: ['pas le temps', 'changer', 'changement', 'crainte', 'craignez', 'perdre du temps', 'chargée', 'en ce moment', 'outil'],
-          preuve: ['transfèrent', 'transfert', 'prêt', 'reprise', 'données', '2 heures', 'deux heures', 'mise en route', 'prise en main', 'formation', '4 heures', 'quatre heures', 'gagnent', 'essai', '14 jours', 'sans engagement', 'nos clients'],
-          suite: ['essai', '14 jours', 'formation', 'prise en main', 'mardi', 'semaine prochaine', 'rendez-vous', 'visio', 'date', 'créneau', 'ouvrir', 'aujourd’hui']
+          sujet: ['temps', 'heures', 'semaine', 'devis', 'factures', 'administratif', 'combien', 'aujourd’hui', 'outil actuel', 'saison', 'soirées', 'week-end', 'heures par semaine', 'combien de temps', 'temps passé', 'soir', 'paperasse', 'facturation'],
+          reprise: ['pas le temps', 'changer', 'changement', 'crainte', 'craignez', 'perdre du temps', 'chargée', 'en ce moment', 'outil', 'peur', 'perdre du temps', 'beaucoup de travail', 'débordée', 'pas le moment', 'changer d’outil', 'surchargée', 'trop de travail'],
+          preuve: ['transfèrent', 'transfert', 'prêt', 'reprise', 'données', '2 heures', 'deux heures', 'mise en route', 'prise en main', 'formation', '4 heures', 'quatre heures', 'gagnent', 'essai', '14 jours', 'sans engagement', 'nos clients', 'transférer', 'quatre heures', 'deux heures', 'prête', 'facile', 'simple'],
+          suite: ['essai', '14 jours', 'formation', 'prise en main', 'mardi', 'semaine prochaine', 'rendez-vous', 'visio', 'date', 'créneau', 'ouvrir', 'aujourd’hui', 'mardi', 'je vous ouvre', 'dès aujourd’hui', 'commencer']
         }
       },
       {
@@ -268,10 +268,10 @@ window.ATELIER_S3 = {
           'Je vous propose de le garder une journée pour faire votre vrai trajet, et vous me direz ce que vous en pensez.'
         ],
         mots: {
-          sujet: ['par rapport à quoi', 'budget', 'prévu', 'autre modèle', 'compar*', 'trajet', 'km', 'utilisation', 'combien', 'voiture'],
-          reprise: ['cher', 'prix', 'somme', 'budget', 'rentable', 'rembourse', 'investissement', '2 400'],
-          preuve: ['80 €', '80 euros', 'essence', 'stationnement', 'parking', 'économ*', 'prime', '300', '4 fois', 'quatre fois', 'sans frais', 'garantie', 'batterie', '5 ans', 'révision', 'rentabilis*', 'par mois'],
-          suite: ['journée', 'essai', 'essayer', 'garder', 'trajet', 'réserver', 'samedi', 'demain', 'date', 'prêt']
+          sujet: ['par rapport à quoi', 'budget', 'prévu', 'autre modèle', 'compar*', 'trajet', 'km', 'utilisation', 'combien', 'voiture', 'comparez', 'comparer', 'autre vélo', 'fixé', 'combien', 'trajets'],
+          reprise: ['cher', 'prix', 'somme', 'budget', 'rentable', 'rembourse', 'investissement', '2 400', 'vaut son prix', 'dépense', 'petite dépense', 'certain', 'sûr', 'vaut le coup', 'valoir'],
+          preuve: ['80 €', '80 euros', 'essence', 'stationnement', 'parking', 'économ*', 'prime', '300', '4 fois', 'quatre fois', 'sans frais', 'garantie', 'batterie', '5 ans', 'révision', 'rentabilis*', 'par mois', 'euros', 'économiser', 'ville', 'essence', 'remboursé'],
+          suite: ['journée', 'essai', 'essayer', 'garder', 'trajet', 'réserver', 'samedi', 'demain', 'date', 'prêt', 'prenez-le', 'demain', 'on en reparle', 'votre trajet']
         }
       },
       {
@@ -296,10 +296,10 @@ window.ATELIER_S3 = {
           'Je vous propose de revenir tous les deux samedi à 10 h : je vous présente l’image en 3D et on ajuste ensemble.'
         ],
         mots: {
-          sujet: ['conjoint', 'mari', 'femme', 'compagnon', 'compagne', 'comptera', 'budget', 'style', 'durée', 'délai', 'travaux', 'important pour lui', 'avis', 'goûts', 'préférences'],
-          reprise: ['conjoint', 'à deux', 'ensemble', 'décider', 'adhère', 'avis', 'd’accord', 'engager', 'en parler'],
-          preuve: ['image', 'futur salon', 'planche', '3d', 'ambiance', 'échantillons', 'devis', '30 jours', 'valable', 'visuel', 'projeter', 'photos', 'réalisations', 'acompte', '30 %'],
-          suite: ['samedi', 'revenir', 'tous les deux', 'rendez-vous', '10 h', 'présente', 'date', 'venir ensemble', 'ajuster']
+          sujet: ['conjoint', 'mari', 'femme', 'compagnon', 'compagne', 'comptera', 'budget', 'style', 'durée', 'délai', 'travaux', 'important pour lui', 'avis', 'goûts', 'préférences', 'important pour votre conjoint', 'son avis', 'ce qu’il aime', 'ce qu’elle aime', 'son goût', 'ses goûts', 'qu’est-ce qui'],
+          reprise: ['conjoint', 'à deux', 'ensemble', 'décider', 'adhère', 'avis', 'd’accord', 'engager', 'en parler', 'd’accord avec le projet', 'signer', 'décider ensemble', 'son accord', 'lui en parler', 'tous les deux'],
+          preuve: ['image', 'futur salon', 'planche', '3d', 'ambiance', 'échantillons', 'devis', '30 jours', 'valable', 'visuel', 'projeter', 'photos', 'réalisations', 'acompte', '30 %', 'image en 3d', 'emportez', 'emporter', 'montrer', 'voir le résultat'],
+          suite: ['samedi', 'revenir', 'tous les deux', 'rendez-vous', '10 h', 'présente', 'date', 'venir ensemble', 'ajuster', 'venez', 'samedi matin', 'montrerai', 'montrer', 'ensemble']
         }
       }
     ]

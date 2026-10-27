@@ -20,13 +20,15 @@
     'ravie de vous rencontrer', 'ravi de vous voir', 'ravie de vous voir', 'ravi de faire votre connaissance', 'enchanté', 'enchantée',
     'bienvenue', 'soyez le bienvenu', 'soyez la bienvenue', 'content de vous voir', 'contente de vous voir', 'heureux de vous rencontrer',
     'heureuse de vous rencontrer', 'c’est un plaisir', 'avec plaisir', 'installez-vous', 'asseyez-vous', 'prenez place', 'je vous en prie',
-    'vous avez trouvé facilement', 'vous allez bien'];
+    'vous avez trouvé facilement', 'vous allez bien',
+    'bonne journée', 'bienvenue chez nous', 'merci d’être passé', 'merci d’être passée', 'merci de nous recevoir', 'merci de votre confiance', 'je suis ravi', 'je suis ravie', 'très heureux', 'très heureuse', 'enchanté de vous rencontrer', 'enchantée de vous rencontrer', 'comment allez-vous', 'merci d’avoir accepté', 'merci pour ce rendez-vous', 'merci de m’avoir reçu', 'merci de m’avoir reçue', 'content de vous rencontrer', 'contente de vous rencontrer', 'je vous remercie de m’accorder', 'c’est un plaisir de vous rencontrer', 'je suis heureux de vous accueillir', 'je suis heureuse de vous accueillir', 'merci d’être venus'];
 
   const PRESENTATION = ['je suis', 'je m’appelle', 'mon nom est', 'je me présente', 'permettez-moi de me présenter', 'conseiller', 'conseillère',
     'commercial', 'commerciale', 'chargé de clientèle', 'chargée de clientèle', 'chargé d’affaires', 'chargée d’affaires', 'responsable',
     'consultant', 'consultante', 'représentant', 'représentante', 'vendeur', 'vendeuse', 'ingénieur commercial', 'technico-commercial',
     'à l’appareil', 'je travaille chez', 'je travaille pour', 'je représente', 'de la société', 'de l’entreprise', 'de l’agence', 'mon rôle', 'ma fonction',
-    'je m’occupe', 'je suis en charge', 'votre interlocuteur', 'votre interlocutrice', 'votre contact', '[prénom', 'prénom nom', '[entreprise'];
+    'je m’occupe', 'je suis en charge', 'votre interlocuteur', 'votre interlocutrice', 'votre contact', '[prénom', 'prénom nom', '[entreprise',
+    'je me permets de me présenter', 'je travaille à', 'je travaille dans', 'je suis le conseiller', 'je suis la conseillère', 'je suis votre conseiller', 'je suis votre conseillère', 'chargé de', 'chargée de', 'je représente la société', 'directeur', 'directrice', 'gérant', 'gérante', 'associé', 'associée', 'expert', 'experte', 'spécialiste', 'agent', 'agente', 'de chez', 'pour le compte de', 'notre société', 'notre entreprise', 'notre agence', 'notre cabinet', 'notre magasin'];
 
   const CADRAGE = ['je vous propose', 'je propose', 'nous proposons', 'minutes', 'minute', 'min', 'une demi-heure', 'demi-heure', 'un quart d’heure',
     'une heure', 'une vingtaine', 'une trentaine', 'une quinzaine', 'durée', 'le temps de', 'nous avons prévu', 'on a prévu', 'prévu ensemble',
@@ -34,14 +36,16 @@
     'l’objectif', 'objectif', 'le but', 'l’objet', 'ordre du jour', 'déroulé', 'déroulement', 'programme', 'étapes', 'faire le point',
     'faire un point', 'cet échange', 'cet entretien', 'ce rendez-vous', 'notre rendez-vous', 'notre échange', 'notre entretien',
     'ça vous va', 'cela vous va', 'ça vous convient', 'cela vous convient', 'vous convient-il', 'vous convient-elle', 'êtes-vous d’accord',
-    'si vous êtes d’accord', 'si cela vous convient', 'si ça vous convient', 'qu’en dites-vous', 'on fait comme ça'];
+    'si vous êtes d’accord', 'si cela vous convient', 'si ça vous convient', 'qu’en dites-vous', 'on fait comme ça',
+    'nous avons', 'nous disposons de', 'on dispose de', 'en quelques minutes', 'quelques minutes', 'rapidement', 'brièvement', 'en deux temps', 'en trois temps', 'deux étapes', 'trois étapes', 'je vous explique comment', 'voici comment', 'voilà comment', 'le plan', 'le programme', 'ce que je vous propose', 'nous allons', 'on va', 'je vais d’abord', 'ensuite je', 'puis je', 'à la fin', 'pour finir', 'en fin d’entretien', 'avant de', 'après quoi', 'si ça vous va', 'si cela vous va', 'ça vous convient', 'est-ce que ça vous va', 'est-ce que cela vous convient', 'on se donne', 'nous nous donnons', 'combien de temps avez-vous', 'de combien de temps disposez-vous', 'vous avez combien de temps'];
 
   const ECOUTE = ['je vous écoute', 'vous écouter', 'commencer par vous écouter', 'écouter', 'parlez-moi', 'racontez-moi', 'me raconter',
     'me parler', 'dites-moi', 'expliquez-moi', 'm’expliquer', 'je vous laisse', 'je vous laisse la parole', 'à vous', 'la parole',
     'votre situation', 'vos besoins', 'votre besoin', 'votre projet', 'vos attentes', 'vos priorités', 'vos enjeux', 'votre activité',
     'vos objectifs', 'vos questions', 'votre contexte', 'vos préoccupations', 'ce qui compte', 'ce qui est important pour vous',
     'ce qui vous amène', 'qu’est-ce qui vous amène', 'qu’est-ce qui', 'comprendre', 'mieux comprendre', 'bien comprendre', 'cerner',
-    'connaître', 'découvrir', 'vos difficultés', 'vos contraintes', 'votre quotidien', 'où vous en êtes', 'votre point de vue', 'votre avis'];
+    'connaître', 'découvrir', 'vos difficultés', 'vos contraintes', 'votre quotidien', 'où vous en êtes', 'votre point de vue', 'votre avis',
+    'je vous laisse me dire', 'je vous laisse m’expliquer', 'je vous laisse me présenter', 'présentez-moi', 'décrivez-moi', 'me décrire', 'me présenter', 'votre besoin', 'ce dont vous avez besoin', 'ce que vous recherchez', 'ce que vous cherchez', 'vous cherchez', 'vous recherchez', 'ce qui vous intéresse', 'ce qui vous préoccupe', 'ce qui vous ferait plaisir', 'vos envies', 'vos attentes', 'vos souhaits', 'votre organisation', 'votre fonctionnement', 'votre équipe', 'votre entreprise', 'votre métier', 'comment ça se passe', 'comment cela se passe', 'comment vous travaillez', 'comment vous faites', 'où en êtes-vous', 'qu’est-ce qui vous a amené', 'qu’est-ce qui vous a amenée', 'pourquoi vous êtes venu', 'pourquoi vous êtes venue', 'je suis là pour vous écouter', 'je suis à votre écoute', 'à votre écoute', 'je vous écoute attentivement', 'votre avis compte', 'donnez-moi votre avis'];
 
   const REFORMULATION = ['si je comprends bien', 'si j’ai bien compris', 'si je vous suis bien', 'si je vous entends bien', 'autrement dit',
     'en d’autres termes', 'vous voulez dire', 'vous me dites', 'vous dites', 'vous trouvez', 'vous avez l’impression', 'vous préférez',
@@ -50,18 +54,21 @@
     'je note', 'si je résume', 'en résumé', 'pour résumer', 'ce que je retiens', 'ce que j’entends', 'vous ressentez', 'vous vous sentez',
     'vous avez besoin', 'est important pour vous', 'compte pour vous', 'vous tient à cœur', 'vous interpelle', 'vous fait hésiter',
     'vous inquiète', 'vous préoccupe', 'vous rend prudent', 'vous rend prudente', 'vous vous interrogez', 'vous vous demandez',
-    'vous hésitez', 'vous doutez', 'vous craignez', 'vous attendez'];
+    'vous hésitez', 'vous doutez', 'vous craignez', 'vous attendez',
+    'si j’entends bien', 'si je vous comprends bien', 'si je saisis bien', 'en somme', 'en clair', 'donc vous', 'ainsi vous', 'vous voulez dire que', 'ce que vous me dites', 'ce que vous dites', 'ce que j’entends', 'ce que je comprends', 'vous avez peur', 'vous avez l’impression que', 'vous avez le sentiment', 'vous ne voyez pas', 'vous n’avez pas envie', 'vous avez envie', 'vous voulez être sûr', 'vous voulez être sûre', 'vous voulez être sûrs', 'vous voulez être certain', 'vous voulez être certaine', 'vous souhaitez être sûr', 'votre crainte', 'votre inquiétude', 'votre priorité', 'votre préoccupation', 'vous tenez à', 'vous préféreriez', 'vous ne souhaitez pas', 'vous ne voulez pas', 'pour vous c’est', 'c’est important pour vous', 'vous êtes inquiet', 'vous êtes inquiète', 'vous êtes déçu', 'vous êtes déçue', 'vous êtes content', 'vous êtes contente', 'vous êtes satisfait', 'vous êtes satisfaite', 'vous trouvez que', 'vous pensez que', 'vous estimez', 'vous jugez', 'je reformule', 'pour être sûr de bien comprendre', 'pour être sûre de bien comprendre', 'pour bien comprendre'];
 
   const QUESTION_OUVERTE = ['qu’est-ce qui', 'qu’est-ce que', 'quel', 'quelle', 'quels', 'quelles', 'comment', 'sur quoi', 'de quoi',
     'par rapport à quoi', 'dans quelle mesure', 'en quoi', 'à quel point', 'à quoi', 'que pensez-vous', 'qu’en pensez-vous',
-    'racontez-moi', 'dites-moi', 'parlez-moi', 'expliquez-moi', 'pourriez-vous préciser', 'précisez'];
+    'racontez-moi', 'dites-moi', 'parlez-moi', 'expliquez-moi', 'pourriez-vous préciser', 'précisez',
+    'combien', 'savez-vous', 'pourquoi', 'lequel', 'laquelle', 'lesquels', 'lesquelles', 'que se passe', 'qu’arrive-t-il', 'comparez', 'vous le comparez', 'par rapport à', 'qu’attendez-vous', 'que recherchez-vous', 'qu’aimeriez-vous', 'que souhaiteriez-vous', 'que voulez-vous dire', 'c’est-à-dire', 'dites-m’en plus', 'expliquez-moi', 'racontez-moi', 'à quel moment', 'depuis quand', 'de quelle façon', 'de quelle manière', 'sous quelle forme'];
 
   const PREUVE = ['garantie', 'garanti', '5 ans', 'cinq ans', 'essai', '30 jours', 'trente jours', 'satisfait ou remboursé', 'remboursé',
     'nos clients', 'clients constatent', 'entreprises équipées', 'références', 'référence', 'témoignage', 'témoignages', 'avis clients',
     'étude', 'étude ergonomique', 'chiffres', 'chiffre', 'résultats', 'baisse', 'réduction des arrêts', 'moins d’arrêts', 'arrêts',
     'absences', 'absentéisme', 'tms', 'troubles musculo', 'prévention', 'prévenir', 'retour sur investissement', 'rentabilité', 'rentable',
     'économies', 'économiser', 'sav', '48 h', '48 heures', '1 200', '1200', 'location', 'louer', 'étaler', 'mensualités', 'diagnostic',
-    'démonstration', 'exemple', 'concrètement', 'certifié', 'normes', 'productivité', 'confort', 'santé'];
+    'démonstration', 'exemple', 'concrètement', 'certifié', 'normes', 'productivité', 'confort', 'santé',
+    'garantis', 'garantie', 'tester', 'testez', 'essayer', 'essayez', 'diminué', 'baissé', 'en baisse', 'gagnent', 'gagner', 'économisez', 'économiser', 'remboursé', 'remboursée', 'gratuitement', 'offert', 'offerte', 'inclus', 'incluse', 'compris', 'comprise', 'clients satisfaits', 'déjà équipés', 'déjà équipées', 'avis', 'notes', 'prouvé', 'mesuré', 'constaté', 'démontré', 'certifié', 'certification', 'pour cent', 'euros', 'en moyenne', 'chaque année', 'chaque mois', 'par semaine', 'par mois', 'par an', 'depuis', 'ans d’expérience', 'années', 'chiffres à l’appui', 'cas concret', 'exemple concret', 'un client', 'une cliente'];
 
   // Les marques d'une preuve, quel que soit le secteur.
   const PREUVE_GENERALE = ['en moyenne', 'nos clients', 'clients', 'garantie', 'garanti', 'essai', 'chiffres', 'chiffre', 'résultats', 'concrètement', 'par exemple', 'références', 'témoignages', 'étude', 'gratuit', 'sans engagement', 'économ*', 'rentab*'];
@@ -70,12 +77,14 @@
     'ça vous rassure', 'cela vous parle', 'ça vous parle', 'qu’en pensez-vous', 'qu’en dites-vous', 'est-ce plus clair', 'est-ce que c’est plus clair',
     'cela vous convient', 'ça vous convient', 'est-ce que cela vous convient', 'avez-vous d’autres questions', 'd’autres questions',
     'cela lève', 'est-ce que cela lève', 'êtes-vous rassuré', 'êtes-vous rassurée', 'ai-je répondu', 'est-ce que j’ai répondu',
-    'cela vous semble', 'ça vous semble', 'vous semble-t-il', 'est-ce que cet angle', 'cet angle', 'votre préoccupation', 'votre question'];
+    'cela vous semble', 'ça vous semble', 'vous semble-t-il', 'est-ce que cet angle', 'cet angle', 'votre préoccupation', 'votre question',
+    'paraît', 'vous paraît', 'ça vous paraît', 'cela vous paraît', 'est-ce plus clair', 'plus clair', 'vous aidera', 'cela vous aide', 'ça vous aide', 'est-ce que je réponds', 'est-ce que ça répond', 'êtes-vous d’accord', 'vous êtes d’accord', 'est-ce que ça vous va', 'ça vous va', 'cela vous va', 'est-ce cohérent', 'est-ce que cela a du sens', 'ça a du sens', 'ça vous convainc', 'cela vous convainc', 'convaincu', 'convaincue', 'rassuré', 'rassurée', 'rassure', 'vous rassure', 'raisonnable', 'est-ce que c’est clair', 'c’est clair pour vous', 'avez-vous des questions', 'des questions', 'reste-t-il un doute', 'un doute', 'une réserve', 'd’autres réserves', 'quelque chose qui vous gêne', 'qui vous retient encore', 'qu’est-ce qui vous retient', 'vous retient', 'que vous en semble', 'votre sentiment', 'votre avis', 'vous voyez', 'vous suivez', 'ça tient la route', 'est-ce que ça vous parle', 'utile', 'intéressant pour vous', 'vous intéresse'];
 
   const SUITE = ['je vous propose', 'nous pourrions', 'on pourrait', 'prochaine étape', 'la suite', 'rendez-vous', 'on fixe', 'fixons',
     'on planifie', 'planifions', 'organiser', 'organisons', 'diagnostic', 'gratuit', 'démonstration', 'essai', 'visite', 'présentation',
     'rencontre', 'rencontrer', 'cette semaine', 'la semaine prochaine', 'demain', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi',
-    'date', 'créneau', 'agenda', 'calendrier', 'je vous envoie', 'je vous rappelle le', 'on continue', 'on avance', 'avançons'];
+    'date', 'créneau', 'agenda', 'calendrier', 'je vous envoie', 'je vous rappelle le', 'on continue', 'on avance', 'avançons',
+    'je peux passer', 'passer', 'on peut se voir', 'se voir', 'venez', 'je vous ouvre', 'on fixe', 'fixer', 'prenez-le', 'prenez-la', 'on en reparle', 'je reviens vers vous', 'je vous rappelle', 'je vous recontacte', 'je vous envoie', 'je vous prépare', 'je vous adresse', 'prochain rendez-vous', 'la semaine prochaine', 'ce soir', 'matin', 'après-midi', 'en fin de journée', 'quel jour', 'quelle date', 'quel moment', 'ça vous irait', 'cela vous irait', 'vous serait-il possible', 'seriez-vous disponible', 'êtes-vous disponible', 'on se rappelle', 'on se retrouve', 'retrouvons-nous', 'je bloque', 'je réserve', 'réservons', 'commençons par', 'première étape', 'pour avancer', 'pour aller plus loin', 'mettre en place', 'démarrer', 'lancer'];
 
   const RAISON = ['parce que', 'car', 'puisque', 'comme', 'ce qui', 'cela', 'ça permet', 'cela permet', 'permet de', 'permet', 'afin de',
     'pour que', 'donc', 'ainsi', 'c’est pourquoi', 'en effet', 'grâce à', 'cela montre', 'ce qui montre', 'cela évite', 'ce qui évite'];
@@ -379,7 +388,7 @@
     // (content-s3.js, `mots`) s'y ajoutent. L'écran construit la grille du
     // cas ouvert (`parCas`) et place le score dans ses six blocs.
     's3-1.6': { integre: true, parCas: (cas, champ) => ({ blocs: [
-      { titre: '1. Accueillir', champs: [champ(0)], criteres: [{ nom: 'L’objection accueillie', mots: ['je comprends', 'j’entends', 'je vois', 'c’est légitime', 'merci de', 'bonne remarque', 'tout à fait', 'en effet', 'effectivement', 'c’est normal', 'bien sûr', 'je note', 'très bien', 'je vous rejoins', 'c’est une vraie question', 'vous avez raison de'], conseil: 'Recevez l’objection sans la contredire.' }],
+      { titre: '1. Accueillir', champs: [champ(0)], criteres: [{ nom: 'L’objection accueillie', mots: ['je comprends', 'j’entends', 'je vois', 'c’est légitime', 'merci de', 'bonne remarque', 'tout à fait', 'en effet', 'effectivement', 'c’est normal', 'bien sûr', 'je note', 'très bien', 'je vous rejoins', 'c’est une vraie question', 'vous avez raison de', 'je vous entends', 'je vous comprends', 'je comprends tout à fait', 'je comprends bien', 'je le comprends', 'd’accord', 'c’est une bonne chose', 'c’est vrai', 'c’est juste', 'c’est une remarque juste', 'c’est une question importante', 'merci de me le dire', 'merci pour votre franchise', 'je vous remercie de', 'c’est compréhensible', 'c’est bien normal', 'bien entendu', 'évidemment', 'absolument', 'entendu', 'très juste', 'ça se comprend', 'cela se comprend', 'c’est important', 'c’est une vraie somme', 'vous n’êtes pas le seul', 'vous n’êtes pas la seule', 'beaucoup de clients', 'c’est une bonne question', 'je note votre remarque', 'je prends note'], conseil: 'Recevez l’objection sans la contredire.' }],
         pieges: [PIEGE_JUGEMENT, { nom: 'Contradiction', points: 1, mots: ['pas du tout', 'détrompez-vous', 'au contraire', 'c’est faux'], conseil: 'Ne contredisez pas le client.' }] },
       { titre: '2. Questionner', champs: [champ(1)], criteres: [{ nom: 'Une question qui creuse', mots: QUESTION_OUVERTE.concat(['vous arrive-t-il', 'avez-vous', 'est-ce que', 'savez-vous', 'combien']), conseil: 'Une seule question, ouverte.' },
         { nom: 'Le bon sujet', mots: cas.mots.sujet, conseil: 'Visez ce qui se cache derrière son objection.' }],

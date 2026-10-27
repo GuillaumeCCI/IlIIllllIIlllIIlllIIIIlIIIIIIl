@@ -49,6 +49,29 @@ test('1.6 : le corrigé type de chaque contexte obtient au moins 8 / 10', () => 
   }
 });
 
+test('1.6 : des réponses justes, formulées autrement que le corrigé, obtiennent au moins 8 / 10', () => {
+  const variees = require('./reponses-variees.cjs')['s3-1.6'];
+  for (const [c, cas] of S3['1.6'].cases.entries()) {
+    const grid = G['s3-1.6'].parCas(cas, i => `line${i}`);
+    const score = A.score(grid, Object.fromEntries(variees[c].map((line, i) => [`line${i}`, line]))).points;
+    assert.ok(score >= 8, `contexte ${c + 1} (${cas.label}) : ${score} / 10`);
+  }
+});
+
+test('1.6 : des réponses maladroites (contredire, brader, pousser) obtiennent au plus 3 / 10', () => {
+  const maladroites = [
+    ['Vous avez tort, ce n’est pas du tout le cas.', 'Vous êtes sûr de vouloir rater une si belle occasion.', 'Bon, passons, ce n’est pas grave.', 'Notre produit est le meilleur du marché, tout le monde le dit.', 'Voilà, c’est tout.', 'Signez ici et on n’en parle plus.'],
+    ['Oui mais vous vous trompez complètement.', 'Il faut absolument acheter maintenant.', 'Je vais vous faire une remise de 20 % pour conclure.', 'Je vous fais un geste commercial exceptionnel aujourd’hui.', 'Ne vous inquiétez pas, tout le monde dit ça.', 'Je vous laisse réfléchir, rappelez-moi quand vous voulez.']
+  ];
+  for (const cas of S3['1.6'].cases) {
+    const grid = G['s3-1.6'].parCas(cas, i => `line${i}`);
+    for (const set of maladroites) {
+      const score = A.score(grid, Object.fromEntries(set.map((line, i) => [`line${i}`, line]))).points;
+      assert.ok(score <= 3, `${cas.label} : ${score} / 10`);
+    }
+  }
+});
+
 test('les réponses réflexes obtiennent au plus 3 / 10', () => {
   assert.ok(points('s4-2.2', Object.fromEntries(S4['2.2'].situations.map((s, i) => [`repair${i}`, s.reflex]))) <= 3);
   assert.ok(points('s3-1.4', { hypothesis: 'Il a pas le temps', question: 'D’accord, je vous rappelle dans un mois.' }) <= 3);
