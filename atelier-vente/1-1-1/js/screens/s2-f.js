@@ -112,6 +112,16 @@
     ? ['Les trois profils sont traités. Rouvrez-en un pour relire votre formulation et la réponse modèle.']
     : '';
 
+  /* Visite guidée, à l'ouverture du premier cas : ses zones n'existent pas
+   * au menu, elle attend donc qu'un cas soit ouvert. Une fois vue, elle ne
+   * revient plus (les cas suivants s'ouvrent sans visite). */
+  if (window.AtelierKit) window.AtelierKit.tour('s2-F', [
+    { target: '.scenario .case-scene', title: 'Le profil', text: 'Voici le client et ce qu’il vous dit.' },
+    { target: '.case-bar', title: 'Les trois profils', text: 'Ce compteur montre combien de profils vous avez traités. « Tous les profils » ramène au menu.' },
+    { target: '.answer-panel .exercise-body', title: 'Vos deux réponses', text: 'Écrivez votre réponse d’écoute, puis, en une phrase, comment vous adaptez votre posture.' },
+    { target: '#main .form-actions', title: 'Valider', text: 'Vous évaluez ensuite votre réponse, puis la correction s’affiche.' }
+  ]);
+
   ex.mount('s2-F', {
     screen, validate, intercept, feedback, afterSubmit, allDone, cases,
     menuIntro: 'Trois profils d’interlocuteurs vous attendent. Choisissez celui que vous souhaitez traiter en premier.',

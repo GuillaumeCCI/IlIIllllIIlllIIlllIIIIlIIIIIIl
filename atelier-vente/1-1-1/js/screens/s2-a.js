@@ -126,6 +126,16 @@
       : `${right} choix sur ${clients.length} correspond${right > 1 ? 'ent' : ''} à la réponse attendue. Rouvrez un client pour relire sa correction.`];
   }
 
+  /* Visite guidée, à l'ouverture du premier cas : ses zones n'existent pas
+   * au menu, elle attend donc qu'un cas soit ouvert. Une fois vue, elle ne
+   * revient plus (les cas suivants s'ouvrent sans visite). */
+  if (window.AtelierKit) window.AtelierKit.tour('s2-A', [
+    { target: '.scenario .case-scene', title: 'Le client', text: 'Voici le client et ce qu’il vous dit.' },
+    { target: '.case-bar', title: 'Les trois clients', text: 'Ce compteur montre combien de clients vous avez traités. « Tous les clients » ramène au menu.' },
+    { target: '.answer-panel .exercise-body', title: 'Votre réponse', text: 'Choisissez la meilleure réponse, puis justifiez votre choix en une phrase.' },
+    { target: '#main .form-actions', title: 'Valider', text: 'Vous évaluez ensuite votre réponse, puis la correction s’affiche.' }
+  ]);
+
   ex.mount('s2-A', {
     screen, validate, intercept, feedback, afterSubmit, allDone, cases,
     menuIntro: 'Trois clients vous attendent. Choisissez celui que vous souhaitez traiter en premier.',
