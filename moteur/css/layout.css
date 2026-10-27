@@ -450,8 +450,13 @@ body { position: relative; }
 @keyframes k-switch-pop { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgb(19 75 215 / 50%); } 40% { transform: scale(1.25); box-shadow: 0 0 0 8px rgb(19 75 215 / 18%); } 70% { transform: scale(.95); } 100% { transform: scale(1); box-shadow: 0 0 0 14px rgb(19 75 215 / 0%); } }
 .k-switch-pop { animation: k-switch-pop .9s cubic-bezier(.3, 1.4, .5, 1); }
 .k-switch-halo { animation: k-switch-glow 1.2s ease-out; }
+/* Le bloc qui glisse est aussi la carte au halo : les deux jouent ensemble
+ * (sinon le halo remplace le glissement, qui ne part qu'à sa fin). */
+.k-switch-next.k-switch-halo { animation: k-switch-next .85s cubic-bezier(.22, .9, .3, 1) both, k-switch-glow 1.2s ease-out; }
+.k-switch-prev.k-switch-halo { animation: k-switch-prev .85s cubic-bezier(.22, .9, .3, 1) both, k-switch-glow 1.2s ease-out; }
 @media (prefers-reduced-motion: reduce) {
   .k-switch-next, .k-switch-prev { animation: k-switch-fade .3s ease both; }
   .k-switch-pulse, .k-switch-pop, .k-switch-halo { animation: none; }
+  .k-switch-next.k-switch-halo, .k-switch-prev.k-switch-halo { animation: k-switch-fade .3s ease both; }
 }
 @keyframes k-switch-fade { from { opacity: 0; } to { opacity: 1; } }

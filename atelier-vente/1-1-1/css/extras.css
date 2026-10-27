@@ -395,3 +395,14 @@
 #main:has(.affirmative) > * { width: 100%; }
 #main .affirmative > .scenario > .illustration { flex: 1 1 0; min-height: 240px; max-height: 56vh; display: flex; }
 #main .affirmative > .scenario > .illustration img { flex: 1; height: auto; min-height: 0; max-height: none; aspect-ratio: auto; }
+
+/* S3 1.6 · Corrigé du traitement complet : six blocs, deux rangées de trois. */
+.sorter.recap:has(.result-tiles) { max-width: 1240px; }
+#main .result-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+#main .result-tiles .result-row { display: flex; flex-direction: column; align-items: stretch; gap: 12px; padding: 18px 20px; }
+.result-tile-head { display: flex; align-items: center; gap: 12px; }
+.result-tiles .result-body { gap: 8px; flex: 1; }
+.result-model { display: block; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: .86rem; line-height: 1.45; }
+.result-model-label { display: block; margin-bottom: 2px; color: var(--navy); font-size: .74rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+@media (max-width: 1000px) { #main .result-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { #main .result-tiles { grid-template-columns: minmax(0, 1fr); } }

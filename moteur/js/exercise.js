@@ -564,7 +564,8 @@
       card.classList.remove('k-switch-halo');
       void card.offsetWidth;
       card.classList.add('k-switch-halo');
-      card.addEventListener('animationend', () => card.classList.remove('k-switch-halo'), { once: true });
+      const off = event => { if (event.target === card && event.animationName === 'k-switch-glow') { card.classList.remove('k-switch-halo'); card.removeEventListener('animationend', off); } };
+      card.addEventListener('animationend', off);
     };
     const animate = (parent, depth) => [...parent.children].forEach(el => {
       if (el.matches(STILL)) return;

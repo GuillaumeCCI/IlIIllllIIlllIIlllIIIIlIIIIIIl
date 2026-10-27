@@ -272,11 +272,11 @@
         <p class="ana-points"><strong>${number(result.points)}</strong><span>/ ${result.total} points</span></p>
         <p class="ana-note">Un indicateur automatique : il repère des mots et des tournures, il ne comprend pas le sens. Relisez aussi le corrigé.</p>
       </div>
-      ${result.blocs.map(bloc => `<div class="ana-bloc">
+      <div class="ana-blocs${several ? ' is-several' : ''}">${result.blocs.map(bloc => `<div class="ana-bloc">
         ${several && bloc.titre ? `<h4>${esc(bloc.titre)}</h4>` : ''}
         <ul class="ana-lines">${bloc.lines.map(line).join('')}</ul>
         ${bloc.marks.length ? `<p class="ana-text">${highlighted(bloc.text, bloc.marks)}</p>` : ''}
-      </div>`).join('')}
+      </div>`).join('')}</div>
     </section>`;
   }
 

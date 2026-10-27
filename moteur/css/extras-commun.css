@@ -673,8 +673,16 @@ html { background-color: #fbf8f2; }
 .ana-points strong { font-size: 2.2rem; font-weight: 800; line-height: 1; color: var(--accent); }
 .ana-points span { color: var(--muted); font-weight: 600; }
 .feedback .ana-note, .ana-note { flex: 1 1 260px; margin: 0; color: var(--muted); font-size: .85rem; }
-.ana-bloc { display: grid; gap: 10px; }
-.ana-bloc + .ana-bloc { padding-top: 14px; border-top: 1px solid var(--line); }
+/* Une seule réponse : les critères en petites cases. Plusieurs réponses : une carte par réponse. */
+.ana-blocs { display: grid; gap: 14px; }
+.ana-blocs.is-several { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ana-blocs.is-several:is(:has(> :nth-child(2):last-child), :has(> :nth-child(4):last-child)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 900px) { .ana-blocs.is-several, .ana-blocs.is-several:is(:has(> :nth-child(2):last-child), :has(> :nth-child(4):last-child)) { grid-template-columns: minmax(0, 1fr); } }
+.ana-bloc { display: grid; gap: 10px; align-content: start; }
+.ana-blocs.is-several .ana-bloc { padding: 16px; border-radius: 12px; background: #f6f8fc; }
+.ana-blocs:not(.is-several) .ana-lines { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.ana-blocs:not(.is-several) .ana-line { padding: 12px; border-radius: 10px; background: #f6f8fc; }
+.ana-blocs.is-several .ana-text { background: #fff; }
 .ana-bloc h4 { margin: 0; color: var(--navy); font-size: 1rem; }
 .ana-lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .ana-line { display: flex; align-items: flex-start; gap: 10px; color: var(--navy); font-size: .92rem; line-height: 1.45; }
@@ -688,3 +696,4 @@ html { background-color: #fbf8f2; }
 .feedback .ana-text, .ana-text { margin: 0; padding: 12px 14px; border-radius: 10px; background: #f6f8fc; color: var(--navy); font-size: .92rem; line-height: 1.6; white-space: pre-line; }
 .ana-text mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
 .ana-text mark.is-warn { background: #ffd9d2; }
+.feedback.is-compact > .ana-score { flex: 0 0 100%; width: 100%; max-width: none; margin: 0; }

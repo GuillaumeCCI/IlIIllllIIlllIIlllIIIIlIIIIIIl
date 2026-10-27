@@ -100,21 +100,22 @@
     </div>`;
   }
 
-  /* Après validation : chaque phrase est relue en regard de son étape. */
+  /* Après validation : chaque phrase est relue en regard de son étape,
+   * six blocs en deux rangées de trois. */
   function reviewScreen() {
     return `<div class="sorter recap">
       <header class="sorter-head">
         <h1>Votre traitement, d’un seul tenant</h1>
         <p class="subtitle">${esc(content.feedback)}</p>
       </header>
-      <ol class="result-list">${method.map((item, i) => `
+      <ol class="result-list result-tiles">${method.map((item, i) => `
         <li class="result-row">
-          <span class="result-number">${String(i + 1).padStart(2, '0')}</span>
+          <span class="result-tile-head"><span class="result-number">${String(i + 1).padStart(2, '0')}</span>
+            <span class="result-role">${icon(item.symbol, { size: 15 })}<span>${esc(item.step)}</span></span></span>
           <span class="result-body">
-            <span class="result-role">${icon(item.symbol, { size: 15 })}<span>${esc(item.step)}</span></span>
             <strong>« ${esc(ex.value(lineKey(i)))} »</strong>
             <span class="result-why">${esc(item.role)}</span>
-            ${content.model && content.model[i] ? `<span class="result-why">Corrigé modèle : « ${esc(content.model[i])} »</span>` : ''}
+            ${content.model && content.model[i] ? `<span class="result-model"><span class="result-model-label">Corrigé modèle</span>« ${esc(content.model[i])} »</span>` : ''}
           </span>
         </li>`).join('')}</ol>
       ${core.feedbackBox()}
