@@ -100,23 +100,31 @@
     </div>`;
   }
 
-  /* Après validation : chaque phrase est relue en regard de son étape,
-   * six blocs en deux rangées de trois. */
+  /* Après validation : six blocs en deux rangées de trois, le score en tête.
+   * Chaque bloc : la phrase de l'apprenant (mots repérés surlignés), les
+   * coches de l'indicateur, puis le corrigé type, replié. */
   function reviewScreen() {
+    const analyse = window.AtelierAnalyse;
+    const grid = window.ATELIER_GRILLES && window.ATELIER_GRILLES['s3-1.6'];
+    const result = analyse && grid ? analyse.score(grid, ex.values()) : null;
+    const bloc = i => result && result.blocs[i];
     return `<div class="sorter recap">
       <header class="sorter-head">
         <h1>Votre traitement, d’un seul tenant</h1>
         <p class="subtitle">${esc(content.feedback)}</p>
       </header>
+      ${result ? `<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section>` : ''}
       <ol class="result-list result-tiles">${method.map((item, i) => `
         <li class="result-row">
-          <span class="result-tile-head"><span class="result-number">${String(i + 1).padStart(2, '0')}</span>
-            <span class="result-role">${icon(item.symbol, { size: 15 })}<span>${esc(item.step)}</span></span></span>
-          <span class="result-body">
-            <strong>« ${esc(ex.value(lineKey(i)))} »</strong>
-            <span class="result-why">${esc(item.role)}</span>
-            ${content.model && content.model[i] ? `<span class="result-model"><span class="result-model-label">Corrigé modèle</span>« ${esc(content.model[i])} »</span>` : ''}
-          </span>
+          <div class="result-tile-head"><span class="result-number">${String(i + 1).padStart(2, '0')}</span>
+            <span class="result-role">${icon(item.symbol, { size: 15 })}<span>${esc(item.step)}</span></span></div>
+          <p class="result-answer-text">« ${bloc(i) ? analyse.answer(bloc(i)) : esc(ex.value(lineKey(i)))} »</p>
+          ${bloc(i) ? analyse.lines(bloc(i), { withText: false }) : ''}
+          <details class="result-model">
+            <summary>Voir un corrigé type</summary>
+            <p class="result-why">${esc(item.role)}</p>
+            ${content.model && content.model[i] ? `<p>« ${esc(content.model[i])} »</p>` : ''}
+          </details>
         </li>`).join('')}</ol>
       ${core.feedbackBox()}
     </div>`;

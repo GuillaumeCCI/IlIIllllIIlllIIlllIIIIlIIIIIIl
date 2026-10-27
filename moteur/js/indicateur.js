@@ -264,27 +264,38 @@
       <span><strong>${esc(item.nom)}</strong>${detail ? `<span class="ana-detail">${esc(detail)}</span>` : ''}</span></li>`;
   }
 
+  // Le score en tête : les points et l'avertissement.
+  const head = result => `<div class="ana-head">
+        <p class="ana-points"><strong>${number(result.points)}</strong><span>/ ${result.total} points</span></p>
+        <p class="ana-note">Un indicateur automatique : il repère des mots et des tournures, il ne comprend pas le sens. Relisez aussi le corrigé.</p>
+      </div>`;
+
+  // Le détail d'un bloc : les coches, puis le texte surligné. Un écran qui
+  // montre lui-même la réponse (`withText: false`) ne garde que les coches.
+  const lines = (bloc, { withText = true } = {}) => `<ul class="ana-lines">${bloc.lines.map(line).join('')}</ul>
+        ${withText && bloc.marks.length ? `<p class="ana-text">${highlighted(bloc.text, bloc.marks)}</p>` : ''}`;
+
+  // La réponse de l'apprenant, mots repérés surlignés (sans repère : telle quelle).
+  const answer = bloc => highlighted(bloc.text, bloc.marks);
+
   function render(result) {
     if (!result) return '';
     const several = result.blocs.length > 1;
     return `<section class="ana-score" aria-label="Indicateur de points">
-      <div class="ana-head">
-        <p class="ana-points"><strong>${number(result.points)}</strong><span>/ ${result.total} points</span></p>
-        <p class="ana-note">Un indicateur automatique : il repère des mots et des tournures, il ne comprend pas le sens. Relisez aussi le corrigé.</p>
-      </div>
+      ${head(result)}
       <div class="ana-blocs${several ? ' is-several' : ''}">${result.blocs.map(bloc => `<div class="ana-bloc">
         ${several && bloc.titre ? `<h4>${esc(bloc.titre)}</h4>` : ''}
-        <ul class="ana-lines">${bloc.lines.map(line).join('')}</ul>
-        ${bloc.marks.length ? `<p class="ana-text">${highlighted(bloc.text, bloc.marks)}</p>` : ''}
+        ${lines(bloc)}
       </div>`).join('')}</div>
     </section>`;
   }
 
-  // Le bloc à insérer dans le corrigé d'un exercice, ou rien s'il n'a pas de grille.
+  // Le bloc à insérer dans le corrigé d'un exercice, ou rien s'il n'a pas de
+  // grille. `integre` : l'écran place lui-même le score dans son corrigé.
   function forExercise(key, values) {
     const grid = root.ATELIER_GRILLES?.[key];
-    return grid ? render(score(grid, values)) : '';
+    return grid && !grid.integre ? render(score(grid, values)) : '';
   }
 
-  root.AtelierAnalyse = Object.freeze({ tokens, find, sentences, score, render, forExercise });
+  root.AtelierAnalyse = Object.freeze({ tokens, find, sentences, score, render, head, lines, answer, forExercise });
 })(globalThis);

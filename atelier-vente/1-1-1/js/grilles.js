@@ -372,7 +372,8 @@
     ] },
 
     // S3 1.6 · « Nos chaises actuelles suffisent » : une phrase par étape.
-    's3-1.6': { blocs: [
+    // Le score est intégré aux six blocs du corrigé (s3-1-6.js).
+    's3-1.6': { integre: true, blocs: [
       { titre: '1. Accueillir', champs: ['line0'], criteres: [{ nom: 'L’objection accueillie', mots: ['je comprends', 'j’entends', 'je vois', 'c’est légitime', 'merci de', 'bonne remarque', 'tout à fait', 'en effet', 'effectivement', 'c’est normal', 'bien sûr', 'je note'], conseil: 'Recevez l’objection sans la contredire.' }],
         pieges: [PIEGE_JUGEMENT, { nom: 'Contradiction', points: 1, mots: ['pas du tout', 'détrompez-vous', 'au contraire'], conseil: 'Ne contredisez pas le client.' }] },
       { titre: '2. Questionner', champs: ['line1'], criteres: [{ nom: 'Une question qui creuse', mots: QUESTION_OUVERTE.concat(['vous arrive-t-il', 'avez-vous', 'est-ce que']), conseil: 'Une seule question, ouverte.' },
