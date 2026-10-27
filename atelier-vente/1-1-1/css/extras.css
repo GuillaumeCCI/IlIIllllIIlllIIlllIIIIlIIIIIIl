@@ -472,15 +472,17 @@
 .answer-panel .result-answer-text { margin: 6px 0 14px; }
 .answer-panel .ana-expect + .ana-lines { margin-top: 8px; }
 .answer-panel .result-model { margin-top: 14px; }
-/* S3 1.4 · Au corrigé : la première réponse sous l'échange, les coches sur deux colonnes. */
-.scenario .review-step { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
-#main .two-columns:has(.review-step) .ana-lines { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; }
-#main .two-columns:has(.review-step) .ana-line { font-size: .88rem; }
-.review-step .result-answer-text { margin: 6px 0 12px; }
-.review-step .result-model { margin-top: 12px; }
-/* S3 1.4 · Au corrigé, les deux panneaux partagent leurs rangées : l'échange face au score, la première réponse face à la seconde, alignées sur la même ligne. */
-#main .review-aligned { grid-template-rows: auto auto 1fr; align-items: stretch; }
-#main .review-aligned > .panel { grid-row: span 3; display: grid; grid-template-rows: subgrid; row-gap: 0; align-content: start; }
-#main .review-aligned > .panel > .review-top { align-self: stretch; }
-#main .review-aligned .scenario .review-step, #main .review-aligned .answer-panel .review-step { margin-top: 0; padding-top: 18px; border-top: 1px solid var(--line); align-self: start; }
-#main .review-aligned .answer-panel > .review-rest { grid-row: 3; }
+/* S3 1.4 · Au corrigé, deux étages : l'échange face au score, puis
+ * « Votre analyse » sur toute la largeur, une carte par réponse. */
+.review-layout { display: grid; gap: 18px; }
+.review-layout > .two-columns { align-items: stretch; }
+.review-score { display: flex; flex-direction: column; }
+.review-score .ana-score.is-head { flex: 1; margin: 0; align-content: center; }
+.review-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 6px; }
+.review-card { padding: 18px 20px; border-radius: 16px; background: #f6f8fc; }
+.review-card .result-answer-text { margin: 6px 0 14px; }
+.review-card .ana-lines { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; }
+.review-card .ana-line { font-size: .9rem; }
+.review-card .result-model { margin-top: 14px; }
+@media (max-width: 900px) { .review-cards, .review-card .ana-lines { grid-template-columns: minmax(0, 1fr); } }
+#main .review-score .ana-score.is-head { padding: 0; box-shadow: none; background: none; }
