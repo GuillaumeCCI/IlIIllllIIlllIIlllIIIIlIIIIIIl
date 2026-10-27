@@ -714,5 +714,6 @@ html { background-color: #fbf8f2; }
 #info-dialog.is-context { width: min(700px, calc(100vw - 32px)); padding: 32px 48px 0; overflow-y: auto; overscroll-behavior: contain; }
 #info-dialog.is-context .k-context ul { gap: 14px; }
 #info-dialog.is-context .k-context li { font-size: .98rem; line-height: 1.42; }
-#info-dialog.is-context .k-context-go { position: sticky; bottom: 0; z-index: 2; margin: 18px -48px 0; padding: 14px 48px 24px; background: linear-gradient(180deg, rgb(255 255 255 / 0%), #fff 26%); }
+/* Bande transparente : les décors des coins bas restent entiers. */
+#info-dialog.is-context .k-context-go { position: sticky; bottom: 0; z-index: 2; margin: 18px 0 0; padding: 0 0 36px; background: none; }
 @media (max-height: 760px) { #info-dialog.is-context .k-context li { font-size: .92rem; } #info-dialog.is-context .k-context-icon { width: 32px; height: 32px; } }
