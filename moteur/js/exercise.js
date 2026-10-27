@@ -858,6 +858,13 @@
       const html = answerKeyFn(values(), current);
       if (html) node.querySelector('.feedback-anchor').insertAdjacentHTML('beforebegin', html);
     }
+    // Réponses ouvertes : l'indicateur de points (analyse.js), en tête du corrigé.
+    const analysis = root.AtelierAnalyse?.forExercise(current.key, values());
+    if (analysis) {
+      const title = node.querySelector('#feedback-title');
+      if (title) title.insertAdjacentHTML('afterend', analysis);
+      else node.insertAdjacentHTML('afterbegin', analysis);
+    }
     if (focus) node.focus();
   }
 

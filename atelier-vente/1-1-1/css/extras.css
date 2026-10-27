@@ -393,5 +393,5 @@
 .tour-corner:has(+ .affirmative) > .tour-replay { margin-top: 18px; }
 #main:has(.affirmative) { display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh - 80px); }
 #main:has(.affirmative) > * { width: 100%; }
-#main .affirmative > .scenario > .illustration { flex: 1 1 0; min-height: 240px; display: flex; }
+#main .affirmative > .scenario > .illustration { flex: 1 1 0; min-height: 240px; max-height: 56vh; display: flex; }
 #main .affirmative > .scenario > .illustration img { flex: 1; height: auto; min-height: 0; max-height: none; aspect-ratio: auto; }

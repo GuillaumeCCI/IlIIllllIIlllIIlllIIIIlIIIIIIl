@@ -665,3 +665,26 @@ body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; 
 body.is-tall-page:not(.is-briefing) { background-image: none !important; background-color: #fbf8f2; }
 /* Sous le décor, jamais de bande blanche : la page se prolonge en beige. */
 html { background-color: #fbf8f2; }
+
+/* Indicateur de points des réponses ouvertes (analyse.js), en tête du corrigé. */
+.ana-score { display: grid; gap: 16px; margin: 6px 0 18px; padding: 20px 22px; border-radius: 14px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 7%), 0 1px 2px rgb(20 40 100 / 4%); }
+.ana-head { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.ana-points { display: inline-flex; align-items: baseline; gap: 8px; margin: 0; }
+.ana-points strong { font-size: 2.2rem; font-weight: 800; line-height: 1; color: var(--accent); }
+.ana-points span { color: var(--muted); font-weight: 600; }
+.feedback .ana-note, .ana-note { flex: 1 1 260px; margin: 0; color: var(--muted); font-size: .85rem; }
+.ana-bloc { display: grid; gap: 10px; }
+.ana-bloc + .ana-bloc { padding-top: 14px; border-top: 1px solid var(--line); }
+.ana-bloc h4 { margin: 0; color: var(--navy); font-size: 1rem; }
+.ana-lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ana-line { display: flex; align-items: flex-start; gap: 10px; color: var(--navy); font-size: .92rem; line-height: 1.45; }
+.ana-line strong { display: block; font-weight: 700; }
+.ana-detail { display: block; color: var(--muted); }
+.ana-symbol { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font-size: .8rem; font-weight: 800; }
+.ana-line.is-ok .ana-symbol { background: #e3f4ea; color: #1d8a4c; }
+.ana-line.is-part .ana-symbol { background: #fff1e3; color: #d96a00; }
+.ana-line.is-miss .ana-symbol { background: #eef1f7; color: var(--muted); }
+.ana-line.is-warn .ana-symbol { background: #ffe4df; color: #c2433d; }
+.feedback .ana-text, .ana-text { margin: 0; padding: 12px 14px; border-radius: 10px; background: #f6f8fc; color: var(--navy); font-size: .92rem; line-height: 1.6; white-space: pre-line; }
+.ana-text mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
+.ana-text mark.is-warn { background: #ffd9d2; }
