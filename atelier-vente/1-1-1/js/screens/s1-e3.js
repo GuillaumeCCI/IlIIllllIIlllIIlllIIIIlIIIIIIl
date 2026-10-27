@@ -25,7 +25,7 @@
           <div><h3>Objectif</h3><ul class="objective-list"><li>${icon('check', { size: 16 })}<span>Prendre l’initiative</span></li><li>${icon('check', { size: 16 })}<span>Créer un climat positif</span></li></ul></div>
         </div>
       </section>
-      <form class="panel answer-panel" novalidate>
+      <form class="panel answer-panel" novalidate data-bar-stays>
         ${core.panelTitle('Votre ouverture')}
         <p class="panel-intro">Une cliente vient refaire son salon dans votre agence de décoration. Elle s’assoit et attend que vous lanciez l’échange. Formulez une entrée en matière naturelle et directe.</p>
         ${ex.field('opening', 'Votre ouverture', { placeholder: 'Ex. Je vous propose de commencer par…', max: 280, rows: 12, hideLabel: true })}

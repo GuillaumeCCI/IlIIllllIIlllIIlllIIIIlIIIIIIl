@@ -383,3 +383,13 @@
 .ult-facts li { display: grid; gap: 2px; padding: 10px 14px; border-left: 3px solid var(--accent); border-radius: 8px; background: #f6f8fc; }
 .ult-facts strong { color: var(--accent); font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .ult-facts span { color: var(--navy); line-height: 1.45; }
+
+/* S1 E3 · Entrer en matière : contenu centré dans la colonne de gauche,
+ * bouton Valider dans le panneau de droite, liens du coin un peu plus bas. */
+.affirmative > .scenario { display: flex; flex-direction: column; justify-content: center; }
+#main .affirmative .answer-panel .form-actions { justify-content: flex-end; margin: 14px 0 0; padding: 0; border-top: 0; }
+.affirmative > .scenario > .tag { align-self: flex-start; }
+.tour-corner:has(+ .affirmative) { padding-right: 16px; }
+.tour-corner:has(+ .affirmative) > .tour-replay { margin-top: 18px; }
+#main:has(.affirmative) { display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh - 80px); }
+#main:has(.affirmative) > * { width: 100%; }
