@@ -446,3 +446,9 @@
 #main .reflex-layout > .scenario { display: flex; flex-direction: column; }
 #main .reflex-layout .reflex-objection { flex: 1; display: flex; flex-direction: column; justify-content: center; margin-top: 18px; }
 #main .reflex-layout .answer-panel .form-actions { margin-top: 18px; padding-top: 0; border-top: 0; justify-content: flex-end; }
+/* S3 1.6 · Les six étapes en ligne, en tête du panneau ; un rail plus court. */
+#main .step-rail-list.is-track { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 18px; padding: 0 0 16px; border-bottom: 1px solid var(--line); }
+#main .step-rail-list.is-track li + li::before { display: none; }
+#main .step-rail-list.is-track .step-rail-item { width: auto; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; font-size: .9rem; }
+#main .step-rail-list.is-track .step-rail-dot { width: 28px; height: 28px; font-size: .78rem; }
+#main .step-rail .client-card-who img { max-height: 110px; }

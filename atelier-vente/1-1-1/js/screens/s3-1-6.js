@@ -68,13 +68,19 @@
     const i = stepOf(c);
     const item = method[i];
 
-    /* Le rail : le retour aux contextes, la fiche du contexte, l'objection,
-     * puis les six étapes empilées, chacune cliquable pour y revenir. */
+    /* Le rail : le retour aux contextes, la fiche du contexte et l'objection.
+     * Les six étapes sont en tête du panneau d'écriture, sur une ligne,
+     * chacune cliquable pour y revenir. */
     const rail = `<aside class="step-rail">
       ${core.button(`${icon('arrowLeft', { size: 16 })}<span>Tous les contextes</span>`, 'back-to-menu', 'text-button with-icon')}
       ${brief(cas)}
       ${core.clientCard(cas.objection, null, 'Objection client')}
-      <ol class="step-rail-list">${method.map((entry, n) => `
+    </aside>`;
+
+    return `<div class="step-layout">
+      ${rail}
+      <form class="panel step-sheet" novalidate>
+        <ol class="step-rail-list is-track">${method.map((entry, n) => `
         <li>
           <button type="button" class="step-rail-item ${n === i ? 'is-active' : ''} ${stepDone(c, n) ? 'is-done' : ''}"
             data-action="goto-step" data-index="${n}" aria-current="${n === i}">
@@ -82,11 +88,6 @@
             <span class="step-rail-label">${esc(entry.step)}</span>
           </button>
         </li>`).join('')}</ol>
-    </aside>`;
-
-    return `<div class="step-layout">
-      ${rail}
-      <form class="panel step-sheet" novalidate>
         <div class="step-sheet-top"><span class="step-pill">Étape ${i + 1} / ${method.length}</span>${kit ? `<span class="tour-pair">${kit.contextButton()}${kit.tourButton()}</span>` : ''}</div>
         <h1>${esc(item.step)} l’objection</h1>
         <p class="subtitle">${esc(item.role)}</p>
