@@ -72,6 +72,18 @@ test('1.6 : des réponses maladroites (contredire, brader, pousser) obtiennent a
   }
 });
 
+test('1.4 : dix hypothèses et questions justes, toutes différentes, obtiennent au moins 8 / 10 ; les mauvaises au plus 3', () => {
+  const { bonnes, mauvaises } = require('./reponses-variees.cjs')['s3-1.4'];
+  for (const [hypothesis, question] of bonnes) {
+    const score = points('s3-1.4', { hypothesis, question });
+    assert.ok(score >= 8, `« ${hypothesis} » / « ${question} » : ${score} / 10`);
+  }
+  for (const [hypothesis, question] of mauvaises) {
+    const score = points('s3-1.4', { hypothesis, question });
+    assert.ok(score <= 3, `« ${hypothesis} » / « ${question} » : ${score} / 10`);
+  }
+});
+
 test('les réponses réflexes obtiennent au plus 3 / 10', () => {
   assert.ok(points('s4-2.2', Object.fromEntries(S4['2.2'].situations.map((s, i) => [`repair${i}`, s.reflex]))) <= 3);
   assert.ok(points('s3-1.4', { hypothesis: 'Il a pas le temps', question: 'D’accord, je vous rappelle dans un mois.' }) <= 3);
