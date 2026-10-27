@@ -244,7 +244,10 @@
         ? (allDone
             ? core.linkButton(`<span>${core.allKeys.indexOf(current.key) === core.allKeys.length - 1 ? 'Voir mon bilan' : 'Exercice suivant'}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary')
             : core.button('Revenir au menu', 'back-to-menu', 'primary'))
-        : core.button(`<span>Cas suivant : ${esc(cases[next].label || `cas ${next + 1}`)}</span>${icon('arrowRight', { size: 18 })}`, 'open-case', 'primary', `data-index="${next}"`)}
+        : core.isDone(current.key)
+          // Exercice déjà terminé (allDone) : la suite en premier, le cas suivant en option.
+          ? `${core.button(`<span>Autre cas : ${esc(cases[next].label || `cas ${next + 1}`)}</span>`, 'open-case', 'text-button', `data-index="${next}"`)}${core.linkButton(`<span>${core.allKeys.indexOf(current.key) === core.allKeys.length - 1 ? 'Voir mon bilan' : 'Exercice suivant'}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary')}`
+          : core.button(`<span>Cas suivant : ${esc(cases[next].label || `cas ${next + 1}`)}</span>${icon('arrowRight', { size: 18 })}`, 'open-case', 'primary', `data-index="${next}"`)}
     </div>`;
   }
 
@@ -372,7 +375,8 @@
   function menuScreen() {
     const cases = caseList();
     const done = cases.filter(item => item.done).length;
-    const all = done === cases.length;
+    // Un exercice peut se terminer avant le dernier cas (allDone) : la suite s'offre alors.
+    const all = done === cases.length || core.isDone(current.key);
 
     /* Variante « lignes » : quand la réplique du client est l'essentiel,
      * elle mérite toute la largeur, avec l'action posée à droite. Les
@@ -447,6 +451,7 @@
     const done = cases.filter(item => item.done).length;
     if (!done) return menuIntro || 'Choisissez le cas que vous souhaitez traiter en premier.';
     if (done === cases.length) return 'Vous avez traité tous les cas. Vous pouvez en rouvrir un pour relire votre réponse et sa correction.';
+    if (core.isDone(current.key)) return `Exercice terminé. Les ${cases.length - done} autres cas restent ouverts : chacun est une nouvelle tentative, à faire quand vous voulez.`;
     return `Il vous reste ${cases.length - done} cas à traiter. Choisissez le suivant, ou rouvrez un cas déjà fait pour relire sa correction.`;
   }
 

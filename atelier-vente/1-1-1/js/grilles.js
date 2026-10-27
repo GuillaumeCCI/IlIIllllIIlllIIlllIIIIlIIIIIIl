@@ -63,6 +63,9 @@
     'économies', 'économiser', 'sav', '48 h', '48 heures', '1 200', '1200', 'location', 'louer', 'étaler', 'mensualités', 'diagnostic',
     'démonstration', 'exemple', 'concrètement', 'certifié', 'normes', 'productivité', 'confort', 'santé'];
 
+  // Les marques d'une preuve, quel que soit le secteur.
+  const PREUVE_GENERALE = ['en moyenne', 'nos clients', 'clients', 'garantie', 'garanti', 'essai', 'chiffres', 'chiffre', 'résultats', 'concrètement', 'par exemple', 'références', 'témoignages', 'étude', 'gratuit', 'sans engagement', 'économ*', 'rentab*'];
+
   const CONTROLE = ['est-ce que cela répond', 'est-ce que ça répond', 'cela répond-il', 'cela répond à', 'ça répond à', 'cela vous rassure',
     'ça vous rassure', 'cela vous parle', 'ça vous parle', 'qu’en pensez-vous', 'qu’en dites-vous', 'est-ce plus clair', 'est-ce que c’est plus clair',
     'cela vous convient', 'ça vous convient', 'est-ce que cela vous convient', 'avez-vous d’autres questions', 'd’autres questions',
@@ -372,19 +375,22 @@
     ] },
 
     // S3 1.6 · « Nos chaises actuelles suffisent » : une phrase par étape.
-    // Le score est intégré aux six blocs du corrigé (s3-1-6.js).
-    's3-1.6': { integre: true, blocs: [
-      { titre: '1. Accueillir', champs: ['line0'], criteres: [{ nom: 'L’objection accueillie', mots: ['je comprends', 'j’entends', 'je vois', 'c’est légitime', 'merci de', 'bonne remarque', 'tout à fait', 'en effet', 'effectivement', 'c’est normal', 'bien sûr', 'je note'], conseil: 'Recevez l’objection sans la contredire.' }],
-        pieges: [PIEGE_JUGEMENT, { nom: 'Contradiction', points: 1, mots: ['pas du tout', 'détrompez-vous', 'au contraire'], conseil: 'Ne contredisez pas le client.' }] },
-      { titre: '2. Questionner', champs: ['line1'], criteres: [{ nom: 'Une question qui creuse', mots: QUESTION_OUVERTE.concat(['vous arrive-t-il', 'avez-vous', 'est-ce que']), conseil: 'Une seule question, ouverte.' },
-        { nom: 'Le bon sujet', mots: ['salariés', 'collaborateurs', 'équipes', 'dos', 'arrêts', 'plaintes', 'douleurs', 'confort', 'inconfort', 'gênés', 'absences', 'tms', 'fatigue'], conseil: 'Interrogez sur le confort et les arrêts.' }],
+    // S3 1.6 · Six contextes : la méthode est commune, les mots du cas
+    // (content-s3.js, `mots`) s'y ajoutent. L'écran construit la grille du
+    // cas ouvert (`parCas`) et place le score dans ses six blocs.
+    's3-1.6': { integre: true, parCas: (cas, champ) => ({ blocs: [
+      { titre: '1. Accueillir', champs: [champ(0)], criteres: [{ nom: 'L’objection accueillie', mots: ['je comprends', 'j’entends', 'je vois', 'c’est légitime', 'merci de', 'bonne remarque', 'tout à fait', 'en effet', 'effectivement', 'c’est normal', 'bien sûr', 'je note', 'très bien', 'je vous rejoins', 'c’est une vraie question', 'vous avez raison de'], conseil: 'Recevez l’objection sans la contredire.' }],
+        pieges: [PIEGE_JUGEMENT, { nom: 'Contradiction', points: 1, mots: ['pas du tout', 'détrompez-vous', 'au contraire', 'c’est faux'], conseil: 'Ne contredisez pas le client.' }] },
+      { titre: '2. Questionner', champs: [champ(1)], criteres: [{ nom: 'Une question qui creuse', mots: QUESTION_OUVERTE.concat(['vous arrive-t-il', 'avez-vous', 'est-ce que', 'savez-vous', 'combien']), conseil: 'Une seule question, ouverte.' },
+        { nom: 'Le bon sujet', mots: cas.mots.sujet, conseil: 'Visez ce qui se cache derrière son objection.' }],
         regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 1 }] },
-      { titre: '3. Reformuler', champs: ['line2'], criteres: [reformulation, { nom: 'Ses mots repris', mots: ['suffisent', 'actuelles', 'dépenser', 'vrai problème', 'satisfait', 'fonctionnent', 'pas de besoin', 'pas nécessaire', 'chaises'], conseil: 'Reprenez son idée : elles suffisent.' }] },
-      { titre: '4. Traiter', champs: ['line3'], criteres: [{ nom: 'Une preuve', mots: PREUVE, conseil: 'Une preuve concrète vaut mieux qu’une promesse.' }] },
-      { titre: '5. Contrôler', champs: ['line4'], criteres: [{ nom: 'L’adhésion vérifiée', mots: CONTROLE, conseil: 'Vérifiez : « Est-ce que cela vous parle ? ».' }],
+      { titre: '3. Reformuler', champs: [champ(2)], criteres: [reformulation, { nom: 'Ses mots repris', mots: cas.mots.reprise, conseil: 'Reprenez ses propres mots.' }] },
+      { titre: '4. Traiter', champs: [champ(3)], criteres: [{ nom: 'Une preuve tirée de vos atouts', mots: cas.mots.preuve.concat(PREUVE_GENERALE), min: 2, conseil: 'Appuyez-vous sur un ou deux de vos atouts, chiffres à l’appui.' }],
+        pieges: [{ nom: 'Le prix bradé', points: 1, mots: ['remise', 'réduction', 'rabais', 'geste commercial', 'baisser le prix', 'moins cher pour vous'], conseil: 'On défend la valeur, on ne brade pas.' }] },
+      { titre: '5. Contrôler', champs: [champ(4)], criteres: [{ nom: 'L’adhésion vérifiée', mots: CONTROLE, conseil: 'Vérifiez : « Est-ce que cela vous parle ? ».' }],
         regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 1 }] },
-      { titre: '6. Enchaîner', champs: ['line5'], criteres: [{ nom: 'Une suite précise', mots: SUITE.concat(['2 ou 3 postes', 'deux ou trois postes', 'objectiver']), conseil: 'Proposez une suite précise : un diagnostic gratuit…' }] }
-    ] },
+      { titre: '6. Enchaîner', champs: [champ(5)], criteres: [{ nom: 'Une suite précise', mots: SUITE.concat(cas.mots.suite), conseil: 'Proposez une étape précise, avec une date.' }] }
+    ] }) },
 
     // S3 1.7 · Cartes réflexes : creuser, puis répondre avec une preuve.
     's3-1.7': { blocs: [

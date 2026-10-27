@@ -247,11 +247,10 @@ window.ATELIER_BRIEFINGS = {
   },
 
   's3-1.6': {
-    lede: { key: "Un traitement complet.", rest: "Six étapes, une phrase à la fois." },
+    lede: { key: "Un traitement complet.", rest: "Six contextes au choix, six étapes, une phrase à la fois." },
     mission: "Rédigez une phrase pour chacune des six étapes de la méthode.",
-    method: "Les étapes se suivent une par une.",
-    situation: 'Un client vous objecte que ses chaises actuelles suffisent. Vous allez construire votre réponse complète, étape par étape, sans brûler les étapes.',
-    quote: 'Nos chaises actuelles suffisent.',
+    method: "Choisissez un contexte : les étapes se suivent ensuite une par une.",
+    situation: 'Six clients, six secteurs, six objections : des sièges de bureau, une maison à vendre, une assurance d’artisan, un logiciel, un vélo électrique, un projet de décoration. Choisissez un contexte, puis construisez votre réponse complète, étape par étape. Un contexte suffit pour terminer ; les autres sont autant de nouvelles tentatives.',
     task: 'Rédigez une phrase pour chacune des six étapes de la méthode : accueillir, questionner, reformuler, traiter, contrôler, enchaîner.',
     criteria: [
       'L’accueil ne contredit pas le client',

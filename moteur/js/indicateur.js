@@ -256,7 +256,7 @@
       detail = item.sentences >= item.expected ? ''
         : item.sentences ? `${item.sentences} sur ${item.expected} pour l’instant.`
         : 'Écrivez la phrase entière, telle que vous la diriez au client.';
-    } else if (item.texte) detail = item.texte;
+    } else if (item.texte) detail = item.kind === 'ok' ? '' : item.texte;
     else if (item.kind === 'warn') detail = `Repéré : ${item.found.map(f => `« ${f} »`).join(', ')}.${item.conseil ? ` ${item.conseil}` : ''}`;
     // Un critère rempli se passe de commentaire : ses mots sont surlignés dans la réponse.
     else if (item.kind !== 'ok' && item.conseil) detail = item.conseil;

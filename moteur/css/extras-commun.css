@@ -657,6 +657,7 @@ body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; 
 #info-dialog.is-context::backdrop { background: rgb(11 19 50 / 35%); backdrop-filter: blur(8px); }
 .k-context ul { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 18px; }
 .k-context li { display: flex; align-items: center; gap: 14px; font-size: 1.05rem; line-height: 1.45; color: var(--navy); }
+.k-context li > span { white-space: pre-line; }
 .k-context strong { display: block; font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
 .k-context-icon { display: grid; place-items: center; width: 38px; height: 38px; flex-shrink: 0; border-radius: 50%; background: var(--tint, #eef3ff); color: var(--accent); }
 .k-context-go { display: flex; justify-content: flex-end; margin: 26px 0 0; }

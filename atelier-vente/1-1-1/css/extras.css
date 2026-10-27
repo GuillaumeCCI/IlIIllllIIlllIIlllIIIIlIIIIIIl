@@ -416,7 +416,24 @@
 .result-model p { margin: 8px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
 .result-top { display: flex; align-items: stretch; gap: 16px; margin: 0 0 16px; }
 .result-top .ana-score.is-head { flex: 1; margin: 0; }
-.result-revise { align-self: center; flex-shrink: 0; gap: 8px; }
-@media (max-width: 760px) { .result-top { flex-direction: column; } .result-revise { align-self: flex-start; } }
+.result-again { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 10px; flex-shrink: 0; }
+.result-again .text-button { gap: 8px; }
+.sorter-head .result-back { margin: 0 auto 6px 0; }
+.result-reread { margin: 18px 0 0; color: var(--muted); font-size: .9rem; line-height: 1.5; }
+@media (max-width: 760px) { .result-top { flex-direction: column; } .result-again { flex-direction: row; flex-wrap: wrap; } }
+/* S3 1.6 · La fiche du contexte dans le rail, et les atouts à l'étape « Traiter ». */
+.case-brief { display: grid; gap: 8px; margin: 4px 0 14px; color: var(--navy); font-size: .9rem; line-height: 1.45; }
+.case-brief p { margin: 0; }
+.case-brief strong { display: block; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.case-brief .case-brief-tag { width: fit-content; padding: 3px 10px; border-radius: 999px; background: var(--tint); color: var(--accent); font-size: .78rem; font-weight: 800; }
+.case-atouts { display: grid; gap: 8px; margin: 4px 0 0; padding: 12px 14px; border-radius: 12px; background: #f6f8fc; }
+.case-atouts ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.case-atouts li { display: flex; align-items: flex-start; gap: 8px; color: var(--navy); font-size: .9rem; line-height: 1.4; }
+.case-atouts li .icon { flex: none; margin-top: 3px; color: #1d8a4c; }
 @media (max-width: 1000px) { #main .result-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 620px) { #main .result-tiles { grid-template-columns: minmax(0, 1fr); } }
+/* S3 1.6 · L'objection dans le rail étroit : une taille de texte qui tient sur la largeur. */
+#main .step-rail .client-card blockquote { font-size: 1.15rem; line-height: 1.35; }
+/* Le menu des six contextes : deux rangées de trois. */
+#main .case-cards:has(> :nth-child(6):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { #main .case-cards:has(> :nth-child(6):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

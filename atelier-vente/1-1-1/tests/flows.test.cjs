@@ -328,18 +328,25 @@ test('S1 C : choisir, argumenter un à un avec un critère, puis emprunter', () 
   assert.match(main(), /compare-arguments/, 'les arguments sont relus avec leur critère');
 });
 
-test('S3 1.6 : les six étapes s’enchaînent une à une', () => {
+test('S3 1.6 : un contexte traité termine l’exercice, les autres restent ouverts', () => {
   const sandbox = load('js/screens/s3-1-6.js');
   const engine = sandbox.window.AtelierExercise;
   const core = sandbox.window.AtelierCore;
   const method = sandbox.window.ATELIER_S3.method;
+  const contexts = sandbox.window.ATELIER_S3['1.6'].cases;
+  assert.ok(contexts.length >= 6, 'six contextes au moins');
 
+  // Deuxième contexte : ses clés sont préfixées (c1_line0…).
+  engine.setValue('openCase', 1);
   for (let i = 0; i < method.length; i++) {
     assert.strictEqual(engine.cursor(), i, `on doit être à l’étape ${i + 1}`);
-    engine.setValue(`line${i}`, `Ma phrase pour l’étape ${i + 1}.`);
+    engine.setValue(`c1_line${i}`, `Ma phrase pour l’étape ${i + 1}.`);
     engine.submit();
   }
-  assert.ok(core.isDone('s3-1.6'), 'les six étapes remplies terminent l’exercice');
+  engine.submit(); // le récapitulatif : valider
+  assert.ok(core.isDone('s3-1.6'), 'un contexte traité termine l’exercice');
+  assert.strictEqual(engine.value('done1'), true);
+  assert.notStrictEqual(engine.value('done0'), true, 'les autres contextes restent à faire');
 });
 
 console.log('\nParcours — manipulation');
