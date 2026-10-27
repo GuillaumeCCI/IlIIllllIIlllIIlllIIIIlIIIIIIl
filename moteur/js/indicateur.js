@@ -268,11 +268,13 @@
   const head = result => `<div class="ana-head">
         <p class="ana-points"><strong>${number(result.points)}</strong><span>/ ${result.total} points</span></p>
         <p class="ana-note">Un indicateur automatique : il repère des mots et des tournures, il ne comprend pas le sens. Relisez aussi le corrigé.</p>
+        <p class="ana-legend"><span><span class="ana-symbol is-ok" aria-hidden="true">✓</span>Présent dans votre réponse</span><span><span class="ana-symbol is-miss" aria-hidden="true">○</span>Attendu, pas encore là</span><span><span class="ana-symbol is-warn" aria-hidden="true">!</span>À éviter</span></p>
       </div>`;
 
   // Le détail d'un bloc : les coches, puis le texte surligné. Un écran qui
   // montre lui-même la réponse (`withText: false`) ne garde que les coches.
-  const lines = (bloc, { withText = true } = {}) => `<ul class="ana-lines">${bloc.lines.map(line).join('')}</ul>
+  const lines = (bloc, { withText = true } = {}) => `<p class="ana-expect">Ce qu’on attend</p>
+        <ul class="ana-lines">${bloc.lines.map(line).join('')}</ul>
         ${withText && bloc.marks.length ? `<p class="ana-text">${highlighted(bloc.text, bloc.marks)}</p>` : ''}`;
 
   // La réponse de l'apprenant, mots repérés surlignés (sans repère : telle quelle).

@@ -689,10 +689,14 @@ html { background-color: #fbf8f2; }
 .ana-line strong { display: block; font-weight: 700; }
 .ana-detail { display: block; color: var(--muted); }
 .ana-symbol { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font-size: .8rem; font-weight: 800; }
-.ana-line.is-ok .ana-symbol { background: #e3f4ea; color: #1d8a4c; }
+.ana-legend { flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0; color: var(--muted); font-size: .85rem; }
+.ana-legend > span { display: inline-flex; align-items: center; gap: 8px; }
+.ana-legend .ana-symbol { width: 22px; height: 22px; font-size: .75rem; }
+.ana-expect { margin: 0; color: var(--navy); font-size: .74rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.ana-symbol.is-ok, .ana-line.is-ok .ana-symbol { background: #e3f4ea; color: #1d8a4c; }
 .ana-line.is-part .ana-symbol { background: #fff1e3; color: #d96a00; }
-.ana-line.is-miss .ana-symbol { background: #eef1f7; color: var(--muted); }
-.ana-line.is-warn .ana-symbol { background: #ffe4df; color: #c2433d; }
+.ana-symbol.is-miss, .ana-line.is-miss .ana-symbol { background: #eef1f7; color: var(--muted); }
+.ana-symbol.is-warn, .ana-line.is-warn .ana-symbol { background: #ffe4df; color: #c2433d; }
 .feedback .ana-text, .ana-text { margin: 0; padding: 12px 14px; border-radius: 10px; background: #f6f8fc; color: var(--navy); font-size: .92rem; line-height: 1.6; white-space: pre-line; }
 .ana-text mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
 .ana-text mark.is-warn { background: #ffd9d2; }
