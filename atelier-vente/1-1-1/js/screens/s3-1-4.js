@@ -16,7 +16,8 @@
     const review = ex.reviewing();
     /* Au corrigé, le score en tête, puis chaque réponse : la phrase (mots
      * repérés surlignés), ce qu'on attend, et le corrigé type replié. La
-     * première réponse passe sous l'échange, la seconde reste à droite :
+     * première réponse passe sous l'échange, la seconde reste à droite, et
+     * les deux s'alignent sur la même ligne (rangées communes, subgrid) :
      * tout tient à l'écran, sans défiler. */
     const analyse = window.AtelierAnalyse;
     const grid = window.ATELIER_GRILLES && window.ATELIER_GRILLES['s3-1.4'];
@@ -27,8 +28,9 @@
         <summary>Voir un corrigé type</summary>
         <div class="result-model-body"><p>${esc(model)}</p>${extra}</div>
       </details>`;
-    return `<div class="two-columns">
+    return `<div class="two-columns${review ? ' review-aligned' : ''}">
       <section class="panel scenario">
+        <div class="review-top">
         <h2>L’échange</h2>
         <div class="conversation">
           ${content.exchange.map(line => `<div class="bubble ${line.who === 'Client' ? 'client' : 'seller'}">
@@ -36,23 +38,28 @@
           </div>`).join('')}
         </div>
         <div class="observation">${icon('lightbulb', { size: 19 })}<span>${esc(content.observation)}</span></div>
+        </div>
         ${review ? `<div class="review-step">${core.step(1, 'Vraie objection probable', answer(0, 'hypothesis', content.hypothesisModel))}</div>` : ''}
       </section>
       <form class="panel answer-panel" novalidate>
+        <div class="review-top">
         <div class="hint-row analyse-head">${core.panelTitle('Votre analyse')}${review ? '' : `<span class="analyse-tools">${kit ? kit.contextButton() : ''}${core.hintBlock(content.hint)}</span>`}</div>
         ${result ? `<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section>` : ''}
+        </div>
         ${review
-          ? `${core.step(2, 'Question pour la révéler', answer(1, 'question', content.questionModel, `<p class="result-avoid">${esc(content.avoid)}</p>`))}`
+          ? `<div class="review-step">${core.step(2, 'Question pour la révéler', answer(1, 'question', content.questionModel, `<p class="result-avoid">${esc(content.avoid)}</p>`))}</div>`
           : `${core.step(1, 'Vraie objection probable', ex.field('hypothesis', 'Vraie objection probable', {
                placeholder: 'Le client hésite peut-être parce que…', max: 240, rows: 4, hideLabel: true
              }), 'Formulez une hypothèse simple et précise.')}
              ${core.step(2, 'Question pour la révéler', ex.field('question', 'Question pour la révéler', {
                placeholder: 'Votre question au client…', max: 240, rows: 4, hideLabel: true
              }), 'Posez une question ouverte, sans suggérer la réponse.')}`}
+        <div class="review-rest">
         ${ex.lockNote('Corrigé disponible après votre tentative')}
         ${core.errorsBox()}
         ${ex.actions('Valider mes réponses')}
         ${core.feedbackBox()}
+        </div>
       </form>
     </div>`;
   }
