@@ -338,14 +338,15 @@
       reformuler(`Réplique ${i + 1}`, `rewrite${i}`, ['prix', 'cher', 'chère', 'tarif', 'coût', 'montant', 'investissement', 'rapport prix', 'valeur', 'élevé'])) },
 
     // S2 D · Une réponse par attitude de Porter, puis le choix justifié.
-    's2-D': { blocs: [
+    // Le score est intégré aux blocs du corrigé (s2-d.js).
+    's2-D': { integre: true, blocs: [
       { titre: 'Jugement / évaluation', champs: ['reply0'], criteres: [{ nom: 'Une évaluation', mots: ['vous avez raison', 'vous avez tort', 'c’est bien', 'c’est une erreur', 'c’est sage', 'c’est dommage', 'bonne idée', 'mauvaise idée', 'c’est raisonnable', 'c’est prudent', 'vous faites bien', 'il ne faut pas', 'sage', 'excellent', 'dommage', 'erreur', 'bien vu'], conseil: 'Approuvez ou désapprouvez : « Vous avez raison… ».' }] },
       { titre: 'Interprétation', champs: ['reply1'], criteres: [{ nom: 'Une explication à sa place', mots: ['en fait', 'au fond', 'c’est que', 'ce qui vous', 'vous n’êtes pas', 'vous avez peur', 'vous doutez', 'pas convaincu', 'vous craignez', 'je pense que vous', 'sûrement', 'sans doute', 'j’imagine que', 'en réalité'], conseil: 'Expliquez à sa place : « En fait, vous… ».' }] },
       { titre: 'Soutien / consolation', champs: ['reply2'], criteres: [{ nom: 'Un réconfort', mots: ['ne vous inquiétez pas', 'rien ne presse', 'prenez votre temps', 'pas de souci', 'c’est normal', 'aucun problème', 'je suis là', 'ne vous en faites pas', 'tout va bien', 'on a le temps', 'aucune pression', 'pas de pression'], conseil: 'Rassurez : « Rien ne presse… ».' }] },
       { titre: 'Investigation / enquête', champs: ['reply3'], criteres: [{ nom: 'Une question pour en savoir plus', mots: QUESTION_OUVERTE.concat(['pourquoi', 'combien', 'quand']), conseil: 'Posez une question : « Qu’est-ce qui… ? ».' }], regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 1 }] },
       { titre: 'Solution / décision', champs: ['reply4'], criteres: [{ nom: 'Une solution proposée', mots: ['je vous propose', 'prenez', 'je vous conseille', 'vous pouvez', 'la formule', 'sans engagement', 'essai', 'je vous recommande', 'choisissez', 'optez', 'signez', 'réservez', 'essayez', 'devriez', 'il suffit'], conseil: 'Proposez une issue : « Prenez la formule… ».' }] },
       { titre: 'Compréhension / reformulation', champs: ['reply5'], criteres: [reformulation, { nom: 'Ses mots repris', mots: ['votre rythme', 'votre temps', 'prendre le temps', 'réfléchir', 'décider', 'temps', 'avant de vous décider'], conseil: 'Reprenez son besoin de temps.' }], pieges: [PIEGE_SOLUTION] },
-      { titre: 'Votre choix justifié', champs: ['justification'],
+      { titre: 'Votre choix justifié', champs: ['finalChoice', 'justification'],
         criteres: [
           { nom: 'La compréhension choisie', mots: ['compréhension', 'reformul*'], conseil: 'En prise de contact, on privilégie la compréhension.' },
           { nom: 'Pourquoi elle convient', mots: ['respecte', 'confiance', 'relation', 'ouverte', 'sans pousser', 'rythme', 'besoin', 'écoute', 'ne juge pas', 'ne force pas'], conseil: 'Dites ce qu’elle apporte à la relation.' },

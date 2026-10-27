@@ -154,7 +154,7 @@ window.ATELIER_BRIEFINGS = {
   's2-D': {
     lede: { key: "Les six attitudes de Porter.", rest: "Produisez-les toutes, puis choisissez." },
     mission: "Rédigez une réponse par attitude, puis désignez la plus appropriée et justifiez.",
-    method: "Six champs, puis un choix final.",
+    method: "Une attitude à la fois, puis votre choix final.",
     situation: 'Un client vous annonce qu’il préfère prendre son temps avant de se décider. Les six attitudes d’écoute de Porter décrivent six façons de lui répondre.',
     quote: 'Je préfère prendre mon temps avant de me décider.',
     task: 'Rédigez une réponse illustrant chacune des six attitudes, puis désignez celle qui convient le mieux à une prise de contact et argumentez votre choix.',

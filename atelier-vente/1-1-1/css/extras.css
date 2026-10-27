@@ -486,3 +486,8 @@
 .review-card .result-model { margin-top: 14px; }
 @media (max-width: 900px) { .review-cards, .review-card .ana-lines { grid-template-columns: minmax(0, 1fr); } }
 #main .review-score .ana-score.is-head { padding: 0; box-shadow: none; background: none; }
+/* S2 D · Les 6 attitudes, une étape à la fois ; au corrigé, le choix final en pleine largeur. */
+#main .porter-layout { grid-template-columns: minmax(300px, 420px) minmax(0, 1fr); max-width: 1600px; }
+#main .result-tiles .result-row.is-final { grid-column: 1 / -1; }
+.porter-choice { display: inline-flex; align-items: center; gap: 8px; width: fit-content; margin: 0; padding: 4px 12px; border-radius: 999px; background: var(--tint); color: var(--accent); font-weight: 700; font-size: .9rem; }
+.porter-layout .step-sheet .pick, .porter-layout .step-sheet select { margin-bottom: 22px; }
