@@ -162,14 +162,20 @@
   }
 
   /* ── Relecture, une fois validé ────────────────────────────────────── */
+  /* Le corrigé au modèle de S1 A (js/corrige.js) : les deux ouvertures et
+   * le choix attendu, le score estimatif, puis une ligne par réponse : vos
+   * arguments, votre emprunt, chacun face à une réponse possible. */
   function reviewScreen() {
     const choice = ex.value('choice');
     const notes = content.feedback.C;
+    const kit = window.AtelierCorrige;
+    const result = kit.score('s1-C', ex.values());
+    const [argBloc, borrowBloc] = result ? result.blocs : [];
     const args = Array.from({ length: argumentCount() }, (_, k) => {
       const n = k + 1;
-      return `<li><span class="chip chip-${k % 3}">${esc(ex.value(`criterion${n}`))}</span><p>${esc(ex.value(`argument${n}`))}</p></li>`;
+      return `<li><span class="chip chip-${k % 3}">${esc(ex.value(`criterion${n}`))}</span><p>« ${kit.part(argBloc, ex.value(`argument${n}`))} »</p></li>`;
     }).join('');
-    return `<div class="opening-cards compare-openings">${content.openings.map((text, index) => {
+    return `<section class="an-review compare-review"><div class="opening-cards compare-openings">${content.openings.map((text, index) => {
         const n = String(index + 1);
         const selected = choice === n;
         const isExpected = n === expected;
@@ -179,16 +185,13 @@
           ${ex.verdictMark(isExpected, isExpected ? (selected ? 'Votre choix, celui attendu' : 'Choix attendu') : (selected ? 'Votre choix' : 'Moins efficace'))}
         </article>`;
       }).join('')}</div>
-      ${ex.inlineNote(notes[0], 'good')}${ex.inlineNote(notes[1], 'bad')}${ex.inlineNote(notes[2], 'neutral')}
-      <section class="panel compare-card">
-        <h2 class="explain-question">Vos arguments</h2>
-        <ol class="compare-arguments">${args}</ol>
-        <div class="own-answer">
-          <h4>Ce que vous emprunteriez à l’autre</h4>
-          <p>« ${esc(ex.value('borrow'))} »</p>
-        </div>
-        ${core.feedbackBox()}
-      </section>`;
+      ${kit.head(result)}
+      ${kit.rows([
+        kit.row({ n: 1, title: 'Vos arguments', bloc: argBloc, yours: `<ol class="compare-arguments">${args}</ol>`, model: [notes[0], notes[1]] }),
+        kit.row({ n: 2, title: 'Ce que vous emprunteriez à l’autre', bloc: borrowBloc, text: ex.value('borrow'), model: notes[2] })
+      ])}
+      ${core.feedbackBox()}
+    </section>`;
   }
 
   function screen() {
@@ -271,8 +274,8 @@
     return true;
   }
 
-  /* L'analyse est posée sous les deux ouvertures comparées. */
-  const feedback = () => [content.feedback.C[3]];
+  /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
+  const feedback = () => [];
 
   /* Supprime l'argument affiché en décalant les suivants. */
   function removeArgument(index) {
@@ -329,5 +332,5 @@
     }));
   }
 
-  ex.mount('s1-C', { screen, validate, feedback, intercept, onMount });
+  ex.mount('s1-C', { screen, validate, feedback, intercept, onMount, compactFeedback: true });
 })();

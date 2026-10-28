@@ -65,9 +65,9 @@ window.ATELIER_S1 = {
 
     // Exercice C de la fiche : comparer deux ouvertures et argumenter.
     C: [
-      'La plus efficace est l’Ouverture 1, pour trois raisons. Un : le cadrage est clair, avec durée et déroulé annoncés : le client sait à quoi s’attendre. Deux : la bascule vers l’écoute précède toute présentation, on découvre avant de « pousser ». Trois : il y a recherche d’accord (« Ça vous va ? ») et une posture centrée client.',
-      'Faiblesses de l’Ouverture 2 : elle parle surtout du vendeur et de ses résultats, enchaîne directement sur « je vais vous présenter », sans cadrage de durée ni temps d’écoute.',
-      'L’emprunt utile à l’Ouverture 2 : la référence à des clients similaires, une preuve sociale à réintroduire brièvement pour crédibiliser, sans en faire le cœur de l’ouverture ni retarder l’écoute.',
+      'Vous pouviez écrire : « L’ouverture 1 cadre l’échange : elle annonce la durée et le déroulé, alors le client sait à quoi s’attendre. Elle donne la parole au client avant toute présentation : on écoute avant de vendre. Elle demande son accord avec “Ça vous va ?” et reste centrée sur lui. »',
+      'Vous pouviez ajouter : « L’ouverture 2, au contraire, parle surtout du vendeur et de ses résultats. Elle passe tout de suite à “je vais vous présenter”, sans annoncer de durée et sans laisser parler le client. »',
+      'Vous pouviez écrire : « Je reprendrais à l’ouverture 2 l’exemple d’autres clients comme lui, parce que cela rend crédible. Je l’ajouterais en une phrase, juste après ma présentation, sans en faire le cœur de l’ouverture ni retarder l’écoute. »',
       'Critère spécifique à vérifier : la qualité de l’argumentation. Au moins trois arguments explicitement reliés aux critères, et un emprunt pertinent identifié.'
     ],
 

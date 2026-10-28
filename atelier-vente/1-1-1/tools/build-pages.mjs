@@ -65,6 +65,7 @@ function page(serie, exercise) {
   <script defer src="../../../moteur/js/sorter.js"></script>
   <script defer src="../../../moteur/js/media.js"></script>
   <script defer src="../../../moteur/js/sounds.js"></script>
+  <script defer src="../js/corrige.js"></script>
   <script defer src="../js/screens/${exercise.file}.js"></script>
 </head>
 <body>

@@ -128,7 +128,7 @@ function makeSandbox(options = {}) {
 
 const MODULES = [
   'js/web-images.js', 'js/icons.js', 'js/catalog.js', 'js/briefings.js', 'js/previews.js', 'js/content-s1.js', 'js/content-s2.js', 'js/content-s3.js', 'js/content-s4.js',
-  'js/core.js', 'js/rules.js', 'js/exercise.js', 'js/dnd.js', 'js/placement.js', 'js/sorter.js', 'js/media.js'
+  'js/core.js', 'js/rules.js', 'js/grilles.js', 'js/indicateur.js', 'js/corrige.js', 'js/exercise.js', 'js/dnd.js', 'js/placement.js', 'js/sorter.js', 'js/media.js'
 ];
 
 /* Charge le socle puis un écran. `options.storage` préremplit localStorage. */

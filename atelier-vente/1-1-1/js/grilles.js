@@ -219,24 +219,24 @@
     ] },
 
     // S1 C · Comparer deux ouvertures : 3 à 5 arguments, puis un emprunt.
-    's1-C': { blocs: [
+    's1-C': { integre: true, blocs: [
       { titre: 'Vos arguments', motif: 'argument',
         criteres: [
-          { nom: 'Cadrage', mots: ['cadrage', 'cadre', 'durée', '30 minutes', 'minutes', 'déroulé', 'déroulement', 'd’abord', 'ensuite', 'structur*', 'annonce', 'à quoi s’attendre', 'organis*'], conseil: 'L’ouverture 1 annonce la durée et le déroulé.' },
-          { nom: 'Écoute avant présentation', mots: ['écoute', 'écouter', 'je vous écoute', 'parole', 'besoin*', 'découv*', 'situation', 'avant de présenter', 'avant de pousser', 'avant de parler', 'laisse parler', 'parler de sa situation', 'parle en premier', 'parler en premier', 'parle d’abord', 'donne la parole', 'laisse la parole', 'laisse parler', 'le client parle', 'centrée sur le client', 'centré sur le client', 'écoute d’abord', 'questionne', 'question'], conseil: 'Elle donne la parole avant de présenter.' },
-          { nom: 'Recherche d’accord', mots: ['ça vous va', 'accord', 'valid*', 'consentement', 'avis', 'implique', 'impliquer', 'demande', 'vérifie', 'approbation'], conseil: '« Ça vous va ? » cherche l’accord du client.' },
-          { nom: 'Posture centrée client', mots: ['centré', 'centrée', 'orienté client', 'orientée client', 'posture', 'parle de lui', 'parle d’elle', 'se met en avant', 'le vendeur', 'ses résultats', 'monopolise', 'client'], conseil: 'Comparez la place laissée au client.' },
-          { nom: 'Comparaison', mots: ['alors que', 'contrairement', 'tandis que', 'à l’inverse', 'au contraire', 'ouverture 2', 'la deuxième', 'la seconde', 'l’autre', 'par rapport', 'plus', 'moins'], min: 2, conseil: 'Mettez les deux ouvertures face à face.' },
+          { nom: 'Cadrage : durée et déroulé annoncés', mots: ['cadrage', 'cadre', 'durée', '30 minutes', 'minutes', 'déroulé', 'déroulement', 'd’abord', 'ensuite', 'structur*', 'annonce', 'à quoi s’attendre', 'organis*'], conseil: 'À relever : l’ouverture 1 annonce la durée et le déroulé.' },
+          { nom: 'Transition vers l’écoute : la parole au client d’abord', mots: ['écoute', 'écouter', 'je vous écoute', 'parole', 'besoin*', 'découv*', 'situation', 'avant de présenter', 'avant de pousser', 'avant de parler', 'laisse parler', 'parler de sa situation', 'parle en premier', 'parler en premier', 'parle d’abord', 'donne la parole', 'laisse la parole', 'laisse parler', 'le client parle', 'centrée sur le client', 'centré sur le client', 'écoute d’abord', 'questionne', 'question'], conseil: 'À relever : l’ouverture 1 donne la parole au client avant de présenter son offre.' },
+          { nom: 'Posture centrée client : l’accord demandé', mots: ['ça vous va', 'accord', 'valid*', 'consentement', 'avis', 'implique', 'impliquer', 'demande', 'vérifie', 'approbation'], conseil: 'À relever : « Ça vous va ? » demande l’accord du client.' },
+          { nom: 'Posture centrée client : la place du client', mots: ['centré', 'centrée', 'orienté client', 'orientée client', 'posture', 'parle de lui', 'parle d’elle', 'se met en avant', 'le vendeur', 'ses résultats', 'monopolise', 'client'], conseil: 'À relever : l’ouverture 2 parle surtout du vendeur et de ses résultats.' },
+          { nom: 'Les deux ouvertures comparées', mots: ['alors que', 'contrairement', 'tandis que', 'à l’inverse', 'au contraire', 'ouverture 2', 'la deuxième', 'la seconde', 'l’autre', 'par rapport', 'plus', 'moins'], min: 2, conseil: 'À relever : ce que fait l’une et pas l’autre (« alors que », « au contraire »).' },
           raison
         ],
-        phrases: { attendues: 3, points: 2 } },
+        phrases: { attendues: 3, points: 2, conseil: 'Rédigez une phrase entière, pas seulement des mots-clés.' } },
       { titre: 'Votre emprunt', champs: ['borrow'],
         criteres: [
-          { nom: 'L’élément emprunté', mots: ['référence*', 'clients', 'entreprises comme la vôtre', 'plusieurs entreprises', 'résultats', 'preuve', 'crédib*', 'témoignage', 'exemple*', 'déjà accompagné', 'accompagne déjà', 'expérience', 'confiance'], conseil: 'L’ouverture 2 cite des clients similaires : une preuve sociale.' },
+          { nom: 'L’élément emprunté', mots: ['référence*', 'clients', 'entreprises comme la vôtre', 'plusieurs entreprises', 'résultats', 'preuve', 'crédib*', 'témoignage', 'exemple*', 'déjà accompagné', 'accompagne déjà', 'expérience', 'confiance'], conseil: 'À relever : l’ouverture 2 cite d’autres clients comme lui, ce qui rend crédible.' },
           { nom: 'Comment vous l’intégrez', mots: ['j’ajouterais', 'j’intégrerais', 'je reprendrais', 'je glisserais', 'j’emprunterais', 'je mettrais', 'ajouter', 'intégrer', 'insérer', 'placer', 'après', 'avant', 'brièvement', 'en une phrase', 'au moment', 'juste après'], conseil: 'Dites où et comment vous le placeriez.' },
           raison
         ],
-        phrases: { attendues: 2, points: 1 } }
+        phrases: { attendues: 2, points: 1, conseil: 'Rédigez une phrase entière, pas seulement des mots-clés.' } }
     ] },
 
     // S1 D · Rédiger une ouverture phrase par phrase.
