@@ -526,3 +526,6 @@
 .an-compare table { table-layout: fixed; }
 .an-compare thead th:nth-child(1) { width: 34%; }
 .an-compare thead th:nth-child(2) { width: 26%; }
+
+/* Le tableau de l’autoévaluation, en haut du corrigé, sous le score. */
+.an-review .an-rows-compare { margin: 0 0 14px; }

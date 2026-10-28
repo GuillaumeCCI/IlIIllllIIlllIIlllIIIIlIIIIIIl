@@ -121,6 +121,7 @@
         ${core.button(`${icon('document', { size: 20 })}<span>Voir la mise en situation</span>`, 'scenario', 'subtle with-icon')}
       </header>
       ${result ? `<section class="panel an-score">${core.panelTitle('Votre score estimatif')}<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section></section>` : ''}
+      <div class="an-rows-compare">${compare(result, VERDICTS.findIndex(row => row.key === 'rewrite'))}</div>
       <ol class="an-rows">${VERDICTS.map((row, i) => `<li class="an-row tone-${result ? toneOf(result.blocs[i]) : row.tone}">
         <div class="an-yours">
           <span class="an-n" aria-hidden="true">${i + 1}</span>
@@ -130,7 +131,6 @@
           <span class="an-mark" aria-hidden="true">${icon(row.symbol, { size: 20, strokeWidth: 3 })}</span>
           <div><h3>${esc(row.label)}</h3><p>${esc(notes[i])}</p></div>
         </div>
-        ${row.key === 'rewrite' ? compare(result, i) : ''}
       </li>`).join('')}</ol>
       ${core.feedbackBox()}
     </section>`;
