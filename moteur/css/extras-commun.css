@@ -721,3 +721,8 @@ html { background-color: #fbf8f2; }
 .k-context-list { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 9px; }
 .k-context .k-context-list li { display: block; position: relative; padding-left: 18px; font-size: inherit; line-height: 1.4; }
 .k-context .k-context-list li::before { content: ''; position: absolute; left: 2px; top: .58em; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: .55; }
+
+/* Fenêtre « Le contexte » : les lignes arrivent en cascade (rang --i posé par kit.js). */
+@keyframes k-cascade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.k-cascade { animation: k-cascade-in .45s cubic-bezier(.3, .7, .3, 1) both; animation-delay: calc(var(--i, 0) * 140ms + 150ms); }
+@media (prefers-reduced-motion: reduce) { .k-cascade { animation: none; } }

@@ -959,9 +959,12 @@
     const rows = onSelf ? selfIntro.rows : typeof contextRows === 'function' ? contextRows() : contextRows;
     if (!rows) return;
     const title = onSelf ? selfIntro.title : typeof contextTitle === 'function' ? contextTitle() : contextTitle;
+    // Les lignes arrivent en cascade : chacune porte son rang (--i).
+    let rank = 0;
+    const next = () => `style="--i:${rank++}"`;
     core().openDialog(title, `<section class="k-context"><ul>${rows.map(([symbol, label, line]) =>
-      `<li><span class="k-context-icon">${icon(symbol, { size: 20 })}</span><span><strong>${esc(label)}</strong>${Array.isArray(line) ? `<ul class="k-context-list">${line.map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : esc(line)}</span></li>`).join('')}</ul></section>
-      <p class="k-context-go"><button type="button" class="button primary" data-act="k-context-go">C’est parti</button></p>`);
+      `<li class="k-cascade" ${next()}><span class="k-context-icon">${icon(symbol, { size: 20 })}</span><span><strong>${esc(label)}</strong>${Array.isArray(line) ? `<ul class="k-context-list">${line.map(item => `<li class="k-cascade" ${next()}>${esc(item)}</li>`).join('')}</ul>` : esc(line)}</span></li>`).join('')}</ul></section>
+      <p class="k-context-go k-cascade" ${next()}><button type="button" class="button primary" data-act="k-context-go">C’est parti</button></p>`);
     const dialog = root.document.querySelector('#info-dialog');
     if (!dialog) return;
     dialog.classList.add('is-context');
