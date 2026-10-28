@@ -89,7 +89,7 @@
                    </div>
                    <div class="row-model">
                      <p class="own-line">« ${esc(ex.value(rewriteKey(i)))} »</p>
-                     ${ex.inlineNote(`Réécriture modèle : « ${item.rewrite} »`, 'neutral')}
+                     ${ex.inlineNote(`Une réécriture possible : « ${item.rewrite} »`, 'neutral')}
                    </div>`
                 : `${ex.select(attitudeKey(i), `Attitude de la réponse ${i + 1}`, attitudes, 'Choisir une attitude')}
                    ${ex.field(rewriteKey(i), `Votre reformulation de la réponse ${i + 1}`, {
@@ -121,7 +121,7 @@
     const right = cases.filter((item, i) => values[attitudeKey(i)] === item.answer).length;
     return [
       content.feedback,
-      `${right} attitude sur ${cases.length} correctement identifiée${right > 1 ? 's' : ''}. Les réécritures modèles sont affichées en face de vos propositions.`,
+      `${right} attitude sur ${cases.length} correctement identifiée${right > 1 ? 's' : ''}. Des réécritures possibles sont affichées en face de vos propositions.`,
       content.criterion
     ];
   }

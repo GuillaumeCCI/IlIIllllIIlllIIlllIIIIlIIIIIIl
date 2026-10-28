@@ -184,7 +184,7 @@
           </div>
           ${bloc(i) ? analyse.lines(bloc(i), { withText: false }) : ''}
           <details class="result-model">
-            <summary>Voir un corrigé type</summary>
+            <summary>Voir une réponse possible</summary>
             <div class="result-model-body">
               <p>« ${esc(cas.model[i])} »</p>
             </div>

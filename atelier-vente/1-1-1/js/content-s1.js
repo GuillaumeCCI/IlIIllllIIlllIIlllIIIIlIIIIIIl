@@ -52,13 +52,13 @@ window.ATELIER_S1 = {
     A: [
       'Ce qui va déjà : la salutation et la présentation sont là : identité, fonction, entreprise. L’ouverture n’est donc pas ratée.',
       'Points perfectibles : pas de mise à l’aise ni de remerciement ; pas de cadrage de la durée ; une bascule trop rapide sur « je vais vous présenter » et « des offres intéressantes », qui oriente vers le produit avant l’écoute ; pas de transition claire vers le client ; « ce qui pourrait vous convenir » reste vague.',
-      'Version améliorée : « Bonjour, merci de me recevoir. Je suis Camille Martin, conseillère chez Novéa. Je vous propose une vingtaine de minutes : d’abord pour que vous me parliez de votre activité et de vos besoins, ensuite je vous présenterai les solutions les plus adaptées. Pour commencer, qu’est-ce qui vous préoccupe aujourd’hui côté couverture ? »',
+      'Une version améliorée possible : « Bonjour, merci de me recevoir. Je suis Camille Martin, conseillère chez Novéa. Je vous propose une vingtaine de minutes : d’abord pour que vous me parliez de votre activité et de vos besoins, ensuite je vous présenterai les solutions les plus adaptées. Pour commencer, qu’est-ce qui vous préoccupe aujourd’hui côté couverture ? »',
       'Critère spécifique à vérifier : la finesse du diagnostic. Avez-vous repéré des points d’amélioration réels, et votre version les corrige-t-elle effectivement ?'
     ],
 
     // Exercice A de la fiche, contexte 1 : boutique, client pressé (B2C).
     B: [
-      'Corrigé modèle pour ce contexte : « Bonjour ! Je vous laisse regarder à votre rythme. Je suis [Prénom], conseiller ici : au moindre besoin, je suis juste à côté. Vous cherchez quelque chose de précis, ou je vous laisse d’abord faire un tour ? »',
+      'Une réponse possible pour ce contexte : « Bonjour ! Je vous laisse regarder à votre rythme. Je suis [Prénom], conseiller ici : au moindre besoin, je suis juste à côté. Vous cherchez quelque chose de précis, ou je vous laisse d’abord faire un tour ? »',
       'Le réglage attendu : une ouverture courte et non intrusive, qui respecte le rythme du client et lui laisse le choix.',
       'Critère spécifique à vérifier : l’adaptation au contexte. Le réglage que vous annoncez doit être cohérent avec la situation et réellement présent dans votre formulation.'
     ],
@@ -97,29 +97,29 @@ window.ATELIER_S1 = {
 
     // Exercice E de la fiche, contrainte 1 : visio, caméra coupée.
     E1: [
-      'Corrigé modèle : « Bonjour [Nom], je suis [Prénom Nom] de [Entreprise]. Comme on ne se voit pas, je vais être clair sur le déroulé : je vous propose 15 minutes, d’abord je vous écoute sur [sujet], ensuite je réagis. Dites-moi simplement quand vous voulez que je précise ou que je m’arrête. »',
+      'Une réponse possible : « Bonjour [Nom], je suis [Prénom Nom] de [Entreprise]. Comme on ne se voit pas, je vais être clair sur le déroulé : je vous propose 15 minutes, d’abord je vous écoute sur [sujet], ensuite je réagis. Dites-moi simplement quand vous voulez que je précise ou que je m’arrête. »',
       'La gestion de la contrainte : un cadrage verbal renforcé, plus une invitation à réagir vocalement, pour compenser l’absence d’image.',
       'Critère spécifique à vérifier : la gestion de la contrainte. Elle doit être effectivement respectée, et l’ouverture rester efficace : climat, cadrage et écoute préservés autant que possible.'
     ],
 
     // Exercice E de la fiche, contrainte 2 : 40 secondes chrono.
     E2: [
-      'Corrigé modèle : « Bonjour, [Prénom Nom] de [Entreprise]. En un mot : on aide les [type d’entreprise] à [bénéfice concret]. Je vous propose 10 minutes pour voir si c’est pertinent pour vous. On continue ? »',
+      'Une réponse possible : « Bonjour, [Prénom Nom] de [Entreprise]. En un mot : on aide les [type d’entreprise] à [bénéfice concret]. Je vous propose 10 minutes pour voir si c’est pertinent pour vous. On continue ? »',
       'La gestion de la contrainte : une accroche bénéfice ultra-courte, suivie d’une demande d’accord immédiate.',
       'Critère spécifique à vérifier : la gestion de la contrainte. Votre ouverture tient-elle réellement dans les quarante secondes, tout en gardant une valeur concrète pour le client et une proposition de suite ?'
     ],
 
     // Exercice E de la fiche, contrainte 3 : sans poser de question.
     E3: [
-      'Corrigé modèle : « Bonjour, merci de me recevoir. Je suis [Prénom Nom] de [Entreprise]. Je vous propose qu’on prenne le temps : je vous laisse me raconter votre situation, je suis là pour ça avant tout. »',
+      'Une réponse possible : « Bonjour, merci de me recevoir. Je suis [Prénom Nom] de [Entreprise]. Je vous propose qu’on prenne le temps : je vous laisse me raconter votre situation, je suis là pour ça avant tout. »',
       'La gestion de la contrainte : remplacer la question par une invitation ouverte, qui donne tout de même la parole au client.',
       'Critère spécifique à vérifier : la gestion de la contrainte. Aucune question posée, et pourtant le client est invité à s’exprimer.'
     ],
 
     // Exercice F de la fiche : transposer d'un canal à un autre.
     F: [
-      'Téléphone : « Bonjour, [Prénom Nom] de [Entreprise], suis-je bien avec [Nom] ? Je vous appelle au sujet de [raison courte]. Est-ce un bon moment pour deux minutes, ou préférez-vous que je rappelle ? … Parfait. Pour être utile, je vais surtout vous écouter : qu’est-ce qui compte le plus pour vous sur [sujet] ? » Les adaptations : vérifier l’identité et la disponibilité, puisqu’on ne voit pas l’interlocuteur ; la voix devient le seul vecteur ; la raison de l’appel est explicite.',
-      'E-mail. Objet : « [Sujet] : un échange de 20 min ? » Message : « Bonjour [Nom], je suis [Prénom Nom], conseiller chez [Entreprise]. Je me permets de vous écrire au sujet de [sujet]. Avant toute proposition, j’aimerais surtout comprendre votre situation et vos priorités. Seriez-vous disponible pour un échange de 20 minutes cette semaine ? Dites-moi le créneau qui vous convient. Bien cordialement, [Signature] » Les adaptations : un objet clair, un ton écrit courtois, le cadrage de la durée, une question de disponibilité puisque le canal est asynchrone, et une écoute annoncée mais reportée à l’échange.',
+      'Une réponse possible au téléphone : « Bonjour, [Prénom Nom] de [Entreprise], suis-je bien avec [Nom] ? Je vous appelle au sujet de [raison courte]. Est-ce un bon moment pour deux minutes, ou préférez-vous que je rappelle ? … Parfait. Pour être utile, je vais surtout vous écouter : qu’est-ce qui compte le plus pour vous sur [sujet] ? » Les adaptations : vérifier l’identité et la disponibilité, puisqu’on ne voit pas l’interlocuteur ; la voix devient le seul vecteur ; la raison de l’appel est explicite.',
+      'Une réponse possible par e-mail. Objet : « [Sujet] : un échange de 20 min ? » Message : « Bonjour [Nom], je suis [Prénom Nom], conseiller chez [Entreprise]. Je me permets de vous écrire au sujet de [sujet]. Avant toute proposition, j’aimerais surtout comprendre votre situation et vos priorités. Seriez-vous disponible pour un échange de 20 minutes cette semaine ? Dites-moi le créneau qui vous convient. Bien cordialement, [Signature] » Les adaptations : un objet clair, un ton écrit courtois, le cadrage de la durée, une question de disponibilité puisque le canal est asynchrone, et une écoute annoncée mais reportée à l’échange.',
       'Critère spécifique à vérifier : l’adaptation au canal. Les quatre fonctions doivent être présentes dans chaque version ET adaptées aux contraintes du canal : identité et disponibilité au téléphone, objet et créneau en e-mail.'
     ]
   }

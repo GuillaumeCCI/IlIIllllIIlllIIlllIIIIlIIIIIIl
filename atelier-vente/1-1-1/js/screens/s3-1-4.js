@@ -39,14 +39,14 @@
         ${core.step(n, title, `<p class="result-answer-text">«\u00a0${result ? analyse.answer(result.blocs[i]) : esc(ex.value(key))}\u00a0»</p>
           ${result ? analyse.lines(result.blocs[i], { withText: false }) : ''}
           <details class="result-model">
-            <summary>Voir un corrigé type</summary>
+            <summary>Voir une réponse possible</summary>
             <div class="result-model-body"><p>${esc(model)}</p>${extra}</div>
           </details>`)}
       </article>`;
     return `<div class="review-layout">
       <div class="two-columns">
         <section class="panel scenario">${exchange()}</section>
-        <section class="panel review-score">${core.panelTitle('Votre score')}${result ? `<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section>` : ''}</section>
+        <section class="panel review-score">${core.panelTitle('Votre score estimatif')}${result ? `<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section>` : ''}</section>
       </div>
       <form class="panel answer-panel review-analysis" novalidate>
         ${core.panelTitle('Votre analyse')}
@@ -88,7 +88,7 @@
 
   /* Les deux repères sont posés sous les deux champs. */
   // Le corrigé est dans les deux réponses : le pavé du bas ne garde que la suite.
-  const feedback = () => ['Relisez votre hypothèse et votre question avec leur corrigé type.'];
+  const feedback = () => ['Relisez votre hypothèse et votre question avec une réponse possible.'];
 
   // À l'arrivée : pourquoi on est là, ce qui se passe, ce qui est demandé.
   if (kit) kit.context([

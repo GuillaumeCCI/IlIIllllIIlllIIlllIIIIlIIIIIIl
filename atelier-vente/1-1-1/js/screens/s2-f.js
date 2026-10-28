@@ -50,12 +50,12 @@
       ? `<div class="own-answer">
            <h4>Votre réponse d’écoute</h4>
            <p>« ${esc(ex.value(replyKey(i)))} »</p>
-           ${ex.inlineNote(`Réponse modèle : « ${profile.model} »`, 'good')}
+           ${ex.inlineNote(`Une réponse possible : « ${profile.model} »`, 'good')}
          </div>
          <div class="own-answer">
            <h4>Votre adaptation</h4>
            <p>« ${esc(ex.value(postureKey(i)))} »</p>
-           ${ex.inlineNote(`Adaptation attendue : ${profile.adaptation}`, 'neutral')}
+           ${ex.inlineNote(`Une adaptation possible : ${profile.adaptation}`, 'neutral')}
          </div>
          ${ex.inlineNote(content.criterion, 'neutral')}
          ${ex.selfSummary(rubric, selfKey(i))}`
@@ -110,7 +110,7 @@
   const allDone = () => profiles.every((_, i) => caseDone(i));
 
   const feedback = () => allDone()
-    ? ['Les trois profils sont traités. Rouvrez-en un pour relire votre formulation et la réponse modèle.']
+    ? ['Les trois profils sont traités. Rouvrez-en un pour relire votre formulation et une réponse possible.']
     : '';
 
   /* Visite guidée, à l'ouverture du premier cas : ses zones n'existent pas

@@ -146,7 +146,7 @@
           max: 500, rows: 6, hideLabel: true,
           placeholder: 'Je reprendrais… parce que… Je l’intégrerais ainsi…'
         })}
-        ${ex.lockNote('Le corrigé modèle sera disponible après validation.')}
+        ${ex.lockNote('Une réponse possible s’affichera après validation.')}
       </section>
       ${art(BORROW_ART)}
       </div>

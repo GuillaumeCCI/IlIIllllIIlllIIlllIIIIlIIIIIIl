@@ -85,7 +85,7 @@
   const VERDICTS = [
     { key: 'strengths', title: 'Ce qui fonctionne', tone: 'good', label: 'Pertinent', symbol: 'check' },
     { key: 'improvements', title: 'Axes d’amélioration', tone: 'bad', label: 'À améliorer', symbol: 'close' },
-    { key: 'rewrite', title: 'Votre version améliorée', tone: 'neutral', label: 'Version améliorée', symbol: 'sparkle' }
+    { key: 'rewrite', title: 'Votre version améliorée', tone: 'neutral', label: 'Une version possible', symbol: 'sparkle' }
   ];
 
   function reviewScreen() {

@@ -72,7 +72,7 @@
         { symbol: 'mail', tone: 'coral', text: 'E-mail : un objet, puis 80 à 120 mots faciles à lire.' },
         { symbol: 'check', tone: 'green', text: 'Sous chaque version, cochez ce qu’elle contient.' }
       ] },
-    { target: '.form-actions', title: 'Valider mes deux versions', text: 'Le corrigé s’affiche, avec une version modèle pour chaque canal.' }
+    { target: '.form-actions', title: 'Valider mes deux versions', text: 'Le corrigé s’affiche, avec une version possible pour chaque canal.' }
   ]);
 
   ex.mount('s1-F', { screen, validate, feedback });

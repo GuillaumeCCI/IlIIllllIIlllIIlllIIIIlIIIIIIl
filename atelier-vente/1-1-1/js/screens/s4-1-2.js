@@ -83,7 +83,7 @@
   }
 
   /* Le modèle et le rappel sont posés sous la réécriture. */
-  const feedback = () => ['Comparez votre réécriture au modèle affiché juste au-dessus. Le détail des maladresses figure ci-dessous.'];
+  const feedback = () => ['Comparez votre réécriture à la version possible affichée juste au-dessus. Le détail des maladresses figure ci-dessous.'];
 
   function answerKey() {
     const flags = marked();

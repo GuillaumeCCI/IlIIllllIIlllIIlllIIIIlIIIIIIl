@@ -73,7 +73,7 @@
    * par étape, la réponse à gauche, le retour teinté à droite. La mise en
    * situation reste à portée dans une fenêtre. Styles : extras.css (.an-*). */
   const VERDICTS = [
-    { key: 'opening', title: 'Votre entrée en matière', tone: 'neutral', label: 'Corrigé modèle', symbol: 'sparkle' },
+    { key: 'opening', title: 'Votre entrée en matière', tone: 'neutral', label: 'Une réponse possible', symbol: 'sparkle' },
     { key: 'adjustment', title: 'Votre réglage majeur', tone: 'good', label: 'Réglage attendu', symbol: 'check' }
   ];
 

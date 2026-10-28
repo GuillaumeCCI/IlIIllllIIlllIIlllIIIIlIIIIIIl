@@ -120,7 +120,7 @@
          ${missing.length
            ? ex.inlineNote(`Fonction${many ? 's' : ''} clé${many ? 's' : ''} absente${many ? 's' : ''} de votre ouverture : ${missing.join(', ')}.`, 'bad')
            : ex.inlineNote('Les quatre fonctions clés sont présentes : accueil, présentation, cadrage et transition vers l’écoute.', 'good')}
-         ${ex.modelBlock('La même ouverture, version modèle', modelRows(), correction.criterion)}`;
+         ${ex.modelBlock('La même ouverture : une version possible', modelRows(), correction.criterion)}`;
 
     return `<div class="writing-workshop">
       ${core.pageTitle('Atelier d’écriture', 'Construisez votre ouverture', 'Rédigez une ouverture commerciale complète (4 à 6 phrases) pour la situation de votre choix. Écrivez une phrase par ligne et sélectionnez sa fonction.')}
@@ -153,7 +153,7 @@
     const missing = missingFunctions();
     return missing.length
       ? [`Relisez votre ouverture : il y manque ${missing.length > 1 ? 'les fonctions' : 'la fonction'} ${missing.join(', ')}. Comparez avec la version modèle ci-dessus.`]
-      : ['Les quatre fonctions clés sont présentes et identifiées. Comparez vos formulations à la version modèle ci-dessus.'];
+      : ['Les quatre fonctions clés sont présentes et identifiées. Comparez vos formulations à la version possible ci-dessus.'];
   }
 
   function removeLine(index) {

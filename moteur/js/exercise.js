@@ -873,7 +873,7 @@
       // La réponse est déjà relue au-dessus : l'encadré devient celui du score.
       node.querySelector('.feedback-tag')?.remove();
       const title = node.querySelector('#feedback-title');
-      if (title) { title.textContent = 'Votre score'; title.insertAdjacentHTML('afterend', analysis); }
+      if (title) { title.textContent = 'Votre score estimatif'; title.insertAdjacentHTML('afterend', analysis); }
       else node.insertAdjacentHTML('afterbegin', analysis);
     }
     if (focus) node.focus();
