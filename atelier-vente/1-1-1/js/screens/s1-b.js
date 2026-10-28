@@ -38,7 +38,7 @@
         </div>
       </section>
       <aside class="wiz-aside">
-        <div class="wiz-aside-head"><div class="wiz-aside-tools">${window.AtelierKit ? window.AtelierKit.tourButton() : ''}${core.stepPill(at, STEPS.length)}</div></div>
+        <div class="wiz-aside-head"><div class="wiz-aside-tools">${window.AtelierKit ? window.AtelierKit.contextButton() + window.AtelierKit.tourButton() : ''}${core.stepPill(at, STEPS.length)}</div></div>
         <div class="wiz-art is-whole is-soft">${core.illustration(current)}</div>
       </aside>
       ${core.feedbackBox()}
@@ -53,7 +53,7 @@
   function selfScreen() {
     return `<section class="self-eval">
       ${window.AtelierKit ? `<div class="tour-corner">${window.AtelierKit.contextButton()}</div>` : ''}
-      ${core.pageTitle('Autoévaluation', 'Votre approche répond-elle à ces critères ?', 'Relisez votre approche. Pour chaque critère, dites si elle y répond. Le corrigé s’affiche ensuite.')}
+      ${core.pageTitle('Autoévaluation', 'Votre approche est-elle une ouverture réussie ?', 'Vous évaluez votre approche (à gauche). Pour chacun des six critères d’une ouverture réussie, dites si elle y répond.')}
       <div class="self-layout">
         <aside class="panel self-recap">
           <h2>Votre approche</h2>
@@ -146,9 +146,17 @@
 
   // À l'arrivée sur l'autoévaluation : ce qu'on a sous les yeux.
   if (window.AtelierKit) window.AtelierKit.selfContext('.self-eval', [
-    ['eye', 'Ce que vous voyez', ['À gauche, votre approche : votre entrée en matière et votre réglage majeur.', 'À droite, les critères d’une ouverture réussie.']],
-    ['list', 'Ce qui vous est demandé', 'Relisez votre approche. Pour chaque critère, dites si elle y répond : « Oui », « En partie » ou « Non ».'],
+    ['eye', 'Ce que vous évaluez', 'Votre approche : votre entrée en matière et votre réglage majeur (à gauche).'],
+    ['list', 'Une ouverture réussie', ['Accueil et climat : saluer, remercier, mettre à l’aise.', 'Présentation : dire qui vous êtes, votre fonction, votre entreprise.', 'Cadrage : annoncer l’objet, le déroulé ou la durée.', 'Transition vers l’écoute : donner la parole au client.', 'Posture centrée client : parler de lui, sans monopoliser la parole.', 'Adaptation : ajuster au client, au canal et à la situation.']],
+    ['list', 'Ce qui vous est demandé', 'Pour chaque critère, dites si votre approche y répond : « Oui », « En partie » ou « Non ».'],
     ['checkCircle', 'Ensuite', 'Le corrigé s’affiche. Vous comparez votre regard avec le sien.']
+  ]);
+
+  // À l'arrivée : la situation, les critères d'une ouverture réussie, ce qui est demandé.
+  if (window.AtelierKit) window.AtelierKit.context([
+    ['users', 'La situation', 'En boutique, un client pressé veut regarder seul, à son rythme.'],
+    ['list', 'Une ouverture réussie', ['Accueil et climat : saluer, remercier, mettre à l’aise.', 'Présentation : dire qui vous êtes, votre fonction, votre entreprise.', 'Cadrage : annoncer l’objet, le déroulé ou la durée.', 'Transition vers l’écoute : donner la parole au client.', 'Posture centrée client : parler de lui, sans monopoliser la parole.', 'Adaptation : ajuster au client, au canal et à la situation.']],
+    ['pencil', 'Ce qui vous est demandé', 'Écrire votre entrée en matière, puis dire ce que vous avez adapté à ce client.']
   ]);
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.

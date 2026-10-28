@@ -31,7 +31,8 @@
     { key: 'rewrite', title: 'Votre version améliorée',
       context: [
         ['target', 'Le but de l’étape', 'Réécrire l’accroche comme si vous étiez la conseillère.'],
-        ['pencil', 'Comment faire', 'Gardez ce qui fonctionne et corrigez les axes d’amélioration que vous avez relevés.']
+        ['pencil', 'Comment faire', 'Gardez ce qui fonctionne et corrigez les axes d’amélioration que vous avez relevés.'],
+        ['list', 'Une ouverture réussie', ['Accueil et climat : saluer, remercier, mettre à l’aise.', 'Présentation : dire qui vous êtes, votre fonction, votre entreprise.', 'Cadrage : annoncer l’objet, le déroulé ou la durée.', 'Transition vers l’écoute : donner la parole au client.', 'Posture centrée client : parler de lui, sans monopoliser la parole.', 'Adaptation : ajuster au client, au canal et à la situation.']]
       ],
       body: () => ex.field('rewrite', 'Votre version améliorée', { placeholder: 'Réécrivez l’accroche ici…', max: 800, rows: 6, hideLabel: true }) }
   ];
@@ -62,7 +63,7 @@
   function selfScreen() {
     return `<section class="self-eval">
       ${window.AtelierKit ? `<div class="tour-corner">${window.AtelierKit.contextButton()}</div>` : ''}
-      ${core.pageTitle('Autoévaluation', 'Votre version répond-elle à ces critères ?', 'Relisez votre analyse. Pour chaque critère, dites si votre version améliorée y répond. Le corrigé s’affiche ensuite.')}
+      ${core.pageTitle('Autoévaluation', 'Votre version améliorée est-elle une ouverture réussie ?', 'Vous évaluez votre version améliorée (n° 3 à gauche). Pour chacun des six critères d’une ouverture réussie, dites si elle y répond.')}
       <div class="self-layout">
         <aside class="panel self-recap">
           <h2>Votre analyse</h2>
@@ -205,8 +206,9 @@
 
   // À l'arrivée sur l'autoévaluation : ce qu'on a sous les yeux.
   if (window.AtelierKit) window.AtelierKit.selfContext('.self-eval', [
-    ['eye', 'Ce que vous voyez', ['À gauche, votre analyse, telle que vous l’avez écrite.', 'À droite, les critères d’une ouverture réussie.']],
-    ['list', 'Ce qui vous est demandé', 'Relisez votre version améliorée. Pour chaque critère, dites si elle y répond : « Oui », « En partie » ou « Non ».'],
+    ['eye', 'Ce que vous évaluez', 'Votre version améliorée de l’accroche (n° 3 à gauche).'],
+    ['list', 'Une ouverture réussie', ['Accueil et climat : saluer, remercier, mettre à l’aise.', 'Présentation : dire qui vous êtes, votre fonction, votre entreprise.', 'Cadrage : annoncer l’objet, le déroulé ou la durée.', 'Transition vers l’écoute : donner la parole au client.', 'Posture centrée client : parler de lui, sans monopoliser la parole.', 'Adaptation : ajuster au client, au canal et à la situation.']],
+    ['list', 'Ce qui vous est demandé', 'Pour chaque critère, dites si votre version y répond : « Oui », « En partie » ou « Non ».'],
     ['checkCircle', 'Ensuite', 'Le corrigé s’affiche. Vous comparez votre regard avec le sien.']
   ]);
 

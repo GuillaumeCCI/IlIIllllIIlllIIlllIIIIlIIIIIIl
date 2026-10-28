@@ -178,17 +178,17 @@
     's1-A': { integre: true, blocs: [
       { titre: 'Ce qui fonctionne', champs: ['strengths'],
         criteres: [
-          { nom: 'La salutation repérée', mots: ['bonjour', 'salutation', 'salue', 'politesse', 'poli', 'polie', 'courtois', 'courtoise'], conseil: 'L’accroche commence bien par une salutation.' },
-          { nom: 'La présentation repérée', mots: ['présente', 'présentation', 'identité', 'nom', 'prénom', 'fonction', 'entreprise', 'camille', 'novéa', 'conseillère', 'qui elle est'], conseil: 'Camille dit qui elle est et pour qui elle travaille.' }
+          { nom: 'Accueil et climat : la salutation', mots: ['bonjour', 'salutation', 'salue', 'politesse', 'poli', 'polie', 'courtois', 'courtoise'], conseil: 'L’accroche commence bien par une salutation.' },
+          { nom: 'Présentation : qui elle est', mots: ['présente', 'présentation', 'identité', 'nom', 'prénom', 'fonction', 'entreprise', 'camille', 'novéa', 'conseillère', 'qui elle est'], conseil: 'Camille dit qui elle est et pour qui elle travaille.' }
         ],
         phrases: { attendues: 1, points: 1 } },
       { titre: 'Axes d’amélioration', champs: ['improvements'],
         criteres: [
-          { nom: 'Mise à l’aise', mots: ['remerci*', 'merci', 'mise à l’aise', 'mettre à l’aise', 'climat', 'chaleur', 'chaleureu*', 'sourire', 'accueil'], conseil: 'Il manque un remerciement, une mise à l’aise.' },
-          { nom: 'Cadrage absent', mots: ['cadrage', 'cadrer', 'durée', 'minutes', 'temps', 'déroulé', 'déroulement', 'objectif', 'ordre du jour', 'structure'], conseil: 'Ni durée ni déroulé ne sont annoncés.' },
-          { nom: 'Produit trop tôt', mots: ['produit', 'offre', 'offres', 'présenter', 'je vais vous présenter', 'vend*', 'pousse*', 'solutions', 'trop vite', 'trop tôt', 'directement'], conseil: 'Elle parle de ses offres avant d’écouter.' },
-          { nom: 'Pas d’écoute', mots: ['écoute', 'écouter', 'question', 'parole', 'besoin*', 'transition', 'laisser parler', 'découverte'], conseil: 'Le client n’a pas la parole.' },
-          { nom: 'Formule vague', mots: ['vague', 'flou', 'floue', 'imprécis', 'imprécise', 'pourrait vous convenir', 'précis', 'concret', 'générique'], conseil: '« Ce qui pourrait vous convenir » reste vague.' }
+          { nom: 'Accueil et climat : pas de mise à l’aise', mots: ['remerci*', 'merci', 'mise à l’aise', 'mettre à l’aise', 'climat', 'chaleur', 'chaleureu*', 'sourire', 'accueil'], conseil: 'Il manque un remerciement, une mise à l’aise.' },
+          { nom: 'Cadrage : ni durée ni déroulé', mots: ['cadrage', 'cadrer', 'durée', 'minutes', 'temps', 'déroulé', 'déroulement', 'objectif', 'ordre du jour', 'structure'], conseil: 'Ni durée ni déroulé ne sont annoncés.' },
+          { nom: 'Transition vers l’écoute : l’offre arrive trop tôt', mots: ['produit', 'offre', 'offres', 'présenter', 'je vais vous présenter', 'vend*', 'pousse*', 'solutions', 'trop vite', 'trop tôt', 'directement'], conseil: 'Elle parle de ses offres avant d’écouter.' },
+          { nom: 'Transition vers l’écoute : le client n’a pas la parole', mots: ['écoute', 'écouter', 'question', 'parole', 'besoin*', 'transition', 'laisser parler', 'découverte'], conseil: 'Le client n’a pas la parole.' },
+          { nom: 'Posture centrée client : une formule vague', mots: ['vague', 'flou', 'floue', 'imprécis', 'imprécise', 'pourrait vous convenir', 'précis', 'concret', 'générique'], conseil: '« Ce qui pourrait vous convenir » reste vague.' }
         ],
         phrases: { attendues: 2, points: 1 } },
       { titre: 'Votre version améliorée', champs: ['rewrite'], ...ouvertureComplete }
@@ -199,19 +199,19 @@
       { titre: 'Votre entrée en matière', champs: ['opening'],
         criteres: [
           accueil,
-          { nom: 'Respect de son rythme', mots: ['à votre rythme', 'je vous laisse', 'prenez votre temps', 'tranquillement', 'sans vous presser',
+          { nom: 'Adaptation : le respect de son rythme', mots: ['à votre rythme', 'je vous laisse', 'prenez votre temps', 'tranquillement', 'sans vous presser',
             'regarder', 'faire un tour', 'librement', 'jeter un œil', 'je reste', 'à côté', 'dans les parages', 'à disposition', 'à votre disposition',
             'au moindre besoin', 'si besoin', 'si vous avez besoin', 'n’hésitez pas', 'rapidement', 'en deux mots', 'je ne vous retiens pas',
             'je ne vous dérange pas', 'pas de souci', 'aucun souci'], conseil: 'Montrez que vous respectez son peu de temps.' },
-          { nom: 'Présentation légère', mots: ['je suis', 'je m’appelle', 'conseiller', 'conseillère', 'vendeur', 'vendeuse', 'ici', 'du magasin', 'de la boutique'], conseil: 'Une présentation en quelques mots suffit.' },
-          { nom: 'Le choix laissé au client', mots: ['vous préférez', 'vous cherchez', 'quelque chose de précis', 'je peux vous aider', 'puis-je vous aider', 'voulez-vous', 'souhaitez-vous', 'si vous voulez', 'comme vous voulez', 'si vous avez besoin', 'faites-moi signe', 'n’hésitez pas', 'quelque chose de précis', 'juste à côté', 'au besoin', 'appelez-moi', 'je suis là si', 'je reste là', 'à votre service', 'vous me dites'], conseil: 'Laissez-lui le choix : être aidé ou regarder seul.' }
+          { nom: 'Présentation : en quelques mots', mots: ['je suis', 'je m’appelle', 'conseiller', 'conseillère', 'vendeur', 'vendeuse', 'ici', 'du magasin', 'de la boutique'], conseil: 'Une présentation en quelques mots suffit.' },
+          { nom: 'Transition vers l’écoute : le choix laissé au client', mots: ['vous préférez', 'vous cherchez', 'quelque chose de précis', 'je peux vous aider', 'puis-je vous aider', 'voulez-vous', 'souhaitez-vous', 'si vous voulez', 'comme vous voulez', 'si vous avez besoin', 'faites-moi signe', 'n’hésitez pas', 'quelque chose de précis', 'juste à côté', 'au besoin', 'appelez-moi', 'je suis là si', 'je reste là', 'à votre service', 'vous me dites'], conseil: 'Laissez-lui le choix : être aidé ou regarder seul.' }
         ],
         // L'ouverture est courte par nature : une phrase complète suffit.
         phrases: { attendues: 1, points: 1 },
         pieges: [PIEGE_PRODUIT, { nom: 'Trop insistant', points: 1, mots: ['pourquoi', 'vous devriez', 'il faut absolument', 'prenez le temps de regarder', 'vous avez tort'], conseil: 'Ne retenez pas un client pressé.' }] },
       { titre: 'Votre réglage majeur', champs: ['adjustment'],
         criteres: [
-          { nom: 'Le réglage nommé', mots: ['court', 'courte', 'bref', 'brève', 'rapide', 'concis', 'concise', 'rythme', 'pressé', 'temps', 'laisser',
+          { nom: 'Adaptation : le réglage nommé', mots: ['court', 'courte', 'bref', 'brève', 'rapide', 'concis', 'concise', 'rythme', 'pressé', 'temps', 'laisser',
             'liberté', 'non intrusif', 'non intrusive', 'discret', 'discrète', 'retenir', 'choix', 'disponible', 'disponibilité', 'adapt*', 'ajust*', 'raccourci*', 'simplifi*'], conseil: 'Nommez ce que vous avez changé : plus court, moins intrusif…' },
           raison
         ],
