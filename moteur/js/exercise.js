@@ -1029,10 +1029,18 @@
 
   /* Les zones d'écriture n'ont plus de poignée : elles grandissent avec
    * le texte (jamais en dessous de leur hauteur prévue), à la saisie et à
-   * chaque rendu (brouillon rechargé). */
+   * chaque rendu (brouillon rechargé). Au-delà d'une douzaine de lignes,
+   * elles cessent de grandir et le texte défile à l'intérieur. */
+  const TEXTAREA_LIMIT = 300;
   function fitTextarea(area) {
     area.style.height = 'auto';
-    if (area.scrollHeight > area.clientHeight) area.style.height = `${area.scrollHeight + 2}px`;
+    area.style.overflowY = '';
+    const base = area.clientHeight;
+    const wanted = area.scrollHeight + 2;
+    if (wanted <= base) return;
+    const limit = Math.max(base, TEXTAREA_LIMIT);
+    area.style.height = `${Math.min(wanted, limit)}px`;
+    if (wanted > limit) area.style.overflowY = 'auto';
   }
 
   function wireAutoGrow() {

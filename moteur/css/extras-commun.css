@@ -726,3 +726,6 @@ html { background-color: #fbf8f2; }
 @keyframes k-cascade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .k-cascade { animation: k-cascade-in .45s cubic-bezier(.3, .7, .3, 1) both; animation-delay: calc(var(--i, 0) * 140ms + 150ms); }
 @media (prefers-reduced-motion: reduce) { .k-cascade { animation: none; } }
+
+/* Les textes de l'apprenant relus dans un corrigé ou une autoévaluation : au-delà de sept lignes environ, le texte défile dans sa zone au lieu d'allonger la page. */
+#main :is(.an-yours p, .review-line, .own-answer p, .ana-text, .result-answer-text, .self-reread, .chain-own, .over-own) { max-height: 10.5em; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
