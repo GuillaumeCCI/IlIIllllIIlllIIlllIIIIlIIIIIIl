@@ -267,7 +267,7 @@
   // Le score en tête : les points et l'avertissement.
   const head = result => `<div class="ana-head">
         <p class="ana-points"><strong>${number(result.points)}</strong><span>/ ${result.total} points</span></p>
-        <p class="ana-note">Un score estimatif, calculé automatiquement : il repère des mots et des tournures, sans comprendre le sens. Une réponse juste dite autrement peut être sous-estimée. Comparez aussi avec la réponse possible.</p>
+        <p class="ana-note">Un score estimatif, calculé automatiquement : il repère des mots et des tournures. Une réponse juste dite autrement peut être sous-estimée. Comparez aussi avec la réponse possible.</p>
         <p class="ana-legend"><span><span class="ana-symbol is-ok" aria-hidden="true">✓</span>Présent dans votre réponse</span><span><span class="ana-symbol is-miss" aria-hidden="true">○</span>Attendu, pas encore là</span><span><span class="ana-symbol is-warn" aria-hidden="true">!</span>À éviter</span></p>
       </div>`;
 
