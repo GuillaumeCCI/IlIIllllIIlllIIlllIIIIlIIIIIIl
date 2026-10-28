@@ -285,16 +285,17 @@
     ] },
 
     // S1 E3 · Agence de décoration : entrer en matière sans question.
-    's1-E3': { blocs: [
-      { champs: ['opening'],
+    's1-E3': { integre: true, blocs: [
+      { titre: 'Votre ouverture', champs: ['opening'],
+        // Les noms des deux objectifs présentés : prendre l'initiative, créer un climat positif.
         criteres: [
-          accueil,
-          { nom: 'Prise d’initiative', mots: ['je vous propose', 'je propose', 'proposons', 'prenons', 'commençons', 'nous allons', 'on va', 'je vais', 'permettez-moi', 'allons-y', 'laissez-moi', 'je commence', 'nous commençons', 'voici comment', 'nous pouvons'], conseil: 'Ouvrez par une proposition : « Je vous propose de… ».' },
-          { nom: 'Invitation à parler', mots: ['je vous laisse', 'je vous écoute', 'racontez-moi', 'parlez-moi', 'me raconter', 'me parler', 'me dire', 'me décrire', 'décrivez-moi', 'votre projet', 'votre salon', 'vos envies', 'vos goûts', 'votre intérieur', 'vos idées', 'ce que vous imaginez', 'ce que vous aimez', 'votre style', 'vos attentes', 'votre situation'], conseil: 'Sans question, invitez-la quand même à s’exprimer.' },
-          { nom: 'Climat positif', mots: ['ravi', 'ravie', 'plaisir', 'heureux', 'heureuse', 'enchanté', 'enchantée', 'merci', 'bienvenue', 'installez-vous', 'agréable', 'ensemble', 'avec vous', 'tranquillement', 'prendre le temps'], conseil: 'Un mot chaleureux installe le climat.' },
-          { nom: 'Présentation', mots: PRESENTATION.concat(['atelier teinte', 'décoratrice', 'décorateur', 'architecte d’intérieur']), conseil: 'Dites qui vous êtes.' }
+          { ...accueil, nom: 'Créer un climat positif : saluer et remercier' },
+          { nom: 'Prendre l’initiative : une proposition', mots: ['je vous propose', 'je propose', 'proposons', 'prenons', 'commençons', 'nous allons', 'on va', 'je vais', 'permettez-moi', 'allons-y', 'laissez-moi', 'je commence', 'nous commençons', 'voici comment', 'nous pouvons'], conseil: 'Ouvrez par une proposition : « Je vous propose de… ».' },
+          { nom: 'Prendre l’initiative : la cliente invitée à parler', mots: ['je vous laisse', 'je vous écoute', 'racontez-moi', 'parlez-moi', 'me raconter', 'me parler', 'me dire', 'me décrire', 'décrivez-moi', 'votre projet', 'votre salon', 'vos envies', 'vos goûts', 'votre intérieur', 'vos idées', 'ce que vous imaginez', 'ce que vous aimez', 'votre style', 'vos attentes', 'votre situation'], conseil: 'Sans question, invitez-la quand même à s’exprimer.' },
+          { nom: 'Créer un climat positif : un mot chaleureux', mots: ['ravi', 'ravie', 'plaisir', 'heureux', 'heureuse', 'enchanté', 'enchantée', 'merci', 'bienvenue', 'installez-vous', 'agréable', 'ensemble', 'avec vous', 'tranquillement', 'prendre le temps'], conseil: 'Un mot chaleureux installe le climat.' },
+          { nom: 'Présentation : qui vous êtes', mots: PRESENTATION.concat(['atelier teinte', 'décoratrice', 'décorateur', 'architecte d’intérieur', 'à l’agence', 'de l’agence']), conseil: 'Dites qui vous êtes.' }
         ],
-        phrases: { attendues: 1, points: 1 },
+        phrases: { attendues: 1, points: 1, conseil: 'Rédigez une phrase entière, pas seulement des mots-clés.' },
         regles: [{ regle: 'sansQuestion', nom: 'Sans question', points: 2 }],
         pieges: [PIEGE_PRODUIT, PIEGE_FAMILIER] }
     ] },

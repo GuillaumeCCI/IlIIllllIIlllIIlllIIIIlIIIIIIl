@@ -13,7 +13,26 @@
   const kit = window.AtelierKit;
   const corner = () => (kit && !ex.reviewing() ? `<div class="tour-corner">${kit.contextButton()}${kit.tourButton()}</div>` : '');
 
+  /* Le corrigé au modèle de S1 A (js/corrige.js) : la situation rappelée,
+   * le score estimatif en tête, puis votre ouverture face à une réponse
+   * possible, avec ce qu'on attend sous votre ouverture. */
+  function reviewScreen() {
+    const corrige = window.AtelierCorrige;
+    const result = corrige.score('s1-E3', ex.values());
+    const [bloc] = result ? result.blocs : [];
+    const notes = content.feedback.E3;
+    return `<section class="an-review">
+      ${core.pageTitle('Corrigé', 'Entrez en matière avec assurance', 'Une cliente vient refaire son salon dans votre agence de décoration. Elle s’assoit et attend que vous lanciez l’échange, sans question. Voici votre ouverture face à une réponse possible.')}
+      ${corrige.head(result)}
+      ${corrige.rows([
+        corrige.row({ n: 1, title: 'Votre ouverture', bloc, text: ex.value('opening'), model: [notes[0], notes[1]] })
+      ])}
+      ${core.feedbackBox()}
+    </section>`;
+  }
+
   function screen() {
+    if (ex.reviewing()) return reviewScreen();
     const current = core.findExercise('s1-E3');
     return `${corner()}<div class="two-columns affirmative">
       <section class="panel scenario">
@@ -44,7 +63,8 @@
     return errors;
   }
 
-  const feedback = () => content.feedback.E3;
+  /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
+  const feedback = () => [];
 
   // À l'arrivée : pourquoi on est là, ce qui se passe, ce qui est demandé.
   if (kit) kit.context([
@@ -61,5 +81,5 @@
     { target: '.form-actions', title: 'Valider', text: 'Le corrigé s’affiche, avec une ouverture possible.' }
   ]);
 
-  ex.mount('s1-E3', { screen, validate, feedback });
+  ex.mount('s1-E3', { screen, validate, feedback, compactFeedback: true });
 })();

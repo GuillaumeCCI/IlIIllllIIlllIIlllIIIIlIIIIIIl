@@ -111,8 +111,8 @@ window.ATELIER_S1 = {
 
     // Exercice E de la fiche, contrainte 3 : sans poser de question.
     E3: [
-      'Une réponse possible : « Bonjour, merci de me recevoir. Je suis [Prénom Nom] de [Entreprise]. Je vous propose qu’on prenne le temps : je vous laisse me raconter votre situation, je suis là pour ça avant tout. »',
-      'La gestion de la contrainte : remplacer la question par une invitation ouverte, qui donne tout de même la parole au client.',
+      'Vous pouviez écrire : « Bonjour, merci d’être venue. Je suis [Prénom Nom], décoratrice à l’agence. Je vous propose qu’on prenne le temps : racontez-moi votre salon tel qu’il est aujourd’hui, et ce que vous aimeriez y changer. »',
+      'Pourquoi cela fonctionne : aucune question n’est posée, et pourtant la cliente est invitée à parler de son projet.',
       'Critère spécifique à vérifier : la gestion de la contrainte. Aucune question posée, et pourtant le client est invité à s’exprimer.'
     ],
 
