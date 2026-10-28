@@ -532,3 +532,13 @@
 
 /* Corrigé au modèle S1 A, dans les autres exercices (js/corrige.js) : de l’air entre deux paragraphes de la réponse possible. */
 .an-review .an-verdict p + p { margin-top: 10px; }
+
+/* Corrigé en deux colonnes égales (S1 D) : votre ouverture face à la réponse possible ; la fonction passe sous chaque phrase. */
+.an-row.is-half { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.an-review .an-row.is-half .review-row { grid-template-columns: 30px minmax(0, 1fr); }
+.an-review .an-row.is-half .review-function { grid-column: 2; justify-content: flex-start; padding-top: 0; }
+.an-review .an-row.is-half .an-verdict > div { flex: 1; min-width: 0; }
+.an-review .an-yours > div { flex: 1; min-width: 0; }
+@media (max-width: 760px) {
+  .an-row.is-half { grid-template-columns: 1fr; }
+}

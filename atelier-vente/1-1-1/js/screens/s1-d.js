@@ -56,7 +56,7 @@
    * repère propre à la fonction choisie. La pastille est verte quand la
    * fonction fait partie des quatre attendues ; « Adaptation » reste un
    * choix légitime, simplement pas une fonction clé. */
-  function reviewedRows() {
+  function reviewedRows(bloc) {
     return Array.from({ length: lineCount() }, (_, i) => {
       const n = i + 1;
       const text = ex.value(lineKey(n));
@@ -66,7 +66,7 @@
       return `<div class="review-row ${isKey ? 'is-key' : ''}">
         <span class="step-number">${n}</span>
         <div class="review-body">
-          <p class="review-line">« ${esc(text)} »</p>
+          <p class="review-line">« ${window.AtelierCorrige.part(bloc, text)} »</p>
           ${guidance ? `<p class="inline-note tone-neutral">${esc(guidance)}</p>` : ''}
         </div>
         <span class="review-function">${ex.verdictMark(isKey)}<span>${esc(fonction)}</span></span>
@@ -111,30 +111,29 @@
     </form>`;
   }
 
+  /* Le corrigé au modèle de S1 A (js/corrige.js) : le score estimatif en
+   * tête, puis votre ouverture, ligne par ligne avec sa fonction, face à
+   * une réponse possible construite de la même façon. */
   function screen() {
     if (!ex.reviewing()) return writing();
+    const corrige = window.AtelierCorrige;
+    const result = corrige.score('s1-D', ex.values());
+    const bloc = result ? result.blocs[0] : null;
     const missing = missingFunctions();
     const many = missing.length > 1;
+    const yours = `<div class="review-rows">${reviewedRows(bloc)}</div>
+      ${missing.length
+        ? ex.inlineNote(`Fonction${many ? 's' : ''} clé${many ? 's' : ''} choisie${many ? 's' : ''} pour aucune de vos phrases : ${missing.join(', ')}.`, 'neutral')
+        : ex.inlineNote('Vous avez relié vos phrases aux quatre fonctions clés : accueil, présentation, cadrage et transition vers l’écoute.', 'neutral')}`;
 
-    const body = `<div class="review-rows">${reviewedRows()}</div>
-         ${missing.length
-           ? ex.inlineNote(`Fonction${many ? 's' : ''} clé${many ? 's' : ''} absente${many ? 's' : ''} de votre ouverture : ${missing.join(', ')}.`, 'bad')
-           : ex.inlineNote('Les quatre fonctions clés sont présentes : accueil, présentation, cadrage et transition vers l’écoute.', 'good')}
-         ${ex.modelBlock('La même ouverture : une version possible', modelRows(), correction.criterion)}`;
-
-    return `<div class="writing-workshop">
-      ${core.pageTitle('Atelier d’écriture', 'Construisez votre ouverture', 'Rédigez une ouverture commerciale complète (4 à 6 phrases) pour la situation de votre choix. Écrivez une phrase par ligne et sélectionnez sa fonction.')}
-      <form class="panel" novalidate>
-        <div class="panel-title">
-          <h2>Votre ouverture</h2>
-          <span class="muted">Votre production, relue</span>
-        </div>
-        <div class="exercise-body">${body}</div>
-        ${core.errorsBox()}
-        ${ex.actions('Valider mon ouverture')}
-        ${core.feedbackBox()}
-      </form>
-    </div>`;
+    return `<section class="an-review writing-review">
+      ${core.pageTitle('Corrigé', 'Construisez votre ouverture', 'Voici votre ouverture relue, phrase par phrase, face à une réponse possible construite de la même façon.')}
+      ${corrige.head(result)}
+      ${corrige.rows([
+        corrige.row({ n: 1, title: 'Votre ouverture', bloc, yours, modelHtml: modelRows(), half: true })
+      ])}
+      ${core.feedbackBox()}
+    </section>`;
   }
 
   function validate(values) {
@@ -148,13 +147,8 @@
     return errors;
   }
 
-  /* Le pavé de relecture se réduit à l'essentiel : le détail est en place. */
-  function feedback() {
-    const missing = missingFunctions();
-    return missing.length
-      ? [`Relisez votre ouverture : il y manque ${missing.length > 1 ? 'les fonctions' : 'la fonction'} ${missing.join(', ')}. Comparez avec la version modèle ci-dessus.`]
-      : ['Les quatre fonctions clés sont présentes et identifiées. Comparez vos formulations à la version possible ci-dessus.'];
-  }
+  /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
+  const feedback = () => [];
 
   function removeLine(index) {
     const total = lineCount();
@@ -186,8 +180,8 @@
         { symbol: 'list', tone: 'coral', text: 'À droite, choisissez ce qu’elle fait dans l’ouverture : sa fonction.' }
       ] },
     { target: '[data-action="add-line"]', title: 'De 4 à 6 phrases', text: 'Il en faut au moins 4. Ce lien ajoute une ligne, jusqu’à 6.' },
-    { target: '.form-actions', title: 'Valider mon ouverture', text: 'Le corrigé reprend chacune de vos lignes, avec un repère sur la fonction choisie, puis une ouverture modèle.' }
+    { target: '.form-actions', title: 'Valider mon ouverture', text: 'Le corrigé reprend chacune de vos lignes, avec un repère sur la fonction choisie, face à une réponse possible.' }
   ]);
 
-  ex.mount('s1-D', { screen, validate, feedback, onMount });
+  ex.mount('s1-D', { screen, validate, feedback, onMount, compactFeedback: true });
 })();

@@ -57,17 +57,18 @@
 
   /* Une ligne du corrigé. `yours` : le HTML de la réponse (par défaut, la
    * phrase surlignée entre guillemets) ; `model` : un texte ou une liste de
-   * paragraphes ; `extra` : ce qui suit, sur toute la largeur. */
-  function row({ n, title, bloc, text = '', yours, model, label = 'Une réponse possible', extra = '' }) {
+   * paragraphes, ou `modelHtml` déjà prêt ; `extra` : ce qui suit, sur
+   * toute la largeur ; `half` : deux colonnes égales (réponses longues). */
+  function row({ n, title, bloc, text = '', yours, model, modelHtml, label = 'Une réponse possible', extra = '', half = false }) {
     const paragraphs = (Array.isArray(model) ? model : [model]).filter(Boolean);
-    return `<li class="an-row tone-${toneOf(bloc)}">
+    return `<li class="an-row tone-${toneOf(bloc)}${half ? ' is-half' : ''}">
         <div class="an-yours">
           <span class="an-n" aria-hidden="true">${esc(n)}</span>
           <div><h2>${esc(title)}</h2>${yours !== undefined ? yours : `<p>« ${answer(bloc, text)} »</p>`}${expect(bloc)}</div>
         </div>
         <div class="an-verdict">
           <span class="an-mark" aria-hidden="true">${core().icon('lightbulb', { size: 20, strokeWidth: 3 })}</span>
-          <div><h3>${esc(label)}</h3>${paragraphs.map(p => `<p>${esc(p)}</p>`).join('')}</div>
+          <div><h3>${esc(label)}</h3>${modelHtml !== undefined ? modelHtml : paragraphs.map(p => `<p>${esc(p)}</p>`).join('')}</div>
         </div>
         ${extra}
       </li>`;

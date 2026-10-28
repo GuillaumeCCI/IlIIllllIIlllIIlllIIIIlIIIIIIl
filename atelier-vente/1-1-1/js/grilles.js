@@ -240,10 +240,16 @@
     ] },
 
     // S1 D · Rédiger une ouverture phrase par phrase.
-    's1-D': { blocs: [
+    's1-D': { integre: true, blocs: [
       { titre: 'Votre ouverture', motif: 'line',
-        criteres: [accueil, presentation, cadrage, ecoute],
-        phrases: { attendues: 4, points: 2 },
+        // Les noms des fonctions, tels qu'on les choisit phrase par phrase.
+        criteres: [
+          { ...accueil, nom: 'Accueil / 4 × 20 : saluer et remercier' },
+          { ...presentation, nom: 'Présentation : qui vous êtes, pour qui' },
+          { ...cadrage, nom: 'Cadrage : objet, déroulé ou durée' },
+          { ...ecoute, nom: 'Transition vers l’écoute : la parole au client' }
+        ],
+        phrases: { attendues: 4, points: 2, conseil: 'Rédigez des phrases entières, pas seulement des mots-clés.' },
         regles: [{ regle: 'avecQuestion', nom: 'Une question pour finir', points: 1 }],
         pieges: [PIEGE_PRODUIT, PIEGE_FAMILIER] }
     ] },
