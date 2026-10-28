@@ -109,8 +109,8 @@
         return `<section class="k-panel ear-review">
           <p class="k-label">Objection ${String(i + 1).padStart(2, '0')} · ${esc(c.topic)}</p>
           <blockquote class="ear-review-quote">“ ${esc(c.quote)} ”</blockquote>
-          <div class="k-pick-pair ear-pick-pair">${kit.picked(okN, natureOf(nature(i)).label, natureOf(c.nature).label, 'Étape 1 · La nature de l’objection')}
-          ${kit.picked(okG, gestureOf(gesture(i)).label, gestureOf(c.gesture).label, 'Étape 2 · Votre premier geste')}</div>
+          <div class="k-pick-pair ear-pick-pair">${kit.picked(okN, natureOf(nature(i)).label, natureOf(c.nature).label, 'La nature de l’objection')}
+          ${kit.picked(okG, gestureOf(gesture(i)).label, gestureOf(c.gesture).label, 'Votre premier geste')}</div>
           ${kit.explain(c.why)}
         </section>`;
       }).join('')}</div>

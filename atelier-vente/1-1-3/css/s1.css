@@ -420,12 +420,10 @@
 .ear-client h2, .ear-quote { color: var(--navy); }
 .ear-topic, .ear-diagnosis-label { color: #5b6a8f; }
 
-/* Corrigé de « Écoutez le client » : les deux décisions se distinguent d'un coup d'œil, chacune sur son fond (bleu pour la nature, doré pour le geste), sans contour. */
-.ear-pick-pair { gap: 16px; }
-.ear-pick-pair .k-pick { padding: 14px 14px 16px; border-radius: 16px; }
-.ear-pick-pair .k-pick:first-child { background: #eef3fd; }
-.ear-pick-pair .k-pick:last-child { background: #fdf5e4; }
-.ear-pick-pair .k-pick-topic { font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; }
-.ear-pick-pair .k-pick:first-child .k-pick-topic { color: #1f4fd8; }
-.ear-pick-pair .k-pick:last-child .k-pick-topic { color: #9a6400; }
-.ear-pick-pair .k-pick-tile { background-clip: padding-box; box-shadow: 0 4px 12px rgb(20 40 100 / 6%); }
+/* Corrigé de « Écoutez le client » : une ligne par décision. À gauche son nom, avec son numéro d'étape dans une pastille ; à droite ce qui a été choisi et ce qu'il fallait choisir, côte à côte. */
+.ear-pick-pair { grid-template-columns: minmax(0, 1fr); gap: 10px; counter-reset: ear-step; }
+.ear-pick-pair .k-pick { grid-template-columns: 190px repeat(2, minmax(0, 1fr)); align-items: center; gap: 12px; }
+.ear-pick-pair .k-pick-topic { grid-column: auto; display: flex; align-items: center; gap: 10px; font-size: .95rem; line-height: 1.3; }
+.ear-pick-pair .k-pick-topic::before { counter-increment: ear-step; content: counter(ear-step); display: grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 50%; background: #e6edfb; color: #1f4fd8; font-size: .85rem; font-weight: 800; }
+.ear-pick-pair .k-pick-tile:only-of-type, .ear-pick-pair .k-pick-topic + .k-pick-tile:last-child { grid-column: span 2; }
+@media (max-width: 760px) { .ear-pick-pair .k-pick { grid-template-columns: minmax(0, 1fr); } .ear-pick-pair .k-pick-tile { grid-column: auto !important; } }
