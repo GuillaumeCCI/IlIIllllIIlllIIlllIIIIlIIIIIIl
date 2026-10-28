@@ -97,8 +97,8 @@ window.ATELIER_S1 = {
 
     // Exercice E de la fiche, contrainte 1 : visio, caméra coupée.
     E1: [
-      'Une réponse possible : « Bonjour [Nom], je suis [Prénom Nom] de [Entreprise]. Comme on ne se voit pas, je vais être clair sur le déroulé : je vous propose 15 minutes, d’abord je vous écoute sur [sujet], ensuite je réagis. Dites-moi simplement quand vous voulez que je précise ou que je m’arrête. »',
-      'La gestion de la contrainte : un cadrage verbal renforcé, plus une invitation à réagir vocalement, pour compenser l’absence d’image.',
+      'Vous pouviez écrire : « Bonjour [Nom], je suis [Prénom Nom] de [Entreprise]. Comme on ne se voit pas, je vais être clair sur le déroulé : je vous propose 15 minutes, d’abord je vous écoute sur [sujet], ensuite je réagis. Dites-moi simplement quand vous voulez que je précise ou que je m’arrête. »',
+      'Pourquoi cela fonctionne : sans image, vous annoncez le déroulé à voix haute et vous invitez le prospect à réagir à la voix.',
       'Critère spécifique à vérifier : la gestion de la contrainte. Elle doit être effectivement respectée, et l’ouverture rester efficace : climat, cadrage et écoute préservés autant que possible.'
     ],
 

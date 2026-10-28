@@ -255,15 +255,16 @@
     ] },
 
     // S1 E1 · Visio : le prospect coupe sa caméra.
-    's1-E1': { blocs: [
-      { champs: ['response'],
+    's1-E1': { integre: true, blocs: [
+      { titre: 'Votre prochaine action', champs: ['response'],
+        // Les trois temps présentés avant la réponse : reconnaître, rassurer, rebondir.
         criteres: [
-          { nom: 'La situation reconnue', mots: ['caméra', 'image', 'on ne se voit pas', 'sans image', 'à l’oral', 'oral', 'voix', 'je vous entends', 'vous entendre', 'coupé', 'pas de souci', 'aucun souci', 'pas de problème', 'très bien', 'tout à fait', 'aucun problème', 'on continue'], conseil: 'Reconnaissez simplement le changement.' },
-          { nom: 'Cadrage à l’oral', mots: CADRAGE, conseil: 'Sans image, annoncez le déroulé à voix haute.' },
-          { nom: 'Invitation à réagir', mots: ['n’hésitez pas', 'dites-moi', 'interrompre', 'interrompez', 'arrêter', 'réagir', 'réagissez', 'quand vous voulez', 'à tout moment', 'si je vais trop vite', 'préciser', 'coupez-moi'], conseil: 'Invitez-le à réagir à la voix.' },
-          { nom: 'Une question sur sa priorité', mots: ECOUTE, conseil: 'Posez une question courte sur ce qui compte pour lui.' }
+          { nom: 'Reconnaître : la caméra coupée, sans reproche', mots: ['caméra', 'image', 'on ne se voit pas', 'sans image', 'à l’oral', 'oral', 'voix', 'je vous entends', 'vous entendre', 'coupé', 'pas de souci', 'aucun souci', 'pas de problème', 'très bien', 'tout à fait', 'aucun problème', 'on continue'], conseil: 'Reconnaissez simplement le changement.' },
+          { nom: 'Rassurer : le déroulé annoncé à l’oral', mots: CADRAGE, conseil: 'Sans image, annoncez le déroulé à voix haute.' },
+          { nom: 'Rassurer : l’invitation à réagir', mots: ['n’hésitez pas', 'dites-moi', 'interrompre', 'interrompez', 'arrêter', 'réagir', 'réagissez', 'quand vous voulez', 'à tout moment', 'si je vais trop vite', 'préciser', 'coupez-moi'], conseil: 'Invitez-le à réagir à la voix.' },
+          { nom: 'Rebondir : une question sur sa priorité', mots: ECOUTE, conseil: 'Posez une question courte sur ce qui compte pour lui.' }
         ],
-        phrases: { attendues: 2, points: 1 },
+        phrases: { attendues: 2, points: 1, conseil: 'Rédigez des phrases entières, pas seulement des mots-clés.' },
         pieges: [{ nom: 'Exiger la caméra', points: 2, mots: ['rallumer', 'rallumez', 'allumer votre caméra', 'activer votre caméra', 'activez', 'remettre la caméra', 'remettez', 'pourriez-vous allumer', 'il faudrait la caméra', 'mettre la caméra'], conseil: 'N’exigez pas qu’il rallume sa caméra.' }] }
     ] },
 

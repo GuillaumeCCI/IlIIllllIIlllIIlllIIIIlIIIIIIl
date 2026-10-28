@@ -19,7 +19,26 @@
    * réponse, l'indice, l'essai oral et les repères. Styles : extras.css. */
   const FACTS = [['calendar', 'Premier rendez-vous'], ['clock', '15 min restantes'], ['user', 'Décideur pressé']];
 
+  /* Le corrigé au modèle de S1 A (js/corrige.js) : la situation rappelée,
+   * le score estimatif en tête, puis votre réponse face à une réponse
+   * possible, avec ce qu'on attend sous votre réponse. */
+  function reviewScreen() {
+    const corrige = window.AtelierCorrige;
+    const result = corrige.score('s1-E1', ex.values());
+    const [bloc] = result ? result.blocs : [];
+    const notes = content.feedback.E1;
+    return `<section class="an-review">
+      ${core.pageTitle('Corrigé', 'Le prospect coupe sa caméra.', 'Premier rendez-vous en visio avec un décideur pressé : il reste 15 minutes, et il vient de couper sa caméra. Voici votre réponse face à une réponse possible.')}
+      ${corrige.head(result)}
+      ${corrige.rows([
+        corrige.row({ n: 1, title: 'Votre prochaine action', bloc, text: ex.value('response'), model: [notes[0], notes[1]] })
+      ])}
+      ${core.feedbackBox()}
+    </section>`;
+  }
+
   function screen() {
+    if (ex.reviewing()) return reviewScreen();
     const current = core.findExercise('s1-E1');
     return `${corner()}<div class="e1-layout">
       <section class="e1-scene">
@@ -53,7 +72,8 @@
   }
 
   const validate = values => [required(values, 'response', 'Votre prochaine action', 300)].filter(Boolean);
-  const feedback = () => content.feedback.E1;
+  /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
+  const feedback = () => [];
 
   function onMount() {
     core.$('[data-action="record"]')?.addEventListener('click', () => media.toggleRecording());
@@ -81,5 +101,5 @@
     { target: '.form-actions', title: 'Valider ma réponse', text: 'Le corrigé s’affiche, avec une réponse possible.' }
   ]);
 
-  ex.mount('s1-E1', { screen, validate, feedback, onMount });
+  ex.mount('s1-E1', { screen, validate, feedback, onMount, compactFeedback: true });
 })();
