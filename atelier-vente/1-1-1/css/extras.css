@@ -491,3 +491,9 @@
 #main .result-tiles .result-row.is-final { grid-column: 1 / -1; }
 .porter-choice { display: inline-flex; align-items: center; gap: 8px; width: fit-content; margin: 0; padding: 4px 12px; border-radius: 999px; background: var(--tint); color: var(--accent); font-weight: 700; font-size: .9rem; }
 .porter-layout .step-sheet .pick, .porter-layout .step-sheet select { margin-bottom: 22px; }
+
+/* S1 A · Corrigé : le score estimatif en tête, puis sous chaque réponse ce qu'on attend. */
+.an-score { margin: 0 0 14px; }
+#main .an-score .ana-score.is-head { margin: 0; padding: 0; box-shadow: none; background: none; }
+.an-yours p::after { display: none; }
+.an-yours .ana-expect { margin-top: 14px; }

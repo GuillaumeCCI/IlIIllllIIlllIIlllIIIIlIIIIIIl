@@ -175,7 +175,7 @@
   window.ATELIER_GRILLES = {
 
     // S1 A · Analyser l'accroche de Camille, puis la réécrire.
-    's1-A': { blocs: [
+    's1-A': { integre: true, blocs: [
       { titre: 'Ce qui fonctionne', champs: ['strengths'],
         criteres: [
           { nom: 'La salutation repérée', mots: ['bonjour', 'salutation', 'salue', 'politesse', 'poli', 'polie', 'courtois', 'courtoise'], conseil: 'L’accroche commence bien par une salutation.' },
@@ -195,7 +195,7 @@
     ] },
 
     // S1 B · Boutique, client pressé : une ouverture courte, non intrusive.
-    's1-B': { blocs: [
+    's1-B': { integre: true, blocs: [
       { titre: 'Votre entrée en matière', champs: ['opening'],
         criteres: [
           accueil,

@@ -73,21 +73,26 @@
    * par étape, la réponse à gauche, le retour teinté à droite. La mise en
    * situation reste à portée dans une fenêtre. Styles : extras.css (.an-*). */
   const VERDICTS = [
-    { key: 'opening', title: 'Votre entrée en matière', tone: 'neutral', label: 'Une réponse possible', symbol: 'sparkle' },
-    { key: 'adjustment', title: 'Votre réglage majeur', tone: 'good', label: 'Réglage attendu', symbol: 'check' }
+    { key: 'opening', title: 'Votre entrée en matière', tone: 'neutral', label: 'Une réponse possible', symbol: 'lightbulb' },
+    { key: 'adjustment', title: 'Votre réglage majeur', tone: 'good', label: 'Un réglage possible', symbol: 'lightbulb' }
   ];
 
   function reviewScreen() {
     const notes = content.feedback.B;
+    // Le score estimatif, intégré réponse par réponse (grille « integre »).
+    const analyse = window.AtelierAnalyse;
+    const grid = window.ATELIER_GRILLES && window.ATELIER_GRILLES['s1-B'];
+    const result = analyse && grid ? analyse.score(grid, ex.values()) : null;
     return `<section class="an-review">
       <header class="an-head">
         ${core.pageTitle('Corrigé', 'Votre approche', 'Voici votre approche, étape par étape, avec un retour sur chacune.')}
         ${core.button(`${icon('document', { size: 20 })}<span>Voir la mise en situation</span>`, 'scenario', 'subtle with-icon')}
       </header>
+      ${result ? `<section class="panel an-score">${core.panelTitle('Votre score estimatif')}<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section></section>` : ''}
       <ol class="an-rows">${VERDICTS.map((row, i) => `<li class="an-row tone-${row.tone}">
         <div class="an-yours">
           <span class="an-n" aria-hidden="true">${i + 1}</span>
-          <div><h2>${esc(row.title)}</h2><p>« ${esc(ex.value(row.key))} »</p></div>
+          <div><h2>${esc(row.title)}</h2><p>« ${result ? analyse.answer(result.blocs[i]) : esc(ex.value(row.key))} »</p>${result ? analyse.lines(result.blocs[i], { withText: false }) : ''}</div>
         </div>
         <div class="an-verdict">
           <span class="an-mark" aria-hidden="true">${icon(row.symbol, { size: 20, strokeWidth: 3 })}</span>

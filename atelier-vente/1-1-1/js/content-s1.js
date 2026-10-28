@@ -52,14 +52,14 @@ window.ATELIER_S1 = {
     A: [
       'Ce qui va déjà : la salutation et la présentation sont là : identité, fonction, entreprise. L’ouverture n’est donc pas ratée.',
       'Points perfectibles : pas de mise à l’aise ni de remerciement ; pas de cadrage de la durée ; une bascule trop rapide sur « je vais vous présenter » et « des offres intéressantes », qui oriente vers le produit avant l’écoute ; pas de transition claire vers le client ; « ce qui pourrait vous convenir » reste vague.',
-      'Une version améliorée possible : « Bonjour, merci de me recevoir. Je suis Camille Martin, conseillère chez Novéa. Je vous propose une vingtaine de minutes : d’abord pour que vous me parliez de votre activité et de vos besoins, ensuite je vous présenterai les solutions les plus adaptées. Pour commencer, qu’est-ce qui vous préoccupe aujourd’hui côté couverture ? »',
+      '« Bonjour, merci de me recevoir. Je suis Camille Martin, conseillère chez Novéa. Je vous propose une vingtaine de minutes : d’abord pour que vous me parliez de votre activité et de vos besoins, ensuite je vous présenterai les solutions les plus adaptées. Pour commencer, qu’est-ce qui vous préoccupe aujourd’hui côté couverture ? »',
       'Critère spécifique à vérifier : la finesse du diagnostic. Avez-vous repéré des points d’amélioration réels, et votre version les corrige-t-elle effectivement ?'
     ],
 
     // Exercice A de la fiche, contexte 1 : boutique, client pressé (B2C).
     B: [
-      'Une réponse possible pour ce contexte : « Bonjour ! Je vous laisse regarder à votre rythme. Je suis [Prénom], conseiller ici : au moindre besoin, je suis juste à côté. Vous cherchez quelque chose de précis, ou je vous laisse d’abord faire un tour ? »',
-      'Le réglage attendu : une ouverture courte et non intrusive, qui respecte le rythme du client et lui laisse le choix.',
+      '« Bonjour ! Je vous laisse regarder à votre rythme. Je suis [Prénom], conseiller ici : au moindre besoin, je suis juste à côté. Vous cherchez quelque chose de précis, ou je vous laisse d’abord faire un tour ? »',
+      'Une ouverture courte et non intrusive, qui respecte le rythme du client et lui laisse le choix.',
       'Critère spécifique à vérifier : l’adaptation au contexte. Le réglage que vous annoncez doit être cohérent avec la situation et réellement présent dans votre formulation.'
     ],
 
