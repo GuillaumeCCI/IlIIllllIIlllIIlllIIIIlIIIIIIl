@@ -28,15 +28,35 @@
     const situation = situations[i];
     const reviewed = caseDone(i);
 
-    const answer = reviewed
-      ? `<div class="own-answer">
-           <h4>Votre réponse de compréhension</h4>
-           <p>« ${esc(ex.value(repairKey(i)))} »</p>
-           ${ex.inlineNote(`Reformulation attendue, à titre d’exemple : « ${situation.model} »`, 'good')}
-         </div>`
-      : ex.field(repairKey(i), 'Votre reformulation de compréhension', {
-          placeholder: 'Écrivez votre reformulation…', max: 240, rows: 4, hideLabel: true
-        });
+    const answer = ex.field(repairKey(i), 'Votre reformulation de compréhension', {
+      placeholder: 'Écrivez votre reformulation…', max: 240, rows: 4, hideLabel: true
+    });
+
+    /* Le corrigé de la situation, au modèle de S1 A (js/corrige.js) : le
+     * score estimatif de cette seule situation, puis votre reformulation
+     * face à une réponse possible. */
+    const corrige = window.AtelierCorrige;
+    const result = reviewed ? corrige.scoreCase('s4-2.2', i, ex.values()) : null;
+    const sheet = reviewed
+      ? `<form class="an-review repair-review" novalidate>
+          ${corrige.head(result)}
+          ${corrige.rows([
+            corrige.row({ n: 1, title: 'Votre reformulation de compréhension', bloc: result ? result.blocs[0] : null, text: ex.value(repairKey(i)), model: `Vous pouviez écrire : « ${situation.model} »` })
+          ])}
+          ${core.errorsBox()}
+          ${ex.caseActions(cases(), i, 'Valider ma réponse')}
+        </form>`
+      : `<form class="panel repair-sheet" novalidate>
+        <div class="rc-sheet-head">
+          <span class="rc-pencil" aria-hidden="true">${icon('pencil', { size: 22 })}</span>
+          <div><h2>Votre reformulation de compréhension</h2>
+          <p>Reformulez ce que le client exprime, sans défendre l’offre immédiatement.</p></div>
+        </div>
+        ${answer}
+        ${ex.lockNote('Un exemple de reformulation apparaîtra après validation.')}
+        ${core.errorsBox()}
+        ${ex.caseActions(cases(), i, 'Valider ma réponse')}
+      </form>`;
 
     /* Les deux répliques se font face, chacune dans sa carte : ce que dit
      * le client à gauche, le réflexe à remplacer à droite. L'écart entre
@@ -67,17 +87,7 @@
         </div>
       </div>
 
-      <form class="panel repair-sheet" novalidate>
-        <div class="rc-sheet-head">
-          <span class="rc-pencil" aria-hidden="true">${icon('pencil', { size: 22 })}</span>
-          <div><h2>Votre reformulation de compréhension</h2>
-          <p>Reformulez ce que le client exprime, sans défendre l’offre immédiatement.</p></div>
-        </div>
-        ${answer}
-        ${reviewed ? '' : ex.lockNote('Un exemple de reformulation apparaîtra après validation.')}
-        ${core.errorsBox()}
-        ${ex.caseActions(cases(), i, 'Valider ma réponse')}
-      </form>
+      ${sheet}
     </div>`;
   }
 

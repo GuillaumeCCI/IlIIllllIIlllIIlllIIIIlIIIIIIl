@@ -481,10 +481,16 @@
       phrases: { ...ouvertureComplete.phrases, conseil: 'Rédigez des phrases entières, pas seulement des mots-clés.' } }] },
 
     // S4 2.2 · Remplacer trois réponses réflexes par une reformulation.
-    's4-2.2': { blocs: [
+    // Les critères portent le nom de la consigne : « reformulation de compréhension ».
+    's4-2.2': { integre: true, blocs: [
       reformuler('Le concurrent moins cher', 'repair0', ['budget', 'prix', 'critère', 'moins cher', 'coût', 'tarif', 'important', 'compar*', 'concurrent']),
       reformuler('Pas le temps', 'repair1', ['charge', 'temps', 'chargé', 'chargée', 'occupé', 'occupée', 'priorité', 'en ce moment', 'pas de place', 'débordé', 'débordée', 'agenda']),
       reformuler('Déjà essayé', 'repair2', ['expérience', 'prudent', 'prudente', 'déçu', 'déçue', 'essayé', 'méfiant', 'réserve', 'rien donné', 'résultat', 'doute'])
-    ] }
+    ].map(bloc => {
+      const [reprise, sujet] = bloc.criteres;
+      return { ...bloc,
+        criteres: [{ ...reprise, nom: 'Reformulation de compréhension : redire et faire confirmer' }, { ...sujet, nom: 'Reformulation de compréhension : ce que dit le client, avec ses mots' }],
+        phrases: { ...bloc.phrases, conseil: 'Rédigez une phrase entière, pas seulement des mots-clés.' } };
+    }) }
   };
 })();
