@@ -77,15 +77,20 @@
 
   /* L'autoévaluation face au score : pour chaque critère de la grille, ce
    * que l'apprenant a répondu, et ce que le score a repéré sous le même nom,
-   * dans le seul bloc évalué. `what` : ce qui est évalué (« votre réponse »). */
-  function compare({ rubric, selfKey, bloc, what }) {
+   * dans le seul bloc évalué. `what` : ce qui est évalué (« votre réponse ») ;
+   * `grade` : la réponse de l'apprenant au critère i, { id, label }, quand
+   * l'écran n'emploie pas l'échelle commune Oui / En partie / Non. */
+  function compare({ rubric, selfKey, bloc, what, grade: gradeOf }) {
     const ex = window.AtelierExercise;
-    const grade = i => ex.selfGrades.find(g => g.id === ex.value(selfKey(i))) || { id: 'vide', label: 'Sans réponse' };
+    const grade = gradeOf || (i => ex.selfGrades.find(g => g.id === ex.value(selfKey(i))) || { id: 'vide', label: 'Sans réponse' });
     const lines = bloc ? bloc.lines : [];
     const seen = title => {
       const same = lines.filter(l => l.nom === title || l.nom.startsWith(`${title} :`));
       if (!same.length) return '<span class="an-seen is-none">L’outil ne sait pas le repérer : à juger vous-même</span>';
-      return same.some(l => l.kind === 'ok') ? '<span class="an-seen is-ok">✓ Oui</span>' : '<span class="an-seen is-miss">○ Non</span>';
+      // Tout repéré : oui ; rien du tout : non ; entre les deux : en partie.
+      if (same.every(l => l.kind === 'ok')) return '<span class="an-seen is-ok">✓ Oui</span>';
+      if (same.every(l => l.kind === 'miss')) return '<span class="an-seen is-miss">○ Non</span>';
+      return '<span class="an-seen is-part">◐ En partie</span>';
     };
     return `<div class="an-rows-compare"><div class="an-compare">
         <h3>Votre autoévaluation, critère par critère</h3>

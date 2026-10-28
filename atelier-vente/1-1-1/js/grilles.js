@@ -269,16 +269,17 @@
     ] },
 
     // S1 E2 · L'ultimatum : 40 secondes pour obtenir un rendez-vous.
-    's1-E2': { blocs: [
-      { champs: ['proposal'],
+    's1-E2': { integre: true, blocs: [
+      { titre: 'Votre ouverture', champs: ['proposal'],
+        // Les noms de l'autoévaluation : accroche claire, valeur client, suite proposée.
         criteres: [
-          { nom: 'Accroche claire', mots: ['bonjour', 'je suis', 'je m’appelle', 'de ergolys', 'chez ergolys', 'ergolys', 'commercial', 'commerciale', 'conseiller', 'conseillère'], conseil: 'Dites tout de suite qui vous êtes.' },
-          { nom: 'Valeur pour la cliente', mots: ['vous aider', 'aider', 'aidons', 'permet', 'gagner', 'économiser', 'économies', 'réduire', 'réduction', 'améliorer', 'bénéfice', 'confort',
+          { nom: 'Accroche claire : qui vous êtes', mots: ['bonjour', 'je suis', 'je m’appelle', 'de ergolys', 'chez ergolys', 'ergolys', 'commercial', 'commerciale', 'conseiller', 'conseillère'], conseil: 'Dites tout de suite qui vous êtes.' },
+          { nom: 'Valeur client : ce que la cliente y gagne', mots: ['vous aider', 'aider', 'aidons', 'permet', 'gagner', 'économiser', 'économies', 'réduire', 'réduction', 'améliorer', 'bénéfice', 'confort',
             'santé', 'dos', 'arrêts', 'arrêts maladie', 'absences', 'absentéisme', 'tms', 'productivité', 'bien-être', 'salariés', 'équipes', 'collaborateurs', 'coûts', 'efficacité', 'résultats', 'concret*', 'prévenir', 'prévention'], min: 2, conseil: 'Dites ce que la cliente peut y gagner, concrètement.' },
-          { nom: 'Suite proposée', mots: ['je vous propose', 'rendez-vous', '10 minutes', 'dix minutes', 'on continue', 'on en parle', 'on fixe', 'ça vous va', 'êtes-vous d’accord', 'd’accord', 'prochaine', 'rencontrer', 'démonstration', 'essai', 'quand', 'créneau', 'cette semaine'], conseil: 'Proposez clairement de poursuivre.' },
-          { nom: 'Le sujet nommé', mots: ['siège*', 'sièges', 'fauteuil*', 'chaise*', 'ergonom*', 'bureau', 'poste de travail', 'postes'], conseil: 'Nommez ce que vous vendez.' }
+          { nom: 'Suite proposée : le rendez-vous demandé', mots: ['je vous propose', 'rendez-vous', '10 minutes', 'dix minutes', 'on continue', 'on en parle', 'on fixe', 'ça vous va', 'êtes-vous d’accord', 'd’accord', 'prochaine', 'rencontrer', 'démonstration', 'essai', 'quand', 'créneau', 'cette semaine'], conseil: 'Proposez clairement de poursuivre.' },
+          { nom: 'Accroche claire : ce que vous vendez', mots: ['siège*', 'sièges', 'fauteuil*', 'chaise*', 'ergonom*', 'bureau', 'poste de travail', 'postes'], conseil: 'Nommez ce que vous vendez.' }
         ],
-        phrases: { attendues: 2, points: 1 },
+        phrases: { attendues: 2, points: 1, conseil: 'Rédigez des phrases entières, pas seulement des mots-clés.' },
         regles: [{ regle: 'maxMots:90', nom: '90 mots au plus', points: 1 }],
         pieges: [PIEGE_FAMILIER] }
     ] },

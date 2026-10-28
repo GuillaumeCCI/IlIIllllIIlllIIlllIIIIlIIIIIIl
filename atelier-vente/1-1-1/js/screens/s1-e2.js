@@ -23,7 +23,6 @@
   ];
   const SCALE = [{ id: '2', label: 'Oui' }, { id: '1', label: 'En partie' }, { id: '0', label: 'Pas encore' }];
   const selfStage = () => ex.value('stage') === 'self';
-  const score = () => SELF.reduce((sum, _, i) => sum + (Number(ex.value(`self${i}`)) || 0), 0);
 
   function writePanel() {
     return `${core.panelTitle('Votre proposition')}
@@ -46,9 +45,33 @@
         ${ex.actions('Valider mon auto-évaluation')}`;
   }
 
+  /* Le corrigé au modèle de S1 A (js/corrige.js) : votre autoévaluation
+   * face à ce que l'outil a repéré, le score estimatif, puis votre
+   * ouverture face à une réponse possible. */
+  function reviewScreen() {
+    const corrige = window.AtelierCorrige;
+    const result = corrige.score('s1-E2', ex.values());
+    const [bloc] = result ? result.blocs : [];
+    const notes = content.feedback.E2;
+    const ids = { 2: 'oui', 1: 'partie', 0: 'non' };
+    const grade = i => {
+      const pick = SCALE.find(s => s.id === ex.value(`self${i}`));
+      return pick ? { id: ids[pick.id], label: pick.label } : { id: 'vide', label: 'Sans réponse' };
+    };
+    return `<section class="an-review">
+      ${core.pageTitle('Corrigé', 'L’ultimatum', 'Vous vendez des sièges de bureau ergonomiques. La gérante d’une PME de 40 salariés vous accorde 40 secondes, puis décide si elle vous donne un rendez-vous de 10 minutes.')}
+      ${corrige.compare({ rubric: SELF.map(s => [s.title]), bloc, what: 'votre ouverture', grade })}
+      ${corrige.head(result)}
+      ${corrige.rows([
+        corrige.row({ n: 1, title: 'Votre ouverture', bloc, text: ex.value('proposal'), model: [notes[0], notes[1]] })
+      ])}
+      ${core.feedbackBox()}
+    </section>`;
+  }
+
   function screen() {
+    if (ex.reviewing()) return reviewScreen();
     const current = core.findExercise('s1-E2');
-    const reviewing = ex.reviewing();
     return `${corner()}${core.pageTitle('', 'L’ultimatum', 'Vous avez 40 secondes pour donner envie au client de poursuivre.')}
     ${core.mission('Votre défi', 'Allez à l’essentiel sans sacrifier le climat, le cadrage ni l’écoute.')}
     <div class="two-columns ultimatum">
@@ -63,8 +86,7 @@
         </ul>
       </section>
       <form class="panel answer-panel" novalidate>
-        ${reviewing ? `${kit.result(score(), SELF.length * 2, 'votre auto-évaluation')}${core.panelTitle('Votre proposition')}<blockquote class="self-reread">« ${esc(ex.value('proposal'))} »</blockquote>`
-          : selfStage() ? selfPanel() : writePanel()}
+        ${selfStage() ? selfPanel() : writePanel()}
         ${core.feedbackBox()}
       </form>
     </div>`;
@@ -85,7 +107,8 @@
     return true;
   }
 
-  const feedback = () => content.feedback.E2;
+  /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
+  const feedback = () => [];
 
   function onMount() {
     media.resetTimer();
@@ -123,5 +146,5 @@
     ]);
   }
 
-  ex.mount('s1-E2', { screen, validate, intercept, feedback, onMount });
+  ex.mount('s1-E2', { screen, validate, intercept, feedback, onMount, compactFeedback: true });
 })();

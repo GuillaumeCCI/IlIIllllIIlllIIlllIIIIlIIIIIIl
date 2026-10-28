@@ -104,8 +104,8 @@ window.ATELIER_S1 = {
 
     // Exercice E de la fiche, contrainte 2 : 40 secondes chrono.
     E2: [
-      'Une réponse possible : « Bonjour, [Prénom Nom] de [Entreprise]. En un mot : on aide les [type d’entreprise] à [bénéfice concret]. Je vous propose 10 minutes pour voir si c’est pertinent pour vous. On continue ? »',
-      'La gestion de la contrainte : une accroche bénéfice ultra-courte, suivie d’une demande d’accord immédiate.',
+      'Vous pouviez écrire : « Bonjour, je suis [Prénom Nom], commercial chez Ergolys. Nos sièges de bureau ergonomiques soulagent le dos de vos salariés et réduisent les arrêts maladie. Je vous propose un rendez-vous de 10 minutes pour voir ce que cela changerait pour vos équipes. Ça vous va ? »',
+      'Pourquoi cela fonctionne : en moins de 40 secondes, la gérante sait qui vous êtes, ce qu’elle peut y gagner, et ce que vous lui proposez ensuite.',
       'Critère spécifique à vérifier : la gestion de la contrainte. Votre ouverture tient-elle réellement dans les quarante secondes, tout en gardant une valeur concrète pour le client et une proposition de suite ?'
     ],
 
