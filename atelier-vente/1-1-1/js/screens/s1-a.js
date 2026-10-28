@@ -89,6 +89,24 @@
     { key: 'rewrite', title: 'Votre version améliorée', tone: 'neutral', label: 'Une réponse possible', symbol: 'lightbulb' }
   ];
 
+  /* L'autoévaluation face au score : pour chaque critère de la grille, ce
+   * que l'apprenant a répondu, et ce que le score a repéré sous le même nom. */
+  function compare(result, only) {
+    const grade = i => ex.selfGrades.find(g => g.id === ex.value(selfKey(i))) || { id: 'vide', label: 'Sans réponse' };
+    const lines = result ? (only === undefined ? result.blocs : [result.blocs[only]]).flatMap(b => b.lines) : [];
+    const seen = title => {
+      const same = lines.filter(l => l.nom === title || l.nom.startsWith(`${title} :`));
+      if (!same.length) return '<span class="an-seen is-none">À juger vous-même</span>';
+      return same.some(l => l.kind === 'ok') ? '<span class="an-seen is-ok">✓ Repéré</span>' : '<span class="an-seen is-miss">○ Pas repéré</span>';
+    };
+    return `<div class="an-compare">
+        <h3>Votre autoévaluation, critère par critère</h3>
+        <p class="muted">Ce que vous avez répondu pour votre version améliorée, face à ce que le score estimatif a repéré.</p>
+        <table><thead><tr><th>Critère</th><th>Votre avis</th><th>Score estimatif</th></tr></thead>
+        <tbody>${content.rubric.map(([title], i) => `<tr><th>${esc(title)}</th><td><span class="self-pill is-${grade(i).id}">${esc(grade(i).label)}</span></td><td>${seen(title)}</td></tr>`).join('')}</tbody></table>
+      </div>`;
+  }
+
   function reviewScreen() {
     const notes = content.feedback.A;
     // Le score estimatif, intégré réponse par réponse (grille « integre »).
@@ -112,8 +130,8 @@
           <span class="an-mark" aria-hidden="true">${icon(row.symbol, { size: 20, strokeWidth: 3 })}</span>
           <div><h3>${esc(row.label)}</h3><p>${esc(notes[i])}</p></div>
         </div>
+        ${row.key === 'rewrite' ? compare(result, i) : ''}
       </li>`).join('')}</ol>
-      ${ex.selfSummary(content.rubric, selfKey, 'votre version')}
       ${core.feedbackBox()}
     </section>`;
   }
