@@ -79,11 +79,7 @@
         ${core.illustration(current)}
         <span class="tag rose">Ouverture orale</span>
         <h2>Le contexte</h2>
-        <ul class="ult-facts">
-          <li><strong>Vous</strong><span>Commercial chez Ergolys, qui vend des sièges de bureau ergonomiques.</span></li>
-          <li><strong>Le client</strong><span>La gérante d’une entreprise de 40 salariés, entre deux réunions.</span></li>
-          <li><strong>Sa décision</strong><span>Après 40 secondes, elle choisit : vous accorder un rendez-vous de 10 minutes, ou s’arrêter là.</span></li>
-        </ul>
+        <p class="panel-intro">Vous êtes commercial chez Ergolys, qui vend des sièges de bureau ergonomiques. La gérante d’une entreprise de 40 salariés vous reçoit entre deux réunions. Après 40 secondes, elle choisit : vous accorder un rendez-vous de 10 minutes, ou s’arrêter là.</p>
       </section>
       <form class="panel answer-panel" novalidate>
         ${selfStage() ? selfPanel() : writePanel()}

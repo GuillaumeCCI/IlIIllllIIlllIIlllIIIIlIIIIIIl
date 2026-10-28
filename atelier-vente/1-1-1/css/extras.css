@@ -160,7 +160,7 @@
 
 /* « Voir un indice » sur la ligne du libellé, au-dessus du coin droit de
    la zone d'écriture. */
-.e1-field-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: -6px; }
+.e1-field-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
 .e1-field-head .e1-label { margin: 0 0 4px; }
 
 /* ── « Quelle ouverture est la plus efficace ? » (1-1-1 · C) ────────────
@@ -350,7 +350,7 @@
 .tour-corner > .tour-replay { flex-shrink: 0; margin-top: 4px; }
 
 /* Libellé de champ et « Voir un indice » sur la même ligne (S1 E2, E3). */
-.k-field-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin: 6px 0 -6px; }
+.k-field-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin: 6px 0 12px; }
 .k-field-label { margin: 0 0 4px; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #4a587c; }
 /* Auto-évaluation de S1 E2 : l'ouverture relue, puis la grille. */
 .self-reread { margin: 4px 0 18px; padding: 14px 18px; border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; background: #f5f7fc; color: var(--navy); font-style: italic; line-height: 1.5; }
