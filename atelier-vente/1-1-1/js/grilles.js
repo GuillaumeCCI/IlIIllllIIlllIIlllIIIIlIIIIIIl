@@ -470,7 +470,15 @@
     ]) },
 
     // S4 1.2 · Réécrire une ouverture maladroite.
-    's4-1.2': { blocs: [{ champs: ['rewrite'], ...ouvertureComplete }] },
+    // Les noms des quatre temps rappelés sous le champ de réécriture.
+    's4-1.2': { integre: true, blocs: [{ titre: 'Votre ouverture réécrite', champs: ['rewrite'], ...ouvertureComplete,
+      criteres: [
+        { ...accueil, nom: 'Accueil : saluer et remercier' },
+        { ...presentation, nom: 'Présentation : qui vous êtes' },
+        { ...cadrage, nom: 'Cadrage : la durée et le déroulé' },
+        { ...ecoute, nom: 'Une question ouverte : la parole au client' }
+      ],
+      phrases: { ...ouvertureComplete.phrases, conseil: 'Rédigez des phrases entières, pas seulement des mots-clés.' } }] },
 
     // S4 2.2 · Remplacer trois réponses réflexes par une reformulation.
     's4-2.2': { blocs: [

@@ -19,7 +19,38 @@
   const stage = () => Number(ex.value('stage')) === 2 ? 2 : 1;
   const setStage = n => ex.setValue('stage', n);
 
+  /* Le corrigé au modèle de S1 A (js/corrige.js) : les maladresses du
+   * texte, repérées ou non, le score estimatif, puis votre ouverture
+   * réécrite face à une réponse possible. */
+  function reviewScreen() {
+    const corrige = window.AtelierCorrige;
+    const result = corrige.score('s4-1.2', ex.values());
+    const [bloc] = result ? result.blocs : [];
+    const flags = marked();
+    const flaws = segments.map((segment, i) => {
+      if (!segment.flaw) return '';
+      const found = flags[i];
+      return `<div class="answer-key-row">
+        <span class="verdict ${found ? 'ok' : 'ko'}">${icon(found ? 'check' : 'close', { size: 14, label: found ? 'repérée' : 'non repérée' })}</span>
+        <span><strong>« ${esc(segment.text.trim())} »</strong> ${found ? 'Repérée.' : 'Non repérée.'} ${esc(segment.why)}</span>
+      </div>`;
+    }).join('');
+    return `<section class="an-review">
+      ${core.pageTitle('Corrigé', content.title, 'Un vendeur ouvre l’entretien de façon maladroite. Vous deviez repérer ses maladresses, puis réécrire son ouverture.')}
+      <section class="panel">${core.panelTitle('Les maladresses du texte')}
+        <div class="answer-key">${flaws}</div>
+        ${ex.inlineNote(content.missing, 'neutral')}
+      </section>
+      ${corrige.head(result)}
+      ${corrige.rows([
+        corrige.row({ n: 1, title: 'Votre ouverture réécrite', bloc, text: ex.value('rewrite'), model: content.feedback })
+      ])}
+      ${core.feedbackBox()}
+    </section>`;
+  }
+
   function screen() {
+    if (ex.reviewing()) return reviewScreen();
     const at = stage();
     const flags = marked();
     const count = markedCount();
@@ -41,14 +72,7 @@
         <span><strong>Surligneur actif</strong><small>Cliquez à nouveau pour retirer une sélection.</small></span>
       </div>`;
 
-    const rewrite = ex.reviewing()
-      ? `<div class="own-answer">
-           <h4>Votre ouverture réécrite</h4>
-           <p>« ${esc(ex.value('rewrite'))} »</p>
-           ${ex.inlineNote(content.feedback, 'good')}
-         </div>
-         ${ex.inlineNote(content.missing, 'neutral')}`
-      : `${ex.field('rewrite', 'Votre ouverture réécrite', {
+    const rewrite = `${ex.field('rewrite', 'Votre ouverture réécrite', {
            placeholder: 'Bonjour, merci de me recevoir. Je suis…', max: 900, rows: 8
          })}
          <div class="advice">${icon('lightbulb', { size: 19 })}<span>Reprenez les quatre temps : accueil, présentation, cadrage de la durée, puis une question ouverte.</span></div>`;
@@ -59,7 +83,7 @@
         <div class="panel-title">
           ${steps}
           <span class="muted">${count} / ${content.minimum} maladresses repérées</span>
-          ${window.AtelierKit && !ex.reviewing() ? window.AtelierKit.tourButton() : ''}
+          ${window.AtelierKit ? window.AtelierKit.tourButton() : ''}
         </div>
         ${at === 1 ? repair : rewrite}
         <div class="case-progress" style="margin-top:18px">
@@ -82,20 +106,8 @@
     return errors;
   }
 
-  /* Le modèle et le rappel sont posés sous la réécriture. */
-  const feedback = () => ['Comparez votre réécriture à la version possible affichée juste au-dessus. Le détail des maladresses figure ci-dessous.'];
-
-  function answerKey() {
-    const flags = marked();
-    return `<div class="answer-key"><h4>Les maladresses du texte</h4>${segments.map((segment, i) => {
-      if (!segment.flaw) return '';
-      const found = flags[i];
-      return `<div class="answer-key-row">
-        <span class="verdict ${found ? 'ok' : 'ko'}">${icon(found ? 'check' : 'close', { size: 14, label: found ? 'repérée' : 'non repérée' })}</span>
-        <span><strong>« ${esc(segment.text.trim())} »</strong> : ${esc(segment.why)}</span>
-      </div>`;
-    }).join('')}</div>`;
-  }
+  /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
+  const feedback = () => [];
 
   function intercept() {
     if (stage() !== 1 || markedCount() < content.minimum) return false;
@@ -149,5 +161,5 @@
     { target: '.writing-workshop .form-actions button[type="submit"]', title: 'Passer à la réécriture', text: 'Une fois les maladresses repérées, vous réécrivez l’ouverture, puis vous découvrez le corrigé.' }
   ]);
 
-  ex.mount('s4-1.2', { screen, validate, feedback, answerKey, intercept, onMount });
+  ex.mount('s4-1.2', { screen, validate, feedback, intercept, onMount, compactFeedback: true });
 })();

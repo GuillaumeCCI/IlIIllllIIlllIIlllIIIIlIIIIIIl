@@ -44,7 +44,7 @@ window.ATELIER_S4 = {
       { text: ' je vais vous expliquer tout ça.', flaw: true, why: 'L’ouverture se termine sur un monologue annoncé : aucune place laissée à l’échange.' }
     ],
     missing: 'Il manque aussi l’essentiel : aucune présentation (ni identité, ni fonction, ni entreprise, le client ne sait pas à qui il parle) et aucun cadrage : ni objet, ni déroulé, ni durée annoncés, l’échange démarre sans repères.',
-    feedback: 'Modèle d’ouverture réécrite : « Bonjour, merci de me recevoir. Je suis [Prénom Nom], conseiller chez [Entreprise]. Je vous propose de faire le point sur votre besoin, puis de voir ensemble les solutions adaptées, nous avons une trentaine de minutes. Pour commencer, je vous écoute : qu’est-ce qui vous amène aujourd’hui ? »'
+    feedback: 'Vous pouviez écrire : « Bonjour, merci de me recevoir. Je suis [Prénom Nom], conseiller chez [Entreprise]. Je vous propose de faire le point sur votre besoin, puis de voir ensemble les solutions adaptées, nous avons une trentaine de minutes. Pour commencer, je vous écoute : qu’est-ce qui vous amène aujourd’hui ? »'
   },
 
   /* ── 2.1 · Associez chaque réponse à son attitude ─────────────────────── */
