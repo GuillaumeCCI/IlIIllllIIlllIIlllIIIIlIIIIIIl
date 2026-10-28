@@ -70,7 +70,7 @@
     </div>`;
 
   function selfScreen() {
-    return sheet('', `<section class="self-eval">
+    return sheet(kit ? kit.contextButton() : '', `<section class="self-eval">
         <p class="eyebrow">Auto-évaluation</p>
         <h2>Vos diagnostics correspondent-ils au mémo ?</h2>
         <p class="muted">Relisez chaque diagnostic avec le mémo. Les corrections s’affichent ensuite.</p>
@@ -197,6 +197,13 @@
     ['list', 'Diagnostiquer', 'C’est reconnaître la nature de l’objection, puis choisir le premier geste pour y répondre.'],
     ['pencil', 'Ce qui vous est demandé', 'Pour chaque objection, choisir sa nature, puis votre premier geste.']
   ], 'Diagnostiquer une objection');
+
+  // À l'arrivée sur l'auto-évaluation : ce qu'on a sous les yeux.
+  if (kit) kit.selfContext('.self-eval', [
+    ['eye', 'Ce que vous voyez', ['À gauche, le mémo : les natures d’objection et les premiers gestes.', 'À droite, vos quatre diagnostics, un par objection.']],
+    ['list', 'Ce qui vous est demandé', 'Comparez chaque diagnostic avec le mémo. Dites s’il vous semble juste : « Oui », « En partie » ou « Non ».'],
+    ['checkCircle', 'Ensuite', 'Les corrections des quatre objections s’affichent.']
+  ]);
 
   // La visite guidée part à l'ouverture de la première objection.
   if (kit) kit.tour('s3-1.3', [

@@ -142,6 +142,13 @@
     ['pencil', 'Ce qui vous est demandé', 'Écrire, pour chaque étape, la phrase que vous diriez au client.']
   ], 'La méthode en 6 étapes');
 
+  // À l'arrivée sur l'auto-évaluation : ce qu'on a sous les yeux.
+  kit.selfContext('.six-self.is-current', [
+    ['eye', 'Ce que vous voyez', 'Vos 6 phrases, une par étape, chacune avec ce qu’elle doit faire.'],
+    ['list', 'Ce qui vous est demandé', 'Relisez chaque phrase. Dites si elle remplit son rôle : « Oui », « En partie » ou « Pas encore ».'],
+    ['checkCircle', 'Ensuite', 'Des phrases modèles s’affichent à côté des vôtres, avec votre score.']
+  ]);
+
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   kit.tour('s1-1.6', [
     { target: '.six-menu', title: 'Les 6 étapes', text: 'Voici les six étapes de la méthode, à traiter une par une.',

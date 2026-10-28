@@ -951,10 +951,14 @@
    * Styles : extras-commun.css (.k-context). */
   let contextRows = null;
   let contextTitle = 'Le contexte';
+  const visible = target => !!root.document && [...root.document.querySelectorAll(target)].some(el => el.getClientRects().length);
   function openContext() {
-    const rows = typeof contextRows === 'function' ? contextRows() : contextRows;
+    // Sur l'écran d'autoévaluation, « Le contexte » explique cet écran.
+    const onSelf = selfIntro && visible(selfIntro.target);
+    if (onSelf) selfIntro.seen = true;
+    const rows = onSelf ? selfIntro.rows : typeof contextRows === 'function' ? contextRows() : contextRows;
     if (!rows) return;
-    const title = typeof contextTitle === 'function' ? contextTitle() : contextTitle;
+    const title = onSelf ? selfIntro.title : typeof contextTitle === 'function' ? contextTitle() : contextTitle;
     core().openDialog(title, `<section class="k-context"><ul>${rows.map(([symbol, label, line]) =>
       `<li><span class="k-context-icon">${icon(symbol, { size: 20 })}</span><span><strong>${esc(label)}</strong>${Array.isArray(line) ? `<ul class="k-context-list">${line.map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : esc(line)}</span></li>`).join('')}</ul></section>
       <p class="k-context-go"><button type="button" class="button primary" data-act="k-context-go">C’est parti</button></p>`);
@@ -977,6 +981,26 @@
       clearInterval(wait);
       openContext();
     }, 250);
+  }
+  /* L'ÉCRAN D'AUTOÉVALUATION : à l'arrivée sur cet écran (la zone `target`
+   * est affichée), une fenêtre dit ce qu'on a sous les yeux, ce qui est
+   * demandé et ce qui suit. Une fois par visite ; tant que l'écran est
+   * affiché, le bouton « Le contexte » la rouvre. `rows` : comme context(). */
+  let selfIntro = null;
+  function selfContext(target, rows, title = 'L’autoévaluation') {
+    selfIntro = { target, rows, title, seen: false };
+    handlers = Object.assign({}, handlers, {
+      'k-context': () => openContext(),
+      'k-context-go': () => root.document.querySelector('#info-dialog')?.close()
+    });
+    if (!root.document) return;
+    const wait = setInterval(() => {
+      const doc = root.document;
+      if (selfIntro.seen) { clearInterval(wait); return; }
+      if (ex().reviewing() || !visible(target) || doc.querySelector('.tour, dialog[open], .launch-veil, .page-transition') || doc.body.classList.contains('menu-open')) return;
+      clearInterval(wait);
+      openContext();
+    }, 400);
   }
   const contextButton = () => `<button type="button" class="text-button with-icon tour-replay k-context-open" data-act="k-context">${icon('document', { size: 18 })}<span>Le contexte</span></button>`;
 
@@ -1008,7 +1032,7 @@
   }
 
   root.AtelierKit = Object.freeze({
-    corrige, answerReview, clientCard, portraitFor, tour, tourButton, context, contextButton, contextOpen: openContext, hlDemo, dragDemo,
+    corrige, answerReview, clientCard, portraitFor, tour, tourButton, context, selfContext, contextButton, contextOpen: openContext, hlDemo, dragDemo,
     esc, icon, words, seconds, filled, plural, stage, setStage, list,
     head, steps, band, tip, help, submit, act, back, reset, dialogButton, bar, utility,
     matrix, answered, score, choiceButtons,

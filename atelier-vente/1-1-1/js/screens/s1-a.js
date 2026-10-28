@@ -61,6 +61,7 @@
 
   function selfScreen() {
     return `<section class="self-eval">
+      ${window.AtelierKit ? `<div class="tour-corner">${window.AtelierKit.contextButton()}</div>` : ''}
       ${core.pageTitle('Autoévaluation', 'Votre version répond-elle à ces critères ?', 'Relisez votre analyse. Pour chaque critère, dites si votre version améliorée y répond. Le corrigé s’affiche ensuite.')}
       <div class="self-layout">
         <aside class="panel self-recap">
@@ -194,6 +195,13 @@
   if (window.AtelierKit) window.AtelierKit.context(
     () => (stepNow() === null ? null : STEPS[stepNow()].context),
     () => `Étape ${stepNow() + 1} · ${STEPS[stepNow()].title}`);
+
+  // À l'arrivée sur l'autoévaluation : ce qu'on a sous les yeux.
+  if (window.AtelierKit) window.AtelierKit.selfContext('.self-eval', [
+    ['eye', 'Ce que vous voyez', ['À gauche, votre analyse, telle que vous l’avez écrite.', 'À droite, les critères d’une ouverture réussie.']],
+    ['list', 'Ce qui vous est demandé', 'Relisez votre version améliorée. Pour chaque critère, dites si elle y répond : « Oui », « En partie » ou « Non ».'],
+    ['checkCircle', 'Ensuite', 'Le corrigé s’affiche. Vous comparez votre regard avec le sien.']
+  ]);
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   if (window.AtelierKit) window.AtelierKit.tour('s1-A', [

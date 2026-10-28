@@ -828,7 +828,7 @@
       if (!reviewing && ex().value('case') !== at) ex().setValue('case', at);
       return `<div class="k-page fm-page ${content.className || ''}">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : ''}${content.tour && !reviewing ? introButton(content) + kit().tourButton() : ''}` })}
+          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : ''}${content.tour && !reviewing ? (introButton(content) || (at === SELF ? kit().contextButton() : '')) + kit().tourButton() : ''}` })}
         ${content.side && !reviewing && !content.stepper ? `<div class="k-panel fm-side">${scene(content.side)}</div>` : ''}
         ${reviewing ? reviewScreen() : `${tabs(at)}<form novalidate class="fm-form">${casePanel(at)}</form>`}
         ${reviewing ? '' : kit().utility(content.lock || 'Corrigé disponible après validation')}
@@ -937,6 +937,12 @@
     kit().dialogs(dialogTable);
 
     if (content.welcome) kit().context(content.welcome.rows, content.welcome.title);
+    // À l'arrivée sur l'auto-évaluation : ce qu'on a sous les yeux.
+    if (selfOn) kit().selfContext('.fm-reread', [
+      ['eye', 'Ce que vous voyez', [`En haut, vos réponses aux ${n} cas, telles que vous les avez écrites.`, `En dessous, les ${content.selfCheck.rows.length} critères à vérifier.`]],
+      ['list', 'Ce qui vous est demandé', 'Relisez vos réponses. Pour chaque critère, répondez « Oui », « En partie » ou « Pas encore ».'],
+      ['checkCircle', 'Ensuite', 'Le corrigé s’affiche, avec votre score.']
+    ]);
     if (content.tour) kit().tour(key, content.tour);
     ex().mount(key, { screen, validate, intercept, feedback, compactFeedback: true });
   }

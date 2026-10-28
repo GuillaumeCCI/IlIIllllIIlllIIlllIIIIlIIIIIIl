@@ -56,6 +56,7 @@
            <p>« ${esc(ex.value(whyKey(i)))} »</p>
          </div>
          <h3 class="self-case-title">Votre autoévaluation</h3>
+         ${window.AtelierKit ? `<div class="tour-corner">${window.AtelierKit.contextButton()}</div>` : ''}
          ${ex.selfList(rubric, selfKey(i))}`
       : reviewed
       ? `${ex.reviewOptions(options, ex.value(choiceKey(i)), client.answer)}
@@ -129,6 +130,13 @@
   /* Visite guidée, à l'ouverture du premier cas : ses zones n'existent pas
    * au menu, elle attend donc qu'un cas soit ouvert. Une fois vue, elle ne
    * revient plus (les cas suivants s'ouvrent sans visite). */
+  // À l'arrivée sur l'autoévaluation d'un client : ce qu'on a sous les yeux.
+  if (window.AtelierKit) window.AtelierKit.selfContext('.self-case-title', [
+    ['eye', 'Ce que vous voyez', ['En haut, la réponse choisie et votre justification.', 'En dessous, les critères d’une bonne réponse.']],
+    ['list', 'Ce qui vous est demandé', 'Relisez votre réponse. Pour chaque critère, dites si elle y répond : « Oui », « En partie » ou « Non ».'],
+    ['checkCircle', 'Ensuite', 'La correction de ce client s’affiche. Vous comparez votre regard avec le sien.']
+  ]);
+
   if (window.AtelierKit) window.AtelierKit.tour('s2-A', [
     { target: '.scenario .case-scene', title: 'Le client', text: 'Voici le client et ce qu’il vous dit.' },
     { target: '.case-bar', title: 'Les trois clients', text: 'Ce compteur montre combien de clients vous avez traités. « Tous les clients » ramène au menu.' },

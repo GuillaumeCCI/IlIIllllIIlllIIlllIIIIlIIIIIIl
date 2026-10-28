@@ -174,6 +174,13 @@
     ['pencil', 'Ce qui vous est demandé', 'Écrire un script pour chacune des 3 esquives, puis les lire à voix haute.']
   ], 'Le script de rebond');
 
+  // À l'arrivée sur l'auto-évaluation : ce qu'on a sous les yeux.
+  kit.selfContext('.rb-reread', [
+    ['eye', 'Ce que vous voyez', ['En haut, vos trois scripts.', 'En dessous, quatre critères sur votre voix.']],
+    ['microphone', 'Ce qui vous est demandé', ['Lisez vos scripts à voix haute, comme au téléphone.', 'Vous pouvez vous enregistrer pour vous réécouter : c’est facultatif.', 'Pour chaque critère, notez-vous de 0 à 2.']],
+    ['checkCircle', 'Ensuite', 'Le corrigé s’affiche, avec votre score.']
+  ]);
+
   // Visite guidée en deux temps : les scripts, puis l'auto-évaluation.
   kit.tour('s2-2.6', [
     { target: '.rb-menu ol', title: 'Les 3 situations', text: 'Une esquive par situation. Cliquez pour passer de l’une à l’autre.' },

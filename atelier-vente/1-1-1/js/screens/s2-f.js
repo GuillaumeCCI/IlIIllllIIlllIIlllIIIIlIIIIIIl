@@ -44,6 +44,7 @@
            <p>« ${esc(ex.value(postureKey(i)))} »</p>
          </div>
          <h3 class="self-case-title">Votre autoévaluation</h3>
+         ${window.AtelierKit ? `<div class="tour-corner">${window.AtelierKit.contextButton()}</div>` : ''}
          ${ex.selfList(rubric, selfKey(i))}`
       : reviewed
       ? `<div class="own-answer">
@@ -115,6 +116,13 @@
   /* Visite guidée, à l'ouverture du premier cas : ses zones n'existent pas
    * au menu, elle attend donc qu'un cas soit ouvert. Une fois vue, elle ne
    * revient plus (les cas suivants s'ouvrent sans visite). */
+  // À l'arrivée sur l'autoévaluation d'un profil : ce qu'on a sous les yeux.
+  if (window.AtelierKit) window.AtelierKit.selfContext('.self-case-title', [
+    ['eye', 'Ce que vous voyez', ['En haut, votre réponse d’écoute et votre adaptation.', 'En dessous, les critères d’une bonne réponse.']],
+    ['list', 'Ce qui vous est demandé', 'Relisez vos deux réponses. Pour chaque critère, dites si elles y répondent : « Oui », « En partie » ou « Non ».'],
+    ['checkCircle', 'Ensuite', 'La correction de ce profil s’affiche. Vous comparez votre regard avec le sien.']
+  ]);
+
   if (window.AtelierKit) window.AtelierKit.tour('s2-F', [
     { target: '.scenario .case-scene', title: 'Le profil', text: 'Voici le client et ce qu’il vous dit.' },
     { target: '.case-bar', title: 'Les trois profils', text: 'Ce compteur montre combien de profils vous avez traités. « Tous les profils » ramène au menu.' },

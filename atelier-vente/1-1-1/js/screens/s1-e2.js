@@ -101,6 +101,12 @@
       ['clock', 'Ce qui se passe', 'Vous vendez des sièges de bureau ergonomiques. La gérante d’une PME vous accorde 40 secondes, puis décide si elle vous donne un rendez-vous.'],
       ['pencil', 'Ce qui vous est demandé', 'Écrire une ouverture de 90 mots maximum, la tester à voix haute au chrono, puis l’évaluer.']
     ]);
+    // À l'arrivée sur l'auto-évaluation : ce qu'on a sous les yeux.
+    kit.selfContext('.self-reread', [
+      ['eye', 'Ce que vous voyez', ['En haut, votre ouverture, telle que vous l’avez écrite.', 'En dessous, les trois éléments qu’elle doit contenir.']],
+      ['list', 'Ce qui vous est demandé', 'Relisez votre ouverture. Pour chaque élément, répondez « Oui », « En partie » ou « Pas encore ».'],
+      ['checkCircle', 'Ensuite', 'Le corrigé s’affiche, avec votre score. Vous pouvez encore revenir à votre ouverture avant de valider.']
+    ]);
     kit.tour('s1-E2', [
       { target: '.answer-panel .field', title: 'Votre ouverture', text: 'Écrivez-la comme vous la diriez : 90 mots au plus, soit environ 40 secondes à l’oral.',
         items: [

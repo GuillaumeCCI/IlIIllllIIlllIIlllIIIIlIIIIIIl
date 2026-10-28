@@ -68,7 +68,7 @@
     const next = after !== -1 ? after : cases.findIndex((_, k) => k !== at && !complete(k));
     return `<div class="k-page fix-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count fix-count"><strong>${doneCount()} / ${cases.length}</strong> répliques réparées</p>${reviewing ? '' : kit.tourButton()}` })}
+        aside: `<p class="k-count fix-count"><strong>${doneCount()} / ${cases.length}</strong> répliques réparées</p>${reviewing ? '' : `<span class="tour-pair">${at === SELF ? kit.contextButton() : ''}${kit.tourButton()}</span>`}` })}
       ${reviewing ? reviewScreen() : `${tabs(at)}
         <form class="k-panel fix-panel" novalidate>
           ${at === SELF ? selfBody() : caseBody(at)}
@@ -132,6 +132,13 @@
 
   kit.on({ case: el => { ex.setValue('case', Number(el.dataset.index)); kit.commit(); } });
   kit.dialogs(Object.fromEntries(cases.map((c, i) => [`tip${i}`, { title: `Repère · ${c.tab}`, html: `<p>${esc(c.tip)}</p>` }])));
+
+  // À l'arrivée sur l'auto-évaluation : ce qu'on a sous les yeux.
+  kit.selfContext('.fix-self-title', [
+    ['eye', 'Ce que vous voyez', ['En haut, vos 3 réponses, telles que vous les avez écrites.', 'En dessous, les trois éléments qu’elles doivent contenir.']],
+    ['list', 'Ce qui vous est demandé', 'Relisez vos réponses. Pour chaque élément, répondez « Oui », « En partie » ou « Pas encore ».'],
+    ['checkCircle', 'Ensuite', 'Le corrigé s’affiche, avec votre score.']
+  ]);
 
   kit.tour('s3-2.2', [
     { target: '.fix-tabs', title: 'Trois répliques', text: 'Trois clients, trois répliques à traiter.',

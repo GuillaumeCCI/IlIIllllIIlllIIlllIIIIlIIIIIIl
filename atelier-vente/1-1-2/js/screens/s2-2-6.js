@@ -206,7 +206,7 @@
     const body = reviewing ? reviewScreen() : at === 1 ? writeStep() : at === 2 ? recordStep() : evaluateStep();
     return `<div class="k-page pitch-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `<p class="k-count">${reviewing ? 'Terminé' : `Étape <strong>${at} sur 3</strong>`}</p><span class="pitch-badge">${esc(content.badge)}</span>` })}
+        aside: `${!reviewing && at === 3 ? kit.contextButton() : ''}<p class="k-count">${reviewing ? 'Terminé' : `Étape <strong>${at} sur 3</strong>`}</p><span class="pitch-badge">${esc(content.badge)}</span>` })}
       ${reviewing ? '' : kit.steps(['Rédiger', 'Enregistrer', 'S’évaluer'], at)}
       ${body}
       ${reviewing ? '' : kit.utility('L’enregistrement reste sur cet appareil et s’efface en quittant la page.')}
@@ -244,6 +244,13 @@
   kit.dialogs({ example: { title: 'Un exemple de pitch en 60 secondes', html: `<p>${esc(content.example)}</p><p class="k-muted">Environ 70 mots, soit une trentaine de secondes à l’oral : il reste de la marge pour respirer.</p>` } });
 
   window.addEventListener('pagehide', () => { if (recorder?.state === 'recording') { recorder.onstop = null; recorder.stop(); } stopStream(); if (takeUrl) URL.revokeObjectURL(takeUrl); });
+
+  // À l'arrivée sur l'étape « S’évaluer » : ce qu'on a sous les yeux.
+  kit.selfContext('.pitch-layout.is-evaluate', [
+    ['eye', 'Ce que vous voyez', ['À gauche, votre enregistrement et les points à écouter.', 'À droite, les critères d’un bon pitch.']],
+    ['list', 'Ce qui vous est demandé', 'Réécoutez votre prise. Pour chaque critère, donnez-vous de 0 à 2 points.'],
+    ['checkCircle', 'Ensuite', 'Votre score s’affiche, avec un exemple de pitch.']
+  ], 'S’évaluer');
 
   ex.mount('s2-2.6', { screen, validate, intercept, feedback, compactFeedback: true });
 })();
