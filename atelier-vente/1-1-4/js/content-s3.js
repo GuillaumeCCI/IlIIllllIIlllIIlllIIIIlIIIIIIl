@@ -30,8 +30,8 @@ window.ATELIER_S3 = {
     letters: true,
     drag: true,
     zones: [
-      { id: 'V', label: 'V · J’entends', sub: 'Paroles et questions', symbol: 'chat', tone: 'neutral' },
-      { id: 'NV', label: 'NV · J’observe', sub: 'Gestes et comportements', symbol: 'eye', tone: 'neutral' }
+      { id: 'V', label: 'Verbal · J’entends', sub: 'Paroles et questions', symbol: 'chat', tone: 'neutral' },
+      { id: 'NV', label: 'Non verbal · J’observe', sub: 'Gestes et comportements', symbol: 'eye', tone: 'neutral' }
     ],
     cards: [
       { text: 'Le client reprend la proposition commerciale et consulte attentivement les modalités.', answer: 'NV', why: 'Un comportement qui traduit un intérêt accru : indice non verbal.' },

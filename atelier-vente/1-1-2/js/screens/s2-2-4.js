@@ -54,7 +54,7 @@
 
   const feedback = () => {
     // Le score est déjà en tête du corrigé : seule la leçon reste.
-    return [`Une preuve doit couvrir toute la promesse : un audit RGPD prouve la conformité, pas une « sécurité totale ».`];
+    return [`Une preuve doit couvrir toute la promesse : un audit de protection des données prouve la conformité, pas une « sécurité totale ».`];
   };
 
   kit.live(() => ({ aside: counter() + kit.tourButton() }));

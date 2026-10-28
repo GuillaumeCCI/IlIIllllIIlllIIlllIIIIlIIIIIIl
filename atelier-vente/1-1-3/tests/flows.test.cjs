@@ -46,7 +46,7 @@ const PERFECT = {
   's2-2-2': (e, w) => e.setValue('links', S(w, 'S2')['2.2'].errors.map(err => err.answer)),
   's2-2-3': e => range(2).forEach(i => e.setValue(`reply${i}`, 'Bonjour, Paul Martin, d’Ergolys.')),
   's2-2-4': e => range(4).forEach(i => e.setValue(`spot${i}`, 'Aucune présentation.')),
-  's2-2-5': e => { e.setValue('pick', '2'); e.setValue('why', 'Elle garde la main.'); },
+  's2-2-5': e => { e.setValue('pick', '1'); e.setValue('why', 'Elle garde la main.'); },
   's2-2-6': (e, w) => { range(3).forEach(i => e.setValue(`script${i}`, 'Je comprends. Quand puis-je vous rappeler ?')); S(w, 'S2')['2.6'].voice.forEach((_, j) => e.setValue(`voice${j}`, '2')); },
   's2-2-7': (e, w) => range(3).forEach(c => S(w, 'S2')['2.7'].gestures.forEach(g => e.setValue(`${g.id}${c}`, 'Calme et souriant.'))),
 

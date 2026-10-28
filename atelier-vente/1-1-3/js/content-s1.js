@@ -134,7 +134,7 @@ window.ATELIER_S1 = {
           'Parle des matériaux de l’équipement, pas de ce que le client y gagne.',
           'Cède une remise de 15 % pour conclure : le prix perd sa crédibilité, sans garantie que ce soit le vrai frein.'
         ] },
-      { id: '2', label: 'Commercial 2', text: 'Je comprends, c’est effectivement un budget. Par rapport à quoi trouvez-vous ce prix élevé : une autre offre, une enveloppe prévue ? Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine. Nos clients constatent une baisse des arrêts liés aux TMS, et l’essai de 30 jours vous permet de le vérifier sans risque. Est-ce que cela répond à votre préoccupation ?',
+      { id: '2', label: 'Commercial 2', text: 'Je comprends, c’est effectivement un budget. Par rapport à quoi trouvez-vous ce prix élevé : une autre offre, une enveloppe prévue ? Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine. Nos clients constatent une baisse des arrêts liés au mal de dos, et l’essai de 30 jours vous permet de le vérifier sans risque. Est-ce que cela répond à votre préoccupation ?',
         analysis: [
           'Accueillir : « Je comprends, c’est effectivement un budget. »',
           'Questionner : « Par rapport à quoi trouvez-vous ce prix élevé ? »',
@@ -173,7 +173,7 @@ window.ATELIER_S1 = {
         'Je comprends : si personne ne se plaint, la question ne se pose pas tous les jours.',
         'Vous arrive-t-il d’avoir des salariés gênés par le dos, ou des arrêts de ce type ?',
         'Si je comprends bien, vous préférez éviter de dépenser tant que ce n’est pas un vrai problème.',
-        'C’est justement l’objectif : prévenir les TMS avant l’arrêt. Nos clients constatent une baisse des absences, et l’étude ergonomique ne cible que les postes à risque.',
+        'C’est justement l’objectif : prévenir le mal de dos avant l’arrêt. Nos clients constatent une baisse des absences, et l’étude ergonomique ne cible que les postes à risque.',
         'Est-ce que cet angle prévention vous parle ?',
         'Je vous propose un diagnostic gratuit de 2 ou 3 postes pour objectiver le besoin.'
       ] },
@@ -197,7 +197,7 @@ window.ATELIER_S1 = {
         'Je comprends, une mauvaise expérience laisse des traces.',
         'Qu’est-ce qui s’était mal passé ?',
         'Si je comprends bien, vous voulez être certain de ne pas revivre la même situation.',
-        'Chez Ergolys, vous avez une garantie de 5 ans, un SAV sous 48 h, un essai de 30 jours satisfait ou remboursé, et plus de 1 200 entreprises déjà équipées.',
+        'Chez Ergolys, vous avez une garantie de 5 ans, un service après-vente sous 48 h, un essai de 30 jours satisfait ou remboursé, et plus de 1 200 entreprises déjà équipées.',
         'Ces garanties répondent-elles à votre crainte ?',
         'Je vous propose de démarrer par l’essai de 30 jours : on fixe la date ensemble ?'
       ] }
@@ -225,7 +225,7 @@ window.ATELIER_S1 = {
         proof: 'L’essai de 30 jours et la garantie de 5 ans.' },
       { text: 'Nos chaises actuelles suffisent.', nature: 'pretexte', natureNote: 'Un prétexte, le statu quo : on creuse pour savoir si un besoin existe.',
         question: 'Avez-vous des salariés gênés par le dos ?',
-        answer: 'Parler prévention des TMS et proposer un diagnostic gratuit.',
+        answer: 'Parler prévention du mal de dos et proposer un diagnostic gratuit.',
         proof: 'La baisse des arrêts constatée chez nos clients.' },
       { text: 'Je dois voir avec la direction.', nature: 'fondee', natureNote: 'Fondée : c’est le processus de décision de l’entreprise.',
         question: 'Qu’est-ce qui compterait pour eux ?',
@@ -233,7 +233,7 @@ window.ATELIER_S1 = {
         proof: 'Un argumentaire chiffré.' },
       { text: 'J’ai été déçu par un fournisseur.', nature: 'reassurance', natureNote: 'Une demande de réassurance : le client veut éviter de revivre la même déception.',
         question: 'Qu’est-ce qui s’était mal passé ?',
-        answer: 'Rassurer par les garanties : garantie de 5 ans, SAV sous 48 h, essai de 30 jours satisfait ou remboursé.',
+        answer: 'Rassurer par les garanties : garantie de 5 ans, service après-vente sous 48 h, essai de 30 jours satisfait ou remboursé.',
         proof: 'Plus de 1 200 entreprises équipées.' }
     ]
   }

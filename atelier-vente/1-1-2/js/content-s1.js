@@ -18,9 +18,9 @@ window.ATELIER_S1 = {
       'Interface mobile': 'assets/illustrations/s1/intrus-mobile.webp',
       'Vous travaillez de partout': 'assets/illustrations/s1/intrus-partout.webp',
       'Assistance 7j/7': 'assets/illustrations/s1/intrus-assistance.webp',
-      '5 000 PME clientes': 'assets/illustrations/s1/intrus-pme.webp',
+      '5 000 entreprises clientes': 'assets/illustrations/s1/intrus-pme.webp',
       '99,9 % de disponibilité': 'assets/illustrations/s1/intrus-disponibilite.webp',
-      'Certifié ISO 27001': 'assets/illustrations/s1/intrus-iso.webp',
+      'Sécurité certifiée par un organisme indépendant': 'assets/illustrations/s1/intrus-iso.webp',
       'Vous ne perdez jamais vos données': 'assets/illustrations/s1/intrus-donnees.webp',
       'Vous gagnez du temps': 'assets/illustrations/s1/intrus-temps.webp',
       'Vous êtes serein sur la sécurité': 'assets/illustrations/s1/intrus-serein.webp',
@@ -40,7 +40,7 @@ window.ATELIER_S1 = {
         why: 'Intrus : la carte 3. « Vous travaillez de partout » est un avantage parmi des caractéristiques : il dit ce que le client y gagne, les trois autres décrivent ce que fait le produit.'
       },
       {
-        cards: ['5 000 PME clientes', '99,9 % de disponibilité', 'Certifié ISO 27001', 'Vous ne perdez jamais vos données'],
+        cards: ['5 000 entreprises clientes', '99,9 % de disponibilité', 'Sécurité certifiée par un organisme indépendant', 'Vous ne perdez jamais vos données'],
         icons: ['users', 'chart', 'award', 'database'],
         intruder: 3,
         category: 'P',
@@ -73,7 +73,7 @@ window.ATELIER_S1 = {
         { text: 'Grâce à', part: null },
         { text: 'la sauvegarde automatique toutes les 10 minutes,', part: 'C' },
         { text: 'vous ne perdez jamais vos données clients :', part: 'A' },
-        { text: 'nos 5 000 PME clientes n’ont connu aucune perte en 2024.', part: 'P' }
+        { text: 'nos 5 000 entreprises clientes n’ont connu aucune perte en 2024.', part: 'P' }
       ],
       [
         { text: 'Avec', part: null },
@@ -88,7 +88,7 @@ window.ATELIER_S1 = {
   '1.3': {
     eyebrow: 'Exercice 1.3 · Méthode CAP',
     title: 'La fabrique à arguments',
-    prospect: ['PME · 12 salariés', 'Sans service informatique'],
+    prospect: ['Entreprise · 12 salariés', 'Sans service informatique'],
     // Les cartes de la fiche produit. `kind` : C (caractéristique), P (preuve)
     // ou null (hors sujet). `needs` : les besoins auxquels elle répond.
     // `optional` : acceptée, mais absente de la liste des cartes attendues.
@@ -96,18 +96,18 @@ window.ATELIER_S1 = {
     // `note` : l'analyse du corrigé, affichée si la carte est déposée hors de
     // son besoin (informations pertinentes mais non prioritaires, à écarter).
     cards: [
-      { id: 'aes', text: 'Chiffrement AES-256', info: 'Une méthode de chiffrement très répandue : les données sont codées et restent illisibles sans la clé. 256 est la longueur de la clé, la plus élevée.', symbol: 'lock', kind: 'C', needs: [0] },
+      { id: 'aes', text: 'Chiffrement de niveau bancaire', info: 'Les données sont codées et restent illisibles sans la clé, avec le même niveau de protection que les banques.', symbol: 'lock', kind: 'C', needs: [0] },
       { id: 'backup', text: 'Sauvegarde toutes les 10 min', info: 'Une copie des données est faite automatiquement toutes les 10 minutes.', symbol: 'cloud', kind: 'C', needs: [0] },
-      { id: 'rgpd', text: 'Conforme RGPD', info: 'Le RGPD est le règlement européen sur la protection des données personnelles. Le logiciel en respecte les règles.', symbol: 'document', kind: 'P', needs: [0] },
+      { id: 'rgpd', text: 'Conforme à la loi européenne', info: 'Une loi européenne protège les données personnelles. Le logiciel en respecte les règles.', symbol: 'document', kind: 'P', needs: [0] },
       { id: 'audit', text: 'Audit de sécurité annuel', info: 'Chaque année, un organisme indépendant vérifie la sécurité du logiciel.', symbol: 'award', kind: 'P', needs: [0] },
       { id: 'support', text: 'Assistance 7j/7', info: 'Une équipe répond aux questions des utilisateurs tous les jours, week-end compris.', symbol: 'headset', kind: 'C', needs: [1] },
       { id: 'reply', text: 'Réponse moyenne : 2 min', info: 'En moyenne, l’assistance répond en 2 minutes.', symbol: 'chat', kind: 'P', needs: [1] },
       { id: 'access', text: 'Accès web + iOS + Android', info: 'Le logiciel s’utilise depuis un navigateur internet, un iPhone (iOS) ou un téléphone Android.', symbol: 'smartphone', kind: 'C', needs: [], note: 'pertinente mais non prioritaire : utile si le client exprime un besoin de mobilité' },
-      { id: 'csv', text: 'Import CSV inclus', info: 'Le CSV est un format de fichier tableau, comme ceux d’Excel. Vous pouvez y récupérer vos données existantes.', symbol: 'document', kind: 'C', needs: [], note: 'pertinente mais non prioritaire : facilite la mise en place sans équipe informatique' },
+      { id: 'csv', text: 'Import de vos tableaux inclus', info: 'Vous pouvez récupérer vos données existantes depuis vos fichiers tableaux, comme ceux d’Excel.', symbol: 'document', kind: 'C', needs: [], note: 'pertinente mais non prioritaire : facilite la mise en place sans équipe informatique' },
       { id: 'price', text: 'À partir de 19 € / mois', info: 'L’abonnement le moins cher coûte 19 € par mois.', symbol: 'coins', kind: 'C', needs: [2] },
       { id: 'free', text: 'Sans engagement', info: 'L’abonnement s’arrête quand vous voulez, sans durée minimale.', symbol: 'ban', kind: 'C', needs: [2] },
       { id: 'fixed', text: 'Tarif garanti 12 mois', info: 'Le prix ne change pas pendant les 12 premiers mois.', symbol: 'tag', kind: 'P', needs: [2] },
-      { id: 'pme', text: 'Plus de 5 000 PME', info: 'Plus de 5 000 petites et moyennes entreprises utilisent déjà le logiciel.', symbol: 'users', kind: 'P', needs: [0, 1, 2], optional: true },
+      { id: 'pme', text: 'Plus de 5 000 entreprises', info: 'Plus de 5 000 petites et moyennes entreprises utilisent déjà le logiciel.', symbol: 'users', kind: 'P', needs: [0, 1, 2], optional: true },
       { id: 'size', text: 'Application : 45 Mo', info: 'L’application occupe 45 Mo (mégaoctets) de place sur le téléphone.', symbol: 'smartphone', kind: null, needs: [], note: 'à écarter : ne répond à aucun besoin exprimé' },
       { id: 'logo', text: 'Interface bleue · logo 2023', info: 'L’interface du logiciel est bleue et son logo date de 2023.', symbol: 'palette', kind: null, needs: [], note: 'à écarter : sans lien avec les besoins du client' }
     ],
@@ -116,7 +116,7 @@ window.ATELIER_S1 = {
         label: 'Sécuriser ses données',
         title: 'Sécuriser les données clients',
         symbol: 'shield',
-        model: 'RelaCosy chiffre vos données et les sauvegarde automatiquement toutes les 10 minutes. Vous sécurisez ainsi vos informations clients et limitez les risques de perte. La solution est conforme au RGPD et sa sécurité est contrôlée chaque année par un organisme indépendant.'
+        model: 'RelaCosy chiffre vos données et les sauvegarde automatiquement toutes les 10 minutes. Vous sécurisez ainsi vos informations clients et limitez les risques de perte. La solution est conforme à la loi européenne sur les données et sa sécurité est contrôlée chaque année par un organisme indépendant.'
       },
       {
         label: 'Fonctionner sans équipe technique',
@@ -160,15 +160,15 @@ window.ATELIER_S1 = {
         ],
         motive: 'S',
         arguments: [
-          'Chiffrement des données et stricte conformité RGPD',
-          'Tarif très accessible, à partir de 19 € / mois',
-          'Sauvegarde automatique de toutes les données',
-          'Abonnement 100 % sans engagement',
-          'Interface moderne, esthétique et intuitive',
-          'Accès multi-supports : ordinateur, smartphone, tablette'
+          'Données chiffrées et conformes à la loi européenne',
+          'Tarif accessible, dès 19 € par mois',
+          'Sauvegarde automatique de toutes vos données',
+          'Abonnement sans engagement',
+          'Interface moderne, esthétique et intuitive, appréciée des équipes',
+          'Accès sur ordinateur, smartphone et tablette, partout et à tout moment'
         ],
         answers: [0, 2],
-        model: 'Motivation dominante : S, Sécurité. Le client évoque un piratage subi, la protection de ses données et son besoin d’être rassuré sur la fiabilité de la solution. Le chiffrement avec la conformité RGPD et la sauvegarde automatique répondent directement à sa préoccupation : réduire les risques liés à la sécurité et à la perte de ses données. Les autres caractéristiques peuvent intéresser, mais ne répondent pas à sa motivation prioritaire.'
+        model: 'Motivation dominante : S, Sécurité. Le client évoque un piratage subi, la protection de ses données et son besoin d’être rassuré sur la fiabilité de la solution. Le chiffrement avec la conformité à la loi européenne sur les données et la sauvegarde automatique répondent directement à sa préoccupation : réduire les risques liés à la sécurité et à la perte de ses données. Les autres caractéristiques peuvent intéresser, mais ne répondent pas à sa motivation prioritaire.'
       },
       {
         label: 'Le client attentif au prix',
@@ -180,12 +180,12 @@ window.ATELIER_S1 = {
         ],
         motive: 'A',
         arguments: [
-          'Chiffrement des données et stricte conformité RGPD',
-          'Tarif très accessible, à partir de 19 € / mois',
-          'Sauvegarde automatique de toutes les données',
-          'Abonnement 100 % sans engagement',
-          'Interface moderne, esthétique et intuitive',
-          'Accès multi-supports : ordinateur, smartphone, tablette'
+          'Données chiffrées et conformes à la loi européenne',
+          'Tarif accessible, dès 19 € par mois',
+          'Sauvegarde automatique de toutes vos données',
+          'Abonnement sans engagement',
+          'Interface moderne, esthétique et intuitive, appréciée des équipes',
+          'Accès sur ordinateur, smartphone et tablette, partout et à tout moment'
         ],
         answers: [1, 3],
         model: 'Motivation dominante : A, Argent. Le client parle explicitement du prix, du coût de la solution et de son refus de s’engager dans la durée. Le tarif à partir de 19 € par mois lui permet d’évaluer immédiatement l’impact financier ; l’abonnement sans engagement réduit son risque, puisqu’il garde la liberté d’arrêter. Un même produit ne se présente pas de la même manière à tous les clients : on sélectionne les arguments qui ont le plus de valeur pour son interlocuteur.'
@@ -199,19 +199,19 @@ window.ATELIER_S1 = {
     title: 'Le tournoi des arguments',
     quote: 'J’ai déjà été piraté. Je veux être certain que mes données seront parfaitement protégées.',
     contenders: {
-      A: { text: 'Chiffrement des données et conformité RGPD', short: 'Chiffrement des données et conformité RGPD', tone: 'blue', image: 'assets/illustrations/s1/tournoi-chiffrement.webp' },
-      B: { text: 'Interface moderne', short: 'Interface moderne', tone: 'red', image: 'assets/illustrations/s1/tournoi-interface.webp', bleed: true },
-      C: { text: 'Sauvegarde automatique des données', short: 'Sauvegarde automatique des données', tone: 'green', image: 'assets/illustrations/s1/tournoi-sauvegarde.webp' },
-      D: { text: 'Tarif accessible', short: 'Tarif accessible', tone: 'orange', image: 'assets/illustrations/s1/soncas-argent.webp' }
+      A: { text: 'Données chiffrées, conformes à la loi européenne', short: 'Données chiffrées, conformes à la loi européenne', tone: 'blue', image: 'assets/illustrations/s1/tournoi-chiffrement.webp' },
+      B: { text: 'Interface moderne, claire et agréable à utiliser au quotidien', short: 'Interface moderne, claire et agréable à utiliser au quotidien', tone: 'red', image: 'assets/illustrations/s1/tournoi-interface.webp', bleed: true },
+      C: { text: 'Sauvegarde automatique de toutes vos données', short: 'Sauvegarde automatique de toutes vos données', tone: 'green', image: 'assets/illustrations/s1/tournoi-sauvegarde.webp' },
+      D: { text: 'Tarif accessible, sans frais cachés ni surprise', short: 'Tarif accessible, sans frais cachés ni surprise', tone: 'orange', image: 'assets/illustrations/s1/soncas-argent.webp' }
     },
     semis: [['A', 'B'], ['C', 'D']],
     expected: { semi1: 'A', semi2: 'C', final: 'A' },
     why: {
-      semi1: 'Le chiffrement et la conformité RGPD répondent directement à la motivation Sécurité : ils apportent des éléments concrets sur la protection des données. L’interface moderne améliore l’expérience d’utilisation, mais ne répond pas à la préoccupation prioritaire de ce client.',
+      semi1: 'Le chiffrement et la conformité à la loi européenne sur les données répondent directement à la motivation Sécurité : ils apportent des éléments concrets sur la protection des données. L’interface moderne améliore l’expérience d’utilisation, mais ne répond pas à la préoccupation prioritaire de ce client.',
       semi2: 'La sauvegarde automatique contribue à sécuriser les données en limitant les conséquences d’une perte. Pour un client motivé par la sécurité, elle est plus pertinente que le tarif accessible.',
       final: 'Les deux arguments répondent à la motivation Sécurité, mais pas au même risque : le chiffrement protège du piratage et de l’accès non autorisé, la sauvegarde protège de la perte. Ce client a déjà subi un piratage : le chiffrement répond le plus directement à sa préoccupation.'
     },
-    model: 'A, chiffrement et conformité RGPD : le client a déjà été piraté, cet argument répond précisément à la préoccupation exprimée. La sauvegarde automatique deviendrait prioritaire face à un client qui craint surtout la perte de ses données. Hiérarchiser, ce n’est pas seulement repérer les arguments qui correspondent à une motivation SONCAS : c’est déterminer lequel répond le plus précisément à ce que le client exprime.'
+    model: 'A, chiffrement et conformité à la loi européenne sur les données : le client a déjà été piraté, cet argument répond précisément à la préoccupation exprimée. La sauvegarde automatique deviendrait prioritaire face à un client qui craint surtout la perte de ses données. Hiérarchiser, ce n’est pas seulement repérer les arguments qui correspondent à une motivation SONCAS : c’est déterminer lequel répond le plus précisément à ce que le client exprime.'
   },
 
   /* ── 1.6 · Construire puis réparer un mauvais argumentaire ──────────── */
@@ -219,7 +219,7 @@ window.ATELIER_S1 = {
     eyebrow: 'Exercice · Argumentation',
     title: 'Construire… puis réparer un mauvais argumentaire !',
     objective: 'Pour cet exercice, vous allez raisonner à l’envers. Vous commencerez par construire volontairement un argumentaire désastreux afin de mieux identifier les pièges à éviter, avant de le transformer en une proposition percutante.',
-    context: 'Vous commercialisez RelaCosy, un logiciel CRM destiné aux PME. Lors de votre découverte, le client vous a exprimé 3 besoins prioritaires :',
+    context: 'Vous commercialisez RelaCosy, un logiciel de suivi des clients destiné aux petites entreprises. Lors de votre découverte, le client vous a exprimé 3 besoins prioritaires :',
     needs: ['Sécuriser ses données.', 'Être accompagné : il ne dispose d’aucun service informatique.', 'Maîtriser son budget.'],
     traps: [
       { name: 'Hors sujet', text: 'Parlez de ce qui n’intéresse pas le client : la couleur du logo, le poids de l’application, l’histoire de votre entreprise.' },
@@ -237,14 +237,14 @@ window.ATELIER_S1 = {
       'Noyer le client sous une liste interminable de fonctions.',
       'Adopter un ton hésitant ou, à l’inverse, péremptoire.'
     ],
-    worstExample: 'RelaCosy pèse seulement 45 Mo, possède une interface bleue, fonctionne sur iOS et Android et son logo a été modernisé en 2023. C’est clairement le meilleur CRM pour votre entreprise !',
+    worstExample: 'RelaCosy pèse seulement 45 Mo, possède une interface bleue, fonctionne sur iOS et Android et son logo a été modernisé en 2023. C’est clairement le meilleur logiciel pour votre entreprise !',
     // Les trois erreurs relevées par le corrigé dans l'exemple ci-dessus.
     worstErrors: [
       'Les arguments sont mal ciblés : le poids de l’application, sa couleur ou son logo ne répondent ni au besoin de sécurité, ni au manque de ressources informatiques, ni à la contrainte budgétaire.',
-      'Les bénéfices client ne sont pas explicités : le commercial énumère des caractéristiques sans dire ce qu’elles apportent à cette PME.',
-      '« C’est le meilleur CRM » n’est pas démontré : aucune preuve, et la crédibilité du discours en pâtit.'
+      'Les bénéfices client ne sont pas explicités : le commercial énumère des caractéristiques sans dire ce qu’elles apportent à cette entreprise.',
+      '« C’est le meilleur logiciel » n’est pas démontré : aucune preuve, et la crédibilité du discours en pâtit.'
     ],
-    model: 'Pour sécuriser vos données clients, RelaCosy utilise un chiffrement AES-256 et réalise des sauvegardes automatiques toutes les 10 minutes. La solution est conforme au RGPD. Comme vous ne disposez pas de service informatique, vous bénéficiez également d’une assistance 7j/7, avec un temps de réponse moyen de 2 minutes. Enfin, l’abonnement démarre à 19 € par mois, sans engagement : vous pouvez ainsi maîtriser votre budget tout en conservant de la souplesse.',
+    model: 'Pour sécuriser vos données clients, RelaCosy utilise un chiffrement de niveau bancaire et réalise des sauvegardes automatiques toutes les 10 minutes. La solution est conforme à la loi européenne sur les données. Comme vous ne disposez pas de service informatique, vous bénéficiez également d’une assistance 7j/7, avec un temps de réponse moyen de 2 minutes. Enfin, l’abonnement démarre à 19 € par mois, sans engagement : vous pouvez ainsi maîtriser votre budget tout en conservant de la souplesse.',
     takeaway: 'Un argumentaire efficace n’accumule pas les caractéristiques du produit : il part des besoins du client, puis sélectionne, traduit et hiérarchise les arguments qui y répondent. Ici, les trois priorités donnent le fil conducteur : sécurité, accompagnement, budget.'
   }
 };

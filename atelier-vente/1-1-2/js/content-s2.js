@@ -34,18 +34,18 @@ window.ATELIER_S2 = {
     subtitle: 'Classez les propositions de la moins convaincante (1) à la plus percutante (5).',
     // `rank` : place attendue, de 1 (moins convaincante) à 5 (plus percutante).
     cards: [
-      { id: 'a', text: 'Vos données clients sont protégées en continu : 5 000 PME nous font confiance, zéro incident en 2024.', rank: 5 },
+      { id: 'a', text: 'Vos données clients sont protégées en continu : 5 000 entreprises nous font confiance, zéro incident en 2024.', rank: 5 },
       { id: 'b', text: 'On a de la sécurité.', rank: 1 },
       { id: 'c', text: 'Vos données sont protégées.', rank: 3 },
       { id: 'd', text: 'Au niveau de la sécurité, le système est plutôt bien conçu, on essaie vraiment d’éviter les problèmes techniques donc vous n’avez normalement pas à vous inquiéter.', rank: 2 },
-      { id: 'e', text: 'Vos données sont protégées en continu, chiffrées et conformes RGPD.', rank: 4 }
+      { id: 'e', text: 'Vos données sont protégées en continu, chiffrées et conformes à la loi européenne sur les données.', rank: 4 }
     ],
     explanation: [
       '1 · b : creuse, elle ne dit rien de concret.',
       '2 · d : elle ajoute du doute (« plutôt », « on essaie », « normalement ») et fait penser à des problèmes.',
       '3 · c : correcte, mais nue : ni précision ni preuve.',
-      '4 · e : elle ajoute des éléments concrets (chiffrées, conformes RGPD).',
-      '5 · a : elle couronne le tout d’une preuve (5 000 PME, zéro incident en 2024).'
+      '4 · e : elle ajoute des éléments concrets (chiffrées, conformes à la loi européenne sur les données).',
+      '5 · a : elle couronne le tout d’une preuve (5 000 entreprises, zéro incident en 2024).'
     ],
     hint: 'Trois critères font monter une proposition : elle parle du client (« vous »), elle est précise, et elle s’appuie sur une preuve. Une hésitation (« plutôt », « normalement ») la fait au contraire chuter.'
   },
@@ -56,7 +56,7 @@ window.ATELIER_S2 = {
     title: 'Le studio d’accroches',
     subtitle: 'Rédigez 3 accroches de natures différentes pour capter l’attention dès les premières secondes.',
     prospect: {
-      name: 'Gérante de PME',
+      name: 'Gérante de petite entreprise',
       software: 'RelaCosy',
       problem: 'elle perd du temps dans la gestion de tâches répétitives.'
     },
@@ -94,13 +94,13 @@ window.ATELIER_S2 = {
     eyebrow: 'Exercice · Argumentation',
     title: 'La chasse aux preuves',
     subtitle: 'Pour chaque affirmation, cochez si elle est étayée par une preuve concrète ou s’il s’agit d’un trou de preuve.',
-    pitch: 'Déjà adopté par 5 000 PME, RelaCosy est un CRM conçu pour une prise en main immédiate : vos équipes sont opérationnelles en moins d’une heure. Résultat, elles économisent en moyenne 3 heures de saisie par semaine, avec la garantie d’une sécurité totale validée par notre audit RGPD annuel.',
+    pitch: 'Déjà adopté par 5 000 entreprises, RelaCosy est un logiciel de suivi des clients conçu pour une prise en main immédiate : vos équipes sont opérationnelles en moins d’une heure. Résultat, elles économisent en moyenne 3 heures de saisie par semaine, avec la garantie d’une sécurité totale validée par notre audit annuel de protection des données.',
     rows: [
-      { text: 'Déjà adopté par 5 000 PME.', answer: 'proof', why: 'Étayée : donnée chiffrée et vérifiable.' },
+      { text: 'Déjà adopté par 5 000 entreprises.', answer: 'proof', why: 'Étayée : donnée chiffrée et vérifiable.' },
       { text: 'Vos équipes sont opérationnelles en moins d’une heure.', answer: 'proof', why: 'Étayée : une durée précise, qu’une démonstration permet de vérifier.' },
       { text: 'Elles économisent en moyenne 3 heures de saisie par semaine.', answer: 'proof', why: 'Étayée : une moyenne chiffrée, mesurable chez les clients.' },
-      { text: 'La garantie d’une sécurité totale.', answer: 'gap', why: 'Trou de preuve : « totale » est une promesse absolue. L’audit prouve la conformité RGPD, pas une sécurité sans faille.' },
-      { text: 'Validée par notre audit RGPD annuel.', answer: 'proof', why: 'Étayée : un audit annuel est un élément vérifiable.' }
+      { text: 'La garantie d’une sécurité totale.', answer: 'gap', why: 'Trou de preuve : « totale » est une promesse absolue. L’audit prouve la conformité à la loi européenne sur les données, pas une sécurité sans faille.' },
+      { text: 'Validée par notre audit annuel de protection des données.', answer: 'proof', why: 'Étayée : un audit annuel est un élément vérifiable.' }
     ],
     columns: [
       { id: 'proof', label: 'Étayée' },
@@ -114,7 +114,7 @@ window.ATELIER_S2 = {
     title: 'L’audit du pitch',
     subtitle: 'Évaluez ce discours selon les 6 critères de la grille commune, de 0 à 2 points par critère.',
     note: 'Désignez ensuite LA modification prioritaire qui le rendrait plus percutant.',
-    pitch: 'Bonjour, RelaCosy est le CRM pensé pour faire gagner du temps à vos équipes tout en sécurisant vos données. Vos commerciaux accèdent à leurs dossiers de n’importe où sur mobile, avec la garantie que tout est sauvegardé et chiffré. C’est une solution clés en main. Quels sont vos défis actuels dans la gestion de vos clients ?',
+    pitch: 'Bonjour, RelaCosy est le logiciel de suivi des clients pensé pour faire gagner du temps à vos équipes tout en sécurisant vos données. Vos commerciaux accèdent à leurs dossiers de n’importe où sur mobile, avec la garantie que tout est sauvegardé et chiffré. C’est une solution clés en main. Quels sont vos défis actuels dans la gestion de vos clients ?',
     // `reference` : la note du corrigé, de 0 à 2. Le pitch est solide sur le
     // bénéfice, le ton et la structure ; il pèche surtout par l'absence de
     // preuve. Un écart d'un point reste accepté.
@@ -131,7 +131,7 @@ window.ATELIER_S2 = {
       { id: '1', label: 'En bonne voie' },
       { id: '2', label: 'Maîtrisé' }
     ],
-    priority: 'Ajouter une preuve à chaque bénéfice : un chiffre ou un fait vérifiable, par exemple « comme les 5 000 PME qui l’utilisent déjà » ou « conforme RGPD, avec un audit de sécurité chaque année ». Sans preuve, la promesse reste une affirmation.'
+    priority: 'Ajouter une preuve à chaque bénéfice : un chiffre ou un fait vérifiable, par exemple « comme les 5 000 entreprises qui l’utilisent déjà » ou « conforme à la loi européenne sur les données, avec un audit de sécurité chaque année ». Sans preuve, la promesse reste une affirmation.'
   },
 
   /* ── 2.6 · Le pitch de 60 secondes ──────────────────────────────────── */
@@ -141,7 +141,7 @@ window.ATELIER_S2 = {
     badge: 'Spécial Sécurité',
     subtitle: 'Rédigez, enregistrez puis auto-évaluez votre pitch de RelaCosy face à un prospect particulièrement soucieux de la sécurité.',
     structure: ['Une accroche', 'Un bénéfice + une preuve', 'Un bénéfice + une preuve', 'Une conclusion'],
-    example: 'Votre priorité, c’est que les données de vos clients ne soient jamais en danger : c’est exactement ce que fait RelaCosy. Vos données sont chiffrées et sauvegardées en continu, conformes RGPD : plus de 5 000 PME l’utilisent sans le moindre incident. Et vous n’avez rien à gérer côté technique, l’assistance répond en 2 minutes, 7j/7. Concrètement, vous gagnez en sérénité sans y consacrer de temps. Je vous propose qu’on regarde ensemble comment le mettre en place chez vous.',
+    example: 'Votre priorité, c’est que les données de vos clients ne soient jamais en danger : c’est exactement ce que fait RelaCosy. Vos données sont chiffrées et sauvegardées en continu, conformes à la loi européenne sur les données : plus de 5 000 entreprises l’utilisent sans le moindre incident. Et vous n’avez rien à gérer côté technique, l’assistance répond en 2 minutes, 7j/7. Concrètement, vous gagnez en sérénité sans y consacrer de temps. Je vous propose qu’on regarde ensemble comment le mettre en place chez vous.',
     criteria: [
       { title: 'Orientation bénéfice', text: 'Je parle des bénéfices pour le client, pas des seules caractéristiques.' },
       { title: 'Preuve à l’appui', text: 'Mes affirmations sont étayées (chiffre, exemple, démonstration).' },

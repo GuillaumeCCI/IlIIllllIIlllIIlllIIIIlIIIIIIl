@@ -1,7 +1,7 @@
 /* SÉRIE 4 · RELANCER · contenus éditables.
  *
  * Textes des maquettes repris tels quels, autour de la proposition envoyée
- * le 3 juin à Madame Riveau (RH d'une PME de 80 salariés, 10 postes). Ce
+ * le 3 juin à Madame Riveau (ressources humaines d'une entreprise de 80 salariés, 10 postes). Ce
  * qu'elles ne montrent pas (affirmations 2 à 6, extraits A et C) et les
  * corrigés viennent de la fiche « Activités supplémentaires SCORM 4 »
  * (M1.1.4), transposée au vouvoiement.
@@ -97,9 +97,9 @@ window.ATELIER_S4 = {
     // éléments en accordéon à droite.
     context: {
       info: 'L’offre Ergolys pour 10 postes complets a été envoyée il y a une semaine. Madame Riveau n’a pas répondu.',
-      // Mêmes faits que le reste de la série 4 : Madame Riveau, PME de 80 salariés.
+      // Mêmes faits que le reste de la série 4 : Madame Riveau, entreprise de 80 salariés.
       rows: [
-        { symbol: 'users', tone: 'blue', label: 'La cliente', text: 'Madame Riveau, responsable RH d’une PME de 80 salariés.' },
+        { symbol: 'users', tone: 'blue', label: 'La cliente', text: 'Madame Riveau, responsable des ressources humaines d’une entreprise de 80 salariés.' },
         { symbol: 'document', tone: 'blue', label: 'L’offre', text: '10 postes pour 17 000 €, installation et garantie 5 ans comprises.' },
         { symbol: 'target', tone: 'green', label: 'Son enjeu', text: 'Soulager le mal de dos de ses équipes.' },
         { symbol: 'chat', tone: 'coral', label: 'Son frein probable', text: 'Convaincre sa direction de la dépense.' }
@@ -211,6 +211,8 @@ window.ATELIER_S4 = {
       { id: 'A', label: 'Relance A', lines: [
         'Bonjour Madame Riveau,',
         'Je me permets de revenir vers vous concernant notre proposition du 3 juin pour l’équipement de vos 10 postes de travail.',
+        'Pour rappel, elle comprend la livraison, l’installation sur place et la garantie de 5 ans sur l’ensemble des sièges.',
+        'Je comprends tout à fait que ce type de décision demande du temps et qu’il faut parfois en parler en interne.',
         'Avez-vous eu l’occasion d’en prendre connaissance ?',
         'Je reste bien entendu disponible si vous avez des questions ou si vous souhaitez que nous reprenions certains éléments de l’offre ensemble.',
         'N’hésitez pas à revenir vers moi lorsque vous serez disponible.',
@@ -281,8 +283,8 @@ window.ATELIER_S4 = {
     ],
     review: { when: 'when', channel: 'channel', written: ['value', 'next'], start: 3,
       symbols: { when: 'calendar', channel: 'mail', value: 'sparkle', next: 'arrowRight' } },
-    skin: { field: 'channel', fields: ['value', 'next'], name: 'Madame Riveau', role: 'Responsable RH', initials: 'MR', subject: 'Notre proposition du 3 juin' },
-    side: { strong: 'Madame Riveau, responsable RH d’une PME de 80 salariés.', info: 'Le 3 juin, vous lui avez envoyé une proposition : du mobilier ergonomique pour équiper 10 postes de travail, c’est-à-dire 10 salariés. Elle est intéressée, mais doit d’abord consulter sa direction. Depuis l’envoi de l’offre, elle n’a pas répondu.', symbol: 'calendar' },
+    skin: { field: 'channel', fields: ['value', 'next'], name: 'Madame Riveau', role: 'Responsable des ressources humaines', initials: 'MR', subject: 'Notre proposition du 3 juin' },
+    side: { strong: 'Madame Riveau, responsable des ressources humaines d’une entreprise de 80 salariés.', info: 'Le 3 juin, vous lui avez envoyé une proposition : du mobilier ergonomique pour équiper 10 postes de travail, c’est-à-dire 10 salariés. Elle est intéressée, mais doit d’abord consulter sa direction. Depuis l’envoi de l’offre, elle n’a pas répondu.', symbol: 'calendar' },
     tip: 'Espacez vos relances : laissez un peu plus de temps entre chacune. Et apportez à chaque fois une information utile, pas seulement une demande de nouvelles.',
     fields: [
       { id: 'when', type: 'input', label: 'Quand ?', sub: 'Combien de jours après l’envoi de l’offre ?', placeholder: 'Ex. : J+3, soit trois jours après l’envoi', max: 40, half: true },

@@ -122,8 +122,8 @@ window.ATELIER_S1 = {
         ] }
     ],
     options: [
-      { id: '1', label: 'Annonce 1', text: 'Alors… c’est 690 € le siège. C’est un peu cher, je sais, mais bon.',
-        analysis: ['Posture hésitante : « Alors… », « mais bon ».', 'Le commercial qualifie lui-même son prix de cher.', 'Aucun bénéfice, aucune réassurance : le prix est nu.'] },
+      { id: '1', label: 'Annonce 1', text: 'Alors… ce siège est à 690 €. C’est un peu cher, je sais, mais bon, c’est un modèle de qualité et la plupart de nos clients en sont plutôt contents.',
+        analysis: ['Posture hésitante : « Alors… », « mais bon ».', 'Le commercial qualifie lui-même son prix de cher.', 'Aucun bénéfice concret : « un modèle de qualité » reste vague, et « plutôt contents » ne rassure pas.'] },
       { id: '2', label: 'Annonce 2', text: 'Ce siège soulage le dos et s’adapte à chaque morphologie. Il est à 690 €, avec une garantie de 5 ans incluse.',
         analysis: ['Structure sandwich : bénéfice, prix, réassurance.', 'Vocabulaire positif et concret.', 'Prix annoncé clairement, sans excuse.'] }
     ],
@@ -188,7 +188,7 @@ window.ATELIER_S1 = {
       'Siège ergonomique : 690 €, réglable en 6 points, garantie 5 ans.',
       'Poste complet : 1 900 € (siège, bureau assis-debout électrique, bras d’écran), installation incluse.',
       'Pack 10 postes : 17 000 €, soit 1 700 € par poste, avec étude ergonomique et formation des équipes.',
-      'Essai gratuit de 30 jours, SAV sous 48 h.'
+      'Essai gratuit de 30 jours, service après-vente sous 48 h.'
     ],
     resourcesLabel: 'Consulter les éléments de l’offre',
     resourcesTitle: 'Les éléments de l’offre',
@@ -198,7 +198,7 @@ window.ATELIER_S1 = {
       { tab: 'Poste complet', tabSub: '1 900 €', title: 'Votre annonce à 1 900 €',
         models: { text: 'Vous pouvez alterner les positions tout au long de la journée pour gagner en confort et en énergie. L’ensemble est à 1 900 €, avec 30 jours pour l’essayer.' } },
       { tab: 'Pack 10 postes', tabSub: '17 000 €', title: 'Votre annonce à 17 000 €',
-        models: { text: 'Vous équipez vos équipes avec une solution complète qui améliore leur confort de travail. L’investissement est de 17 000 €, installation comprise, avec un SAV sous 48 h.' } }
+        models: { text: 'Vous équipez vos équipes avec une solution complète qui améliore leur confort de travail. L’investissement est de 17 000 €, installation comprise, avec un service après-vente sous 48 h.' } }
     ],
     keyPoint: 'Il n’y a pas de réponse unique : votre banque doit vous ressembler et rester naturelle à l’oral. L’objectif n’est plus de réciter une méthode, mais de vous constituer des formulations à vous approprier et à adapter en rendez-vous.',
     nextLabel: 'Enregistrer cette carte',

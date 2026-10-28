@@ -68,7 +68,7 @@ window.ATELIER_BRIEFINGS = {
     mission: 'Choisissez une objection, puis rédigez une phrase adressée au client pour chacune des six étapes de la méthode. Terminez par une auto-évaluation.',
     method: 'Une étape à la fois. Un repère est disponible à chaque étape.',
     quote: 'Nos chaises actuelles suffisent.',
-    situation: 'Vous rencontrez le responsable des services généraux d’une PME. Il vous oppose une objection. Vous allez lui répondre en suivant les six étapes, sans en sauter une.',
+    situation: 'Vous rencontrez le responsable des services généraux d’une entreprise. Il vous oppose une objection. Vous allez lui répondre en suivant les six étapes, sans en sauter une.',
     task: 'Accueillir, questionner, reformuler, traiter, contrôler, enchaîner : une phrase pour chaque étape, comme si vous lui parliez. Puis relisez-vous avec la grille d’auto-évaluation.',
     criteria: ['Une phrase par étape, qui remplit son rôle', 'Un ton naturel, à l’oral', 'Une suite concrète pour finir']
   },

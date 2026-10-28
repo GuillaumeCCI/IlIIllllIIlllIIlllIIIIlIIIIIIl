@@ -226,7 +226,7 @@
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   kit.tour('s1-1.3', [
-    { target: '.fab-prospect', title: 'Votre prospect', text: 'Voici le client : une PME de 12 salariés sans service informatique, et ses trois priorités. Vous construisez un argument pour chacune.' },
+    { target: '.fab-prospect', title: 'Votre prospect', text: 'Voici le client : une entreprise de 12 salariés sans service informatique, et ses trois priorités. Vous construisez un argument pour chacune.' },
     { target: '.fab-cards', title: 'Les informations du produit', text: 'Ces cartes décrivent le produit.',
       items: [
         { symbol: 'pointer', tone: 'blue', text: 'Faites glisser une carte, ou cliquez dessus, pour l’ajouter à votre argument.' },

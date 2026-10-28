@@ -58,7 +58,7 @@ window.ATELIER_S3 = {
       { text: 'Votre offre ne comprend pas l’installation, or j’en ai absolument besoin.', answer: 'fondee', why: 'Sincère et fondée : on argumente, on propose une solution ou une compensation.' },
       { text: 'Je pensais que votre garantie n’était que d’un an.', answer: 'malentendu', why: 'Malentendu : la garantie est de 5 ans. On informe, preuve à l’appui.' },
       { text: 'Comment être sûr que ça tiendra dans le temps ?', answer: 'reassurance', why: 'Demande de réassurance : on rassure avec des garanties, des références, des preuves.' },
-      { text: 'On m’a dit que votre SAV ne répondait jamais.', answer: 'malentendu', why: 'Malentendu, rumeur non vérifiée : on rectifie avec tact, chiffres ou témoignages à l’appui.' },
+      { text: 'On m’a dit que votre service après-vente ne répondait jamais.', answer: 'malentendu', why: 'Malentendu, rumeur non vérifiée : on rectifie avec tact, chiffres ou témoignages à l’appui.' },
       { text: 'Bon, envoyez-moi une doc, je verrai ça.', answer: 'pretexte', why: 'Prétexte, dérobade : on creuse l’intérêt réel avant d’envoyer, pour garder la main.' }
     ]
   },

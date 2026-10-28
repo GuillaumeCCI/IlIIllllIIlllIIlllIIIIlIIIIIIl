@@ -45,22 +45,22 @@ window.ATELIER_S2 = {
         label: 'Client pressé',
         quote: 'Je passe juste jeter un œil en coup de vent, je n’ai vraiment pas beaucoup de temps.',
         options: [
-          { id: 'a', text: 'Vous avez tort, prenez le temps de regarder, c’est important.' },
+          { id: 'a', text: 'Je comprends, mais prenez quand même cinq minutes pour bien regarder : vous risquez de passer à côté de nos nouveautés.' },
           { id: 'b', text: 'Très bien, je vais vous montrer rapidement notre meilleure offre.' },
           { id: 'c', text: 'Aucun souci, je vous laisse regarder à votre rythme ; je reste dans les parages si vous avez besoin.' },
-          { id: 'd', text: 'Pourquoi n’avez-vous pas le temps aujourd’hui ?' }
+          { id: 'd', text: 'Ah, une journée chargée ? Qu’est-ce qui vous presse autant aujourd’hui ?' }
         ],
         answer: 'c',
-        model: 'Vous pouviez écrire : « La réponse c montre que je comprends qu’il est pressé et respecte son rythme : la relation reste ouverte. La a le juge, la b lui propose une offre trop tôt, et la d lui pose une question trop personnelle pour un premier contact. »'
+        model: 'Vous pouviez écrire : « La réponse c montre que je comprends qu’il est pressé et respecte son rythme : la relation reste ouverte. La a insiste au lieu de respecter son rythme, la b lui propose une offre trop tôt, et la d lui pose une question trop personnelle pour un premier contact. »'
       },
       {
         label: 'Client méfiant',
         quote: 'Franchement, vos solutions miracles, je n’y crois pas trop. Ça ne se passe jamais comme prévu.',
         options: [
-          { id: 'a', text: 'Ne vous inquiétez pas, avec nous ça se passera bien.' },
+          { id: 'a', text: 'Ne vous inquiétez pas : avec nous, tout se passera bien, nous avons l’habitude de ce genre de projet.' },
           { id: 'b', text: 'Cette mauvaise expérience vous rend prudent, je comprends.' },
-          { id: 'c', text: 'C’est que vous êtes mal tombé, les autres ne font pas leur travail.' },
-          { id: 'd', text: 'Qu’est-ce qui s’est passé exactement ?' }
+          { id: 'c', text: 'Vous avez sans doute eu affaire à des prestataires peu sérieux ; ce n’est pas du tout notre façon de travailler.' },
+          { id: 'd', text: 'Qu’est-ce qui s’est passé exactement avec votre ancien prestataire ?' }
         ],
         answer: 'b',
         model: 'Vous pouviez écrire : « La réponse b montre de la compréhension : elle nomme sa méfiance sans la minimiser ni la juger, ce qui installe la confiance. La a minimise ce qu’il ressent, la c juge les autres et interprète. La d n’est pas fausse, mais elle arrive trop tôt : on creusera plus tard. »'
@@ -70,8 +70,8 @@ window.ATELIER_S2 = {
         quote: 'Je ne connais rien à tout ça, j’ai un peu peur de me tromper.',
         options: [
           { id: 'a', text: 'C’est normal de se sentir perdu au début ; on va avancer ensemble, à votre rythme.' },
-          { id: 'b', text: 'Ne vous inquiétez pas, c’est très simple.' },
-          { id: 'c', text: 'Vous devriez vous renseigner avant de venir.' },
+          { id: 'b', text: 'Ne vous inquiétez pas, c’est très simple : la plupart de nos clients s’y retrouvent dès le premier jour.' },
+          { id: 'c', text: 'Il aurait fallu vous renseigner un peu avant : ça vous aurait évité ce stress.' },
           { id: 'd', text: 'Je vais vous expliquer tout de suite comment ça marche.' }
         ],
         answer: 'a',

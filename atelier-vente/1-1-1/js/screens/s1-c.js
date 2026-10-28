@@ -61,7 +61,7 @@
   }
 
   /* Le contexte en pastilles illustrées, chacune dans sa teinte. */
-  const facts = () => `<ul class="compare-facts">${[['briefcase', 'Premier RDV B2B'], ['building', 'PME'], ['clock', '30 min']]
+  const facts = () => `<ul class="compare-facts">${[['briefcase', 'Premier rendez-vous'], ['building', 'Petite entreprise'], ['clock', '30 min']]
     .map(([name, label]) => `<li>${icon(name, { size: 20 })}<span>${esc(label)}</span></li>`).join('')}</ul>`;
 
   /* ── Étape 1 : choisir ─────────────────────────────────────────────── */

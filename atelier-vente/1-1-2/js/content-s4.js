@@ -21,7 +21,7 @@ window.ATELIER_S4 = {
     items: [
       { text: 'Vous ne perdez jamais vos données clients.', answer: 'A', why: 'Elle dit ce que le client y gagne.' },
       { text: 'Assistance téléphonique 7j/7.', answer: 'C', why: 'Un service fourni, décrit sans son effet pour le client.' },
-      { text: 'Utilisé par plus de 5 000 PME.', answer: 'P', why: 'Une preuve sociale chiffrée.' },
+      { text: 'Utilisé par plus de 5 000 entreprises.', answer: 'P', why: 'Une preuve sociale chiffrée.' },
       { text: 'Sauvegarde automatique toutes les 10 minutes.', answer: 'C', why: 'Elle décrit le fonctionnement du produit.' },
       { text: '99,9 % de disponibilité garantie par contrat.', answer: 'P', why: 'Un engagement chiffré et contractuel : la promesse devient vérifiable.' },
       { text: 'Vous êtes dépanné même le week-end.', answer: 'A', why: 'Le bénéfice concret de l’assistance 7j/7.' }
@@ -60,7 +60,7 @@ window.ATELIER_S4 = {
     instruction: 'Pour chaque formulation, choisissez C ou B.',
     items: [
       { text: 'Vous tenez deux jours sans recharger.', answer: 'B', why: 'Ce que la batterie change au quotidien.' },
-      { text: 'Ce matériau est traité anti-UV.', answer: 'C', why: 'Une propriété du matériau.' },
+      { text: 'Ce matériau est traité contre les rayons du soleil.', answer: 'C', why: 'Une propriété du matériau.' },
       { text: 'Contrat sans engagement.', answer: 'C', why: 'Une condition de l’offre.' },
       { text: 'Vos meubles ne jauniront pas au soleil.', answer: 'B', why: 'Le résultat vécu par l’utilisateur.' },
       { text: 'Vous gardez la liberté d’arrêter quand vous voulez.', answer: 'B', why: 'La liberté que procure un contrat sans engagement.' },
@@ -109,7 +109,7 @@ window.ATELIER_S4 = {
     subtitle: 'Lisez l’échange, puis relevez au moins 3 erreurs majeures.',
     exchange: [
       { who: 'client', text: 'Je cherche surtout quelque chose de simple à utiliser.' },
-      { who: 'seller', text: 'Alors, on a le chiffrement AES-256, la conformité RGPD, 200 intégrations, un module de reporting BI, une API ouverte, le SSO, l’hébergement souverain, la sauvegarde incrémentale…' },
+      { who: 'seller', text: 'Alors, on a le chiffrement de niveau bancaire, la conformité à la loi européenne sur les données, 200 intégrations, un module de reporting BI, une API ouverte, le SSO, l’hébergement souverain, la sauvegarde incrémentale…' },
       { who: 'client', text: '… euh, d’accord.' }
     ],
     model: [

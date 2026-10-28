@@ -229,7 +229,7 @@ window.ATELIER_BRIEFINGS = {
     lede: { key: 'Quatre étapes,', rest: 'de la relance à la clôture.' },
     mission: 'Construisez votre plan de relance. Pour chaque étape, choisissez le moment, le canal, l’information utile à apporter et le prochain pas à proposer.',
     method: 'Vous avancez une étape à la fois. Vos cinq ressources restent consultables à tout moment.',
-    situation: 'Le 3 juin, vous avez proposé à Madame Riveau, responsable RH d’une PME de 80 salariés, du mobilier ergonomique pour équiper 10 postes de travail. Elle est intéressée, mais doit d’abord consulter sa direction. Depuis, elle n’a pas répondu.',
+    situation: 'Le 3 juin, vous avez proposé à Madame Riveau, responsable des ressources humaines d’une entreprise de 80 salariés, du mobilier ergonomique pour équiper 10 postes de travail. Elle est intéressée, mais doit d’abord consulter sa direction. Depuis, elle n’a pas répondu.',
     task: 'Prévoyez trois relances, de plus en plus espacées dans le temps, puis un message de clôture.',
     criteria: ['Des relances espacées', 'Des canaux variés', 'Une valeur nouvelle à chaque fois']
   },

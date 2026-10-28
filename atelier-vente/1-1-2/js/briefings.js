@@ -20,7 +20,7 @@ window.ATELIER_BRIEFINGS = {
     lede: { key: 'Trois cartes vont ensemble.', rest: 'La quatrième se cache parmi elles.' },
     mission: 'Dans chacune des trois séries, écartez la carte intruse, puis dites si le trio restant réunit des caractéristiques, des avantages ou des preuves.',
     method: 'Cliquez sur la carte intruse pour l’écarter.',
-    situation: 'Vous préparez la présentation de RelaCosy, un logiciel CRM pour les PME. Vos notes mélangent ce que fait le produit, ce que le client y gagne et ce qui le prouve.',
+    situation: 'Vous préparez la présentation de RelaCosy, un logiciel de suivi des clients pour les petites entreprises. Vos notes mélangent ce que fait le produit, ce que le client y gagne et ce qui le prouve.',
     task: 'Pour chaque série de quatre cartes, repérez l’intrus, puis identifiez la catégorie commune aux trois autres.',
     criteria: ['Distinguer caractéristique, avantage et preuve', 'Justifier mentalement chaque choix avant de valider']
   },
@@ -38,7 +38,7 @@ window.ATELIER_BRIEFINGS = {
     lede: { key: 'Une fiche produit, trois besoins.', rest: 'Fabriquez trois arguments sur mesure.' },
     mission: 'Pour chaque priorité du prospect, sélectionnez les caractéristiques utiles, formulez l’avantage, puis choisissez la preuve.',
     method: 'Glissez les cartes de la fiche produit dans l’atelier, ou cliquez-les.',
-    situation: 'Votre prospect dirige une PME de 12 salariés, sans service informatique. Il veut sécuriser ses données, fonctionner sans équipe technique et maîtriser son budget.',
+    situation: 'Votre prospect dirige une entreprise de 12 salariés, sans service informatique. Il veut sécuriser ses données, fonctionner sans équipe technique et maîtriser son budget.',
     task: 'Construisez un argument CAP par besoin, en ne retenant que les informations qui y répondent.',
     criteria: ['Des caractéristiques reliées au besoin, sans information hors sujet', 'Un avantage formulé du point de vue du client', 'Une preuve vérifiable']
   },
@@ -66,7 +66,7 @@ window.ATELIER_BRIEFINGS = {
     lede: { key: 'Faites le pire,', rest: 'pour mieux savoir le réparer.' },
     mission: 'Rédigez volontairement le pire argumentaire possible, diagnostiquez-en trois erreurs majeures, puis réécrivez-le pour répondre aux besoins du client.',
     method: 'Trois étapes : construire, analyser, réparer.',
-    situation: 'Vous vendez RelaCosy à une PME qui veut sécuriser ses données, être accompagnée faute de service informatique, et maîtriser son budget.',
+    situation: 'Vous vendez RelaCosy à une petite entreprise qui veut sécuriser ses données, être accompagnée faute de service informatique, et maîtriser son budget.',
     task: 'Écrivez un argumentaire désastreux, nommez trois erreurs et leur impact, puis proposez une version qui répond aux trois besoins avec des bénéfices concrets et des preuves.',
     criteria: ['Un diagnostic qui nomme l’erreur et son effet sur le client', 'Une version réparée qui couvre les trois besoins', 'Des bénéfices concrets appuyés de preuves']
   },
@@ -93,9 +93,9 @@ window.ATELIER_BRIEFINGS = {
 
   's2-2.3': {
     lede: { key: 'Les premières secondes décident.', rest: 'Trois accroches pour les gagner.' },
-    mission: 'Rédigez trois accroches de natures différentes pour une gérante de PME : une question, un chiffre-choc, un bénéfice projeté.',
+    mission: 'Rédigez trois accroches de natures différentes pour une gérante de petite entreprise : une question, un chiffre-choc, un bénéfice projeté.',
     method: 'Une accroche par onglet, 160 caractères maximum.',
-    situation: 'Une gérante de PME perd du temps dans la gestion de tâches répétitives. Vous lui présentez RelaCosy et devez capter son attention dès la première phrase.',
+    situation: 'Une gérante de petite entreprise perd du temps dans la gestion de tâches répétitives. Vous lui présentez RelaCosy et devez capter son attention dès la première phrase.',
     task: 'Rédigez une question qui l’amène à reconnaître le temps perdu, un chiffre-choc qui rend le problème concret, et un bénéfice qui la projette dans le résultat.',
     criteria: ['Courte', 'Concrète', 'Centrée sur le client']
   },

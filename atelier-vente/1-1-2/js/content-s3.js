@@ -79,18 +79,18 @@ window.ATELIER_S3 = {
     subtitle: 'Le client exprime un besoin. Sélectionnez l’argument commercial le plus pertinent pour y répondre.',
     note: 'Un seul argument est sélectionné par besoin. Certains arguments sont des intrus et ne seront pas utilisés.',
     options: [
-      'Import des données existantes inclus',
-      'Formation incluse pour faciliter une prise en main rapide',
-      'Chiffrement des données AES-256',
-      'Tarif à partir de 19 €/mois, sans engagement',
-      'Interface moderne'
+      'Import de vos données existantes inclus',
+      'Formation de votre équipe incluse',
+      'Chiffrement de toutes vos données, au même niveau que les banques',
+      'Tarif dès 19 € par mois, sans engagement',
+      'Interface moderne et colorée'
     ],
     needs: [
       { tab: 'Prise en main', quote: 'Ce qui compte pour moi, c’est que mon équipe puisse utiliser la solution rapidement.', answer: 1, why: 'Le client veut que son équipe soit rapidement opérationnelle : la formation incluse répond directement à cette préoccupation.' },
-      { tab: 'Reprise des données', quote: 'Je dois aussi récupérer toutes mes données actuelles. Je ne veux rien perdre lors du changement de solution.', answer: 0, why: 'Le client veut récupérer ses données lors du changement : l’import inclus est l’argument le plus directement lié. Ne vous laissez pas distraire par le chiffrement AES-256 : il concerne la protection des données, pas leur transfert.' },
+      { tab: 'Reprise des données', quote: 'Je dois aussi récupérer toutes mes données actuelles. Je ne veux rien perdre lors du changement de solution.', answer: 0, why: 'Le client veut récupérer ses données lors du changement : l’import inclus est l’argument le plus directement lié. Ne vous laissez pas distraire par le chiffrement de niveau bancaire : il concerne la protection des données, pas leur transfert.' },
       { tab: 'Budget', quote: 'Et puis notre budget est assez serré. Je dois vraiment maîtriser les coûts.', answer: 3, why: 'Le client exprime une contrainte budgétaire : le tarif et l’absence d’engagement sont les éléments les plus pertinents à ce moment de l’échange.' }
     ],
-    intruders: 'Le chiffrement AES-256 deviendrait pertinent si le client exprimait une préoccupation de sécurité ou de confidentialité. L’interface moderne n’apporte pas de réponse assez directe aux trois besoins exprimés. Le bon argument n’est pas simplement un argument intéressant sur le produit : c’est celui qui répond au besoin que le client vient d’exprimer.',
+    intruders: 'Le chiffrement de niveau bancaire deviendrait pertinent si le client exprimait une préoccupation de sécurité ou de confidentialité. L’interface moderne n’apporte pas de réponse assez directe aux trois besoins exprimés. Le bon argument n’est pas simplement un argument intéressant sur le produit : c’est celui qui répond au besoin que le client vient d’exprimer.',
         rules: [
       'Un seul argument par besoin.',
       'Chaque argument ne peut servir qu’une fois : ceux déjà retenus sont grisés.',

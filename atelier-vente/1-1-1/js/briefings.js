@@ -48,7 +48,7 @@ window.ATELIER_BRIEFINGS = {
     lede: { key: "Deux ouvertures, un choix.", rest: "Les deux se défendent : tranchez et argumentez." },
     mission: "Choisissez la plus efficace, appuyez-vous sur trois arguments, puis identifiez un emprunt utile.",
     method: "Reliez chaque argument à un critère.",
-    situation: 'Premier rendez-vous B2B dans une PME, trente minutes prévues. Deux ouvertures vous sont proposées pour cette même situation. Les deux sont acceptables.',
+    situation: 'Premier rendez-vous avec une petite entreprise, trente minutes prévues. Deux ouvertures vous sont proposées pour cette même situation. Les deux sont acceptables.',
     task: 'Choisissez la plus efficace, appuyez votre décision sur au moins trois arguments reliés aux critères, puis identifiez ce que vous emprunteriez à l’autre.',
     criteria: [
       'Au moins trois arguments explicitement reliés aux critères d’une bonne ouverture',

@@ -180,7 +180,7 @@
   kit.tour('s1-1.6', [
     { target: '.repair-side .repair-block', title: 'Votre client', text: 'Voici le contexte de l’exercice.',
       items: [
-        { symbol: 'target', tone: 'blue', text: 'Le produit : RelaCosy, un logiciel CRM pour les PME.' },
+        { symbol: 'target', tone: 'blue', text: 'Le produit : RelaCosy, un logiciel de suivi des clients pour les petites entreprises.' },
         { symbol: 'document', tone: 'blue', text: 'Les 3 besoins prioritaires du client restent affichés pendant tout l’exercice.' }
       ] },
     { target: '.repair-challenge', title: 'Votre défi', text: 'Le défi change selon l’étape :',

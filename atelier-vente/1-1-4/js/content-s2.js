@@ -34,7 +34,7 @@ window.ATELIER_S2 = {
       { text: 'Demander « Par rapport à quoi trouvez-vous le prix élevé ? » permet de mieux comprendre ce qui se cache derrière l’objection.', answer: 'V', why: 'Défendre son prix, c’est d’abord comprendre l’objection.' },
       { text: 'Ramener un prix à un coût par jour, par poste ou par usage peut aider à le mettre en perspective.', answer: 'V', why: 'Un montant rapporté à l’usage devient concret et comparable.' },
       { text: 'Pour défendre son prix, il faut avant tout expliquer au client pourquoi nos propres coûts sont élevés.', answer: 'F', why: 'On évite de se justifier : les coûts de l’entreprise ne disent rien de la valeur pour le client.' },
-      { text: 'Rappeler ce que le prix comprend (garantie, installation, SAV…) permet de remettre en avant la valeur de l’offre.', answer: 'V', why: 'On rend visible la valeur de l’offre.' },
+      { text: 'Rappeler ce que le prix comprend (garantie, installation, service après-vente…) permet de remettre en avant la valeur de l’offre.', answer: 'V', why: 'On rend visible la valeur de l’offre.' },
       { text: 'Défendre son prix signifie refuser toute discussion sur le tarif.', answer: 'F', why: 'Défendre son prix, ce n’est pas se braquer : on écoute, on comprend, puis on valorise.' }
     ],
     keyPoint: 'À retenir : défendre son prix, c’est d’abord comprendre l’objection, puis rendre la valeur de l’offre visible. On évite de se justifier, de se braquer ou d’accorder immédiatement une remise.'
@@ -71,7 +71,7 @@ window.ATELIER_S2 = {
       { text: 'Ramené à sa durée d’utilisation, cela représente moins de 40 centimes par jour.', answer: 2, why: 'Le prix est rapporté à l’usage.' },
       { text: 'Par rapport à quoi trouvez-vous le prix élevé ?', answer: 0, why: 'Une question pour comprendre la référence du client.' },
       { text: 'Comparons les deux offres sur le même périmètre : l’installation et la garantie sont-elles également incluses dans l’offre concurrente ?', answer: 4, why: 'On vérifie que les deux offres couvrent le même périmètre.' },
-      { text: 'Ce tarif comprend la garantie 5 ans, la livraison, l’installation et le SAV.', answer: 1, why: 'On rappelle tout ce que le prix contient.' },
+      { text: 'Ce tarif comprend la garantie 5 ans, la livraison, l’installation et le service après-vente.', answer: 1, why: 'On rappelle tout ce que le prix contient.' },
       { text: 'Au-delà du prix de l’équipement, regardons aussi ce que peuvent coûter l’inconfort, les absences ou la désorganisation qu’ils peuvent entraîner.', answer: 3, why: 'On met en regard ce que coûte le statu quo.' }
     ],
     keyPoint: 'À retenir : face à une objection sur le prix, il n’existe pas une réponse unique. L’enjeu est de choisir le levier adapté à ce que le client exprime.'
@@ -147,9 +147,9 @@ window.ATELIER_S2 = {
     speaker: 'Client',
     quote: 'Votre offre est plus chère que celle de votre concurrent.',
     options: [
-      { id: '1', label: 'Réponse 01', text: 'Je comprends. Notre tarif est plus élevé parce que nous proposons une garantie de 5 ans et un SAV sous 48 h.',
-        analysis: ['Contient déjà un élément intéressant de valorisation.', 'Suppose immédiatement que l’écart est justifié par la garantie et le SAV.', 'Ne vérifie pas ce que comprend l’offre concurrente.'] },
-      { id: '2', label: 'Réponse 02', text: 'C’est possible. Avant de comparer les prix, regardons si les deux offres couvrent le même périmètre : étude ergonomique, installation, garantie et SAV. Nous pourrons ensuite regarder précisément d’où vient l’écart.',
+      { id: '1', label: 'Réponse 01', text: 'Je comprends tout à fait. Notre tarif est plus élevé, c’est vrai, mais c’est parce que nous proposons une garantie de 5 ans et un service après-vente qui intervient sous 48 h. Au final, vous payez surtout pour votre tranquillité d’esprit.',
+        analysis: ['Contient déjà un élément intéressant de valorisation.', 'Suppose immédiatement que l’écart est justifié par la garantie et le service après-vente.', 'Ne vérifie pas ce que comprend l’offre concurrente.'] },
+      { id: '2', label: 'Réponse 02', text: 'C’est possible. Avant de comparer les prix, regardons si les deux offres couvrent le même périmètre : étude ergonomique, installation, garantie et service après-vente. Nous pourrons ensuite regarder précisément d’où vient l’écart.',
         analysis: ['Ne nie pas l’écart de prix et ne dénigre pas le concurrent.', 'Propose de vérifier les éléments comparés avant de justifier l’écart.', 'Prépare la valorisation des différences réellement constatées.'] }
     ],
     answer: '2',
@@ -221,7 +221,7 @@ window.ATELIER_S2 = {
       { tab: 'Trop cher', scene: { quote: 'C’est trop cher.' },
         models: { text: 'Je comprends. Qu’est-ce qui vous fait dire que le prix est trop élevé ? Regardons ce qui est important pour vous et ce que notre offre comprend.' } },
       { tab: 'Moins cher ailleurs', scene: { quote: 'J’ai trouvé moins cher ailleurs.' },
-        models: { text: 'C’est possible. Regardons si nous comparons exactement le même périmètre : installation, garantie, SAV… Cela nous permettra de comprendre précisément l’écart.' } },
+        models: { text: 'C’est possible. Regardons si nous comparons exactement le même périmètre : installation, garantie, service après-vente… Cela nous permettra de comprendre précisément l’écart.' } },
       { tab: 'Vaut-il 17 000 € ?', scene: { quote: 'Je ne suis pas sûr que cela vaille 17 000 €.' },
         models: { text: 'Regardons ce que représentent ces 17 000 € : 10 postes équipés, soit 1 700 € par poste, avec l’installation et la garantie comprises. L’enjeu est de vérifier si cette solution répond suffisamment à vos priorités pour justifier cet investissement.' } }
     ],

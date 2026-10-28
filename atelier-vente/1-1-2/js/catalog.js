@@ -33,9 +33,9 @@ window.ATELIER_CATALOG = {
         { id: '1.2', file: 's1-1-2', label: 'Décomposez l’argument', thumb: 'assets/illustrations/s1/accueil/1-2.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-2.webp' },
         { id: '1.3', file: 's1-1-3', label: 'La fabrique à arguments', thumb: 'assets/illustrations/s1/accueil/1-3.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-3.webp' },
         { id: '1.4', file: 's1-1-4', label: 'Le radar SONCAS', thumb: 'assets/illustrations/s1/accueil/1-4.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-4.webp',
-          image: 'assets/illustrations/s1/1-1-2-S1-i1-4.png', alt: 'Un dirigeant de PME, mains jointes, écoute avec attention derrière son bureau.', imagePosition: 'center 30%' },
+          image: 'assets/illustrations/s1/1-1-2-S1-i1-4.png', alt: 'Un dirigeant de petite entreprise, mains jointes, écoute avec attention derrière son bureau.', imagePosition: 'center 30%' },
         { id: '1.5', file: 's1-1-5', label: 'Le tournoi des arguments', thumb: 'assets/illustrations/s1/accueil/1-5.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-5.webp',
-          image: 'assets/illustrations/s1/1-1-2-S1-i1-4.png', alt: 'Un dirigeant de PME, mains jointes, écoute avec attention derrière son bureau.', imagePosition: 'center 30%' },
+          image: 'assets/illustrations/s1/1-1-2-S1-i1-4.png', alt: 'Un dirigeant de petite entreprise, mains jointes, écoute avec attention derrière son bureau.', imagePosition: 'center 30%' },
         { id: '1.6', file: 's1-1-6', label: 'Réparer un argumentaire', thumb: 'assets/illustrations/s1/accueil/1-6.webp', theme: 'blue', background: 'assets/backgrounds/s1/1-1-2-S1-1-6.webp' }
       ]
     },

@@ -109,24 +109,24 @@ window.ATELIER_S2 = {
     portrait: true,
     listTitle: 'Que répond le commercial ?',
     options: [
-      { id: '1', label: 'Réponse 1', text: 'Pas de souci, je vous envoie la doc, bonne journée.',
-        analysis: [
-          'Accepte la dérobade telle quelle : l’échange s’arrête là.',
-          'Aucune information sur le besoin : la documentation sera générique, donc peu lue.',
-          'Aucune suite convenue : la relance partira à froid.'
-        ] },
-      { id: '2', label: 'Réponse 2', text: 'Avec plaisir. Pour vous adresser exactement ce qui vous sera utile plutôt qu’une brochure générique, puis-je vous poser deux questions rapides : combien de postes environ, et avez-vous déjà eu des soucis de dos dans les équipes ?',
+      { id: '1', label: 'Réponse 1', text: 'Avec plaisir. Pour vous adresser exactement ce qui vous sera utile plutôt qu’une brochure générique, puis-je vous poser deux questions rapides : combien de postes environ, et avez-vous déjà eu des soucis de dos dans les équipes ?',
         analysis: [
           'Accueille la demande sans la contester (« avec plaisir »).',
           'Justifie ses questions par l’intérêt du client : un envoi sur mesure.',
           'Pose deux questions courtes qui qualifient le besoin et relancent l’échange.'
+        ] },
+      { id: '2', label: 'Réponse 2', text: 'Bien sûr, je vous envoie dès aujourd’hui notre documentation complète, avec nos tarifs et quelques exemples d’installations chez nos clients. Vous pourrez la parcourir tranquillement et la faire circuler dans votre équipe. Bonne journée !',
+        analysis: [
+          'Accepte la dérobade telle quelle : l’échange s’arrête là.',
+          'Aucune information sur le besoin : la documentation sera générique, donc peu lue.',
+          'Aucune suite convenue : la relance partira à froid.'
         ] }
     ],
-    answer: '2',
+    answer: '1',
     whyLabel: 'Pourquoi ce choix ?',
     whyHelp: 'Pensez à la suite donnée à la conversation.',
     hint: 'Une demande de documentation est souvent une façon polie de raccrocher. Quelle réponse garde la conversation ouverte ?',
-    model: 'La réponse 2. Elle accepte la demande mais la transforme en occasion de qualifier, et garde la main avec deux questions ciblées, au lieu de subir l’esquive et de perdre le contact. Argument implicite : une documentation personnalisée vaut mieux qu’une brochure générique.'
+    model: 'La réponse 1. Elle accepte la demande mais la transforme en occasion de qualifier, et garde la main avec deux questions ciblées, au lieu de subir l’esquive et de perdre le contact. Argument implicite : une documentation personnalisée vaut mieux qu’une brochure générique.'
   },
 
   /* ── 2.6 · Le script de rebond ──────────────────────────────────────── */

@@ -59,7 +59,7 @@
       return pick ? { id: ids[pick.id], label: pick.label } : { id: 'vide', label: 'Sans réponse' };
     };
     return `<section class="an-review">
-      ${core.pageTitle('Corrigé', 'L’ultimatum', 'Vous vendez des sièges de bureau ergonomiques. La gérante d’une PME de 40 salariés vous accorde 40 secondes, puis décide si elle vous donne un rendez-vous de 10 minutes.')}
+      ${core.pageTitle('Corrigé', 'L’ultimatum', 'Vous vendez des sièges de bureau ergonomiques. La gérante d’une entreprise de 40 salariés vous accorde 40 secondes, puis décide si elle vous donne un rendez-vous de 10 minutes.')}
       ${corrige.compare({ rubric: SELF.map(s => [s.title]), bloc, what: 'votre ouverture', grade })}
       ${corrige.head(result)}
       ${corrige.rows([
@@ -81,7 +81,7 @@
         <h2>Le contexte</h2>
         <ul class="ult-facts">
           <li><strong>Vous</strong><span>Commercial chez Ergolys, qui vend des sièges de bureau ergonomiques.</span></li>
-          <li><strong>Le client</strong><span>La gérante d’une PME de 40 salariés, entre deux réunions.</span></li>
+          <li><strong>Le client</strong><span>La gérante d’une entreprise de 40 salariés, entre deux réunions.</span></li>
           <li><strong>Sa décision</strong><span>Après 40 secondes, elle choisit : vous accorder un rendez-vous de 10 minutes, ou s’arrêter là.</span></li>
         </ul>
       </section>
@@ -121,7 +121,7 @@
     // À l'arrivée : pourquoi on est là, ce qui se passe, ce qui est demandé.
     kit.context([
       ['target', 'Pourquoi vous êtes là', 'Pour vous entraîner à aller à l’essentiel quand le temps manque, sans perdre le client.'],
-      ['clock', 'Ce qui se passe', 'Vous vendez des sièges de bureau ergonomiques. La gérante d’une PME vous accorde 40 secondes, puis décide si elle vous donne un rendez-vous.'],
+      ['clock', 'Ce qui se passe', 'Vous vendez des sièges de bureau ergonomiques. La gérante d’une entreprise vous accorde 40 secondes, puis décide si elle vous donne un rendez-vous.'],
       ['pencil', 'Ce qui vous est demandé', 'Écrire une ouverture de 90 mots maximum, la tester à voix haute au chrono, puis l’évaluer.']
     ]);
     // À l'arrivée sur l'auto-évaluation : ce qu'on a sous les yeux.
