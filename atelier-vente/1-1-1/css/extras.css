@@ -521,3 +521,8 @@
 #main .an-review .ana-note, #main .an-review .ana-legend, #main .an-review .ana-line, #main .an-review .ana-detail,
 #main .an-review .an-yours p, #main .an-review .an-verdict p, #main .an-review .self-pill, #main .an-review .an-seen { font-size: 1rem; }
 #main .an-review .ana-expect, #main .an-review .an-compare thead th { font-size: .8rem; }
+
+/* Tableau de l’autoévaluation : la colonne « Repéré dans votre texte ? » plus à droite. */
+.an-compare table { table-layout: fixed; }
+.an-compare thead th:nth-child(1) { width: 34%; }
+.an-compare thead th:nth-child(2) { width: 26%; }
