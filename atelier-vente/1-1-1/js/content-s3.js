@@ -355,22 +355,31 @@ window.ATELIER_S3 = {
       {
         objection: 'Il faut que j’en parle à ma direction.',
         answer: 'processus',
-        feedback: 'Fondée, liée au processus de décision. Creuser : « Qu’est-ce qui compterait pour eux ? » Réponse : fournir un argumentaire chiffré et proposer une présentation courte à la direction.'
+        // Pourquoi cette nature, puis une question et une réponse possibles.
+        why: 'Elle est fondée : elle dépend de la façon dont l’entreprise prend ses décisions.',
+        question: 'Vous pouviez écrire : « Qu’est-ce qui compterait le plus pour votre direction ? »',
+        reply: 'Vous pouviez écrire : « Je vous prépare un dossier chiffré pour votre direction, et je peux venir le présenter avec vous en quelques minutes. »'
       },
       {
         objection: 'C’est trop cher.',
         answer: 'fondee',
-        feedback: 'Fondée. Creuser : « Par rapport à quoi ? » Réponse : la valeur, l’essai de 30 jours et la garantie de 5 ans ; la location est possible pour étaler le budget.'
+        why: 'Elle est fondée : le prix est un vrai critère pour le client.',
+        question: 'Vous pouviez écrire : « Par rapport à quoi trouvez-vous le prix élevé ? »',
+        reply: 'Vous pouviez écrire : « Nos sièges sont garantis 5 ans, et vous pouvez les essayer 30 jours. La location est aussi possible, pour étaler le budget. »'
       },
       {
         objection: 'J’ai été déçu par un fournisseur.',
         answer: 'rassurance',
-        feedback: 'Demande de réassurance. Creuser : « Qu’est-ce qui s’était mal passé ? » Réponse : la garantie de 5 ans, un SAV sous 48 h, l’essai de 30 jours satisfait ou remboursé, et plus de 1 200 entreprises équipées.'
+        why: 'C’est une demande de réassurance : le client veut être sûr que cela ne se reproduira pas.',
+        question: 'Vous pouviez écrire : « Qu’est-ce qui s’était mal passé avec ce fournisseur ? »',
+        reply: 'Vous pouviez écrire : « Nos sièges sont garantis 5 ans, notre service après-vente intervient sous 48 h, et vous pouvez les essayer 30 jours, satisfait ou remboursé. Plus de 1 200 entreprises sont déjà équipées. »'
       },
       {
         objection: 'Nos chaises actuelles suffisent.',
         answer: 'pretexte',
-        feedback: 'Prétexte, statu quo. Creuser : « Avez-vous des salariés gênés par le dos ? » Réponse : la prévention des TMS, la baisse des arrêts constatée chez nos clients, un diagnostic gratuit.'
+        why: 'C’est un prétexte : le client préfère ne rien changer.',
+        question: 'Vous pouviez écrire : « Avez-vous des salariés gênés par le dos ? »',
+        reply: 'Vous pouviez écrire : « Nos clients constatent une baisse des arrêts liés au mal de dos. Je vous propose un diagnostic gratuit de vos postes de travail. »'
       }
     ]
   }

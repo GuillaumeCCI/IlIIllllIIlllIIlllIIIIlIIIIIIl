@@ -450,7 +450,8 @@
     ] }) },
 
     // S3 1.7 · Cartes réflexes : creuser, puis répondre avec une preuve.
-    's3-1.7': { blocs: [
+    // Les critères portent les noms des temps de la carte : creuser, répondre.
+    's3-1.7': { integre: true, blocs: [
       ['Direction', ['direction', 'compterait', 'important pour eux', 'critères', 'qui décide', 'décision', 'quand', 'convaincre', 'attendent', 'qui d’autre', 'arguments'],
         ['argumentaire', 'chiffr*', 'dossier', 'synthèse', 'présentation', 'présenter', 'rencontrer', 'rendez-vous', 'accompagner', 'avec vous', 'document', 'retour sur investissement', 'coût des arrêts', 'à votre direction']],
       ['Trop cher', ['par rapport à quoi', 'comparé', 'compar*', 'budget prévu', 'enveloppe', 'autre offre', 'combien', 'quel budget', 'autre devis'],
@@ -461,10 +462,10 @@
         ['prévention', 'prévenir', 'tms', 'arrêts', 'baisse', 'diagnostic', 'gratuit', 'étude', 'essai', 'coût', 'absences']]
     ].flatMap(([titre, creuser, prouver], i) => [
       { titre: `${titre} : votre question`, champs: [`dig${i}`],
-        criteres: [{ nom: 'Une question ouverte', mots: QUESTION_OUVERTE.concat(['pourquoi', 'que s’est-il passé', 'avez-vous', 'qui décide', 'comparé']), conseil: 'Creusez par une question ouverte.' }, { nom: 'Le bon angle', mots: creuser, conseil: 'Visez la cause probable de l’objection.' }],
-        regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 1 }] },
+        criteres: [{ nom: 'Creuser : une question ouverte', mots: QUESTION_OUVERTE.concat(['pourquoi', 'que s’est-il passé', 'avez-vous', 'qui décide', 'comparé']), conseil: 'Creusez par une question ouverte.' }, { nom: 'Creuser : le bon angle', mots: creuser, conseil: 'Visez la cause probable de l’objection.' }],
+        regles: [{ regle: 'avecQuestion', nom: 'Creuser : une vraie question, avec « ? »', points: 1 }] },
       { titre: `${titre} : votre réponse`, champs: [`reply${i}`],
-        criteres: [{ nom: 'Une preuve', mots: prouver, min: 2, conseil: 'Appuyez-vous sur une preuve : garantie, essai, chiffres…' }],
+        criteres: [{ nom: 'Répondre : une preuve', mots: prouver, min: 2, conseil: 'Appuyez-vous sur une preuve : garantie, essai, chiffres…' }],
         pieges: [{ nom: 'Le prix bradé', points: 1, mots: ['remise', 'réduction', 'rabais', 'geste commercial', 'baisser le prix', 'baisse de prix', 'moins cher pour vous'], conseil: 'On défend la valeur, on ne brade pas.' }] }
     ]) },
 

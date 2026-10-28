@@ -219,8 +219,8 @@ test('S3 1.7 : une carte se construit en trois temps, dans le cas ouvert', () =>
   engine.submit();
   assert.strictEqual(engine.value('done1'), true, 'la carte construite doit être marquée');
   assert.ok(!core.isDone('s3-1.7'), 'une carte sur quatre ne termine pas l’exercice');
-  assert.match(main(), /own-answer/, 'la question et la réponse doivent être relues');
-  assert.match(main(), /inline-note/, 'l’analyse de la carte doit suivre');
+  assert.match(main(), /Creuser : votre question/, 'la question et la réponse doivent être relues');
+  assert.match(main(), /Une réponse possible/, 'une réponse possible doit suivre');
 
   // Le temps en cours est propre à chaque carte : une carte neuve repart à 1.
   engine.setValue('openCase', 3);

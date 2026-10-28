@@ -36,25 +36,39 @@
 
   const natureOptions = content.natures.map(n => ({ id: n.id, label: n.label }));
 
+  /* Le corrigé d'une carte, au modèle de S1 A (js/corrige.js) : la nature
+   * de l'objection (décoder), le score estimatif de cette carte, puis votre
+   * question (creuser) et votre réponse (répondre), chacune face à une
+   * réponse possible. */
+  function reviewScreen(i, card) {
+    const corrige = window.AtelierCorrige;
+    const result = corrige.scoreCase('s3-1.7', [2 * i, 2 * i + 1], ex.values());
+    const [digBloc, replyBloc] = result ? result.blocs : [];
+    return `<form class="an-review s317-review" novalidate data-bar-stays>
+      ${ex.caseBar(caseList(), i, { noun: 'carte', feminine: true }, { dots: false })}
+      ${core.pageTitle('Corrigé', `Objection ${i + 1}`, `Le client vous dit : « ${card.objection} »`)}
+      <section class="panel">${core.panelTitle('Décoder : la nature de l’objection')}
+        ${ex.reviewOptions(natureOptions, ex.value(natureKey(i)), card.answer)}
+        ${ex.inlineNote(card.why, 'neutral')}
+      </section>
+      ${corrige.head(result)}
+      ${corrige.rows([
+        corrige.row({ n: 1, title: 'Creuser : votre question', bloc: digBloc, text: ex.value(digKey(i)), model: card.question }),
+        corrige.row({ n: 2, title: 'Répondre : votre réponse avec une preuve', bloc: replyBloc, text: ex.value(replyKey(i)), model: card.reply })
+      ])}
+      ${core.errorsBox()}
+      ${ex.caseActions(caseList(), i, 'Valider cette carte')}
+    </form>`;
+  }
+
   function screen() {
     const i = ex.openCase() ?? 0;
     const card = cards[i];
     const reviewed = cardDone(i);
     const at = stage(i);
 
-    const body = reviewed
-      ? `<h4 class="review-heading">La nature de l’objection</h4>
-         ${ex.reviewOptions(natureOptions, ex.value(natureKey(i)), card.answer)}
-         <div class="own-answer">
-           <h4>Votre question pour creuser</h4>
-           <p>« ${esc(ex.value(digKey(i)))} »</p>
-         </div>
-         <div class="own-answer">
-           <h4>Votre réponse avec preuve</h4>
-           <p>« ${esc(ex.value(replyKey(i)))} »</p>
-         </div>
-         ${ex.inlineNote(card.feedback, ex.value(natureKey(i)) === card.answer ? 'good' : 'bad')}`
-      : at === 1
+    if (reviewed) return reviewScreen(i, card);
+    const body = at === 1
       ? `<h2>Quelle est la nature de cette objection ?</h2>
          <p class="muted">Choisissez une réponse.</p>
          ${ex.radioCards(natureKey(i), content.natures, 'two')}`
@@ -70,11 +84,8 @@
       <span class="stepper-dot">${n + 1}</span><span class="stepper-label">${esc(label.toUpperCase())}</span>
     </div>`).join('')}</div>`;
 
-    /* Les deux premiers temps font avancer la carte ; le troisième la
-     * valide, et la barre propose alors la carte suivante. */
-    const actions = reviewed
-      ? ex.caseActions(caseList(), i, 'Valider cette carte')
-      : ex.actions(at < 3 ? 'Continuer' : 'Valider cette carte');
+    /* Les deux premiers temps font avancer la carte ; le troisième la valide. */
+    const actions = ex.actions(at < 3 ? 'Continuer' : 'Valider cette carte');
 
     return `<div class="two-columns reflex-layout">
       <section class="panel scenario">
@@ -83,9 +94,9 @@
       </section>
       <form class="panel answer-panel" novalidate data-bar-stays>
         ${ex.caseBar(caseList(), i, { noun: 'carte', feminine: true }, { dots: false })}
-        ${reviewed ? '' : steps}
+        ${steps}
         <div class="stage-body">${body}</div>
-        ${reviewed ? '' : ex.lockNote('Le corrigé de cette carte s’affiche dès que vous l’avez construite')}
+        ${ex.lockNote('Le corrigé de cette carte s’affiche dès que vous l’avez construite')}
         ${core.errorsBox()}
         ${actions}
       </form>
