@@ -51,7 +51,7 @@ window.ATELIER_S2 = {
           { id: 'd', text: 'Pourquoi n’avez-vous pas le temps aujourd’hui ?' }
         ],
         answer: 'c',
-        feedback: 'Réponse c : compréhension et respect du rythme. Elle respecte le cadre posé par le client et garde la relation ouverte. La réponse a juge, la b saute à la solution, et la d est une investigation intrusive au premier contact.'
+        model: 'Vous pouviez écrire : « La réponse c montre que je comprends qu’il est pressé et respecte son rythme : la relation reste ouverte. La a le juge, la b lui propose une offre trop tôt, et la d lui pose une question trop personnelle pour un premier contact. »'
       },
       {
         label: 'Client méfiant',
@@ -63,7 +63,7 @@ window.ATELIER_S2 = {
           { id: 'd', text: 'Qu’est-ce qui s’est passé exactement ?' }
         ],
         answer: 'b',
-        feedback: 'Réponse b : compréhension. Elle nomme le ressenti sans minimiser ni juger, ce qui installe la confiance. La réponse a minimise, la c juge et interprète. La d n’est pas fausse, mais prématurée : on creusera plus tard.'
+        model: 'Vous pouviez écrire : « La réponse b montre de la compréhension : elle nomme sa méfiance sans la minimiser ni la juger, ce qui installe la confiance. La a minimise ce qu’il ressent, la c juge les autres et interprète. La d n’est pas fausse, mais elle arrive trop tôt : on creusera plus tard. »'
       },
       {
         label: 'Client novice',
@@ -75,7 +75,7 @@ window.ATELIER_S2 = {
           { id: 'd', text: 'Je vais vous expliquer tout de suite comment ça marche.' }
         ],
         answer: 'a',
-        feedback: 'Réponse a : compréhension, avec une pointe de soutien adaptée. Elle reconnaît le ressenti et rassure sans minimiser. La réponse b minimise (« c’est très simple ») et peut braquer, la c juge, la d saute à la solution.'
+        model: 'Vous pouviez écrire : « La réponse a montre de la compréhension : elle reconnaît sa peur et le rassure sans la minimiser, à son rythme. La b minimise avec “c’est très simple” et peut le braquer, la c le juge, et la d lui explique tout avant de l’avoir écouté. »'
       }
     ]
   },

@@ -35,6 +35,28 @@
     done: caseDone(i)
   }));
 
+  /* Le corrigé d'un client, au modèle de S1 A (js/corrige.js) : votre
+   * choix, votre autoévaluation face à ce que l'outil a repéré, le score
+   * estimatif de ce client, puis votre justification face à une réponse
+   * possible. */
+  function reviewScreen(i, client, options) {
+    const corrige = window.AtelierCorrige;
+    const result = corrige.scoreCase('s2-A', i, ex.values());
+    const bloc = result ? result.blocs[0] : null;
+    return `<form class="an-review s2a-review" novalidate>
+      ${ex.caseBar(cases(), i, 'client')}
+      ${core.pageTitle('Corrigé', client.label, `Le client vous dit : « ${client.quote} »`)}
+      <section class="panel">${core.panelTitle('Votre choix')}${ex.reviewOptions(options, ex.value(choiceKey(i)), client.answer)}</section>
+      ${corrige.compare({ rubric, selfKey: selfKey(i), bloc, what: 'votre réponse' })}
+      ${corrige.head(result)}
+      ${corrige.rows([
+        corrige.row({ n: 1, title: 'Votre justification', bloc, text: ex.value(whyKey(i)), model: client.model })
+      ])}
+      ${core.errorsBox()}
+      ${ex.caseActions(cases(), i)}
+    </form>`;
+  }
+
   function screen() {
     const i = ex.openCase() ?? 0;
     const client = clients[i];
@@ -46,6 +68,7 @@
       label: option.text,
       badge: option.id
     }));
+    if (reviewed) return reviewScreen(i, client, options);
 
     const picked = (options.find(o => o.id === ex.value(choiceKey(i))) || {}).label || '';
     const body = !reviewed && selfOpen(i)
@@ -58,15 +81,6 @@
          <h3 class="self-case-title">Votre autoévaluation</h3>
          ${window.AtelierKit ? `<div class="tour-corner">${window.AtelierKit.contextButton()}</div>` : ''}
          ${ex.selfList(rubric, selfKey(i))}`
-      : reviewed
-      ? `${ex.reviewOptions(options, ex.value(choiceKey(i)), client.answer)}
-         ${ex.inlineNote(client.feedback, ex.value(choiceKey(i)) === client.answer ? 'good' : 'bad')}
-         <div class="own-answer">
-           <h4>Votre justification</h4>
-           <p>« ${esc(ex.value(whyKey(i)))} »</p>
-           ${ex.inlineNote(content.criterion, 'neutral')}
-         </div>
-         ${ex.selfSummary(rubric, selfKey(i))}`
       : `${ex.radioCards(choiceKey(i), options, 'answers')}
          ${ex.field(whyKey(i), 'Votre justification', {
            help: 'En une phrase, pourquoi les 3 autres réponses sont-elles moins adaptées ?',
@@ -84,7 +98,7 @@
         ${ex.caseBar(cases(), i, 'client')}
         ${core.panelTitle(client.label)}
         <div class="exercise-body">${body}</div>
-        ${reviewed ? '' : ex.lockNote(selfOpen(i) ? 'La correction s’affiche dès que vous validez votre autoévaluation' : 'Après validation, vous faites votre autoévaluation, puis la correction s’affiche')}
+        ${ex.lockNote(selfOpen(i) ? 'La correction s’affiche dès que vous validez votre autoévaluation' : 'Après validation, vous faites votre autoévaluation, puis la correction s’affiche')}
         ${core.errorsBox()}
         ${selfOpen(i) && !reviewed ? `<div class="wiz-back">${core.button(`${core.icon('arrowLeft', { size: 17 })}<span>Modifier ma réponse</span>`, 'self-back', 'text-button with-icon')}</div>` : ''}
         ${ex.caseActions(cases(), i, selfOpen(i) ? 'Voir la correction' : 'Valider ma réponse')}

@@ -329,19 +329,20 @@
     ] },
 
     // S2 A · Justifier son choix de réponse, client par client.
-    's2-A': { blocs: [
+    's2-A': { integre: true, blocs: [
       ['Client pressé', ['temps', 'pressé', 'rythme', 'laisser', 'liberté', 'disponible', 'cadre', 'coup de vent', 'respecte', 'n’impose pas']],
       ['Client méfiant', ['méfi*', 'doute', 'expérience', 'confiance', 'prudent', 'ressenti', 'nomme', 'sceptique', 'déçu', 'mauvaise expérience']],
       ['Client novice', ['peur', 'rassur*', 'soutien', 'accompagn*', 'ensemble', 'normal', 'perdu', 'se tromper', 'rythme', 'ressenti']]
     ].map(([titre, sujet], i) => ({
       titre, champs: [`why${i}`],
       criteres: [
-        { nom: 'L’attitude nommée', mots: ['compréhension', 'reformul*', 'comprend*', 'écoute', 'respect*', 'empathie', 'empathique', 'bienveillan*', 'sans le juger', 'sans juger', 'sans minimiser', 'nomme', 'reconnaît', 'rassure', 'bienveillance', 'accompagne', 'libre', 'laisse libre', 'rythme', 'confiance', 'accueille'], conseil: 'Nommez l’attitude de la bonne réponse.' },
-        { nom: 'Le lien avec ce client', mots: sujet, conseil: 'Reliez votre choix à ce que vit ce client.' },
-        { nom: 'Les autres réponses écartées', mots: ['juge*', 'jugement', 'minimis*', 'solution', 'intrusi*', 'prématur*', 'pousse*', 'interpr*', 'ferme', 'force', 'impose', 'trop tôt', 'les autres', 'se défendre', 'se défend', 'critiquer', 'critique', 'les autres', 'interroge*', 'proposent', 'contrairement', 'alors que', 'au lieu de'], conseil: 'Dites pourquoi les autres réponses ferment la relation.' },
+        // Les noms de l'autoévaluation (ATELIER_S2.rubric), là où l'outil sait les repérer.
+        { nom: 'Attitude adaptée au moment : l’attitude nommée', mots: ['compréhension', 'reformul*', 'comprend*', 'écoute', 'respect*', 'empathie', 'empathique', 'bienveillan*', 'sans le juger', 'sans juger', 'sans minimiser', 'nomme', 'reconnaît', 'rassure', 'bienveillance', 'accompagne', 'libre', 'laisse libre', 'rythme', 'confiance', 'accueille'], conseil: 'Nommez l’attitude de la bonne réponse.' },
+        { nom: 'Écoute réelle : ce que vit ce client', mots: sujet, conseil: 'Reliez votre choix à ce que vit ce client.' },
+        { nom: 'Relation qui reste ouverte : les autres réponses écartées', mots: ['juge*', 'jugement', 'minimis*', 'solution', 'intrusi*', 'prématur*', 'pousse*', 'interpr*', 'ferme', 'force', 'impose', 'trop tôt', 'les autres', 'se défendre', 'se défend', 'critiquer', 'critique', 'les autres', 'interroge*', 'proposent', 'contrairement', 'alors que', 'au lieu de'], conseil: 'Dites pourquoi les autres réponses ferment la relation.' },
         raison
       ],
-      phrases: { attendues: 1, points: 1 }
+      phrases: { attendues: 1, points: 1, conseil: 'Rédigez une phrase entière, pas seulement des mots-clés.' }
     })) },
 
     // S2 B · Réécrire 4 fausses reformulations sur « un peu chère ».

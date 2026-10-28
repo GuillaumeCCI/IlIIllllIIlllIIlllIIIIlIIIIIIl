@@ -32,6 +32,13 @@
     return ok === lines.length ? 'good' : ok === 0 ? 'bad' : 'neutral';
   }
 
+  /* Le score d'un seul cas (exercice à plusieurs clients) : le bloc i de la
+   * grille, seul, pour que les cas pas encore traités ne comptent pas. */
+  function scoreCase(key, i, values) {
+    const grid = window.ATELIER_GRILLES && window.ATELIER_GRILLES[key];
+    return grid && grid.blocs[i] && analyse() ? analyse().score({ blocs: [grid.blocs[i]] }, values) : null;
+  }
+
   // « Votre score estimatif », en tête du corrigé.
   const head = result => (result
     ? `<section class="panel an-score">${core().panelTitle('Votre score estimatif')}<section class="ana-score is-head" aria-label="Indicateur de points">${analyse().head(result)}</section></section>`
@@ -100,5 +107,5 @@
       </div></div>`;
   }
 
-  window.AtelierCorrige = Object.freeze({ score, toneOf, head, answer, part, expect, row, rows, compare });
+  window.AtelierCorrige = Object.freeze({ score, scoreCase, toneOf, head, answer, part, expect, row, rows, compare });
 })();

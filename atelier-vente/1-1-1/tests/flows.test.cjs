@@ -115,7 +115,7 @@ test('S2 A : le menu des cas, puis un client à la fois', () => {
   // Sa correction s'affiche aussitôt, au contact des réponses.
   assert.match(main(), /option-review/, 'les options doivent passer en relecture');
   assert.match(main(), /mark-ok/, 'la réponse attendue doit être marquée');
-  assert.match(main(), /inline-note/, 'l’explication doit être posée sous les options');
+  assert.match(main(), /Une réponse possible/, 'une réponse possible doit suivre la justification');
 
   // Retour au menu : le client traité y est signalé.
   engine.setValue('openCase', null);
