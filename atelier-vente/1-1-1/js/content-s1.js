@@ -50,8 +50,8 @@ window.ATELIER_S1 = {
   feedback: {
     // Exercice B de la fiche : diagnostiquer une ouverture « correcte mais perfectible ».
     A: [
-      'Ce qui va déjà : la salutation et la présentation sont là : identité, fonction, entreprise. L’ouverture n’est donc pas ratée.',
-      'Points perfectibles : pas de mise à l’aise ni de remerciement ; pas de cadrage de la durée ; une bascule trop rapide sur « je vais vous présenter » et « des offres intéressantes », qui oriente vers le produit avant l’écoute ; pas de transition claire vers le client ; « ce qui pourrait vous convenir » reste vague.',
+      'Vous pouviez écrire : « La conseillère commence par saluer le client. Elle se présente clairement : son nom, sa fonction et son entreprise. »',
+      'Vous pouviez écrire : « Elle ne remercie pas le client et ne le met pas à l’aise. Elle n’annonce ni la durée ni le déroulé. Avec “je vais vous présenter des offres intéressantes”, elle parle de ses produits avant d’écouter. Elle ne donne pas la parole au client, et “ce qui pourrait vous convenir” reste vague. »',
       '« Bonjour, merci de me recevoir. Je suis Camille Martin, conseillère chez Novéa. Je vous propose une vingtaine de minutes : d’abord pour que vous me parliez de votre activité et de vos besoins, ensuite je vous présenterai les solutions les plus adaptées. Pour commencer, qu’est-ce qui vous préoccupe aujourd’hui côté couverture ? »',
       'Critère spécifique à vérifier : la finesse du diagnostic. Avez-vous repéré des points d’amélioration réels, et votre version les corrige-t-elle effectivement ?'
     ],
