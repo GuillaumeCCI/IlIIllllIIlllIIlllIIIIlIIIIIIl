@@ -515,3 +515,9 @@
 .an-seen.is-miss { color: #b13a2b; }
 .an-seen.is-none { color: var(--muted); font-weight: 500; }
 .an-rows-compare { margin-top: 12px; padding: 16px; border-radius: 18px; background: #fff; box-shadow: 0 8px 24px rgb(20 40 100 / 8%); }
+
+/* S1 A, S1 B · Corrigé : une seule taille pour le texte courant (titres et petites étiquettes à part). */
+#main .an-review p, #main .an-review li, #main .an-review td, #main .an-review tbody th,
+#main .an-review .ana-note, #main .an-review .ana-legend, #main .an-review .ana-line, #main .an-review .ana-detail,
+#main .an-review .an-yours p, #main .an-review .an-verdict p, #main .an-review .self-pill, #main .an-review .an-seen { font-size: 1rem; }
+#main .an-review .ana-expect, #main .an-review .an-compare thead th { font-size: .8rem; }
