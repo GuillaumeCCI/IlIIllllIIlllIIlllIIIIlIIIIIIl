@@ -83,13 +83,15 @@
     const analyse = window.AtelierAnalyse;
     const grid = window.ATELIER_GRILLES && window.ATELIER_GRILLES['s1-B'];
     const result = analyse && grid ? analyse.score(grid, ex.values()) : null;
+    // La couleur suit le résultat : tout trouvé, rien trouvé, entre les deux.
+    const toneOf = bloc => { const lines = bloc.lines.filter(l => l.kind !== 'warn'); const ok = lines.filter(l => l.kind === 'ok').length; return ok === lines.length ? 'good' : ok === 0 ? 'bad' : 'neutral'; };
     return `<section class="an-review">
       <header class="an-head">
         ${core.pageTitle('Corrigé', 'Votre approche', 'Voici votre approche, étape par étape, avec un retour sur chacune.')}
         ${core.button(`${icon('document', { size: 20 })}<span>Voir la mise en situation</span>`, 'scenario', 'subtle with-icon')}
       </header>
       ${result ? `<section class="panel an-score">${core.panelTitle('Votre score estimatif')}<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section></section>` : ''}
-      <ol class="an-rows">${VERDICTS.map((row, i) => `<li class="an-row tone-${row.tone}">
+      <ol class="an-rows">${VERDICTS.map((row, i) => `<li class="an-row tone-${result ? toneOf(result.blocs[i]) : row.tone}">
         <div class="an-yours">
           <span class="an-n" aria-hidden="true">${i + 1}</span>
           <div><h2>${esc(row.title)}</h2><p>« ${result ? analyse.answer(result.blocs[i]) : esc(ex.value(row.key))} »</p>${result ? analyse.lines(result.blocs[i], { withText: false }) : ''}</div>

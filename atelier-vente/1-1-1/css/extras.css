@@ -497,3 +497,7 @@
 #main .an-score .ana-score.is-head { margin: 0; padding: 0; box-shadow: none; background: none; }
 .an-yours p::after { display: none; }
 .an-yours .ana-expect { margin-top: 14px; }
+/* Une réponse possible : encadré neutre, quelle que soit la réponse (la couleur du numéro suit le score). */
+.an-review .an-verdict { background: #f3f5fa; }
+.an-review .an-verdict h3 { color: var(--navy); }
+.an-review .an-verdict .an-mark { color: var(--navy); }
