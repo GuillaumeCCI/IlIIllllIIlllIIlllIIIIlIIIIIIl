@@ -541,3 +541,15 @@ button.fab-col-head:hover { background: #f4f7fd; }
 .fab-col .fab-drop { min-height: 380px; }
 #main .fab-col textarea { min-height: 380px; }
 @media (max-width: 900px) { .fab-col .fab-drop, #main .fab-col textarea { min-height: 200px; } }
+
+/* 1.3 · Les trois zones en bandes horizontales : le titre à gauche, la zone
+ * à droite, sur toute la largeur (au lieu de trois colonnes hautes). */
+@media (min-width: 901px) {
+  #main .fab-cols { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  #main .fab-col { grid-template-columns: 220px minmax(0, 1fr); align-items: start; gap: 18px; padding: 16px 0; }
+  #main .fab-col + .fab-col { border-left: 0; border-top: 1px solid var(--line); }
+  #main .fab-col .fab-drop { min-height: 88px; flex-direction: row; flex-wrap: wrap; align-items: center; }
+  #main .fab-col .fab-drop-empty { display: flex; gap: 10px; margin: auto; }
+  #main .fab-col .fab-chip { width: auto; max-width: 100%; }
+  #main .fab-col textarea { min-height: 88px; height: 96px; }
+}
