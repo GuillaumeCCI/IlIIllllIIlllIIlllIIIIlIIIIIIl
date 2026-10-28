@@ -301,29 +301,30 @@
     ] },
 
     // S1 F · Transposer l'ouverture au téléphone, puis par e-mail.
-    's1-F': { blocs: [
+    's1-F': { integre: true, blocs: [
       { titre: 'Au téléphone', champs: ['phone'],
+        // Les noms des cases à cocher sous chaque version.
         criteres: [
-          { nom: 'Identité vérifiée', mots: ['suis-je bien', 'je suis bien', 'bien avec', 'êtes-vous bien', 'c’est bien', 'je parle bien', 'monsieur', 'madame', '[nom'], conseil: 'Vérifiez que vous parlez à la bonne personne.' },
-          presentation,
-          { nom: 'Raison de l’appel', mots: ['je vous appelle', 'au sujet de', 'concernant', 'à propos de', 'pour vous parler', 'suite à', 'l’objet de mon appel', 'je me permets', 'mon appel'], conseil: 'Dites tout de suite pourquoi vous appelez.' },
-          { nom: 'Disponibilité', mots: ['bon moment', 'un moment', 'avez-vous', 'quelques minutes', 'deux minutes', '2 minutes', 'disponible', 'je vous dérange', 'rappeler', 'préférez-vous', 'plus tard'], conseil: 'Demandez si c’est un bon moment.' },
-          ecoute
+          { nom: 'Se présenter : vérifier à qui l’on parle', mots: ['suis-je bien', 'je suis bien', 'bien avec', 'êtes-vous bien', 'c’est bien', 'je parle bien', 'monsieur', 'madame', '[nom'], conseil: 'Vérifiez que vous parlez à la bonne personne.' },
+          { ...presentation, nom: 'Se présenter : qui vous êtes' },
+          { nom: 'Donner le motif : la raison de l’appel', mots: ['je vous appelle', 'au sujet de', 'concernant', 'à propos de', 'pour vous parler', 'suite à', 'l’objet de mon appel', 'je me permets', 'mon appel'], conseil: 'Dites tout de suite pourquoi vous appelez.' },
+          { nom: 'Poser une question : est-ce un bon moment ?', mots: ['bon moment', 'un moment', 'avez-vous', 'quelques minutes', 'deux minutes', '2 minutes', 'disponible', 'je vous dérange', 'rappeler', 'préférez-vous', 'plus tard'], conseil: 'Demandez si c’est un bon moment.' },
+          { ...ecoute, nom: 'Poser une question : la parole au client' }
         ],
-        phrases: { attendues: 3, points: 1 } },
+        phrases: { attendues: 3, points: 1, conseil: 'Rédigez des phrases entières, pas seulement des mots-clés.' } },
       { titre: 'L’objet de l’e-mail', champs: ['subject'],
-        criteres: [{ nom: 'Un objet clair', mots: ['échange', 'rendez-vous', 'rencontre', 'min', 'minutes', 'proposition', 'votre', 'projet', 'appel', 'entretien', 'point', 'demande', 'question'], conseil: 'Un objet court qui dit le sujet et l’intention.' }],
+        criteres: [{ nom: 'Objet clair', mots: ['échange', 'rendez-vous', 'rencontre', 'min', 'minutes', 'proposition', 'votre', 'projet', 'appel', 'entretien', 'point', 'demande', 'question'], conseil: 'Un objet court qui dit le sujet et l’intention.' }],
         phrases: { points: 0 } },
       { titre: 'Le message', champs: ['email'],
         criteres: [
-          { nom: 'Formule d’appel', mots: ['bonjour', 'madame', 'monsieur', 'cher', 'chère'], conseil: 'Commencez par « Bonjour [Nom] ».' },
-          presentation,
-          { nom: 'Raison du message', mots: ['je me permets', 'au sujet de', 'concernant', 'je vous écris', 'suite à', 'à propos de'], conseil: 'Dites pourquoi vous écrivez.' },
+          { nom: 'Formule d’appel : « Bonjour [Nom] »', mots: ['bonjour', 'madame', 'monsieur', 'cher', 'chère'], conseil: 'Commencez par « Bonjour [Nom] ».' },
+          { ...presentation, nom: 'Présentation : qui vous êtes' },
+          { nom: 'Donner le motif : la raison du message', mots: ['je me permets', 'au sujet de', 'concernant', 'je vous écris', 'suite à', 'à propos de'], conseil: 'Dites pourquoi vous écrivez.' },
           { nom: 'Écoute annoncée', mots: ['comprendre', 'vos priorités', 'votre situation', 'vos besoins', 'vous écouter', 'échanger', 'vos attentes', 'votre avis'], conseil: 'Annoncez que vous voulez d’abord comprendre.' },
-          { nom: 'Durée et créneau', mots: ['minutes', 'créneau', 'disponible', 'disponibilité', 'semaine', 'date', 'quand', 'rendez-vous', 'échange de', 'appel de'], conseil: 'Proposez une durée et demandez un créneau.' },
+          { nom: 'Appel à l’action : une durée et un créneau', mots: ['minutes', 'créneau', 'disponible', 'disponibilité', 'semaine', 'date', 'quand', 'rendez-vous', 'échange de', 'appel de'], conseil: 'Proposez une durée et demandez un créneau.' },
           { nom: 'Formule de politesse', mots: ['cordialement', 'bien à vous', 'belle journée', 'bonne journée', 'dans l’attente', 'au plaisir', 'salutations', 'bien cordialement'], conseil: 'Terminez par une formule de politesse.' }
         ],
-        phrases: { attendues: 3, points: 1 },
+        phrases: { attendues: 3, points: 1, conseil: 'Rédigez des phrases entières, pas seulement des mots-clés.' },
         regles: [{ regle: 'minMots:80', nom: '80 mots au moins', points: 1 }, { regle: 'maxMots:120', nom: '120 mots au plus', points: 1 }] }
     ] },
 

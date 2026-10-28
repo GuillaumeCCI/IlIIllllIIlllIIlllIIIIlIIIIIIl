@@ -117,10 +117,20 @@ window.ATELIER_S1 = {
     ],
 
     // Exercice F de la fiche : transposer d'un canal à un autre.
-    F: [
-      'Une réponse possible au téléphone : « Bonjour, [Prénom Nom] de [Entreprise], suis-je bien avec [Nom] ? Je vous appelle au sujet de [raison courte]. Est-ce un bon moment pour deux minutes, ou préférez-vous que je rappelle ? … Parfait. Pour être utile, je vais surtout vous écouter : qu’est-ce qui compte le plus pour vous sur [sujet] ? » Les adaptations : vérifier l’identité et la disponibilité, puisqu’on ne voit pas l’interlocuteur ; la voix devient le seul vecteur ; la raison de l’appel est explicite.',
-      'Une réponse possible par e-mail. Objet : « [Sujet] : un échange de 20 min ? » Message : « Bonjour [Nom], je suis [Prénom Nom], conseiller chez [Entreprise]. Je me permets de vous écrire au sujet de [sujet]. Avant toute proposition, j’aimerais surtout comprendre votre situation et vos priorités. Seriez-vous disponible pour un échange de 20 minutes cette semaine ? Dites-moi le créneau qui vous convient. Bien cordialement, [Signature] » Les adaptations : un objet clair, un ton écrit courtois, le cadrage de la durée, une question de disponibilité puisque le canal est asynchrone, et une écoute annoncée mais reportée à l’échange.',
-      'Critère spécifique à vérifier : l’adaptation au canal. Les quatre fonctions doivent être présentes dans chaque version ET adaptées aux contraintes du canal : identité et disponibilité au téléphone, objet et créneau en e-mail.'
-    ]
+    // Une réponse possible par réponse : téléphone, objet, message.
+    F: {
+      phone: [
+        'Vous pouviez écrire : « Bonjour, [Prénom Nom] de [Entreprise], suis-je bien avec [Nom] ? Je vous appelle au sujet de [raison courte]. Est-ce un bon moment pour deux minutes, ou préférez-vous que je rappelle ? … Parfait. Pour être utile, je vais surtout vous écouter : qu’est-ce qui compte le plus pour vous sur [sujet] ? »',
+        'Pourquoi cela fonctionne : vous ne voyez pas votre interlocuteur, alors vous vérifiez à qui vous parlez et s’il a le temps. Vous dites tout de suite pourquoi vous appelez, puis vous lui donnez la parole.'
+      ],
+      subject: [
+        'Vous pouviez écrire : « [Sujet] : un échange de 20 minutes ? »',
+        'Pourquoi cela fonctionne : en quelques mots, le lecteur sait de quoi il s’agit et ce que vous lui proposez.'
+      ],
+      email: [
+        'Vous pouviez écrire : « Bonjour [Nom], je suis [Prénom Nom], conseiller chez [Entreprise]. Je me permets de vous écrire au sujet de [sujet]. Avant toute proposition, j’aimerais surtout comprendre votre situation et vos priorités. Seriez-vous disponible pour un échange de 20 minutes cette semaine ? Dites-moi le créneau qui vous convient. Bien cordialement, [Signature] »',
+        'Pourquoi cela fonctionne : le ton est courtois, la durée est annoncée, et vous demandez un créneau, puisque le lecteur répondra plus tard. L’écoute est annoncée, et elle aura lieu pendant l’échange.'
+      ]
+    }
   }
 };
