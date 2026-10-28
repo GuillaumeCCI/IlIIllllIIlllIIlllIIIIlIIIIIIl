@@ -419,15 +419,15 @@
     ] },
 
     // S3 1.5 · Expliquer pourquoi la réponse B est la plus juste.
-    's3-1.5': { blocs: [
-      { champs: ['why'],
+    's3-1.5': { integre: true, blocs: [
+      { titre: 'Votre raisonnement', champs: ['why'],
         criteres: [
-          { nom: 'Les étapes repérées', mots: ['accueil*', 'creuse*', 'question*', 'reformul*', 'preuve', 'traite*', 'contrôle*', 'vérifie*', 'adhésion', 'par rapport à quoi', 'essai', 'arrêts'], min: 3, conseil: 'B accueille, creuse, reformule, prouve et contrôle.' },
-          { nom: 'Les défauts de A', mots: ['contredit', 'contredire', 'remise', 'brade*', '10 %', 'réduction', 'négociation', 'prématuré*', 'dévalorise*', 'affaiblit', 'ne creuse pas', 'n’écoute pas', 'pas si cher'], conseil: 'A contredit le client et brade le prix.' },
-          { nom: 'La valeur défendue', mots: ['valeur', 'valoris*', 'sans brader', 'sans baisser', 'investissement', 'en vaut la peine', 'dévaloris*', 'la valeur', 'prouve la valeur', 'défend', 'justifie', 'ne baisse pas', 'sans remise'], conseil: 'B défend la valeur au lieu de baisser le prix.' },
+          { nom: 'La réponse B : accueillir, creuser, reformuler, prouver, vérifier', mots: ['accueil*', 'creuse*', 'question*', 'reformul*', 'preuve', 'traite*', 'contrôle*', 'vérifie*', 'adhésion', 'par rapport à quoi', 'essai', 'arrêts'], min: 3, conseil: 'À relever : B accueille, creuse, reformule, prouve et vérifie l’accord du client.' },
+          { nom: 'La réponse A : contredire et brader', mots: ['contredit', 'contredire', 'remise', 'brade*', '10 %', 'réduction', 'négociation', 'prématuré*', 'dévalorise*', 'affaiblit', 'ne creuse pas', 'n’écoute pas', 'pas si cher'], conseil: 'À relever : A contredit le client et baisse tout de suite le prix.' },
+          { nom: 'La valeur défendue, sans baisser le prix', mots: ['valeur', 'valoris*', 'sans brader', 'sans baisser', 'investissement', 'en vaut la peine', 'dévaloris*', 'la valeur', 'prouve la valeur', 'défend', 'justifie', 'ne baisse pas', 'sans remise'], conseil: 'À relever : B défend la valeur au lieu de baisser le prix.' },
           raison
         ],
-        phrases: { attendues: 2, points: 1 } }
+        phrases: { attendues: 2, points: 1, conseil: 'Rédigez des phrases entières, pas seulement des mots-clés.' } }
     ] },
 
     // S3 1.6 · « Nos chaises actuelles suffisent » : une phrase par étape.

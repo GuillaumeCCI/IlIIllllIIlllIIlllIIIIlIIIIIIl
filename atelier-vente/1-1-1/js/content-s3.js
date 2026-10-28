@@ -117,7 +117,7 @@ window.ATELIER_S3 = {
       { id: 'B', text: 'Je comprends, c’est un budget. Par rapport à quoi trouvez-vous le prix élevé : une autre offre ou une enveloppe prévue ? Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine. Nos clients constatent une baisse des arrêts liés aux TMS, et l’essai de 30 jours vous permet de vérifier sans risque. Est-ce que cela répond à votre préoccupation ?' }
     ],
     answer: 'B',
-    feedback: 'La réponse B. Elle accueille, creuse (« par rapport à quoi ? »), reformule, traite avec une preuve (baisse des arrêts, essai de 30 jours) et contrôle l’adhésion. La réponse A contredit le client, ne creuse rien et brade d’emblée avec une remise : c’est de la négociation prématurée, qui affaiblit la valeur au lieu de traiter l’objection.'
+    feedback: 'Vous pouviez écrire : « La réponse B est la plus juste. Elle accueille l’objection, creuse avec “par rapport à quoi ?”, reformule, apporte une preuve (moins d’arrêts de travail, un essai de 30 jours) et vérifie que le client est d’accord. La réponse A le contredit, ne cherche pas à comprendre et accorde tout de suite une remise : elle affaiblit la valeur au lieu de traiter l’objection. »'
   },
 
   /* ── 1.6 · Construisez votre traitement complet ───────────────────────── */

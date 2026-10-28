@@ -279,7 +279,7 @@ test('S3 1.5 : on choisit, puis on explique, le choix étant rappelé', () => {
 
   // La correction est posée au contact des réponses.
   assert.match(main(), /option-review/, 'les deux réponses passent en relecture');
-  assert.match(main(), /inline-note/, 'l’analyse doit suivre les réponses');
+  assert.match(main(), /Une réponse possible/, 'une réponse possible doit suivre le raisonnement');
 });
 
 test('S1 C : choisir, argumenter un à un avec un critère, puis emprunter', () => {

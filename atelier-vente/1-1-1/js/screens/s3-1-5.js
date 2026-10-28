@@ -122,30 +122,28 @@
   }
 
   /* ── Relecture, une fois validé ────────────────────────────────────── */
+  /* Le corrigé au modèle de S1 A (js/corrige.js) : l'objection rappelée,
+   * votre choix, le score estimatif, puis votre raisonnement face à une
+   * réponse possible. */
   function reviewScreen() {
-    return `<div class="writing-workshop">
-      <form class="panel" novalidate>
-        ${ex.reviewOptions(options, ex.value('choice'), content.answer)}
-        ${ex.inlineNote(content.feedback, ex.value('choice') === content.answer ? 'good' : 'bad')}
-        <div class="own-answer">
-          <h4>Votre raisonnement</h4>
-          <p>« ${esc(ex.value('why'))} »</p>
-        </div>
-        ${core.feedbackBox()}
-      </form>
-    </div>`;
+    const corrige = window.AtelierCorrige;
+    const result = corrige.score('s3-1.5', ex.values());
+    const [bloc] = result ? result.blocs : [];
+    return `<section class="an-review">
+      ${core.pageTitle('Corrigé', content.title, `Le client vous dit : « ${content.objection} » ${content.objectionContext}`)}
+      <section class="panel">${core.panelTitle('Votre choix')}${ex.reviewOptions(options, ex.value('choice'), content.answer)}</section>
+      ${corrige.head(result)}
+      ${corrige.rows([
+        corrige.row({ n: 1, title: 'Votre raisonnement', bloc, text: ex.value('why'), model: content.feedback })
+      ])}
+      ${core.feedbackBox()}
+    </section>`;
   }
 
   function screen() {
-    const review = ex.reviewing();
+    if (ex.reviewing()) return reviewScreen();
     const at = stage();
-    const title = review ? content.title
-      : at === 1 ? 'Quelle réponse traite le mieux l’objection ?'
-      : 'Expliquez votre choix';
-
-    const body = review ? reviewScreen()
-      : at === 1 ? chooseScreen()
-      : explainScreen();
+    const title = at === 1 ? 'Quelle réponse traite le mieux l’objection ?' : 'Expliquez votre choix';
 
     return `<div class="duo-page">
       <header class="duo-head">
@@ -153,9 +151,9 @@
           <p class="eyebrow">${esc(content.eyebrow)}</p>
           <h1>${esc(title)}</h1>
         </div>
-        ${review ? '' : stepper(at)}
+        ${stepper(at)}
       </header>
-      ${review ? body : `<form novalidate>${body}</form>`}
+      <form novalidate>${at === 1 ? chooseScreen() : explainScreen()}</form>
     </div>`;
   }
 
@@ -177,11 +175,8 @@
     return true;
   }
 
-  function feedback(values) {
-    return [values.choice === content.answer
-      ? `Vous avez retenu la réponse ${values.choice}, celle attendue. L’analyse est affichée sous les deux propositions.`
-      : `Vous avez retenu la réponse ${values.choice} ; la réponse attendue est la ${content.answer}. L’analyse est affichée sous les deux propositions.`];
-  }
+  /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
+  const feedback = () => [];
 
   /* Le retour à l'étape 1 conserve le choix : on vient le relire. */
   function onMount() {
@@ -189,5 +184,5 @@
       button.addEventListener('click', () => { ex.setValue('stage', 1); ex.render(); }));
   }
 
-  ex.mount('s3-1.5', { screen, validate, feedback, intercept, onMount });
+  ex.mount('s3-1.5', { screen, validate, feedback, intercept, onMount, compactFeedback: true });
 })();
