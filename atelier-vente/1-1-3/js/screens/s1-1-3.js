@@ -38,42 +38,51 @@
     return `<span class="ear-dots">${cases.map((_, i) => `<button type="button" class="ear-dot ${i === at && !recap() ? 'is-current' : complete(i) ? 'is-filled' : ''}" data-act="case" data-index="${i}" aria-label="Cas ${i + 1}"></button>`).join('')}</span>`;
   }
 
+  /* Les éléments arrivent en cascade (classe commune k-cascade, rang --i) :
+   * le panneau du client quand on change de cas, celui des choix à chaque
+   * nouvelle étape. Entre deux clics sur la même étape, rien ne rejoue. */
+  let shown = { panel: null, step: null };
+  let play = { panel: true, step: true };
+  const rise = (on, n) => (on ? ` k-cascade" style="--i:${n}` : '');
+
   function clientPanel(i) {
+    const on = play.panel;
     return `<section class="ear-client">
-      <img class="ear-portrait" src="${esc(core.asset(kit.portraitFor(null, i)))}" alt="" decoding="async">
-      <p class="ear-eyebrow">${esc(content.eyebrow)} · Objection ${String(i + 1).padStart(2, '0')}</p>
-      <h2>Écoutez le client</h2>
-      <span class="ear-rule" aria-hidden="true"></span>
-      <blockquote class="ear-quote">“ ${esc(cases[i].quote)} ”</blockquote>
+      <img class="ear-portrait${rise(on, 0)}" src="${esc(core.asset(kit.portraitFor(null, i)))}" alt="" decoding="async">
+      <p class="ear-eyebrow${rise(on, 1)}">Objection ${String(i + 1).padStart(2, '0')}</p>
+      <h2 class="ear-heading${rise(on, 2)}">Écoutez le client</h2>
+      <span class="ear-rule${rise(on, 2)}" aria-hidden="true"></span>
+      <blockquote class="ear-quote${rise(on, 3)}">“ ${esc(cases[i].quote)} ”</blockquote>
       ${step(i) === 2
-        ? `<div class="ear-diagnosis"><p class="ear-diagnosis-label">Diagnostic posé</p><span class="ear-chip">${icon('check', { size: 18 })}<span>${esc(natureOf(nature(i)).label)}</span></span></div>`
-        : `<p class="ear-topic">Cas : ${esc(cases[i].topic)}</p>`}
+        ? `<div class="ear-diagnosis${rise(on || play.step, on ? 4 : 0)}"><p class="ear-diagnosis-label">Diagnostic posé</p><span class="ear-chip">${icon('check', { size: 18 })}<span>${esc(natureOf(nature(i)).label)}</span></span></div>`
+        : `<p class="ear-topic${rise(on, 4)}">Cas : ${esc(cases[i].topic)}</p>`}
     </section>`;
   }
 
   function decision(i) {
+    const on = play.step;
     if (step(i) === 1) {
-      return `<p class="k-label">Étape 1 · Poser le diagnostic</p>
-        <h2 class="ear-title">Quelle est la nature de cette objection ?</h2>
-        <p class="ear-sub">Choisissez la nature la plus probable.</p>
+      return `<p class="k-label${rise(on, 0)}">Étape 1 · Poser le diagnostic</p>
+        <h2 class="ear-title${rise(on, 1)}">Quelle est la nature de cette objection ?</h2>
+        <p class="ear-sub${rise(on, 2)}">Choisissez la nature la plus probable.</p>
         <div class="ear-grid">${natures.map((n, k) => `
-          <button type="button" class="ear-option ${nature(i) === n.id ? 'is-chosen' : ''}" data-act="nature" data-id="${n.id}" aria-pressed="${nature(i) === n.id}">
+          <button type="button" class="ear-option ${nature(i) === n.id ? 'is-chosen' : ''}${rise(on, 3 + k)}" data-act="nature" data-id="${n.id}" aria-pressed="${nature(i) === n.id}">
             <span class="ear-letter">${letters[k]}</span><span><strong>${esc(n.label)}</strong><small>${esc(n.text)}</small></span>
           </button>`).join('')}</div>
-        <p class="ear-foot">Votre choix ouvre la deuxième décision.</p>`;
+        <p class="ear-foot${rise(on, 3 + natures.length)}">Votre choix ouvre la deuxième décision.</p>`;
     }
-    return `<div class="ear-retained">${icon('check', { size: 18 })}<span>Nature retenue : <strong>${esc(natureOf(nature(i)).label)}</strong></span>
+    return `<div class="ear-retained${rise(on, 0)}">${icon('check', { size: 18 })}<span>Nature retenue : <strong>${esc(natureOf(nature(i)).label)}</strong></span>
         <button type="button" class="text-button" data-act="edit">Modifier</button></div>
-      <p class="k-label">Étape 2 · Passer à l’action</p>
-      <h2 class="ear-title">Comment réagir maintenant ?</h2>
-      <p class="ear-sub">Choisissez le premier geste à adopter.</p>
-      <div class="ear-list">${gestures.map(g => `
-        <button type="button" class="ear-action ${gesture(i) === g.id ? 'is-chosen' : ''}" data-act="gesture" data-id="${g.id}" aria-pressed="${gesture(i) === g.id}">
+      <p class="k-label${rise(on, 1)}">Étape 2 · Passer à l’action</p>
+      <h2 class="ear-title${rise(on, 2)}">Comment réagir maintenant ?</h2>
+      <p class="ear-sub${rise(on, 3)}">Choisissez le premier geste à adopter.</p>
+      <div class="ear-list">${gestures.map((g, k) => `
+        <button type="button" class="ear-action ${gesture(i) === g.id ? 'is-chosen' : ''}${rise(on, 4 + k)}" data-act="gesture" data-id="${g.id}" aria-pressed="${gesture(i) === g.id}">
           <span class="ear-action-symbol">${icon(g.symbol, { size: 28 })}</span>
           <span><strong>${esc(g.label)}</strong><small>${esc(g.sub)}</small></span>
           ${icon('chevronRight', { size: 22 })}
         </button>`).join('')}</div>
-      <p class="ear-foot">Choisissez un geste pour valider ce cas.</p>`;
+      <p class="ear-foot${rise(on, 4 + gestures.length)}">Choisissez un geste pour valider ce cas.</p>`;
   }
 
   function recapScreen() {
@@ -100,8 +109,8 @@
         return `<section class="k-panel ear-review">
           <p class="k-label">Objection ${String(i + 1).padStart(2, '0')} · ${esc(c.topic)}</p>
           <blockquote class="ear-review-quote">“ ${esc(c.quote)} ”</blockquote>
-          <div class="k-pick-pair">${kit.picked(okN, natureOf(nature(i)).label, natureOf(c.nature).label, 'Nature de l’objection')}
-          ${kit.picked(okG, gestureOf(gesture(i)).label, gestureOf(c.gesture).label, 'Premier geste')}</div>
+          <div class="k-pick-pair ear-pick-pair">${kit.picked(okN, natureOf(nature(i)).label, natureOf(c.nature).label, 'Étape 1 · La nature de l’objection')}
+          ${kit.picked(okG, gestureOf(gesture(i)).label, gestureOf(c.gesture).label, 'Étape 2 · Votre premier geste')}</div>
           ${kit.explain(c.why)}
         </section>`;
       }).join('')}</div>
@@ -115,6 +124,10 @@
       <span class="ear-top-right">${reviewing ? '' : `<span class="tour-pair">${kit.contextButton()}${kit.tourButton()}</span>`}${kit.dialogButton('recall', 'Rappel', 'text-button', '')}<span class="ear-sep" aria-hidden="true"></span>
       ${reviewing ? '<span>Corrigé</span>' : `<span>Cas ${recap() ? cases.length : at + 1} sur ${cases.length}</span>${caseDots(at)}`}</span></div>`;
     if (reviewing) return `<div class="k-page ear-page">${top}${reviewScreen()}</div>`;
+    // Ce qui a changé depuis le dernier dessin : le cas, ou l'étape du cas.
+    const now = { panel: at, step: `${at}-${step(at)}` };
+    play = { panel: shown.panel !== now.panel, step: shown.step !== now.step };
+    shown = now;
     return `<div class="k-page ear-page">
       ${top}
       <form novalidate>
