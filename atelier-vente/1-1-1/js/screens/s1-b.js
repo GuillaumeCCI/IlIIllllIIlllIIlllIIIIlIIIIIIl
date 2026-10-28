@@ -84,13 +84,13 @@
     const lines = result ? result.blocs.flatMap(b => b.lines) : [];
     const seen = title => {
       const same = lines.filter(l => l.nom === title || l.nom.startsWith(`${title} :`));
-      if (!same.length) return '<span class="an-seen is-none">À juger vous-même</span>';
-      return same.some(l => l.kind === 'ok') ? '<span class="an-seen is-ok">✓ Repéré</span>' : '<span class="an-seen is-miss">○ Pas repéré</span>';
+      if (!same.length) return '<span class="an-seen is-none">L’outil ne sait pas le repérer : à juger vous-même</span>';
+      return same.some(l => l.kind === 'ok') ? '<span class="an-seen is-ok">✓ Oui</span>' : '<span class="an-seen is-miss">○ Non</span>';
     };
     return `<div class="an-compare">
         <h3>Votre autoévaluation, critère par critère</h3>
-        <p class="muted">Ce que vous avez répondu pour votre approche, face à ce que le score estimatif a repéré.</p>
-        <table><thead><tr><th>Critère</th><th>Votre avis</th><th>Score estimatif</th></tr></thead>
+        <p class="muted">Ce que vous avez répondu pour votre approche, face à ce que l’outil a repéré dans votre texte.</p>
+        <table><thead><tr><th>Critère</th><th>Votre avis</th><th>Repéré dans votre texte ?</th></tr></thead>
         <tbody>${content.rubric.map(([title], i) => `<tr><th>${esc(title)}</th><td><span class="self-pill is-${grade(i).id}">${esc(grade(i).label)}</span></td><td>${seen(title)}</td></tr>`).join('')}</tbody></table>
       </div>`;
   }
