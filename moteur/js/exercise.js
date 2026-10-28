@@ -728,7 +728,7 @@
   let revealed = false;
   const HEAD = '.k-head, .page-title, header, h1, .subtitle, .k-subtitle, .k-band, .instruction-band';
   // Le menu des cas aussi : ses cartes arrivent l'une après l'autre.
-  const SPLIT = 'form, .k-columns, .two-columns, .k-page, .intrus-stage, .duo-page, .stacked-screen, .case-menu, .case-cards, .case-rows';
+  const SPLIT = 'form, .an-review, .k-columns, .two-columns, .k-page, .intrus-stage, .duo-page, .stacked-screen, .case-menu, .case-cards, .case-rows';
   function painted(el) {
     const style = root.getComputedStyle ? root.getComputedStyle(el) : null;
     if (!style) return false;
@@ -876,7 +876,7 @@
       if (title) { title.textContent = 'Votre score estimatif'; title.insertAdjacentHTML('afterend', analysis); }
       else node.insertAdjacentHTML('afterbegin', analysis);
     }
-    if (focus) node.focus();
+    if (focus) node.focus({ preventScroll: true });
   }
 
   function submit() {
@@ -912,10 +912,11 @@
     core.entry(current.key).done = allDoneFn ? allDoneFn(values(), current) : true;
     core.persist();
     render();
-    // Le corrigé arrive en cascade : un bloc après l'autre, sans attendre.
+    /* Le corrigé arrive en cascade, un bloc après l'autre (aussi celui d'un
+     * seul cas), et l'on arrive en haut de la page pour le lire dans l'ordre. */
     showFeedback(true);
-    if (core.isDone(current.key)) revealScreen({ t0: Date.now(), start: 0.05, read: 0.2, deep: true });
-    $('#feedback')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    revealScreen({ t0: Date.now(), start: 0.05, read: 0.2, deep: true });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
 /* ───────────────────────── Menus déroulants ───────────────────────────   * La liste native du navigateur ne se met pas en forme : chaque <select>   * d'un exercice est doublé d'une liste à nous (bouton bleu pâle, liste   * claire, choix surligné). Le <select> reste dans la page, caché : c'est   * lui qui porte la valeur (sauvegarde, validation) ; la liste ne fait que   * le piloter. Styles : extras-commun.css (.pick). */
