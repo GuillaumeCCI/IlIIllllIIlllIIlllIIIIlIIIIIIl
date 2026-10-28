@@ -178,19 +178,19 @@
     's1-A': { integre: true, blocs: [
       { titre: 'Ce qui fonctionne', champs: ['strengths'],
         criteres: [
-          { nom: 'Accueil et climat : la salutation', mots: ['bonjour', 'salutation', 'salue', 'politesse', 'poli', 'polie', 'courtois', 'courtoise'], conseil: 'L’accroche commence bien par une salutation.' },
-          { nom: 'Présentation : qui elle est', mots: ['présente', 'présentation', 'identité', 'nom', 'prénom', 'fonction', 'entreprise', 'camille', 'novéa', 'conseillère', 'qui elle est'], conseil: 'Camille dit qui elle est et pour qui elle travaille.' }
+          { nom: 'Accueil et climat : la salutation', mots: ['bonjour', 'salutation', 'salue', 'politesse', 'poli', 'polie', 'courtois', 'courtoise'], conseil: 'À relever : l’accroche commence par une salutation.' },
+          { nom: 'Présentation : qui elle est', mots: ['présente', 'présentation', 'identité', 'nom', 'prénom', 'fonction', 'entreprise', 'camille', 'novéa', 'conseillère', 'qui elle est'], conseil: 'À relever : Camille dit qui elle est et pour qui elle travaille.' }
         ],
-        phrases: { attendues: 1, points: 1 } },
+        phrases: { attendues: 1, points: 1, conseil: 'Rédigez une phrase entière, pas seulement des mots-clés.' } },
       { titre: 'Axes d’amélioration', champs: ['improvements'],
         criteres: [
-          { nom: 'Accueil et climat : pas de mise à l’aise', mots: ['remerci*', 'merci', 'mise à l’aise', 'mettre à l’aise', 'climat', 'chaleur', 'chaleureu*', 'sourire', 'accueil'], conseil: 'Il manque un remerciement, une mise à l’aise.' },
-          { nom: 'Cadrage : ni durée ni déroulé', mots: ['cadrage', 'cadrer', 'durée', 'minutes', 'temps', 'déroulé', 'déroulement', 'objectif', 'ordre du jour', 'structure'], conseil: 'Ni durée ni déroulé ne sont annoncés.' },
-          { nom: 'Transition vers l’écoute : l’offre arrive trop tôt', mots: ['produit', 'offre', 'offres', 'présenter', 'je vais vous présenter', 'vend*', 'pousse*', 'solutions', 'trop vite', 'trop tôt', 'directement'], conseil: 'Elle parle de ses offres avant d’écouter.' },
-          { nom: 'Transition vers l’écoute : le client n’a pas la parole', mots: ['écoute', 'écouter', 'question', 'parole', 'besoin*', 'transition', 'laisser parler', 'découverte'], conseil: 'Le client n’a pas la parole.' },
-          { nom: 'Posture centrée client : une formule vague', mots: ['vague', 'flou', 'floue', 'imprécis', 'imprécise', 'pourrait vous convenir', 'précis', 'concret', 'générique'], conseil: '« Ce qui pourrait vous convenir » reste vague.' }
+          { nom: 'Accueil et climat : pas de mise à l’aise', mots: ['remerci*', 'merci', 'mise à l’aise', 'mettre à l’aise', 'climat', 'chaleur', 'chaleureu*', 'sourire', 'accueil'], conseil: 'À relever : il manque un remerciement, une mise à l’aise.' },
+          { nom: 'Cadrage : ni durée ni déroulé', mots: ['cadrage', 'cadrer', 'durée', 'minutes', 'temps', 'déroulé', 'déroulement', 'objectif', 'ordre du jour', 'structure'], conseil: 'À relever : ni durée ni déroulé ne sont annoncés.' },
+          { nom: 'Transition vers l’écoute : l’offre arrive trop tôt', mots: ['produit', 'offre', 'offres', 'présenter', 'je vais vous présenter', 'vend*', 'pousse*', 'solutions', 'trop vite', 'trop tôt', 'directement'], conseil: 'À relever : elle parle de ses offres avant d’écouter.' },
+          { nom: 'Transition vers l’écoute : le client n’a pas la parole', mots: ['écoute', 'écouter', 'question', 'parole', 'besoin*', 'transition', 'laisser parler', 'découverte'], conseil: 'À relever : le client n’a pas la parole.' },
+          { nom: 'Posture centrée client : une formule vague', mots: ['vague', 'flou', 'floue', 'imprécis', 'imprécise', 'pourrait vous convenir', 'précis', 'concret', 'générique'], conseil: 'À relever : « ce qui pourrait vous convenir » reste vague.' }
         ],
-        phrases: { attendues: 2, points: 1 } },
+        phrases: { attendues: 2, points: 1, conseil: 'Rédigez une phrase entière, pas seulement des mots-clés.' } },
       { titre: 'Votre version améliorée', champs: ['rewrite'], ...ouvertureComplete }
     ] },
 

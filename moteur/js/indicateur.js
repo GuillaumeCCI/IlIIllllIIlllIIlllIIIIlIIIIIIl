@@ -186,7 +186,7 @@
       max += sentencePoints;
       const share = Math.min(1, phrases.complete / expected);
       earned += sentencePoints * share;
-      lines.push({ kind: share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: expected > 1 ? `${expected} phrases complètes` : 'Une phrase complète', sentences: phrases.complete, expected, listOnly });
+      lines.push({ kind: share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: expected > 1 ? `${expected} phrases complètes` : 'Une phrase complète', sentences: phrases.complete, expected, listOnly, conseil: bloc.phrases && bloc.phrases.conseil });
     }
 
     for (const spec of bloc.regles || []) {
@@ -255,7 +255,7 @@
     if (item.sentences !== undefined) {
       detail = item.sentences >= item.expected ? ''
         : item.sentences ? `${item.sentences} sur ${item.expected} pour l’instant.`
-        : 'Écrivez la phrase entière, telle que vous la diriez au client.';
+        : item.conseil || 'Écrivez la phrase entière, telle que vous la diriez au client.';
     } else if (item.texte) detail = item.kind === 'ok' ? '' : item.texte;
     else if (item.kind === 'warn') detail = `Repéré : ${item.found.map(f => `« ${f} »`).join(', ')}.${item.conseil ? ` ${item.conseil}` : ''}`;
     // Un critère rempli se passe de commentaire : ses mots sont surlignés dans la réponse.
@@ -275,7 +275,7 @@
   // montre lui-même la réponse (`withText: false`) ne garde que les coches.
   const met = bloc => bloc.lines.filter(item => item.kind === 'ok').length;
   const expected = bloc => bloc.lines.filter(item => item.kind !== 'warn').length;
-  const lines = (bloc, { withText = true } = {}) => `<p class="ana-expect">Ce qu’on attend <span>· ${met(bloc)} sur ${expected(bloc)}</span></p>
+  const lines = (bloc, { withText = true } = {}) => `<p class="ana-expect">Ce qu’on attend dans votre réponse <span>· ${met(bloc)} sur ${expected(bloc)} repérés</span></p>
         <ul class="ana-lines">${bloc.lines.map(line).join('')}</ul>
         ${withText && bloc.marks.length ? `<p class="ana-text">${highlighted(bloc.text, bloc.marks)}</p>` : ''}`;
 
