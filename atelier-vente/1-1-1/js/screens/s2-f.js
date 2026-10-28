@@ -30,11 +30,34 @@
     done: caseDone(i)
   }));
 
+  /* Le corrigé d'un profil, au modèle de S1 A (js/corrige.js) : votre
+   * autoévaluation face à ce que l'outil a repéré, le score estimatif de ce
+   * profil, puis vos deux réponses, chacune face à une réponse possible. */
+  function reviewScreen(i, profile) {
+    const corrige = window.AtelierCorrige;
+    const result = corrige.scoreCase('s2-F', [2 * i, 2 * i + 1], ex.values());
+    const [replyBloc, postureBloc] = result ? result.blocs : [];
+    const all = result ? { lines: result.blocs.flatMap(b => b.lines) } : null;
+    return `<form class="an-review s2f-review" novalidate>
+      ${ex.caseBar(cases(), i, 'profil')}
+      ${core.pageTitle('Corrigé', profile.label, `Le client vous dit : « ${profile.quote} »`)}
+      ${corrige.compare({ rubric, selfKey: selfKey(i), bloc: all, what: 'vos deux réponses' })}
+      ${corrige.head(result)}
+      ${corrige.rows([
+        corrige.row({ n: 1, title: 'Votre réponse d’écoute', bloc: replyBloc, text: ex.value(replyKey(i)), model: `Vous pouviez écrire : « ${profile.model} »` }),
+        corrige.row({ n: 2, title: 'Votre adaptation', bloc: postureBloc, text: ex.value(postureKey(i)), model: profile.adaptation })
+      ])}
+      ${core.errorsBox()}
+      ${ex.caseActions(cases(), i)}
+    </form>`;
+  }
+
   function screen() {
     const i = ex.openCase() ?? 0;
     const profile = profiles[i];
     const reviewed = caseDone(i);
     const current = core.findExercise('s2-F');
+    if (reviewed) return reviewScreen(i, profile);
 
     const body = !reviewed && selfOpen(i)
       ? `<div class="own-answer">
@@ -46,19 +69,6 @@
          <h3 class="self-case-title">Votre autoévaluation</h3>
          ${window.AtelierKit ? `<div class="tour-corner">${window.AtelierKit.contextButton()}</div>` : ''}
          ${ex.selfList(rubric, selfKey(i))}`
-      : reviewed
-      ? `<div class="own-answer">
-           <h4>Votre réponse d’écoute</h4>
-           <p>« ${esc(ex.value(replyKey(i)))} »</p>
-           ${ex.inlineNote(`Une réponse possible : « ${profile.model} »`, 'good')}
-         </div>
-         <div class="own-answer">
-           <h4>Votre adaptation</h4>
-           <p>« ${esc(ex.value(postureKey(i)))} »</p>
-           ${ex.inlineNote(`Une adaptation possible : ${profile.adaptation}`, 'neutral')}
-         </div>
-         ${ex.inlineNote(content.criterion, 'neutral')}
-         ${ex.selfSummary(rubric, selfKey(i))}`
       : `${core.step(1, 'Votre réponse d’écoute', ex.field(replyKey(i), 'Votre réponse d’écoute', {
            placeholder: 'Écrivez votre réponse…', max: 320, rows: 4, hideLabel: true
          }), 'Répondez sans contredire ni vous justifier.')}
@@ -77,7 +87,7 @@
         ${ex.caseBar(cases(), i, 'profil')}
         ${core.panelTitle(profile.label)}
         <div class="exercise-body">${body}</div>
-        ${reviewed ? '' : ex.lockNote(selfOpen(i) ? 'La correction s’affiche dès que vous validez votre autoévaluation' : 'Après validation, vous faites votre autoévaluation, puis la correction s’affiche')}
+        ${ex.lockNote(selfOpen(i) ? 'La correction s’affiche dès que vous validez votre autoévaluation' : 'Après validation, vous faites votre autoévaluation, puis la correction s’affiche')}
         ${core.errorsBox()}
         ${selfOpen(i) && !reviewed ? `<div class="wiz-back">${core.button(`${core.icon('arrowLeft', { size: 17 })}<span>Modifier ma réponse</span>`, 'self-back', 'text-button with-icon')}</div>` : ''}
         ${ex.caseActions(cases(), i, selfOpen(i) ? 'Voir la correction' : 'Valider ma réponse')}

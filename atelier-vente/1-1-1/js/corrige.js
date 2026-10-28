@@ -33,10 +33,12 @@
   }
 
   /* Le score d'un seul cas (exercice à plusieurs clients) : le bloc i de la
-   * grille, seul, pour que les cas pas encore traités ne comptent pas. */
+   * grille, ou les blocs listés ([2, 3]), seuls, pour que les cas pas encore
+   * traités ne comptent pas. */
   function scoreCase(key, i, values) {
     const grid = window.ATELIER_GRILLES && window.ATELIER_GRILLES[key];
-    return grid && grid.blocs[i] && analyse() ? analyse().score({ blocs: [grid.blocs[i]] }, values) : null;
+    const blocs = grid ? [].concat(i).map(n => grid.blocs[n]).filter(Boolean) : [];
+    return blocs.length && analyse() ? analyse().score({ blocs }, values) : null;
   }
 
   // « Votre score estimatif », en tête du corrigé.

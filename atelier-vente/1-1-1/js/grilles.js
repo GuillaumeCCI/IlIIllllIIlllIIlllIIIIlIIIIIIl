@@ -375,22 +375,23 @@
     ] },
 
     // S2 F · Trois profils : une réponse d'écoute, puis la posture.
-    's2-F': { blocs: [
+    // Les critères portent les noms de l'autoévaluation (ATELIER_S2.rubric).
+    's2-F': { integre: true, blocs: [
       { titre: 'Méfiant : votre réponse', champs: ['reply0'],
-        criteres: [{ nom: 'Le doute nommé', mots: ['doute*', 'méfi*', 'confiance', 'prudent', 'déçu', 'expérience', 'sceptique', 'réserves', 'je comprends', 'j’entends', 'je le comprends'], conseil: 'Nommez son doute calmement.' },
-          { nom: 'Une invitation à préciser', mots: QUESTION_OUVERTE.concat(['ce qui vous rendrait', 'qu’est-ce qui vous rassurerait']), conseil: 'Transformez le doute en information.' }],
+        criteres: [{ nom: 'Écoute réelle : son doute nommé', mots: ['doute*', 'méfi*', 'confiance', 'prudent', 'déçu', 'expérience', 'sceptique', 'réserves', 'je comprends', 'j’entends', 'je le comprends'], conseil: 'Nommez son doute calmement.' },
+          { nom: 'Relation qui reste ouverte : une invitation à préciser', mots: QUESTION_OUVERTE.concat(['ce qui vous rendrait', 'qu’est-ce qui vous rassurerait']), conseil: 'Transformez le doute en information.' }],
         pieges: [{ nom: 'Défense', points: 1, mots: ['si si', 'je vous assure', 'faites-moi confiance', 'ce n’est pas vrai', 'nos solutions marchent', 'vous avez tort', 'pas du tout', 'je vous garantis'], conseil: 'Ne répondez pas à l’agressivité par la défense.' }, PIEGE_MINIMISE] },
-      { titre: 'Méfiant : votre adaptation', champs: ['posture0'], criteres: [{ nom: 'La posture décrite', mots: ['calme', 'défens*', 'sans me défendre', 'agress*', 'nommer', 'accueillir', 'justifier', 'neutre', 'information', 'apaiser', 'posé', 'posée', 'serein*', 'patien*', 'ton'], conseil: 'Calme, sans défense : on nomme le doute.' }, raison] },
+      { titre: 'Méfiant : votre adaptation', champs: ['posture0'], criteres: [{ nom: 'Attitude adaptée au moment : la posture décrite', mots: ['calme', 'défens*', 'sans me défendre', 'agress*', 'nommer', 'accueillir', 'justifier', 'neutre', 'information', 'apaiser', 'posé', 'posée', 'serein*', 'patien*', 'ton'], conseil: 'Calme, sans défense : on nomme le doute.' }, raison] },
       { titre: 'Bavard : votre réponse', champs: ['reply1'],
-        criteres: [{ nom: 'Une synthèse', mots: ['si je résume', 'en résumé', 'pour résumer', 'si je comprends bien', 'beaucoup à gérer', 'plusieurs prestataires', 'trois prestataires', 'déçu', 'la même histoire', 'plusieurs essais'], conseil: 'Résumez ce qu’il a dit.' },
-          { nom: 'Un recentrage', mots: ['sur quoi', 'par quoi', 'pour être utile', 'commençons', 'priorité', 'le plus important', 'l’essentiel', 'recentrer', 'concentrer', 'en premier'], conseil: 'Proposez par quoi commencer.' }],
+        criteres: [{ nom: 'Reformulation fidèle : une synthèse', mots: ['si je résume', 'en résumé', 'pour résumer', 'si je comprends bien', 'beaucoup à gérer', 'plusieurs prestataires', 'trois prestataires', 'déçu', 'la même histoire', 'plusieurs essais'], conseil: 'Résumez ce qu’il a dit.' },
+          { nom: 'Relation qui reste ouverte : un recentrage', mots: ['sur quoi', 'par quoi', 'pour être utile', 'commençons', 'priorité', 'le plus important', 'l’essentiel', 'recentrer', 'concentrer', 'en premier'], conseil: 'Proposez par quoi commencer.' }],
         pieges: [{ nom: 'Couper la parole', points: 1, mots: ['stop', 'arrêtez', 'on va pas', 'abrégez', 'venons-en au fait', 'bref'], conseil: 'Recentrez avec respect, sans couper.' }] },
-      { titre: 'Bavard : votre adaptation', champs: ['posture1'], criteres: [{ nom: 'La posture décrite', mots: ['synthèse', 'résum*', 'recentr*', 'respect*', 'sans couper', 'couper la parole', 'cadrer', 'structur*', 'canaliser', 'guider', 'interromp*'], conseil: 'Une synthèse qui recentre, sans couper.' }, raison] },
+      { titre: 'Bavard : votre adaptation', champs: ['posture1'], criteres: [{ nom: 'Attitude adaptée au moment : la posture décrite', mots: ['synthèse', 'résum*', 'recentr*', 'respect*', 'sans couper', 'couper la parole', 'cadrer', 'structur*', 'canaliser', 'guider', 'interromp*'], conseil: 'Une synthèse qui recentre, sans couper.' }, raison] },
       { titre: 'Silencieux : votre réponse', champs: ['reply2'],
-        criteres: [{ nom: 'Le silence accueilli', mots: ['prudent', 'normal', 'prenez', 'votre temps', 'je comprends', 'pas de souci', 'réfléchi*', 'à votre rythme'], conseil: 'Accueillez sa réserve.' },
-          { nom: 'Une question ouverte légère', mots: QUESTION_OUVERTE.concat(['ce qui compte']), conseil: 'Une question douce pour l’inviter à parler.' }],
+        criteres: [{ nom: 'Écoute réelle : sa réserve accueillie', mots: ['prudent', 'normal', 'prenez', 'votre temps', 'je comprends', 'pas de souci', 'réfléchi*', 'à votre rythme'], conseil: 'Accueillez sa réserve.' },
+          { nom: 'Relation qui reste ouverte : une question légère', mots: QUESTION_OUVERTE.concat(['ce qui compte']), conseil: 'Une question douce pour l’inviter à parler.' }],
         regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 1 }] },
-      { titre: 'Silencieux : votre adaptation', champs: ['posture2'], criteres: [{ nom: 'La posture décrite', mots: ['question ouverte', 'douce', 'doucement', 'sans presser', 'invit*', 'encourag*', 'silence', 'laisser le temps', 'mettre à l’aise', 'rassur*', 'patien*', 'léger', 'légère', 'ouvert'], conseil: 'Une investigation douce, sans presser.' }, raison] }
+      { titre: 'Silencieux : votre adaptation', champs: ['posture2'], criteres: [{ nom: 'Attitude adaptée au moment : la posture décrite', mots: ['question ouverte', 'douce', 'doucement', 'sans presser', 'invit*', 'encourag*', 'silence', 'laisser le temps', 'mettre à l’aise', 'rassur*', 'patien*', 'léger', 'légère', 'ouvert'], conseil: 'Une investigation douce, sans presser.' }, raison] }
     ] },
 
     // S3 1.4 · « Je vais réfléchir » : l'hypothèse, puis la question.

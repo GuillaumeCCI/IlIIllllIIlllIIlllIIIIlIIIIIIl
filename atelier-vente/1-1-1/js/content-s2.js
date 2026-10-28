@@ -149,19 +149,19 @@ window.ATELIER_S2 = {
         label: 'Méfiant / agressif',
         quote: 'Franchement, vos solutions miracles, je n’y crois pas trop. Ça ne se passe jamais comme prévu.',
         model: 'Vous avez des doutes sérieux, je le comprends. Dites-moi ce qui vous rendrait plus confiant.',
-        adaptation: 'Ne pas répondre à l’agressivité par la défense : nommer le doute calmement et le transformer en information.'
+        adaptation: 'Vous pouviez écrire : « Je reste calme et je ne cherche pas à me justifier : je nomme son doute, pour le transformer en information. »'
       },
       {
         label: 'Bavard',
         quote: 'Alors, je vous explique, on a déjà essayé trois prestataires, et à chaque fois c’est la même histoire, je vous raconte…',
         model: 'Si je résume, il y a beaucoup à gérer de votre côté. Pour être utile, sur quoi voulez-vous qu’on commence ?',
-        adaptation: 'Une reformulation-synthèse qui recentre avec respect, sans couper la parole.'
+        adaptation: 'Vous pouviez écrire : « Je fais une synthèse de ce qu’il a dit, puis je recentre l’échange avec respect, sans lui couper la parole. »'
       },
       {
         label: 'Silencieux',
         quote: '… (le client écoute, hoche la tête, mais ne répond pas)',
         model: 'Vous restez prudent, c’est normal ; qu’est-ce qui compte le plus pour vous là-dessus ?',
-        adaptation: 'Compréhension, plus une question ouverte légère, une investigation douce, pour l’inviter à s’exprimer sans le presser.'
+        adaptation: 'Vous pouviez écrire : « J’accueille son silence avec compréhension, puis je pose une question ouverte légère, pour l’inviter à parler sans le presser. »'
       }
     ]
   }
