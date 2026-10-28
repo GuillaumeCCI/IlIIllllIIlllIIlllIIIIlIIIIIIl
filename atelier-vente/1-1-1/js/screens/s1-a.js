@@ -124,12 +124,13 @@
       <ol class="an-rows">${VERDICTS.map((row, i) => `<li class="an-row tone-${result ? toneOf(result.blocs[i]) : row.tone}">
         <div class="an-yours">
           <span class="an-n" aria-hidden="true">${i + 1}</span>
-          <div><h2>${esc(row.title)}</h2><p>« ${result ? analyse.answer(result.blocs[i]) : esc(ex.value(row.key))} »</p>${result ? analyse.lines(result.blocs[i], { withText: false }) : ''}</div>
+          <div><h2>${esc(row.title)}</h2><p>« ${result ? analyse.answer(result.blocs[i]) : esc(ex.value(row.key))} »</p></div>
         </div>
         <div class="an-verdict">
           <span class="an-mark" aria-hidden="true">${icon(row.symbol, { size: 20, strokeWidth: 3 })}</span>
           <div><h3>${esc(row.label)}</h3><p>${esc(notes[i])}</p></div>
         </div>
+        ${result ? `<div class="an-expect-band">${analyse.lines(result.blocs[i], { withText: false })}</div>` : ''}
         ${row.key === 'rewrite' ? compare(result, i) : ''}
       </li>`).join('')}</ol>
       ${core.feedbackBox()}

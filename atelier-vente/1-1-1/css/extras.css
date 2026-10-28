@@ -521,3 +521,8 @@
 #main .an-review .ana-note, #main .an-review .ana-legend, #main .an-review .ana-line, #main .an-review .ana-detail,
 #main .an-review .an-yours p, #main .an-review .an-verdict p, #main .an-review .self-pill, #main .an-review .an-seen { font-size: 1rem; }
 #main .an-review .ana-expect, #main .an-review .an-compare thead th { font-size: .8rem; }
+
+/* S1 A, S1 B · « Ce qu’on attend » sous la phrase et la réponse possible, sur toute la largeur, en colonnes. */
+.an-expect-band { grid-column: 1 / -1; padding: 4px 6px 0; }
+.an-expect-band .ana-expect { margin: 0 0 8px; }
+.an-expect-band .ana-lines { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px 32px; }
