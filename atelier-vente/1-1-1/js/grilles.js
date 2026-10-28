@@ -346,8 +346,14 @@
     })) },
 
     // S2 B · Réécrire 4 fausses reformulations sur « un peu chère ».
-    's2-B': { blocs: [0, 1, 2, 3].map(i =>
-      reformuler(`Réplique ${i + 1}`, `rewrite${i}`, ['prix', 'cher', 'chère', 'tarif', 'coût', 'montant', 'investissement', 'rapport prix', 'valeur', 'élevé'])) },
+    's2-B': { integre: true, blocs: [0, 1, 2, 3].map(i => {
+      const bloc = reformuler(`Réplique ${i + 1}`, `rewrite${i}`, ['prix', 'cher', 'chère', 'tarif', 'coût', 'montant', 'investissement', 'rapport prix', 'valeur', 'élevé']);
+      // L'attitude attendue, sous le nom de sa tuile : « Compréhension / reformulation ».
+      const [reprise, sujet] = bloc.criteres;
+      return { ...bloc,
+        criteres: [{ ...reprise, nom: 'Compréhension / reformulation : reprendre et faire confirmer' }, { ...sujet, nom: 'Compréhension / reformulation : le prix, avec ses mots' }],
+        phrases: { ...bloc.phrases, conseil: 'Rédigez une phrase entière, pas seulement des mots-clés.' } };
+    }) },
 
     // S2 D · Une réponse par attitude de Porter, puis le choix justifié.
     // Le score est intégré aux blocs du corrigé (s2-d.js).

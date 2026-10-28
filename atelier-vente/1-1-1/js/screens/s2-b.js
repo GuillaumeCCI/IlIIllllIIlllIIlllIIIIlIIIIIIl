@@ -61,49 +61,30 @@
     </form>`;
   }
 
+  /* Le corrigé au modèle de S1 A (js/corrige.js) : la phrase du client, le
+   * score estimatif, puis une ligne par réplique : l'attitude que vous avez
+   * reconnue et votre reformulation, face à une réponse possible. */
+  function reviewScreen() {
+    const corrige = window.AtelierCorrige;
+    const result = corrige.score('s2-B', ex.values());
+    const blocs = result ? result.blocs : [];
+    return `<section class="an-review">
+      ${core.pageTitle('Corrigé', content.title, `Le client dit au vendeur : ${content.mission} ${content.feedback}`)}
+      ${corrige.head(result)}
+      ${corrige.rows(cases.map((item, i) => {
+        const chosen = ex.value(attitudeKey(i));
+        const right = chosen === item.answer;
+        const yours = `<p class="an-attitude">Attitude reconnue : <strong>${esc(chosen)}</strong> ${ex.verdictMark(right, right ? 'Attendue' : `Attendue : ${item.answer}`)}</p>
+          <p>Votre reformulation : « ${corrige.answer(blocs[i], ex.value(rewriteKey(i)))} »</p>`;
+        return corrige.row({ n: i + 1, title: `Réplique du vendeur : « ${item.text} »`, bloc: blocs[i], yours,
+          model: [`Attitude du vendeur : ${item.answer}. ${item.why}`, item.rewrite] });
+      }))}
+      ${core.feedbackBox()}
+    </section>`;
+  }
+
   function screen() {
-    const review = ex.reviewing();
-    if (!review) return replica();
-    return `<div class="writing-workshop">
-      ${core.pageTitle(content.eyebrow, content.title)}
-      ${core.mission('Votre mission', content.intro, '', 'target')}
-      ${core.clientCard(content.mission)}
-      <form class="panel" novalidate>
-        <div class="answer-table">
-          <div class="answer-table-head">
-            <span>Réponse du vendeur</span><span>Attitude identifiée</span><span>Votre reformulation</span>
-          </div>
-          ${cases.map((item, i) => {
-            const chosen = ex.value(attitudeKey(i));
-            const right = chosen === item.answer;
-            return `<div class="answer-row ${review ? (right ? 'row-ok' : 'row-ko') : ''}">
-              <div class="row-source">
-                <span class="row-badge" aria-hidden="true">${i + 1}</span>
-                <p>« ${esc(item.text)} »</p>
-              </div>
-              ${review
-                ? `<div class="row-verdict">
-                     ${ex.verdictMark(right, right ? chosen : `Attendu : ${item.answer}`)}
-                     ${right ? '' : `<span class="row-chosen">Votre réponse : ${esc(chosen)}</span>`}
-                     ${ex.inlineNote(item.why, right ? 'good' : 'bad')}
-                   </div>
-                   <div class="row-model">
-                     <p class="own-line">« ${esc(ex.value(rewriteKey(i)))} »</p>
-                     ${ex.inlineNote(`Une réécriture possible : « ${item.rewrite} »`, 'neutral')}
-                   </div>`
-                : `${ex.select(attitudeKey(i), `Attitude de la réponse ${i + 1}`, attitudes, 'Choisir une attitude')}
-                   ${ex.field(rewriteKey(i), `Votre reformulation de la réponse ${i + 1}`, {
-                     placeholder: 'Réécrivez la réponse…', max: 300, rows: 2, hideLabel: true
-                   })}`}
-            </div>`;
-          }).join('')}
-        </div>
-        ${ex.lockNote('Corrigé disponible après validation')}
-        ${core.errorsBox()}
-        ${ex.actions('Valider mes réponses')}
-        ${core.feedbackBox()}
-      </form>
-    </div>`;
+    return ex.reviewing() ? reviewScreen() : replica();
   }
 
   function validate(values) {
@@ -115,16 +96,8 @@
     return errors;
   }
 
-  /* Le détail figure déjà en face de chaque réponse : la synthèse ne garde
-   * que le principe et le score. */
-  function feedback(values) {
-    const right = cases.filter((item, i) => values[attitudeKey(i)] === item.answer).length;
-    return [
-      content.feedback,
-      `${right} attitude sur ${cases.length} correctement identifiée${right > 1 ? 's' : ''}. Des réécritures possibles sont affichées en face de vos propositions.`,
-      content.criterion
-    ];
-  }
+  /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
+  const feedback = () => [];
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   if (window.AtelierKit) window.AtelierKit.tour('s2-B', [
@@ -143,5 +116,5 @@
       ] }
   ]);
 
-  ex.mount('s2-B', { screen, validate, feedback, onMount: () => core.wireRubric(window.ATELIER_S2.rubric) });
+  ex.mount('s2-B', { screen, validate, feedback, compactFeedback: true, onMount: () => core.wireRubric(window.ATELIER_S2.rubric) });
 })();

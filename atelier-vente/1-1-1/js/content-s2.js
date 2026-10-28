@@ -92,25 +92,25 @@ window.ATELIER_S2 = {
         text: 'Si je comprends bien, en fait vous n’avez pas le budget.',
         answer: 'Interprétation',
         why: 'Elle ajoute « pas le budget », que le client n’a pas dit.',
-        rewrite: 'Si je comprends bien, le prix est un point important pour vous.'
+        rewrite: 'Vous pouviez écrire : « Si je comprends bien, le prix est un point important pour vous. »'
       },
       {
         text: 'Je comprends, mais vous savez, la qualité a un prix.',
         answer: 'Jugement / évaluation',
         why: 'Le « mais » annule l’écoute et défend l’offre.',
-        rewrite: 'Le tarif vous interpelle, c’est cela ?'
+        rewrite: 'Vous pouviez écrire : « Le tarif vous interpelle, c’est cela ? »'
       },
       {
         text: 'Je vois ce que vous voulez dire ; vous devriez regarder notre offre d’entrée de gamme.',
         answer: 'Solution / décision',
         why: 'Elle propose une offre avant d’avoir compris.',
-        rewrite: 'Vous vous interrogez sur le rapport prix / valeur, si je comprends bien.'
+        rewrite: 'Vous pouviez écrire : « Vous vous interrogez sur le rapport prix / valeur, si je comprends bien. »'
       },
       {
         text: 'Je comprends, ne vous en faites pas, tout le monde dit ça au début.',
         answer: 'Soutien / consolation',
         why: '« Tout le monde dit ça » minimise le ressenti.',
-        rewrite: 'J’entends que le prix vous fait hésiter.'
+        rewrite: 'Vous pouviez écrire : « J’entends que le prix vous fait hésiter. »'
       }
     ],
     feedback: 'Une reformulation de compréhension reprend ce que le client a dit et lui demande confirmation, sans ajouter d’interprétation, de jugement, de solution ni de réconfort.'
