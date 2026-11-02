@@ -227,7 +227,11 @@
   const MAP = {
     's2-2.1': () => choicePreview(6),
     's2-2.2': () => choicePreview(6),
-    's2-2.3': () => choicePreview(6)
+    's2-2.3': () => choicePreview(6),
+    's3-3.1': () => writePreview(3),
+    's3-3.2': () => writePreview(3),
+    's3-3.3': () => writePreview(2),
+    's3-3.4': () => choicePreview(2)
   };
 
   const preview = key => (MAP[key] ? MAP[key]() : '');

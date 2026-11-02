@@ -31,6 +31,19 @@ window.ATELIER_CATALOG = {
         { id: '2.2', file: 's2-2-2', label: 'En entreprise', theme: 'blue', mount: 'form' },
         { id: '2.3', file: 's2-2-3', label: 'À l’agence immobilière', theme: 'blue', mount: 'form' }
       ]
+    },
+    {
+      id: 's3',
+      label: 'Reformuler',
+      // Écho, reflet, synthèse et « l'intrus » : fiche M1.2.1, activité A2.
+      // Chaque exercice compte plusieurs clients (la fiche n'en donne qu'un).
+      sourced: true,
+      exercises: [
+        { id: '3.1', file: 's3-3-1', label: 'L’écho', theme: 'blue', mount: 'form' },
+        { id: '3.2', file: 's3-3-2', label: 'Le reflet', theme: 'blue', mount: 'form' },
+        { id: '3.3', file: 's3-3-3', label: 'La synthèse', theme: 'blue', mount: 'form' },
+        { id: '3.4', file: 's3-3-4', label: 'Reformulation, ou pas ?', theme: 'blue', mount: 'form' }
+      ]
     }
   ]
 };

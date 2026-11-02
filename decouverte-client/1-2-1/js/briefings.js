@@ -41,5 +41,40 @@ window.ATELIER_BRIEFINGS = {
     situation: 'Vous êtes agent dans une agence immobilière. Le propriétaire a déjà confié la vente de son appartement à une autre agence, sans résultat.',
     task: 'Six réponses à analyser. Pour chacune : l’attitude d’écoute, puis l’effet probable sur le propriétaire.',
     criteria: ['La bonne attitude pour chaque réponse', 'Son effet probable sur le propriétaire']
+  },
+
+  /* ══ SÉRIE 3 · REFORMULER ════════════════════════════════════════════ */
+
+  's3-3.1': {
+    lede: { key: 'Un mot du client,', rest: 'une question, et il précise.' },
+    mission: 'Trois clients vous parlent. Pour chacun, reformulez en écho : reprenez un mot important de sa phrase, sur un ton de question, pour qu’il en dise plus.',
+    method: 'Un client à la fois : lisez, écrivez votre écho, passez au suivant.',
+    situation: 'Un cycliste qui va travailler à vélo, une famille qui prépare ses vacances, un gérant de restaurant qui parle de son fournisseur. Chacun glisse un mot qui en dit long.',
+    task: 'Trois échos à écrire, de quelques mots chacun. Ni conseil, ni produit : seulement le mot du client, en question.',
+    criteria: ['Un mot du client', 'Une question', 'Fidélité aux mots du client']
+  },
+  's3-3.2': {
+    lede: { key: 'Ce qu’il ressent,', rest: 'avec ses mots.' },
+    mission: 'Trois clients vous confient une difficulté. Pour chacun, reformulez en reflet : dites-lui ce qu’il ressent, en reprenant ses mots, sans juger ni conseiller.',
+    method: 'Un client à la fois : lisez, écrivez votre reflet, passez au suivant.',
+    situation: 'Un couple qui cherche un appartement depuis des mois, un automobiliste qui revient au garage pour la troisième fois, une responsable déçue par des formations.',
+    task: 'Trois reflets à écrire, en une ou deux phrases chacun.',
+    criteria: ['Ce qu’il ressent', 'Ses mots', 'Fidélité aux mots du client']
+  },
+  's3-3.3': {
+    lede: { key: 'Tout l’essentiel,', rest: 'puis « C’est bien ça ? »' },
+    mission: 'Deux clients vous ont donné quatre informations chacun. Pour chacun, écrivez une synthèse : reprenez les quatre éléments sans rien ajouter, puis demandez-lui de valider.',
+    method: 'Un client à la fois : lisez ses quatre éléments, écrivez votre synthèse.',
+    situation: 'La gérante de deux salons de coiffure, puis le patron d’un café-restaurant. Tous deux viennent de vous expliquer ce qui compte pour eux.',
+    task: 'Deux synthèses à écrire, comme vous les diriez à voix haute.',
+    criteria: ['Tous les éléments', 'Une validation', 'Fidélité aux mots du client']
+  },
+  's3-3.4': {
+    lede: { key: 'Ça y ressemble,', rest: 'mais ce n’en est pas.' },
+    mission: 'Quatre clients, huit réponses de vendeurs. Pour chaque réponse, dites si c’est une vraie reformulation, ou si le vendeur y ajoute un jugement, une interprétation, un argument ou une solution.',
+    method: 'Une réponse à la fois : un choix, puis la réponse suivante.',
+    situation: 'Les clients parlent d’une offre concurrente, de leur mal de dos, d’un contrat d’assurance et de commandes ressaisies à la main.',
+    task: 'Huit réponses à juger. Le corrigé explique chacune.',
+    criteria: ['Repérer une vraie reformulation', 'Repérer ce qui s’y ajoute']
   }
 };

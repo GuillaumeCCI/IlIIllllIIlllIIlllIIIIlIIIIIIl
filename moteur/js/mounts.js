@@ -820,7 +820,7 @@
         if (!fields.length && !c.model && !c.lesson) return '';
         // `reviewDialogue: 'seller'` : au corrigé, seule la réponse du vendeur est redite
         // (la réplique du client, commune à tous les cas, est en tête : `reviewIntro`).
-        const shownScene = [].concat(c.scene || content.scene || []).filter(b => b.quote || b.info || b.dialogue)
+        const shownScene = [].concat(c.scene || content.scene || []).filter(b => b.quote || b.info || b.dialogue || b.facts)
           .map(b => (b.dialogue && content.reviewDialogue ? Object.assign({}, b, { dialogue: b.dialogue.filter(line => line.who === content.reviewDialogue) }) : b));
         const sceneHtml = c.reviewScene !== false && shownScene.length ? scene(shownScene) : '';
         // Un onglet qui se contente de répéter « Situation 2 » n'est pas redit.
