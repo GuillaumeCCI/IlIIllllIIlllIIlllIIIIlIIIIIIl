@@ -134,7 +134,7 @@ window.ATELIER_S1 = {
           'Parle des matériaux de l’équipement, pas de ce que le client y gagne.',
           'Cède une remise de 15 % pour conclure : le prix perd sa crédibilité, sans garantie que ce soit le vrai frein.'
         ] },
-      { id: '2', label: 'Commercial 2', text: 'Je comprends, c’est effectivement un budget. Par rapport à quoi trouvez-vous ce prix élevé : une autre offre, une enveloppe prévue ? Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine. Nos clients constatent une baisse des arrêts liés au mal de dos, et l’essai de 30 jours vous permet de le vérifier sans risque. Est-ce que cela répond à votre préoccupation ?',
+      { id: '2', label: 'Commercial 2', text: 'Je comprends, c’est effectivement un budget. Par rapport à quoi trouvez-vous ce prix élevé ? Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine. Nos clients constatent une baisse des arrêts liés au mal de dos, et l’essai de 30 jours vous permet de le vérifier sans risque. Est-ce que cela répond à votre préoccupation ?',
         analysis: [
           'Accueillir : « Je comprends, c’est effectivement un budget. »',
           'Questionner : « Par rapport à quoi trouvez-vous ce prix élevé ? »',
@@ -179,7 +179,7 @@ window.ATELIER_S1 = {
       ] },
       { text: 'C’est trop cher.', model: [
         'Je comprends, c’est un vrai investissement.',
-        'Par rapport à quoi le trouvez-vous élevé : une autre offre, un budget prévu ?',
+        'Vous le trouvez élevé par rapport à quoi ?',
         'Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine. C’est bien ça ?',
         'Nos sièges sont garantis 5 ans, et l’essai de 30 jours vous permet de vérifier leur valeur sans risque. La location est aussi possible, pour étaler le budget.',
         'Est-ce que cela répond à votre préoccupation ?',

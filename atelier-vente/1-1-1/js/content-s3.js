@@ -114,7 +114,7 @@ window.ATELIER_S3 = {
     objectionContext: 'Le client exprime un frein lié au prix. Votre objectif est de traiter cette objection de manière constructive tout en valorisant la solution.',
     options: [
       { id: 'A', text: 'Ce n’est pas si cher, c’est simplement le prix normal pour ce niveau de qualité. Nos équipements sont fabriqués avec des matériaux haut de gamme, qui justifient pleinement ce positionnement sur le marché. Cependant, je vois que vous hésitez, alors pour vous aider à vous décider aujourd’hui, je peux exceptionnellement vous accorder une remise immédiate de 10 %, à condition de signer le bon de commande avant la fin de la semaine.' },
-      { id: 'B', text: 'Je comprends, c’est un budget. Par rapport à quoi trouvez-vous le prix élevé : une autre offre ou une enveloppe prévue ? Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine. Nos clients constatent moins d’arrêts liés au mal de dos, et l’essai de 30 jours vous permet de vérifier sans risque. Est-ce que cela répond à votre préoccupation ?' }
+      { id: 'B', text: 'Je comprends, c’est un budget. Par rapport à quoi trouvez-vous le prix élevé ? Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine. Nos clients constatent moins d’arrêts liés au mal de dos, et l’essai de 30 jours vous permet de vérifier sans risque. Est-ce que cela répond à votre préoccupation ?' }
     ],
     answer: 'B',
     feedback: 'Vous pouviez écrire : « La réponse B est la plus juste. Elle accueille l’objection, creuse avec “par rapport à quoi ?”, reformule, apporte une preuve (moins d’arrêts de travail, un essai de 30 jours) et vérifie que le client est d’accord. La réponse A le contredit, ne cherche pas à comprendre et accorde tout de suite une remise : elle affaiblit la valeur au lieu de traiter l’objection. »'
@@ -188,7 +188,7 @@ window.ATELIER_S3 = {
         ],
         model: [
           'Je comprends, les honoraires représentent une vraie somme sur une vente comme la vôtre.',
-          'Qu’est-ce qui compte le plus pour vous dans cette vente : le prix final, le délai, ou les frais ?',
+          'Qu’est-ce qui compte le plus pour vous dans cette vente ?',
           'Si je comprends bien, vous voulez être sûrs que nos honoraires vous rapportent plus qu’ils ne vous coûtent. C’est bien ça ?',
           'Nos maisons se vendent en 45 jours en moyenne, et 92 % au prix affiché : si votre maison se vend seulement 2 % plus cher, la différence d’honoraires est largement couverte.',
           'Est-ce que cette façon de faire le calcul vous parle ?',
@@ -289,7 +289,7 @@ window.ATELIER_S3 = {
         ],
         model: [
           'Je comprends, c’est une vraie somme pour un vélo.',
-          'Par rapport à quoi le trouvez-vous cher : un autre modèle, ou le budget que vous aviez prévu ?',
+          'Vous le trouvez cher par rapport à quoi ?',
           'Si je comprends bien, vous voulez être sûr que cet achat se rembourse vraiment sur vos trajets. C’est bien ça ?',
           'Sur vos 12 km par jour, vous économisez environ 80 € par mois d’essence et de stationnement. Avec la prime de 300 € de la ville, le vélo est remboursé en deux ans environ. Et vous pouvez payer en 4 fois, sans frais.',
           'Est-ce que ce calcul vous rassure ?',
@@ -323,7 +323,7 @@ window.ATELIER_S3 = {
         ],
         model: [
           'Bien sûr, c’est un projet qui vous concerne tous les deux, c’est normal de décider à deux.',
-          'Qu’est-ce qui comptera le plus pour lui : le budget, le style, ou la durée des travaux ?',
+          'Qu’est-ce qui comptera le plus pour lui dans ce projet ?',
           'Si je comprends bien, vous voulez qu’il adhère au projet autant que vous avant de vous engager. C’est bien ça ?',
           'Pour l’aider à se projeter, je vous prépare une image en 3D de votre futur salon et je vous confie les échantillons ; le devis reste valable 30 jours.',
           'Est-ce que cela vous aiderait pour en parler ensemble ?',
