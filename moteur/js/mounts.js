@@ -86,7 +86,7 @@
         // La réplique seule du client : sa carte illustrée, un portrait par
         // exercice (toujours le même pour une page donnée).
         const speaker = block.speaker && !/^(le )?client$/i.test(block.speaker) ? block.speaker : 'Le client vous dit';
-        return kit().clientCard(block.quote, block.portrait || null, speaker);
+        return kit().clientCard(block.quote, block.portrait === false ? false : (block.portrait || null), speaker);
       }
       if (block.dialogue) {
         return `<ol class="sc-dialogue">${block.dialogue.map(line => {

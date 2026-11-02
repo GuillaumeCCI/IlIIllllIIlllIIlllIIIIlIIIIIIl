@@ -15,7 +15,10 @@
    * à l'autre (assets/illustrations/clients/). */
   const client = (tab, speaker, quote, model, placeholder, portrait) => ({
     tab,
-    scene: { quote, speaker, portrait },
+    // Une scène illustrée ({ image, alt }) remplace le portrait : elle s'affiche en grand, au-dessus de la réplique.
+    scene: portrait && portrait.image
+      ? [{ image: portrait.image, alt: portrait.alt }, { quote, speaker, portrait: false }]
+      : { quote, speaker, portrait },
     fields: [{ id: 'text', label: 'Votre reformulation', sub: 'Écrivez ce que vous diriez au client, mot pour mot.', placeholder, rows: 3, model }]
   });
 
@@ -88,10 +91,12 @@
       cases: [
         client('L’acheteuse', 'Une cliente, venue avec son mari dans une agence immobilière', 'On a déjà visité quinze appartements. À chaque fois on a un coup de cœur, et on se fait doubler par un autre acheteur.',
           'Vous avez l’impression de toujours arriver trop tard, et ça finit par être décourageant.', 'Votre reflet…', 'client-cheveux-gris'),
-        client('L’automobiliste', 'La cliente, à l’accueil d’un garage', 'C’est la troisième fois que je reviens pour le même bruit. On me dit que c’est réglé, et deux jours après, ça recommence.',
-          'Vous en avez assez de revenir pour rien, et vous avez le sentiment de ne pas être prise au sérieux.', 'Votre reflet…', 'client-veste-verte'),
+        client('L’automobiliste', 'Le client, chez son concessionnaire automobile', 'C’est la troisième fois que je reviens pour le même bruit. On me dit que c’est réglé, et deux jours après, ça recommence.',
+          'Vous en avez assez de revenir pour rien, et vous avez le sentiment de ne pas être pris au sérieux.', 'Votre reflet…',
+          { image: 'assets/illustrations/dialogues/concession-automobile.webp', alt: 'Chez un concessionnaire, un client pensif écoute une conseillère qui consulte sa tablette.' }),
         client('La responsable', 'La responsable des ressources humaines d’une entreprise', 'J’ai déjà payé deux formations l’an dernier, et mes équipes n’en ont rien retiré.',
-          'Vous êtes déçue par ces deux formations, et vous craignez de dépenser encore pour rien.', 'Votre reflet…', 'client-veste-verte')
+          'Vous êtes déçue par ces deux formations, et vous craignez de dépenser encore pour rien.', 'Votre reflet…',
+          { image: 'assets/illustrations/dialogues/entretien-rh.webp', alt: 'Dans un bureau, deux femmes discutent autour d’une table, l’une tient une feuille à la main.' })
       ],
       selfCheck: {
         title: 'Relisez vos trois reflets',

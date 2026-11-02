@@ -506,6 +506,8 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
    qu'elle tienne en quelques lignes au lieu d'une colonne étroite. */
 #main .client-card.is-long { --client-card-size: clamp(1.05rem, 1.25vw, 1.2rem); --client-card-mark: 44px; --client-card-portrait: 170px; --client-card-portrait-max: 190px; }
 #main .client-card.is-long .client-card-quote blockquote { font-weight: 700; line-height: 1.4; }
+/* Sans portrait (la scène illustrée est au-dessus) : une seule colonne. */
+#main .client-card.no-portrait { grid-template-columns: minmax(0, auto); padding-left: 22px; }
 
 /* Carte étroite (colonne, téléphone) : portrait entier au-dessus. */
 @container (max-width: 640px) {

@@ -194,8 +194,10 @@
     const clean = String(text).replace(/^\s*[«“]\s*/, '').replace(/\s*[»”]\s*$/, '');
     const art = name => esc(asset(`${PORTRAITS}${name}.webp`));
     // Une longue réplique (plus de 90 signes) passe en taille réduite.
-    return `<div class="client-card-box"><section class="client-card ${clean.length > 90 ? 'is-long' : ''}">
-      <div class="client-card-who" aria-hidden="true"><img src="${esc(asset(portraitFor(portrait, index)))}" alt="" decoding="async"></div>
+    // `portrait` à false : la carte sans portrait, sous une scène illustrée.
+    const who = portrait === false ? '' : `<div class="client-card-who" aria-hidden="true"><img src="${esc(asset(portraitFor(portrait, index)))}" alt="" decoding="async"></div>`;
+    return `<div class="client-card-box"><section class="client-card ${clean.length > 90 ? 'is-long' : ''} ${portrait === false ? 'no-portrait' : ''}">
+      ${who}
       <div class="client-card-said">
         <p class="client-card-label">${esc(label)}</p>
         <div class="client-card-quote"><img class="client-card-mark" src="${art('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${esc(clean)}</blockquote><img class="client-card-mark is-closing" src="${art('guillemet-fermant')}" alt="" aria-hidden="true"></div>

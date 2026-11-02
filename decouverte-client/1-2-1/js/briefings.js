@@ -57,7 +57,7 @@ window.ATELIER_BRIEFINGS = {
     lede: { key: 'Ce qu’il ressent,', rest: 'avec ses mots.' },
     mission: 'Trois clients vous confient une difficulté. Pour chacun, reformulez en reflet : dites-lui ce qu’il ressent, en reprenant ses mots, sans juger ni conseiller.',
     method: 'Un client à la fois : lisez, écrivez votre reflet, passez au suivant.',
-    situation: 'Un couple qui cherche un appartement depuis des mois, une automobiliste qui revient au garage pour la troisième fois, une responsable déçue par des formations.',
+    situation: 'Un couple qui cherche un appartement depuis des mois, un automobiliste qui revient au garage pour la troisième fois, une responsable déçue par des formations.',
     task: 'Trois reflets à écrire, en une ou deux phrases chacun.',
     criteria: ['Ce qu’il ressent', 'Ses mots', 'Fidélité aux mots du client']
   },
