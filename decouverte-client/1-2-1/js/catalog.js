@@ -27,9 +27,9 @@ window.ATELIER_CATALOG = {
       // La situation 3 (agence immobilière) s'y ajoute.
       sourced: true,
       exercises: [
-        { id: '2.1', file: 's2-2-1', label: 'Au magasin', theme: 'blue', mount: 'form' },
-        { id: '2.2', file: 's2-2-2', label: 'En entreprise', theme: 'blue', mount: 'form' },
-        { id: '2.3', file: 's2-2-3', label: 'À l’agence immobilière', theme: 'blue', mount: 'form' }
+        { id: '2.1', file: 's2-2-1', image: 'assets/illustrations/dialogues/magasin.webp', alt: 'Dans un magasin, un vendeur répond à une cliente qui l’écoute, la main sous le menton.', label: 'Au magasin', theme: 'blue', mount: 'form' },
+        { id: '2.2', file: 's2-2-2', image: 'assets/illustrations/dialogues/entreprise.webp', alt: 'Dans un atelier, une commerciale explique quelque chose à un client qui l’écoute, sceptique.', label: 'En entreprise', theme: 'blue', mount: 'form' },
+        { id: '2.3', file: 's2-2-3', image: 'assets/illustrations/dialogues/agence.webp', alt: 'À une table de rendez-vous, une conseillère présente un document sur sa tablette à un client pensif.', label: 'À l’agence immobilière', theme: 'blue', mount: 'form' }
       ]
     },
     {
@@ -42,7 +42,7 @@ window.ATELIER_CATALOG = {
         { id: '3.1', file: 's3-3-1', label: 'L’écho', theme: 'blue', mount: 'form' },
         { id: '3.2', file: 's3-3-2', label: 'Le reflet', theme: 'blue', mount: 'form' },
         { id: '3.3', file: 's3-3-3', label: 'La synthèse', theme: 'blue', mount: 'form' },
-        { id: '3.4', file: 's3-3-4', label: 'Reformulation, ou pas ?', theme: 'blue', mount: 'form' }
+        { id: '3.4', file: 's3-3-4', image: 'assets/illustrations/dialogues/reformulation.webp', alt: 'Un vendeur montre quelque chose sur sa tablette à une cliente qui l’écoute attentivement.', label: 'Reformulation, ou pas ?', theme: 'blue', mount: 'form' }
       ]
     },
     {
@@ -51,10 +51,10 @@ window.ATELIER_CATALOG = {
       // Le rendez-vous des Benali et son corrigé : fiche M1.2.1, activité A3.
       sourced: true,
       exercises: [
-        { id: '4.1', file: 's4-4-1', label: 'Les attitudes de Lucas', theme: 'blue', mount: 'form', image: 'assets/illustrations/s4/rendez-vous-benali.webp', alt: 'Dans une agence immobilière, Lucas reçoit un couple : la femme parle, le mari consulte son téléphone, les bras croisés.', pending: true },
-        { id: '4.2', file: 's4-4-2', label: 'Les signaux manqués', theme: 'blue', mount: 'form', image: 'assets/illustrations/s4/rendez-vous-benali.webp', alt: 'Dans une agence immobilière, Lucas reçoit un couple : la femme parle, le mari consulte son téléphone, les bras croisés.', pending: true },
-        { id: '4.3', file: 's4-4-3', label: 'Pourquoi L7 et L8 changent tout', theme: 'blue', mount: 'form', image: 'assets/illustrations/s4/rendez-vous-benali.webp', alt: 'Dans une agence immobilière, Lucas reçoit un couple : la femme parle, le mari consulte son téléphone, les bras croisés.', pending: true },
-        { id: '4.4', file: 's4-4-4', label: 'Réécrire la réplique L3', theme: 'blue', mount: 'form', image: 'assets/illustrations/s4/rendez-vous-benali.webp', alt: 'Dans une agence immobilière, Lucas reçoit un couple : la femme parle, le mari consulte son téléphone, les bras croisés.', pending: true }
+        { id: '4.1', file: 's4-4-1', label: 'Les attitudes de Lucas', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un conseiller présente des annonces sur sa tablette à une cliente qui réfléchit.' },
+        { id: '4.2', file: 's4-4-2', label: 'Les signaux manqués', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un conseiller présente des annonces sur sa tablette à une cliente qui réfléchit.' },
+        { id: '4.3', file: 's4-4-3', label: 'Pourquoi L7 et L8 changent tout', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un conseiller présente des annonces sur sa tablette à une cliente qui réfléchit.' },
+        { id: '4.4', file: 's4-4-4', label: 'Réécrire la réplique L3', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un conseiller présente des annonces sur sa tablette à une cliente qui réfléchit.' }
       ]
     }
   ]

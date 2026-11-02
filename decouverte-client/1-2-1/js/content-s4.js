@@ -35,10 +35,9 @@
   ];
 
   const ligne = code => LIGNES.find(line => line.label.startsWith(`${code} `));
-  // L'illustration : déposez-la à ce chemin (voir assets/illustrations/COMMENT-REMPLACER-UNE-IMAGE.txt).
   const SCENE = [{ media: {
-    image: 'assets/illustrations/s4/rendez-vous-benali.webp',
-    alt: 'Dans une agence immobilière, Lucas reçoit un couple : la femme parle, le mari consulte son téléphone, les bras croisés.',
+    image: 'assets/illustrations/dialogues/rendez-vous-benali.webp',
+    alt: 'Dans une agence, un conseiller présente des annonces sur sa tablette à une cliente qui réfléchit.',
     placeholder: 'Le rendez-vous des Benali',
     title: 'Le rendez-vous des Benali',
     intro: 'Lucas, conseiller immobilier, reçoit M. et Mme Benali pour un premier rendez-vous. Ce qui est entre crochets décrit leur comportement.',

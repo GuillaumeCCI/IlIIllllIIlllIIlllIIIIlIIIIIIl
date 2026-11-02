@@ -169,7 +169,10 @@
   const CONTRAT = 'Je ne comprends rien à ces contrats. J’ai peur de signer quelque chose qui ne me protège pas vraiment.';
   const SAISIE = 'On perd des heures chaque semaine à ressaisir les commandes à la main.';
   const intrus = (quote, reply, answer, why) => ({
-    scene: { dialogue: [{ who: 'client', label: 'Le client', text: quote }, { who: 'seller', label: 'Le vendeur', text: reply }] },
+    scene: [
+      { image: 'assets/illustrations/dialogues/reformulation.webp', alt: 'Un vendeur montre quelque chose sur sa tablette à une cliente qui l’écoute attentivement.' },
+      { dialogue: [{ who: 'client', label: 'Le client', text: quote }, { who: 'seller', label: 'Le vendeur', text: reply }] }
+    ],
     fields: [{ id: 'type', type: 'choice', label: 'Cette réponse est…', options: REFO, answer, why, whyTitle: 'Pourquoi' }]
   });
 

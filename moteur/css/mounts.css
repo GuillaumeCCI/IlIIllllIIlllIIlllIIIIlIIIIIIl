@@ -567,3 +567,6 @@ button.crash-passage:hover { background: #fff1d6; }
 .sc-media-art.is-missing .sc-media-missing .icon { display: none; }
 .sc-transcript .sc-dialogue { gap: 8px; }
 .sc-transcript .sc-line p { font-size: 1rem; line-height: 1.45; padding: 10px 16px; }
+
+/* Une illustration au-dessus d’un dialogue (mountForm) : assez basse pour garder le dialogue à l’écran. */
+.fm-scene .sc-picture:has(+ .sc-dialogue) img { max-height: 240px; object-position: center 30%; }

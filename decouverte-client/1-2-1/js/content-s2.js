@@ -186,10 +186,16 @@
 
   /* Les onglets « Réponse 1 » à « Réponse 6 », et le nom de celui qui répond. */
   const SELLERS = { '2.1': 'Le vendeur', '2.2': 'Le commercial', '2.3': 'L’agent' };
+  const PICTURES = {
+    '2.1': { image: 'assets/illustrations/dialogues/magasin.webp', alt: 'Dans un magasin, un vendeur répond à une cliente qui l’écoute, la main sous le menton.' },
+    '2.2': { image: 'assets/illustrations/dialogues/entreprise.webp', alt: 'Dans un atelier, une commerciale explique quelque chose à un client qui l’écoute, sceptique.' },
+    '2.3': { image: 'assets/illustrations/dialogues/agence.webp', alt: 'À une table de rendez-vous, une conseillère présente un document sur sa tablette à un client pensif.' }
+  };
   for (const [id, exercise] of Object.entries(S2)) {
     exercise.cases.forEach((kase, i) => {
       kase.tab = `Réponse ${i + 1}`;
       kase.scene.dialogue[1].label = SELLERS[id];
+      kase.scene = [PICTURES[id], kase.scene];
     });
   }
   root.ATELIER_S2 = S2;
