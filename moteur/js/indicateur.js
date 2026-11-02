@@ -184,12 +184,16 @@
       lines.push({ kind: share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: critere.nom, found: unique.slice(0, 4), conseil: critere.conseil });
     }
     earned += listOnly ? criteriaEarned / 2 : criteriaEarned;
+    // Sans aucun élément attendu, la forme ne se coche pas : un texte court
+    // ou une question hors sujet ne doit pas paraître « réussi ».
+    const noSubstance = (bloc.criteres || []).length > 0 && criteriaEarned === 0;
+    const WAIT = 'Ce point comptera dès que votre réponse reprendra un élément attendu.';
 
     if (sentencePoints) {
       max += sentencePoints;
       const share = Math.min(1, phrases.complete / expected);
       formEarned += sentencePoints * share;
-      lines.push({ kind: share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: expected > 1 ? `${expected} phrases complètes` : 'Une phrase complète', sentences: phrases.complete, expected, listOnly, conseil: bloc.phrases && bloc.phrases.conseil });
+      lines.push({ kind: noSubstance ? 'miss' : share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: expected > 1 ? `${expected} phrases complètes` : 'Une phrase complète', sentences: phrases.complete, expected, listOnly, wait: noSubstance, conseil: noSubstance ? WAIT : bloc.phrases && bloc.phrases.conseil });
     }
 
     for (const spec of bloc.regles || []) {
@@ -198,7 +202,7 @@
       max += def.points;
       const ok = def.test(text);
       if (ok) formEarned += def.points;
-      lines.push({ kind: ok ? 'ok' : 'miss', nom: def.nom || 'Consigne', texte: ok ? def.ok : def.ko });
+      lines.push({ kind: ok && !noSubstance ? 'ok' : 'miss', nom: def.nom || 'Consigne', texte: noSubstance ? WAIT : ok ? def.ok : def.ko });
     }
 
     // La forme (phrases, consignes) suit le fond : entière dès que la moitié
@@ -260,7 +264,8 @@
   function line(item) {
     let detail = '';
     if (item.sentences !== undefined) {
-      detail = item.sentences >= item.expected ? ''
+      detail = item.wait ? item.conseil
+        : item.sentences >= item.expected ? ''
         : item.sentences ? `${item.sentences} sur ${item.expected} pour l’instant.`
         : item.conseil || 'Écrivez la phrase entière, telle que vous la diriez au client.';
     } else if (item.texte) detail = item.kind === 'ok' ? '' : item.texte;

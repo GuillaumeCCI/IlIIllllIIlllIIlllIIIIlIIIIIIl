@@ -50,7 +50,7 @@ window.ATELIER_BRIEFINGS = {
     mission: 'Trois clients vous parlent. Pour chacun, reformulez en écho : reprenez un mot important de sa phrase, sur un ton de question, pour qu’il en dise plus.',
     method: 'Un client à la fois : lisez, écrivez votre écho, passez au suivant.',
     situation: 'Un cycliste qui va travailler à vélo, une famille qui prépare ses vacances, une gérante de restaurant qui parle de son fournisseur. Chacun glisse un mot qui en dit long.',
-    task: 'Trois échos à écrire, de quelques mots chacun. Ni conseil, ni produit : seulement le mot du client, en question.',
+    task: 'Trois échos à écrire, de quelques mots chacun. Ni conseil, ni produit : le mot du client en question, puis une courte relance.',
     criteria: ['Un mot du client', 'Une question', 'Fidélité aux mots du client']
   },
   's3-3.2': {

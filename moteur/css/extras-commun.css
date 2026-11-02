@@ -235,7 +235,7 @@ html[data-embed="solo"] #main { padding-top: 20px; }
 /* ── Ombre portée en bas à droite ───────────────────────────────────────
    Les illustrations de mise en situation et les bulles posées dessus
    reçoivent une ombre décalée vers le bas et la droite. */
-#main :where(.illustration, .case-scene, .hidden-scene, .objection-scene, .sc-picture, .studio-picture, .tournoi-picture, .call-scene, .cmp-banner, .cmp-scene, .media-scene, .soncas-scene, .fm-review-scene) { box-shadow: 5px 7px 16px rgb(16 22 60 / 11%), 1px 2px 4px rgb(16 22 60 / 6%); }
+#main :where(.illustration, .case-scene, .hidden-scene, .objection-scene, .sc-picture, .studio-picture, .tournoi-picture, .call-scene, .cmp-banner, .cmp-scene, .media-scene, .soncas-scene) { box-shadow: 5px 7px 16px rgb(16 22 60 / 11%), 1px 2px 4px rgb(16 22 60 / 6%); }
 
 #main :where(.hidden-bubble, .cmp-bubble, .soncas-bubble, .sc-bubble, .over-bubble, .crash-bubble, .six-bubble, .repair-bubble) { box-shadow: 3px 5px 12px rgb(16 22 60 / 13%), 1px 1px 3px rgb(16 22 60 / 6%); }
 

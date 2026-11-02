@@ -49,11 +49,11 @@
       submitLabel: 'Client suivant',
       cases: [
         client('Le cycliste', 'Le client, dans un magasin de vélos électriques', 'Je fais 25 kilomètres par jour pour aller au travail, avec une côte terrible à la fin.',
-          'Une côte terrible ?', 'Votre écho…', 'client-tasse'),
+          'Une côte terrible ? C’est-à-dire ?', 'Votre écho…', 'client-tasse'),
         client('La famille', 'La cliente, dans une agence de voyages', 'On voudrait partir en famille cet été, mais pas comme l’an dernier : c’était épuisant.',
-          'Épuisant ?', 'Votre écho…', 'client-pull-clair'),
+          'C’était épuisant ? Qu’est-ce qui vous a fatiguée ?', 'Votre écho…', 'client-pull-clair'),
         client('La restauratrice', 'La gérante d’un restaurant, au téléphone avec un fournisseur', 'Avec notre fournisseur actuel, les livraisons, c’est toujours la loterie.',
-          'La loterie ?', 'Votre écho…', 'client-chignon')
+          'Toujours la loterie ? Comment ça se passe ?', 'Votre écho…', 'client-chignon')
       ],
       selfCheck: {
         title: 'Relisez vos trois échos',
@@ -64,7 +64,7 @@
           fidelite
         ]
       },
-      keyPoint: 'À retenir : l’écho est la reformulation la plus courte. Il ne propose rien : il laisse le client préciser lui-même. « Une côte terrible ? » vous apprendra la pente, la distance, s’il arrive en sueur au bureau… autant d’indices sur son vrai besoin. Erreur fréquente : « Ah, il vous faut un moteur puissant ! » n’est pas une reformulation, c’est déjà une solution.',
+      keyPoint: 'À retenir : l’écho est la reformulation la plus courte. Il ne propose rien : il laisse le client préciser lui-même. On reprend son mot, puis une courte relance (« c’est-à-dire ? ») : le mot seul, renvoyé sec, sonne comme un perroquet. « Une côte terrible ? C’est-à-dire ? » vous apprendra la pente, la distance, s’il arrive en sueur au bureau… autant d’indices sur son vrai besoin. Erreur fréquente : « Ah, il vous faut un moteur puissant ! » n’est pas une reformulation, c’est déjà une solution.',
       feedback: 'Votre écho reprend-il un mot du client, sur un ton de question, sans rien ajouter ?'
     },
 
