@@ -89,8 +89,9 @@
       countLabel: 'reflets écrits',
       submitLabel: 'Client suivant',
       cases: [
-        client('L’acheteuse', 'Une cliente, venue avec son mari dans une agence immobilière', 'On a déjà visité quinze appartements. À chaque fois on a un coup de cœur, et on se fait doubler par un autre acheteur.',
-          'Vous avez l’impression de toujours arriver trop tard, et ça finit par être décourageant.', 'Votre reflet…', 'client-cheveux-gris'),
+        client('La rénovation', 'Une cliente, dans un showroom de carrelage, pour rénover sa maison', 'Ça fait trois fois qu’on a un coup de cœur pour un carrelage. À chaque fois, le temps de se décider, il n’est plus disponible.',
+          'Vous avez l’impression de toujours arriver trop tard, et ça finit par être décourageant.', 'Votre reflet…',
+          { image: 'assets/illustrations/dialogues/showroom-carrelage.webp', alt: 'Dans un showroom de matériaux, une cliente pensive écoute un vendeur qui lui montre des échantillons.' }),
         client('L’automobiliste', 'Le client, chez son concessionnaire automobile', 'C’est la troisième fois que je reviens pour le même bruit. On me dit que c’est réglé, et deux jours après, ça recommence.',
           'Vous en avez assez de revenir pour rien, et vous avez le sentiment de ne pas être pris au sérieux.', 'Votre reflet…',
           { image: 'assets/illustrations/dialogues/concession-automobile.webp', alt: 'Chez un concessionnaire, un client pensif écoute une conseillère qui consulte sa tablette.' }),
@@ -107,7 +108,7 @@
           fidelite
         ]
       },
-      keyPoint: 'À retenir : le reflet nomme l’émotion sans la juger. « Le marché est tendu, il faut vous décider plus vite » n’est pas un reflet : c’est une évaluation, le vendeur fait la leçon. « Vous avez l’impression d’arriver toujours trop tard » montre au client qu’on a compris ce qu’il vit.',
+      keyPoint: 'À retenir : le reflet nomme l’émotion sans la juger. « Il fallait vous décider plus vite » n’est pas un reflet : c’est une évaluation, le vendeur fait la leçon. « Vous avez l’impression d’arriver toujours trop tard » montre au client qu’on a compris ce qu’il vit.',
       feedback: 'Votre reflet nomme-t-il ce que ressent le client, sans conseil ni jugement ?'
     },
 

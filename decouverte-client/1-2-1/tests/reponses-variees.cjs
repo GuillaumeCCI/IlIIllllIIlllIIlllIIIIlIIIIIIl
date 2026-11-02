@@ -31,15 +31,15 @@ module.exports = {
     ],
     's3-3.2': [
       { c0_text: 'Vous avez l’impression de toujours arriver trop tard, et c’est décourageant.', c1_text: 'Vous en avez assez de revenir pour le même bruit, vous avez le sentiment qu’on ne vous prend pas au sérieux.', c2_text: 'Vous êtes déçue de ces formations et vous avez peur de dépenser encore pour rien.' },
-      { c0_text: 'Quinze visites et à chaque fois un autre acheteur passe devant : vous êtes découragés.', c1_text: 'Revenir trois fois pour le même problème, c’est usant, vous êtes agacé.', c2_text: 'Vous avez payé deux formations qui n’ont rien apporté, vous êtes méfiante maintenant.' },
-      { c0_text: 'Vous êtes frustrés de vous faire doubler à chaque coup de cœur.', c1_text: 'Vous êtes exaspéré : on vous dit que c’est réglé et le bruit revient.', c2_text: 'Vous craignez de payer encore une formation dont vos équipes ne retireront rien.' },
-      { c0_text: 'J’entends que vous êtes las de toutes ces visites qui ne donnent rien.', c1_text: 'Vous avez le sentiment de revenir pour rien, et ça vous énerve.', c2_text: 'Vous êtes échaudée par les deux formations de l’an dernier.' },
-      { c0_text: 'Ça doit être décourageant d’avoir un coup de cœur et de voir l’appartement vous échapper.', c1_text: 'Vous êtes à bout, ce bruit revient toujours malgré la réparation.', c2_text: 'Vous avez l’impression d’avoir dépensé votre budget pour rien.' },
-      { c0_text: 'Vous avez peur de rater encore le prochain appartement.', c1_text: 'Vous êtes mécontent, c’est la troisième fois que vous revenez.', c2_text: 'Vous êtes déçue, vos équipes n’ont rien retiré de ces formations.' },
+      { c0_text: 'Trois coups de cœur et à chaque fois le carrelage n’est plus là : vous êtes découragée.', c1_text: 'Revenir trois fois pour le même problème, c’est usant, vous êtes agacé.', c2_text: 'Vous avez payé deux formations qui n’ont rien apporté, vous êtes méfiante maintenant.' },
+      { c0_text: 'Vous êtes frustrée de le voir partir à chaque coup de cœur.', c1_text: 'Vous êtes exaspéré : on vous dit que c’est réglé et le bruit revient.', c2_text: 'Vous craignez de payer encore une formation dont vos équipes ne retireront rien.' },
+      { c0_text: 'J’entends que vous êtes lasse de ces coups de cœur qui ne donnent rien.', c1_text: 'Vous avez le sentiment de revenir pour rien, et ça vous énerve.', c2_text: 'Vous êtes échaudée par les deux formations de l’an dernier.' },
+      { c0_text: 'Ça doit être décourageant d’avoir un coup de cœur et de voir le carrelage vous échapper.', c1_text: 'Vous êtes à bout, ce bruit revient toujours malgré la réparation.', c2_text: 'Vous avez l’impression d’avoir dépensé votre budget pour rien.' },
+      { c0_text: 'Vous avez peur de rater encore le prochain carrelage qui vous plaira.', c1_text: 'Vous êtes mécontent, c’est la troisième fois que vous revenez.', c2_text: 'Vous êtes déçue, vos équipes n’ont rien retiré de ces formations.' },
       { c0_text: 'Vous sentez que vous arrivez toujours trop tard, c\'est frustrant.', c1_text: 'Vous avez le sentiment qu\'on ne vous écoute pas au garage.', c2_text: 'Vous n\'avez plus confiance après ces deux formations payées pour rien.' },
-      { c0_text: 'Vous êtes fatigués de visiter sans jamais réussir à acheter.', c1_text: 'Revenir encore et encore, vous en avez marre.', c2_text: 'Vous avez du mal à faire confiance à une nouvelle formation.' },
-      { c0_text: 'Quinze appartements visités, et chaque fois doublés : vous êtes découragés.', c1_text: 'Trois fois le même bruit : vous êtes à bout de patience, vous ne vous sentez pas pris au sérieux.', c2_text: 'Deux formations l’an dernier et aucun résultat : vous êtes déçue et inquiète de recommencer.' },
-      { c0_text: 'C’est usant de se faire passer devant à chaque coup de cœur.', c1_text: 'Ça doit être pénible de revenir pour un bruit qu’on vous disait réparé.', c2_text: 'Vous redoutez de dépenser encore sans que vos équipes en retirent quoi que ce soit.' }
+      { c0_text: 'Vous êtes fatiguée de chercher sans jamais réussir à commander.', c1_text: 'Revenir encore et encore, vous en avez marre.', c2_text: 'Vous avez du mal à faire confiance à une nouvelle formation.' },
+      { c0_text: 'Trois carrelages trouvés, et chaque fois plus disponibles : vous êtes découragée.', c1_text: 'Trois fois le même bruit : vous êtes à bout de patience, vous ne vous sentez pas pris au sérieux.', c2_text: 'Deux formations l’an dernier et aucun résultat : vous êtes déçue et inquiète de recommencer.' },
+      { c0_text: 'C’est usant de rater chaque coup de cœur, le temps de se décider.', c1_text: 'Ça doit être pénible de revenir pour un bruit qu’on vous disait réparé.', c2_text: 'Vous redoutez de dépenser encore sans que vos équipes en retirent quoi que ce soit.' }
     ],
     's3-3.3': [
       { c0_text: 'Si je résume : vous perdez du temps à répondre au téléphone pendant que vous coiffez, et environ trois clientes par semaine ne viennent pas. Vos coiffeuses doivent voir le planning sur leur téléphone. Et il faut que ce soit simple, après l’application trop compliquée. C’est bien ça ?',
@@ -108,9 +108,9 @@ module.exports = {
       { c0_text: 'Ne vous inquiétez pas, tout le monde a des côtes.', c1_text: 'C’est normal, les vacances en famille, c’est fatigant.', c2_text: 'Vous avez raison, changez de fournisseur.' }
     ],
     's3-3.2': [
-      { c0_text: 'Le marché est tendu, il faut vous décider plus vite.', c1_text: 'Ne vous inquiétez pas, cette fois on va trouver.', c2_text: 'Je vous propose notre formation, elle est bien meilleure.' },
-      { c0_text: 'Je vous conseille de faire une offre dès la première visite.', c1_text: 'Je vous propose une remise sur la réparation.', c2_text: 'Notre solution est garantie, vous ne perdrez pas votre argent.' },
-      { c0_text: 'En fait, vous êtes trop exigeants sur les appartements.', c1_text: 'Ça arrive à tout le monde, les voitures font du bruit.', c2_text: 'Vous auriez dû choisir de meilleures formations.' }
+      { c0_text: 'Il fallait vous décider plus vite, c’est tout.', c1_text: 'Ne vous inquiétez pas, cette fois on va trouver.', c2_text: 'Je vous propose notre formation, elle est bien meilleure.' },
+      { c0_text: 'Je vous conseille de commander tout de suite la prochaine fois.', c1_text: 'Je vous propose une remise sur la réparation.', c2_text: 'Notre solution est garantie, vous ne perdrez pas votre argent.' },
+      { c0_text: 'En fait, vous êtes trop lents à vous décider.', c1_text: 'Ça arrive à tout le monde, les voitures font du bruit.', c2_text: 'Vous auriez dû choisir de meilleures formations.' }
     ],
     's3-3.3': [
       { c0_text: 'Je vous propose notre logiciel de réservation à 29 euros par mois, il règle tout.', c1_text: 'Notre machine est la plus fiable du marché, je vous fais un devis.' },
@@ -136,7 +136,7 @@ module.exports = {
 
   motsCles: {
     's3-3.1': { c0_text: 'côte', c1_text: 'épuisant', c2_text: 'loterie' },
-    's3-3.2': { c0_text: 'découragés appartements', c1_text: 'agacé bruit', c2_text: 'déçue formations' },
+    's3-3.2': { c0_text: 'découragée carrelage', c1_text: 'agacé bruit', c2_text: 'déçue formations' },
     's3-3.3': { c0_text: 'téléphone, rendez-vous, planning, simple', c1_text: 'pannes, 300, serveurs, place' },
     's4-4.2': { c1_verifier: 'loin nuit bras' },
     's4-4.3': { c0_pourquoi: 'écho sécurité synthèse' },
@@ -154,7 +154,7 @@ module.exports = {
     ],
     's3-3.2': [
       { c0_text: 'vous avé l impression darivé toujour tro tard, c décourajant', c1_text: 'vous en avez mare de revenir pour rien, vous avez le santiment de pas etre pris au serieu', c2_text: 'vous etes dessu par ces formation et vous avez peur de dépensé encor pour rien' },
-      { c0_text: 'Vous ete décourager de vous faire doublé a chaque cou de coeur.', c1_text: 'Vous etes exaspéré, sa recomence a chaque fois.', c2_text: 'Vous etes déçu, vos équipe nont rien retirer des formations.' },
+      { c0_text: 'Vous ete décourager de le voir partir a chaque cou de coeur.', c1_text: 'Vous etes exaspéré, sa recomence a chaque fois.', c2_text: 'Vous etes déçu, vos équipe nont rien retirer des formations.' },
       { c0_text: 'Vous avez l\'impresion d\'arriver toujours trop tard et sa vous décourage', c1_text: 'Vous en avez asser de revenir pour le meme bruit', c2_text: 'Vous avez peur de payé encore pour rien apres ces deux formations' }
     ],
     's3-3.3': [

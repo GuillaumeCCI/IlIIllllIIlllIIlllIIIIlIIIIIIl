@@ -519,6 +519,13 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
   .client-card-mark { width: 42px; }
   .client-card-quote .client-card-mark.is-closing { width: 32px; margin-left: 2px; }
 }
+/* Carte moyenne (colonne d’un écran côte à côte) : portrait au-dessus mais
+   moins haut, marges resserrées, pour que la réplique se lise sans défiler. */
+@container (min-width: 380px) and (max-width: 640px) {
+  #main .client-card:not(.no-portrait) .client-card-who { padding-top: 10px; }
+  #main .client-card:not(.no-portrait) .client-card-who img { max-height: 125px; }
+  #main .client-card:not(.no-portrait) .client-card-said { padding: 8px 0 18px; }
+}
 
 /* ── Menus déroulants (exercise.js, enhanceSelect) ──────────────────────
    Chaque <select> d'exercice est doublé d'une liste à nous : bouton bleu

@@ -519,6 +519,9 @@ button.crash-passage:hover { background: #fff1d6; }
 #main .fm-airy .fm-tab-n { width: 48px; height: 48px; font-size: 1.05rem; }
 #main .fm-airy .fm-tab-line { display: block; flex: 1; min-width: 20px; height: 1px; margin: 0 14px; background: #c9d3e8; }
 .fm-airy .fm-panel { padding: 36px 56px 40px; }
+/* Côte à côte (scène | réponse) : pas de grand vide au-dessus, pour que la
+   réplique du client se lise en entier sans défiler. */
+.fm-airy .fm-panel.is-side { padding-top: 4px; }
 .fm-airy .fm-title { font-size: clamp(1.6rem, 2.3vw, 2.1rem); }
 .fm-airy .fm-main { gap: 18px; }
 @media (max-width: 900px) { #main .fm-airy .fm-tabs { flex-wrap: wrap; gap: 8px; } #main .fm-airy .fm-tab-line { display: none; } .fm-airy .fm-panel { padding: 24px; } }

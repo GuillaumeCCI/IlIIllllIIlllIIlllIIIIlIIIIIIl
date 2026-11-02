@@ -98,8 +98,8 @@
 
     // S3 3.2 · Le reflet, sur trois clients.
     's3-3.2': { integre: true, blocs: [
-      reflet('L’acheteuse', 'c0_text', ['visité', 'visites', 'visiter', 'quinze', '15', 'appartements', 'appartement', 'coup de cœur', 'coups de cœur',
-        'doubler', 'doublés', 'doublé', 'devancé*', 'autre acheteur', 'autres acheteurs', 'trop tard', 'à chaque fois', 'chaque fois', 'passer devant',
+      reflet('La rénovation', 'c0_text', ['carrelage', 'carrelages', 'trois fois', 'trois', 'coup de cœur', 'coups de cœur', 'plus disponible', 'disponible',
+        'rupture', 'épuisé', 'parti', 'déjà vendu', 'trop tard', 'à chaque fois', 'chaque fois', 'passer devant',
         'vous échappe', 'échappe', 'vous filer', 'filer', 'rater', 'ratez', 'manquer', 'perdre', 'perdez']),
       reflet('L’automobiliste', 'c1_text', ['troisième fois', 'trois fois', 'même bruit', 'bruit', 'revenir', 'revenez', 'revenu', 'pour rien', 'réglé',
         'réparé', 'réparation', 'deux jours', 'recommence', 'revient', 'toujours là', 'garage', 'voiture', 'encore', 'à chaque fois', 'problème']),
