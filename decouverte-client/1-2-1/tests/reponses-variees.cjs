@@ -18,7 +18,16 @@ module.exports = {
       { c0_text: 'La côte est terrible ?', c1_text: 'Vous dites épuisant ?', c2_text: 'Vous dites la loterie ?' },
       { c0_text: 'Une côte terrible, à la fin ?', c1_text: 'Épuisant, comment ça ?', c2_text: 'La loterie, à ce point ?' },
       { c0_text: 'Terrible, cette côte ?', c1_text: 'C\'était épuisant ?', c2_text: 'C’est la loterie, vraiment ?' },
-      { c0_text: 'Une côte terrible ? C’est-à-dire ?', c1_text: 'Épuisant ? Qu’est-ce qui l’était ?', c2_text: 'La loterie ? C’est-à-dire ?' }
+      { c0_text: 'Une côte terrible ? C’est-à-dire ?', c1_text: 'Épuisant ? Qu’est-ce qui l’était ?', c2_text: 'La loterie ? C’est-à-dire ?' },
+      // Le mot du client, puis une courte relance : la forme la plus naturelle à l'oral.
+      { c0_text: 'Une côte terrible ? Racontez-moi.', c1_text: 'C’était épuisant ? Qu’est-ce qui s’est passé ?', c2_text: 'Toujours la loterie ? Qu’est-ce qui se passe ?' },
+      { c0_text: 'Une côte terrible ? Qu’entendez-vous par là ?', c1_text: 'Épuisant ? Vous pouvez m’en dire plus ?', c2_text: 'La loterie, les livraisons ? Qu’entendez-vous par là ?' },
+      { c0_text: 'Une côte terrible, c’est-à-dire ? Elle est longue, raide ?', c1_text: 'Pas comme l’an dernier ? Qu’est-ce qui était épuisant ?', c2_text: 'Les livraisons, c’est la loterie ? Racontez-moi une livraison type.' },
+      { c0_text: '25 kilomètres avec une côte terrible ? Comment ça se passe pour vous ?', c1_text: 'L’an dernier, c’était épuisant ? Racontez-moi comment ça s’est passé.', c2_text: 'Toujours la loterie, vos livraisons ? Qu’est-ce qui coince le plus ?' },
+      { c0_text: "Une cote terrible ? C'est-a-dire ?", c1_text: "C'etait epuisant ? Qu'est-ce qui vous a fatiguee ?", c2_text: "La loterie ? C'est-a-dire ?" },
+      { c0_text: 'une côte terrible? cad?', c1_text: 'épuisant? comment ça?', c2_text: 'la loterie? cad?' },
+      { c0_text: 'Une côte terrible ? Qu’est-ce qui est le plus dur ?', c1_text: 'Épuisant, vos vacances ? Qu’est-ce qui a coincé ?', c2_text: 'La loterie ? Qu’est-ce qui ne va pas, concrètement ?' },
+      { c0_text: 'Terrible à quel point, cette côte ?', c1_text: 'Épuisant pour toute la famille ? Racontez-moi.', c2_text: 'La loterie, avec votre fournisseur actuel ? Comment ça se passe ?' }
     ],
     's3-3.2': [
       { c0_text: 'Vous avez l’impression de toujours arriver trop tard, et c’est décourageant.', c1_text: 'Vous en avez assez de revenir pour le même bruit, vous avez le sentiment qu’on ne vous prend pas au sérieux.', c2_text: 'Vous êtes déçue de ces formations et vous avez peur de dépenser encore pour rien.' },
