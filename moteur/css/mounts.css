@@ -568,3 +568,21 @@ button.crash-passage:hover { background: #fff1d6; }
 .sc-transcript .sc-dialogue { gap: 8px; }
 .sc-transcript .sc-line p { font-size: 1rem; line-height: 1.45; padding: 10px 16px; }
 
+
+/* La transcription en conversation : le client à gauche, le vendeur à droite ;
+   les répliques arrivent en cascade, chacune glissant depuis son côté. */
+.sc-transcript .sc-dialogue { gap: 10px; }
+.sc-transcript .sc-line { width: min(86%, 560px); animation: sc-from-left .45s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 140ms); }
+.sc-transcript .sc-line.is-seller { margin-left: auto; grid-template-columns: minmax(0, 1fr) 82px; animation-name: sc-from-right; }
+.sc-transcript .sc-line.is-seller .sc-avatar { order: 2; }
+@keyframes sc-from-left { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
+@keyframes sc-from-right { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .sc-transcript .sc-line { animation: none; } }
+@media (max-width: 620px) { .sc-transcript .sc-line { width: 94%; grid-template-columns: 56px minmax(0, 1fr); } .sc-transcript .sc-line.is-seller { grid-template-columns: minmax(0, 1fr) 56px; } }
+
+/* Une étiquette longue (corrigé des éléments à repérer, petits écrans) passe à la ligne. */
+.fm-chips-review .mark { white-space: normal; text-align: left; }
+@media (max-width: 600px) { .mark { white-space: normal; } }
+
+/* Téléphone : les choix longs sur une seule colonne. */
+@media (max-width: 600px) { .fm-chips.cols-2 { grid-template-columns: minmax(0, 1fr); } }

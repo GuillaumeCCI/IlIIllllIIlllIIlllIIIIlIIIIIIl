@@ -419,3 +419,11 @@
 .ear-eyebrow { color: var(--accent); }
 .ear-client h2, .ear-quote { color: var(--navy); }
 .ear-topic, .ear-diagnosis-label { color: #5b6a8f; }
+
+/* Tablette : « À chaque étape, son rôle » empile ses deux panneaux plus tôt, pour que
+   les noms des étapes tiennent dans leurs cartes. */
+@media (max-width: 1100px) { .role-layout { grid-template-columns: minmax(0, 1fr); } }
+.role-name { overflow-wrap: anywhere; }
+
+/* Téléphone : la barre du haut de « Écoutez le client » passe à la ligne au lieu de déborder. */
+.ear-top-right, .ear-dots { flex-wrap: wrap; min-width: 0; }

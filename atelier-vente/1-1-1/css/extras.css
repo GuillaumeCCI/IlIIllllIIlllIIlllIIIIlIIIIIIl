@@ -543,3 +543,14 @@
 @media (max-width: 760px) {
   .an-row.is-half { grid-template-columns: 1fr; }
 }
+
+/* Petits écrans : les écrans en étapes (S2 D notamment) passent sur une colonne ;
+   les règles ci-dessus, plus fortes, l’empêchaient. */
+@media (max-width: 900px) { #main .step-layout, #main .porter-layout { grid-template-columns: minmax(0, 1fr); } }
+
+/* Téléphone : les boutons de la colonne de droite (S1 B, S1 D) passent à la ligne. */
+.wiz-aside-tools { flex-wrap: wrap; min-width: 0; }
+@media (max-width: 480px) { .wiz-aside-head .step-pill { max-width: 100%; flex-wrap: wrap; } }
+
+/* Petits écrans : le repère « Repéré / Pas repéré » passe à la ligne au lieu de déborder. */
+@media (max-width: 600px) { .an-seen { white-space: normal; } }

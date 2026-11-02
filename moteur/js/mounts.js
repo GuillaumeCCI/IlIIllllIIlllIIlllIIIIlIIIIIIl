@@ -52,7 +52,8 @@
    *   { facts: [{ symbol, text }], title }         une liste de repères. */
   const MEDIA = [];
   // La transcription reprend l'affichage des dialogues de scene().
-  const dialogueHtml = lines => scene({ dialogue: lines });
+  // Chaque réplique porte son rang (--i) : elles arrivent en cascade, chacune de son côté.
+  const dialogueHtml = lines => { let i = 0; return scene({ dialogue: lines }).replace(/<li class="sc-line/g, () => `<li style="--i:${i++}" class="sc-line`); };
   // Ce que lit la voix : qui parle, puis ses mots, sans les indications entre crochets.
   const spoken = lines => lines.map(line => `${String(line.label || '').replace(/^L\d+ · /, '')}. ${line.text.replace(/\[[^\]]*\]/g, ' ')}`).join(' ');
   function mediaBlock(block) {

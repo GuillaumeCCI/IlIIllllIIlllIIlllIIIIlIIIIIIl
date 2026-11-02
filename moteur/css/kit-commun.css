@@ -384,3 +384,11 @@
 .k-matrix tr.is-arriving { animation: matrix-row-in .4s ease-out; }
 @keyframes matrix-row-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .k-matrix tr.is-arriving { animation: none; } }
+
+/* Téléphone : le titre prend toute la largeur, les boutons de l’en-tête (Le contexte,
+   Visite guidée, avancement) passent dessous au lieu d’écraser le titre. */
+@media (max-width: 760px) {
+  .k-head { flex-wrap: wrap; }
+  .k-head-text { flex: 1 1 auto; width: 100%; }
+  .k-head-aside { margin-left: 0; padding-top: 0; text-align: left; max-width: 100%; }
+}
