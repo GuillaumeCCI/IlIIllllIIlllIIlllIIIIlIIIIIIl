@@ -76,5 +76,40 @@ window.ATELIER_BRIEFINGS = {
     situation: 'Les clients parlent d’une offre concurrente, de leur mal de dos, d’un contrat d’assurance et de commandes ressaisies à la main.',
     task: 'Huit réponses à juger. Le corrigé explique chacune.',
     criteria: ['Repérer une vraie reformulation', 'Repérer ce qui s’y ajoute']
+  },
+
+  /* ══ SÉRIE 4 · ANALYSER UN ENTRETIEN ═════════════════════════════════ */
+
+  's4-4.1': {
+    lede: { key: 'Sept répliques,', rest: 'sept attitudes à reconnaître.' },
+    mission: 'Lucas, conseiller immobilier, reçoit M. et Mme Benali. Pour chacune de ses répliques, de L2 à L8, trouvez son attitude d’écoute.',
+    method: 'L’entretien reste affiché, la réplique à analyser est surlignée.',
+    situation: 'Le couple cherche une maison avec un jardin, pour environ 280 000 €. Lucas enchaîne les maladresses, puis se rattrape.',
+    task: 'Sept répliques à analyser : évaluation, interprétation, soutien, enquête, solution ou compréhension.',
+    criteria: ['La bonne attitude pour chaque réplique']
+  },
+  's4-4.2': {
+    lede: { key: 'Un geste, un soupir, trois mots.', rest: 'Lucas n’a rien vu.' },
+    mission: 'Dans l’entretien de Lucas avec les Benali, repérez les signaux du couple qu’il n’a pas exploités avant L7. Puis écrivez la question qui vous aurait permis d’en vérifier un.',
+    method: 'Cliquez sur les signaux, puis écrivez votre question.',
+    situation: 'Le couple montre beaucoup de choses sans les dire : des gestes, un ton, des mots glissés en passant.',
+    task: 'Au moins trois signaux à repérer, puis une question pour en vérifier un, au lieu de le supposer.',
+    criteria: ['Les signaux manqués', 'Signal vérifié, pas supposé']
+  },
+  's4-4.3': {
+    lede: { key: 'Deux répliques', rest: 'et tout bascule.' },
+    mission: 'À la fin de l’entretien, les répliques L7 et L8 de Lucas retournent la situation. Expliquez pourquoi.',
+    method: 'Relisez la fin de l’entretien, puis rédigez votre analyse.',
+    situation: 'Après une série de maladresses, Lucas revient sur un mot de M. Benali. Le couple se détend et confirme sa synthèse.',
+    task: 'Quelques phrases : ce que fait Lucas en L7 et L8, et ce que ça change pour le couple.',
+    criteria: ['Les mots du client repris', 'M. Benali enfin écouté', 'Le vrai besoin découvert', 'La synthèse validée']
+  },
+  's4-4.4': {
+    lede: { key: '« Comme tout le monde ! »', rest: 'Et si Lucas avait écouté ?' },
+    mission: 'En L3, Lucas juge le souhait du couple. Réécrivez sa réplique avec une attitude de compréhension.',
+    method: 'La réplique L3 est surlignée dans l’entretien : écrivez ce que Lucas aurait pu dire.',
+    situation: 'M. Benali vient de dire « Et pas trop loin », sans lever les yeux de son téléphone. Lucas répond : « comme tout le monde ».',
+    task: 'Une réplique qui reprend le mot du client, ne juge pas et l’invite à préciser.',
+    criteria: ['Le mot du client repris', 'Une invitation à préciser', 'Tourné vers M. Benali']
   }
 };

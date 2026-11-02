@@ -231,7 +231,11 @@
     's3-3.1': () => writePreview(3),
     's3-3.2': () => writePreview(3),
     's3-3.3': () => writePreview(2),
-    's3-3.4': () => choicePreview(2)
+    's3-3.4': () => choicePreview(2),
+    's4-4.1': () => choicePreview(6),
+    's4-4.2': () => choicePreview(4),
+    's4-4.3': () => writePreview(1),
+    's4-4.4': () => writePreview(1)
   };
 
   const preview = key => (MAP[key] ? MAP[key]() : '');

@@ -35,7 +35,7 @@
     mots: ['il vous faut', 'il vous faudrait', 'il faut que vous', 'je vous propose', 'je vous conseille', 'je vous recommande', 'je vous suggère',
       'nous avons', 'nous proposons', 'on a ce qu’il', 'j’ai ce qu’il', 'j’ai exactement', 'notre modèle', 'nos modèles', 'notre offre', 'notre solution',
       'notre logiciel', 'notre application', 'notre machine', 'notre matelas', 'nos contrats', 'notre gamme', 'prenez', 'essayez', 'optez',
-      'la solution', 'une solution', 'moteur', 'batterie', 'promotion', 'promo', 'remise', 'réduction', 'tarif', 'prix', '€', 'euros', 'abonnement',
+      'la solution', 'une solution', 'un moteur', 'la batterie', 'promotion', 'promo', 'remise', 'réduction', 'tarif', 'prix', '€', 'euros', 'abonnement',
       'ce qu’il vous faut', 'je vais vous montrer', 'regardez', 'on va trouver', 'je m’en occupe', 'ça règle', 'réglera'],
     conseil: 'Une reformulation ne propose rien : elle redit seulement ce que dit le client.' };
 
@@ -130,6 +130,69 @@
         ['Peu de place au comptoir', ['place', 'peu de place', 'comptoir', 'derrière le comptoir', 'espace', 'encombrement', 'encombrante', 'compact',
           'compacte', 'petite', 'réduite', 'étroit', 'exigu', 'taille']]
       ])
+    ] },
+
+    // S4 4.2 · Vérifier un signal par une question, au lieu de le supposer.
+    's4-4.2': { integre: true, blocs: [
+      { titre: 'Vérifier un signal', champs: ['c0_verifier'],
+        criteres: [
+          { nom: 'Un signal du couple', points: 3, conseil: 'Partez d’un signal précis : « pas trop loin », le travail de nuit, les bras croisés, le soupir…',
+            mots: ['pas trop loin', 'trop loin', 'loin', 'distance', 'trajet', 'route', 'temps de trajet', 'nuit', 'de nuit', '23 heures', '23 h', 'horaires',
+              'hôpital', 'travail', 'gardes', 'téléphone', 'bras croisés', 'bras', 'soupir', 'soupirez', 'silence', 'sèchement', 'habitudes', 'proposition',
+              'cette maison', 'la maison', 'monsieur', 'ce qui vous gêne', 'ce qui vous préoccupe', 'préoccupe', 'compte le plus', 'important pour vous'] },
+          { nom: 'Une vérification, pas une supposition', points: 3, conseil: 'Demandez-lui : « c’est par rapport à quoi ? », « vous voulez dire… ? ».',
+            mots: ['de quoi', 'exactement', 'précisément', 'à quoi', 'par rapport à quoi', 'par rapport à', 'vous voulez dire', 'qu’entendez-vous', 'qu’est-ce que vous entendez', 'c’est-à-dire', 'c’est bien',
+              'est-ce que', 'est-ce', 'qu’est-ce qui', 'qu’est-ce que', 'quand vous dites', 'si je comprends', 'ai-je bien compris', 'comment', 'pourquoi',
+              'pouvez-vous', 'pourriez-vous', 'dites-moi', 'précisez', 'préciser', 'quel', 'quelle', 'combien', 'est-il', 'est-elle', 'avez-vous', 'vous préoccupe',
+              'vous inquiète', 'vous gêne', 'qui compte'] }
+        ],
+        // Une question courte sans verbe (« Pas trop loin de quoi ? ») est juste : pas de phrase exigée.
+        phrases: { points: 0 },
+        regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 2 }],
+        pieges: [PIEGE_SOLUTION, PIEGE_JUGEMENT] }
+    ] },
+
+    // S4 4.3 · Pourquoi L7 et L8 retournent la situation.
+    's4-4.3': { integre: true, blocs: [
+      { titre: 'Pourquoi L7 et L8 changent tout', champs: ['c0_pourquoi'],
+        criteres: [
+          { nom: 'Les mots du client repris', points: 2, conseil: 'Dites que Lucas reprend les mots exacts de M. Benali : « pas trop loin ».',
+            mots: ['pas trop loin', 'ses mots', 'ses propres mots', 'mots exacts', 'mots du client', 'reprend', 'reprise', 'répète', 'écho', 'reformul*', 'cite'] },
+          { nom: 'M. Benali enfin écouté', points: 2, conseil: 'Dites que Lucas s’adresse enfin à M. Benali, qu’il avait écarté.',
+            mots: ['s’adresse', 'adresse', 'directement', 'monsieur', 'm. benali', 'le mari', 'son mari', 'écarté', 'ignoré', 'oublié', 'inclut', 'implique',
+              'entendu', 'écouté', 'considéré', 'pris en compte', 'se sent compris', 'se sent écouté', 'reconnu'] },
+          { nom: 'Le vrai besoin découvert', points: 2, conseil: 'Nommez le vrai besoin : la sécurité du trajet de nuit.',
+            mots: ['sécurité', 'en sécurité', 'sécuritaire', 'trajet de nuit', 'trajet', 'de nuit', 'endormi', 'endormir', 'fatigue', 'fatigué', 'danger', 'dangereux',
+              'accident', 'vingt minutes', '20 minutes', 'hôpital', 'vrai besoin', 'besoin réel', 'véritable besoin', 'vraie raison', 'gardes', 'pas une question d’habitudes'] },
+          { nom: 'La synthèse validée', points: 2, conseil: 'Dites que L8 résume tout et le fait valider par le couple.',
+            mots: ['synthèse', 'résume', 'résumé', 'récapitule', 'valide', 'valider', 'validé', 'validée', 'validation', 'confirme', 'confirment', 'c’est bien ça',
+              'les deux', 'le couple', 'tous les deux', 'critère', 'critères', 'priorité', 'premier critère', 'hors cible', 'à côté'] },
+          { nom: 'L’effet sur le couple', points: 1, conseil: 'Montrez l’effet : il décroise les bras, il se confie.',
+            mots: ['décroise', 'bras', 'se détend', 'détend', 'détente', 'confiance', 'se confie', 'confie', 'ouvre', 's’ouvre', 'parle', 'livre', 'explique',
+              'raconte', 'apaise', 'tension'] }
+        ],
+        phrases: { attendues: 2, points: 1 },
+        pieges: [PIEGE_JUGEMENT] }
+    ] },
+
+    // S4 4.4 · La réplique L3, réécrite avec une attitude de compréhension.
+    's4-4.4': { integre: true, blocs: [
+      { titre: 'Votre réplique à la place de L3', champs: ['c0_l3'],
+        criteres: [
+          { nom: 'Le mot du client repris', points: 3, conseil: 'Reprenez le mot de M. Benali : « pas trop loin ».',
+            mots: ['pas trop loin', 'trop loin', 'loin', 'distance', 'proximité', 'proche', 'près', 'éloigné', 'trajet'] },
+          { nom: 'Une invitation à préciser', points: 3, conseil: 'Invitez-le à préciser : « par rapport à quoi ? ».',
+            mots: ['de quoi', 'exactement', 'précisément', 'à quoi', 'surtout', 'par rapport à quoi', 'par rapport à', 'c’est-à-dire', 'qu’entendez-vous', 'vous voulez dire', 'qu’est-ce qui', 'qu’est-ce que', 'pourquoi',
+              'comment', 'pouvez-vous', 'pourriez-vous', 'dites-m’en', 'dites-moi', 'précisez', 'préciser', 'quel', 'quelle', 'combien', 'compte', 'important',
+              'qui compte', 'préoccupe', 'est-ce que'] },
+          { nom: 'Tourné vers M. Benali', points: 1, conseil: 'Adressez-vous à lui : « Monsieur », « pour vous ».',
+            mots: ['monsieur', 'pour vous', 'vous', 'votre'] }
+        ],
+        phrases: { points: 0 },
+        regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 2 }],
+        pieges: [PIEGE_SOLUTION, PIEGE_JUGEMENT,
+          { nom: 'Le jugement de L3', points: 3, mots: ['comme tout le monde', 'soyons réalistes', 'réaliste', 'il faudra', 's’éloigner', 'impossible', 'pas possible',
+            'avec votre budget', 'avec 280 000', 'tout le monde veut'], conseil: 'Ne reprenez pas le jugement de L3 : écoutez avant de conclure.' }] }
     ] }
   };
 })(typeof window !== 'undefined' ? window : globalThis);

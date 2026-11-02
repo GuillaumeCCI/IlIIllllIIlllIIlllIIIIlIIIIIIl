@@ -53,6 +53,42 @@ module.exports = {
         c1_text: 'Ce que je retiens : la machine tombe en panne le week-end, il faut tenir trois cents cafés par jour, vos serveurs changent souvent et doivent l’utiliser facilement, et vous avez peu de place. Je ne me trompe pas ?' },
       { c0_text: 'Si je résume bien : les appels vous dérangent quand vous coiffez, trois rendez-vous manqués chaque semaine, le planning doit être consultable par vos coiffeuses sur leur téléphone, et l’outil doit être simple, pas comme l’application déjà essayée. Vous confirmez ?',
         c1_text: 'Si je résume bien : des pannes presque chaque week-end, trois cents cafés par jour, des serveurs qui se renouvellent et une prise en main facile, et un comptoir réduit. Vous confirmez ?' }
+    ],
+    's4-4.2': [
+      { c0_verifier: 'Quand vous dites pas trop loin, c’est par rapport à quoi ?' },
+      { c0_verifier: 'Monsieur, pas trop loin, ça veut dire combien de temps de trajet pour vous ?' },
+      { c0_verifier: 'Vous travaillez de nuit : est-ce que le trajet du retour vous préoccupe ?' },
+      { c0_verifier: 'Monsieur, qu’est-ce qui compte le plus pour vous dans ce projet ?' },
+      { c0_verifier: 'Je vois que cette maison ne vous convainc pas. Qu’est-ce qui vous gêne ?' },
+      { c0_verifier: "Pas trop loin de quoi, exactement ? De l'hôpital ?" },
+      { c0_verifier: 'Quand vous rentrez à 23 heures, combien de temps de route est acceptable pour vous ?' },
+      { c0_verifier: 'Pouvez-vous me préciser ce que vous entendez par pas trop loin ?' },
+      { c0_verifier: 'J’ai l’impression que ma proposition ne vous parle pas, est-ce que je me trompe ?' },
+      { c0_verifier: 'Monsieur, la distance est importante pour vous, par rapport à votre travail de nuit ?' }
+    ],
+    's4-4.3': [
+      { c0_pourquoi: 'En L7, Lucas reprend les mots exacts de M. Benali et s’adresse enfin à lui. Il se sent écouté et explique son vrai besoin : rentrer en sécurité après ses gardes de nuit. En L8, Lucas résume tout et le couple valide.' },
+      { c0_pourquoi: 'Lucas fait un écho de « pas trop loin » et vérifie. M. Benali, qui était ignoré, décroise les bras et parle du danger de s’endormir au volant. Puis la synthèse de L8 est confirmée par les deux.' },
+      { c0_pourquoi: 'Parce qu’il arrête de juger et reformule. Le mari se sent pris en compte, il se confie : le vrai critère, c’est vingt minutes maximum depuis l’hôpital. La synthèse finale permet au couple de valider.' },
+      { c0_pourquoi: 'L7 reprend le mot du client au lieu de le contredire, donc M. Benali s’ouvre. On découvre que le problème n’est pas l’habitude mais la fatigue du trajet de nuit. L8 récapitule et fait valider le besoin par le couple.' },
+      { c0_pourquoi: "Il revient sur ce qu'a dit Monsieur avec ses propres mots. Monsieur se détend, il raconte qu'il s'est déjà endormi au volant. Ensuite Lucas résume et les deux confirment : c'est la sécurité qui compte." },
+      { c0_pourquoi: 'Lucas écoute enfin M. Benali, qu’il avait écarté. Grâce à la reformulation, le vrai besoin apparaît : la sécurité sur la route après le travail. La synthèse transforme ce besoin en premier critère, validé par les deux.' },
+      { c0_pourquoi: 'Avant, Lucas parlait et proposait. En L7 il reprend « pas trop loin » et pose une vraie question : le client se sent compris et livre la vraie raison, ses gardes de nuit. En L8, il résume, et le couple dit oui.' },
+      { c0_pourquoi: 'L7 montre qu’il a entendu M. Benali, ce qui fait tomber la tension. Le besoin réel apparaît : moins de vingt minutes de trajet. L8 reformule le tout et obtient l’accord du couple, donc les recherches seront dans la bonne cible.' },
+      { c0_pourquoi: 'Il s’adresse directement au mari et reprend ses mots. Celui-ci décroise les bras et explique le danger du trajet de nuit. Puis Lucas fait une synthèse validée : maintenant il sait quoi chercher.' },
+      { c0_pourquoi: 'Lucas passe enfin à la compréhension : il reformule ce que dit M. Benali et vérifie. M. Benali se sent écouté et révèle son vrai besoin, la sécurité. La synthèse de L8, confirmée par les deux, fixe les critères.' }
+    ],
+    's4-4.4': [
+      { c0_l3: 'Pas trop loin… La distance compte beaucoup pour vous, Monsieur. Par rapport à quoi, surtout ?' },
+      { c0_l3: 'Monsieur, quand vous dites pas trop loin, c’est-à-dire ?' },
+      { c0_l3: 'Pas trop loin, d’accord. Qu’est-ce qui est important pour vous dans la distance ?' },
+      { c0_l3: 'La distance compte pour vous. Pouvez-vous me dire par rapport à quoi ?' },
+      { c0_l3: 'Pas trop loin ? Qu’entendez-vous par là, Monsieur ?' },
+      { c0_l3: "Je note que la proximité est importante pour vous. Pourquoi, surtout ?" },
+      { c0_l3: 'Pas trop loin de quoi, Monsieur ? De votre travail ?' },
+      { c0_l3: 'Vous voulez rester proche. Qu’est-ce qui compte le plus pour vous là-dedans ?' },
+      { c0_l3: 'Monsieur, pas trop loin, ça représente combien de temps de trajet pour vous ?' },
+      { c0_l3: 'Si je comprends bien, la distance est un critère important. Dites-moi en plus, Monsieur ?' }
     ]
   },
 
@@ -71,12 +107,30 @@ module.exports = {
       { c0_text: 'Je vous propose notre logiciel de réservation à 29 euros par mois, il règle tout.', c1_text: 'Notre machine est la plus fiable du marché, je vous fais un devis.' },
       { c0_text: 'Vous avez raison, le téléphone c’est pénible. Prenez notre application.', c1_text: 'Il vous faut une machine plus grosse, avec notre garantie.' },
       { c0_text: 'Je vous recommande notre abonnement, avec un rappel automatique des rendez-vous par message.', c1_text: 'Je vous propose notre modèle compact, livré et installé gratuitement.' }
+    ],
+    's4-4.2': [
+      { c0_verifier: 'En fait, vous êtes fatigué, il vous faut une maison tout près de l’hôpital.' },
+      { c0_verifier: 'Ne vous inquiétez pas, je vous propose une maison à 10 minutes.' },
+      { c0_verifier: 'Vous avez raison, c’est normal de vouloir être proche.' }
+    ],
+    's4-4.3': [
+      { c0_pourquoi: 'Parce que Lucas propose enfin une maison moins chère.' },
+      { c0_pourquoi: 'Il a raison d’insister, le client finit toujours par accepter.' },
+      { c0_pourquoi: 'C’est normal, à la fin les clients se fatiguent.' }
+    ],
+    's4-4.4': [
+      { c0_l3: 'Pas trop loin, comme tout le monde. Soyons réalistes, il faudra s’éloigner.' },
+      { c0_l3: 'Je vous propose une maison à 25 minutes, c’est raisonnable.' },
+      { c0_l3: 'Avec votre budget, ce n’est pas possible, désolé.' }
     ]
   },
 
   motsCles: {
     's3-3.1': { c0_text: 'côte', c1_text: 'épuisant', c2_text: 'loterie' },
     's3-3.2': { c0_text: 'découragés appartements', c1_text: 'agacé bruit', c2_text: 'déçue formations' },
-    's3-3.3': { c0_text: 'téléphone, rendez-vous, planning, simple', c1_text: 'pannes, 300, serveurs, place' }
+    's3-3.3': { c0_text: 'téléphone, rendez-vous, planning, simple', c1_text: 'pannes, 300, serveurs, place' },
+    's4-4.2': { c0_verifier: 'loin nuit bras' },
+    's4-4.3': { c0_pourquoi: 'écho sécurité synthèse' },
+    's4-4.4': { c0_l3: 'loin monsieur' }
   }
 };

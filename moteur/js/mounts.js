@@ -35,7 +35,11 @@
     return grid && grid.blocs ? grid.blocs.findIndex(b => (b.champs || []).includes(name)) : -1;
   };
   const blocFields = (key, index) => root.ATELIER_GRILLES[key].blocs[index].champs;
-  const scoreHead = key => (ouvert() ? ouvert().head(key) : '');
+  // `scope` : ce que le score évalue, quand l'exercice mêle choix et réponse rédigée.
+  const scoreHead = (key, scope) => {
+    const html = ouvert() ? ouvert().head(key) : '';
+    return html && scope ? `<p class="open-scope">${esc(scope)}</p>${html}` : html;
+  };
 
   /* ───────────────────────────── Scènes ───────────────────────────────── */
 
@@ -815,12 +819,12 @@
 
     function reviewScreen() {
       if (content.review) return accordionReview();
-      return scoreHead(key) + (content.reviewIntro ? `<div class="fm-review-intro">${scene(content.reviewIntro)}</div>` : '') + (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
+      return scoreHead(key, content.scoreScope) + (content.reviewIntro ? `<div class="fm-review-intro">${scene(content.reviewIntro)}</div>` : '') + (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
         const fields = fieldsOf(i);
         if (!fields.length && !c.model && !c.lesson) return '';
         // `reviewDialogue: 'seller'` : au corrigé, seule la réponse du vendeur est redite
         // (la réplique du client, commune à tous les cas, est en tête : `reviewIntro`).
-        const shownScene = [].concat(c.scene || content.scene || []).filter(b => b.quote || b.info || b.dialogue || b.facts)
+        const shownScene = [].concat(Array.isArray(c.reviewScene) ? c.reviewScene : (c.scene || content.scene || [])).filter(b => b.quote || b.info || b.dialogue || b.facts)
           .map(b => (b.dialogue && content.reviewDialogue ? Object.assign({}, b, { dialogue: b.dialogue.filter(line => line.who === content.reviewDialogue) }) : b));
         const sceneHtml = c.reviewScene !== false && shownScene.length ? scene(shownScene) : '';
         // Un onglet qui se contente de répéter « Situation 2 » n'est pas redit.
@@ -844,7 +848,7 @@
         return `<section class="k-panel fm-review">
           ${n > 1 ? `<p class="k-label">${esc(heading)}</p>` : ''}
           ${c.title ? `<h3 class="fm-review-title">${esc(c.title)}</h3>` : ''}
-          ${sceneHtml && n > 1 ? `<div class="fm-review-scene">${sceneHtml}</div>` : ''}
+          ${sceneHtml && (n > 1 || Array.isArray(c.reviewScene)) ? `<div class="fm-review-scene">${sceneHtml}</div>` : ''}
           ${decisions.length > 1 ? `<div class="k-pick-pair">${decisions.map(f => pick(i, f)).join('')}</div>${decisions.filter(f => f.why).map(f => kit().explain(f.why, f.whyTitle || f.label.replace(/^[0-9]+ · /, ''))).join('')}` : ''}
           ${fields.map(f => {
             if (f.type === 'choice') {
