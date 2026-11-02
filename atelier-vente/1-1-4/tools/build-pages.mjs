@@ -46,7 +46,7 @@ function page(serie, exercise) {
   <link rel="stylesheet" href="../../../moteur/css/briefing.css">
   <link rel="stylesheet" href="../../../moteur/css/kit-commun.css">
   <link rel="stylesheet" href="../css/kit.css">
-  <link rel="stylesheet" href="../css/mounts.css">
+  <link rel="stylesheet" href="../../../moteur/css/mounts.css">
   <link rel="stylesheet" href="../../../moteur/css/extras-commun.css">
   <link rel="stylesheet" href="../css/extras.css">
   <script defer src="../js/catalog.js"></script>
@@ -70,7 +70,7 @@ function page(serie, exercise) {
   <script defer src="../../../moteur/js/sorter.js"></script>
   <script defer src="../../../moteur/js/media.js"></script>
   <script defer src="../../../moteur/js/kit.js"></script>
-  <script defer src="../js/mounts.js"></script>
+  <script defer src="../../../moteur/js/mounts.js"></script>
   <script defer src="../../../moteur/js/sounds.js"></script>
   <script defer src="../js/screens/${exercise.file}.js"></script>
 </head>

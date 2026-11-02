@@ -125,7 +125,7 @@ test('chaque grille lit des champs qui existent dans les écrans ou le contenu',
 });
 
 test('les outils de corrigé placent le score', () => {
-  const mounts = fs.readFileSync(path.join(root, 'js/mounts.js'), 'utf8');
+  const mounts = fs.readFileSync(path.join(root, '../../moteur/js/mounts.js'), 'utf8');
   assert.match(mounts, /scoreHead\(key\)/);
   assert.match(mounts, /ouvert\(\)\.answer\(/);
   for (const key of ['s2-2.4', 's4-4.3']) {

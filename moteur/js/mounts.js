@@ -1,4 +1,4 @@
-/* MÉCANIQUES D'EXERCICE 1-1-4 · quatre écrans paramétrés par le contenu.
+/* MÉCANIQUES D’EXERCICE · quatre écrans paramétrés par le contenu (1-1-4, 1-2-1…).
  *
  * La plupart des 34 exercices du module partagent une mécanique :
  *   mountDeck     une carte à la fois, classée dans l'une des zones
