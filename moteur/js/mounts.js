@@ -51,10 +51,8 @@
    *   { info, symbol, strong }        une phrase de contexte (strong : début en gras) ;
    *   { facts: [{ symbol, text }], title }         une liste de repères. */
   const MEDIA = [];
-  const dialogueHtml = lines => `<ol class="sc-dialogue">${lines.map(line => {
-    const seller = line.who === 'seller';
-    return `<li class="sc-line ${seller ? 'is-seller' : ''}"><span class="sc-avatar ${seller ? 'is-seller' : ''}">${icon(seller ? 'headset' : 'users', { size: 24 })}<small>${esc(line.label || (seller ? 'Vous' : 'Client'))}</small></span><p class="sc-bubble">« ${esc(line.text)} »</p></li>`;
-  }).join('')}</ol>`;
+  // La transcription reprend l'affichage des dialogues de scene().
+  const dialogueHtml = lines => scene({ dialogue: lines });
   // Ce que lit la voix : qui parle, puis ses mots, sans les indications entre crochets.
   const spoken = lines => lines.map(line => `${String(line.label || '').replace(/^L\d+ · /, '')}. ${line.text.replace(/\[[^\]]*\]/g, ' ')}`).join(' ');
   function mediaBlock(block) {

@@ -565,3 +565,5 @@ button.crash-passage:hover { background: #fff1d6; }
 /* Le nom de la scène en attente de son illustration : en bas, sous le bouton de lecture. */
 .sc-media-art.is-missing .sc-media-missing { position: absolute; inset: auto 0 18px; height: auto; display: block; text-align: center; }
 .sc-media-art.is-missing .sc-media-missing .icon { display: none; }
+.sc-transcript .sc-dialogue { gap: 8px; }
+.sc-transcript .sc-line p { font-size: 1rem; line-height: 1.45; padding: 10px 16px; }
