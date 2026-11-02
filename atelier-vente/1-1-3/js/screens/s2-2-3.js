@@ -12,6 +12,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S2['2.3'];
   const turns = content.turns;
@@ -96,9 +97,9 @@
       </section>
       <section class="k-panel call-feedback">
         <header class="call-fb-head"><h2>Le retour</h2><p class="call-fb-count">${icon('chart', { size: 20 })}<span>${count} critère${count > 1 ? 's' : ''} validé${count > 1 ? 's' : ''}</span></p></header>
+        ${ouvert.head('s2-2.3')}
         <div class="call-tabs" role="tablist">${turns.map((_, k) => `<button type="button" role="tab" class="call-tab ${k === t ? 'is-current' : ''}" aria-selected="${k === t}" data-act="review-turn" data-index="${k}">Tour ${k + 1}</button>`).join('')}</div>
-        <div class="call-fb-card"><span class="call-fb-icon">${icon('user', { size: 24 })}</span><div><p class="call-fb-label">Votre réponse</p><p>« ${esc(reply(t))} »</p></div></div>
-        <div class="call-fb-card is-model"><span class="call-fb-icon">${icon('sparkle', { size: 24 })}</span><div><p class="call-fb-label">Une réponse possible</p><p>${esc(tr.model)}</p></div></div>
+        ${ouvert.answer('s2-2.3', t, { title: 'Votre réponse', text: reply(t), model: tr.model })}
         ${tr.why ? ex.inlineNote(tr.why, 'neutral') : ''}
         <ul class="call-fb-keys">${keys.map((k, i) => `<li class="is-${esc(k.id)} ${ticked(t, i) ? 'is-on' : ''}">
           <span class="call-fb-key-icon">${icon(keyIcon[k.id] || 'check', { size: 22 })}</span><strong>${esc(k.label)}</strong>

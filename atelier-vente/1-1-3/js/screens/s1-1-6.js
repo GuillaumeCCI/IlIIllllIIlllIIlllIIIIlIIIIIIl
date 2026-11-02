@@ -10,6 +10,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S1['1.6'];
   const method = window.ATELIER_METHOD;
@@ -69,13 +70,14 @@
   function reviewScreen() {
     const model = objection().model;
     const self = content.checks.map((_, i) => Number(ex.value(`self${i}`)) || 0).reduce((a, b) => a + b, 0);
-    return `<section class="k-panel">
+    ouvert.forCase('s1-1.6', content.objections.indexOf(objection()));
+    return `${ouvert.head('s1-1.6')}<section class="k-panel">
       <p class="k-label">Objection travaillée</p>
       <p class="six-bubble is-review">« ${esc(objection().text)} »</p>
       ${kit.result(self, content.checks.length * 2, 'votre auto-évaluation')}
       <ol class="six-review">${method.map((s, i) => `<li>
         <p class="six-review-step"><span class="six-n">${i + 1}</span><strong>${esc(s.name)}</strong><small>${esc(s.role)}</small></p>
-        <div class="six-review-pair">${kit.yours('Votre phrase', phrase(i))}${kit.model('Une phrase possible', model[i])}</div>
+        <div class="six-review-pair">${ouvert.answer('s1-1.6', i, { title: 'Votre phrase', text: phrase(i), model: model[i] })}</div>
       </li>`).join('')}</ol>
     </section>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;

@@ -10,6 +10,10 @@
  * Le calcul vient de moteur/js/indicateur.js (window.AtelierAnalyse) et des
  * grilles de js/grilles.js. Sans eux, la réponse s'affiche telle quelle,
  * avec sa réponse possible.
+ *
+ * Commun à tous les modules (sauf 1-1-1, qui a son js/corrige.js). Une
+ * grille peut dépendre du cas travaillé (`parCas: index => ({ blocs })`) :
+ * l'écran annonce le cas avec `forCase(key, index)` avant le corrigé.
  */
 (() => {
   'use strict';
@@ -17,7 +21,12 @@
   const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
   const filled = value => String(value ?? '').trim().length > 0;
   const engine = () => window.AtelierAnalyse;
-  const grid = key => window.ATELIER_GRILLES && window.ATELIER_GRILLES[key];
+  const cases = {};
+  const forCase = (key, index) => { cases[key] = Number(index) || 0; };
+  const grid = key => {
+    const g = window.ATELIER_GRILLES && window.ATELIER_GRILLES[key];
+    return g && typeof g.parCas === 'function' ? Object.assign({ integre: g.integre }, g.parCas(cases[key] || 0)) : g;
+  };
   const current = () => (window.AtelierExercise ? window.AtelierExercise.values() : {});
 
   /* Le score de tout l'exercice, ou null (pas de grille, rien d'écrit). */
@@ -77,5 +86,5 @@
     </div>`;
   }
 
-  window.AtelierOuvert = Object.freeze({ result, blocOf, head, model, quote, expected, answer });
+  window.AtelierOuvert = Object.freeze({ result, blocOf, head, model, quote, expected, answer, forCase });
 })();

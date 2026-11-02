@@ -12,6 +12,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S3['1.2'];
   const passages = content.passages;
@@ -103,7 +104,7 @@
   const TIP_ICONS = ['chat', 'lightbulb', 'users'];
 
   function reviewScreen() {
-    return reviewTab === 2 ? rewriteReview() : faultsReview();
+    return `${ouvert.head('s3-1.2')}${reviewTab === 2 ? rewriteReview() : faultsReview()}`;
   }
 
   function faultsReview() {
@@ -124,11 +125,12 @@
               <p class="crash-fault-quote">« ${esc(p.text)} »</p>
               <p class="crash-fault-answer"><strong>Réponse attendue :</strong> ${esc(label)}.</p>
               ${detail ? `<p class="crash-fault-detail">${esc(detail.charAt(0).toUpperCase() + detail.slice(1))}</p>` : ''}
-              <p class="crash-fault-yours">${row !== undefined ? `Votre réponse : « ${esc(ex.value(`error${row}`))} »` : 'Passage non repéré.'}</p>
+              ${row !== undefined ? `<div class="crash-fault-yours"><p class="open-answer-title">Votre réponse</p>${ouvert.quote('s3-1.2', 0, ex.value(`error${row}`), undefined, [`error${row}`])}</div>` : '<p class="crash-fault-yours">Passage non repéré.</p>'}
             </div>
           </li>`;
         }).join('')}</ol>
-        ${others.length ? `<h3 class="k-small-title">Vos autres repérages</h3><ul class="crash-own">${others.map(r => `<li>${esc(ex.value(`error${r}`))}</li>`).join('')}</ul>` : ''}
+        ${others.length ? `<h3 class="k-small-title">Vos autres repérages</h3><ul class="crash-own">${others.map(r => `<li>${ouvert.quote('s3-1.2', 0, ex.value(`error${r}`), undefined, [`error${r}`])}</li>`).join('')}</ul>` : ''}
+        ${ouvert.expected('s3-1.2', 0)}
       </section>
       <div class="crash-side">
       ${content.missing ? `<aside class="k-panel crash-tips">
@@ -145,8 +147,8 @@
   function rewriteReview() {
     return `<section class="k-panel">
       <h2>La réécriture</h2>
-      <p class="k-muted">Comparez votre réponse au client avec le corrigé modèle.</p>
-      <div class="k-columns is-even">${kit.yours('Votre réponse', ex.value('rewrite'))}${kit.model('Corrigé modèle', content.model)}</div>
+      <p class="k-muted">Comparez votre réponse au client avec une réponse possible.</p>
+      ${ouvert.answer('s3-1.2', 1, { title: 'Votre réponse', text: ex.value('rewrite'), model: content.model })}
       <div class="crash-review-back">${kit.back('review-tab', 'Revenir aux maladresses')}</div>
     </section>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;

@@ -10,6 +10,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S2['2.6'];
   const situations = content.situations;
@@ -96,11 +97,12 @@
   function reviewScreen() {
     const score = content.voice.map((_, j) => Number(ex.value(`voice${j}`)) || 0).reduce((a, b) => a + b, 0);
     return `<section class="k-panel">
+      ${ouvert.head('s2-2.6')}
       ${kit.result(score, content.voice.length * 2, 'votre auto-évaluation de la voix')}
       ${situations.map((s, i) => `<div class="rb-review">
         <p class="k-label">Script ${i + 1} · ${esc(s.title)}</p>
         <p class="rb-review-quote">« ${esc(s.quote)} »</p>
-        <div class="rb-review-pair">${kit.yours('Votre réponse', script(i))}${kit.model('Une réponse possible', s.model)}</div>
+        <div class="rb-review-pair">${ouvert.answer('s2-2.6', i, { title: 'Votre réponse', text: script(i), model: s.model })}</div>
       </div>`).join('')}
     </section>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;

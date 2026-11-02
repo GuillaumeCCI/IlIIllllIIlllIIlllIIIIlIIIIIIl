@@ -645,7 +645,9 @@
           <div class="cmp-options" ${reviewing ? '' : 'role="radiogroup"'}>${content.options.map(option => optionCard(option, reviewing)).join('')}</div>
           <section class="k-panel cmp-why">
             ${reviewing
-              ? `${yours('Votre justification', ex().value('why'))}${model('Une justification possible', content.model)}`
+              ? (window.AtelierOuvert
+                ? `${window.AtelierOuvert.head(key)}${window.AtelierOuvert.answer(key, 0, { title: 'Votre justification', text: ex().value('why'), model: content.model })}`
+                : `${yours('Votre justification', ex().value('why'))}${model('Une justification possible', content.model)}`)
               : `<h2>${esc(content.whyLabel)}</h2><p class="k-muted">${esc(content.whyHelp)}</p>
                 ${ex().field('why', content.whyLabel, { placeholder: 'Expliquez ce qui rend cette réponse efficace…', max: 600, rows: 3, hideLabel: true })}
                 <div class="cmp-why-row">${dialogButton('hint', 'Voir un indice', 'text-button', 'lightbulb')}${submit('Valider ma réponse')}</div>`}

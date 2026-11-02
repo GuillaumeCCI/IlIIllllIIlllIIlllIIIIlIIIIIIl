@@ -11,6 +11,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S3['2.2'];
   const cases = content.cases;
@@ -84,14 +85,14 @@
 
   function reviewScreen() {
     const score = content.selfChecks.reduce((sum, _, i) => sum + (Number(ex.value(`self${i}`)) || 0), 0);
-    return `${kit.result(score, content.selfChecks.length * 2, 'votre auto-évaluation')}
+    return `${ouvert.head('s3-2.2')}${kit.result(score, content.selfChecks.length * 2, 'votre auto-évaluation')}
     ${cases.map((c, i) => `<section class="k-panel fix-review">
       <p class="k-label">Cas ${i + 1} · ${esc(c.tab)}</p>
       <p class="fix-client"><span class="fix-c">C</span><span>« ${esc(c.client)} »</span></p>
       <p class="fix-reflex is-review">${icon('close', { size: 16 })}<span>« ${esc(c.reflex)} »</span></p>
       <div class="k-columns is-even">
-        <div>${kit.yours('Pourquoi ça bloque, selon vous', ex.value(`why${i}`))}${kit.model('Ce que ce réflexe provoque', c.blocks)}</div>
-        <div>${kit.yours('Votre réponse adaptée', ex.value(`reply${i}`))}${kit.model('Une réponse possible', c.model)}</div>
+        <div>${ouvert.answer('s3-2.2', i * 2, { title: 'Pourquoi ça bloque, selon vous', text: ex.value(`why${i}`), model: c.blocks })}</div>
+        <div>${ouvert.answer('s3-2.2', i * 2 + 1, { title: 'Votre réponse adaptée', text: ex.value(`reply${i}`), model: c.model })}</div>
       </div>
     </section>`).join('')}
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;

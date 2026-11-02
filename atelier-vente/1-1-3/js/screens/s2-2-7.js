@@ -10,6 +10,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S2['2.7'];
   const cards = content.cards;
@@ -59,10 +60,11 @@
       </article>`).join('')}</div>
     </section>
     <section class="k-panel">
-      <h2>Les cartes du corrigé</h2>
-      <div class="reflex-sheet-grid">${cards.map(c => `<article class="reflex-model">
+      <h2>Vos cartes, geste par geste</h2>
+      ${ouvert.head('s2-2.7')}
+      <div class="reflex-sheet-grid">${cards.map((c, i) => `<article class="reflex-model">
         <p class="reflex-final-quote">« ${esc(c.quote)} »</p>
-        <dl>${gestures.map(g => `<dt>${esc(g.label)}</dt><dd>${esc(c.model[g.id])}</dd>`).join('')}</dl>
+        ${gestures.map((g, k) => ouvert.answer('s2-2.7', i * 3 + k, { title: g.label, text: val(k, i), model: c.model[g.id] })).join('')}
       </article>`).join('')}</div>
     </section>
     ${core.feedbackBox()}<div class="k-utility"><button type="button" class="text-button with-icon" data-act="print">${icon('document', { size: 17 })}<span>Imprimer ma fiche</span></button>${kit.reset()}</div>`;

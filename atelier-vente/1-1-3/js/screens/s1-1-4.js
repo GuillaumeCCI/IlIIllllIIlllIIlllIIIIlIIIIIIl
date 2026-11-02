@@ -10,6 +10,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S1['1.4'];
   const exercise = () => ex.current;
@@ -53,11 +54,9 @@
   }
 
   function reviewBody() {
-    return `${kit.yours('Votre hypothèse', ex.value('hypothesis'))}
-      <div class="k-model"><p class="k-model-title">${icon('sparkle', { size: 16 })}<span>Objections probables, selon le corrigé</span></p>
-        <ul class="hidden-list">${content.hypotheses.map(h => `<li>${esc(h)}</li>`).join('')}</ul></div>
-      ${kit.yours('Votre question', ex.value('question'))}
-      ${kit.model('Une question possible', content.model)}
+    return `${ouvert.head('s1-1.4')}
+      ${ouvert.answer('s1-1.4', 0, { title: 'Votre hypothèse', text: ex.value('hypothesis'), modelHtml: `<ul class="hidden-list">${content.hypotheses.map(h => `<li>${esc(h)}</li>`).join('')}</ul>` })}
+      ${ouvert.answer('s1-1.4', 1, { title: 'Votre question', text: ex.value('question'), model: content.model })}
       ${ex.inlineNote(content.lesson, 'neutral')}`;
   }
 

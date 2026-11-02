@@ -736,3 +736,28 @@ html { background-color: #fbf8f2; }
 #main :is(.button.secondary, .secondary, .icon-button):not(:disabled):hover { border-color: transparent; background: var(--tint, #eef3fd); box-shadow: 0 8px 20px rgb(20 40 100 / 16%); }
 #main .timer-widget { border-color: transparent; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 8%); }
 #main .mission { border-color: transparent; box-shadow: 0 6px 18px rgb(20 40 100 / 7%); }
+
+/* Réponses ouvertes (moteur/js/reponses-ouvertes.js) : le score en tête du
+   corrigé, puis, pour chaque réponse, le texte surligné, ce qu'on attend et
+   une réponse possible repliée. Sobre : pas de cadre en plus dans les cartes.
+   Tout est rangé sous .open-answer / .open-model : 1-1-1 garde ses styles. */
+.open-score { margin: 0 0 18px; }
+.open-answer { display: grid; gap: 10px; margin-top: 14px; }
+.open-answer-title { margin: 0; color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.open-answer .result-answer-text, .crash-fault-yours .result-answer-text, .open-errors .result-answer-text { margin: 0; color: var(--navy); font-size: 1rem; font-weight: 600; line-height: 1.5; white-space: pre-line; }
+.open-answer .result-answer-text.is-empty { color: var(--muted); font-weight: 400; }
+.open-answer .result-answer-text mark, .crash-fault-yours mark, .open-errors mark, .spot-own mark, .repair-diag-list mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
+.open-answer .result-answer-text mark.is-warn, .crash-fault-yours mark.is-warn, .spot-own mark.is-warn, .repair-diag-list mark.is-warn { background: #ffd9d2; }
+.open-answer .ana-lines { gap: 6px; }
+.open-answer .ana-line { font-size: .9rem; }
+.open-model { margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line); }
+.open-model summary { display: inline-flex; align-items: center; gap: 8px; width: fit-content; list-style: none; color: var(--accent); font-size: .9rem; font-weight: 700; cursor: var(--cursor-hand, pointer); }
+.open-model summary::-webkit-details-marker { display: none; }
+.open-model summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform .25s ease; }
+.open-model[open]:not(.is-closing) summary::before { transform: rotate(45deg) translate(-2px, -2px); }
+.open-model .result-model-body { overflow: hidden; }
+.open-model p, .open-model li { margin: 8px 0 0; color: var(--navy); font-size: .92rem; line-height: 1.5; }
+.open-model ol, .open-model ul { margin: 4px 0 0; padding-left: 20px; }
+@media (prefers-reduced-motion: reduce) { .open-model summary::before { transition: none; } }
+.open-errors { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.open-errors li { display: flex; gap: 10px; align-items: baseline; }

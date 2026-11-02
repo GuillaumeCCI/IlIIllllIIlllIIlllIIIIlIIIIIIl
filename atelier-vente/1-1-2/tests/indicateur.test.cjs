@@ -168,7 +168,7 @@ test('chaque écran concerné place le score dans son corrigé', () => {
 });
 
 test('le corrigé des réponses ouvertes parle de « Une réponse possible »', () => {
-  const helper = fs.readFileSync(path.join(root, 'js/reponses-ouvertes.js'), 'utf8');
+  const helper = fs.readFileSync(path.join(root, '../../moteur/js/reponses-ouvertes.js'), 'utf8');
   assert.match(helper, /Une réponse possible/);
   for (const key of Object.keys(G)) {
     const code = fs.readFileSync(path.join(root, 'js/screens', `${key.replace('.', '-')}.js`), 'utf8');
@@ -179,7 +179,7 @@ test('le corrigé des réponses ouvertes parle de « Une réponse possible »', 
 test('les pages d’exercice chargent les grilles, l’indicateur et la relecture', () => {
   for (const file of fs.readdirSync(path.join(root, 'exercices'))) {
     const html = fs.readFileSync(path.join(root, 'exercices', file), 'utf8');
-    for (const script of ['../js/grilles.js', '../../../moteur/js/indicateur.js', '../js/reponses-ouvertes.js']) {
+    for (const script of ['../js/grilles.js', '../../../moteur/js/indicateur.js', '../../../moteur/js/reponses-ouvertes.js']) {
       assert.ok(html.includes(`src="${script}"`), `${file} : ${script} manque`);
     }
   }

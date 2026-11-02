@@ -10,6 +10,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S1['1.7'];
   const natures = window.ATELIER_NATURES;
@@ -66,7 +67,7 @@
   }
 
   function reviewScreen() {
-    return `<section class="k-panel">
+    return `${ouvert.head('s1-1.7')}<section class="k-panel">
       <h2>Votre bibliothèque</h2>
       <p class="k-muted">Gardez-la sous la main : elle se relit en un coup d’œil avant un rendez-vous.</p>
       ${table(true)}
@@ -77,9 +78,8 @@
       <p class="review-line">Votre diagnostic : <strong>${esc(natureLabel(val('nature', i)))}</strong></p>
       ${ex.inlineNote(`Nature selon le corrigé : ${natureLabel(f.nature)}. ${f.natureNote}`, 'neutral')}
       <div class="lib-review-grid">
-        ${kit.model('Une question possible', f.question)}
-        ${kit.model('Une réponse possible', f.answer)}
-        ${kit.model('Une preuve possible', f.proof)}
+        ${ouvert.answer('s1-1.7', i * 2, { title: 'Votre question', text: val('question', i), model: f.question })}
+        ${ouvert.answer('s1-1.7', i * 2 + 1, { title: 'Votre réponse et sa preuve', text: `${val('answer', i) || ''} ${val('proof', i) || ''}`.trim(), modelHtml: `<p>${esc(f.answer)}</p><p><strong>Preuve :</strong> ${esc(f.proof)}</p>` })}
       </div>
     </section>`).join('')}</div>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;

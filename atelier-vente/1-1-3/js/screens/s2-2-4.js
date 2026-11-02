@@ -10,6 +10,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S2['2.4'];
   const total = content.errors.length;
@@ -57,8 +58,9 @@
   }
 
   function reviewBody() {
-    return `<h2>Vos repérages</h2>
-      <ol class="spot-own">${content.errors.map((_, i) => `<li>${esc(ex.value(`spot${i}`))}</li>`).join('')}</ol>`;
+    return `${ouvert.head('s2-2.4')}<h2>Vos repérages</h2>
+      <ol class="spot-own">${content.errors.map((_, i) => `<li>${ouvert.quote('s2-2.4', 0, ex.value(`spot${i}`), undefined, [`spot${i}`])}</li>`).join('')}</ol>
+      ${ouvert.expected('s2-2.4', 0)}`;
   }
 
   function validate(values) {
