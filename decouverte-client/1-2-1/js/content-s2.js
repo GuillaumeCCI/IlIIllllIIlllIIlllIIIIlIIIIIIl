@@ -64,7 +64,8 @@
     tour,
     caseNoun: 'Réponse',
     countLabel: 'réponses analysées',
-    className: 'fm-airy',
+    // Pleine largeur : l'illustration au-dessus du dialogue reste grande ; onglets en pastilles.
+    pills: true,
     // Au corrigé : la réplique du client une seule fois, en tête, puis la seule réponse du vendeur par carte.
     reviewDialogue: 'seller',
     submitLabel: 'Réponse suivante',

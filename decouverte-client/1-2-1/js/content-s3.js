@@ -191,7 +191,8 @@
       { target: '.fm-actions', title: 'Réponse suivante', text: 'Huit réponses : le corrigé arrive après la dernière.' }
     ],
     caseNoun: 'Réponse',
-    className: 'fm-airy',
+    // Pleine largeur : l'illustration au-dessus du dialogue reste grande ; onglets en pastilles.
+    pills: true,
     countLabel: 'réponses jugées',
     submitLabel: 'Réponse suivante',
     cases: [
