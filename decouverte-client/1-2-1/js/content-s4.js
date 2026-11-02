@@ -37,7 +37,7 @@
   const ligne = code => LIGNES.find(line => line.label.startsWith(`${code} `));
   const SCENE = [{ media: {
     image: 'assets/illustrations/dialogues/rendez-vous-benali.webp',
-    alt: 'Dans une agence, un conseiller présente des annonces sur sa tablette à une cliente qui réfléchit.',
+    alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.',
     placeholder: 'Le rendez-vous des Benali',
     title: 'Le rendez-vous des Benali',
     intro: 'Lucas, conseiller immobilier, reçoit M. et Mme Benali pour un premier rendez-vous. Ce qui est entre crochets décrit leur comportement.',
