@@ -14,6 +14,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S1['1.4'];
   const clients = content.clients;
@@ -150,6 +151,7 @@
   function reviewScreen() {
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: 'Votre radar, client par client', symbol: 'target' })}
+      ${ouvert.head('s1-1.4')}
       <div class="k-review-grid">${clients.map((item, c) => {
         const expectedMotive = motiveOf(item.motive);
         const okMotive = motive(c) === item.motive;
@@ -168,8 +170,7 @@
             if (!expected && !chosen) return '';
             return `<li>${kit.mark(expected, `${letters[i]} · ${text}`)}<small>${expected ? (chosen ? 'retenu, attendu' : 'attendu, non retenu') : 'retenu, non attendu'}</small></li>`;
           }).join('')}</ul>
-          ${kit.yours('Votre justification', ex.value(`why${c}`))}
-          ${kit.model('Corrigé modèle', item.model)}
+          ${ouvert.answer('s1-1.4', c, { title: 'Votre justification', text: ex.value(`why${c}`), model: item.model })}
         </section>`;
       }).join('')}</div>
       ${core.feedbackBox()}

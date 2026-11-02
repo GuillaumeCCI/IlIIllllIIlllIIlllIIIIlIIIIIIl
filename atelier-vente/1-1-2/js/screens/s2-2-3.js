@@ -9,6 +9,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S2['2.3'];
   const hooks = content.hooks;
@@ -63,10 +64,10 @@
   function reviewScreen() {
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: 'Vos trois accroches', subtitle: 'Relisez chacune au regard des trois critères : courte, concrète, centrée sur le client.' })}
+      ${ouvert.head('s2-2.3')}
       <div class="studio-review">${hooks.map((hook, i) => `<section class="k-panel">
         <p class="k-label">Accroche ${i + 1} · ${esc(hook.tab)}</p>
-        ${kit.yours('Votre accroche', ex.value(`hook${i}`))}
-        ${kit.model('Un exemple', hook.example)}
+        ${ouvert.answer('s2-2.3', i, { title: 'Votre accroche', text: ex.value(`hook${i}`), model: hook.example })}
       </section>`).join('')}</div>
       ${core.feedbackBox()}
       <div class="k-utility">${kit.reset()}</div>

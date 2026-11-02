@@ -13,6 +13,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S1['1.3'];
   const cards = content.cards;
@@ -128,7 +129,8 @@
 
   function reviewScreen() {
     return `<div class="k-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: 'Vos trois arguments', subtitle: 'Chaque carte est vérifiée au regard du besoin, puis comparée au corrigé modèle.' })}
+      ${kit.head({ eyebrow: content.eyebrow, title: 'Vos trois arguments', subtitle: 'Chaque carte est vérifiée au regard du besoin, puis comparée à une réponse possible.' })}
+      ${ouvert.head('s1-1.3')}
       <div class="fab-review">${needs.map((item, n) => {
         const expected = cards.filter(c => c.kind === 'C' && c.needs.includes(n) && !c.optional).map(c => c.text).join(', ');
         return `<section class="k-panel">
@@ -136,11 +138,10 @@
           <h4 class="k-small-title">Caractéristiques</h4>
           <ul class="fab-verdicts">${picked(n, 'c').map(id => cardVerdict(id, n, 'C')).join('')}</ul>
           <p class="k-muted">Attendues : ${esc(expected)}.</p>
-          ${kit.yours('Votre avantage', advantage(n))}
+          ${ouvert.answer('s1-1.3', n, { title: 'Votre avantage', text: advantage(n), model: item.model })}
           <h4 class="k-small-title">Preuves</h4>
           <ul class="fab-verdicts">${picked(n, 'p').map(id => cardVerdict(id, n, 'P')).join('')}</ul>
           <p class="k-muted">Attendues : ${esc(cards.filter(c => c.kind === 'P' && c.needs.includes(n) && !c.optional).map(c => c.text).join(', '))}.</p>
-          ${kit.model('Argument possible', item.model)}
         </section>`;
       }).join('')}</div>
       ${content.takeaway ? ex.inlineNote(content.takeaway, 'neutral') : ''}

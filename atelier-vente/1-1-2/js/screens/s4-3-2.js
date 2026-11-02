@@ -8,6 +8,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S4['3.2'];
 
@@ -15,6 +16,7 @@
     const reviewing = ex.reviewing();
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : kit.tourButton() })}
+      ${reviewing ? ouvert.head('s4-3.2') : ''}
       <form class="over-page" novalidate>
         <div class="k-columns is-wide-left">
         <section class="k-panel" aria-label="Extrait de l’entretien">
@@ -27,9 +29,10 @@
         <section class="k-panel">
           <p class="over-title">${icon('search', { size: 30 })}<span><strong>Votre diagnostic</strong><small>Notez les 3 erreurs les plus importantes.</small></span></p>
           ${[0, 1, 2].map(i => `<div class="over-error"><span class="over-n">${i + 1}</span>
-            ${reviewing ? `<p class="over-own">${esc(ex.value(`error${i}`))}</p>`
+            ${reviewing ? ouvert.quote('s4-3.2', 0, ex.value(`error${i}`), undefined, [`error${i}`])
               : ex.field(`error${i}`, `Erreur ${i + 1}`, { placeholder: 'Décrivez l’erreur observée…', max: 240, rows: 2, hideLabel: true })}
           </div>`).join('')}
+          ${reviewing ? ouvert.expected('s4-3.2', 0) : ''}
         </section>
         </div>
         ${reviewing ? '' : `${core.errorsBox()}${kit.bar({ left: kit.help(content.tip, 'info'), right: kit.submit('Comparer avec le corrigé') })}`}

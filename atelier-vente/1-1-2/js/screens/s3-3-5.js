@@ -9,6 +9,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S3['3.5'];
   const lines = content.lines;
@@ -70,6 +71,7 @@
     const right = lines.filter((l, i) => act(i) === l.answer).length;
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: 'Vos analyses, réplique par réplique' })}
+      ${ouvert.head('s3-3.5')}
       ${kit.result(right, lines.length, 'répliques bien analysées')}
       <div class="k-review-grid">${lines.map((l, i) => {
         const ok = act(i) === l.answer;
@@ -78,8 +80,7 @@
           <blockquote class="check-review-quote">« ${esc(l.text)} »</blockquote>
           ${kit.picked(ok, label(act(i)), label(l.answer))}
           ${kit.explain(l.why)}
-          ${act(i) === 'push' ? kit.yours('Votre question de contrôle', ex.value(`q${i}`)) : ''}
-          ${l.model ? kit.model('Question de contrôle possible', l.model) : ''}
+          ${act(i) === 'push' ? ouvert.answer('s3-3.5', i, { title: 'Votre question de contrôle', text: ex.value(`q${i}`), model: l.model || '' }) : ouvert.model(l.model || '')}
         </section>`;
       }).join('')}</div>
       ${core.feedbackBox()}

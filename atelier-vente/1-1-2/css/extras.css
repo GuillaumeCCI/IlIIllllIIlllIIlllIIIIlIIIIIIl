@@ -257,3 +257,30 @@
 .dk-card.has-banner::before, .express-card.has-banner::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--card-bg) center / cover no-repeat; opacity: .5; pointer-events: none; }
 /* L'aquarelle fait 686 px de large : la carte s'en tient à cette largeur pour ne pas l'étirer. */
 .express-card.has-banner { width: min(100%, 700px); }
+
+/* Réponses ouvertes (js/reponses-ouvertes.js) : le score en tête du corrigé,
+   puis, pour chaque réponse, le texte surligné, ce qu'on attend et une
+   réponse possible repliée. Sobre : pas de cadre en plus dans les cartes. */
+.open-score { margin: 0 0 18px; }
+.open-answer { display: grid; gap: 10px; margin-top: 14px; }
+.open-answer-title { margin: 0; color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.result-answer-text { margin: 0; color: var(--navy); font-size: 1rem; font-weight: 600; line-height: 1.5; white-space: pre-line; }
+.result-answer-text.is-empty { color: var(--muted); font-weight: 400; }
+.result-answer-text mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
+.result-answer-text mark.is-warn { background: #ffd9d2; }
+.open-answer .ana-lines { gap: 6px; }
+.open-answer .ana-line { font-size: .9rem; }
+.result-model { margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--line); }
+.result-model summary { display: inline-flex; align-items: center; gap: 8px; width: fit-content; list-style: none; color: var(--accent); font-size: .9rem; font-weight: 700; cursor: var(--cursor-hand, pointer); }
+.result-model summary::-webkit-details-marker { display: none; }
+.result-model summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform .25s ease; }
+.result-model[open]:not(.is-closing) summary::before { transform: rotate(45deg) translate(-2px, -2px); }
+.result-model-body { overflow: hidden; }
+.result-model p, .result-model li { margin: 8px 0 0; color: var(--navy); font-size: .92rem; line-height: 1.5; }
+.result-model ol { margin: 4px 0 0; padding-left: 20px; }
+.result-model li strong { display: block; }
+@media (prefers-reduced-motion: reduce) { .result-model summary::before { transition: none; } }
+/* S4 3.2 et S1 1.6 : la liste d'erreurs relue, surlignée champ par champ. */
+.open-errors { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.open-errors li { display: flex; gap: 10px; align-items: baseline; }
+.open-errors .result-answer-text { font-size: .95rem; }

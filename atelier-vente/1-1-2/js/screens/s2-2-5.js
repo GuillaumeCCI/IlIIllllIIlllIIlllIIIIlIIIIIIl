@@ -11,6 +11,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc } = kit;
   const content = window.ATELIER_S2['2.5'];
   const criteria = content.criteria;
@@ -41,6 +42,7 @@
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, note: content.note,
         aside: `<p class="k-count">Score : <strong data-live="score">${esc(totalText().replace('Total : ', ''))}</strong></p>${reviewing ? '' : kit.tourButton()}` })}
+      ${reviewing ? ouvert.head('s2-2.5') : ''}
       <section class="k-panel audit-pitch"><p class="k-label">Le pitch à analyser</p><p>${esc(content.pitch)}</p></section>
       <form class="audit-layout" novalidate>
         <section class="k-panel">
@@ -51,7 +53,7 @@
         </section>
         <section class="k-panel audit-priority">
           <h2>2. Choisissez votre priorité</h2>
-          ${reviewing ? `${kit.yours('Votre modification prioritaire', ex.value('priority'))}${kit.model('Corrigé modèle', content.priority)}`
+          ${reviewing ? `${ouvert.answer('s2-2.5', 0, { title: 'Votre modification prioritaire', text: ex.value('priority'), model: content.priority })}`
             : `<p class="k-instruction">Quelle modification aurait le plus fort impact sur ce pitch ?</p>
               ${ex.field('priority', 'La modification prioritaire', { placeholder: 'La modification prioritaire…', max: 240, rows: 7, hideLabel: true })}
               <p class="k-muted">Une seule priorité, formulée concrètement.</p>

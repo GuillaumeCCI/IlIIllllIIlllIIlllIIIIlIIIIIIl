@@ -11,6 +11,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S1['1.5'];
   const C = content.contenders;
@@ -123,6 +124,7 @@
     const rows = [['semi1', 'Demi-finale 1'], ['semi2', 'Demi-finale 2'], ['final', 'Finale']];
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: 'Votre tournoi, match par match', symbol: 'trophy' })}
+      ${ouvert.head('s1-1.5')}
       <section class="k-panel">
         <ul class="tournoi-review">${rows.map(([key, label]) => {
           const ok = pick(key) === content.expected[key];
@@ -132,8 +134,7 @@
             <p class="k-muted">${esc(content.why[key])}</p>
           </li>`;
         }).join('')}</ul>
-        ${kit.yours('Votre justification', ex.value('why'))}
-        ${kit.model('Corrigé modèle', content.model)}
+        ${ouvert.answer('s1-1.5', 0, { title: 'Votre justification', text: ex.value('why'), model: content.model })}
       </section>
       ${core.feedbackBox()}
       <div class="k-utility">${kit.reset()}</div>

@@ -13,6 +13,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S2['2.6'];
   const LIMIT = 60;
@@ -189,11 +190,11 @@
 
   function reviewScreen() {
     return `<section class="k-panel">
+      ${ouvert.head('s2-2.6')}
       ${kit.result(total(), max, 'votre auto-évaluation')}
-      ${kit.yours('Votre pitch', pitch())}
+      ${ouvert.answer('s2-2.6', 0, { title: 'Votre pitch', text: pitch(), model: content.example })}
       <p class="pitch-words">${esc(wordsLine())}${Number(ex.value('recorded')) ? ` · prise de ${ex.value('recorded')} s` : ''}</p>
       <ul class="pitch-score-list">${criteria.map((c, i) => `<li><span>${esc(c.title)}</span><strong>${ex.value(`score${i}`)} / 2</strong></li>`).join('')}</ul>
-      ${kit.model('Un exemple de pitch en 60 s', content.example)}
       ${ex.inlineNote('Pour progresser, retravaillez en priorité les critères notés 0, puis refaites une prise : le chrono reste le meilleur juge de la concision.', 'neutral')}
     </section>
     ${core.feedbackBox()}

@@ -9,6 +9,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S3['3.6'];
   const steps = content.steps;
@@ -76,11 +77,10 @@
   }
 
   function reviewBody() {
-    return `<div class="tree-review">${steps.map((step, i) => `<section class="k-panel">
+    return `${ouvert.head('s3-3.6')}<div class="tree-review">${steps.map((step, i) => `<section class="k-panel">
       <p class="k-label">${i < 3 ? `${step.key} · ${esc(step.label)}` : `Branche · client ${esc(step.label.toLowerCase())}`}</p>
       ${step.client ? `<p class="tree-client">${icon('chat', { size: 18 })}<span>« ${esc(step.client)} »</span></p>` : ''}
-      ${kit.yours('Votre réponse', text(i))}
-      ${kit.model('Corrigé modèle', step.model)}
+      ${ouvert.answer('s3-3.6', i, { title: 'Votre réponse', text: text(i), model: step.model })}
     </section>`).join('')}</div>
     ${content.takeaway ? ex.inlineNote(content.takeaway, 'neutral') : ''}
     ${core.feedbackBox()}

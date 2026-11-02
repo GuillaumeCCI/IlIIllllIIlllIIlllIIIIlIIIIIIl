@@ -11,6 +11,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S4['1.2'];
   const lines = content.lines;
@@ -63,14 +64,15 @@
   function reviewScreen() {
     return `<div class="k-page cg-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle })}
+      ${ouvert.head('s4-1.2')}
       <form novalidate>
         ${lines.map((line, i) => `<section class="chain-row">
           <span class="chain-n">${i + 1}</span>
           <div class="chain-cell tone-c"><p class="chain-label">Caractéristique</p><p class="chain-feature">${esc(line.feature)}</p></div>
           <span class="chain-arrow">${icon('arrowRight', { size: 26 })}</span>
-          <div class="chain-cell tone-a"><p class="chain-label">Avantage</p><p class="chain-own">${esc(ex.value(`adv${i}`))}</p>${kit.model('Corrigé, exemple', line.advantage)}</div>
+          <div class="chain-cell tone-a"><p class="chain-label">Avantage</p>${ouvert.answer('s4-1.2', i * 2, { title: 'Votre avantage', text: ex.value(`adv${i}`), model: line.advantage })}</div>
           <span class="chain-arrow">${icon('arrowRight', { size: 26 })}</span>
-          <div class="chain-cell tone-p"><p class="chain-label">Preuve</p><p class="chain-own">${esc(ex.value(`proof${i}`))}</p>${kit.model('Corrigé, exemple', line.proof)}</div>
+          <div class="chain-cell tone-p"><p class="chain-label">Preuve</p>${ouvert.answer('s4-1.2', i * 2 + 1, { title: 'Votre preuve', text: ex.value(`proof${i}`), model: line.proof })}</div>
         </section>`).join('')}
         ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>
       </form>

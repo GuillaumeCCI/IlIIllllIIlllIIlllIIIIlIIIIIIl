@@ -10,6 +10,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S4['2.2'];
   const challenges = content.challenges;
@@ -52,11 +53,11 @@
   function reviewScreen() {
     return `<div class="k-page cap-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle })}
+      ${ouvert.head('s4-2.2')}
       <div class="mc-grid">${challenges.map((c, i) => `<section class="k-panel mc-card">
         <header class="mc-card-head"><span class="mc-n">${i + 1}</span><strong>Défi ${i + 1}</strong><span class="mc-tag">${esc(c.tag)}</span></header>
         <div class="mc-tech"><span class="mc-tech-symbol">${icon('document', { size: 24 })}</span><div><p class="k-label">La carte technique</p><p class="mc-tech-text">“ ${esc(c.card)} ”</p></div></div>
-        ${kit.yours('Votre bénéfice client', ex.value(`client${i}`))}
-        ${kit.model('Corrigé, exemple', c.model)}
+        ${ouvert.answer('s4-2.2', i, { title: 'Votre bénéfice client', text: ex.value(`client${i}`), model: c.model })}
       </section>`).join('')}</div>
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>
     </div>`;

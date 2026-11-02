@@ -11,6 +11,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S1['1.6'];
 
@@ -110,16 +111,18 @@
   function reviewScreen() {
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: 'Avant / après', subtitle: 'Votre argumentaire désastreux, votre diagnostic, puis votre version réparée.' })}
+      ${ouvert.head('s1-1.6')}
       <div class="k-columns is-even">
-        <section class="k-panel repair-before"><p class="repair-stage-label">Avant</p>${kit.yours('Mon pire argumentaire', ex.value('worst'))}
-          <h3 class="k-small-title">Mon diagnostic</h3>
-          <ol class="repair-diag-list">${[0, 1, 2].map(i => `<li>${esc(ex.value(`error${i}`))}</li>`).join('')}</ol>
-          ${kit.model('Exemple de pire argumentaire', content.worstExample)}
+        <section class="k-panel repair-before"><p class="repair-stage-label">Avant</p>${ouvert.answer('s1-1.6', 0, { title: 'Mon pire argumentaire', text: ex.value('worst'), model: content.worstExample })}
+          <div class="open-answer">
+            <p class="open-answer-title">Mon diagnostic</p>
+            <ol class="repair-diag-list">${[0, 1, 2].map(i => `<li>${ouvert.quote('s1-1.6', 1, ex.value(`error${i}`), undefined, [`error${i}`])}</li>`).join('')}</ol>
+            ${ouvert.expected('s1-1.6', 1)}
+          </div>
           <h3 class="k-small-title">Les erreurs à y repérer</h3>
           <ol class="repair-diag-list">${content.worstErrors.map(text => `<li>${esc(text)}</li>`).join('')}</ol>
         </section>
-        <section class="k-panel repair-after"><p class="repair-stage-label is-green">Après</p>${kit.yours('Mon argumentaire réparé', ex.value('fixed'))}
-          ${kit.model('Exemple d’argumentaire amélioré', content.model)}
+        <section class="k-panel repair-after"><p class="repair-stage-label is-green">Après</p>${ouvert.answer('s1-1.6', 2, { title: 'Mon argumentaire réparé', text: ex.value('fixed'), model: content.model })}
           ${ex.inlineNote(content.takeaway, 'neutral')}
         </section>
       </div>
