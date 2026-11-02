@@ -63,8 +63,8 @@ window.ATELIER_S2 = {
     max: 240,
     turns: [
       { line: 'C’est à quel sujet ? M. Riveau n’est pas disponible.',
-        model: 'Bonjour, [Prénom Nom], d’Ergolys. J’appelle M. Riveau au sujet du confort des postes de travail : c’est bien lui qui s’en occupe ? Quand puis-je le joindre, ou préférez-vous que je passe par vous ?',
-        why: 'Ce qui fonctionne : on nomme l’objet clairement, on valorise l’interlocuteur, on propose une suite concrète et on ne force pas.' },
+        model: 'Bonjour, [Prénom Nom], d’Ergolys. J’appelle M. Riveau pour le confort des postes de travail. Vous connaissez son agenda mieux que personne : quand puis-je le joindre, ou à qui m’adresser ?',
+        why: 'Ce qui fonctionne : on nomme l’objet clairement, on valorise l’interlocuteur (« vous connaissez son agenda mieux que personne »), on propose une suite concrète et on ne force pas.' },
       { line: 'Il est en déplacement toute la semaine. Vous voulez laisser un message ?',
         model: 'Merci, c’est gentil. Quel jour serait-il plus disponible la semaine prochaine ? Et en son absence, qui suit l’aménagement des bureaux ?' }
     ],
