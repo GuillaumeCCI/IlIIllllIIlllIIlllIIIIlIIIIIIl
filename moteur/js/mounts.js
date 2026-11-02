@@ -793,17 +793,43 @@
       }).join('')}</div>${content.keyPoint ? ex().inlineNote(content.keyPoint, 'neutral') : ''}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
     }
 
+    const optionLabel = (f, id) => (f.options.find(o => o.id === id) || {}).label || 'rien';
+    /* Une décision relue : ce qui a été choisi, ce qu'il fallait choisir. */
+    function pick(i, f) {
+      const accepted = [].concat(f.answer || []);
+      return kit().picked(accepted.includes(val(i, f)), optionLabel(f, val(i, f)), accepted.map(id => optionLabel(f, id)).join(' ou '), f.label);
+    }
+    /* Des éléments à repérer (chips avec `answer`) : repérés, oubliés, en trop. */
+    function chipsReview(i, f) {
+      const expected = [].concat(f.answer);
+      const chosen = chips(i, f);
+      const rows = f.options.filter(o => expected.includes(o.id) || chosen.includes(o.id)).map(o => {
+        const want = expected.includes(o.id);
+        const got = chosen.includes(o.id);
+        const note = want && got ? 'repéré' : want ? 'à repérer aussi' : (f.extraNote || 'pas attendu ici');
+        return `<li>${kit().mark(want && got, o.label)}<small>${note}${o.why ? ` · ${esc(o.why)}` : ''}</small></li>`;
+      });
+      const found = expected.filter(id => chosen.includes(id)).length;
+      return `<div class="fm-chips-review"><p class="review-line">${esc(f.label)} : <strong>${found} sur ${expected.length}</strong></p><ul>${rows.join('')}</ul></div>`;
+    }
+
     function reviewScreen() {
       if (content.review) return accordionReview();
-      return scoreHead(key) + (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
+      return scoreHead(key) + (content.reviewIntro ? `<div class="fm-review-intro">${scene(content.reviewIntro)}</div>` : '') + (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
         const fields = fieldsOf(i);
         if (!fields.length && !c.model && !c.lesson) return '';
-        const sceneHtml = c.reviewScene !== false ? scene((c.scene || content.scene) && [].concat(c.scene || content.scene).filter(b => b.quote || b.info || b.dialogue)) : '';
+        // `reviewDialogue: 'seller'` : au corrigé, seule la réponse du vendeur est redite
+        // (la réplique du client, commune à tous les cas, est en tête : `reviewIntro`).
+        const shownScene = [].concat(c.scene || content.scene || []).filter(b => b.quote || b.info || b.dialogue)
+          .map(b => (b.dialogue && content.reviewDialogue ? Object.assign({}, b, { dialogue: b.dialogue.filter(line => line.who === content.reviewDialogue) }) : b));
+        const sceneHtml = c.reviewScene !== false && shownScene.length ? scene(shownScene) : '';
         // Un onglet qui se contente de répéter « Situation 2 » n'est pas redit.
         const noun = `${content.caseNoun || 'Cas'} ${i + 1}`;
         const heading = c.tab && c.tab !== noun ? `${noun} · ${c.tab}` : noun;
         // Les champs courts (un mot, une date) se lisent en tableau.
         const compact = fields.length > 2 && fields.every(f => f.type !== 'choice' && f.type !== 'chips' && blocOf(key, k(i, f)) < 0);
+        // Deux décisions ou plus (choix avec réponse attendue) : une ligne chacune.
+        const decisions = fields.filter(f => f.type === 'choice' && [].concat(f.answer || []).length);
         // Le corrigé du cas sert de réponse possible quand un seul champ est noté.
         const scored = fields.filter(f => blocOf(key, k(i, f)) >= 0);
         const caseModel = scored.length === 1 && !scored[0].model ? c.model : '';
@@ -819,14 +845,15 @@
           ${n > 1 ? `<p class="k-label">${esc(heading)}</p>` : ''}
           ${c.title ? `<h3 class="fm-review-title">${esc(c.title)}</h3>` : ''}
           ${sceneHtml && n > 1 ? `<div class="fm-review-scene">${sceneHtml}</div>` : ''}
+          ${decisions.length > 1 ? `<div class="k-pick-pair">${decisions.map(f => pick(i, f)).join('')}</div>${decisions.filter(f => f.why).map(f => kit().explain(f.why, f.whyTitle || f.label.replace(/^[0-9]+ · /, ''))).join('')}` : ''}
           ${fields.map(f => {
             if (f.type === 'choice') {
-              const opt = id => (f.options.find(o => o.id === id) || {}).label || 'rien';
               const accepted = [].concat(f.answer || []);
-              if (!accepted.length) return `<p class="review-line">${esc(f.label)} : <strong>${esc(opt(val(i, f)))}</strong></p>`;
-              const ok = accepted.includes(val(i, f));
-              return `${kit().picked(ok, opt(val(i, f)), accepted.map(opt).join(' ou '), f.label)}${f.why ? kit().explain(f.why) : ''}`;
+              if (!accepted.length) return `<p class="review-line">${esc(f.label)} : <strong>${esc(optionLabel(f, val(i, f)))}</strong></p>`;
+              if (decisions.length > 1) return '';
+              return `${pick(i, f)}${f.why ? kit().explain(f.why) : ''}`;
             }
+            if (f.type === 'chips' && f.answer) return chipsReview(i, f);
             if (f.type === 'chips') {
               const labels = chips(i, f).map(id => (f.options.find(o => o.id === id) || {}).label).filter(Boolean);
               return `<p class="review-line">${esc(f.label)} : <strong>${esc(labels.join(' · ') || 'aucun')}</strong></p>`;

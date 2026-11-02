@@ -538,3 +538,8 @@ button.crash-passage:hover { background: #fff1d6; }
 .dk-context li { display: flex; align-items: center; gap: 14px; font-size: 1.05rem; line-height: 1.45; color: var(--navy); }
 .dk-context strong { display: block; font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
 .dk-context-icon { display: grid; place-items: center; width: 38px; height: 38px; flex-shrink: 0; border-radius: 50%; background: var(--tint); color: var(--accent); }
+
+/* Éléments à repérer (mountForm, chips avec réponse) : un par ligne. */
+.fm-chips-review ul { display: grid; gap: 8px; margin: 8px 0 0; padding: 0; list-style: none; }
+.fm-chips-review li { display: grid; gap: 2px; }
+.fm-chips-review small { margin-left: 30px; color: var(--muted); }

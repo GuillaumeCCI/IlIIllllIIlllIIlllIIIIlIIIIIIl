@@ -1,0 +1,54 @@
+/* CATALOGUE DES SÉRIES ET DES EXERCICES · module 1-2-1, aucune compilation.
+ *
+ * Découverte client · Pratiquer l'écoute active et s'adapter au client
+ * (fiche M1.2.1). Ce fichier déclare les séries et les exercices : leur
+ * titre, leur mécanique et leur fond. C'est le seul fichier à modifier pour
+ * changer l'ordre des exercices ou ajouter une illustration.
+ *
+ * `mount` indique la mécanique (voir moteur/js/mounts.js) ; le contenu est
+ * dans js/content-<série>.js, à l'entrée `id`. Les pages de `exercices/`
+ * préfixent les chemins par « ../ » ; ne mettez donc jamais « ../ » ici.
+ */
+window.ATELIER_CATALOG = {
+  // Clé de sauvegarde propre au module : il ne se mélange à aucun autre.
+  storageKey: 'decouverte-client-1-2-1-v1',
+
+  code: '1-2-1',
+  title: 'Écoute active · module 1-2-1',
+  intro: 'Reconnaître les attitudes d’écoute, reformuler sans rien ajouter, repérer les signaux du client et adapter sa posture.',
+
+  commonBackground: 'assets/backgrounds/commun.webp',
+
+  series: [
+    {
+      id: 's2',
+      label: 'Les attitudes d’écoute',
+      // Situations 1 et 2 et leurs corrigés : fiche M1.2.1, activité A1.
+      // La situation 3 (agence immobilière) s'y ajoute.
+      sourced: true,
+      exercises: [
+        { id: '2.1', file: 's2-2-1', label: 'Au magasin', theme: 'blue', mount: 'form' },
+        { id: '2.2', file: 's2-2-2', label: 'En entreprise', theme: 'blue', mount: 'form' },
+        { id: '2.3', file: 's2-2-3', label: 'À l’agence immobilière', theme: 'blue', mount: 'form' }
+      ]
+    }
+  ]
+};
+
+/* LES PORTRAITS DES CARTES « CITATION CLIENT » (une ligne par page).
+ * Portraits disponibles, dans assets/illustrations/clients/ : client-tasse,
+ * client-cheveux-gris, client-chignon, client-pull-clair, client-veste-verte. */
+window.ATELIER_CATALOG.portraits = {
+  default: 'client-tasse'
+};
+
+/* Index pratique : liste à plat de tous les exercices, dans l'ordre du parcours.
+ * Chaque entrée reçoit `key` (« s2-2.1 »), `series` et `seriesLabel`. */
+window.ATELIER_CATALOG.all = window.ATELIER_CATALOG.series.flatMap(serie =>
+  serie.exercises.map(exercise => Object.assign({}, exercise, {
+    key: `${serie.id}-${exercise.id}`,
+    series: serie.id,
+    seriesLabel: serie.label,
+    sourced: serie.sourced === true
+  }))
+);

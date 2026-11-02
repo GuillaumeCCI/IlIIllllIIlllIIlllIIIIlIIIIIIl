@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr" data-cadre>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1249d8">
+  <title>L’Atelier Vente</title>
+  <!-- LE CADRE · cadre.html?module=1-1-1&theme=s1 (code d'intégration LMS),
+       ou cadre.html?page=1-1-1/exercices/s1-a.html (une page de module
+       ouverte hors du cadre s'y place d'elle-même : moteur/js/embed.js).
+       Le navigateur quitte le plein écran à chaque changement de page. Ici,
+       c'est cette page qui passe en plein écran, et elle ne change jamais :
+       les pages du module défilent dans le cadre intérieur, le plein écran
+       reste. Les pages intérieures le demandent à ce cadre (attribut
+       data-cadre), et leur hauteur est relayée au LMS pour ajuster son iframe. -->
+  <style>
+    html, body { height: 100%; margin: 0; background: #f8f5f0; }
+    iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+    p { margin: 0; padding: 24px; font: 1rem/1.5 system-ui, sans-serif; color: #19264f; }
+    /* La transition d'un exercice à l'autre (menu) : le logo en fondu. */
+    .transition { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; background: #f8f5f0; opacity: 0; pointer-events: none; transition: opacity .35s ease; }
+    .transition.is-on { opacity: 1; pointer-events: auto; }
+    .transition img { width: min(340px, 62vw); height: auto; mix-blend-mode: multiply; opacity: 0; transform: scale(.96); transition: opacity .45s ease .1s, transform .6s ease .1s; }
+    .transition.is-on img { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .transition, .transition img { transition: none; transform: none; } }
+  </style>
+</head>
+<body>
+  <script>
+  (function () {
+    'use strict';
+    var params = new URLSearchParams(location.search);
+    var dir = location.pathname.replace(/[^/]*$/, '');
+    var PAGE = /^\d+-\d+-\d+\/(?:exercices\/[\w-]+\.html|index\.html)?$/;
+
+    // La page à montrer : une page d'un module de ce parcours, rien d'autre.
+    function target() {
+      var page = params.get('page');
+      if (page) {
+        var url;
+        try { url = new URL(page, location.href); } catch (e) { return null; }
+        if (url.origin !== location.origin || url.pathname.indexOf(dir) !== 0 || !PAGE.test(url.pathname.slice(dir.length))) return null;
+        return url.pathname.slice(dir.length) + url.search + url.hash;
+      }
+      var module = params.get('module') || '';
+      var theme = params.get('theme') || '';
+      if (!/^\d+-\d+-\d+$/.test(module) || (theme && !/^s\d+$/.test(theme))) return null;
+      return module + '/index.html?embed=module' + (theme ? '&theme=' + theme : '');
+    }
+
+    var src = target();
+    if (!src) {
+      document.body.innerHTML = '<p>Adresse incomplète : page introuvable.</p>';
+      return;
+    }
+    var frame = document.createElement('iframe');
+    frame.title = 'L’Atelier Vente';
+    frame.allow = 'autoplay; fullscreen; microphone; camera';
+    frame.src = src;
+    document.body.appendChild(frame);
+
+    // À chaque page intérieure : son titre, et l'adresse du cadre la suit
+    // (un rechargement rouvre la même page).
+    frame.addEventListener('load', function () {
+      try {
+        var inner = frame.contentWindow.location;
+        if (inner.pathname.indexOf(dir) !== 0) return;
+        document.title = frame.contentDocument.title || document.title;
+        frame.title = document.title;
+        history.replaceState(null, '', location.pathname + '?page=' + encodeURIComponent(inner.pathname.slice(dir.length) + inner.search + inner.hash));
+      } catch (e) { /* page d'ailleurs : rien à suivre */ }
+    });
+
+    /* LA TRANSITION. Quand le menu change d'exercice, la page intérieure
+     * passe par ici : le logo CCI couvre le cadre en fondu, un bruit de page
+     * tournée joue (sauf sons coupés), l'exercice se charge dessous, puis le
+     * logo s'efface. Le cadre ne changeant pas de page, rien n'est coupé. */
+    var cover = document.createElement('div');
+    cover.className = 'transition';
+    cover.setAttribute('aria-hidden', 'true');
+    cover.innerHTML = '<img src="../moteur/assets/logo-cci.webp" alt="">';
+    document.body.appendChild(cover);
+    var sound = null;
+    var since = 0, waiting = false, rescue = 0;
+    function uncover() {
+      waiting = false;
+      clearTimeout(rescue);
+      setTimeout(function () { cover.classList.remove('is-on'); }, Math.max(0, since + 1900 - Date.now()));
+    }
+    window.atelierTransition = function (url) {
+      if (waiting) return;
+      waiting = true;
+      since = Date.now();
+      cover.classList.add('is-on');
+      var muted = false;
+      try { muted = localStorage.getItem('atelier-vente-sons') === 'off'; } catch (e) { /* son actif */ }
+      if (!muted) {
+        try {
+          sound = sound || new Audio('../moteur/assets/audio/transition-page.mp3');
+          sound.volume = 0.22;
+          sound.currentTime = 0;
+          var played = sound.play();
+          if (played && played.catch) played.catch(function () {});
+        } catch (e) { /* pas de son */ }
+      }
+      setTimeout(function () { frame.contentWindow.location.href = url; }, 380);
+      rescue = setTimeout(uncover, 6000); // secours : jamais de logo bloqué
+    };
+    frame.addEventListener('load', function () { if (waiting) uncover(); });
+
+    // La hauteur annoncée par la page intérieure remonte au LMS.
+    addEventListener('message', function (event) {
+      var data = event.data;
+      if (event.source !== frame.contentWindow || !data || data.type !== 'atelier-vente:height') return;
+      if (parent !== window) parent.postMessage(data, '*');
+    });
+  })();
+  </script>
+</body>
+</html>

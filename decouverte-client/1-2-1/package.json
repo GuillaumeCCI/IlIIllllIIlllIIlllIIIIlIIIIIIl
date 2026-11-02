@@ -1,0 +1,17 @@
+{
+  "name": "decouverte-client-1-2-1",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Découverte client, module 1-2-1 : pratiquer l’écoute active et s’adapter au client. Sans dépendance ni compilation.",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "build:pages": "node tools/build-pages.mjs",
+    "test": "node --test tests/rules.test.cjs && node tests/screens.test.cjs && node tests/flows.test.cjs && node tests/indicateur.test.cjs",
+    "build:images": "node tools/build-images.mjs",
+    "check:layout": "node tools/check-layout.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

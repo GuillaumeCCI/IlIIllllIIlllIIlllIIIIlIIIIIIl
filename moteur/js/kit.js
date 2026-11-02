@@ -460,7 +460,7 @@
   };
 
   /* L'explication du corrigé, avec son ampoule. */
-  const explain = text => `<div class="k-explain"><span class="k-explain-icon">${icon('lightbulb', { size: 22 })}</span><div><strong>Explication</strong><p>${esc(text)}</p></div></div>`;
+  const explain = (text, title = 'Explication') => `<div class="k-explain"><span class="k-explain-icon">${icon('lightbulb', { size: 22 })}</span><div><strong>${esc(title)}</strong><p>${esc(text)}</p></div></div>`;
 
   /* La production de l'apprenant, citée telle quelle. */
   const yours = (title, text) =>

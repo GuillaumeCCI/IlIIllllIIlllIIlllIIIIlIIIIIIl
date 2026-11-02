@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1249d8">
+  <meta name="robots" content="noindex, nofollow">
+  <title>L’Atelier Vente · Découverte client · Intégrer</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231249d8'/%3E%3Cpath d='M9 29 17 10h7l-8 19z' fill='white'/%3E%3Cpath d='m23 19 7 10h-8l-3-5z' fill='%23ff936b'/%3E%3C/svg%3E">
+  <style>
+  @font-face { font-family: 'Fira Sans'; font-weight: 400; src: url('../moteur/assets/fonts/fira-sans-400.woff2') format('woff2'); font-display: swap; }
+  @font-face { font-family: 'Fira Sans'; font-weight: 700; src: url('../moteur/assets/fonts/fira-sans-700.woff2') format('woff2'); font-display: swap; }
+  @font-face { font-family: 'Fira Sans'; font-weight: 800; src: url('../moteur/assets/fonts/fira-sans-800.woff2') format('woff2'); font-display: swap; }
+  :root { --navy: #13205c; --accent: #1249d8; --tint: #e6eeff; --coral: #ff936b; --muted: #5b6a8f; --line: #dde3f0; --bg: #f8f5f0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Fira Sans', system-ui, sans-serif; color: var(--navy); background: var(--bg); line-height: 1.5; }
+  a { color: var(--accent); }
+  .top { display: flex; align-items: center; gap: 14px; padding: 18px clamp(16px, 4vw, 64px); background: #fff; border-bottom: 1px solid var(--line); }
+  .top strong { font-size: 1.2rem; }
+  .top nav { margin-left: auto; display: flex; gap: 18px; }
+  .mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(115deg, var(--accent) 55%, var(--coral) 55%); }
+  main { max-width: 1240px; margin: 0 auto; padding: 36px clamp(16px, 4vw, 48px) 64px; }
+  h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0 0 8px; line-height: 1.1; }
+  .lede { color: var(--muted); font-size: 1.15rem; margin: 0 0 28px; max-width: 760px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; box-shadow: 0 6px 18px rgb(20 40 100 / 6%); }
+  .button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; border-radius: 10px; background: var(--accent); color: #fff; font-weight: 700; text-decoration: none; border: 0; font: inherit; font-weight: 700; cursor: pointer; }
+  .button.secondary { background: #fff; color: var(--accent); border: 1.5px solid var(--accent); }
+  .button.small { padding: 6px 12px; font-size: .88rem; border-radius: 8px; }
+  .k { display: inline-block; padding: 3px 10px; border-radius: 12px; background: var(--tint); color: var(--accent); font-weight: 800; font-size: .85rem; }
+  footer { text-align: center; color: var(--muted); font-size: .88rem; padding: 0 16px 32px; }
+  .sound-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; font: inherit; font-weight: 650; font-size: .88rem; color: var(--accent); cursor: pointer; }
+  .sound-toggle[aria-pressed="false"] { color: var(--muted); }
+</style>
+</head>
+<body>
+  <header class="top"><span class="mark" aria-hidden="true"></span><strong>L’Atelier Vente · Découverte client</strong>
+    <nav><a href="index.html">Les modules</a><span data-sound-anchor hidden></span></nav></header>
+  <main>
+  <h1>Intégrer les exercices</h1>
+  <p class="lede">Deux façons de placer les exercices dans une autre plateforme (LMS, Moodle, site, Notion…) : un module entier, ou un seul thème du module (ses exercices, avec leur navigation). Chaque thème a son code d’intégration, affiché en entier : copiez-le et collez-le dans un bloc HTML de votre LMS.</p>
+  <section class="card how">
+    <h2>Mode d’emploi</h2>
+    <ol>
+      <li><strong>Lien</strong> : à coller tel quel dans un bouton ou une activité « URL ». Les exercices s’ouvrent en plein écran.</li>
+      <li><strong>Code d’intégration</strong> : à coller dans un bloc HTML (« intégrer », « iframe », « code source »). Un thème = une activité du LMS. Le cadre mesure 900 pixels de haut, avec une barre de défilement si l’exercice est plus long.</li>
+      <li><strong>Hauteur automatique</strong> (facultatif) : collez aussi la ligne ci-dessous juste après le code d’intégration, dans le même bloc HTML. C’est la même pour tous les thèmes. Si la plateforme refuse les scripts, le code d’intégration seul fonctionne quand même.
+        <pre class="code" id="resize-code"></pre>
+        <button type="button" class="button small secondary" id="resize-copy">Copier la ligne de hauteur automatique</button></li>
+      <li>Les réponses de l’apprenant restent dans son navigateur. Certains navigateurs bloquent cette mémoire dans un cadre intégré : les exercices fonctionnent, mais le brouillon n’est pas gardé d’une visite à l’autre.</li>
+    </ol>
+  </section>
+  <p class="filter"><label for="filter">Rechercher un thème ou un exercice</label><input id="filter" type="search" placeholder="Titre, série, numéro…"></p>
+  <div id="modules"></div>
+</main>
+<style>
+  .how h2 { margin-top: 0; }
+  .how ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+  .filter { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 26px 0 8px; }
+  .filter input { flex: 1; min-width: 220px; padding: 10px 14px; border: 1.5px solid var(--line); border-radius: 10px; font: inherit; }
+  .module { margin-top: 22px; }
+  .module-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .module-head h2 { margin: 0; font-size: 1.5rem; }
+  .module-head .actions { margin-left: auto; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .serie-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 20px 0 6px; }
+  .serie-head .actions { margin-left: auto; }
+  .serie h3 { font-size: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 0; }
+  .serie-head .note { color: var(--muted); font-size: .9rem; }
+  .serie[hidden] { display: none; }
+  .code { margin: 8px 0; padding: 10px 12px; background: var(--soft, #f3f5fa); border: 1px solid var(--line); border-radius: 8px; font: .78rem/1.45 ui-monospace, Consolas, monospace; white-space: pre-wrap; word-break: break-all; user-select: all; cursor: text; }
+  .how .code { margin-top: 10px; }
+  .row { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+  .row .id { font-weight: 800; color: var(--accent); }
+  .row[hidden] { display: none; }
+  .copied { background: #1b6b47 !important; border-color: #1b6b47 !important; color: #fff !important; }
+  @media (max-width: 760px) { .row { grid-template-columns: 44px minmax(0, 1fr); } }
+</style>
+  <footer>Vos réponses restent dans votre navigateur : rien n’est envoyé à un serveur.</footer>
+  <script>
+(function () {
+  'use strict';
+  var MODULES = [{"code":"1-2-1","intro":"Reconnaître les attitudes d’écoute, reformuler sans rien ajouter, repérer les signaux du client et adapter sa posture.","series":[{"id":"s2","label":"Les attitudes d’écoute","exercises":[{"id":"2.1","file":"s2-2-1","label":"Au magasin"},{"id":"2.2","file":"s2-2-2","label":"En entreprise"},{"id":"2.3","file":"s2-2-3","label":"À l’agence immobilière"}]}]}];
+  var NAME = "L’Atelier Vente · Découverte client";
+  /* Ouverte en local (Live Server, serveur de test, fichier), la page donne
+   * quand même les adresses publiques : un code pointant vers l'ordinateur
+   * ne marcherait que chez soi, et le LMS demanderait l'accès à l'appareil. */
+  var local = location.protocol === 'file:' || /^(localhost|127\.|\[::1\]|0\.0\.0\.0)/.test(location.hostname);
+  var base = local ? 'https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/decouverte-client/' : location.href.replace(/[^/]*([?#].*)?$/, '');
+  var esc = function (v) { return String(v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var resize = '<script>if(!window.atelierVenteResize){window.atelierVenteResize=1;addEventListener("message",function(e){if(!e.data||e.data.type!=="atelier-vente:height")return;document.querySelectorAll("iframe[data-atelier-vente]").forEach(function(f){if(f.contentWindow===e.source)f.style.height=e.data.height+"px";});});}<' + '/script>';
+  function iframe(url, title) {
+    return '<iframe src="' + url + '" title="' + esc(title) + '" data-atelier-vente style="width:100%;height:900px;border:0;" loading="lazy" allow="autoplay; fullscreen; microphone; camera"></iframe>';
+  }
+  function actions(url, title) {
+    return '<span class="actions">'
+      + '<a class="button small secondary" href="' + url + '" target="_blank" rel="noopener">Aperçu</a>'
+      + '<button type="button" class="button small secondary" data-copy="' + esc(url) + '">Copier le lien</button>'
+      + '<button type="button" class="button small" data-copy="' + esc(iframe(url, title)) + '">Copier le code d’intégration</button></span>';
+  }
+  document.getElementById('modules').innerHTML = MODULES.map(function (m) {
+    // Le cadre garde le plein écran d'un exercice à l'autre (voir cadre.html).
+    var moduleUrl = base + 'cadre.html?module=' + m.code;
+    return '<section class="card module" data-module="' + m.code + '"><div class="module-head"><span class="k">Module ' + m.code + '</span><h2>Tous les exercices d’un coup</h2>'
+      + actions(moduleUrl, NAME + ', module ' + m.code) + '</div>'
+      + m.series.map(function (s) {
+        var themeUrl = base + 'cadre.html?module=' + m.code + '&theme=' + s.id;
+        var themeTitle = NAME + ' ' + m.code + ' · ' + s.label;
+        return '<div class="serie"><div class="serie-head"><h3>' + esc(s.label) + '</h3><span class="note">Le thème entier · ' + s.exercises.length + ' exercice' + (s.exercises.length > 1 ? 's' : '') + '</span>' + actions(themeUrl, themeTitle) + '</div><pre class="code">' + esc(iframe(themeUrl, themeTitle)) + '</pre>' + s.exercises.map(function (x) {
+          return '<div class="row" data-search="' + esc((m.code + ' ' + s.label + ' ' + x.id + ' ' + x.label).toLowerCase()) + '"><span class="id">' + esc(x.id) + '</span><span>' + esc(x.label) + '</span></div>';
+        }).join('') + '</div>';
+      }).join('') + '</section>';
+  }).join('');
+
+  document.getElementById('resize-code').textContent = resize;
+  document.getElementById('resize-copy').setAttribute('data-copy', resize);
+
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-copy]');
+    if (!button) return;
+    var text = button.getAttribute('data-copy');
+    var done = function () {
+      var label = button.textContent;
+      button.classList.add('copied'); button.textContent = 'Copié';
+      setTimeout(function () { button.classList.remove('copied'); button.textContent = label; }, 1600);
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () { prompt('Copiez :', text); });
+    else { prompt('Copiez :', text); }
+  });
+
+  document.getElementById('filter').addEventListener('input', function (event) {
+    var q = event.target.value.trim().toLowerCase();
+    document.querySelectorAll('.row').forEach(function (row) { row.hidden = q && row.getAttribute('data-search').indexOf(q) === -1; });
+    document.querySelectorAll('.serie').forEach(function (serie) { serie.hidden = !serie.querySelector('.row:not([hidden])'); });
+  });
+})();
+</script>
+</body>
+</html>

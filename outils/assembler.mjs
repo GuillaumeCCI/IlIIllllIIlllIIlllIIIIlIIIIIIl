@@ -21,6 +21,11 @@ const slug = process.argv[2] || 'atelier-vente';
 const repo = join(root, slug);
 if (!existsSync(repo)) { console.error(`Parcours introuvable : ${slug}`); process.exit(1); }
 
+/* Le nom et l'accroche du parcours : parcours.json dans son dossier
+ * (« titre », « accroche »). Sans fichier : L'Atelier Vente. */
+const SETTINGS = existsSync(join(repo, 'parcours.json')) ? JSON.parse(readFileSync(join(repo, 'parcours.json'), 'utf8')) : {};
+const NAME = SETTINGS.titre || 'L’Atelier Vente';
+
 /* Les modules publiés, dans l'ordre de l'accueil. `source` : le dossier du
  * projet, relatif à ce dépôt. Ajoutez une ligne pour un nouveau module. */
 const MODULES = readdirSync(repo).filter(name => /^[0-9]/.test(name) && existsSync(join(repo, name, 'js/catalog.js'))).sort()
@@ -115,7 +120,7 @@ const page = (title, body, script = '', { hidden = false } = {}) => `<!doctype h
   <style>${STYLE}</style>
 </head>
 <body>
-  <header class="top"><span class="mark" aria-hidden="true"></span><strong>L’Atelier Vente</strong>
+  <header class="top"><span class="mark" aria-hidden="true"></span><strong>${esc(NAME)}</strong>
     <nav><a href="index.html">Les modules</a><span data-sound-anchor hidden></span></nav></header>
   ${body}
   <footer>Vos réponses restent dans votre navigateur : rien n’est envoyé à un serveur.</footer>
@@ -127,9 +132,9 @@ const page = (title, body, script = '', { hidden = false } = {}) => `<!doctype h
 /* ───────────────────────────── Accueil ───────────────────────────────── */
 
 const count = m => m.series.reduce((n, s) => n + s.exercises.length, 0);
-const home = page('L’Atelier Vente · Tous les modules', `<main>
-  <h1>L’Atelier Vente</h1>
-  <p class="lede">${modules.reduce((n, m) => n + count(m), 0)} exercices interactifs de vente, en ${modules.length} modules. Choisissez un module pour enchaîner ses exercices, ou ouvrez la page « Intégrer » pour placer un module ou un exercice dans une autre plateforme.</p>
+const home = page(`${NAME} · Tous les modules`, `<main>
+  <h1>${esc(NAME)}</h1>
+  <p class="lede">${SETTINGS.accroche ? `${esc(SETTINGS.accroche)} ` : ''}${modules.reduce((n, m) => n + count(m), 0)} exercices interactifs de vente, en ${modules.length} modules. Choisissez un module pour enchaîner ses exercices, ou ouvrez la page « Intégrer » pour placer un module ou un exercice dans une autre plateforme.</p>
   <div class="grid">${modules.map(m => `<article class="card module">
     <span class="k">Module ${esc(m.code)}</span>
     <p class="intro">${esc(m.intro)}</p>
@@ -151,7 +156,7 @@ writeFileSync(join(repo, 'index.html'), home);
 /* Les adresses sont calculées dans le navigateur, à partir de l'adresse de
  * la page : le site fonctionne quel que soit le nom du compte ou du dépôt. */
 const data = JSON.stringify(modules);
-const integrate = page('L’Atelier Vente · Intégrer', `<main>
+const integrate = page(`${NAME} · Intégrer`, `<main>
   <h1>Intégrer les exercices</h1>
   <p class="lede">Deux façons de placer les exercices dans une autre plateforme (LMS, Moodle, site, Notion…) : un module entier, ou un seul thème du module (ses exercices, avec leur navigation). Chaque thème a son code d’intégration, affiché en entier : copiez-le et collez-le dans un bloc HTML de votre LMS.</p>
   <section class="card how">
@@ -194,11 +199,12 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
 (function () {
   'use strict';
   var MODULES = ${data};
+  var NAME = ${JSON.stringify(NAME)};
   /* Ouverte en local (Live Server, serveur de test, fichier), la page donne
    * quand même les adresses publiques : un code pointant vers l'ordinateur
    * ne marcherait que chez soi, et le LMS demanderait l'accès à l'appareil. */
   var local = location.protocol === 'file:' || /^(localhost|127\\.|\\[::1\\]|0\\.0\\.0\\.0)/.test(location.hostname);
-  var base = local ? 'https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/atelier-vente/' : location.href.replace(/[^/]*([?#].*)?$/, '');
+  var base = local ? 'https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/${slug}/' : location.href.replace(/[^/]*([?#].*)?$/, '');
   var esc = function (v) { return String(v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var resize = '<script>if(!window.atelierVenteResize){window.atelierVenteResize=1;addEventListener("message",function(e){if(!e.data||e.data.type!=="atelier-vente:height")return;document.querySelectorAll("iframe[data-atelier-vente]").forEach(function(f){if(f.contentWindow===e.source)f.style.height=e.data.height+"px";});});}<' + '/script>';
   function iframe(url, title) {
@@ -214,10 +220,10 @@ const integrate = page('L’Atelier Vente · Intégrer', `<main>
     // Le cadre garde le plein écran d'un exercice à l'autre (voir cadre.html).
     var moduleUrl = base + 'cadre.html?module=' + m.code;
     return '<section class="card module" data-module="' + m.code + '"><div class="module-head"><span class="k">Module ' + m.code + '</span><h2>Tous les exercices d’un coup</h2>'
-      + actions(moduleUrl, 'L’Atelier Vente, module ' + m.code) + '</div>'
+      + actions(moduleUrl, NAME + ', module ' + m.code) + '</div>'
       + m.series.map(function (s) {
         var themeUrl = base + 'cadre.html?module=' + m.code + '&theme=' + s.id;
-        var themeTitle = 'L’Atelier Vente ' + m.code + ' · ' + s.label;
+        var themeTitle = NAME + ' ' + m.code + ' · ' + s.label;
         return '<div class="serie"><div class="serie-head"><h3>' + esc(s.label) + '</h3><span class="note">Le thème entier · ' + s.exercises.length + ' exercice' + (s.exercises.length > 1 ? 's' : '') + '</span>' + actions(themeUrl, themeTitle) + '</div><pre class="code">' + esc(iframe(themeUrl, themeTitle)) + '</pre>' + s.exercises.map(function (x) {
           return '<div class="row" data-search="' + esc((m.code + ' ' + s.label + ' ' + x.id + ' ' + x.label).toLowerCase()) + '"><span class="id">' + esc(x.id) + '</span><span>' + esc(x.label) + '</span></div>';
         }).join('') + '</div>';
