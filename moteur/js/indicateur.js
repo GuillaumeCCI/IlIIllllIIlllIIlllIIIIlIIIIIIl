@@ -281,13 +281,12 @@
     // Sans aucun élément attendu, la forme ne se coche pas : un texte court
     // ou une question hors sujet ne doit pas paraître « réussi ».
     const noSubstance = (bloc.criteres || []).length > 0 && criteriaEarned === 0;
-    const WAIT = 'Ce point comptera dès que votre réponse reprendra un élément attendu.';
 
     if (sentencePoints) {
       max += sentencePoints;
       const share = Math.min(1, phrases.complete / expected);
       formEarned += sentencePoints * share;
-      lines.push({ kind: noSubstance ? 'miss' : share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: expected > 1 ? `${expected} phrases complètes` : 'Une phrase complète', sentences: phrases.complete, expected, listOnly, wait: noSubstance, conseil: noSubstance ? WAIT : bloc.phrases && bloc.phrases.conseil });
+      lines.push({ kind: noSubstance ? 'miss' : share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: expected > 1 ? `${expected} phrases complètes` : 'Une phrase complète', sentences: phrases.complete, expected, listOnly, wait: noSubstance, conseil: bloc.phrases && bloc.phrases.conseil });
     }
 
     for (const spec of bloc.regles || []) {
@@ -296,7 +295,7 @@
       max += def.points;
       const ok = def.test(text);
       if (ok) formEarned += def.points;
-      lines.push({ kind: ok && !noSubstance ? 'ok' : 'miss', nom: def.nom || 'Consigne', texte: noSubstance ? WAIT : ok ? def.ok : def.ko });
+      lines.push({ kind: ok && !noSubstance ? 'ok' : 'miss', nom: def.nom || 'Consigne', wait: noSubstance, texte: ok ? def.ok : def.ko });
     }
 
     // La forme (phrases, consignes) suit le fond : entière dès que la moitié
@@ -358,11 +357,12 @@
   function line(item) {
     let detail = '';
     if (item.sentences !== undefined) {
-      detail = item.wait ? item.conseil
+      detail = item.wait ? ''
         : item.sentences >= item.expected ? ''
         : item.sentences ? `${item.sentences} sur ${item.expected} pour l’instant.`
         : item.conseil || 'Écrivez la phrase entière, telle que vous la diriez au client.';
-    } else if (item.texte) detail = item.kind === 'ok' ? '' : item.texte;
+    } else if (item.wait) detail = '';
+    else if (item.texte) detail = item.kind === 'ok' ? '' : item.texte;
     else if (item.kind === 'warn') detail = `Repéré : ${item.found.map(f => `« ${f} »`).join(', ')}.${item.conseil ? ` ${item.conseil}` : ''}`;
     // Un critère rempli se passe de commentaire : ses mots sont surlignés dans la réponse.
     else if (item.kind !== 'ok' && item.conseil) detail = item.conseil;
