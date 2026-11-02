@@ -1,8 +1,9 @@
 /* SÉRIE 4 · ANALYSER UN ENTRETIEN (fiche M1.2.1, activité A3).
  *
  * Lucas, conseiller immobilier, reçoit M. et Mme Benali pour un premier
- * rendez-vous. L'entretien est affiché en entier dans chaque exercice : les
- * quatre exercices se font dans n'importe quel ordre.
+ * rendez-vous. Comme 1-1-1 S1 A : à gauche, l'illustration de la scène, avec
+ * « Écouter l'entretien » et « Voir la transcription » ; à droite, une question
+ * à la fois. Les quatre exercices se font dans n'importe quel ordre.
  *   4.1  l'attitude de Lucas dans chacune de ses répliques (L2 à L8) ;
  *   4.2  les signaux du couple que Lucas n'a pas exploités, et la question
  *        qui en vérifie un ;
@@ -33,12 +34,19 @@
     { who: 'client', label: 'M. et Mme Benali', text: 'Oui, exactement.' }
   ];
 
-  /* L'entretien entier, une réplique surlignée si on la nomme (« L3 »). */
-  const entretien = focus => [
-    { info: 'Lucas, conseiller immobilier, reçoit M. et Mme Benali pour un premier rendez-vous. Ce qui est entre crochets décrit leur comportement.', symbol: 'users' },
-    { dialogue: LIGNES.map(line => (focus && line.label.startsWith(`${focus} `) ? Object.assign({}, line, { mark: line.text }) : line)) }
-  ];
   const ligne = code => LIGNES.find(line => line.label.startsWith(`${code} `));
+  // L'illustration : déposez-la à ce chemin (voir assets/illustrations/COMMENT-REMPLACER-UNE-IMAGE.txt).
+  const SCENE = [{ media: {
+    image: 'assets/illustrations/s4/rendez-vous-benali.webp',
+    alt: 'Dans une agence immobilière, Lucas reçoit un couple : la femme parle, le mari consulte son téléphone, les bras croisés.',
+    placeholder: 'Le rendez-vous des Benali',
+    title: 'Le rendez-vous des Benali',
+    intro: 'Lucas, conseiller immobilier, reçoit M. et Mme Benali pour un premier rendez-vous. Ce qui est entre crochets décrit leur comportement.',
+    transcript: LIGNES,
+    listenLabel: 'Écouter l’entretien',
+    note: 'Écoute lue par la voix de votre navigateur. La transcription décrit aussi les gestes du couple.'
+  } }];
+  const scene = { target: '.sc-media', title: 'La scène', text: 'Écoutez l’entretien, ou lisez sa transcription.' };
 
   const welcome = {
     title: 'Le rendez-vous des Benali',
@@ -55,9 +63,9 @@
   /* ── 4.1 · L'attitude de chaque réplique ──────────────────────────── */
   const replique = (code, answer, why) => ({
     tab: code,
-    scene: entretien(code),
+    scene: SCENE,
     reviewScene: [{ dialogue: [ligne(code)] }],
-    fields: [{ id: 'attitude', type: 'choice', label: `L’attitude de Lucas en ${code}`, options: ATTITUDES, answer, why, whyTitle: 'Pourquoi' }]
+    fields: [{ id: 'attitude', type: 'choice', label: `L’attitude de Lucas en ${code}`, sub: `« ${ligne(code).text} »`, options: ATTITUDES, answer, why, whyTitle: 'Pourquoi' }]
   });
 
   root.ATELIER_S4 = {
@@ -67,8 +75,8 @@
       subtitle: 'Pour chacune de ses répliques, de L2 à L8, trouvez l’attitude d’écoute de Lucas.',
       welcome: accueil('Pour chaque réplique de Lucas surlignée, trouvez son attitude d’écoute.'),
       tour: [
-        { target: '.fm-scene', title: 'L’entretien', text: 'Lisez l’entretien : la réplique à analyser est surlignée.' },
-        { target: '.fm-main .fm-field', title: 'L’attitude', text: 'Cliquez sur l’attitude de Lucas dans cette réplique.' },
+        scene,
+        { target: '.fm-main .fm-field', title: 'La réplique', text: 'Cliquez sur l’attitude de Lucas dans cette réplique.' },
         { target: '.fm-actions', title: 'Réplique suivante', text: 'Sept répliques : le corrigé arrive après la dernière.' }
       ],
       caseNoun: 'Réplique',
@@ -94,17 +102,18 @@
       subtitle: 'Repérez les signaux du couple que Lucas n’a pas exploités avant L7, puis écrivez la question qui en vérifie un.',
       welcome: accueil('Repérez les signaux que Lucas laisse passer avant L7, puis écrivez la question qui en vérifie un.'),
       tour: [
-        { target: '.fm-scene', title: 'L’entretien', text: 'Relisez l’entretien, en particulier ce qui est entre crochets.' },
-        { target: '.fm-main .fm-field:has(.fm-chips)', title: '1. Les signaux', text: 'Cliquez sur chaque signal que Lucas n’a pas exploité avant L7.' },
-        { target: '.fm-main .fm-field:has(textarea)', title: '2. Vérifier', text: 'Choisissez l’un de ces signaux et écrivez la question qui le vérifie.' },
-        { target: '.fm-actions', title: 'Valider', text: 'Le corrigé reprend chaque signal.' }
+        scene,
+        { target: '.fm-main .fm-field', title: '1. Les signaux', text: 'Cliquez sur chaque signal que Lucas n’a pas exploité avant L7.' },
+        { target: '.fm-actions', title: 'Étape suivante', text: 'Ensuite, vous écrirez la question qui vérifie un signal.' }
       ],
-      caseNoun: 'Analyse',
+      caseNoun: 'Étape',
+      pills: true,
+      className: 'fm-airy',
       submitLabel: 'Voir le corrigé',
       scoreScope: 'Le score estimatif porte sur votre question (partie 2). Les signaux repérés sont corrigés juste en dessous.',
       cases: [
-        { tab: 'Les signaux', scene: entretien(), reviewScene: false, fields: [
-          { id: 'signaux', type: 'chips', label: '1 · Les signaux que Lucas n’a pas exploités', sub: 'Choisissez-en au moins trois. Certains ne sont pas des signaux manqués.', chipNoun: 'signal', min: 3,
+        { tab: 'Repérer', scene: SCENE, reviewScene: false, fields: [
+          { id: 'signaux', type: 'chips', columns: 2, label: '1 · Les signaux que Lucas n’a pas exploités', sub: 'Choisissez-en au moins trois. Certains ne sont pas des signaux manqués.', chipNoun: 'signal', min: 3,
             extraNote: 'Lucas en a déjà tenu compte',
             options: [
               { id: 'telephone', label: 'M. Benali consulte son téléphone, les bras croisés', why: 'Il ne se sent pas concerné, ou pas écouté.' },
@@ -116,7 +125,9 @@
               { id: 'bonjour', label: 'Le couple s’installe après le bonjour de Lucas', why: 'C’est l’accueil, pas un signal.' },
               { id: 'soupir', label: 'Le soupir de M. Benali après la proposition de maison', why: 'La proposition est rejetée avant même d’être regardée.' }
             ],
-            answer: ['telephone', 'loin', 'nuit', 'sec', 'soupir'] },
+            answer: ['telephone', 'loin', 'nuit', 'sec', 'soupir'] }
+        ] },
+        { tab: 'Vérifier', scene: SCENE, reviewScene: false, fields: [
           { id: 'verifier', label: '2 · Vérifier un signal', sub: 'Choisissez l’un de ces signaux. Quelle question auriez-vous posée pour le vérifier, au lieu de le supposer ?', placeholder: 'Votre question au client…', rows: 3,
             model: 'Pour « pas trop loin » : « Quand vous dites pas trop loin, Monsieur, c’est par rapport à quoi, surtout ? ». Pour les bras croisés : « Monsieur, qu’est-ce qui compte le plus pour vous dans ce projet ? »' }
         ] }
@@ -131,15 +142,15 @@
       subtitle: 'Expliquez pourquoi ces deux répliques de Lucas retournent la situation.',
       welcome: accueil('Expliquez pourquoi les répliques L7 et L8 retournent la situation.'),
       tour: [
-        { target: '.fm-scene', title: 'L’entretien', text: 'Relisez la fin de l’entretien, de L7 à la dernière réplique.' },
+        scene,
         { target: '.fm-main .fm-field', title: 'Votre analyse', text: 'Expliquez ce que font L7 et L8, et ce que ça change pour le couple.' },
         { target: '.fm-actions', title: 'Valider', text: 'Vous comparez ensuite avec une réponse possible.' }
       ],
       caseNoun: 'Analyse',
       submitLabel: 'Voir le corrigé',
       cases: [
-        { tab: 'Votre analyse', scene: entretien('L7').map(b => (b.dialogue ? { dialogue: b.dialogue.map(line => (line.label.startsWith('L8 ') ? Object.assign({}, line, { mark: line.text }) : line)) } : b)), reviewScene: false, fields: [
-          { id: 'pourquoi', label: 'Pourquoi L7 et L8 retournent la situation', sub: 'Ce que fait Lucas, et l’effet sur M. et Mme Benali.', placeholder: 'Votre analyse…', rows: 7,
+        { tab: 'Votre analyse', scene: SCENE, reviewScene: false, fields: [
+          { id: 'pourquoi', label: 'Pourquoi L7 et L8 retournent la situation', sub: 'Relisez la fin de l’entretien dans la transcription : ce que fait Lucas en L7 et L8, et l’effet sur M. et Mme Benali.', placeholder: 'Votre analyse…', rows: 7,
             model: 'En L7, Lucas reprend les mots exacts de M. Benali (« pas trop loin ») et s’adresse enfin à lui, alors qu’il l’avait écarté jusque-là. M. Benali se sent entendu : il décroise les bras et livre son vrai besoin, la sécurité du trajet de nuit, pas le confort ni l’habitude. En L8, Lucas fait de ce besoin le premier critère de recherche (moins de vingt minutes de l’hôpital) et fait valider sa synthèse par les deux. Sans elle, toutes les maisons proposées auraient été à côté.' }
         ] }
       ],
@@ -153,15 +164,15 @@
       subtitle: 'Réécrivez la réplique de Lucas avec une attitude de compréhension.',
       welcome: accueil('Réécrivez la réplique L3 de Lucas avec une attitude de compréhension.'),
       tour: [
-        { target: '.fm-scene', title: 'L’entretien', text: 'La réplique L3 est surlignée : Lucas y juge le souhait du couple.' },
+        scene,
         { target: '.fm-main .fm-field', title: 'Votre réplique', text: 'Écrivez ce que Lucas aurait pu dire à la place.' },
         { target: '.fm-actions', title: 'Valider', text: 'Vous comparez ensuite avec une réponse possible.' }
       ],
       caseNoun: 'Réécriture',
       submitLabel: 'Voir le corrigé',
       cases: [
-        { tab: 'Votre réplique', scene: entretien('L3'), reviewScene: [{ dialogue: [LIGNES[4], ligne('L3')] }], fields: [
-          { id: 'l3', label: 'Votre réplique, à la place de L3', sub: 'Reprenez le mot de M. Benali, sans juger, et invitez-le à préciser.', placeholder: 'Ce que Lucas aurait pu dire…', rows: 4,
+        { tab: 'Votre réplique', scene: SCENE, reviewScene: [{ dialogue: [LIGNES[4], ligne('L3')] }], fields: [
+          { id: 'l3', label: 'Votre réplique, à la place de L3', sub: `M. Benali vient de dire « Et pas trop loin ». Lucas répond en L3 : « ${ligne('L3').text} » Reprenez le mot de M. Benali, sans juger, et invitez-le à préciser.`, placeholder: 'Ce que Lucas aurait pu dire…', rows: 4,
             model: '« Pas trop loin… La distance compte beaucoup pour vous, Monsieur. Par rapport à quoi, surtout ? » D’autres formulations conviennent si elles reprennent le mot du client, ne jugent pas et l’invitent à préciser.' }
         ] }
       ],

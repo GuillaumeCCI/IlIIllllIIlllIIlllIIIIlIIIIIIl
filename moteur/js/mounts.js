@@ -50,9 +50,37 @@
    *   { email: { to, subject, lines } }            un e-mail ;
    *   { info, symbol, strong }        une phrase de contexte (strong : début en gras) ;
    *   { facts: [{ symbol, text }], title }         une liste de repères. */
+  const MEDIA = [];
+  const dialogueHtml = lines => `<ol class="sc-dialogue">${lines.map(line => {
+    const seller = line.who === 'seller';
+    return `<li class="sc-line ${seller ? 'is-seller' : ''}"><span class="sc-avatar ${seller ? 'is-seller' : ''}">${icon(seller ? 'headset' : 'users', { size: 24 })}<small>${esc(line.label || (seller ? 'Vous' : 'Client'))}</small></span><p class="sc-bubble">« ${esc(line.text)} »</p></li>`;
+  }).join('')}</ol>`;
+  // Ce que lit la voix : qui parle, puis ses mots, sans les indications entre crochets.
+  const spoken = lines => lines.map(line => `${String(line.label || '').replace(/^L\d+ · /, '')}. ${line.text.replace(/\[[^\]]*\]/g, ' ')}`).join(' ');
+  function mediaBlock(block) {
+    const id = MEDIA.push(block) - 1;
+    const art = block.image
+      ? `<img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async" onerror="this.parentNode.classList.add('is-missing')">`
+      : '';
+    return `<div class="sc-media">
+      <figure class="sc-media-art ${block.image ? '' : 'is-missing'}">${art}<figcaption class="sc-media-missing">${icon('users', { size: 34 })}<span>${esc(block.placeholder || 'Illustration à venir')}</span></figcaption>
+        <button type="button" class="play-button" data-act="sc-listen" data-media="${id}" aria-label="${esc(block.listenLabel || 'Écouter')}">${icon('play', { size: 30 })}</button></figure>
+      <div class="media-actions">
+        <button type="button" class="button primary with-icon" data-act="sc-listen" data-media="${id}">${icon('play', { size: 18 })}<span>${esc(block.listenLabel || 'Écouter')}</span></button>
+        <button type="button" class="button subtle" data-act="sc-transcript" data-media="${id}">${esc(block.transcriptLabel || 'Voir la transcription')}</button>
+      </div>
+      ${block.note ? `<p class="asset-note">${esc(block.note)}</p>` : ''}
+    </div>`;
+  }
+  const mediaHandlers = {
+    'sc-listen': el => { const b = MEDIA[Number(el.dataset.media)]; if (b && root.AtelierMedia) root.AtelierMedia.listen(b.src ? { src: b.src } : { transcript: spoken(b.transcript) }); },
+    'sc-transcript': el => { const b = MEDIA[Number(el.dataset.media)]; if (b) core().openDialog(b.title || 'Transcription', `<div class="sc-transcript">${b.intro ? `<p class="k-muted">${esc(b.intro)}</p>` : ''}${dialogueHtml(b.transcript)}</div>`); }
+  };
+
   function scene(blocks) {
     const list = Array.isArray(blocks) ? blocks : blocks ? [blocks] : [];
     return list.map(block => {
+      if (block.media) return mediaBlock(block.media);
       if (block.quote) {
         // La réplique seule du client : sa carte illustrée, un portrait par
         // exercice (toujours le même pour une page donnée).
@@ -571,7 +599,7 @@
           </button>`).join('')}</div></div>`;
       }
       if (f.type === 'chips') {
-        return `<div class="fm-field">${label}<div class="fm-chips">${f.options.map(o => {
+        return `<div class="fm-field">${label}<div class="fm-chips ${f.columns ? `cols-${f.columns}` : ''}">${f.options.map(o => {
           const on = chips(i, f).includes(o.id);
           return `<button type="button" class="fm-chip ${on ? 'is-on' : ''}" data-act="fm-chip" data-key="${esc(key)}" data-id="${esc(o.id)}" data-field="${esc(key)}" aria-pressed="${on}"><span class="fm-tick">${on ? icon('check', { size: 14 }) : ''}</span>${o.symbol ? icon(o.symbol, { size: 22 }) : ''}<span>${esc(o.label)}</span></button>`;
         }).join('')}</div><p class="k-muted" data-live="chips-${esc(key)}">${chipsLine(i, f)}</p></div>`;
@@ -946,6 +974,7 @@
 
     kit().on({
       'fm-case': el => { ex().setValue('case', Number(el.dataset.index)); kit().commit(); },
+      ...mediaHandlers,
       'fm-field': el => { ex().setValue('fstep', Number(el.dataset.index)); kit().commit(); },
       'fm-choice': el => { ex().setValue(el.dataset.key, el.dataset.id); kit().commit(); },
       'fm-chip': el => {

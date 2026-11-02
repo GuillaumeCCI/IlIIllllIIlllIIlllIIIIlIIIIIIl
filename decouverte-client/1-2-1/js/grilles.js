@@ -134,7 +134,7 @@
 
     // S4 4.2 · Vérifier un signal par une question, au lieu de le supposer.
     's4-4.2': { integre: true, blocs: [
-      { titre: 'Vérifier un signal', champs: ['c0_verifier'],
+      { titre: 'Vérifier un signal', champs: ['c1_verifier'],
         criteres: [
           { nom: 'Un signal du couple', points: 3, conseil: 'Partez d’un signal précis : « pas trop loin », le travail de nuit, les bras croisés, le soupir…',
             mots: ['pas trop loin', 'trop loin', 'loin', 'distance', 'trajet', 'route', 'temps de trajet', 'nuit', 'de nuit', '23 heures', '23 h', 'horaires',

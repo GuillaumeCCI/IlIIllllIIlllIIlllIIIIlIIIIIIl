@@ -55,16 +55,16 @@ module.exports = {
         c1_text: 'Si je résume bien : des pannes presque chaque week-end, trois cents cafés par jour, des serveurs qui se renouvellent et une prise en main facile, et un comptoir réduit. Vous confirmez ?' }
     ],
     's4-4.2': [
-      { c0_verifier: 'Quand vous dites pas trop loin, c’est par rapport à quoi ?' },
-      { c0_verifier: 'Monsieur, pas trop loin, ça veut dire combien de temps de trajet pour vous ?' },
-      { c0_verifier: 'Vous travaillez de nuit : est-ce que le trajet du retour vous préoccupe ?' },
-      { c0_verifier: 'Monsieur, qu’est-ce qui compte le plus pour vous dans ce projet ?' },
-      { c0_verifier: 'Je vois que cette maison ne vous convainc pas. Qu’est-ce qui vous gêne ?' },
-      { c0_verifier: "Pas trop loin de quoi, exactement ? De l'hôpital ?" },
-      { c0_verifier: 'Quand vous rentrez à 23 heures, combien de temps de route est acceptable pour vous ?' },
-      { c0_verifier: 'Pouvez-vous me préciser ce que vous entendez par pas trop loin ?' },
-      { c0_verifier: 'J’ai l’impression que ma proposition ne vous parle pas, est-ce que je me trompe ?' },
-      { c0_verifier: 'Monsieur, la distance est importante pour vous, par rapport à votre travail de nuit ?' }
+      { c1_verifier: 'Quand vous dites pas trop loin, c’est par rapport à quoi ?' },
+      { c1_verifier: 'Monsieur, pas trop loin, ça veut dire combien de temps de trajet pour vous ?' },
+      { c1_verifier: 'Vous travaillez de nuit : est-ce que le trajet du retour vous préoccupe ?' },
+      { c1_verifier: 'Monsieur, qu’est-ce qui compte le plus pour vous dans ce projet ?' },
+      { c1_verifier: 'Je vois que cette maison ne vous convainc pas. Qu’est-ce qui vous gêne ?' },
+      { c1_verifier: "Pas trop loin de quoi, exactement ? De l'hôpital ?" },
+      { c1_verifier: 'Quand vous rentrez à 23 heures, combien de temps de route est acceptable pour vous ?' },
+      { c1_verifier: 'Pouvez-vous me préciser ce que vous entendez par pas trop loin ?' },
+      { c1_verifier: 'J’ai l’impression que ma proposition ne vous parle pas, est-ce que je me trompe ?' },
+      { c1_verifier: 'Monsieur, la distance est importante pour vous, par rapport à votre travail de nuit ?' }
     ],
     's4-4.3': [
       { c0_pourquoi: 'En L7, Lucas reprend les mots exacts de M. Benali et s’adresse enfin à lui. Il se sent écouté et explique son vrai besoin : rentrer en sécurité après ses gardes de nuit. En L8, Lucas résume tout et le couple valide.' },
@@ -109,9 +109,9 @@ module.exports = {
       { c0_text: 'Je vous recommande notre abonnement, avec un rappel automatique des rendez-vous par message.', c1_text: 'Je vous propose notre modèle compact, livré et installé gratuitement.' }
     ],
     's4-4.2': [
-      { c0_verifier: 'En fait, vous êtes fatigué, il vous faut une maison tout près de l’hôpital.' },
-      { c0_verifier: 'Ne vous inquiétez pas, je vous propose une maison à 10 minutes.' },
-      { c0_verifier: 'Vous avez raison, c’est normal de vouloir être proche.' }
+      { c1_verifier: 'En fait, vous êtes fatigué, il vous faut une maison tout près de l’hôpital.' },
+      { c1_verifier: 'Ne vous inquiétez pas, je vous propose une maison à 10 minutes.' },
+      { c1_verifier: 'Vous avez raison, c’est normal de vouloir être proche.' }
     ],
     's4-4.3': [
       { c0_pourquoi: 'Parce que Lucas propose enfin une maison moins chère.' },
@@ -129,7 +129,7 @@ module.exports = {
     's3-3.1': { c0_text: 'côte', c1_text: 'épuisant', c2_text: 'loterie' },
     's3-3.2': { c0_text: 'découragés appartements', c1_text: 'agacé bruit', c2_text: 'déçue formations' },
     's3-3.3': { c0_text: 'téléphone, rendez-vous, planning, simple', c1_text: 'pannes, 300, serveurs, place' },
-    's4-4.2': { c0_verifier: 'loin nuit bras' },
+    's4-4.2': { c1_verifier: 'loin nuit bras' },
     's4-4.3': { c0_pourquoi: 'écho sécurité synthèse' },
     's4-4.4': { c0_l3: 'loin monsieur' }
   }

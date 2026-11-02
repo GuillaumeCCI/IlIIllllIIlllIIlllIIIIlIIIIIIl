@@ -546,3 +546,22 @@ button.crash-passage:hover { background: #fff1d6; }
 
 /* Ce que le score évalue, au-dessus du score (mountForm, scoreScope). */
 .open-scope { margin: 0 0 8px; color: var(--muted); font-size: .92rem; }
+
+/* La transcription dans sa fenêtre : elle défile si elle est longue. */
+.sc-transcript { max-height: 70vh; overflow: auto; padding-right: 6px; }
+
+/* Scène illustrée avec écoute et transcription (mountForm, bloc media), comme 1-1-1 S1 A. */
+.sc-media { display: grid; gap: 4px; }
+.sc-media-art { position: relative; margin: 0; border-radius: 16px; overflow: hidden; background: #eef3ff; aspect-ratio: 4 / 3; }
+.sc-media-art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sc-media-missing { display: none; }
+.sc-media-art.is-missing img { display: none; }
+.sc-media-art.is-missing .sc-media-missing { display: grid; place-content: center; justify-items: center; gap: 10px; height: 100%; color: #5d6785; font-weight: 700; }
+.sc-media .asset-note { margin: 8px 0 0; color: var(--muted); font-size: .88rem; }
+
+/* Des choix longs (des phrases) : deux colonnes plus larges (champ chips, columns: 2). */
+.fm-chips.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.fm-chips.cols-1 { grid-template-columns: minmax(0, 1fr); }
+/* Le nom de la scène en attente de son illustration : en bas, sous le bouton de lecture. */
+.sc-media-art.is-missing .sc-media-missing { position: absolute; inset: auto 0 18px; height: auto; display: block; text-align: center; }
+.sc-media-art.is-missing .sc-media-missing .icon { display: none; }
