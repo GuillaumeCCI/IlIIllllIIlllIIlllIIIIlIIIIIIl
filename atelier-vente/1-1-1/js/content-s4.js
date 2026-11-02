@@ -91,7 +91,7 @@ window.ATELIER_S4 = {
       {
         client: 'Je n’ai pas le temps de m’occuper de ça en ce moment.',
         reflex: 'Ça va vous prendre dix minutes, c’est rien.',
-        model: 'Votre charge actuelle ne laisse pas de place à un nouveau projet, c’est bien cela ?'
+        model: 'En ce moment, vous avez déjà trop à faire pour vous lancer dans un nouveau projet, c’est bien ça ?'
       },
       {
         client: 'On a déjà essayé ce type de solution, ça n’a rien donné.',

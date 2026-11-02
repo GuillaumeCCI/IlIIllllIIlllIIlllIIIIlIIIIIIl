@@ -63,7 +63,7 @@ window.ATELIER_S2 = {
     max: 240,
     turns: [
       { line: 'C’est à quel sujet ? M. Riveau n’est pas disponible.',
-        model: 'Bonjour, vous faites bien de me demander. Je contacte M. Riveau au sujet de l’aménagement ergonomique des postes de vos équipes : c’est bien lui qui suit ce type de sujet ? Quel serait le meilleur moment pour le joindre, ou préférez-vous que je passe par vous ?',
+        model: 'Bonjour, [Prénom Nom], d’Ergolys. J’appelle M. Riveau au sujet du confort des postes de travail : c’est bien lui qui s’en occupe ? Quand puis-je le joindre, ou préférez-vous que je passe par vous ?',
         why: 'Ce qui fonctionne : on nomme l’objet clairement, on valorise l’interlocuteur, on propose une suite concrète et on ne force pas.' },
       { line: 'Il est en déplacement toute la semaine. Vous voulez laisser un message ?',
         model: 'Merci, c’est gentil. Quel jour serait-il plus disponible la semaine prochaine ? Et en son absence, qui suit l’aménagement des bureaux ?' }
@@ -174,7 +174,7 @@ window.ATELIER_S2 = {
         rebond: 'Quel créneau vous irait mieux ?' } },
       { quote: 'Envoyez-moi une doc.', model: {
         posture: 'Coopératif : on garde la main.',
-        reponse: 'Volontiers, pour cibler l’utile…',
+        reponse: 'Volontiers. Pour vous envoyer ce qui vous sera vraiment utile…',
         rebond: 'Combien de postes environ ?' } },
       { quote: 'On a déjà un fournisseur.', model: {
         posture: 'Sans dénigrer.',

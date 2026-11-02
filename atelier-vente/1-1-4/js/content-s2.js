@@ -113,9 +113,9 @@ window.ATELIER_S2 = {
     hint: 'Gardez le prix total visible, citez le repère sans erreur, puis reliez-le à ce que le client vit au quotidien.',
     cases: [
       { tab: 'Siège ergonomique', tabSub: '690 €', scene: { image: 'assets/illustrations/s2/1-1-4-S2-i2-3-A.png', alt: 'Offre 1, siège ergonomique à 690 € : sur 5 ans, environ 0,38 € par jour.' },
-        models: { text: 'Sur 5 ans d’utilisation, l’investissement représente environ 38 centimes par jour pour un équipement conçu pour améliorer le confort au poste de travail.' } },
+        models: { text: 'Ce siège est à 690 €. Sur 5 ans, cela représente environ 38 centimes par jour, pour être bien assis et ménager votre dos chaque jour de travail.' } },
       { tab: 'Pack de 10 postes', tabSub: '17 000 €', scene: { image: 'assets/illustrations/s2/1-1-4-S2-i2-3-B.png', alt: 'Offre 2, pack de 10 postes à 17 000 € : 1 700 € par poste.' },
-        models: { text: 'Cela représente 1 700 € par poste, avec l’installation et la garantie comprises. Le client peut ainsi comparer le prix avec le périmètre réel de la solution proposée.' } }
+        models: { text: 'Le pack est à 17 000 € pour 10 postes, soit 1 700 € par poste, installation et garantie comprises. Vous pouvez ainsi comparer ce prix avec tout ce que la solution comprend vraiment.' } }
     ],
     keyPoint: 'À retenir : décomposer le prix ne consiste pas seulement à faire un calcul. Il faut ensuite relier ce chiffre à une valeur concrète pour le client.',
     nextLabel: 'Enregistrer et passer à l’offre 2',
@@ -219,11 +219,11 @@ window.ATELIER_S2 = {
     hint: 'Une question pour comprendre la référence du client, puis un ou deux faits concrets de l’offre. Pas de remise à ce stade.',
     cases: [
       { tab: 'Trop cher', scene: { quote: 'C’est trop cher.' },
-        models: { text: 'Je comprends. Qu’est-ce qui vous fait dire que le prix est trop élevé ? Regardons ce qui est important pour vous et ce que notre offre comprend.' } },
+        models: { text: 'Je comprends. Qu’est-ce qui vous fait dire que le prix est trop élevé ? Sachez que l’installation et la garantie de 5 ans sont comprises, et que vous pouvez essayer gratuitement pendant 30 jours.' } },
       { tab: 'Moins cher ailleurs', scene: { quote: 'J’ai trouvé moins cher ailleurs.' },
-        models: { text: 'C’est possible. Regardons si nous comparons exactement le même périmètre : installation, garantie, service après-vente… Cela nous permettra de comprendre précisément l’écart.' } },
+        models: { text: 'C’est possible. Vous avez comparé avec quelle offre ? Regardons si elle comprend bien la même chose : l’installation, la garantie, le service après-vente. Cela nous permettra de comprendre d’où vient l’écart.' } },
       { tab: 'Vaut-il 17 000 € ?', scene: { quote: 'Je ne suis pas sûr que cela vaille 17 000 €.' },
-        models: { text: 'Regardons ce que représentent ces 17 000 € : 10 postes équipés, soit 1 700 € par poste, avec l’installation et la garantie comprises. L’enjeu est de vérifier si cette solution répond suffisamment à vos priorités pour justifier cet investissement.' } }
+        models: { text: 'Regardons ce que représentent ces 17 000 € : 10 postes équipés, soit 1 700 € par poste, installation et garantie comprises. Qu’est-ce qui compte le plus pour vous, pour que cet investissement en vaille la peine ?' } }
     ],
     keyPoint: 'À retenir : une objection sur le prix n’appelle pas une réponse automatique. On écoute, on questionne, on choisit son levier, on valorise.',
     nextLabel: 'Objection suivante',
@@ -256,7 +256,7 @@ window.ATELIER_S2 = {
         { id: 'levers', type: 'chips', label: 'Choisissez vos leviers', sub: 'Prenez ceux qui servent votre réponse ; inutile de tous les utiliser.', chipNoun: 'levier',
           options: window.ATELIER_LEVERS.map(l => ({ id: l.id, label: l.short, symbol: l.symbol })).concat({ id: 'rassurer', label: 'Rassurer', symbol: 'shield' }) },
         { id: 'text', label: 'Ma réponse au client', placeholder: 'Ce que vous diriez au client…', rows: 5,
-          model: 'Je comprends. Quand vous dites que ce sera difficile à justifier, est-ce surtout le montant global qui vous pose question, ou le retour que votre direction peut en attendre ? Le pack représente 1 700 € par poste, installation et garantie comprises. On peut regarder ensemble les enjeux prioritaires pour vos équipes et les mettre en regard de l’investissement, afin que vous disposiez d’éléments concrets pour votre direction.' }
+          model: 'Je comprends. Quand vous dites que ce sera difficile à justifier, c’est surtout le montant total qui vous gêne, ou ce que votre direction attend en retour ? Le pack revient à 1 700 € par poste, installation et garantie comprises. Je vous propose qu’on regarde ensemble ce que vos équipes y gagnent par rapport à ce montant : vous aurez des éléments concrets à montrer à votre direction.' }
       ] }
     ],
     submitLabel: 'Vérifier ma réponse',

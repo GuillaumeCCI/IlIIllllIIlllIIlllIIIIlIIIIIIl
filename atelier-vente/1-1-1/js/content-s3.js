@@ -100,7 +100,7 @@ window.ATELIER_S3 = {
     hint: 'Le commercial a accepté le report sans chercher à comprendre. « Je vais réfléchir » cache souvent un doute précis : un budget non arbitré, une décision qui ne lui appartient pas seul, une crainte sur la mise en œuvre ou une comparaison en cours. Votre question doit être ouverte, courte et sans suggestion de réponse.',
     // Trois repères distincts : l'écran les place sous le champ concerné.
     hypothesisModel: '« Je vais réfléchir » est souvent un prétexte qui masque une objection non exprimée : le prix, un doute sur l’utilité, la nécessité de valider en interne, ou la crainte de se tromper.',
-    questionModel: 'Question possible : « Bien sûr. Pour vous aider au mieux, qu’est-ce qui vous fait hésiter aujourd’hui : le budget, le moment, ou autre chose ? » On isole ainsi la vraie objection plutôt que de subir un « on verra ».',
+    questionModel: 'Question possible : « Bien sûr. Pour vous aider au mieux, qu’est-ce qui vous fait hésiter aujourd’hui ? » On isole ainsi la vraie objection plutôt que de subir un « on verra ».',
     avoid: 'À éviter : accepter un report vague, comme ici. En proposant de rappeler dans un mois, le commercial perd la main.'
   },
 
@@ -156,7 +156,7 @@ window.ATELIER_S3 = {
         model: [
           'Je comprends : si personne ne se plaint, la question ne se pose pas tous les jours.',
           'Vous arrive-t-il d’avoir des salariés gênés par le dos, ou des arrêts de ce type ?',
-          'Si je comprends bien, vous préférez éviter de dépenser tant que ce n’est pas un vrai problème.',
+          'Si je comprends bien, tant que ce n’est pas un vrai problème, vous préférez éviter de dépenser. C’est bien ça ?',
           'C’est justement l’objectif : éviter les douleurs de dos avant qu’elles ne deviennent des arrêts. Chez nos clients, ces arrêts ont baissé, et le diagnostic ne porte que sur les postes à risque.',
           'Est-ce que cette idée de prévention vous parle ?',
           'Je vous propose un diagnostic gratuit de 2 ou 3 postes, pour vérifier ensemble s’il y a un vrai besoin.'
@@ -189,10 +189,10 @@ window.ATELIER_S3 = {
         model: [
           'Je comprends, les honoraires représentent une vraie somme sur une vente comme la vôtre.',
           'Qu’est-ce qui compte le plus pour vous dans cette vente : le prix final, le délai, ou les frais ?',
-          'Si je comprends bien, vous voulez être sûrs que ce que vous payez se retrouve dans le prix que vous touchez au final.',
+          'Si je comprends bien, vous voulez être sûrs que nos honoraires vous rapportent plus qu’ils ne vous coûtent. C’est bien ça ?',
           'Nos maisons se vendent en 45 jours en moyenne, et 92 % au prix affiché : si votre maison se vend seulement 2 % plus cher, la différence d’honoraires est largement couverte.',
           'Est-ce que cette façon de faire le calcul vous parle ?',
-          'Je vous propose de comparer les deux offres sur ce qu’il vous restera vraiment après la vente, samedi matin ici même.'
+          'Je vous propose qu’on se revoie samedi matin pour comparer les deux offres sur ce qu’il vous restera vraiment après la vente. Ça vous va ?'
         ],
         mots: {
           sujet: ['prix final', 'prix de vente', 'délai', 'frais', 'compte le plus', 'priorité', 'important pour vous', 'autre agence', '3 %', 'comparé', 'net vendeur', 'attendez', 'vendre vite', 'meilleur prix', 'attentes', 'vite', 'prix', 'calendrier', 'déménagement', 'quand', 'objectif', 'combien'],
@@ -222,8 +222,8 @@ window.ATELIER_S3 = {
         model: [
           'Très bien, c’est important d’être couvert quand on travaille chez les autres.',
           'Si demain un dégât des eaux vous immobilise un mois, savez-vous ce que votre contrat vous verse ?',
-          'Si je vous suis bien, vous êtes satisfait de votre assureur et vous ne voulez pas tout changer pour rien.',
-          'Justement, je ne vous propose pas de changer à l’aveugle : en 20 minutes, je compare votre contrat au nôtre, en particulier ce qui vous est versé si vous ne pouvez plus travailler, une garantie qui manque à trois artisans sur quatre.',
+          'Si je vous suis bien, vous êtes satisfait de votre assureur et vous ne voulez pas tout changer pour rien. C’est bien ça ?',
+          'Justement, je ne vous propose pas de changer à l’aveugle. En 20 minutes, je compare votre contrat au nôtre, surtout ce qui vous est versé si vous ne pouvez plus travailler. Trois artisans sur quatre n’ont pas cette garantie.',
           'Cette comparaison vous semble utile ?',
           'Je vous propose de passer jeudi en fin de journée avec votre contrat actuel, et vous déciderez ensuite.'
         ],
@@ -256,7 +256,7 @@ window.ATELIER_S3 = {
         model: [
           'Je comprends, la saison doit être chargée, et changer d’outil fait peur quand on court déjà.',
           'Combien de temps passez-vous aujourd’hui chaque semaine sur vos devis et vos factures ?',
-          'Si je comprends bien, vous craignez que le changement vous prenne plus de temps qu’il ne vous en fait gagner.',
+          'Si je comprends bien, vous craignez que le changement vous prenne plus de temps qu’il ne vous en fait gagner. C’est bien ça ?',
           'C’est pour ça que nos équipes transfèrent vos données elles-mêmes : le logiciel est prêt en 2 heures, et nos clients gagnent en moyenne 4 heures par semaine.',
           'Est-ce que cela répond à votre crainte sur le temps ?',
           'Je vous propose d’ouvrir l’essai gratuit aujourd’hui, et de fixer votre heure de formation mardi prochain.'
@@ -290,8 +290,8 @@ window.ATELIER_S3 = {
         model: [
           'Je comprends, c’est une vraie somme pour un vélo.',
           'Par rapport à quoi le trouvez-vous cher : un autre modèle, ou le budget que vous aviez prévu ?',
-          'Si je comprends bien, vous voulez être sûr que cet achat se rembourse vraiment sur vos trajets.',
-          'Sur vos 12 km par jour, vous économisez environ 80 € par mois d’essence et de stationnement ; avec la prime de la ville de 300 € et le paiement en 4 fois, le vélo est remboursé en deux ans environ.',
+          'Si je comprends bien, vous voulez être sûr que cet achat se rembourse vraiment sur vos trajets. C’est bien ça ?',
+          'Sur vos 12 km par jour, vous économisez environ 80 € par mois d’essence et de stationnement. Avec la prime de 300 € de la ville, le vélo est remboursé en deux ans environ. Et vous pouvez payer en 4 fois, sans frais.',
           'Est-ce que ce calcul vous rassure ?',
           'Je vous propose de le garder une journée pour faire votre vrai trajet, et vous me direz ce que vous en pensez.'
         ],
@@ -322,9 +322,9 @@ window.ATELIER_S3 = {
           'Nos poseurs interviennent dans toute la région.'
         ],
         model: [
-          'Bien sûr, c’est un projet pour toute la maison, c’est normal de décider à deux.',
+          'Bien sûr, c’est un projet qui vous concerne tous les deux, c’est normal de décider à deux.',
           'Qu’est-ce qui comptera le plus pour lui : le budget, le style, ou la durée des travaux ?',
-          'Si je comprends bien, vous voulez qu’il adhère au projet autant que vous avant de vous engager.',
+          'Si je comprends bien, vous voulez qu’il adhère au projet autant que vous avant de vous engager. C’est bien ça ?',
           'Pour l’aider à se projeter, je vous prépare une image en 3D de votre futur salon et je vous confie les échantillons ; le devis reste valable 30 jours.',
           'Est-ce que cela vous aiderait pour en parler ensemble ?',
           'Je vous propose de revenir tous les deux samedi à 10 h : je vous présente l’image en 3D et on ajuste ensemble.'

@@ -151,7 +151,7 @@ window.ATELIER_S3 = {
         model: 'Le vendeur ne saisit pas cette occasion : au lieu de vérifier si la cliente est prête à avancer, il reprend son argumentaire et ajoute de nouvelles informations.' }],
         hint: 'Que se passe-t-il quand on continue de présenter des produits à un client déjà prêt ?' },
       { tab: 'Répondre', fields: [{ id: 'text', label: 'Que répondez-vous à la cliente ?', placeholder: 'Votre réplique…', max: 240, rows: 4,
-        model: 'Oui, une livraison avant la fin du mois est possible. Est-ce que ce délai vous conviendrait pour lancer l’équipement ?' }],
+        model: 'Oui, nous pouvons vous livrer avant la fin du mois. Si ce délai vous convient, on lance la commande ?' }],
         hint: 'Répondez à sa question, puis proposez la décision dans la même phrase.' }
     ],
     nextLabel: 'Enregistrer et continuer',
@@ -228,7 +228,7 @@ window.ATELIER_S3 = {
     cases: [
       { tab: 'Votre closing', title: 'Votre closing complet', fields: [
         { id: 'text', label: 'Rédigez la suite de l’échange jusqu’à une prochaine étape concrète.', placeholder: 'Écrivez ce que vous diriez au client…', max: 1200, rows: 8,
-          model: 'Oui, nous pouvons organiser l’installation avant la fin du mois. Si ce calendrier vous convient, est-ce que nous pouvons partir sur les 10 postes ? [silence] Parfait. Je prépare la commande aujourd’hui et je vous confirme ensuite la date d’installation et les prochaines étapes.' }
+          model: 'Oui, nous pouvons organiser l’installation avant la fin du mois. Nous avons donc validé les 10 postes, avec l’installation et la garantie de 5 ans. Si ce calendrier vous convient, est-ce que nous pouvons lancer la commande ? [silence] Parfait. Je prépare la commande aujourd’hui et je vous confirme ensuite la date d’installation et les prochaines étapes.' }
       ] }
     ],
     keyPoint: 'À retenir : conclure, ce n’est pas seulement obtenir un « oui ». C’est transformer l’accord en prochaine étape claire et sécurisante pour le client.',

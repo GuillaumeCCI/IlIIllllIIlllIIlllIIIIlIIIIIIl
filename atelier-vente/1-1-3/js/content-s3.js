@@ -44,7 +44,7 @@ window.ATELIER_S3 = {
     ],
         hint: 'Comparez la réponse aux étapes de la méthode : le commercial accueille-t-il ? Questionne-t-il ? Apporte-t-il une preuve ? Vérifie-t-il que le doute est levé ?',
     rewriteHelp: 'Accueillez, questionnez, reformulez, traitez, contrôlez.',
-    model: 'Je comprends, le budget est un point important. Quand vous dites que c’est trop cher, c’est par rapport à quoi exactement : une enveloppe prévue, une autre offre ? Si je comprends bien, vous voulez être sûr d’en avoir pour votre investissement. Concrètement, voici ce que cette solution vous fait gagner, et ce que cela représente sur l’année. Est-ce que cela répond à votre interrogation ? Dans ce cas, je vous propose de voir ensemble la mise en place.'
+    model: 'Je comprends, le budget est un point important. Quand vous dites que c’est trop cher, c’est par rapport à quoi : une enveloppe prévue, une autre offre ? Si je comprends bien, vous voulez être sûr que cet investissement en vaut la peine. C’est bien ça ? Concrètement, je vais vous montrer ce que cette solution vous fait gagner, et ce que cela représente sur une année. Est-ce que cela répond à votre question ? Si oui, je vous propose de voir ensemble la mise en place.'
   },
 
   /* ── 2.1 · À chaque objection, sa nature ────────────────────────────── */

@@ -129,7 +129,7 @@ window.ATELIER_S5 = {
     cases: [
       { tab: 'À vous de répondre', fields: [
         { id: 'text', label: 'À vous de répondre', sub: 'Rédigez ce que vous diriez à la cliente.', placeholder: 'Ce que vous diriez…', rows: 6,
-          model: 'Je comprends. Quand vous dites que c’est plus cher que prévu, est-ce par rapport au budget que vous aviez envisagé ou à une autre solution ? Dans le montant proposé, l’accompagnement, la livraison, la garantie et le suivi pendant 12 mois sont inclus : vous n’avez pas de prestation complémentaire à ajouter. Si l’on rapporte l’investissement à l’année, cela représente moins de 7 € par jour pour bénéficier de l’ensemble du service.' }
+          model: 'Je comprends. Quand vous dites que c’est plus cher que prévu, c’est par rapport au budget que vous aviez en tête, ou à une autre solution ? Dans ce montant, tout est compris : l’accompagnement, la livraison, la garantie et le suivi pendant 12 mois. Vous n’aurez rien à payer en plus. Sur l’année, cela fait moins de 7 € par jour pour l’ensemble du service.' }
       ] }
     ],
     keyPoint: 'Le bon réflexe : défendre son prix, ce n’est pas se justifier. C’est aider le client à comprendre ce qu’il obtient en contrepartie de son investissement.',

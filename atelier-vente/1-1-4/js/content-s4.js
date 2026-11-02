@@ -133,9 +133,9 @@ window.ATELIER_S4 = {
     ],
     cases: [
       { tab: 'Mes 3 éléments de valeur', fields: [
-        { id: 'v1', label: 'Élément 1', placeholder: 'Rédigez votre premier élément de valeur…', rows: 2, model: 'Le retour chiffré d’un client du même secteur (baisse des arrêts).' },
-        { id: 'v2', label: 'Élément 2', placeholder: 'Rédigez votre deuxième élément de valeur…', rows: 2, model: 'Une échéance : fin de l’offre d’essai de 30 jours étendue, ou disponibilité d’un créneau d’installation.' },
-        { id: 'v3', label: 'Élément 3', placeholder: 'Rédigez votre troisième élément de valeur…', rows: 2, model: 'Une information utile : nouveau coloris, option location pour étaler le budget, étude ergonomique offerte.' }
+        { id: 'v1', label: 'Élément 1', placeholder: 'Rédigez votre premier élément de valeur…', rows: 2, model: 'Une entreprise de votre secteur nous a donné ses chiffres : ses arrêts liés au mal de dos ont baissé depuis qu’elle est équipée.' },
+        { id: 'v2', label: 'Élément 2', placeholder: 'Rédigez votre deuxième élément de valeur…', rows: 2, model: 'L’essai gratuit de 30 jours prolongé se termine à la fin du mois, et il nous reste un créneau d’installation avant cette date.' },
+        { id: 'v3', label: 'Élément 3', placeholder: 'Rédigez votre troisième élément de valeur…', rows: 2, model: 'Bonne nouvelle : le siège existe maintenant dans un nouveau coloris, la location est possible pour étaler le budget, et nous offrons l’étude ergonomique.' }
       ], lesson: 'Autre piste du corrigé : une proposition d’aide, comme un diagnostic gratuit de 2 ou 3 postes pour objectiver le besoin. Toute proposition pertinente est valable.' }
     ],
     submitLabel: 'Enregistrer mes 3 éléments',

@@ -98,13 +98,13 @@ window.ATELIER_S2 = {
         text: 'Je comprends, mais vous savez, la qualité a un prix.',
         answer: 'Jugement / évaluation',
         why: 'Le « mais » annule l’écoute et défend l’offre.',
-        rewrite: 'Vous pouviez écrire : « Le tarif vous interpelle, c’est cela ? »'
+        rewrite: 'Vous pouviez écrire : « Le prix vous paraît élevé, c’est bien ça ? »'
       },
       {
         text: 'Je vois ce que vous voulez dire ; vous devriez regarder notre offre d’entrée de gamme.',
         answer: 'Solution / décision',
         why: 'Elle propose une offre avant d’avoir compris.',
-        rewrite: 'Vous pouviez écrire : « Vous vous interrogez sur le rapport prix / valeur, si je comprends bien. »'
+        rewrite: 'Vous pouviez écrire : « Si je comprends bien, vous vous demandez si le prix est justifié. »'
       },
       {
         text: 'Je comprends, ne vous en faites pas, tout le monde dit ça au début.',
@@ -154,13 +154,13 @@ window.ATELIER_S2 = {
       {
         label: 'Bavard',
         quote: 'Alors, je vous explique, on a déjà essayé trois prestataires, et à chaque fois c’est la même histoire, je vous raconte…',
-        model: 'Si je résume, il y a beaucoup à gérer de votre côté. Pour être utile, sur quoi voulez-vous qu’on commence ?',
+        model: 'Si je résume, vous avez déjà essayé trois prestataires, et chaque fois, c’était la même histoire. Pour être utile, par quoi voulez-vous qu’on commence ?',
         adaptation: 'Vous pouviez écrire : « Je fais une synthèse de ce qu’il a dit, puis je recentre l’échange avec respect, sans lui couper la parole. »'
       },
       {
         label: 'Silencieux',
         quote: '… (le client écoute, hoche la tête, mais ne répond pas)',
-        model: 'Vous restez prudent, c’est normal ; qu’est-ce qui compte le plus pour vous là-dessus ?',
+        model: 'Je vous laisse le temps d’y penser. Qu’est-ce qui compte le plus pour vous, là-dessus ?',
         adaptation: 'Vous pouviez écrire : « J’accueille son silence avec compréhension, puis je pose une question ouverte légère, pour l’inviter à parler sans le presser. »'
       }
     ]

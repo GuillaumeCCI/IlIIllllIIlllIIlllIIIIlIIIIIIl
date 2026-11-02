@@ -172,7 +172,7 @@
       cases: [
         { tab: 'Votre réplique', scene: SCENE, reviewScene: [{ dialogue: [LIGNES[4], ligne('L3')] }], fields: [
           { id: 'l3', label: 'Votre réplique, à la place de L3', sub: `M. Benali vient de dire « Et pas trop loin ». Nadia répond en L3 : « ${ligne('L3').text} » Reprenez le mot de M. Benali, sans juger, et invitez-le à préciser.`, placeholder: 'Ce que Nadia aurait pu dire…', rows: 4,
-            model: '« Pas trop loin… La distance compte beaucoup pour vous, Monsieur. Par rapport à quoi, surtout ? » D’autres formulations conviennent si elles reprennent le mot du client, ne jugent pas et l’invitent à préciser.' }
+            model: '« Pas trop loin… La distance compte beaucoup pour vous, Monsieur. Pas trop loin de quoi, surtout ? » D’autres formulations conviennent si elles reprennent le mot du client, ne jugent pas et l’invitent à préciser.' }
         ] }
       ],
       keyPoint: 'À retenir : au lieu de juger (« comme tout le monde »), on reprend le mot du client et on l’invite à préciser. C’est souvent derrière un mot court que se cache le critère décisif.'

@@ -112,7 +112,7 @@ window.ATELIER_S1 = {
       'La nécessité de valider en interne.',
       'La crainte de se tromper.'
     ],
-    model: 'Bien sûr. Pour vous aider au mieux, qu’est-ce qui vous fait hésiter aujourd’hui : le budget, le moment, ou autre chose ?',
+    model: 'Bien sûr. Pour vous aider au mieux, qu’est-ce qui vous fait hésiter aujourd’hui ?',
     lesson: '« Je vais réfléchir » est souvent un prétexte qui masque une objection non exprimée. En acceptant un report vague, la commerciale perd la main ; la question isole la vraie objection plutôt que de subir un « on verra ».'
   },
 
@@ -172,23 +172,23 @@ window.ATELIER_S1 = {
       { text: 'Nos chaises actuelles suffisent.', model: [
         'Je comprends : si personne ne se plaint, la question ne se pose pas tous les jours.',
         'Vous arrive-t-il d’avoir des salariés gênés par le dos, ou des arrêts de ce type ?',
-        'Si je comprends bien, vous préférez éviter de dépenser tant que ce n’est pas un vrai problème.',
-        'C’est justement l’objectif : prévenir le mal de dos avant l’arrêt. Nos clients constatent une baisse des absences, et l’étude ergonomique ne cible que les postes à risque.',
-        'Est-ce que cet angle prévention vous parle ?',
-        'Je vous propose un diagnostic gratuit de 2 ou 3 postes pour objectiver le besoin.'
+        'Si je comprends bien, tant que ce n’est pas un vrai problème, vous préférez éviter de dépenser. C’est bien ça ?',
+        'C’est justement l’objectif : prévenir le mal de dos avant l’arrêt. Nos clients constatent une baisse des absences, et l’étude ne porte que sur les postes où il y a un vrai risque.',
+        'Est-ce que cette idée de prévention vous parle ?',
+        'Je vous propose un diagnostic gratuit de 2 ou 3 postes, pour vérifier ensemble s’il y a un vrai besoin.'
       ] },
       { text: 'C’est trop cher.', model: [
         'Je comprends, c’est un vrai investissement.',
         'Par rapport à quoi le trouvez-vous élevé : une autre offre, un budget prévu ?',
-        'Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine.',
-        'Vos sièges sont garantis 5 ans, et l’essai de 30 jours vous permet de vérifier la valeur sans risque ; la location est aussi possible pour étaler le budget.',
+        'Si je comprends bien, vous voulez être sûr que l’investissement en vaut la peine. C’est bien ça ?',
+        'Nos sièges sont garantis 5 ans, et l’essai de 30 jours vous permet de vérifier leur valeur sans risque. La location est aussi possible, pour étaler le budget.',
         'Est-ce que cela répond à votre préoccupation ?',
         'Je vous propose de lancer l’essai sur quelques postes : plutôt la semaine prochaine ou la suivante ?'
       ] },
       { text: 'Je dois voir avec la direction.', model: [
         'Bien sûr, c’est une décision qui se prend à plusieurs.',
         'Qu’est-ce qui compterait le plus pour votre direction ?',
-        'Si je comprends bien, vous avez besoin d’éléments solides pour présenter le projet.',
+        'Si je comprends bien, vous avez besoin d’éléments solides pour présenter le projet. C’est bien ça ?',
         'Je vous prépare un argumentaire chiffré, et je peux présenter le projet en quelques minutes à votre direction.',
         'Est-ce que cela vous aiderait à le défendre ?',
         'Quand voyez-vous votre direction ? Je peux vous envoyer l’argumentaire la veille.'
@@ -196,9 +196,9 @@ window.ATELIER_S1 = {
       { text: 'J’ai été déçu par un fournisseur.', model: [
         'Je comprends, une mauvaise expérience laisse des traces.',
         'Qu’est-ce qui s’était mal passé ?',
-        'Si je comprends bien, vous voulez être certain de ne pas revivre la même situation.',
+        'Si je comprends bien, vous voulez être certain de ne pas revivre la même situation. C’est bien ça ?',
         'Chez Ergolys, vous avez une garantie de 5 ans, un service après-vente sous 48 h, un essai de 30 jours satisfait ou remboursé, et plus de 1 200 entreprises déjà équipées.',
-        'Ces garanties répondent-elles à votre crainte ?',
+        'Est-ce que ces garanties vous rassurent ?',
         'Je vous propose de démarrer par l’essai de 30 jours : on fixe la date ensemble ?'
       ] }
     ],
@@ -220,7 +220,7 @@ window.ATELIER_S1 = {
     subtitle: 'Pour vos prochains rendez-vous, rédigez une réponse pour chaque objection.',
     fiches: [
       { text: 'C’est trop cher.', nature: 'fondee', natureNote: 'Une réserve réelle sur le prix : on creuse, puis on argumente la valeur.',
-        question: 'Par rapport à quoi ?',
+        question: 'Vous le trouvez cher par rapport à quoi ?',
         answer: 'Mettre en avant la valeur : essai de 30 jours et garantie de 5 ans ; la location est possible pour étaler le budget.',
         proof: 'L’essai de 30 jours et la garantie de 5 ans.' },
       { text: 'Nos chaises actuelles suffisent.', nature: 'pretexte', natureNote: 'Un prétexte, le statu quo : on creuse pour savoir si un besoin existe.',

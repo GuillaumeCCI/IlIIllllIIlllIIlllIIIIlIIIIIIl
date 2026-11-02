@@ -115,7 +115,7 @@ window.ATELIER_S4 = {
     model: [
       { title: 'Le besoin exprimé est ignoré', text: 'Le client cherche la simplicité : rien n’y répond.' },
       { title: 'L’effet catalogue', text: 'Le commercial déballe tous ses arguments, sans sélection.' },
-      { title: 'Le jargon technique', text: 'AES-256, BI, API, SSO : rien n’est traduit en bénéfice.' },
+      { title: 'Le jargon technique', text: 'BI, API, SSO, sauvegarde incrémentale : aucun de ces termes n’est traduit en bénéfice.' },
       { title: 'Le monologue', text: 'Aucune question ni vérification de l’impact : le client décroche, son « euh, d’accord » le montre.' }
     ],
     tip: 'Observez le fond, le rythme et l’écoute.'

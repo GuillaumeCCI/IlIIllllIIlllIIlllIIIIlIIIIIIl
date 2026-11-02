@@ -93,7 +93,7 @@ window.ATELIER_S1 = {
         { id: 'risk', label: '1 · Diagnostiquer', sub: 'Quel risque prend le commercial ?', placeholder: 'Votre analyse…', rows: 4,
           model: 'Le prix est annoncé avant que le commercial ait pu comprendre le besoin et faire percevoir la valeur de l’offre. Présenté seul, le montant de 17 000 € risque de devenir le principal point de comparaison pour le client.' },
         { id: 'replay', label: '2 · Rejouer', sub: 'Que répondriez-vous au client ?', placeholder: 'Votre nouvelle réplique…', rows: 4,
-          model: 'Bien sûr, je vais vous donner le prix. Pour vous donner un montant adapté et vous expliquer ce qu’il comprend, j’ai juste besoin de vous poser deux ou trois questions sur vos postes et vos besoins.' }
+          model: 'Bien sûr. Pour 10 postes, cela tourne autour de 17 000 €, selon les options. Pour vous donner un montant juste et vous expliquer ce qu’il comprend, est-ce que je peux vous poser deux ou trois questions sur vos postes et vos besoins ?' }
       ], lesson: 'Il ne s’agit pas d’esquiver la question : on l’accueille, puis on propose de clarifier rapidement le besoin avant d’annoncer le prix et ce qu’il comprend.' }
     ],
     keyPoint: 'À retenir : quand le prix est demandé très tôt, ne pas esquiver, mais éviter d’annoncer un prix « nu ». D’abord comprendre et donner de la valeur, puis annoncer le prix.',
