@@ -552,8 +552,8 @@ button.crash-passage:hover { background: #fff1d6; }
 
 /* Scène illustrée avec écoute et transcription (mountForm, bloc media), comme 1-1-1 S1 A. */
 .sc-media { display: grid; gap: 4px; }
-.sc-media-art { position: relative; margin: 0; border-radius: 16px; overflow: hidden; background: #eef3ff; aspect-ratio: 4 / 3; }
-.sc-media-art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sc-media-art { position: relative; margin: 0; border-radius: 16px; overflow: hidden; background: #eef3ff; aspect-ratio: 16 / 9; }
+.sc-media-art img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .sc-media-missing { display: none; }
 .sc-media-art.is-missing img { display: none; }
 .sc-media-art.is-missing .sc-media-missing { display: grid; place-content: center; justify-items: center; gap: 10px; height: 100%; color: #5d6785; font-weight: 700; }
