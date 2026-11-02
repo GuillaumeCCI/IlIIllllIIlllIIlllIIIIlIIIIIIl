@@ -141,5 +141,37 @@ module.exports = {
     's4-4.2': { c1_verifier: 'loin nuit bras' },
     's4-4.3': { c0_pourquoi: 'écho sécurité synthèse' },
     's4-4.4': { c0_l3: 'loin monsieur' }
+  },
+
+  // Réponses justes, écrites par quelqu’un de fâché avec l’orthographe : sans accents,
+  // au son (« sa », « tro », « koi »), mots collés (« cest », « darivé »), sans majuscule ni point.
+  fautes: {
+    's3-3.1': [
+      { c0_text: 'une cote terible ? cest a dire ?', c1_text: 'cété épuisan ? qu esce qui vous a fatigé ?', c2_text: 'toujour la loteri ? coment sa se passe ?' },
+      { c0_text: 'Une côtes térrible ? Raconté moi.', c1_text: 'Epuisent ? Cest a dire ?', c2_text: 'La lotterie ? Sa veut dire quoi ?' },
+      { c0_text: 'une cote terrrible ?', c1_text: 'épuisant ? sa veu dire koi ?', c2_text: 'la louterie ? cad ?' },
+      { c0_text: 'Une monté téribl ? Comment sa ?', c1_text: 'C etait epuissant ? Racontez moi', c2_text: 'Toujour la lotrie, les livraison ? Comment ça ?' }
+    ],
+    's3-3.2': [
+      { c0_text: 'vous avé l impression darivé toujour tro tard, c décourajant', c1_text: 'vous en avez mare de revenir pour rien, vous avez le santiment de pas etre pris au serieu', c2_text: 'vous etes dessu par ces formation et vous avez peur de dépensé encor pour rien' },
+      { c0_text: 'Vous ete décourager de vous faire doublé a chaque cou de coeur.', c1_text: 'Vous etes exaspéré, sa recomence a chaque fois.', c2_text: 'Vous etes déçu, vos équipe nont rien retirer des formations.' },
+      { c0_text: 'Vous avez l\'impresion d\'arriver toujours trop tard et sa vous décourage', c1_text: 'Vous en avez asser de revenir pour le meme bruit', c2_text: 'Vous avez peur de payé encore pour rien apres ces deux formations' }
+    ],
+    's3-3.3': [
+      { c0_text: 'si je résume, vous perdé du tant au téléfone pandant que vous coifé, 3 cliente par semaine vienne pas, vos coifeuse doive voir le planing sur leur portable et il faut un truc simple. cest bien sa ?',
+        c1_text: 'si je resume votre machine tombe en pane presque chaque wikend, vous servé 300 café par jour, vos serveur change souvant donc elle doit etre simple et la plasse derriere le comptoire est réduite. cest bien sa ?' }
+    ],
+    's4-4.2': [
+      { c1_verifier: 'quand vous dites pas tro loin, cest par raport a quoi ?' },
+      { c1_verifier: 'Monsieur pas trop loin sa veux dire combien de tant de trajet pour vous ?' }
+    ],
+    's4-4.3': [
+      { c0_pourquoi: 'en L7 nadia reprent les mot exact de M benali et sadresse enfin a lui. il se sent écouter et il explique son vrai besoin, rentré en sécurité aprés ses garde de nuit. en L8 elle résume tout et le couple valide.' },
+      { c0_pourquoi: 'Nadia reformule pas tro loin et elle verifie. Monsieur qui etait ignoré décroise les bras et parle du dangé de sendormir au volan. La sintèse de L8 est confirmé par les deux.' }
+    ],
+    's4-4.4': [
+      { c0_l3: 'pas tro loin... la distanse conte beaucoup pour vous monsieur, pas trop loin de quoi ?' },
+      { c0_l3: 'Monsieur, quant vous dite pas trop loin, cest a dire ?' }
+    ]
   }
 };

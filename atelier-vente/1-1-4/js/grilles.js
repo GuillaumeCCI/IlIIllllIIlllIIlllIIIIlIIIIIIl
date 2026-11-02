@@ -848,7 +848,7 @@
           { nom: 'Un prochain pas concret', mots: ['créneaux', 'créneau', 'deux créneaux', '15 minutes', 'quinze minutes', 'minutes', 'mardi ou jeudi', 'deux jours',
             '11 h', '14 h', 'date', 'dates', 'horaire', 'horaires', 'précis', 'précise', 'précisément', 'rendez-vous', 'échange', 'appel à l’action',
             'prochain pas', 'prochaine étape', 'action', 'facilite', 'faciliter', 'facile', 'simple', 'simplifie', 'concret', 'concrète', 'propose',
-            'proposition', 'choix', 'choisir', 'court', 'courte', 'rapide', 'disponible', 'invite', 'invitation', 'engage', 'effort', 'question fermée',
+            'proposition', 'choix', 'de choisir', 'vous choisi*', 'court', 'courte', 'rapide', 'disponible', 'invite', 'invitation', 'engage', 'effort', 'question fermée',
             'répondre facilement', 'oui ou non', 'clair', 'claire'],
             conseil: 'Elle propose un échange court, avec deux créneaux précis.' },
           { nom: 'Les limites de la relance A', mots: ['ouverte', 'ouvert', 'trop ouvert', 'n’hésitez pas', 'effort', 'attend', 'attendre', 'passif', 'passive',

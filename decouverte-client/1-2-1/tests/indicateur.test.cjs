@@ -88,6 +88,24 @@ test('les bonnes idées en mots isolés restent à 6 / 10 au plus, sous les rép
   assert.deepStrictEqual(high, []);
 });
 
+test('les réponses justes pleines de fautes d’orthographe obtiennent au moins 7 / 10', () => {
+  const { fautes: FAUTES } = require('./reponses-variees.cjs');
+  for (const [key, sets] of Object.entries(FAUTES)) {
+    const low = sets.map((values, n) => [n + 1, points(key, values)]).filter(([, score]) => score < 7);
+    assert.deepStrictEqual(low, [], `${key} : ${low.map(([n, s]) => `réponse ${n} à ${s} / 10`).join(', ')}`);
+  }
+});
+
+test('la tolérance aux fautes ne confond pas deux vrais mots voisins', () => {
+  const same = (text, expression) => A.find(A.tokens(text), expression, true).length > 0;
+  assert.ok(!same('pas pris au sérieux', 'prix'), '« pris » n’est pas « prix »');
+  assert.ok(!same('le parking de l’agence', 'agente'), '« agence » n’est pas « agente »');
+  assert.ok(!same('le parking de l’agence', 'agent'), '« agence » n’est pas « agent »');
+  assert.ok(same('cété épuisan', 'épuisant'), '« épuisan » vaut « épuisant »');
+  assert.ok(same('toujour la loteri', 'loterie'), '« loteri » vaut « loterie »');
+  assert.ok(same('cest bien sa', 'c’est bien ça'), '« cest bien sa » vaut « c’est bien ça »');
+});
+
 test('une réponse vide ne marque aucun point, une réponse hors sujet au plus 1', () => {
   for (const key of Object.keys(G)) {
     assert.strictEqual(points(key, fill(key, '')), 0, key);

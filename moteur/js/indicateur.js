@@ -18,6 +18,11 @@
  * « proposez », « proposer » se valent) ; un mot peut s'intercaler entre
  * deux mots d'une expression (« je vous le propose »). Un mot terminé par
  * `*` est un début de mot (« rassur* »).
+ *
+ * Fautes d’orthographe : les critères tolèrent les mots écrits au son, une
+ * lettre de travers, les mots collés (« cest ») ; une phrase sans majuscule
+ * ni point compte si elle a un verbe et ses petits mots de liaison. Les
+ * pièges, eux, restent exacts, pour ne jamais pénaliser à tort.
  */
 (function (root) {
   'use strict';
@@ -34,9 +39,19 @@
     'euses', 'euse', 'eurs', 'eur', 'ives', 'ive', 'ions', 'iez', 'ons', 'ent', 'ait', 'ais', 'ant', 'ante', 'ees', 'ee', 'era', 'erai',
     'ez', 'er', 'es', 'e', 's', 'x'].sort((a, b) => b.length - a.length);
   const stem = word => {
-    for (const end of ENDINGS) if (word.length - end.length >= 3 && word.endsWith(end)) return word.slice(0, -end.length);
+    for (const end of ENDINGS) {
+      // « prix » garde son x : sinon il se confondrait avec « pris » (pris au sérieux).
+      if (end === 'x' && word.length < 5) continue;
+      if (word.length - end.length >= 3 && word.endsWith(end)) return word.slice(0, -end.length);
+    }
     return word;
   };
+
+  /* Mots collés par un apprenant qui écrit vite ou mal (« cest », « jai »,
+   * « cad ») : rendus en mots séparés, pour que « c’est bien ça » ou
+   * « c’est-à-dire » se reconnaissent quand même. */
+  const SPLIT = { cest: ['c', 'est'], sest: ['s', 'est'], nest: ['n', 'est'], jai: ['j', 'ai'], quil: ['qu', 'il'], quils: ['qu', 'ils'],
+    cad: ['c', 'est', 'a', 'dire'], cestadire: ['c', 'est', 'a', 'dire'], ske: ['ce', 'que'], kesk: ['qu', 'est', 'ce', 'que'] };
 
   // Les mots du texte, avec leur place dans le texte d'origine (pour surligner).
   function tokens(text) {
@@ -46,7 +61,7 @@
     let m;
     while ((m = re.exec(source))) {
       const word = plain(m[0]);
-      list.push({ word, stem: stem(word), start: m.index, end: m.index + m[0].length });
+      for (const piece of SPLIT[word] || [word]) list.push({ word: piece, stem: stem(piece), start: m.index, end: m.index + m[0].length });
     }
     return list;
   }
@@ -56,25 +71,80 @@
   function compile(expression) {
     if (cache.has(expression)) return cache.get(expression);
     const parts = plain(expression).split(/[^a-z0-9*]+/).filter(Boolean)
-      .map(word => (word.endsWith('*') ? { prefix: word.slice(0, -1) } : { stem: stem(word) }));
+      .map(word => (word.endsWith('*') ? { prefix: word.slice(0, -1) } : { stem: stem(word), word }));
     cache.set(expression, parts);
     return parts;
   }
-  const same = (token, part) => (part.prefix !== undefined ? token.word.startsWith(part.prefix) : token.stem === part.stem);
+
+  /* Tolérance orthographique, pour les critères seulement (jamais les
+   * pièges) : un apprenant fâché avec l'orthographe doit voir ses bonnes
+   * idées comptées. Deux mots se valent s'ils se prononcent à peu près
+   * pareil (« épuisan », « fatigé », « loterri ») ou s'ils ne diffèrent que
+   * d'une lettre (deux pour les mots longs). Les mots de moins de quatre
+   * lettres restent exacts : « sa » et « ça » ne se confondent pas. */
+  const sound = word => word
+    .replace(/ph/g, 'f').replace(/qu/g, 'k').replace(/c(?=[eiy])/g, 's').replace(/[cq]/g, 'k')
+    .replace(/gu(?=[ei])/g, 'g').replace(/g(?=[ei])/g, 'j').replace(/h/g, '').replace(/y/g, 'i').replace(/w/g, 'v')
+    .replace(/eau|au/g, 'o').replace(/ai|ei/g, 'e').replace(/en|em|am/g, 'an').replace(/ain|ein|un|im/g, 'in')
+    .replace(/([a-z])\1+/g, '$1').replace(/(?<=^.{4,})(es|e|s|t|ts|d|ds|x|z|er|ez|et)$/, '');
+  // Distance d'édition bornée (avec inversion de deux lettres voisines).
+  const near = (a, b, max) => {
+    if (Math.abs(a.length - b.length) > max) return false;
+    let before = null;
+    let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+    for (let i = 1; i <= a.length; i++) {
+      const cur = [i];
+      let best = i;
+      for (let j = 1; j <= b.length; j++) {
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+        if (before && i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) cur[j] = Math.min(cur[j], before[j - 2] + 1);
+        best = Math.min(best, cur[j]);
+      }
+      if (best > max) return false;
+      before = prev;
+      prev = cur;
+    }
+    return prev[b.length] <= max;
+  };
+  const close = (word, target) => {
+    if (word.length < 4 || target.length < 4) return false;
+    if (sound(word) === sound(target)) return true;
+    const shortest = Math.min(word.length, target.length);
+    const max = shortest >= 10 ? 2 : shortest >= 7 ? 1 : 0;
+    if (max > 0 && near(word, target, max)) return true;
+    // Une élision sans apostrophe : « darriver », « lappartement ».
+    const rest = word.startsWith('qu') ? word.slice(2) : /^[dljnsc][aeiouyh]/.test(word) ? word.slice(1) : '';
+    return rest.length >= 4 && close(rest, target);
+  };
+  // Les mots courts les plus souvent écrits au son.
+  const SHORT = { sa: 'ca', ke: 'que', koi: 'quoi', ki: 'qui', tro: 'trop', tou: 'tout', tous: 'tout', bocou: 'beaucoup', bcp: 'beaucoup', pk: 'pourquoi',
+    pq: 'pourquoi', pr: 'pour', ds: 'dans', vs: 'vous', ns: 'nous', tjs: 'toujours', tjrs: 'toujours', pa: 'pas', mai: 'mais', se: 'ce' };
+  const same = (token, part, fuzzy) => {
+    if (part.prefix !== undefined) {
+      if (token.word.startsWith(part.prefix)) return true;
+      return Boolean(fuzzy) && part.prefix.length >= 5 && close(token.word.slice(0, part.prefix.length), part.prefix);
+    }
+    if (token.stem === part.stem) return true;
+    if (!fuzzy) return false;
+    if (SHORT[token.word] && SHORT[token.word] === part.word) return true;
+    // Les mots entiers, pas les racines : « agence » ne doit pas valoir « agent ».
+    return close(token.word, part.word) || (token.stem.length >= 4 && part.stem.length >= 4 && sound(token.stem) === sound(part.stem));
+  };
 
   // Toutes les places où l'expression apparaît : [début, fin] en indices de mots.
-  function find(list, expression) {
+  // `fuzzy` : tolérer les fautes d'orthographe (critères seulement).
+  function find(list, expression, fuzzy = false) {
     const parts = compile(expression);
     if (!parts.length) return [];
     const found = [];
     for (let i = 0; i < list.length; i++) {
-      if (!same(list[i], parts[0])) continue;
+      if (!same(list[i], parts[0], fuzzy)) continue;
       let at = i;
       let ok = true;
       for (let p = 1; p < parts.length && ok; p++) {
         // Le mot suivant de l'expression, ou celui d'après (un mot intercalé).
-        if (list[at + 1] && same(list[at + 1], parts[p])) at += 1;
-        else if (list[at + 2] && same(list[at + 2], parts[p])) at += 2;
+        if (list[at + 1] && same(list[at + 1], parts[p], fuzzy)) at += 1;
+        else if (list[at + 2] && same(list[at + 2], parts[p], fuzzy)) at += 2;
         else ok = false;
       }
       if (ok) found.push([i, at]);
@@ -103,19 +173,43 @@
     'merci bonjour').split(' '));
   const isVerb = token => VERBS.has(token.word) ||
     (token.word.length >= 4 && /(ez|ons|er|ir|ait|ais|aient|ent|ra|rai|rez|rons|e)$/.test(token.word) && !/ment$/.test(token.word));
+  // Un verbe reconnaissable sans majuscule ni point : terminaisons sûres seulement
+  // (« téléphone », « client » ne passent pas pour des verbes).
+  const isStrongVerb = token => token.word.length >= 4 && /(ez|ons|er|ir|ait|ais|aient|rez|rons)$/.test(token.word);
 
-  // Une phrase complète : majuscule, verbe, quatre mots au moins, ponctuation finale.
+  // Une phrase complète : un verbe et quatre mots au moins. La majuscule et
+  // le point final ne sont pas exigés : on juge l'idée, pas l'orthographe.
+  // Un mot qui suit « je », « vous »… compte comme verbe, même mal écrit
+  // (« vous avé », « il reprent »). Une liste de mots-clés, elle, n'a pas de verbe.
+  const SUBJECTS = new Set('je j tu il elle on nous vous ils elles'.split(' '));
+  const GREETINGS = new Set(['bonjour', 'merci']);
+  const GLUE = new Set('le la les l un une des de du d a au aux pour avec dans sur que qu qui et en par ne n pas c ce se si mais ou donc car quand comme'.split(' '));
   function sentences(text) {
     const pieces = String(text ?? '').split(/(?<=[.!?…])\s+|\n+/).map(s => s.trim()).filter(Boolean);
     const complete = pieces.filter(piece => {
       const words = tokens(piece);
+      if (words.length < 4) return false;
+      // Une suite de mots isolés séparés par des virgules reste une liste.
+      const chunks = piece.split(/[,;\/]+/).map(c => tokens(c).length).filter(Boolean);
+      if (chunks.length >= 3 && chunks.every(n => n <= 2)) return false;
+      const subject = words.some((w, i) => SUBJECTS.has(w.word) && words[i + 1] && !SUBJECTS.has(words[i + 1].word));
+      // Une phrase, même mal écrite, a ses petits mots de liaison ou finit par
+      // une ponctuation ; une liste de mots-clés, non.
+      const glue = words.filter(w => GLUE.has(w.word)).length >= 2 || /[.!?…]\s*["»”)]?$/.test(piece);
+      if (glue && (subject || words.some((w, i) => (VERBS.has(w.word) && !GREETINGS.has(w.word)) || (isStrongVerb(w) && !(w.word === 'rendez' && words[i + 1]?.word === 'vous'))))) return true;
+      // Sans verbe évident, la majuscule et le point final départagent, comme avant.
       const first = piece.replace(/^[«"“\s(—–-]+/, '');
-      return words.length >= 4 &&
-        /^\p{Lu}/u.test(first) &&
-        /[.!?…»"”)]$/.test(piece) &&
-        words.some(isVerb);
+      return /^\p{Lu}/u.test(first) && /[.!?…»"”)]$/.test(piece) && words.some(isVerb);
     });
-    return { all: pieces.length, complete: complete.length };
+    // Un long texte sans aucun point (plusieurs verbes, une douzaine de mots
+    // ou plus) vaut plusieurs phrases : l'apprenant a oublié la ponctuation.
+    const unpunctuated = !/[.!?…]/.test(String(text ?? ''));
+    const count = complete.reduce((n, piece) => {
+      if (!unpunctuated) return n + 1;
+      const words = tokens(piece);
+      return n + Math.max(1, Math.min(words.filter(w => VERBS.has(w.word) || isStrongVerb(w)).length, Math.floor(words.length / 6)));
+    }, 0);
+    return { all: pieces.length, complete: count };
   }
 
   /* ── Règles propres à un exercice ─────────────────────────────────── */
@@ -169,7 +263,7 @@
       const hits = [];
       const spans = [];
       for (const expression of critere.mots) {
-        for (const [a, b] of find(list, expression)) {
+        for (const [a, b] of find(list, expression, true)) {
           // Une tournure déjà comptée (« je vous propose ») ne recompte pas son morceau (« propose »).
           if (spans.some(([x, y]) => a >= x && b <= y)) continue;
           spans.push([a, b]);
