@@ -57,11 +57,13 @@
   const spoken = lines => lines.map(line => `${String(line.label || '').replace(/^L\d+ · /, '')}. ${line.text.replace(/\[[^\]]*\]/g, ' ')}`).join(' ');
   function mediaBlock(block) {
     const id = MEDIA.push(block) - 1;
-    const art = block.image
+    // Une illustration encore « en attente » au catalogue (pending) n'est pas demandée : le cadre la remplace.
+    const waiting = ex() && ex().current && ex().current.pending;
+    const art = block.image && !waiting
       ? `<img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async" onerror="this.parentNode.classList.add('is-missing')">`
       : '';
     return `<div class="sc-media">
-      <figure class="sc-media-art ${block.image ? '' : 'is-missing'}">${art}<figcaption class="sc-media-missing">${icon('users', { size: 34 })}<span>${esc(block.placeholder || 'Illustration à venir')}</span></figcaption>
+      <figure class="sc-media-art ${block.image && !waiting ? '' : 'is-missing'}">${art}<figcaption class="sc-media-missing">${icon('users', { size: 34 })}<span>${esc(block.placeholder || 'Illustration à venir')}</span></figcaption>
         <button type="button" class="play-button" data-act="sc-listen" data-media="${id}" aria-label="${esc(block.listenLabel || 'Écouter')}">${icon('play', { size: 30 })}</button></figure>
       <div class="media-actions">
         <button type="button" class="button primary with-icon" data-act="sc-listen" data-media="${id}">${icon('play', { size: 18 })}<span>${esc(block.listenLabel || 'Écouter')}</span></button>

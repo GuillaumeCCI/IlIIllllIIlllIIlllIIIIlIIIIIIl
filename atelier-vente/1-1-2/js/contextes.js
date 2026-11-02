@@ -2,7 +2,7 @@
  *
  * Pour les exercices qui n'ont pas leur propre fenêtre (kit.context dans
  * l'écran, ou `welcome` dans le contenu) : le moteur (moteur/js/kit.js)
- * l'ouvre à l'arrivée et ajoute le bouton « Le contexte ». Jusqu'à quatre lignes :
+ * l'ouvre à l'arrivée et ajoute le bouton « Le contexte ». Trois lignes :
  * la situation, ce qui est demandé, comment faire, ce qui compte. Tirées de la page de
  * présentation de l'exercice (js/briefings.js) ; à retoucher librement ici.
  */
@@ -97,6 +97,15 @@ window.ATELIER_CONTEXTES = {
       ['target', 'Ce qui compte', ['Des notes cohérentes avec le pitch', 'Une priorité unique, concrète et argumentée']]
     ]
   },
+  's2-2.6': {
+    title: 'Le pitch de 60 secondes',
+    rows: [
+      ['users', 'La situation', 'Votre prospect est très attentif à la sécurité de ses données. Vous disposez d’une minute pour lui présenter RelaCosy.'],
+      ['pencil', 'Ce qui vous est demandé', 'Rédigez votre pitch de RelaCosy pour un prospect soucieux de sécurité, enregistrez-le en 60 secondes maximum, puis auto-évaluez-vous.'],
+      ['list', 'Comment faire', 'Structurez votre pitch (accroche, deux bénéfices prouvés, conclusion), enregistrez une prise audio ou vidéo, puis notez-vous sur les sept critères.'],
+      ['target', 'Ce qui compte', ['Une structure complète en 60 secondes', 'Des bénéfices appuyés de preuves', 'Un ton affirmatif, orienté client']]
+    ]
+  },
   's3-3.1': {
     title: 'Repérez l’intrus',
     rows: [
@@ -140,6 +149,24 @@ window.ATELIER_CONTEXTES = {
       ['pencil', 'Ce qui vous est demandé', 'Pour chacune des quatre répliques, dites si le vendeur vérifie l’impact de son argument ou pousse son argumentation. S’il pousse, rédigez la question qu’il aurait pu poser.'],
       ['list', 'Comment faire', 'Qualifiez chaque réplique et, le cas échéant, rédigez une question de contrôle de 180 caractères maximum.'],
       ['target', 'Ce qui compte', ['Reconnaître une vérification de l’impact', 'Une question de contrôle ouverte et reliée à l’argument']]
+    ]
+  },
+  's4-1.1': {
+    title: 'C, A ou P ?',
+    rows: [
+      ['users', 'La situation', 'Six phrases extraites d’un argumentaire de RelaCosy mélangent les trois composantes de la méthode CAP.'],
+      ['pencil', 'Ce qui vous est demandé', 'Pour chaque affirmation, dites s’il s’agit d’une caractéristique, d’un avantage ou d’une preuve.'],
+      ['list', 'Comment faire', 'Qualifiez les six affirmations, puis vérifiez vos réponses.'],
+      ['target', 'Ce qui compte', ['Distinguer les trois composantes de la méthode CAP']]
+    ]
+  },
+  's4-2.1': {
+    title: 'Caractéristique ou bénéfice ?',
+    rows: [
+      ['users', 'La situation', 'Six formulations vont par paires : une caractéristique, puis le bénéfice qu’elle procure.'],
+      ['pencil', 'Ce qui vous est demandé', 'Pour chaque formulation, dites s’il s’agit d’une caractéristique ou d’un bénéfice client.'],
+      ['list', 'Comment faire', 'Qualifiez les six formulations, puis vérifiez vos réponses.'],
+      ['target', 'Ce qui compte', ['Distinguer la donnée produit de la valeur pour l’utilisateur']]
     ]
   },
   's4-2.2': {

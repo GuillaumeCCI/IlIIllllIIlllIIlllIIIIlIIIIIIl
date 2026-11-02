@@ -2,7 +2,7 @@
  *
  * Pour les exercices qui n'ont pas leur propre fenêtre (kit.context dans
  * l'écran, ou `welcome` dans le contenu) : le moteur (moteur/js/kit.js)
- * l'ouvre à l'arrivée et ajoute le bouton « Le contexte ». Jusqu'à quatre lignes :
+ * l'ouvre à l'arrivée et ajoute le bouton « Le contexte ». Trois lignes :
  * la situation, ce qui est demandé, comment faire, ce qui compte. Tirées de la page de
  * présentation de l'exercice (js/briefings.js) ; à retoucher librement ici.
  */
@@ -115,6 +115,15 @@ window.ATELIER_CONTEXTES = {
       ['target', 'Ce qui compte', ['Des phrases naturelles', 'Une décision proposée clairement']]
     ]
   },
+  's4-4.2': {
+    title: 'L’anatomie d’une relance',
+    rows: [
+      ['users', 'La situation', 'Un commercial relance Madame Riveau au sujet d’une proposition envoyée le 3 juin.'],
+      ['pencil', 'Ce qui vous est demandé', 'Lisez l’e-mail de relance, puis placez chacun de ses trois extraits dans sa partie.'],
+      ['list', 'Comment faire', 'Trois extraits, trois parties : rappel du contexte, élément de valeur, appel à l’action.'],
+      ['target', 'Ce qui compte', ['Reconnaître les trois parties d’une relance']]
+    ]
+  },
   's4-4.3': {
     title: 'Trouver l’élément de valeur',
     rows: [
@@ -131,6 +140,15 @@ window.ATELIER_CONTEXTES = {
       ['pencil', 'Ce qui vous est demandé', 'Lisez l’e-mail, puis nommez quatre erreurs et leur effet sur la relation.'],
       ['list', 'Comment faire', 'Pour chaque erreur : ce qui ne va pas, et pourquoi cela nuit à la relation.'],
       ['target', 'Ce qui compte', ['Quatre erreurs précises', 'Leur effet sur la relation expliqué']]
+    ]
+  },
+  's4-4.5': {
+    title: 'À vous de trancher !',
+    rows: [
+      ['users', 'La situation', 'Le 3 juin, vous avez envoyé à Madame Riveau une proposition pour équiper 10 postes de travail. Voici deux façons de la relancer.'],
+      ['pencil', 'Ce qui vous est demandé', 'Lisez les deux relances, choisissez la plus efficace et justifiez votre choix.'],
+      ['list', 'Comment faire', 'Appuyez-vous sur au moins deux critères : contexte, valeur apportée, ton, prochain pas.'],
+      ['target', 'Ce qui compte', ['Le bon choix', 'Au moins deux critères']]
     ]
   },
   's5-1.2': {

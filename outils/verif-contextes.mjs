@@ -2,8 +2,10 @@
  *
  * Pour tous les modules de tous les parcours : un exercice doit ouvrir une
  * fenêtre de contexte à l'arrivée, de l'une de ces façons :
- *   - son écran appelle kit.context (ou kit.selfContext) ;
- *   - son contenu a une clé `welcome` ou `context` (écrans communs, moteur/js/mounts.js) ;
+ *   - son écran appelle kit.context (kit.selfContext ne compte pas : c'est la
+ *     fenêtre de l'écran d'autoévaluation, pas celle de l'arrivée) ;
+ *   - son contenu a une clé `welcome` (écrans communs, moteur/js/mounts.js),
+ *     ou `context` pour les cartes Vrai/Faux (mountDeck ouvre sa fenêtre) ;
  *   - le module la déclare dans js/contextes.js (window.ATELIER_CONTEXTES),
  *     et ses pages chargent ce fichier.
  *
@@ -37,7 +39,7 @@ for (const parcours of readdirSync(root).filter(p => !p.startsWith('.') && statS
         const src = existsSync(screen) ? readFileSync(screen, 'utf8') : '';
         const m = /mount\w+\('[^']+',\s*window\.(ATELIER_S\d+)\['([^']+)'\]/.exec(src);
         const content = m && ctx.window[m[1]] && ctx.window[m[1]][m[2]];
-        const own = content ? !!(content.welcome || content.context || (content.intro && content.intro.title)) : /kit\.context\(|selfContext\(|\.context\(\[/.test(src);
+        const own = content ? !!(content.welcome || (content.context && typeof content.context === 'object' && /mountDeck/.test(src))) : /kit\.context\(|\.context\(\[/.test(src);
         if (own) continue;
         if (!declared[key]) problems.push(`${parcours}/${mod} ${key} « ${e.label} » : aucune fenêtre de contexte`);
         else if (!loaded(e.file)) problems.push(`${parcours}/${mod} ${key} : la page ne charge pas js/contextes.js et moteur/js/kit.js`);

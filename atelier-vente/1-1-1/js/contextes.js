@@ -2,11 +2,20 @@
  *
  * Pour les exercices qui n'ont pas leur propre fenêtre (kit.context dans
  * l'écran, ou `welcome` dans le contenu) : le moteur (moteur/js/kit.js)
- * l'ouvre à l'arrivée et ajoute le bouton « Le contexte ». Jusqu'à quatre lignes :
+ * l'ouvre à l'arrivée et ajoute le bouton « Le contexte ». Trois lignes :
  * la situation, ce qui est demandé, comment faire, ce qui compte. Tirées de la page de
  * présentation de l'exercice (js/briefings.js) ; à retoucher librement ici.
  */
 window.ATELIER_CONTEXTES = {
+  's1-A': {
+    title: 'Analyser',
+    rows: [
+      ['users', 'La situation', 'Vous êtes en boutique. Un client entre d’un pas pressé, jette des coups d’œil à sa montre et évite le contact visuel. Une conseillère l’accueille par une accroche que vous allez écouter.'],
+      ['pencil', 'Ce qui vous est demandé', 'Relevez ce qui fonctionne, deux à trois axes d’amélioration, puis proposez votre version.'],
+      ['list', 'Comment faire', 'Écoutez l’accroche, puis relevez ce qui fonctionne, deux à trois axes d’amélioration précis, et réécrivez-la à votre façon.'],
+      ['target', 'Ce qui compte', ['La finesse du diagnostic : des points d’amélioration réels, pas des erreurs inventées', 'Une version réécrite qui corrige effectivement les points relevés', 'Un ton et une concision adaptés à un client pressé']]
+    ]
+  },
   's1-C': {
     title: 'Comparer',
     rows: [
@@ -34,6 +43,15 @@ window.ATELIER_CONTEXTES = {
       ['target', 'Ce qui compte', ['Les quatre fonctions sont présentes dans chaque version', 'Au téléphone : identité vérifiée, disponibilité demandée, motif explicite', 'En e-mail : objet clair, cadrage de la durée, proposition de créneau']]
     ]
   },
+  's2-A': {
+    title: 'Choisir la réponse juste',
+    rows: [
+      ['users', 'La situation', 'Trois clients se présentent successivement en boutique : l’un est pressé, le deuxième méfiant après de mauvaises expériences, le troisième n’y connaît rien et redoute de se tromper.'],
+      ['pencil', 'Ce qui vous est demandé', 'Pour chaque client, choisissez la meilleure réponse puis justifiez votre choix en une phrase.'],
+      ['list', 'Comment faire', 'Pour chacun, choisissez parmi quatre réponses la meilleure prise de contact, puis justifiez en une phrase pourquoi les trois autres sont moins adaptées.'],
+      ['target', 'Ce qui compte', ['Le choix s’appuie sur le rythme, le besoin et le niveau d’ouverture du client', 'La justification explique pourquoi les autres options ferment ou dévient la relation', 'L’attitude retenue garde la relation ouverte']]
+    ]
+  },
   's2-B': {
     title: 'Reformuler sans dévier',
     rows: [
@@ -41,6 +59,15 @@ window.ATELIER_CONTEXTES = {
       ['pencil', 'Ce qui vous est demandé', 'Nommez l’attitude vers laquelle chaque réponse dévie, puis réécrivez-la en compréhension.'],
       ['list', 'Comment faire', 'Pour chaque réponse, nommez l’attitude de Porter vers laquelle elle dévie, puis réécrivez-la en véritable compréhension.'],
       ['target', 'Ce qui compte', ['La bonne attitude est nommée pour chacune des quatre réponses', 'La réécriture reprend les mots du client sans rien ajouter', 'Ni jugement, ni interprétation, ni solution prématurée, ni consolation']]
+    ]
+  },
+  's2-F': {
+    title: 'Adapter son écoute',
+    rows: [
+      ['users', 'La situation', 'Trois profils d’interlocuteurs difficiles se succèdent : un client méfiant voire agressif, un client bavard qui part dans tous les sens, et un client silencieux qui ne répond presque pas.'],
+      ['pencil', 'Ce qui vous est demandé', 'Pour chaque profil, formulez une réponse d’écoute et expliquez votre adaptation.'],
+      ['list', 'Comment faire', 'Pour chaque profil, formulez une réponse d’écoute juste, puis expliquez en une phrase comment vous adaptez votre posture.'],
+      ['target', 'Ce qui compte', ['La réponse reste de l’écoute : ni jugement, ni défense', 'Elle est ajustée au profil par son ton, sa longueur et son ouverture', 'L’adaptation annoncée est réellement visible dans la formulation']]
     ]
   },
   's3-1.1': {

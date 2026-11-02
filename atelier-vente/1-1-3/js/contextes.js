@@ -2,7 +2,7 @@
  *
  * Pour les exercices qui n'ont pas leur propre fenêtre (kit.context dans
  * l'écran, ou `welcome` dans le contenu) : le moteur (moteur/js/kit.js)
- * l'ouvre à l'arrivée et ajoute le bouton « Le contexte ». Jusqu'à quatre lignes :
+ * l'ouvre à l'arrivée et ajoute le bouton « Le contexte ». Trois lignes :
  * la situation, ce qui est demandé, comment faire, ce qui compte. Tirées de la page de
  * présentation de l'exercice (js/briefings.js) ; à retoucher librement ici.
  */
@@ -32,6 +32,15 @@ window.ATELIER_CONTEXTES = {
       ['pencil', 'Ce qui vous est demandé', 'Comparez deux réponses à « C’est trop cher », choisissez la plus efficace, puis expliquez votre choix.'],
       ['list', 'Comment faire', 'Choisissez la réponse qui aide à comprendre et à traiter l’objection. Appuyez votre justification sur les étapes de la méthode.'],
       ['target', 'Ce qui compte', ['Le bon choix', 'Une justification qui cite les étapes respectées ou oubliées']]
+    ]
+  },
+  's2-2.1': {
+    title: 'Barrage, prétexte ou vraie objection ?',
+    rows: [
+      ['users', 'La situation', 'Vous prospectez par téléphone. Entre l’accueil qui filtre et le décideur qui esquive, il faut reconnaître ce qu’on entend pour savoir comment réagir.'],
+      ['pencil', 'Ce qui vous est demandé', 'Classez six répliques entendues au téléphone : barrage du standard, prétexte ou objection réelle.'],
+      ['list', 'Comment faire', 'Un barrage fait obstacle à la mise en relation, un prétexte évite la conversation, une objection réelle exprime un frein légitime.'],
+      ['target', 'Ce qui compte', ['Reconnaître le barrage du standard', 'Distinguer une esquive d’un frein réel']]
     ]
   },
   's2-2.2': {
@@ -86,6 +95,15 @@ window.ATELIER_CONTEXTES = {
       ['pencil', 'Ce qui vous est demandé', 'Rangez chacune des six réactions dans le dossier de sa nature la plus probable.'],
       ['list', 'Comment faire', 'Prétexte, objection sincère et fondée, malentendu ou demande de réassurance : à vous de classer.'],
       ['target', 'Ce qui compte', ['Une nature appuyée sur les mots du prospect']]
+    ]
+  },
+  's3-2.2': {
+    title: 'Passez en mode traitement',
+    rows: [
+      ['users', 'La situation', 'Au téléphone, trois prospects esquivent. Le commercial réagit chaque fois par un mauvais réflexe.'],
+      ['pencil', 'Ce qui vous est demandé', 'Pour chacun des trois cas, expliquez pourquoi le réflexe du commercial bloque, puis rédigez votre réponse adaptée.'],
+      ['list', 'Comment faire', 'Transformez chaque réflexe en réponse qui ouvre l’échange : écoutez, clarifiez, puis proposez une suite concrète.'],
+      ['target', 'Ce qui compte', ['Comprendre l’effet du mauvais réflexe', 'Une réponse avec accueil, question et suite']]
     ]
   }
 };

@@ -25,7 +25,7 @@
   const pitch = () => ex.value('pitch');
   const wordsLine = () => `${kit.plural(kit.words(pitch()), 'mot')} · ≈ ${kit.seconds(pitch())} s`;
   const notes = () => criteria.map((_, i) => ex.value(`score${i}`));
-  const total = () => (notes().every(v => v !== '') ? notes().reduce((sum, v) => sum + Number(v), 0) : null);
+  const total = () => (notes().every(v => v !== '' && v != null) ? notes().reduce((sum, v) => sum + Number(v), 0) : null);
   const totalText = () => `Total : ${total() === null ? '-' : total()} / ${max}`;
   const clock = s => (s >= 60 ? '01:00' : `00:${String(s).padStart(2, '0')}`);
 
@@ -191,10 +191,10 @@
   function reviewScreen() {
     return `<section class="k-panel">
       ${ouvert.head('s2-2.6')}
-      ${kit.result(total(), max, 'votre auto-évaluation')}
+      ${kit.result(total() ?? 0, max, 'votre auto-évaluation')}
       ${ouvert.answer('s2-2.6', 0, { title: 'Votre pitch', text: pitch(), model: content.example })}
       <p class="pitch-words">${esc(wordsLine())}${Number(ex.value('recorded')) ? ` · prise de ${ex.value('recorded')} s` : ''}</p>
-      <ul class="pitch-score-list">${criteria.map((c, i) => `<li><span>${esc(c.title)}</span><strong>${ex.value(`score${i}`)} / 2</strong></li>`).join('')}</ul>
+      <ul class="pitch-score-list">${criteria.map((c, i) => `<li><span>${esc(c.title)}</span><strong>${ex.value(`score${i}`) == null ? 'non noté' : `${ex.value(`score${i}`)} / 2`}</strong></li>`).join('')}</ul>
       ${ex.inlineNote('Pour progresser, retravaillez en priorité les critères notés 0, puis refaites une prise : le chrono reste le meilleur juge de la concision.', 'neutral')}
     </section>
     ${core.feedbackBox()}
