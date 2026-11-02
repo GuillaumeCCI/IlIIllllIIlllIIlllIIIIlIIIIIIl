@@ -47,6 +47,8 @@
   /* L'en-tête des maquettes : sur-titre, titre, sous-titre, et à droite un
    * compteur (« 0 / 3 séries complétées »). `symbol` ajoute un médaillon. */
   function head({ eyebrow = '', title, subtitle = '', aside = '', symbol = '', note = '' }) {
+    // Un exercice qui a une fenêtre de contexte reçoit son bouton « Le contexte ».
+    if (contextRows && !ex().reviewing() && !String(aside).includes('data-act="k-context"')) aside = contextButton() + aside;
     return `<header class="k-head">
       ${symbol ? `<span class="k-head-symbol">${icon(symbol, { size: 30 })}</span>` : ''}
       <div class="k-head-text">
@@ -1034,6 +1036,39 @@
     };
     autoStart(steps.filter(s => !s.later), tourKey, 2600);
     autoStart(steps.filter(s => s.later), `${tourKey}-suite`, 1600);
+  }
+
+  /* LES EXERCICES SANS FENÊTRE PROPRE : celle de leur module, dans
+   * js/contextes.js (window.ATELIER_CONTEXTES, clé de l'exercice). Elle s'ouvre
+   * à l'arrivée, et le bouton « Le contexte » la rouvre. Rien ne change pour un
+   * écran qui a déjà la sienne à l'arrivée (kit.context, welcome). */
+  const ownContext = () => {
+    // L'exercice se monte un peu après le chargement : on l'attend (10 s au plus).
+    let tries = 0;
+    const wait = setInterval(() => {
+      const engine = ex();
+      if (++tries > 40) { clearInterval(wait); return; }
+      if (!engine || !engine.current) return;
+      clearInterval(wait);
+      const entry = root.ATELIER_CONTEXTES && root.ATELIER_CONTEXTES[engine.current.key];
+      // selfIntro (fenêtre de l'écran d'autoévaluation) ne compte pas : elle ne s'ouvre pas à l'arrivée.
+      if (!entry || contextRows) return;
+      context(entry.rows, entry.title);
+      if (!engine.reviewing()) engine.render();
+      // Un écran sans en-tête commun (kit.head) : le bouton se place après le titre, et y revient après chaque redessin.
+      const place = () => {
+        const main = root.document.querySelector('#main');
+        if (!main || engine.reviewing() || main.querySelector('[data-act="k-context"]')) return;
+        const title = main.querySelector('h1');
+        if (title) title.insertAdjacentHTML('afterend', `<p class="k-context-float">${contextButton()}</p>`);
+      };
+      place();
+      if (root.MutationObserver) new root.MutationObserver(place).observe(root.document.querySelector('#main'), { childList: true });
+    }, 250);
+  };
+  if (root.document && root.document.addEventListener) {
+    if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', ownContext);
+    else ownContext();
   }
 
   root.AtelierKit = Object.freeze({

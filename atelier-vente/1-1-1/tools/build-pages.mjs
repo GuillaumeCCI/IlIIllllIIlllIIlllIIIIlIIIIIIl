@@ -44,10 +44,11 @@ function page(serie, exercise) {
   <link rel="stylesheet" href="../../../moteur/css/sorter.css">
   <link rel="stylesheet" href="../../../moteur/css/layout.css">
   <link rel="stylesheet" href="../../../moteur/css/briefing.css">
-  <link rel="stylesheet" href="../../../moteur/css/extras-commun.css">
+${exercise.file === 's1-e2' ? '  <link rel="stylesheet" href="../../../moteur/css/kit-commun.css">\n' : ''}  <link rel="stylesheet" href="../../../moteur/css/extras-commun.css">
   <link rel="stylesheet" href="../css/extras.css">
   <script defer src="../js/catalog.js"></script>
   <script defer src="../js/briefings.js"></script>
+  <script defer src="../js/contextes.js"></script>
   <script defer src="../js/previews.js"></script>
   <script defer src="../js/content-s1.js"></script>
   <script defer src="../js/content-s2.js"></script>
@@ -65,6 +66,7 @@ function page(serie, exercise) {
   <script defer src="../../../moteur/js/sorter.js"></script>
   <script defer src="../../../moteur/js/media.js"></script>
   <script defer src="../../../moteur/js/sounds.js"></script>
+  <script defer src="../../../moteur/js/kit.js"></script>
   <script defer src="../js/corrige.js"></script>
   <script defer src="../js/screens/${exercise.file}.js"></script>
 </head>

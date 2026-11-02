@@ -761,3 +761,6 @@ html { background-color: #fbf8f2; }
 @media (prefers-reduced-motion: reduce) { .open-model summary::before { transition: none; } }
 .open-errors { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .open-errors li { display: flex; gap: 10px; align-items: baseline; }
+
+/* Le bouton « Le contexte » sous le titre des écrans sans en-tête commun. */
+.k-context-float { margin: 6px 0 0; }

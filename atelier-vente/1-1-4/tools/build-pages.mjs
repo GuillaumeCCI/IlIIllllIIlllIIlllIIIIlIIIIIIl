@@ -51,6 +51,7 @@ function page(serie, exercise) {
   <link rel="stylesheet" href="../css/extras.css">
   <script defer src="../js/catalog.js"></script>
   <script defer src="../js/briefings.js"></script>
+  <script defer src="../js/contextes.js"></script>
   <script defer src="../js/previews.js"></script>
   <script defer src="../js/content-s1.js"></script>
   <script defer src="../js/content-s2.js"></script>

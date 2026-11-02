@@ -22,5 +22,10 @@ for (const parcours of readdirSync(root).filter(name => !name.startsWith('.') &&
     if (run.status !== 0) failed++;
   }
 }
+// Contrôle commun à tous les parcours : chaque exercice a sa fenêtre de contexte.
+if (!only) {
+  const check = spawnSync(process.execPath, [join(root, 'outils/verif-contextes.mjs')], { stdio: 'inherit' });
+  if (check.status !== 0) failed++;
+}
 console.log(failed ? `\n${failed} module(s) en échec.` : '\nTous les tests passent.');
 process.exit(failed ? 1 : 0);
