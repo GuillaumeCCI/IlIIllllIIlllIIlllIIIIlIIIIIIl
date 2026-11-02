@@ -13,6 +13,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S4['4.3'];
   const kase = content.cases[0];
@@ -53,11 +54,11 @@
   }
 
   function reviewScreen() {
-    return `<section class="k-panel vf-review">
+    return `${ouvert.head('s4-4.3')}<section class="k-panel vf-review">
       <h2>Vos éléments de valeur</h2>
       <p class="k-muted">Comparez chacun de vos éléments à une piste possible.</p>
       ${fields.map((f, i) => `<div class="vf-review-row"><p class="k-label">${esc(f.label)}</p>
-        <div class="k-columns is-even">${kit.yours('Votre élément', ex.value(key(f)))}${kit.model('Une piste possible', f.model)}</div></div>`).join('')}
+        ${ouvert.answer('s4-4.3', i, { title: 'Votre élément', text: ex.value(key(f)), model: f.model })}</div>`).join('')}
       ${kase.lesson ? ex.inlineNote(kase.lesson, 'neutral') : ''}
     </section>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;

@@ -26,6 +26,17 @@
   const LETTERS = 'abcdefghij';
   const intOr = (v, fallback = null) => (Number.isInteger(v) ? v : fallback);
 
+  /* Le score des réponses ouvertes (moteur/js/reponses-ouvertes.js et
+   * js/grilles.js) : `blocOf(key, champ)` donne le bloc de la grille qui lit
+   * ce champ, ou -1 (pas de grille, ou champ non noté). */
+  const ouvert = () => root.AtelierOuvert;
+  const blocOf = (key, name) => {
+    const grid = ouvert() && root.ATELIER_GRILLES && root.ATELIER_GRILLES[key];
+    return grid && grid.blocs ? grid.blocs.findIndex(b => (b.champs || []).includes(name)) : -1;
+  };
+  const blocFields = (key, index) => root.ATELIER_GRILLES[key].blocs[index].champs;
+  const scoreHead = key => (ouvert() ? ouvert().head(key) : '');
+
   /* ───────────────────────────── Scènes ───────────────────────────────── */
 
   /* Une scène est un bloc, ou une liste de blocs :
@@ -408,7 +419,11 @@
             <header class="cmp-why-head"><span class="cmp-why-symbol">${icon('pencil', { size: 22 })}</span><div><h2>${esc(content.whyLabel)}</h2><p class="k-muted">${esc(content.whyHelp)}</p></div>${reviewing ? '' : minNote}</header>
             ${criteriaBlock(reviewing)}
             ${reviewing
-              ? `${fields ? Array.from({ length: fields }, (_, i) => kit().yours(`Votre critère ${i + 1}`, ex().value(`crit${i}`))).join('') : kit().yours('Votre justification', ex().value('why'))}${kit().model('Corrigé', content.model)}`
+              ? (blocOf(key, fields ? 'crit0' : 'why') >= 0
+                ? `${scoreHead(key)}${fields
+                    ? `<div class="open-answer">${Array.from({ length: fields }, (_, i) => `<p class="open-answer-title">Votre critère ${i + 1}</p>${ouvert().quote(key, blocOf(key, `crit${i}`), ex().value(`crit${i}`), undefined, [`crit${i}`])}`).join('')}${ouvert().expected(key, blocOf(key, 'crit0'))}${ouvert().model(content.model)}</div>`
+                    : ouvert().answer(key, blocOf(key, 'why'), { title: 'Votre justification', text: ex().value('why'), model: content.model })}`
+                : `${fields ? Array.from({ length: fields }, (_, i) => kit().yours(`Votre critère ${i + 1}`, ex().value(`crit${i}`))).join('') : kit().yours('Votre justification', ex().value('why'))}${kit().model('Corrigé', content.model)}`)
               : `${fields
                   ? `<div class="cmp-fields">${Array.from({ length: fields }, (_, i) => `<div><p class="cmp-field-label"><span>${i + 1}</span>Critère ${i + 1}</p>${ex().field(`crit${i}`, `Critère ${i + 1}`, { placeholder: 'Saisissez votre critère…', max: 300, rows: 3, hideLabel: true })}</div>`).join('')}</div>`
                   : ex().field('why', content.whyLabel, { placeholder: content.whyPlaceholder || 'Expliquez votre choix…', max: 600, rows: 3, hideLabel: true })}
@@ -752,7 +767,7 @@
         return { out, badge };
       });
       const shownOf = (i, f) => (f.type === 'select' ? channelLabel(val(i, f)) : val(i, f)) || 'rien';
-      return `<div class="rva">${cases.map((c, i) => {
+      return `${scoreHead(key)}<div class="rva">${cases.map((c, i) => {
         const { out, badge } = verdicts[i];
         const r = c.review || {};
         return `<details class="rva-item tone-${badge[0]}" ${i === 0 ? 'open' : ''}>
@@ -765,7 +780,7 @@
                 const [state, text] = out[f.id] || ['read', ''];
                 return `<div class="rva-row" role="row">
                   <span class="rva-field" role="rowheader"><span class="rva-symbol">${icon(symbols[f.id] || 'pencil', { size: 20 })}</span><strong>${esc(f.label)}</strong></span>
-                  <span class="rva-cell" role="cell">${esc(shownOf(i, f))}</span>
+                  <span class="rva-cell" role="cell">${blocOf(key, k(i, f)) >= 0 ? `<span class="rva-open">${ouvert().quote(key, blocOf(key, k(i, f)), val(i, f))}${ouvert().expected(key, blocOf(key, k(i, f)))}</span>` : esc(shownOf(i, f))}</span>
                   <span class="rva-cell is-model" role="cell">${esc(f.model || '')}</span>
                   <span class="rva-avis tone-${state}" role="cell"><span class="rva-mark">${icon(tone[state][1], { size: 14, strokeWidth: 3 })}</span><span><strong>${tone[state][0]}</strong>${text ? `<small>${esc(text)}</small>` : ''}</span></span>
                 </div>`;
@@ -780,7 +795,7 @@
 
     function reviewScreen() {
       if (content.review) return accordionReview();
-      return (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
+      return scoreHead(key) + (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
         const fields = fieldsOf(i);
         if (!fields.length && !c.model && !c.lesson) return '';
         const sceneHtml = c.reviewScene !== false ? scene((c.scene || content.scene) && [].concat(c.scene || content.scene).filter(b => b.quote || b.info || b.dialogue)) : '';
@@ -788,7 +803,10 @@
         const noun = `${content.caseNoun || 'Cas'} ${i + 1}`;
         const heading = c.tab && c.tab !== noun ? `${noun} · ${c.tab}` : noun;
         // Les champs courts (un mot, une date) se lisent en tableau.
-        const compact = fields.length > 2 && fields.every(f => f.type !== 'choice' && f.type !== 'chips');
+        const compact = fields.length > 2 && fields.every(f => f.type !== 'choice' && f.type !== 'chips' && blocOf(key, k(i, f)) < 0);
+        // Le corrigé du cas sert de réponse possible quand un seul champ est noté.
+        const scored = fields.filter(f => blocOf(key, k(i, f)) >= 0);
+        const caseModel = scored.length === 1 && !scored[0].model ? c.model : '';
         if (compact) {
           const shownOf = f => (f.type === 'select' ? ((f.options.find(o => (o.id || o) === val(i, f)) || {}).label || val(i, f)) : val(i, f));
           return `<section class="k-panel fm-review">
@@ -814,9 +832,17 @@
               return `<p class="review-line">${esc(f.label)} : <strong>${esc(labels.join(' · ') || 'aucun')}</strong></p>`;
             }
             const shown = f.type === 'select' ? ((f.options.find(o => (o.id || o) === val(i, f)) || {}).label || val(i, f)) : val(i, f);
+            const b = blocOf(key, k(i, f));
+            if (b >= 0) {
+              const group = blocFields(key, b);
+              if (group.length === 1) return ouvert().answer(key, b, { title: f.label || 'Votre réponse', text: shown, model: f.model || caseModel });
+              // Un bloc qui lit plusieurs champs : chaque champ surligné, puis les coches une fois.
+              const last = group[group.length - 1] === k(i, f);
+              return `<div class="open-answer"><p class="open-answer-title">${esc(f.label || 'Votre réponse')}</p>${ouvert().quote(key, b, shown, undefined, [k(i, f)])}${last ? ouvert().expected(key, b) : ''}${f.model ? ouvert().model(f.model) : ''}</div>`;
+            }
             return `<div class="fm-review-pair ${f.model ? '' : 'is-single'}">${kit().yours(f.label || 'Votre réponse', shown)}${f.model ? kit().model(f.modelLabel || 'Une réponse possible', f.model) : ''}</div>`;
           }).join('')}
-          ${c.model ? kit().model(content.modelLabel || 'Corrigé modèle', c.model) : ''}
+          ${c.model && !caseModel ? kit().model(content.modelLabel || 'Une réponse possible', c.model) : ''}
           ${c.lesson ? ex().inlineNote(c.lesson, 'neutral') : ''}
         </section>`;
       }).join('') + `${content.keyPoint ? ex().inlineNote(content.keyPoint, 'neutral') : ''}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;

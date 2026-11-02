@@ -10,6 +10,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S2['2.4'];
   const passages = content.passages;
@@ -61,14 +62,15 @@
 
   function reviewScreen() {
     const caught = passages.filter((_, i) => rowOf(i) !== undefined).length;
-    return `<section class="k-panel">
+    return `${ouvert.head('s2-2.4')}<section class="k-panel">
       <h2>Les 4 faux pas</h2>
       <p class="k-muted">Vous avez posé un drapeau sur ${caught} passage${caught > 1 ? 's' : ''} sur ${passages.length}.</p>
       <ol class="crash-review">${passages.map((p, i) => `<li class="${rowOf(i) !== undefined ? 'is-ok' : ''}">
         <p class="crash-quote">« ${esc(p.text)} »</p><p>${esc(p.error)}</p>
-        ${rowOf(i) !== undefined ? `<p class="crash-yours">Votre ligne ${rowOf(i) + 1} : ${esc(ex.value(`error${rowOf(i)}`))}</p>` : ''}
+        ${rowOf(i) !== undefined ? `<div class="crash-fault-yours"><p class="open-answer-title">Votre ligne ${rowOf(i) + 1}</p>${ouvert.quote('s2-2.4', 0, ex.value(`error${rowOf(i)}`), undefined, [`error${rowOf(i)}`])}</div>` : ''}
       </li>`).join('')}</ol>
-      ${rows.some(r => flag(r) === null) ? `<h3 class="k-small-title">Vos autres repérages</h3><ul class="crash-own">${rows.filter(r => flag(r) === null).map(r => `<li>${esc(ex.value(`error${r}`))}</li>`).join('')}</ul>` : ''}
+      ${rows.some(r => flag(r) === null) ? `<h3 class="k-small-title">Vos autres repérages</h3><ul class="crash-own">${rows.filter(r => flag(r) === null).map(r => `<li>${ouvert.quote('s2-2.4', 0, ex.value(`error${r}`), undefined, [`error${r}`])}</li>`).join('')}</ul>` : ''}
+      ${ouvert.expected('s2-2.4', 0)}
       ${content.keyPoint ? ex.inlineNote(content.keyPoint, 'neutral') : ''}
     </section>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;

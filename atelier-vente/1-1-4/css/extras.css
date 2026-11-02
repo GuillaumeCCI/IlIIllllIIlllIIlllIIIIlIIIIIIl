@@ -269,3 +269,9 @@
 #main .fm-panel.is-next { animation: card-next .45s cubic-bezier(.2, .7, .2, 1) both; }
 #main .fm-panel.is-prev { animation: card-prev .45s cubic-bezier(.2, .7, .2, 1) both; }
 @media (prefers-reduced-motion: reduce) { #main .fm-panel.is-next, #main .fm-panel.is-prev { animation: none; } }
+
+/* S4 4.6 : la réponse relue dans sa case, puis ses coches, l’une sous l’autre. */
+.rva-open { display: grid; gap: 8px; width: 100%; }
+.rva-open .result-answer-text { margin: 0; color: var(--navy); font-size: .95rem; font-weight: 600; line-height: 1.5; }
+.rva-open mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
+.rva-open .ana-line { font-size: .85rem; }
