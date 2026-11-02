@@ -107,7 +107,7 @@
       ],
       caseNoun: 'Étape',
       pills: true,
-      className: 'fm-airy',
+      // Pleine largeur : la scène illustrée reste grande.
       submitLabel: 'Voir le corrigé',
       scoreScope: 'Le score estimatif porte sur votre question (partie 2). Les signaux repérés sont corrigés juste en dessous.',
       cases: [
