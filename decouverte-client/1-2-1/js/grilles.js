@@ -156,9 +156,9 @@
     's4-4.3': { integre: true, blocs: [
       { titre: 'Pourquoi L7 et L8 changent tout', champs: ['c0_pourquoi'],
         criteres: [
-          { nom: 'Les mots du client repris', points: 2, conseil: 'Dites que Lucas reprend les mots exacts de M. Benali : « pas trop loin ».',
+          { nom: 'Les mots du client repris', points: 2, conseil: 'Dites que Nadia reprend les mots exacts de M. Benali : « pas trop loin ».',
             mots: ['pas trop loin', 'ses mots', 'ses propres mots', 'mots exacts', 'mots du client', 'reprend', 'reprise', 'répète', 'écho', 'reformul*', 'cite'] },
-          { nom: 'M. Benali enfin écouté', points: 2, conseil: 'Dites que Lucas s’adresse enfin à M. Benali, qu’il avait écarté.',
+          { nom: 'M. Benali enfin écouté', points: 2, conseil: 'Dites que Nadia s’adresse enfin à M. Benali, qu’elle avait écarté.',
             mots: ['s’adresse', 'adresse', 'directement', 'monsieur', 'm. benali', 'le mari', 'son mari', 'écarté', 'ignoré', 'oublié', 'inclut', 'implique',
               'entendu', 'écouté', 'considéré', 'pris en compte', 'se sent compris', 'se sent écouté', 'reconnu'] },
           { nom: 'Le vrai besoin découvert', points: 2, conseil: 'Nommez le vrai besoin : la sécurité du trajet de nuit.',

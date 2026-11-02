@@ -67,16 +67,16 @@ module.exports = {
       { c1_verifier: 'Monsieur, la distance est importante pour vous, par rapport à votre travail de nuit ?' }
     ],
     's4-4.3': [
-      { c0_pourquoi: 'En L7, Lucas reprend les mots exacts de M. Benali et s’adresse enfin à lui. Il se sent écouté et explique son vrai besoin : rentrer en sécurité après ses gardes de nuit. En L8, Lucas résume tout et le couple valide.' },
-      { c0_pourquoi: 'Lucas fait un écho de « pas trop loin » et vérifie. M. Benali, qui était ignoré, décroise les bras et parle du danger de s’endormir au volant. Puis la synthèse de L8 est confirmée par les deux.' },
+      { c0_pourquoi: 'En L7, Nadia reprend les mots exacts de M. Benali et s’adresse enfin à lui. Il se sent écouté et explique son vrai besoin : rentrer en sécurité après ses gardes de nuit. En L8, Nadia résume tout et le couple valide.' },
+      { c0_pourquoi: 'Nadia fait un écho de « pas trop loin » et vérifie. M. Benali, qui était ignoré, décroise les bras et parle du danger de s’endormir au volant. Puis la synthèse de L8 est confirmée par les deux.' },
       { c0_pourquoi: 'Parce qu’il arrête de juger et reformule. Le mari se sent pris en compte, il se confie : le vrai critère, c’est vingt minutes maximum depuis l’hôpital. La synthèse finale permet au couple de valider.' },
       { c0_pourquoi: 'L7 reprend le mot du client au lieu de le contredire, donc M. Benali s’ouvre. On découvre que le problème n’est pas l’habitude mais la fatigue du trajet de nuit. L8 récapitule et fait valider le besoin par le couple.' },
-      { c0_pourquoi: "Il revient sur ce qu'a dit Monsieur avec ses propres mots. Monsieur se détend, il raconte qu'il s'est déjà endormi au volant. Ensuite Lucas résume et les deux confirment : c'est la sécurité qui compte." },
-      { c0_pourquoi: 'Lucas écoute enfin M. Benali, qu’il avait écarté. Grâce à la reformulation, le vrai besoin apparaît : la sécurité sur la route après le travail. La synthèse transforme ce besoin en premier critère, validé par les deux.' },
-      { c0_pourquoi: 'Avant, Lucas parlait et proposait. En L7 il reprend « pas trop loin » et pose une vraie question : le client se sent compris et livre la vraie raison, ses gardes de nuit. En L8, il résume, et le couple dit oui.' },
+      { c0_pourquoi: "Elle revient sur ce qu'a dit Monsieur avec ses propres mots. Monsieur se détend, il raconte qu'il s'est déjà endormi au volant. Ensuite Nadia résume et les deux confirment : c'est la sécurité qui compte." },
+      { c0_pourquoi: 'Nadia écoute enfin M. Benali, qu’elle avait écarté. Grâce à la reformulation, le vrai besoin apparaît : la sécurité sur la route après le travail. La synthèse transforme ce besoin en premier critère, validé par les deux.' },
+      { c0_pourquoi: 'Avant, Nadia parlait et proposait. En L7 elle reprend « pas trop loin » et pose une vraie question : le client se sent compris et livre la vraie raison, ses gardes de nuit. En L8, elle résume, et le couple dit oui.' },
       { c0_pourquoi: 'L7 montre qu’il a entendu M. Benali, ce qui fait tomber la tension. Le besoin réel apparaît : moins de vingt minutes de trajet. L8 reformule le tout et obtient l’accord du couple, donc les recherches seront dans la bonne cible.' },
-      { c0_pourquoi: 'Il s’adresse directement au mari et reprend ses mots. Celui-ci décroise les bras et explique le danger du trajet de nuit. Puis Lucas fait une synthèse validée : maintenant il sait quoi chercher.' },
-      { c0_pourquoi: 'Lucas passe enfin à la compréhension : il reformule ce que dit M. Benali et vérifie. M. Benali se sent écouté et révèle son vrai besoin, la sécurité. La synthèse de L8, confirmée par les deux, fixe les critères.' }
+      { c0_pourquoi: 'Elle s’adresse directement au mari et reprend ses mots. Celui-ci décroise les bras et explique le danger du trajet de nuit. Puis Nadia fait une synthèse validée : maintenant elle sait quoi chercher.' },
+      { c0_pourquoi: 'Nadia passe enfin à la compréhension : elle reformule ce que dit M. Benali et vérifie. M. Benali se sent écouté et révèle son vrai besoin, la sécurité. La synthèse de L8, confirmée par les deux, fixe les critères.' }
     ],
     's4-4.4': [
       { c0_l3: 'Pas trop loin… La distance compte beaucoup pour vous, Monsieur. Par rapport à quoi, surtout ?' },
@@ -114,7 +114,7 @@ module.exports = {
       { c1_verifier: 'Vous avez raison, c’est normal de vouloir être proche.' }
     ],
     's4-4.3': [
-      { c0_pourquoi: 'Parce que Lucas propose enfin une maison moins chère.' },
+      { c0_pourquoi: 'Parce que Nadia propose enfin une maison moins chère.' },
       { c0_pourquoi: 'Il a raison d’insister, le client finit toujours par accepter.' },
       { c0_pourquoi: 'C’est normal, à la fin les clients se fatiguent.' }
     ],

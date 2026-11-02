@@ -51,7 +51,7 @@ window.ATELIER_CATALOG = {
       // Le rendez-vous des Benali et son corrigé : fiche M1.2.1, activité A3.
       sourced: true,
       exercises: [
-        { id: '4.1', file: 's4-4-1', label: 'Les attitudes de Lucas', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.' },
+        { id: '4.1', file: 's4-4-1', label: 'Les attitudes de Nadia', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.' },
         { id: '4.2', file: 's4-4-2', label: 'Les signaux manqués', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.' },
         { id: '4.3', file: 's4-4-3', label: 'Pourquoi L7 et L8 changent tout', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.' },
         { id: '4.4', file: 's4-4-4', label: 'Réécrire la réplique L3', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.' }

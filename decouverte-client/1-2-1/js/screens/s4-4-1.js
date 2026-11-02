@@ -1,6 +1,6 @@
-/* S4 4.1 · Les attitudes de Lucas.
+/* S4 4.1 · Les attitudes de Nadia.
  *
- * Sept répliques de Lucas : l’attitude d’écoute de chacune. Mécanique commune : voyez AtelierMounts.mountForm.
+ * Sept répliques de Nadia : l’attitude d’écoute de chacune. Mécanique commune : voyez AtelierMounts.mountForm.
  */
 (() => {
   'use strict';
