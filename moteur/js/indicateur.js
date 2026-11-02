@@ -99,7 +99,7 @@
     'viens vient venons venez viennent ' +
     'comprends comprend comprenons comprenez ' +
     'entends entend entendons entendez ' +
-    'reste restez convient conviennent semble semblez ' +
+    'reste restez convient conviennent semble semblez faut fallait faudra faudrait vaut valent ' +
     'merci bonjour').split(' '));
   const isVerb = token => VERBS.has(token.word) ||
     (token.word.length >= 4 && /(ez|ons|er|ir|ait|ais|aient|ent|ra|rai|rez|rons|e)$/.test(token.word) && !/ment$/.test(token.word));
@@ -160,9 +160,12 @@
     const listOnly = sentencePoints > 0 && phrases.complete === 0 && text.length > 0;
 
     let criteriaEarned = 0;
+    let criteriaMax = 0;
+    let formEarned = 0;
     for (const critere of bloc.criteres || []) {
       const points = critere.points ?? 2;
       max += points;
+      criteriaMax += points;
       const hits = [];
       const spans = [];
       for (const expression of critere.mots) {
@@ -185,7 +188,7 @@
     if (sentencePoints) {
       max += sentencePoints;
       const share = Math.min(1, phrases.complete / expected);
-      earned += sentencePoints * share;
+      formEarned += sentencePoints * share;
       lines.push({ kind: share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: expected > 1 ? `${expected} phrases complètes` : 'Une phrase complète', sentences: phrases.complete, expected, listOnly, conseil: bloc.phrases && bloc.phrases.conseil });
     }
 
@@ -194,11 +197,15 @@
       if (!def) continue;
       max += def.points;
       const ok = def.test(text);
-      if (ok) earned += def.points;
+      if (ok) formEarned += def.points;
       lines.push({ kind: ok ? 'ok' : 'miss', nom: def.nom || 'Consigne', texte: ok ? def.ok : def.ko });
     }
 
-    // Aucun critère trouvé : la forme seule (phrases, consignes) ne rapporte rien.
+    // La forme (phrases, consignes) suit le fond : entière dès que la moitié
+    // des critères est trouvée, en proportion en dessous, rien sans critère.
+    // Une phrase bien construite mais hors sujet ne rapporte donc presque rien.
+    const formShare = criteriaMax ? Math.min(1, criteriaEarned / (criteriaMax / 2)) : 1;
+    earned += formEarned * formShare * (listOnly ? 0.5 : 1);
     if ((bloc.criteres || []).length && criteriaEarned === 0) earned = 0;
 
     let malus = 0;

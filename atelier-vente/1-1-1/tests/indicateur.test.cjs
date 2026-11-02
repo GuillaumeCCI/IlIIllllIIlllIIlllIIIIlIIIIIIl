@@ -152,5 +152,45 @@ test('le bloc affiché contient le score et les mots surlignés', () => {
   assert.match(html, /<mark class="is-warn">en promotion<\/mark>/);
 });
 
+/* Troisième jeu (reponses-variees-3.cjs) : des réponses de vrais apprenants,
+ * très loin des corrigés. Justes : 6 / 10 au moins ; hors sujet : 2 au plus ;
+ * mots-clés sans phrase : 5 au plus. */
+const V3 = require('./reponses-variees-3.cjs');
+const score3 = (key, values) => {
+  if (key === 's3-1.6') {
+    const [c, lines] = values;
+    const grid = G['s3-1.6'].parCas(S3['1.6'].cases[c], i => `line${i}`);
+    return (A.score(grid, Object.fromEntries(lines.map((line, i) => [`line${i}`, line]))) || { points: 0 }).points;
+  }
+  return (A.score(G[key], values) || { points: 0 }).points;
+};
+
+test('jeu 3 : douze réponses justes par exercice, formulées très différemment, obtiennent au moins 6 / 10', () => {
+  const low = [];
+  for (const [key, sets] of Object.entries(V3.bonnes)) {
+    if (key === 's2-D') {
+      const blocs = G['s2-D'].blocs;
+      (sets.attitudes || []).forEach((list, i) => list.forEach(text => {
+        const p = A.score({ blocs: [blocs[i]] }, { [`reply${i}`]: text }).points;
+        if (p < 6) low.push(`s2-D ${blocs[i].titre} « ${text} » : ${p}`);
+      }));
+      (sets.choix || []).forEach(([finalChoice, justification]) => {
+        const p = A.score({ blocs: [blocs[6]] }, { finalChoice, justification }).points;
+        if (p < 6) low.push(`s2-D choix « ${justification} » : ${p}`);
+      });
+      continue;
+    }
+    sets.forEach((values, n) => { const p = score3(key, values); if (p < 6) low.push(`${key} réponse ${n + 1} : ${p}`); });
+  }
+  assert.deepStrictEqual(low, []);
+});
+
+test('jeu 3 : les réponses hors sujet restent à 2 / 10 au plus, les listes de mots-clés à 5', () => {
+  const high = [];
+  for (const [key, values] of Object.entries(V3.horsSujet)) { const p = score3(key, values); if (p > 2) high.push(`hors sujet ${key} : ${p}`); }
+  for (const [key, values] of Object.entries(V3.motsCles)) { const p = score3(key, values); if (p > 5) high.push(`mots-clés ${key} : ${p}`); }
+  assert.deepStrictEqual(high, []);
+});
+
 console.log(`\n${passed} test${passed > 1 ? 's' : ''} réussi${passed > 1 ? 's' : ''}, ${failed} en échec.\n`);
 process.exit(failed ? 1 : 0);
