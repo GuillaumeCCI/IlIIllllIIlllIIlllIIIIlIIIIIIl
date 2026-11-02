@@ -89,7 +89,7 @@
       eyebrow: 'Attitudes d’écoute · Situation 1',
       title: 'Qui parle comme ça ? Au magasin',
       subtitle: 'Une cliente vient remplacer son lave-linge. Six vendeurs lui répondent.',
-      reviewIntro: { quote: LINGE, speaker: 'La cliente vous dit' },
+      reviewIntro: { dialogue: [{ who: 'client', label: 'La cliente', text: LINGE }] },
       cases: [
         reponse(LINGE, CLIENTE, 'En fait, ce que vous cherchez, c’est le moins cher, peu importe la qualité.',
           'interpretation', 'ferme',
@@ -122,7 +122,7 @@
       eyebrow: 'Attitudes d’écoute · Situation 2',
       title: 'Qui parle comme ça ? En entreprise',
       subtitle: 'Le dirigeant d’une entreprise de travaux reçoit un commercial. Six commerciaux lui répondent.',
-      reviewIntro: { quote: CHANTIERS, speaker: 'Le dirigeant vous dit' },
+      reviewIntro: { dialogue: [{ who: 'client', label: 'Le dirigeant', text: CHANTIERS }] },
       cases: [
         reponse(CHANTIERS, DIRIGEANT, 'La nouvelle version a une application mobile, ça réglera le problème. Je vous l’installe ?',
           'solution', 'ferme',
@@ -155,7 +155,7 @@
       eyebrow: 'Attitudes d’écoute · Situation 3',
       title: 'Qui parle comme ça ? À l’agence immobilière',
       subtitle: 'Un propriétaire pousse la porte d’une nouvelle agence pour vendre son appartement. Six agents lui répondent.',
-      reviewIntro: { quote: APPARTEMENT, speaker: 'Le propriétaire vous dit' },
+      reviewIntro: { dialogue: [{ who: 'client', label: 'Le propriétaire', text: APPARTEMENT }] },
       cases: [
         reponse(APPARTEMENT, PROPRIETAIRE, 'Combien de visites avez-vous eues ? Et à quel prix est-il affiché ?',
           'enquete', 'partiel',

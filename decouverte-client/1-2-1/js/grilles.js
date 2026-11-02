@@ -17,7 +17,7 @@
   const EMOTION = ['décourag*', 'découragement', 'frustr*', 'déçu', 'déçue', 'déçus', 'déception', 'décevant*', 'lass*', 'las', 'en avez assez',
     'en avoir assez', 'marre', 'ras-le-bol', 'agac*', 'énerv*', 'exaspér*', 'inquiet', 'inquiète', 'inquiétude', 'inquiète*', 'peur', 'crain*',
     'craignez', 'redoutez', 'fatigu*', 'épuis*', 'usant', 'usante', 'impression', 'l’impression', 'sentiment', 'le sentiment', 'sentez', 'ressentez',
-    'ressenti', 'vous semble', 'impatien*', 'colère', 'irrité', 'irritée', 'désespér*', 'doute*', 'méfi*', 'pas pris au sérieux', 'pris au sérieux',
+    'ressenti', 'vous semble', 'impatien*', 'colère', 'irrité', 'irritée', 'désespér*', 'doute*', 'méfi*', 'pas pris au sérieux', 'pris au sérieux', 'pas prise au sérieux', 'prise au sérieux',
     'pas écouté', 'pas écoutée', 'injuste', 'pénible', 'dur', 'difficile', 'blasé', 'blasée', 'amer', 'amère', 'perdu confiance', 'confiance',
     'échaudé', 'échaudée', 'regret*', 'vexé', 'vexée', 'déprim*', 'stress*', 'tendu', 'tendue', 'à bout', 'ça vous pèse', 'pèse', 'agaçant',
     'lassant', 'rageant', 'contrari*', 'mécontent*', 'insatisf*', 'vous en avez', 'vous avez du mal'];
@@ -92,13 +92,13 @@
         'vingt-cinq kilomètres', 'kilomètres', 'à la fin', 'trajet', 'tous les jours', 'par jour']),
       echo('La famille', 'c1_text', ['épuisant', 'épuisante', 'épuisé', 'épuisée', 'épuisés', 'épuisement', 'pas comme l’an dernier', 'l’an dernier',
         'l’année dernière', 'fatigant', 'fatigante', 'crevant', 'en famille']),
-      echo('Le gérant', 'c2_text', ['loterie', 'la loterie', 'toujours la loterie', 'c’est la loterie', 'livraisons', 'livraison', 'au hasard', 'aléatoire',
+      echo('La restauratrice', 'c2_text', ['loterie', 'la loterie', 'toujours la loterie', 'c’est la loterie', 'livraisons', 'livraison', 'au hasard', 'aléatoire',
         'aléatoires', 'imprévisible', 'imprévisibles', 'jamais sûr', 'pas fiable', 'fiables', 'irrégulier*'])
     ] },
 
     // S3 3.2 · Le reflet, sur trois clients.
     's3-3.2': { integre: true, blocs: [
-      reflet('Le couple', 'c0_text', ['visité', 'visites', 'visiter', 'quinze', '15', 'appartements', 'appartement', 'coup de cœur', 'coups de cœur',
+      reflet('L’acheteuse', 'c0_text', ['visité', 'visites', 'visiter', 'quinze', '15', 'appartements', 'appartement', 'coup de cœur', 'coups de cœur',
         'doubler', 'doublés', 'doublé', 'devancé*', 'autre acheteur', 'autres acheteurs', 'trop tard', 'à chaque fois', 'chaque fois', 'passer devant',
         'vous échappe', 'échappe', 'vous filer', 'filer', 'rater', 'ratez', 'manquer', 'perdre', 'perdez']),
       reflet('L’automobiliste', 'c1_text', ['troisième fois', 'trois fois', 'même bruit', 'bruit', 'revenir', 'revenez', 'revenu', 'pour rien', 'réglé',

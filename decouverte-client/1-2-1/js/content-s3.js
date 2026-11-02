@@ -10,10 +10,12 @@
 (function (root) {
   'use strict';
 
-  /* Une réplique de client, et le champ où l'apprenant écrit sa reformulation. */
-  const client = (tab, speaker, quote, model, placeholder) => ({
+  /* Une réplique de client, et le champ où l'apprenant écrit sa reformulation.
+   * `portrait` : un portrait différent par client, jamais repris d'un exercice
+   * à l'autre (assets/illustrations/clients/). */
+  const client = (tab, speaker, quote, model, placeholder, portrait) => ({
     tab,
-    scene: { quote, speaker },
+    scene: { quote, speaker, portrait },
     fields: [{ id: 'text', label: 'Votre reformulation', sub: 'Écrivez ce que vous diriez au client, mot pour mot.', placeholder, rows: 3, model }]
   });
 
@@ -28,9 +30,9 @@
       title: 'L’écho : un mot, une question',
       subtitle: 'Reprenez le mot clé du client, sur un ton de question, pour l’inviter à préciser.',
       welcome: { title: 'Reformuler en écho', rows: [
-        ['chat', 'L’écho', 'On reprend un mot important du client, sur le ton d’une question, pour qu’il en dise plus.'],
-        ['target', 'Pourquoi', 'Le client précise lui-même ce qu’il a voulu dire : vous découvrez son vrai besoin, sans rien supposer.'],
-        ['pencil', 'Ce qui vous est demandé', 'Pour chacun des trois clients, écrivez votre écho : quelques mots, une question.']
+        ['compass', 'Pourquoi on est là', 'Au début d’un entretien, le client parle peu. Souvent une seule phrase, avec un mot plus fort que les autres. C’est ce mot qu’il faut saisir.'],
+        ['target', 'L’objectif', 'Prendre le réflexe de relancer sur ce mot, au lieu de répondre tout de suite. Vous obtenez une information de plus, sans orienter le client.'],
+        ['lightbulb', 'Bon à savoir', 'Le ton compte autant que les mots. Dit d’une voix plate, l’écho sonne comme une moquerie. Avec une vraie curiosité dans la voix, il invite à continuer.']
       ] },
       tour: [
         { target: '.fm-scene', title: 'Le client', text: 'Lisez ce que le client vous dit.' },
@@ -44,11 +46,11 @@
       submitLabel: 'Client suivant',
       cases: [
         client('Le cycliste', 'Le client, dans un magasin de vélos électriques', 'Je fais 25 kilomètres par jour pour aller au travail, avec une côte terrible à la fin.',
-          'Une côte terrible ?', 'Votre écho…'),
+          'Une côte terrible ?', 'Votre écho…', 'client-tasse'),
         client('La famille', 'La cliente, dans une agence de voyages', 'On voudrait partir en famille cet été, mais pas comme l’an dernier : c’était épuisant.',
-          'Épuisant ?', 'Votre écho…'),
-        client('Le gérant', 'Le gérant d’un restaurant, au téléphone avec un fournisseur', 'Avec notre fournisseur actuel, les livraisons, c’est toujours la loterie.',
-          'La loterie ?', 'Votre écho…')
+          'Épuisant ?', 'Votre écho…', 'client-pull-clair'),
+        client('La restauratrice', 'La gérante d’un restaurant, au téléphone avec un fournisseur', 'Avec notre fournisseur actuel, les livraisons, c’est toujours la loterie.',
+          'La loterie ?', 'Votre écho…', 'client-chignon')
       ],
       selfCheck: {
         title: 'Relisez vos trois échos',
@@ -69,9 +71,9 @@
       title: 'Le reflet : dire ce que le client ressent',
       subtitle: 'Renvoyez au client ce qu’il ressent, avec ses mots, sans juger ni conseiller.',
       welcome: { title: 'Reformuler en reflet', rows: [
-        ['ear', 'Le reflet', 'On renvoie au client ce qu’il ressent, ou le sens de ce qu’il dit : « Vous avez l’impression que… ».'],
-        ['target', 'Pourquoi', 'Le client se sent compris. Il ose alors dire ce qui compte vraiment pour lui.'],
-        ['pencil', 'Ce qui vous est demandé', 'Pour chacun des trois clients, écrivez votre reflet en une ou deux phrases.']
+        ['compass', 'Pourquoi on est là', 'Un client contrarié n’écoute pas vos questions tant qu’il ne se sent pas compris. Tant que son émotion est là, elle bloque la suite de l’entretien.'],
+        ['target', 'L’objectif', 'Mettre des mots sur ce que le client ressent, pour faire baisser la tension. Ensuite seulement, il est prêt à parler de ce qu’il attend.'],
+        ['lightbulb', 'Bon à savoir', 'Si vous vous trompez d’émotion, ce n’est pas grave : le client vous corrige, et vous en apprenez encore plus.']
       ] },
       tour: [
         { target: '.fm-scene', title: 'Le client', text: 'Lisez ce que le client vous dit, et ce qu’il ressent.' },
@@ -84,12 +86,12 @@
       countLabel: 'reflets écrits',
       submitLabel: 'Client suivant',
       cases: [
-        client('Le couple', 'Un couple, dans une agence immobilière', 'On a déjà visité quinze appartements. À chaque fois on a un coup de cœur, et on se fait doubler par un autre acheteur.',
-          'Vous avez l’impression de toujours arriver trop tard, et ça finit par être décourageant.', 'Votre reflet…'),
-        client('L’automobiliste', 'Le client, à l’accueil d’un garage', 'C’est la troisième fois que je reviens pour le même bruit. On me dit que c’est réglé, et deux jours après, ça recommence.',
-          'Vous en avez assez de revenir pour rien, et vous avez le sentiment de ne pas être pris au sérieux.', 'Votre reflet…'),
+        client('L’acheteuse', 'Une cliente, venue avec son mari dans une agence immobilière', 'On a déjà visité quinze appartements. À chaque fois on a un coup de cœur, et on se fait doubler par un autre acheteur.',
+          'Vous avez l’impression de toujours arriver trop tard, et ça finit par être décourageant.', 'Votre reflet…', 'client-cheveux-gris'),
+        client('L’automobiliste', 'La cliente, à l’accueil d’un garage', 'C’est la troisième fois que je reviens pour le même bruit. On me dit que c’est réglé, et deux jours après, ça recommence.',
+          'Vous en avez assez de revenir pour rien, et vous avez le sentiment de ne pas être prise au sérieux.', 'Votre reflet…', 'client-veste-verte'),
         client('La responsable', 'La responsable des ressources humaines d’une entreprise', 'J’ai déjà payé deux formations l’an dernier, et mes équipes n’en ont rien retiré.',
-          'Vous êtes déçue par ces deux formations, et vous craignez de dépenser encore pour rien.', 'Votre reflet…')
+          'Vous êtes déçue par ces deux formations, et vous craignez de dépenser encore pour rien.', 'Votre reflet…', 'client-veste-verte')
       ],
       selfCheck: {
         title: 'Relisez vos trois reflets',
@@ -110,9 +112,9 @@
       title: 'La synthèse : tout l’essentiel, puis valider',
       subtitle: 'Résumez tout ce que le client vous a dit, sans rien ajouter, puis demandez-lui de valider.',
       welcome: { title: 'Reformuler en synthèse', rows: [
-        ['list', 'La synthèse', 'On résume tous les éléments importants que le client a donnés, puis on lui demande si c’est bien ça.'],
-        ['target', 'Pourquoi', 'Le client corrige ou complète. Vous repartez d’un besoin validé, pas d’une supposition.'],
-        ['pencil', 'Ce qui vous est demandé', 'Pour chacun des deux clients, écrivez votre synthèse, comme vous la diriez à voix haute.']
+        ['compass', 'Pourquoi on est là', 'Pendant un entretien, le client donne ses informations dans le désordre. Sans résumé, chacun repart avec sa propre version.'],
+        ['target', 'L’objectif', 'Rassembler en quelques phrases tout ce qu’il a dit, et le lui faire confirmer. Vous continuez ensuite sur une base que vous partagez tous les deux.'],
+        ['lightbulb', 'Bon à savoir', 'La synthèse sert aussi de passage : une fois qu’elle est validée, vous pouvez présenter votre proposition.']
       ] },
       tour: [
         { target: '.fm-scene', title: 'Ce que le client a dit', text: 'Lisez les quatre éléments donnés par le client.' },
