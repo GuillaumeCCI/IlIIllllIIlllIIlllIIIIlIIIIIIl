@@ -208,15 +208,18 @@
 
   /* « Voir un indice » : le bouton à l'ampoule des autres modules
    * (.k-dialog-button), qui ouvre la fenêtre « Un indice » au gabarit des
-   * repères. Le texte voyage dans l'attribut data-hint. */
-  const hintBlock = text =>
-    `<button type="button" class="button secondary k-dialog-button" data-hint="${esc(text)}">${icon('lightbulb', { size: 18 })}<span>Voir un indice</span></button>`;
+   * repères. Le texte voyage dans l'attribut data-hint ; une liste facultative
+ * (une phrase, puis des points) dans data-hint-list. */
+  const hintBlock = (text, items) =>
+    `<button type="button" class="button secondary k-dialog-button" data-hint="${esc(text)}"${items ? ` data-hint-list="${esc(JSON.stringify(items))}"` : ''}>${icon('lightbulb', { size: 18 })}<span>Voir un indice</span></button>`;
 
   if (root.document && typeof root.document.addEventListener === 'function') {
     document.addEventListener('click', event => {
       const control = event.target.closest?.('[data-hint]');
       if (!control) return;
-      openDialog('Un indice', `<p>${esc(control.dataset.hint)}</p>`);
+      let items = [];
+      try { items = control.dataset.hintList ? JSON.parse(control.dataset.hintList) : []; } catch { items = []; }
+      openDialog('Un indice', `<p>${esc(control.dataset.hint)}</p>${items.length ? `<ul class="hint-list">${items.map(item => `<li>${esc(item)}</li>`).join('')}</ul>` : ''}`);
     });
   }
 

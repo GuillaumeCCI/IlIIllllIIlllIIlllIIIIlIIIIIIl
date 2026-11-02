@@ -14,6 +14,7 @@
    * reste à droite. Le corrigé, lui, montre les deux étapes ensemble. */
   const STEPS = [
     { key: 'opening', title: 'Montrez rapidement au client que vous avez compris son rythme et son besoin d’autonomie.', hint: 'Votre entrée en matière · 3 à 4 phrases',
+      indice: ['Une ouverture réussie tient en six points :', ['Accueil et climat : saluer, remercier, mettre à l’aise.', 'Présentation : dire qui vous êtes, votre fonction, votre entreprise.', 'Cadrage : annoncer l’objet, le déroulé ou la durée.', 'Transition vers l’écoute : donner la parole au client.', 'Posture centrée client : parler de lui, sans monopoliser la parole.', 'Adaptation : ajuster au client, au canal et à la situation.']],
       body: () => ex.field('opening', 'Votre entrée en matière', { placeholder: 'Écrivez ce que vous diriez au client…', max: 600, rows: 5, hideLabel: true }) },
     { key: 'adjustment', title: 'Précisez le réglage majeur effectué pour vous synchroniser avec le client.', hint: 'Une phrase suffit · par exemple le rythme, le ton, la distance ou la précision',
       body: () => ex.field('adjustment', 'Votre réglage majeur', { placeholder: 'Expliquez le principal ajustement effectué…', max: 250, rows: 4, hideLabel: true }) }
@@ -29,7 +30,7 @@
         ${core.callout('Un client entre dans votre magasin d’un pas rapide. Il jette des coups d’œil réguliers à sa montre, se montre particulièrement sur la réserve et évite le contact visuel prolongé. Il a manifestement un besoin précis, mais craint d’être accaparé par un discours commercial trop lourd.')}
         <div class="signals"><strong>Signaux observés</strong>${core.chips(['Pressé', 'Réservé', 'Besoin précis'])}</div>
         <div class="wiz-step is-step-${at + 1}">
-          <div class="wiz-prompt"><span class="wiz-bulb" aria-hidden="true">${icon('lightbulb', { size: 30 })}</span><div><h2>${esc(step.title)}</h2><p>${esc(step.hint)}</p></div></div>
+          <div class="wiz-prompt ${step.indice ? 'has-hint' : ''}"><span class="wiz-bulb" aria-hidden="true">${icon('lightbulb', { size: 30 })}</span><div><h2>${esc(step.title)}</h2><p>${esc(step.hint)}</p></div>${step.indice ? core.hintBlock(step.indice[0], step.indice[1]) : ''}</div>
           ${step.body()}
           ${last ? core.errorsBox() : ''}
           ${last
@@ -170,10 +171,10 @@
     ['checkCircle', 'Ensuite', 'Le corrigé s’affiche. Vous comparez votre regard avec le sien.']
   ]);
 
-  // À l'arrivée : la situation, les critères d'une ouverture réussie, ce qui est demandé.
+  // À l'arrivée : la situation et ce qui est demandé. Les critères d'une
+  // ouverture réussie sont dans l'indice de l'étape 1 (« Voir un indice »).
   if (window.AtelierKit) window.AtelierKit.context([
     ['users', 'La situation', 'En boutique, un client pressé veut regarder seul, à son rythme.'],
-    ['list', 'Une ouverture réussie', ['Accueil et climat : saluer, remercier, mettre à l’aise.', 'Présentation : dire qui vous êtes, votre fonction, votre entreprise.', 'Cadrage : annoncer l’objet, le déroulé ou la durée.', 'Transition vers l’écoute : donner la parole au client.', 'Posture centrée client : parler de lui, sans monopoliser la parole.', 'Adaptation : ajuster au client, au canal et à la situation.']],
     ['pencil', 'Ce qui vous est demandé', 'Écrire votre entrée en matière, puis dire ce que vous avez adapté à ce client.']
   ]);
 

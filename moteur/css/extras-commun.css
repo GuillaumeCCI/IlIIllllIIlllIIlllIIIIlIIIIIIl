@@ -764,3 +764,12 @@ html { background-color: #fbf8f2; }
 
 /* Le bouton « Le contexte » sous le titre des écrans sans en-tête commun. */
 .k-context-float { margin: 6px 0 0; }
+
+/* Étape d’exercice (1-1-1 S1 B) : « Voir un indice » à droite de la consigne, décollé du champ. */
+.wiz-prompt.has-hint { grid-template-columns: 72px minmax(0, 1fr) auto; }
+.wiz-prompt.has-hint .k-dialog-button { align-self: center; }
+@media (max-width: 760px) { .wiz-prompt.has-hint { grid-template-columns: 56px minmax(0, 1fr); } .wiz-prompt.has-hint .k-dialog-button { grid-column: 2; justify-self: start; } }
+/* La liste d’un indice (core.hintBlock avec des points). */
+.hint-list { margin: 10px 0 0; padding-left: 20px; display: grid; gap: 6px; }
+/* La situation des exercices en étapes (1-1-1 S1 B, S1 D) : un texte plus grand. */
+.wiz-main .callout p { font-size: 1.12rem; line-height: 1.6; }
