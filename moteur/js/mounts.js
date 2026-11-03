@@ -97,6 +97,13 @@
           return `<li class="sc-line ${seller ? 'is-seller' : ''}"><span class="sc-avatar ${seller ? 'is-seller' : ''}">${icon(seller ? 'headset' : 'users', { size: 24 })}<small>${esc(line.label || (seller ? 'Commercial' : 'Client'))}</small></span><p>« ${text} »</p></li>`;
         }).join('')}</ol>`;
       }
+      if (block.image && block.bubbles) {
+        // Un échange court posé sur l'image : chaque réplique dans une bulle,
+        // du côté de celui qui parle (side), l'une sous l'autre dans l'ordre
+        // où elles sont dites. Sur un écran étroit, les bulles passent sous l'image.
+        return `<figure class="sc-picture has-bubbles"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async">
+          <ol class="sc-talk">${block.bubbles.map(b => `<li class="sc-talk-line is-${b.side === 'right' ? 'right' : 'left'} ${b.who === 'seller' ? 'is-seller' : ''}"><small>${esc(b.label || '')}</small><span>« ${esc(b.text)} »</span></li>`).join('')}</ol></figure>`;
+      }
       if (block.image) {
         return `<figure class="sc-picture ${block.wide ? 'is-wide' : ''}"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async" style="object-position:${esc(block.position || 'center')}">
           ${block.bubble ? `<p class="sc-bubble">« ${esc(block.bubble)} »</p>` : ''}

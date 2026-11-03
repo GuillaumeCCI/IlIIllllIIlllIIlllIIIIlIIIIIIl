@@ -19,6 +19,20 @@
 .sc-picture img { display: block; width: 100%; height: auto; max-height: 440px; object-fit: cover; }
 .sc-picture.is-wide { background: #f6efe3; }
 .sc-picture.is-wide img { width: min(100%, 820px); max-height: none; margin: 0 auto; }
+/* Un échange court posé sur l'image (scene { image, bubbles }) : les bulles en bas,
+ * chacune du côté de celui qui parle, la pointe vers lui ; les visages restent libres. */
+.sc-picture.has-bubbles img { max-height: none; }
+.sc-talk { position: absolute; inset: auto 2.5% 4% 2.5%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.sc-talk-line { position: relative; display: grid; gap: 2px; grid-row: 1; padding: 9px 14px 11px; border-radius: 16px; background: rgb(255 255 255 / 95%); box-shadow: 0 8px 20px rgb(20 30 60 / 18%); color: var(--navy); font-size: clamp(.86rem, 1vw, 1.05rem); font-weight: 600; line-height: 1.32; }
+.sc-talk-line.is-left { grid-column: 1; }
+/* Le client parle le premier : sa bulle est un peu plus haute. */
+.sc-talk-line:not(.is-seller) { margin-bottom: 22px; }
+.sc-talk-line.is-right { grid-column: 2; }
+.sc-talk-line.is-seller { background: rgb(232 239 253 / 96%); }
+.sc-talk-line small { color: var(--accent); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.sc-talk-line::before { content: ""; position: absolute; top: -9px; width: 18px; height: 18px; background: inherit; transform: rotate(45deg); border-radius: 3px; }
+.sc-talk-line.is-left::before { left: 28px; }
+.sc-talk-line.is-right::before { right: 28px; }
 .sc-picture figcaption { padding: 12px 16px; background: #fff8ec; color: var(--navy); font-weight: 650; }
 .sc-bubble { position: absolute; left: 4%; top: 8%; max-width: 46%; padding: 12px 18px; border-radius: 16px; background: rgb(255 255 255 / 95%); box-shadow: 0 8px 20px rgb(20 30 60 / 16%); color: var(--navy); font-size: clamp(1rem, 1.4vw, 1.3rem); font-weight: 650; }
 .sc-email { padding: 22px 28px; border: 1px solid var(--line); border-radius: 14px; background: #fff; color: var(--navy); line-height: 1.55; }
@@ -291,6 +305,13 @@ button.sw-passage:hover { background: #f1f4fb; }
   .sc-line { grid-template-columns: minmax(0, 1fr); }
   .sc-avatar { grid-auto-flow: column; justify-content: start; align-items: center; }
   .sc-bubble { position: static; max-width: none; border-radius: 0; box-shadow: none; }
+  #main .sc-picture.has-bubbles { overflow: visible; background: none; box-shadow: none; }
+  .sc-picture.has-bubbles img { border-radius: 14px; box-shadow: 5px 7px 16px rgb(16 22 60 / 11%); }
+  .sc-talk { position: static; grid-template-columns: minmax(0, 1fr); margin-top: 14px; }
+  .sc-talk-line { grid-column: 1 !important; grid-row: auto; margin-bottom: 0 !important; }
+  .sc-talk-line.is-right { justify-self: end; }
+  .sc-talk-line { max-width: 90%; font-size: 1.05rem; box-shadow: none; background: #edf3ff; }
+  .sc-talk-line.is-seller { background: #e3ebfb; }
   .crash-line { grid-template-columns: minmax(0, 1fr); }
   .mt-review li { grid-template-columns: auto minmax(0, 1fr); }
   .mt-review li > .mark { grid-column: 2; justify-self: start; }

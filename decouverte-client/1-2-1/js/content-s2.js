@@ -194,11 +194,16 @@
     '2.2': { image: 'assets/illustrations/dialogues/entreprise.webp', alt: 'Dans un atelier, une commerciale explique quelque chose à un client qui l’écoute, sceptique.' },
     '2.3': { image: 'assets/illustrations/dialogues/agence.webp', alt: 'À une table de rendez-vous, une conseillère présente un document sur sa tablette à un client pensif.' }
   };
+  // Le côté de l'image où se tient le client (le vendeur est de l'autre côté).
+  const CLIENT_SIDE = { '2.1': 'right', '2.2': 'left', '2.3': 'left' };
   for (const [id, exercise] of Object.entries(S2)) {
     exercise.cases.forEach((kase, i) => {
       kase.tab = `Réponse ${i + 1}`;
       kase.scene.dialogue[1].label = SELLERS[id];
-      kase.scene = [PICTURES[id], kase.scene];
+      // Les deux répliques en bulles sur l'image ; le corrigé garde l'échange en texte.
+      kase.reviewScene = [kase.scene];
+      const side = who => (who === 'client' ? CLIENT_SIDE[id] : CLIENT_SIDE[id] === 'left' ? 'right' : 'left');
+      kase.scene = [Object.assign({}, PICTURES[id], { bubbles: kase.scene.dialogue.map(line => Object.assign({ side: side(line.who) }, line)) })];
     });
   }
   root.ATELIER_S2 = S2;
