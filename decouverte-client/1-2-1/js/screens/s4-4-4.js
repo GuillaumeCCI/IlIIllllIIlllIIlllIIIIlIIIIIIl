@@ -1,6 +1,6 @@
-/* S4 4.4 · Réécrire la réplique L3.
+/* S4 4.4 · Réécrire « Comme tout le monde ! ».
  *
- * Réécrire L3 avec une attitude de compréhension. Mécanique commune : voyez AtelierMounts.mountForm.
+ * Réécrire « comme tout le monde » avec une attitude de compréhension. Mécanique commune : voyez AtelierMounts.mountForm.
  */
 (() => {
   'use strict';

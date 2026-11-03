@@ -1,4 +1,4 @@
-/* S4 4.3 · Pourquoi L7 et L8 changent tout.
+/* S4 4.3 · Pourquoi la fin de l’entretien change tout.
  *
  * Expliquer le retournement de la fin de l’entretien. Mécanique commune : voyez AtelierMounts.mountForm.
  */

@@ -152,9 +152,9 @@
         pieges: [PIEGE_SOLUTION, PIEGE_JUGEMENT] }
     ] },
 
-    // S4 4.3 · Pourquoi L7 et L8 retournent la situation.
+    // S4 4.3 · Pourquoi la fin de l'entretien retourne la situation.
     's4-4.3': { integre: true, blocs: [
-      { titre: 'Pourquoi L7 et L8 changent tout', champs: ['c0_pourquoi'],
+      { titre: 'Pourquoi la fin de l’entretien change tout', champs: ['c0_pourquoi'],
         criteres: [
           { nom: 'Les mots du client repris', points: 2, conseil: 'Dites que Nadia reprend les mots exacts de M. Benali : « pas trop loin ».',
             mots: ['pas trop loin', 'ses mots', 'ses propres mots', 'mots exacts', 'mots du client', 'reprend', 'reprise', 'répète', 'écho', 'reformul*', 'cite'] },
@@ -164,7 +164,7 @@
           { nom: 'Le vrai besoin découvert', points: 2, conseil: 'Nommez le vrai besoin : la sécurité du trajet de nuit.',
             mots: ['sécurité', 'en sécurité', 'sécuritaire', 'trajet de nuit', 'trajet', 'de nuit', 'endormi', 'endormir', 'fatigue', 'fatigué', 'danger', 'dangereux',
               'accident', 'vingt minutes', '20 minutes', 'hôpital', 'vrai besoin', 'besoin réel', 'véritable besoin', 'vraie raison', 'gardes', 'pas une question d’habitudes'] },
-          { nom: 'La synthèse validée', points: 2, conseil: 'Dites que L8 résume tout et le fait valider par le couple.',
+          { nom: 'La synthèse validée', points: 2, conseil: 'Dites que le résumé de Nadia reprend tout et le fait valider par le couple.',
             mots: ['synthèse', 'résume', 'résumé', 'récapitule', 'valide', 'valider', 'validé', 'validée', 'validation', 'confirme', 'confirment', 'c’est bien ça',
               'les deux', 'le couple', 'tous les deux', 'critère', 'critères', 'priorité', 'premier critère', 'hors cible', 'à côté'] },
           { nom: 'L’effet sur le couple', points: 1, conseil: 'Montrez l’effet : il décroise les bras, il se confie.',
@@ -175,9 +175,9 @@
         pieges: [PIEGE_JUGEMENT] }
     ] },
 
-    // S4 4.4 · La réplique L3, réécrite avec une attitude de compréhension.
+    // S4 4.4 · La réplique « comme tout le monde », réécrite avec une attitude de compréhension.
     's4-4.4': { integre: true, blocs: [
-      { titre: 'Votre réplique à la place de L3', champs: ['c0_l3'],
+      { titre: 'Votre réplique à la place de celle de Nadia', champs: ['c0_l3'],
         criteres: [
           { nom: 'Le mot du client repris', points: 3, conseil: 'Reprenez le mot de M. Benali : « pas trop loin ».',
             mots: ['pas trop loin', 'trop loin', 'loin', 'distance', 'proximité', 'proche', 'près', 'éloigné', 'trajet'] },
@@ -191,8 +191,8 @@
         phrases: { points: 0 },
         regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 2 }],
         pieges: [PIEGE_SOLUTION, PIEGE_JUGEMENT,
-          { nom: 'Le jugement de L3', points: 3, mots: ['comme tout le monde', 'soyons réalistes', 'réaliste', 'il faudra', 's’éloigner', 'impossible', 'pas possible',
-            'avec votre budget', 'avec 280 000', 'tout le monde veut'], conseil: 'Ne reprenez pas le jugement de L3 : écoutez avant de conclure.' }] }
+          { nom: 'Le jugement de Nadia', points: 3, mots: ['comme tout le monde', 'soyons réalistes', 'réaliste', 'il faudra', 's’éloigner', 'impossible', 'pas possible',
+            'avec votre budget', 'avec 280 000', 'tout le monde veut'], conseil: 'Ne reprenez pas le jugement « comme tout le monde » : écoutez avant de conclure.' }] }
     ] }
   };
 })(typeof window !== 'undefined' ? window : globalThis);
