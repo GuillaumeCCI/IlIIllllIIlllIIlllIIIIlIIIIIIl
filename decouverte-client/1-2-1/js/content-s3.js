@@ -176,11 +176,15 @@
   const DOS = 'Je dors mal depuis des mois, je me réveille avec le dos en compote.';
   const CONTRAT = 'Je ne comprends rien à ces contrats. J’ai peur de signer quelque chose qui ne me protège pas vraiment.';
   const SAISIE = 'On perd des heures chaque semaine à ressaisir les commandes à la main.';
+  // Chaque onglet nomme ce dont parle le client, jamais « Réponse 1 ».
+  const SUJETS = new Map([[OFFRE, 'L’offre du concurrent'], [DOS, 'Le mal de dos'], [CONTRAT, 'Les contrats'], [SAISIE, 'Les commandes à ressaisir']]);
   const intrus = (quote, reply, answer, why) => ({
-    scene: [
-      { image: 'assets/illustrations/dialogues/reformulation.webp', alt: 'Un vendeur montre quelque chose sur sa tablette à une cliente qui l’écoute attentivement.' },
-      { dialogue: [{ who: 'client', label: 'Le client', text: quote }, { who: 'seller', label: 'Le vendeur', text: reply }] }
-    ],
+    tab: SUJETS.get(quote),
+    // Les deux répliques en bulles sur l'image (le vendeur à gauche, la cliente à droite) ;
+    // le corrigé garde l'échange en texte.
+    scene: [{ image: 'assets/illustrations/dialogues/reformulation.webp', alt: 'Un vendeur montre quelque chose sur sa tablette à une cliente qui l’écoute attentivement.',
+      bubbles: [{ who: 'client', side: 'right', label: 'La cliente', text: quote }, { who: 'seller', side: 'left', label: 'Le vendeur', text: reply }] }],
+    reviewScene: [{ dialogue: [{ who: 'client', label: 'La cliente', text: quote }, { who: 'seller', label: 'Le vendeur', text: reply }] }],
     fields: [{ id: 'type', type: 'choice', label: 'Cette réponse est…', options: REFO, answer, why, whyTitle: 'Pourquoi' }]
   });
 
@@ -212,7 +216,7 @@
       intrus(CONTRAT, 'Pas de panique, nos contrats sont les plus simples du marché.', 'non', 'C’est du soutien (« pas de panique ») suivi d’un argument sur le produit. La crainte du client n’est pas reprise.'),
       intrus(OFFRE, 'Quelque chose vous retient dans leur proposition ?', 'oui', 'C’est un écho reformulé en question : le client est invité à dire ce qui le retient.'),
       intrus(SAISIE, 'Donc en fait, votre équipe manque surtout d’organisation.', 'non', 'C’est une interprétation, presque un jugement : le client a parlé de temps perdu, pas d’une équipe mal organisée.')
-    ].map((kase, i) => Object.assign(kase, { tab: `Réponse ${i + 1}` })),
+    ],
     keyPoint: 'À retenir : une reformulation n’ajoute rien. Dès qu’apparaissent un jugement (« vous avez raison »), une interprétation (« en fait »), un argument (« nos contrats ») ou une solution (« il vous faut »), on n’écoute plus : on parle de soi ou du produit.'
   };
 })(typeof window !== 'undefined' ? window : globalThis);

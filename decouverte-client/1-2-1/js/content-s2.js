@@ -194,11 +194,16 @@
     '2.2': { image: 'assets/illustrations/dialogues/entreprise.webp', alt: 'Dans un atelier, une commerciale explique quelque chose à un client qui l’écoute, sceptique.' },
     '2.3': { image: 'assets/illustrations/dialogues/agence.webp', alt: 'À une table de rendez-vous, une conseillère présente un document sur sa tablette à un client pensif.' }
   };
+  // Les onglets nomment celui qui répond (« 01 Commercial »), jamais « Réponse 1 ».
+  const TABS = { '2.1': ['Vendeur', 'vendeurs', 'le dernier'], '2.2': ['Commercial', 'commerciaux', 'le dernier'], '2.3': ['Agent', 'agents', 'le dernier'] };
   // Le côté de l'image où se tient le client (le vendeur est de l'autre côté).
   const CLIENT_SIDE = { '2.1': 'right', '2.2': 'left', '2.3': 'left' };
   for (const [id, exercise] of Object.entries(S2)) {
-    exercise.cases.forEach((kase, i) => {
-      kase.tab = `Réponse ${i + 1}`;
+    const [noun, plural, last] = TABS[id];
+    exercise.caseNoun = noun;
+    exercise.tour = tour.map(step => (step.target === '.fm-tabs' ? Object.assign({}, step, { title: `Six ${plural}`, text: `Le corrigé arrive après ${last}.` }) : step));
+    exercise.cases.forEach(kase => {
+      kase.tab = noun;
       kase.scene.dialogue[1].label = SELLERS[id];
       // Les deux répliques en bulles sur l'image ; le corrigé garde l'échange en texte.
       kase.reviewScene = [kase.scene];

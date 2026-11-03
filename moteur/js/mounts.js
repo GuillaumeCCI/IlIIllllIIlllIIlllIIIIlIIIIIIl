@@ -102,7 +102,7 @@
         // du côté de celui qui parle (side), l'une sous l'autre dans l'ordre
         // où elles sont dites. Sur un écran étroit, les bulles passent sous l'image.
         return `<figure class="sc-picture has-bubbles"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async">
-          <ol class="sc-talk">${block.bubbles.map(b => `<li class="sc-talk-line is-${b.side === 'right' ? 'right' : 'left'} ${b.who === 'seller' ? 'is-seller' : ''}"><small>${esc(b.label || '')}</small><span>« ${esc(b.text)} »</span></li>`).join('')}</ol></figure>`;
+          <ol class="sc-talk">${block.bubbles.map(b => `<li class="sc-talk-line is-${b.side === 'right' ? 'right' : 'left'} ${b.who === 'seller' ? 'is-seller' : ''}"><small>${esc(b.label || '')}</small><span>«&nbsp;${esc(b.text)}&nbsp;»</span></li>`).join('')}</ol></figure>`;
       }
       if (block.image) {
         return `<figure class="sc-picture ${block.wide ? 'is-wide' : ''}"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async" style="object-position:${esc(block.position || 'center')}">
