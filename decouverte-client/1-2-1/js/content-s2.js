@@ -54,14 +54,16 @@
   };
   const tour = [
     { target: '.fm-scene', title: 'L’échange', text: 'Lisez ce que dit le client, puis la réponse du vendeur.' },
-    { target: '.fm-main .fm-field:nth-of-type(1)', title: '1. L’attitude', text: 'Cliquez sur l’attitude qui correspond à cette réponse.' },
-    { target: '.fm-main .fm-field:nth-of-type(2)', title: '2. L’effet', text: 'Choisissez ce que le client va probablement ressentir.' },
-    { target: '.fm-actions', title: 'Réponse suivante', text: 'Six réponses à analyser : le corrigé arrive après la dernière.' }
+    { target: '.fm-main .fm-field', title: '1. L’attitude', text: 'Cliquez sur l’attitude qui correspond à cette réponse.' },
+    { target: '.fm-actions', title: '2. L’effet', text: 'Ensuite, vous choisirez son effet sur le client.' },
+    { target: '.fm-tabs', title: 'Six réponses', text: 'Le corrigé arrive après la dernière.' }
   ];
 
   const commun = {
     welcome,
     tour,
+    // Une question à la fois : l'attitude, puis l'effet (moins chargé).
+    oneField: true,
     caseNoun: 'Réponse',
     countLabel: 'réponses analysées',
     // Pleine largeur : l'illustration au-dessus du dialogue reste grande ; onglets en pastilles.

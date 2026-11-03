@@ -660,6 +660,29 @@
     const fieldOpen = j => fieldsOf(0).slice(0, j).every(f => f.optional || filledField(0, f));
     let shownField = null;
 
+    /* UNE QUESTION À LA FOIS DANS CHAQUE CAS (content.oneField) : les champs
+     * d'un cas s'affichent l'un après l'autre ; « Continuer » passe au
+     * suivant, « Précédent » revient. `fsub<cas>` garde la question affichée. */
+    const subAt = i => {
+      const fields = fieldsOf(i);
+      const asked = intOr(ex().value(`fsub${i}`));
+      if (asked !== null) return Math.min(Math.max(0, asked), fields.length - 1);
+      const first = fields.findIndex(f => !f.optional && !filledField(i, f));
+      return first === -1 ? 0 : first;
+    };
+    const subMore = i => content.oneField && subAt(i) < fieldsOf(i).length - 1;
+    // La question qui change glisse en place (le cas qui change glisse déjà en entier).
+    let shownSub = null;
+    const slideSub = i => {
+      const s = subAt(i);
+      // L'écran mémorise la question affichée : y répondre ne la fait pas
+      // glisser vers la suivante avant « Continuer ».
+      if (!ex().reviewing() && ex().value(`fsub${i}`) !== s) ex().setValue(`fsub${i}`, s);
+      const cls = shownSub && shownSub[0] === i && shownSub[1] !== s ? (s > shownSub[1] ? 'is-next' : 'is-prev') : '';
+      shownSub = [i, s];
+      return cls;
+    };
+
     function fieldStepsPanel() {
       const fields = fieldsOf(0);
       const at = fieldAt();
@@ -722,7 +745,7 @@
       const sceneHtml = scene(c.scene || content.scene);
       const after = cases.findIndex((_, j) => j > i && !complete(j));
       const next = after !== -1 ? after : cases.findIndex((_, j) => j !== i && !complete(j));
-      const label = next === -1 ? (selfOn ? 'Enregistrer et s’auto-évaluer' : content.submitLabel || 'Valider mes réponses') : (c.next || content.nextLabel || `Enregistrer et continuer`);
+      const label = subMore(i) ? (content.continueLabel || 'Continuer') : next === -1 ? (selfOn ? 'Enregistrer et s’auto-évaluer' : content.submitLabel || 'Valider mes réponses') : (c.next || content.nextLabel || `Enregistrer et continuer`);
       if (content.stepper) {
         const prev = i > 0 ? `data-act="fm-case" data-index="${i - 1}"` : 'disabled';
         // L'astuce se pose à côté du cadre blanc, sur le fond de la page.
@@ -742,10 +765,10 @@
         ${c.title && n > 1 ? `<p class="k-label">${esc(content.caseNoun || 'Cas')} ${i + 1} / ${n}</p>` : ''}${c.title ? `<h2 class="fm-title">${esc(c.title)}</h2>` : ''}
         ${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}
         ${tokens()}
-        ${c.numbered ? numberedFields(i, fields) : fieldRows(i, fields)}
+        ${content.oneField ? `<div class="fm-one ${slideSub(i)}">${fieldBlock(i, fields[subAt(i)])}</div>` : c.numbered ? numberedFields(i, fields) : fieldRows(i, fields)}
         ${checksBlock(i)}
         ${core().errorsBox()}
-        <div class="fm-actions">${content.hint || c.hint ? kit().dialogButton(`hint${c.hint ? i : ''}`, content.hintLabel || 'Voir un repère', 'secondary', 'lightbulb') : '<span></span>'}
+        <div class="fm-actions">${content.oneField && subAt(i) > 0 ? `<button type="button" class="button secondary" data-act="fm-sub" data-index="${subAt(i) - 1}">${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>` : content.hint || c.hint ? kit().dialogButton(`hint${c.hint ? i : ''}`, content.hintLabel || 'Voir un repère', 'secondary', 'lightbulb') : '<span></span>'}
           ${content.resources ? kit().dialogButton('resources', content.resourcesLabel || 'Mes ressources', 'text-button', 'stack') : ''}${kit().submit(label)}</div>
       </div>`;
       if (!sceneHtml) return `<section class="k-panel fm-panel ${move}">${form}</section>`;
@@ -936,6 +959,12 @@
         return own.length ? own : caseErrors(values, 0);
       }
       const at = current();
+      if (content.oneField && at !== SELF && fieldsOf(at).length) {
+        // Seule la question affichée est vérifiée ; la suivante vient ensuite.
+        const one = caseErrors(values, at).filter(e => e.key === k(at, fieldsOf(at)[subAt(at)]));
+        if (one.length) return one;
+        if (subMore(at)) return [];
+      }
       const own = at === SELF ? [] : caseErrors(values, at);
       if (own.length) return own;
       const missing = cases.findIndex((_, i) => !complete(i) && i !== at);
@@ -960,6 +989,10 @@
         return true;
       }
       const at = current();
+      if (at !== SELF && subMore(at) && kit().filled(values[k(at, fieldsOf(at)[subAt(at)])])) {
+        ex().setValue(`fsub${at}`, subAt(at) + 1);
+        return true;
+      }
       if (at === SELF || caseErrors(values, at).length) return false;
       if (!fieldsOf(at).length) ex().setValue(k(at, 'read'), true);
       // Le cas suivant encore incomplet, sinon le premier qui l'est.
@@ -974,7 +1007,8 @@
     const feedback = () => [content.feedback || 'Comparez vos réponses au corrigé.'];
 
     kit().on({
-      'fm-case': el => { ex().setValue('case', Number(el.dataset.index)); kit().commit(); },
+      'fm-case': el => { ex().setValue('case', Number(el.dataset.index)); if (content.oneField) ex().setValue(`fsub${el.dataset.index}`, null); kit().commit(); },
+      'fm-sub': el => { ex().setValue(`fsub${current()}`, Number(el.dataset.index)); kit().commit(); },
       ...mediaHandlers,
       'fm-field': el => { ex().setValue('fstep', Number(el.dataset.index)); kit().commit(); },
       'fm-choice': el => { ex().setValue(el.dataset.key, el.dataset.id); kit().commit(); },

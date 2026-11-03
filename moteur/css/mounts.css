@@ -500,11 +500,11 @@ button.crash-passage:hover { background: #fff1d6; }
 #main .fs-panel textarea { min-height: 150px; font-size: 1.05rem; }
 .fs-tip { display: flex; align-items: center; gap: 14px; margin: 0; padding: 16px 20px; border-radius: 14px; background: #eef4ff; color: var(--navy); }
 .fs-tip .icon { color: var(--accent); flex-shrink: 0; }
-.fs-step.is-next { animation: fs-next .4s ease-out; }
-.fs-step.is-prev { animation: fs-prev .4s ease-out; }
+.fs-step.is-next, .fm-one.is-next { animation: fs-next .4s ease-out; }
+.fs-step.is-prev, .fm-one.is-prev { animation: fs-prev .4s ease-out; }
 @keyframes fs-next { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
 @keyframes fs-prev { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .fs-step.is-next, .fs-step.is-prev { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .fs-step.is-next, .fs-step.is-prev, .fm-one.is-next, .fm-one.is-prev { animation: none; } }
 @media (max-width: 900px) { .fs-layout { grid-template-columns: minmax(0, 1fr); } .fs-nav li { padding-bottom: 8px; } .fs-nav li::before { display: none; } }
 
 /* ── Mise en page aérée (className: 'fm-airy') ────────────────────────
