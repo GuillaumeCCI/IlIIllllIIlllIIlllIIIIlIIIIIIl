@@ -410,7 +410,7 @@ body { position: relative; }
 .attitude-tiles .radio-card input { position: absolute; opacity: 0; pointer-events: none; }
 .attitude-tiles .radio-symbol { width: 50px; height: 50px; border-radius: 50%; background: #fff; }
 #main .attitude-tiles .radio-symbol .icon { width: 28px; height: 28px; }
-.attitude-tiles .radio-body strong { font-size: .88rem; line-height: 1.25; }
+.attitude-tiles .radio-body strong { font-size: .88rem; line-height: 1.25; color: var(--accent); }
 @media (max-width: 900px) {
   .replica-cards { grid-template-columns: minmax(0, 1fr); }
   .replica-progress { flex-direction: column; align-items: stretch; }

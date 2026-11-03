@@ -191,7 +191,7 @@
 .fm-choice { display: flex; align-items: center; gap: 16px; padding: 12px 16px; border: 1.5px solid #dbe3f4; border-radius: 12px; background: #fff; color: var(--navy); text-align: left; }
 .fm-choice:hover { border-color: var(--accent); }
 .fm-choice.is-chosen { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); background: #f5f8ff; }
-.fm-choice strong { display: block; font-size: 1.12rem; }
+.fm-choice strong { display: block; font-size: 1.12rem; color: var(--accent); }
 .fm-choice small { display: block; color: #5b6a8f; margin-top: 2px; }
 .fm-choice-symbol { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--tint); color: var(--accent); flex-shrink: 0; }
 .fm-choice-symbol.tone-coral { background: #ffe4df; color: #e2553c; }
