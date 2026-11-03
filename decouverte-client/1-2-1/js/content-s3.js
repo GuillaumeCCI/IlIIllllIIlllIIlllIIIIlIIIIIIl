@@ -176,10 +176,10 @@
   const DOS = 'Je dors mal depuis des mois, je me réveille avec le dos en compote.';
   const CONTRAT = 'Je ne comprends rien à ces contrats. J’ai peur de signer quelque chose qui ne me protège pas vraiment.';
   const SAISIE = 'On perd des heures chaque semaine à ressaisir les commandes à la main.';
-  // Chaque onglet nomme ce dont parle le client, jamais « Réponse 1 ».
-  const SUJETS = new Map([[OFFRE, 'L’offre du concurrent'], [DOS, 'Le mal de dos'], [CONTRAT, 'Les contrats'], [SAISIE, 'Les commandes à ressaisir']]);
-  const intrus = (quote, reply, answer, why) => ({
-    tab: SUJETS.get(quote),
+  // Chaque onglet reprend quelques mots de la réponse du vendeur : on sait ce
+  // qui attend derrière. Jamais « Réponse 1 », ni le même mot partout.
+  const intrus = (tab, quote, reply, answer, why) => ({
+    tab,
     // Les deux répliques en bulles sur l'image (le vendeur à gauche, la cliente à droite) ;
     // le corrigé garde l'échange en texte.
     scene: [{ image: 'assets/illustrations/dialogues/reformulation.webp', alt: 'Un vendeur montre quelque chose sur sa tablette à une cliente qui l’écoute attentivement.',
@@ -208,14 +208,14 @@
     countLabel: 'réponses jugées',
     submitLabel: 'Réponse suivante',
     cases: [
-      intrus(OFFRE, 'Vous avez des doutes sur leur offre.', 'oui', 'C’est un reflet : le vendeur redit le doute du client, sans rien ajouter.'),
-      intrus(DOS, 'Il vous faut un matelas ferme, c’est ce qu’il y a de mieux pour le dos.', 'non', 'C’est une solution, et même un conseil discutable : le vendeur ne sait encore rien des besoins du client.'),
-      intrus(CONTRAT, 'Les contrats vous paraissent difficiles à lire, et vous craignez de ne pas être bien protégé.', 'oui', 'Le vendeur redit la difficulté et la crainte du client, avec d’autres mots, sans rien ajouter.'),
-      intrus(OFFRE, 'Vous avez raison de vous méfier, ils sont connus pour leurs frais cachés.', 'non', 'C’est une évaluation (« vous avez raison »), et elle dénigre le concurrent. Le client n’a jamais parlé de frais cachés.'),
-      intrus(SAISIE, 'Des heures perdues chaque semaine, à tout ressaisir à la main ?', 'oui', 'C’est un écho : le vendeur reprend les mots du client sur un ton de question, pour l’inviter à préciser.'),
-      intrus(CONTRAT, 'Pas de panique, nos contrats sont les plus simples du marché.', 'non', 'C’est du soutien (« pas de panique ») suivi d’un argument sur le produit. La crainte du client n’est pas reprise.'),
-      intrus(OFFRE, 'Quelque chose vous retient dans leur proposition ?', 'oui', 'C’est un écho reformulé en question : le client est invité à dire ce qui le retient.'),
-      intrus(SAISIE, 'Donc en fait, votre équipe manque surtout d’organisation.', 'non', 'C’est une interprétation, presque un jugement : le client a parlé de temps perdu, pas d’une équipe mal organisée.')
+      intrus('« Des doutes sur leur offre »', OFFRE, 'Vous avez des doutes sur leur offre.', 'oui', 'C’est un reflet : le vendeur redit le doute du client, sans rien ajouter.'),
+      intrus('« Un matelas ferme »', DOS, 'Il vous faut un matelas ferme, c’est ce qu’il y a de mieux pour le dos.', 'non', 'C’est une solution, et même un conseil discutable : le vendeur ne sait encore rien des besoins du client.'),
+      intrus('« Difficiles à lire »', CONTRAT, 'Les contrats vous paraissent difficiles à lire, et vous craignez de ne pas être bien protégé.', 'oui', 'Le vendeur redit la difficulté et la crainte du client, avec d’autres mots, sans rien ajouter.'),
+      intrus('« Leurs frais cachés »', OFFRE, 'Vous avez raison de vous méfier, ils sont connus pour leurs frais cachés.', 'non', 'C’est une évaluation (« vous avez raison »), et elle dénigre le concurrent. Le client n’a jamais parlé de frais cachés.'),
+      intrus('« Des heures perdues »', SAISIE, 'Des heures perdues chaque semaine, à tout ressaisir à la main ?', 'oui', 'C’est un écho : le vendeur reprend les mots du client sur un ton de question, pour l’inviter à préciser.'),
+      intrus('« Les plus simples du marché »', CONTRAT, 'Pas de panique, nos contrats sont les plus simples du marché.', 'non', 'C’est du soutien (« pas de panique ») suivi d’un argument sur le produit. La crainte du client n’est pas reprise.'),
+      intrus('« Quelque chose vous retient ? »', OFFRE, 'Quelque chose vous retient dans leur proposition ?', 'oui', 'C’est un écho reformulé en question : le client est invité à dire ce qui le retient.'),
+      intrus('« Manque d’organisation »', SAISIE, 'Donc en fait, votre équipe manque surtout d’organisation.', 'non', 'C’est une interprétation, presque un jugement : le client a parlé de temps perdu, pas d’une équipe mal organisée.')
     ],
     keyPoint: 'À retenir : une reformulation n’ajoute rien. Dès qu’apparaissent un jugement (« vous avez raison »), une interprétation (« en fait »), un argument (« nos contrats ») ou une solution (« il vous faut »), on n’écoute plus : on parle de soi ou du produit.'
   };

@@ -194,16 +194,23 @@
     '2.2': { image: 'assets/illustrations/dialogues/entreprise.webp', alt: 'Dans un atelier, une commerciale explique quelque chose à un client qui l’écoute, sceptique.' },
     '2.3': { image: 'assets/illustrations/dialogues/agence.webp', alt: 'À une table de rendez-vous, une conseillère présente un document sur sa tablette à un client pensif.' }
   };
-  // Les onglets nomment celui qui répond (« 01 Commercial »), jamais « Réponse 1 ».
-  const TABS = { '2.1': ['Vendeur', 'vendeurs', 'le dernier'], '2.2': ['Commercial', 'commerciaux', 'le dernier'], '2.3': ['Agent', 'agents', 'le dernier'] };
+  // Chaque onglet reprend quelques mots de la réponse qu'il contient : on sait
+  // ce qui attend derrière. Jamais « Réponse 1 », ni le même mot partout.
+  const TABS = {
+    '2.1': ['« Le moins cher »', '« Quelle capacité ? »', '« Une famille de cinq »', '« L’extension de garantie »', '« La promotion de la semaine »', '« On va trouver »'],
+    '2.2': ['« L’application mobile »', '« Le logiciel marche bien »', '« Beaucoup de clients »', '« Trois mois de test »', '« Mon collègue »', '« Sur quel appareil ? »'],
+    '2.3': ['« Combien de visites ? »', '« Douter de votre appartement »', '« Le prix de départ »', '« Tous les appartements »', '« On baisse le prix »', '« L’autre agence »']
+  };
+  // Le nom de celui qui répond, dans les messages (« Commercial 2 : faites un choix »).
+  const NOUNS = { '2.1': ['Vendeur', 'vendeurs'], '2.2': ['Commercial', 'commerciaux'], '2.3': ['Agent', 'agents'] };
   // Le côté de l'image où se tient le client (le vendeur est de l'autre côté).
   const CLIENT_SIDE = { '2.1': 'right', '2.2': 'left', '2.3': 'left' };
   for (const [id, exercise] of Object.entries(S2)) {
-    const [noun, plural, last] = TABS[id];
+    const [noun, plural] = NOUNS[id];
     exercise.caseNoun = noun;
-    exercise.tour = tour.map(step => (step.target === '.fm-tabs' ? Object.assign({}, step, { title: `Six ${plural}`, text: `Le corrigé arrive après ${last}.` }) : step));
-    exercise.cases.forEach(kase => {
-      kase.tab = noun;
+    exercise.tour = tour.map(step => (step.target === '.fm-tabs' ? Object.assign({}, step, { title: `Six ${plural}`, text: 'Chaque onglet reprend quelques mots d’une réponse. Le corrigé arrive après la dernière.' }) : step));
+    exercise.cases.forEach((kase, i) => {
+      kase.tab = TABS[id][i];
       kase.scene.dialogue[1].label = SELLERS[id];
       // Les deux répliques en bulles sur l'image ; le corrigé garde l'échange en texte.
       kase.reviewScene = [kase.scene];

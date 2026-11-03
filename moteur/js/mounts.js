@@ -78,6 +78,45 @@
     'sc-transcript': el => { const b = MEDIA[Number(el.dataset.media)]; if (b) core().openDialog(b.title || 'Transcription', `<div class="sc-transcript">${b.intro ? `<p class="k-muted">${esc(b.intro)}</p>` : ''}${dialogueHtml(b.transcript)}</div>`); }
   };
 
+  /* Les bulles sur l'image s'écrivent petit à petit (effet machine à écrire),
+   * l'une après l'autre, dans l'ordre où elles sont dites. Le texte entier
+   * est déjà dans la page (invisible tant qu'il n'est pas « tapé ») : la bulle
+   * garde sa taille et un lecteur d'écran lit tout. Un échange ne s'écrit
+   * qu'une fois ; redessiné ensuite (un choix, un retour), il s'affiche entier. */
+  const TYPED = new Set();
+  const noTyping = () => root.__noTypewriter || (root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  function typeBubbles() {
+    if (!root.document) return;
+    // Une fenêtre (le contexte) ou la visite guidée cache l'écran : on attend.
+    if (root.document.querySelector('dialog[open], .tour')) { root.setTimeout(typeBubbles, 300); return; }
+    root.document.querySelectorAll('.sc-talk[data-tw]').forEach(list => {
+      const key = list.dataset.tw;
+      list.removeAttribute('data-tw');
+      if (TYPED.has(key) || noTyping()) { list.classList.remove('is-typing'); return; }
+      const lines = [...list.querySelectorAll('.sc-talk-line')];
+      let at = 0;
+      const next = () => {
+        if (!list.isConnected) return;
+        // Vu en entier une fois : il ne s'écrira plus.
+        if (at >= lines.length) { TYPED.add(key); list.classList.remove('is-typing'); return; }
+        const line = lines[at++];
+        const span = line.querySelector('.sc-talk-text');
+        const full = span.textContent;
+        line.classList.add('is-on');
+        let n = 0;
+        const tick = () => {
+          if (!span.isConnected) return;
+          n = Math.min(full.length, n + 2);
+          span.innerHTML = `${esc(full.slice(0, n))}<span class="sc-tw-rest">${esc(full.slice(n))}</span>`;
+          if (n < full.length) root.setTimeout(tick, 26);
+          else { span.textContent = full; root.setTimeout(next, 300); }
+        };
+        tick();
+      };
+      next();
+    });
+  }
+
   function scene(blocks) {
     const list = Array.isArray(blocks) ? blocks : blocks ? [blocks] : [];
     return list.map(block => {
@@ -101,8 +140,11 @@
         // Un échange court posé sur l'image : chaque réplique dans une bulle,
         // du côté de celui qui parle (side), l'une sous l'autre dans l'ordre
         // où elles sont dites. Sur un écran étroit, les bulles passent sous l'image.
+        const key = `${block.image}|${block.bubbles.map(b => b.text).join('|')}`;
+        const typing = !TYPED.has(key) && !noTyping();
+        if (typing) root.setTimeout(typeBubbles, 60);
         return `<figure class="sc-picture has-bubbles"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async">
-          <ol class="sc-talk">${block.bubbles.map(b => `<li class="sc-talk-line is-${b.side === 'right' ? 'right' : 'left'} ${b.who === 'seller' ? 'is-seller' : ''}"><small>${esc(b.label || '')}</small><span>«&nbsp;${esc(b.text)}&nbsp;»</span></li>`).join('')}</ol></figure>`;
+          <ol class="sc-talk ${typing ? 'is-typing' : ''}" ${typing ? `data-tw="${esc(key)}"` : ''}>${block.bubbles.map(b => `<li class="sc-talk-line is-${b.side === 'right' ? 'right' : 'left'} ${b.who === 'seller' ? 'is-seller' : ''}"><small>${esc(b.label || '')}</small><span class="sc-talk-text">«&nbsp;${esc(b.text)}&nbsp;»</span></li>`).join('')}</ol></figure>`;
       }
       if (block.image) {
         return `<figure class="sc-picture ${block.wide ? 'is-wide' : ''}"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async" style="object-position:${esc(block.position || 'center')}">
