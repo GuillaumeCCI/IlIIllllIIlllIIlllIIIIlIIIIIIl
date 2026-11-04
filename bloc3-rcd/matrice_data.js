@@ -1,5 +1,5 @@
 // Matrice compétences / critères -> chapitres du parcours (source unique, utilisée par les deux pages)
-// Poids : "E" = essentiel (traite directement le critère), "C" = complémentaire (appui, exemple, activité)
+// Poids : "E" = chapitre principal (consacré au critère), "C" = chapitre d'appui (en parle sans que ce soit son sujet)
 
 const COMPETENCES = [
   { bloc: "1. Recrutement des salariés permanents et intérimaires", items: [
