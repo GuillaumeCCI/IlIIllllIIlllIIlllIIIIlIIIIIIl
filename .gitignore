@@ -9,3 +9,11 @@ references/
 
 # Répertoire interne des illustrations : gardé sur l’ordinateur, jamais publié.
 repertoire/
+
+# Pages temporaires des tests d'affichage (téléphone 390 / tablette 820) :
+# gardées sur l'ordinateur, jamais publiées.
+_r-*.html
+_b-*.html
+
+# Réglages VS Code propres à chaque ordinateur (tasks.json, lui, est partagé).
+.vscode/settings.json
