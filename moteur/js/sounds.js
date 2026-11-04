@@ -520,8 +520,9 @@
 
   /* L'ÉCRAN D'ACCUEIL. À la première arrivée de la visite sur un accueil
    * (ou plus tard, si le navigateur refuse la musique faute de geste), un
-   * écran couvre la page, en deux temps. D'abord le plein écran : un seul
-   * bouton, sans échappatoire (sauf navigateur qui ne le permet pas, ou
+   * écran couvre la page, en deux temps. D'abord le plein écran, conseillé :
+   * « Passer en plein écran » ou « Continuer sans plein écran » (sauf
+   * navigateur qui ne le permet pas, ou
    * page déjà en plein écran : cette étape est alors sautée). Puis la
    * musique : « Avec musique » est le geste qui la lance ; « Sans musique »
    * la coupe, comme le bouton Musique. L'écran ne revient plus de la visite. Un
@@ -563,9 +564,10 @@
     entrance.innerHTML = `<div class="av-entrance-card" data-step="screen"${askScreen ? '' : ' hidden'}>
       <h1 id="av-entrance-title">L’Atelier Vente</h1>
       ${svg(SCREEN)}
-      <p>Les exercices se font en plein écran,<br>pour profiter de toute la place.</p>
+      <p>Les exercices sont plus confortables en plein écran,<br>pour profiter de toute la place.</p>
       <div class="av-entrance-actions">
         <button type="button" data-entrance-screen>${svg(SCREEN)}Passer en plein écran</button>
+        <button type="button" class="is-quiet" data-entrance-skip>Continuer sans plein écran</button>
       </div>
     </div>
     <div class="av-entrance-card" data-step="music"${askScreen ? ' hidden' : ''}>
@@ -584,8 +586,10 @@
     entrance.addEventListener('click', event => {
       // Étape 1 : le plein écran, puis la question de la musique. Même
       // refusé par le navigateur, on passe à la suite : pas d'impasse.
-      if (event.target.closest('[data-entrance-screen]')) {
-        enterFullscreen();
+      // « Continuer sans » : même suite, la page reste en fenêtre.
+      const screenStep = event.target.closest('[data-entrance-screen], [data-entrance-skip]');
+      if (screenStep) {
+        if (screenStep.hasAttribute('data-entrance-screen')) enterFullscreen();
         entrance.querySelector('[data-step="screen"]').hidden = true;
         entrance.querySelector('[data-step="music"]').hidden = false;
         entrance.querySelector('[data-entrance="on"]').focus();
