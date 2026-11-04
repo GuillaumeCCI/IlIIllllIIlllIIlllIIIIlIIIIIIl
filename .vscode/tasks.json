@@ -1,0 +1,16 @@
+{
+  // À l'ouverture du dossier dans VS Code : récupère ce qui a été envoyé sur
+  // GitHub depuis l'autre ordinateur (git pull). « --ff-only » : si les deux
+  // versions ont divergé, rien n'est touché et un message l'indique.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Récupérer depuis GitHub",
+      "type": "shell",
+      "command": "git pull --ff-only",
+      "runOptions": { "runOn": "folderOpen" },
+      "presentation": { "reveal": "silent", "panel": "dedicated", "close": false },
+      "problemMatcher": []
+    }
+  ]
+}
