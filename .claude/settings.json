@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/sync.cjs",
+            "timeout": 20,
+            "statusMessage": "Récupération depuis GitHub..."
+          }
+        ]
+      }
+    ]
+  }
+}
