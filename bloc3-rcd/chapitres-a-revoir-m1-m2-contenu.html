@@ -116,7 +116,7 @@
   <div id="planBlock" hidden>
     <h2>2. Mes chapitres à revoir</h2>
     <p class="legend">Pour chaque critère, certains chapitres sont <b>principaux</b> : ils sont consacrés à ce critère. D'autres sont des chapitres <b>d'appui</b> : ils en parlent aussi, sans que ce soit leur sujet.</p>
-    <p class="legend"><b>Prioritaire</b> : chapitre principal d'un critère non acquis.<br><b>À revoir</b> : chapitre principal d'un critère à travailler, ou chapitre d'appui d'un critère non acquis.<br><b>Conseillé</b> : chapitre d'appui d'un critère à travailler.</p>
+    <p class="legend"><b>Prioritaire</b> : chapitre principal d'un critère non acquis.<br><b>À revoir</b> : chapitre d'appui d'un critère non acquis, ou n'importe quel chapitre d'un critère à travailler.</p>
     <p class="legend">Cocher « Fait » au fur et à mesure.</p>
     <div class="wrap" id="plan"></div>
   </div>
@@ -129,7 +129,7 @@
 const BLOCS = COMPETENCES.slice(0, 2), MODS = MODULES.slice(0, 2);
 const ALL = BLOCS.flatMap(b => b.items);
 const LABEL = { A: "Acquis", T: "À travailler", N: "Non acquis" };
-const LEVEL = { 3: "Prioritaire", 2: "À revoir", 1: "Conseillé" };
+const LEVEL = { 3: "Prioritaire", 2: "À revoir" };
 
 // Sauvegarde dans le navigateur : critères cochés, cases « Fait », liste affichée ou non
 const KEY = 'bloc3-rcd-m1m2-chapitres';
@@ -159,10 +159,10 @@ function result(c) {
   return v.includes('N') ? 'N' : v.includes('T') ? 'T' : 'A';
 }
 // Priorité d'un lien chapitre -> critère : non acquis = 3 (principal) / 2 (appui) ;
-// à travailler = 2 (principal) / 1 (appui) ; acquis = rien
+// à travailler = 2 pour tous les chapitres ; acquis = rien
 function level(w, v) {
   if (v === 'N') return w === 'E' ? 3 : 2;
-  if (v === 'T') return w === 'E' ? 2 : 1;
+  if (v === 'T') return 2;
   return 0;
 }
 
