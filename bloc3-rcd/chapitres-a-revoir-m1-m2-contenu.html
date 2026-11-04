@@ -115,8 +115,7 @@
 
   <div id="planBlock" hidden>
     <h2>2. Mes chapitres à revoir</h2>
-    <p class="legend">Pour chaque critère, certains chapitres sont <b>principaux</b> : ils sont consacrés à ce critère. D'autres sont des chapitres <b>d'appui</b> : ils en parlent aussi, sans que ce soit leur sujet.</p>
-    <p class="legend"><b>Prioritaire</b> : chapitre principal d'un critère non acquis.<br><b>À revoir</b> : chapitre d'appui d'un critère non acquis, ou n'importe quel chapitre d'un critère à travailler.</p>
+    <p class="legend"><b>Prioritaire</b> : chapitre lié à un critère non acquis.<br><b>À revoir</b> : chapitre lié à un critère à travailler.</p>
     <p class="legend">Cocher « Fait » au fur et à mesure.</p>
     <div class="wrap" id="plan"></div>
   </div>
@@ -158,10 +157,10 @@ function result(c) {
   if (v.includes(undefined)) return null;
   return v.includes('N') ? 'N' : v.includes('T') ? 'T' : 'A';
 }
-// Priorité d'un lien chapitre -> critère : non acquis = 3 (principal) / 2 (appui) ;
-// à travailler = 2 pour tous les chapitres ; acquis = rien
+// Priorité d'un chapitre : non acquis = 3 (Prioritaire), à travailler = 2 (À revoir),
+// que le chapitre soit principal ou d'appui ; acquis = rien
 function level(w, v) {
-  if (v === 'N') return w === 'E' ? 3 : 2;
+  if (v === 'N') return 3;
   if (v === 'T') return 2;
   return 0;
 }
