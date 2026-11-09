@@ -22,6 +22,19 @@
     fields: [{ id: 'text', label: 'Votre reformulation', sub: 'Écrivez ce que vous diriez au client, mot pour mot.', placeholder, rows: 3, model }]
   });
 
+  /* L'écho (3.1) : le champ dit exactement quoi écrire, avec un exemple pris
+   * hors de l'exercice (il ne donne pas la réponse). */
+  const echo = (...args) => {
+    const kase = client(...args);
+    kase.fields = kase.fields.map(f => Object.assign({}, f, {
+      label: 'Votre écho : son mot clé, en question',
+      sub: 'Reprenez un ou quelques mots du client, tels quels, avec un point d’interrogation. Vous pouvez ajouter une courte relance (« C’est-à-dire ? »).',
+      placeholder: 'Ex. : « Trop cher ? C’est-à-dire ? »',
+      rows: 2
+    }));
+    return kase;
+  };
+
   /* Les critères de la grille d'auto-positionnement, repris tels quels. */
   const fidelite = { title: 'Fidélité aux mots du client', text: 'Ma reformulation ne contient ni ajout, ni jugement, ni argument sur un produit.' };
 
@@ -39,7 +52,7 @@
       ] },
       tour: [
         { target: '.fm-scene', title: 'Le client', text: 'Lisez ce que le client vous dit.' },
-        { target: '.fm-main .fm-field', title: 'Votre écho', text: 'Écrivez quelques mots du client, sous forme de question.' },
+        { target: '.fm-main .fm-field', title: 'Votre écho', text: 'Reprenez le mot clé du client, tel quel, avec un point d’interrogation. Exemple : « Trop cher ? C’est-à-dire ? »' },
         { target: '.fm-actions', title: 'Client suivant', text: 'Trois clients : le corrigé arrive après le dernier.' }
       ],
       caseNoun: 'Client',
@@ -48,11 +61,11 @@
       countLabel: 'échos écrits',
       submitLabel: 'Client suivant',
       cases: [
-        client('Le cycliste', 'Le client, dans un magasin de vélos électriques', 'Je fais 25 kilomètres par jour pour aller au travail, avec une côte terrible à la fin.',
+        echo('Le cycliste', 'Le client, dans un magasin de vélos électriques', 'Je fais 25 kilomètres par jour pour aller au travail, avec une côte terrible à la fin.',
           'Une côte terrible ? C’est-à-dire ?', 'Votre écho…', 'client-tasse'),
-        client('La famille', 'La cliente, dans une agence de voyages', 'On voudrait partir en famille cet été, mais pas comme l’an dernier : c’était épuisant.',
+        echo('La famille', 'La cliente, dans une agence de voyages', 'On voudrait partir en famille cet été, mais pas comme l’an dernier : c’était épuisant.',
           'C’était épuisant ? Qu’est-ce qui vous a fatiguée ?', 'Votre écho…', 'client-pull-clair'),
-        client('La restauratrice', 'La gérante d’un restaurant, au téléphone avec un fournisseur', 'Avec notre fournisseur actuel, les livraisons, c’est toujours la loterie.',
+        echo('La restauratrice', 'La gérante d’un restaurant, au téléphone avec un fournisseur', 'Avec notre fournisseur actuel, les livraisons, c’est toujours la loterie.',
           'Toujours la loterie ? Comment ça se passe ?', 'Votre écho…', 'client-chignon')
       ],
       selfCheck: {
