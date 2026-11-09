@@ -1040,6 +1040,46 @@
   }
   const contextButton = () => `<button type="button" class="text-button with-icon tour-replay k-context-open" data-act="k-context">${icon('document', { size: 18 })}<span>Le contexte</span></button>`;
 
+  /* « À RETENIR » : la leçon de l'exercice, dans une fenêtre du même style
+   * que « Le contexte ». Elle s'ouvre d'elle-même à l'arrivée sur le corrigé
+   * (une fois par visite et par exercice), quand aucune autre fenêtre n'est
+   * ouverte ; le bouton rendu à la place de l'ancien encadré la rouvre.
+   * Le « À retenir : » du texte devient le titre. */
+  let keyText = '';
+  const keySeen = new Set();
+  function openKeyPoint() {
+    if (!keyText) return;
+    const text = keyText.replace(/^\s*À retenir\s*:\s*/i, '').replace(/^./, ch => ch.toUpperCase());
+    const parts = text.split(/(?<=[.!?])\s+(?=[A-ZÀÂÉÈÊÎÔÛÇ«])/);
+    let rank = 0;
+    const next = () => `style="--i:${rank++}"`;
+    core().openDialog('À retenir', `<section class="k-context k-keypoint"><ul>${parts.map((part, i) =>
+      `<li class="k-cascade" ${next()}><span class="k-context-icon">${icon(i ? 'check' : 'lightbulb', { size: 20 })}</span><span>${esc(part)}</span></li>`).join('')}</ul></section>
+      <p class="k-context-go k-cascade" ${next()}><button type="button" class="button primary" data-act="k-keypoint-go">J’ai compris</button></p>`);
+    const dialog = root.document.querySelector('#info-dialog');
+    if (!dialog) return;
+    dialog.classList.add('is-context');
+    dialog.addEventListener('close', () => dialog.classList.remove('is-context'), { once: true });
+  }
+  function keyPoint(text) {
+    if (!text) return '';
+    keyText = text;
+    on({ 'k-keypoint': () => openKeyPoint(), 'k-keypoint-go': () => root.document.querySelector('#info-dialog')?.close() });
+    const id = ex().current && ex().current.key;
+    if (root.document && id && !keySeen.has(id)) {
+      keySeen.add(id);
+      let tries = 0;
+      const wait = setInterval(() => {
+        const doc = root.document;
+        if (++tries > 120 || !ex().reviewing()) { clearInterval(wait); return; }
+        if (doc.querySelector('dialog[open], .tour, .launch-veil, .page-transition') || !doc.querySelector('#main .k-keypoint-open')) return;
+        clearInterval(wait);
+        openKeyPoint();
+      }, 400);
+    }
+    return `<p class="k-keypoint-row"><button type="button" class="text-button with-icon tour-replay k-keypoint-open" data-act="k-keypoint">${icon('lightbulb', { size: 18 })}<span>À retenir</span></button></p>`;
+  }
+
   // Lancement automatique : on attend que la première zone soit à l'écran
   // et que l'écran ait fini d'apparaître.
   function tour(id, steps) {
@@ -1101,7 +1141,7 @@
   }
 
   root.AtelierKit = Object.freeze({
-    corrige, answerReview, clientCard, portraitFor, tour, tourButton, context, selfContext, contextButton, contextOpen: openContext, hlDemo, dragDemo,
+    corrige, answerReview, clientCard, portraitFor, tour, tourButton, context, selfContext, contextButton, contextOpen: openContext, keyPoint, hlDemo, dragDemo,
     esc, icon, words, seconds, filled, plural, stage, setStage, list,
     head, steps, band, tip, help, submit, act, back, reset, dialogButton, bar, utility,
     matrix, answered, score, choiceButtons,

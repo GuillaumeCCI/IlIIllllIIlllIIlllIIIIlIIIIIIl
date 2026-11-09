@@ -41,7 +41,7 @@
         ${kit.steps(markers.map(m => m.label), reviewing ? markers.length + 1 : 0, { compact: true })}
         ${reviewing ? `${kit.result(right, passages.length, 'passages bien repérés')}${sentence(true)}
           <ul class="sw-explain">${markers.map(m => `<li class="tone-${esc(m.tone)}"><strong>${esc(m.label)}</strong><span>${esc(content.explanations[m.id])}</span></li>`).join('')}</ul>
-          ${content.keyPoint ? ex.inlineNote(content.keyPoint, 'neutral') : ''}
+          ${window.AtelierKit.keyPoint(content.keyPoint)}
           ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
         : `<p class="sw-instruction">${icon('pointer', { size: 20 })}<span>Choisissez un surligneur, puis sélectionnez le passage correspondant.</span></p>
           <div class="sw-tools" role="radiogroup" aria-label="Surligneurs">${markers.map(m => `

@@ -220,6 +220,9 @@
     const [noun, plural] = NOUNS[id];
     const [who, effets] = WHO[id];
     exercise.caseNoun = noun;
+    // Au corrigé : la réplique de départ, à part et titrée, puis les réponses.
+    exercise.reviewIntroTitle = `Au départ, ${who} dit`;
+    exercise.reviewListTitle = `Les six ${plural} lui répondent`;
     exercise.welcome = Object.assign({}, welcome, { rows: welcome.rows.map(row => (row[0] === 'pencil' ? [row[0], row[1], `Pour chaque réponse, trouvez l’attitude d’écoute, puis l’effet de cette réponse sur ${who}.`] : row)) });
     exercise.tour = tour.map(step => (step.target === '.fm-tabs' ? Object.assign({}, step, { title: `Six ${plural}`, text: 'Chaque onglet reprend quelques mots d’une réponse. Le corrigé arrive après la dernière.' })
       : step.target === '.fm-actions' ? Object.assign({}, step, { text: `Ensuite, vous choisirez l’effet de cette réponse sur ${who}.` }) : step));

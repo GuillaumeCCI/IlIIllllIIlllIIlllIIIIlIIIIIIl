@@ -836,3 +836,11 @@ html { background-color: #fbf8f2; }
    l'exercice (onglets, consigne) : ils ne doivent pas sembler en faire partie. */
 #main .k-head:has(.k-head-aside :is(.tour-replay, .k-context-open, .k-count)) { margin-bottom: 14px; }
 #main .k-head-aside:has(.k-context-open) { row-gap: 10px; }
+
+/* ── « À retenir » (kit.keyPoint) : un bouton en fin de corrigé rouvre la
+   fenêtre, qui reprend le style de « Le contexte ». */
+#main .k-keypoint-row { margin: 26px 0 4px; }
+#main .k-keypoint-open { background: #fff3df; color: #8a4f0c; }
+#main .k-keypoint-open:hover, #main .k-keypoint-open:focus-visible { background: #ffe8c4; }
+.k-keypoint .k-context-icon { background: #fff3df; color: #b06a12; }
+.k-keypoint li > span:last-child { font-size: 1.05rem; line-height: 1.55; }

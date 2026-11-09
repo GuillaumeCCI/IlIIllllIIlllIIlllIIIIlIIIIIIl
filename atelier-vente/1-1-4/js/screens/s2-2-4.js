@@ -71,7 +71,7 @@
       </li>`).join('')}</ol>
       ${rows.some(r => flag(r) === null) ? `<h3 class="k-small-title">Vos autres repérages</h3><ul class="crash-own">${rows.filter(r => flag(r) === null).map(r => `<li>${ouvert.quote('s2-2.4', 0, ex.value(`error${r}`), undefined, [`error${r}`])}</li>`).join('')}</ul>` : ''}
       ${ouvert.expected('s2-2.4', 0)}
-      ${content.keyPoint ? ex.inlineNote(content.keyPoint, 'neutral') : ''}
+      ${window.AtelierKit.keyPoint(content.keyPoint)}
     </section>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }

@@ -274,7 +274,7 @@
       const placed = kit().deckPlaced(total);
       const right = cards.filter((card, i) => placed[i] === card.answer).length;
       const body = reviewing
-        ? `${kit().result(right, total, content.resultLabel || 'bonnes réponses')}${kit().deckReview(cards, zones)}${content.keyPoint ? root.AtelierExercise.inlineNote(content.keyPoint, 'neutral') : ''}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`
+        ? `${kit().result(right, total, content.resultLabel || 'bonnes réponses')}${kit().deckReview(cards, zones)}${kit().keyPoint(content.keyPoint)}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`
         : index === null
           ? `<h2>Relisez vos réponses</h2><p class="k-muted">Cliquez sur une ligne pour la modifier, puis validez.</p>${kit().deckRecap(cards, zones, 'Valider mes réponses')}`
           : playScreen(index);
@@ -390,7 +390,7 @@
             <span class="mt-review-text"><strong>${content.quoted === false ? esc(c.text) : `« ${esc(c.text)} »`}</strong><span>${icon('arrowRight', { size: 15 })} ${esc(zones[c.answer].label)}</span>${c.why ? `<small>${esc(c.why)}</small>` : ''}</span>
             ${kit().mark(ok, ok ? 'Correct' : `Vous : ${link(i) === null ? 'rien' : zones[link(i)].label}`)}</li>`;
         }).join('')}</ol>
-        ${content.keyPoint ? ex().inlineNote(content.keyPoint, 'neutral') : ''}
+        ${kit().keyPoint(content.keyPoint)}
         ${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
     }
 
@@ -907,7 +907,7 @@
             ${c.lesson ? ex().inlineNote(c.lesson, 'neutral') : ''}
           </div>
         </details>`;
-      }).join('')}</div>${content.keyPoint ? ex().inlineNote(content.keyPoint, 'neutral') : ''}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
+      }).join('')}</div>${kit().keyPoint(content.keyPoint)}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
     }
 
     const optionLabel = (f, id) => (f.options.find(o => o.id === id) || {}).label || 'rien';
@@ -935,7 +935,7 @@
 
     function reviewScreen() {
       if (content.review) return accordionReview();
-      return scoreHead(key, content.scoreScope) + (content.reviewIntro ? `<div class="fm-review-intro">${scene(content.reviewIntro)}</div>` : '') + (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
+      return scoreHead(key, content.scoreScope) + (content.reviewIntro ? `<section class="fm-review-intro">${content.reviewIntroTitle ? `<p class="fm-review-intro-label">${icon('users', { size: 18 })}<span>${esc(content.reviewIntroTitle)}</span></p>` : ''}${scene(content.reviewIntro)}</section>${content.reviewListTitle ? `<h2 class="fm-review-list-title">${esc(content.reviewListTitle)}</h2>` : ''}` : '') + (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
         const fields = fieldsOf(i);
         if (!fields.length && !c.model && !c.lesson) return '';
         // `reviewDialogue: 'seller'` : au corrigé, seule la réponse du vendeur est redite
@@ -992,7 +992,7 @@
           ${c.model && !caseModel ? kit().model(content.modelLabel || 'Une réponse possible', c.model) : ''}
           ${c.lesson ? ex().inlineNote(c.lesson, 'neutral') : ''}
         </section>`;
-      }).join('') + `${content.keyPoint ? ex().inlineNote(content.keyPoint, 'neutral') : ''}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
+      }).join('') + `${kit().keyPoint(content.keyPoint)}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
     }
 
     function screen() {

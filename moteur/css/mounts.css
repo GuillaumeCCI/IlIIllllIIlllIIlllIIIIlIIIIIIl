@@ -650,3 +650,14 @@ button.crash-passage:hover { background: #fff1d6; }
 /* Clavier seulement : un liseré fin, discret. */
 #main .fm-choice:focus-visible { outline: 2px solid #a9c0f6; outline-offset: 2px; }
 #main .fm-choice-symbol { width: 44px; height: 44px; }
+
+/* ── Corrigé : la réplique de départ, à part (content.reviewIntro) ──────
+   Une carte chaude et titrée (« Au départ, la cliente dit »), bien
+   distincte des réponses des vendeurs en bleu, puis un titre avant la
+   liste des réponses. */
+#main .fm-review-intro { margin: 10px 0 0; padding: 16px 22px 20px; border-radius: 18px; background: #fff3df; box-shadow: 0 6px 18px rgb(120 80 20 / 8%); }
+#main .fm-review-intro-label { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; color: #9a5b12; font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+#main .fm-review-intro .sc-line p { background: #fff; font-style: italic; }
+#main .fm-review-intro .sc-avatar { color: #9a5b12; }
+#main .fm-review-intro .sc-avatar .icon { background: #ffe6bf; }
+#main .fm-review-list-title { margin: 30px 0 4px; color: var(--navy); font-size: 1.25rem; font-weight: 800; }
