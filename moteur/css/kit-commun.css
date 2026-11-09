@@ -392,3 +392,12 @@
   .k-head-text { flex: 1 1 auto; width: 100%; }
   .k-head-aside { margin-left: 0; padding-top: 0; text-align: left; max-width: 100%; }
 }
+
+/* L'explication d'une question, juste sous ses tuiles (kit.picked, `why`) :
+   alignée sur les tuiles, petite ampoule, sans titre à répéter. */
+.k-pick-pair:has(.k-pick-why) { gap: 22px; }
+.k-pick-why { grid-column: 2 / -1; display: flex; align-items: flex-start; gap: 10px; margin: 2px 0 0; color: var(--navy); line-height: 1.5; }
+.k-pick-why > span:last-child { opacity: .85; }
+.k-pick-why-icon { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--tint); color: var(--accent); }
+.k-pick:not(:has(.k-pick-topic)) .k-pick-why { grid-column: 1 / -1; }
+@media (max-width: 760px) { .k-pick-why { grid-column: 1 / -1; } }

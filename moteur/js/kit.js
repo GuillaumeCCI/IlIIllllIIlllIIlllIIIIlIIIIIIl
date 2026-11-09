@@ -449,7 +449,9 @@
    * de l'apprenant (vert s'il est juste, rouge sinon), à droite la réponse
    * attendue, seulement s'il s'est trompé. `topic` précise la question
    * quand il y en a plusieurs (« Nature », « Premier geste »…). */
-  const picked = (ok, chosen, expected, topic = '') => {
+  // `why` : l'explication, posée juste sous les tuiles de sa question (pas
+  // de titre à répéter, l'œil ne fait pas d'aller-retour).
+  const picked = (ok, chosen, expected, topic = '', why = '') => {
     const tile = (state, label, value) => `<div class="k-pick-tile ${state}">
       <span class="k-pick-icon">${icon(state === 'is-ko' ? 'close' : 'check', { size: 20, strokeWidth: 3 })}</span>
       <span><small>${esc(label)}</small><strong>${esc(value)}</strong></span>
@@ -458,7 +460,8 @@
     // l'on a choisi, et ce qu'il fallait choisir.
     return `<div class="k-pick">${topic ? `<p class="k-pick-topic">${esc(topic)}</p>` : ''}${ok
       ? tile('is-ok', 'Vous avez choisi la bonne réponse', chosen)
-      : tile('is-ko', 'Vous avez choisi', chosen || 'Aucune réponse') + tile('is-ok', 'Il fallait choisir', expected)}</div>`;
+      : tile('is-ko', 'Vous avez choisi', chosen || 'Aucune réponse') + tile('is-ok', 'Il fallait choisir', expected)}${why
+      ? `<p class="k-pick-why"><span class="k-pick-why-icon">${icon('lightbulb', { size: 16 })}</span><span>${esc(why)}</span></p>` : ''}</div>`;
   };
 
   /* L'explication du corrigé, avec son ampoule. */

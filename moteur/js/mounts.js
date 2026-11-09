@@ -912,9 +912,12 @@
 
     const optionLabel = (f, id) => (f.options.find(o => o.id === id) || {}).label || 'rien';
     /* Une décision relue : ce qui a été choisi, ce qu'il fallait choisir. */
-    function pick(i, f) {
+    // `withWhy` : l'explication sous les tuiles (plusieurs décisions par cas),
+    // et la question sans son « 1 · », déjà donné par la pastille numérotée.
+    function pick(i, f, withWhy = false) {
       const accepted = [].concat(f.answer || []);
-      return kit().picked(accepted.includes(val(i, f)), optionLabel(f, val(i, f)), accepted.map(id => optionLabel(f, id)).join(' ou '), f.label);
+      const topic = withWhy ? String(f.label || '').replace(/^[0-9]+ · /, '') : f.label;
+      return kit().picked(accepted.includes(val(i, f)), optionLabel(f, val(i, f)), accepted.map(id => optionLabel(f, id)).join(' ou '), topic, withWhy ? f.why : '');
     }
     /* Des éléments à repérer (chips avec `answer`) : repérés, oubliés, en trop. */
     function chipsReview(i, f) {
@@ -962,7 +965,7 @@
           ${n > 1 ? `<p class="k-label">${esc(heading)}</p>` : ''}
           ${c.title ? `<h3 class="fm-review-title">${esc(c.title)}</h3>` : ''}
           ${sceneHtml && (n > 1 || Array.isArray(c.reviewScene)) ? `<div class="fm-review-scene">${sceneHtml}</div>` : ''}
-          ${decisions.length > 1 ? `<div class="k-pick-pair">${decisions.map(f => pick(i, f)).join('')}</div>${decisions.filter(f => f.why).map(f => kit().explain(f.why, f.whyTitle || f.label.replace(/^[0-9]+ · /, ''))).join('')}` : ''}
+          ${decisions.length > 1 ? `<div class="k-pick-pair">${decisions.map(f => pick(i, f, true)).join('')}</div>` : ''}
           ${fields.map(f => {
             if (f.type === 'choice') {
               const accepted = [].concat(f.answer || []);

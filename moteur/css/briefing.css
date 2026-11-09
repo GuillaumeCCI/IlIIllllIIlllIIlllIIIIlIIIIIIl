@@ -537,3 +537,10 @@ body.is-briefing .briefing {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
+
+/* ── Une carte « Votre mission » plus large ──────────────────────────────
+   Avec une illustration, la consigne prend plus de largeur : ses lignes
+   s'allongent, la carte raccourcit, et le bouton « Commencer l'exercice »
+   reste dans l'écran sans rien resserrer. La page s'élargit aussi. */
+body.is-briefing .briefing { width: min(100% - 10vw, 1440px); }
+.briefing-body.has-art { grid-template-columns: minmax(0, 1fr) minmax(380px, 1fr); gap: clamp(32px, 3.5vw, 56px); }
