@@ -1081,14 +1081,19 @@
     const id = ex().current && ex().current.key;
     if (root.document && id && !keySeen.has(id)) {
       keySeen.add(id);
-      let tries = 0;
-      const wait = setInterval(() => {
+      // Dès l'arrivée sur le corrigé : essai immédiat, puis toutes les 150 ms
+      // tant qu'une autre fenêtre est ouverte (on attend qu'elle se ferme,
+      // sans abandonner tant qu'on reste sur le corrigé).
+      let wait = 0;
+      const tryOpen = () => {
         const doc = root.document;
-        if (++tries > 120 || !ex().reviewing()) { clearInterval(wait); return; }
-        if (doc.querySelector('dialog[open], .tour, .launch-veil, .page-transition') || !doc.querySelector('#main .k-keypoint-open')) return;
+        if (!ex().reviewing()) { clearInterval(wait); return true; }
+        if (doc.querySelector('dialog[open], .tour, .launch-veil, .page-transition') || !doc.querySelector('#main .k-keypoint-open')) return false;
         clearInterval(wait);
         openKeyPoint();
-      }, 400);
+        return true;
+      };
+      root.setTimeout(() => { if (!tryOpen()) wait = setInterval(tryOpen, 150); }, 0);
     }
     return `<p class="k-keypoint-row"><button type="button" class="text-button with-icon tour-replay k-keypoint-open" data-act="k-keypoint">${icon('lightbulb', { size: 18 })}<span>À retenir</span></button></p>`;
   }

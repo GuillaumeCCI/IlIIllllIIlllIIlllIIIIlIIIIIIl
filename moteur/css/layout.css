@@ -423,28 +423,25 @@ body { position: relative; }
 #main { zoom: var(--echelle, 1); }
 .scale-label { font-size: .82rem; font-weight: 700; color: var(--navy); white-space: nowrap; }
 
-/* Passage d'un élément à l'autre (argument, série…) : le contenu arrive de
- * loin, du côté où l'on va, avec un léger rebond ; les blocs se suivent ; le
- * premier s'entoure d'un halo et le repère courant pulse (exercise.js,
- * markSwitch). */
+/* Passage d'un élément à l'autre (argument, série…) : le contenu glisse à
+ * peine, du côté où l'on va, en fondu, sans rebond ; les blocs se suivent ;
+ * le premier s'éclaire d'un halo discret et le repère courant pulse
+ * (exercise.js, markSwitch). Sobre : l'ancien envol de 260 px avec rotation
+ * et rebond était jugé brutal. */
 @keyframes k-switch-next {
-  0% { opacity: 0; transform: translateX(260px) scale(.92) rotate(1.5deg); }
-  60% { opacity: 1; transform: translateX(-18px) scale(1.01) rotate(-.3deg); }
-  80% { transform: translateX(6px) scale(1); }
+  0% { opacity: 0; transform: translateX(28px); }
   100% { opacity: 1; transform: none; }
 }
 @keyframes k-switch-prev {
-  0% { opacity: 0; transform: translateX(-260px) scale(.92) rotate(-1.5deg); }
-  60% { opacity: 1; transform: translateX(18px) scale(1.01) rotate(.3deg); }
-  80% { transform: translateX(-6px) scale(1); }
+  0% { opacity: 0; transform: translateX(-28px); }
   100% { opacity: 1; transform: none; }
 }
-@keyframes k-switch-glow { 0%, 35% { box-shadow: 0 0 0 0 rgb(19 75 215 / 0%); } 55% { box-shadow: 0 0 0 6px rgb(19 75 215 / 35%), 0 18px 40px rgb(19 75 215 / 18%); } 100% { box-shadow: 0 0 0 16px rgb(19 75 215 / 0%); } }
+@keyframes k-switch-glow { 0%, 30% { box-shadow: 0 0 0 0 rgb(19 75 215 / 0%); } 55% { box-shadow: 0 0 0 3px rgb(19 75 215 / 16%), 0 14px 32px rgb(19 75 215 / 10%); } 100% { box-shadow: 0 0 0 10px rgb(19 75 215 / 0%); } }
 @keyframes k-switch-pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgb(19 75 215 / 60%); } 40% { transform: scale(2); box-shadow: 0 0 0 10px rgb(19 75 215 / 20%); } 70% { transform: scale(.9); } 100% { transform: scale(1); box-shadow: 0 0 0 16px rgb(19 75 215 / 0%); } }
-.k-switch-next { animation: k-switch-next .85s cubic-bezier(.22, .9, .3, 1) both; }
-.k-switch-prev { animation: k-switch-prev .85s cubic-bezier(.22, .9, .3, 1) both; }
-:is(.k-switch-next, .k-switch-prev) ~ :is(.k-switch-next, .k-switch-prev) { animation-delay: .1s; }
-:is(.k-switch-next, .k-switch-prev) ~ :is(.k-switch-next, .k-switch-prev) ~ :is(.k-switch-next, .k-switch-prev) { animation-delay: .2s; }
+.k-switch-next { animation: k-switch-next .42s cubic-bezier(.2, .8, .3, 1) both; }
+.k-switch-prev { animation: k-switch-prev .42s cubic-bezier(.2, .8, .3, 1) both; }
+:is(.k-switch-next, .k-switch-prev) ~ :is(.k-switch-next, .k-switch-prev) { animation-delay: .06s; }
+:is(.k-switch-next, .k-switch-prev) ~ :is(.k-switch-next, .k-switch-prev) ~ :is(.k-switch-next, .k-switch-prev) { animation-delay: .12s; }
 .k-switch-pulse { animation: k-switch-pulse .9s cubic-bezier(.3, 1.4, .5, 1); }
 /* La pastille d'un onglet : un rebond léger, sans déborder sur son texte. */
 @keyframes k-switch-pop { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgb(19 75 215 / 50%); } 40% { transform: scale(1.25); box-shadow: 0 0 0 8px rgb(19 75 215 / 18%); } 70% { transform: scale(.95); } 100% { transform: scale(1); box-shadow: 0 0 0 14px rgb(19 75 215 / 0%); } }
@@ -452,8 +449,8 @@ body { position: relative; }
 .k-switch-halo { animation: k-switch-glow 1.2s ease-out; }
 /* Le bloc qui glisse est aussi la carte au halo : les deux jouent ensemble
  * (sinon le halo remplace le glissement, qui ne part qu'à sa fin). */
-.k-switch-next.k-switch-halo { animation: k-switch-next .85s cubic-bezier(.22, .9, .3, 1) both, k-switch-glow 1.2s ease-out; }
-.k-switch-prev.k-switch-halo { animation: k-switch-prev .85s cubic-bezier(.22, .9, .3, 1) both, k-switch-glow 1.2s ease-out; }
+.k-switch-next.k-switch-halo { animation: k-switch-next .42s cubic-bezier(.2, .8, .3, 1) both, k-switch-glow 1s ease-out; }
+.k-switch-prev.k-switch-halo { animation: k-switch-prev .42s cubic-bezier(.2, .8, .3, 1) both, k-switch-glow 1s ease-out; }
 @media (prefers-reduced-motion: reduce) {
   .k-switch-next, .k-switch-prev { animation: k-switch-fade .3s ease both; }
   .k-switch-pulse, .k-switch-pop, .k-switch-halo { animation: none; }
