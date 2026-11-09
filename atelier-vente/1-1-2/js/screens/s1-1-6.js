@@ -123,7 +123,7 @@
           <ol class="repair-diag-list">${content.worstErrors.map(text => `<li>${esc(text)}</li>`).join('')}</ol>
         </section>
         <section class="k-panel repair-after"><p class="repair-stage-label is-green">Après</p>${ouvert.answer('s1-1.6', 2, { title: 'Mon argumentaire réparé', text: ex.value('fixed'), model: content.model })}
-          ${ex.inlineNote(content.takeaway, 'neutral')}
+          ${window.AtelierKit.keyPoint(content.takeaway)}
         </section>
       </div>
       <section class="k-panel">

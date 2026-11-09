@@ -67,7 +67,7 @@
           }).join('')}</ol>
         </section>
         <div class="ar-actions">
-          ${reviewing ? `${content.takeaway ? ex.inlineNote(content.takeaway, 'neutral') : ''}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
+          ${reviewing ? `${window.AtelierKit.keyPoint(content.takeaway)}${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
             : `${core.errorsBox()}${kit.bar({ left: kit.reset(), center: kit.dialogButton('rule', 'Voir la consigne', 'secondary', ''), right: kit.submit('Valider mes associations', count() === reactions.length ? '' : 'data-pending="true"') })}`}
         </div>
       </form>

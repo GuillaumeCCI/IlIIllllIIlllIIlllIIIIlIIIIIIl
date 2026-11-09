@@ -622,13 +622,13 @@
     /* La frise d'étapes de l'en-tête (content.stepper), à la place des onglets. */
     function stepper(at) {
       return `<div class="fm-stepper"><p class="fm-stepper-now">${esc(content.caseNoun || 'Étape')} ${at + 1} sur ${n}</p><p class="fm-stepper-count" data-live="fm-count">${countLine()}</p>
-        <ol>${cases.map((c, i) => `<li class="${i === at ? 'is-current' : ''} ${tabState(i, at)}"><button type="button" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === at ? 'aria-current="step"' : ''} aria-label="${esc(c.tab)} · ${tabLabel(i, at)}"><span class="fm-stepper-dot">${complete(i) && i !== at ? icon('check', { size: 16 }) : i + 1}</span><span class="fm-stepper-label">${esc(c.tab)}</span></button></li>`).join('')}</ol></div>`;
+        <ol>${cases.map((c, i) => `<li class="${i === at ? 'is-current' : ''} ${tabState(i, at)}"><button type="button" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === at ? 'aria-current="step"' : ''} aria-label="${esc(c.tab)} · ${tabLabel(i, at)}"><span class="fm-stepper-dot">${complete(i) ? icon('check', { size: 16 }) : i + 1}</span><span class="fm-stepper-label">${esc(c.tab)}</span></button></li>`).join('')}</ol></div>`;
     }
 
     function tabs(at) {
       if (n < 2 || content.stepper) return '';
       return `<div class="fm-tabs count-${n} ${content.sequential ? 'is-steps' : ''} ${content.pills ? 'is-pills' : ''}">${cases.map((c, i) => `<button type="button" class="fm-tab ${i === at ? 'is-current' : ''} ${tabState(i, at)}" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === at ? 'aria-current="step"' : ''} title="${tabLabel(i, at).replace(/^./, ch => ch.toUpperCase())}">
-        <span class="fm-tab-n">${complete(i) && i !== at ? icon('check', { size: 18 }) : content.sequential ? i + 1 : String(i + 1).padStart(2, '0')}</span><span class="fm-tab-text">${esc(c.tab)}${c.tabSub && !content.pills ? `<small>${esc(c.tabSub)}</small>` : ''}${c.tabNote && !content.pills ? `<small class="fm-tab-note">${esc(c.tabNote)}</small>` : ''}</span></button>`).join('<span class="fm-tab-line" aria-hidden="true"></span>')}${selfOn ? `
+        <span class="fm-tab-n">${complete(i) ? icon('check', { size: 18 }) : content.sequential ? i + 1 : String(i + 1).padStart(2, '0')}</span><span class="fm-tab-text">${esc(c.tab)}${c.tabSub && !content.pills ? `<small>${esc(c.tabSub)}</small>` : ''}${c.tabNote && !content.pills ? `<small class="fm-tab-note">${esc(c.tabNote)}</small>` : ''}</span></button>`).join('<span class="fm-tab-line" aria-hidden="true"></span>')}${selfOn ? `
         <button type="button" class="fm-tab is-self ${at === SELF ? 'is-current' : ''}" data-act="fm-case" data-index="${SELF}" ${doneCount() === n ? '' : 'disabled'}>
         <span class="fm-tab-n">${icon(doneCount() === n ? 'list' : 'lock', { size: 16 })}</span><span class="fm-tab-text">Auto-évaluation</span></button>` : ''}</div>`;
     }

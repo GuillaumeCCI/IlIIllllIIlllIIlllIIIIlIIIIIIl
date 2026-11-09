@@ -57,7 +57,7 @@
     return `${ouvert.head('s1-1.4')}
       ${ouvert.answer('s1-1.4', 0, { title: 'Votre hypothèse', text: ex.value('hypothesis'), modelHtml: `<ul class="hidden-list">${content.hypotheses.map(h => `<li>${esc(h)}</li>`).join('')}</ul>` })}
       ${ouvert.answer('s1-1.4', 1, { title: 'Votre question', text: ex.value('question'), model: content.model })}
-      ${ex.inlineNote(content.lesson, 'neutral')}`;
+      ${window.AtelierKit.keyPoint(content.lesson)}`;
   }
 
   function validate(values) {

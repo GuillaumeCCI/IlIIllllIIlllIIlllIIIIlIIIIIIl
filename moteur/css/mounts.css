@@ -661,3 +661,7 @@ button.crash-passage:hover { background: #fff1d6; }
 #main .fm-review-intro .sc-avatar { color: #9a5b12; }
 #main .fm-review-intro .sc-avatar .icon { background: #ffe6bf; }
 #main .fm-review-list-title { margin: 30px 0 4px; color: var(--navy); font-size: 1.25rem; font-weight: 800; }
+/* L'onglet ouvert, s'il est déjà répondu, garde sa coche verte : il reste
+   soulevé et blanc (on est dessus), la coche dit qu'il est terminé. */
+#main .fm-tab.is-done.is-current .fm-tab-n { background: var(--ok); color: #fff; }
+.fm-stepper li.is-done.is-current .fm-stepper-dot { background: var(--ok); color: #fff; box-shadow: 0 0 0 5px var(--ok-soft); }

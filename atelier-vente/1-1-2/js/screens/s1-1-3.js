@@ -144,7 +144,7 @@
           <p class="k-muted">Attendues : ${esc(cards.filter(c => c.kind === 'P' && c.needs.includes(n) && !c.optional).map(c => c.text).join(', '))}.</p>
         </section>`;
       }).join('')}</div>
-      ${content.takeaway ? ex.inlineNote(content.takeaway, 'neutral') : ''}
+      ${window.AtelierKit.keyPoint(content.takeaway)}
       ${core.feedbackBox()}
       <div class="k-utility">${kit.reset()}</div>
     </div>`;

@@ -82,7 +82,7 @@
       ${step.client ? `<p class="tree-client">${icon('chat', { size: 18 })}<span>« ${esc(step.client)} »</span></p>` : ''}
       ${ouvert.answer('s3-3.6', i, { title: 'Votre réponse', text: text(i), model: step.model })}
     </section>`).join('')}</div>
-    ${content.takeaway ? ex.inlineNote(content.takeaway, 'neutral') : ''}
+    ${window.AtelierKit.keyPoint(content.takeaway)}
     ${core.feedbackBox()}
     <div class="k-utility">${kit.reset()}</div>`;
   }
