@@ -38,10 +38,10 @@
     const card = (i, n, title, key, model, extra = '') => `<article class="review-card">
         ${core.step(n, title, `<p class="result-answer-text">«\u00a0${result ? analyse.answer(result.blocs[i]) : esc(ex.value(key))}\u00a0»</p>
           ${result ? analyse.lines(result.blocs[i], { withText: false }) : ''}
-          <details class="result-model">
-            <summary>Voir une réponse possible</summary>
+          <div class="result-model is-shown">
+            <p class="result-model-title">Voir une réponse possible</p>
             <div class="result-model-body"><p>${esc(model)}</p>${extra}</div>
-          </details>`)}
+          </div>`)}
       </article>`;
     return `<div class="review-layout">
       <div class="two-columns">

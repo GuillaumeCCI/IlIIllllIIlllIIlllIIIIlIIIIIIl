@@ -91,10 +91,10 @@
           <p class="result-answer-text">« ${bloc(i) ? analyse.answer(bloc(i)) : esc(text)} »</p>
         </div>
         ${bloc(i) ? analyse.lines(bloc(i), { withText: false }) : ''}
-        <details class="result-model">
-          <summary>Voir une réponse possible</summary>
+        <div class="result-model is-shown">
+          <p class="result-model-title">Voir une réponse possible</p>
           <div class="result-model-body"><p>${esc(model)}</p></div>
-        </details>
+        </div>
       </li>`;
     const chosen = ex.value('finalChoice');
     return `<div class="sorter recap">

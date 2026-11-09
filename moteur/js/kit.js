@@ -1050,7 +1050,20 @@
   function openKeyPoint() {
     if (!keyText) return;
     const text = keyText.replace(/^\s*À retenir\s*:\s*/i, '').replace(/^./, ch => ch.toUpperCase());
-    const parts = text.split(/(?<=[.!?])\s+(?=[A-ZÀÂÉÈÊÎÔÛÇ«])/);
+    // Un point par phrase, sans jamais couper à l'intérieur de guillemets
+    // (« Une côte terrible ? C'est-à-dire ? » reste d'un seul tenant).
+    const parts = [];
+    let depth = 0, from = 0;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (ch === '«') depth++;
+      else if (ch === '»') depth = Math.max(0, depth - 1);
+      else if (!depth && /[.!?]/.test(ch) && /\s/.test(text[i + 1] || '') && /[A-ZÀÂÉÈÊÎÔÛÇ«]/.test(text.slice(i + 1).trimStart()[0] || '')) {
+        parts.push(text.slice(from, i + 1).trim());
+        from = i + 1;
+      }
+    }
+    if (text.slice(from).trim()) parts.push(text.slice(from).trim());
     let rank = 0;
     const next = () => `style="--i:${rank++}"`;
     core().openDialog('À retenir', `<section class="k-context k-keypoint"><ul>${parts.map((part, i) =>

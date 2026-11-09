@@ -183,12 +183,12 @@
             <p class="result-answer-text">« ${bloc(i) ? analyse.answer(bloc(i)) : esc(ex.value(lineKey(c, i)))} »</p>
           </div>
           ${bloc(i) ? analyse.lines(bloc(i), { withText: false }) : ''}
-          <details class="result-model">
-            <summary>Voir une réponse possible</summary>
+          <div class="result-model is-shown">
+            <p class="result-model-title">Voir une réponse possible</p>
             <div class="result-model-body">
               <p>« ${esc(cas.model[i])} »</p>
             </div>
-          </details>
+          </div>
         </li>`).join('')}</ol>
       <p class="result-reread">${esc(content.feedback)}</p>
       ${ex.caseActions(cases(), c)}

@@ -52,11 +52,11 @@
     return scored ? `<section class="ana-score is-head open-score" aria-label="Votre score">${engine().head(scored)}</section>` : '';
   }
 
-  /* La réponse possible, repliée : un texte, ou du HTML déjà prêt (`html`). */
+  /* La réponse possible, toujours affichée : un texte, ou du HTML déjà prêt (`html`). */
   const model = (text, { html = '', extra = '', label = 'Une réponse possible' } = {}) => (filled(text) || html
-    ? `<details class="result-model open-model"><summary>${esc(label)}</summary>
+    ? `<div class="result-model open-model is-shown"><p class="result-model-title">${esc(label)}</p>
         <div class="result-model-body">${html || `<p>${esc(text)}</p>`}${extra}</div>
-      </details>`
+      </div>`
     : '');
 
   /* La réponse de l'apprenant, mots repérés surlignés (sans grille : telle quelle). */

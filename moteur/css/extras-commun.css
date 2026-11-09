@@ -844,3 +844,11 @@ html { background-color: #fbf8f2; }
 #main .k-keypoint-open:hover, #main .k-keypoint-open:focus-visible { background: #ffe8c4; }
 .k-keypoint .k-context-icon { background: #fff3df; color: #b06a12; }
 .k-keypoint li > span:last-child { font-size: 1.05rem; line-height: 1.55; }
+
+/* ── « Une réponse possible », toujours affichée (plus de pli) ───────────
+   Un encadré vert pâle, titré comme les autres rubriques du corrigé. */
+#main .result-model.is-shown { margin-top: 16px; padding: 14px 18px 16px; border: 0; border-radius: 14px; background: #eef8f2; }
+#main .result-model-title { margin: 0 0 6px; color: #1b6b47; font-size: .78rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+#main .result-model.is-shown .result-model-body { overflow: visible; }
+#main .result-model.is-shown .result-model-body > p:first-child { margin-top: 0; }
+#main .result-model.is-shown p { color: var(--navy); font-size: 1rem; line-height: 1.5; }
