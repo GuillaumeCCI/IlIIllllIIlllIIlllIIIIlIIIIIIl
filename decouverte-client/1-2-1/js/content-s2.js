@@ -27,6 +27,13 @@
     { id: 'ferme', label: 'Il se ferme', sub: 'Il se sent jugé, bousculé ou pas entendu.' }
   ];
 
+  // Les mêmes effets, quand c'est une cliente qui parle.
+  const EFFETS_ELLE = [
+    { id: 'ouvre', label: 'Elle a envie d’en dire plus', sub: 'Elle se sent écoutée et continue de parler.' },
+    { id: 'partiel', label: 'Elle répond, sans plus', sub: 'Elle donne une information, pas ce qui compte pour elle.' },
+    { id: 'ferme', label: 'Elle se ferme', sub: 'Elle se sent jugée, bousculée ou pas entendue.' }
+  ];
+
   root.ATELIER_ATTITUDES = ATTITUDES;
 
   /* Un cas : la réplique du client, la réponse du vendeur, les deux décisions. */
@@ -38,7 +45,8 @@
       ] },
       fields: [
         { id: 'attitude', type: 'choice', label: '1 · L’attitude du vendeur', options: ATTITUDES, answer: attitude, why: whyAttitude },
-        { id: 'effet', type: 'choice', label: '2 · Son effet sur le client', options: EFFETS, answer: effet, why: whyEffet }
+        // Libellé et choix accordés à la personne plus bas (WHO).
+        { id: 'effet', type: 'choice', label: '2 · L’effet de cette réponse sur le client', options: EFFETS, answer: effet, why: whyEffet }
       ]
     };
   }
@@ -206,12 +214,18 @@
   const NOUNS = { '2.1': ['Vendeur', 'vendeurs'], '2.2': ['Commercial', 'commerciaux'], '2.3': ['Agent', 'agents'] };
   // Le côté de l'image où se tient le client (le vendeur est de l'autre côté).
   const CLIENT_SIDE = { '2.1': 'left', '2.2': 'left', '2.3': 'left' };
+  // La personne qui se confie : « l'effet de cette réponse sur … », et ses effets accordés.
+  const WHO = { '2.1': ['la cliente', EFFETS_ELLE], '2.2': ['le dirigeant', EFFETS], '2.3': ['le propriétaire', EFFETS] };
   for (const [id, exercise] of Object.entries(S2)) {
     const [noun, plural] = NOUNS[id];
+    const [who, effets] = WHO[id];
     exercise.caseNoun = noun;
-    exercise.tour = tour.map(step => (step.target === '.fm-tabs' ? Object.assign({}, step, { title: `Six ${plural}`, text: 'Chaque onglet reprend quelques mots d’une réponse. Le corrigé arrive après la dernière.' }) : step));
+    exercise.welcome = Object.assign({}, welcome, { rows: welcome.rows.map(row => (row[0] === 'pencil' ? [row[0], row[1], `Pour chaque réponse, trouvez l’attitude d’écoute, puis l’effet de cette réponse sur ${who}.`] : row)) });
+    exercise.tour = tour.map(step => (step.target === '.fm-tabs' ? Object.assign({}, step, { title: `Six ${plural}`, text: 'Chaque onglet reprend quelques mots d’une réponse. Le corrigé arrive après la dernière.' })
+      : step.target === '.fm-actions' ? Object.assign({}, step, { text: `Ensuite, vous choisirez l’effet de cette réponse sur ${who}.` }) : step));
     exercise.cases.forEach((kase, i) => {
       kase.tab = TABS[id][i];
+      kase.fields = kase.fields.map(f => (f.id === 'effet' ? Object.assign({}, f, { label: `2 · L’effet de cette réponse sur ${who}`, options: effets }) : f));
       kase.scene.dialogue[1].label = SELLERS[id];
       // Les deux répliques en bulles sur l'image ; le corrigé garde l'échange en texte.
       kase.reviewScene = [kase.scene];
