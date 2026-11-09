@@ -675,3 +675,25 @@ button.crash-passage:hover { background: #fff1d6; }
 .sc-say-text { display: block; font-size: clamp(1.05rem, 1.45vw, 1.3rem); font-style: italic; font-weight: 600; line-height: 1.38; text-shadow: 0 1px 8px rgb(16 22 60 / 40%); }
 .sc-say-mark { font-family: Georgia, serif; font-style: normal; font-size: 1.5em; line-height: 0; opacity: .75; vertical-align: -.25em; margin: 0 .08em; }
 #main .sc-picture.has-say figcaption { background: linear-gradient(rgb(16 22 60 / 0%), rgb(16 22 60 / 72%) 34%, rgb(16 22 60 / 90%)); color: #fff; font-weight: 400; }
+
+/* ── L'entretien à lire (bloc { script }) ────────────────────────────────
+   Comme un texte de théâtre : le nom à gauche, la réplique à droite, sans
+   bulle. La réplique étudiée est surlignée (fond jaune doux, filet à
+   gauche) ; hors du passage étudié, les lignes s'estompent. La liste
+   défile dans son cadre, avec une barre fine. */
+.sc-script-title { margin: 0; color: var(--navy); font-size: 1.15rem; font-weight: 800; }
+.sc-script-intro { margin: 4px 0 12px; color: #56658a; font-size: .92rem; line-height: 1.45; }
+.sc-script-list { position: relative; list-style: none; margin: 0; padding: 4px 6px 4px 0; display: grid; gap: 2px; max-height: min(560px, 64vh); overflow-y: auto; scrollbar-width: thin; scrollbar-color: #c9d3e8 transparent; scroll-behavior: smooth; }
+.sc-script-line { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; align-items: baseline; padding: 9px 12px; border-radius: 12px; transition: opacity .2s; }
+.sc-script-who { color: #56658a; font-size: .78rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; text-align: right; }
+.sc-script-line.is-seller .sc-script-who { color: var(--accent); }
+.sc-script-line p { margin: 0; color: var(--navy); font-size: 1.02rem; line-height: 1.5; }
+.sc-script-act { color: #6b7899; font-style: italic; }
+.sc-script-line.is-focus { background: #fff3c4; box-shadow: inset 4px 0 0 #f2b630; }
+.sc-script-line.is-focus p { font-weight: 600; }
+.sc-script-line.is-dim { opacity: .38; }
+@media (max-width: 700px) { .sc-script-line { grid-template-columns: minmax(0, 1fr); gap: 2px; } .sc-script-who { text-align: left; } }
+
+/* La barre des boutons (« Enregistrer et continuer ») sans trait au-dessus :
+   l'espace suffit à la séparer des réponses. */
+#main .fm-actions { border-top: 0; padding-top: 6px; }

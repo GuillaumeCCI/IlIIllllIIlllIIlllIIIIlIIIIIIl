@@ -1,9 +1,9 @@
 /* SÉRIE 4 · ANALYSER UN ENTRETIEN (fiche M1.2.1, activité A3).
  *
  * Nadia, conseillère immobilière, reçoit M. et Mme Benali pour un premier
- * rendez-vous. Comme 1-1-1 S1 A : à gauche, l'illustration de la scène, avec
- * « Écouter l'entretien » et « Voir la transcription » ; à droite, une question
- * à la fois. Les quatre exercices se font dans n'importe quel ordre.
+ * rendez-vous. À gauche, l'entretien affiché en entier (bloc `script`), le
+ * passage étudié surligné ; à droite, une question à la fois. Les quatre
+ * exercices se font dans n'importe quel ordre.
  *   4.1  l'attitude de Nadia dans chacune de ses répliques ;
  *   4.2  les signaux du couple que Nadia n'a pas exploités, et la question
  *        qui en vérifie un ;
@@ -36,17 +36,18 @@
   ];
 
   const ligne = ref => LIGNES.find(line => line.ref === ref);
-  const SCENE = [{ media: {
-    image: 'assets/illustrations/dialogues/rendez-vous-benali.webp',
-    alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.',
-    placeholder: 'Le rendez-vous des Benali',
+  const rang = ref => (typeof ref === 'number' ? ref : LIGNES.findIndex(line => line.ref === ref));
+  /* L'entretien affiché en entier, à lire directement (sans image ni
+   * fenêtre). `focus` : les répliques dont il est question, surlignées ;
+   * `until` : la dernière ligne du passage étudié (la suite s'estompe). */
+  const SCENE_OF = (focus = [], until = null) => [{ script: {
     title: 'Le rendez-vous des Benali',
-    intro: 'Nadia, conseillère immobilière, reçoit M. et Mme Benali pour un premier rendez-vous. Ce qui est entre crochets décrit leur comportement.',
-    transcript: LIGNES,
-    listenLabel: 'Écouter l’entretien',
-    note: 'Écoute lue par la voix de votre navigateur. La transcription décrit aussi les gestes du couple.'
+    intro: 'Nadia, conseillère immobilière, reçoit M. et Mme Benali pour un premier rendez-vous. Entre crochets : leurs gestes.',
+    lines: LIGNES,
+    focus: focus.map(rang),
+    until: until == null ? null : rang(until)
   } }];
-  const scene = { target: '.sc-media', title: 'La scène', text: 'Écoutez l’entretien, ou lisez sa transcription.' };
+  const scene = { target: '.sc-script', title: 'L’entretien', text: 'Lisez l’entretien. Ce qui est surligné en jaune, c’est le passage dont il est question.' };
 
   const welcome = {
     title: 'Le rendez-vous des Benali',
@@ -63,7 +64,7 @@
   /* ── 4.1 · L'attitude de chaque réplique ──────────────────────────── */
   const replique = (ref, tab, answer, why) => ({
     tab,
-    scene: SCENE,
+    scene: SCENE_OF([ref]),
     reviewScene: [{ dialogue: [ligne(ref)] }],
     fields: [{ id: 'attitude', type: 'choice', label: 'L’attitude de Nadia dans cette réplique', sub: `« ${ligne(ref).text} »`, options: ATTITUDES, answer, why, whyTitle: 'Pourquoi' }]
   });
@@ -112,7 +113,8 @@
       submitLabel: 'Voir le corrigé',
       scoreScope: 'Le score estimatif porte sur votre question (partie 2). Les signaux repérés sont corrigés juste en dessous.',
       cases: [
-        { tab: 'Repérer', scene: SCENE, reviewScene: false, fields: [
+        // Le passage étudié : tout ce qui précède « pas trop loin » (la suite s'estompe).
+        { tab: 'Repérer', scene: SCENE_OF([], rang('pas-trop-loin') - 1), reviewScene: false, fields: [
           { id: 'signaux', type: 'chips', columns: 2, label: '1 · Les signaux que Nadia n’a pas exploités', sub: 'Choisissez-en au moins trois. Certains ne sont pas des signaux manqués.', chipNoun: 'signal', min: 3,
             extraNote: 'Nadia en a déjà tenu compte',
             options: [
@@ -127,7 +129,7 @@
             ],
             answer: ['telephone', 'loin', 'nuit', 'sec', 'soupir'] }
         ] },
-        { tab: 'Vérifier', scene: SCENE, reviewScene: false, fields: [
+        { tab: 'Vérifier', scene: SCENE_OF([], rang('pas-trop-loin') - 1), reviewScene: false, fields: [
           { id: 'verifier', label: '2 · Vérifier un signal', sub: 'Choisissez l’un de ces signaux. Quelle question auriez-vous posée pour le vérifier, au lieu de le supposer ?', placeholder: 'Votre question au client…', rows: 3,
             model: 'Pour « pas trop loin » : « Quand vous dites pas trop loin, Monsieur, c’est par rapport à quoi, surtout ? ». Pour les bras croisés : « Monsieur, qu’est-ce qui compte le plus pour vous dans ce projet ? »' }
         ] }
@@ -149,8 +151,8 @@
       caseNoun: 'Analyse',
       submitLabel: 'Voir le corrigé',
       cases: [
-        { tab: 'Votre analyse', scene: SCENE, reviewScene: false, fields: [
-          { id: 'pourquoi', label: 'Pourquoi les deux dernières répliques de Nadia retournent la situation', sub: 'Relisez la fin de l’entretien dans la transcription : ce que fait Nadia quand elle revient sur « pas trop loin », puis quand elle résume, et l’effet sur M. et Mme Benali.', placeholder: 'Votre analyse…', rows: 7,
+        { tab: 'Votre analyse', scene: SCENE_OF(['pas-trop-loin', 'resume']), reviewScene: false, fields: [
+          { id: 'pourquoi', label: 'Pourquoi les deux dernières répliques de Nadia retournent la situation', sub: 'Relisez les deux répliques surlignées : ce que fait Nadia quand elle revient sur « pas trop loin », puis quand elle résume, et l’effet sur M. et Mme Benali.', placeholder: 'Votre analyse…', rows: 7,
             model: 'D’abord, Nadia reprend les mots exacts de M. Benali (« pas trop loin ») et s’adresse enfin à lui, alors qu’elle l’avait écarté jusque-là. M. Benali se sent entendu : il décroise les bras et livre son vrai besoin, la sécurité du trajet de nuit, pas le confort ni l’habitude. Ensuite, dans son résumé, Nadia fait de ce besoin le premier critère de recherche (moins de vingt minutes de l’hôpital) et fait valider sa synthèse par les deux. Sans elle, toutes les maisons proposées auraient été à côté.' }
         ] }
       ],
@@ -171,7 +173,7 @@
       caseNoun: 'Réécriture',
       submitLabel: 'Voir le corrigé',
       cases: [
-        { tab: 'Votre réplique', scene: SCENE, reviewScene: [{ dialogue: [LIGNES[4], ligne('tout-le-monde')] }], fields: [
+        { tab: 'Votre réplique', scene: SCENE_OF([4, 'tout-le-monde']), reviewScene: [{ dialogue: [LIGNES[4], ligne('tout-le-monde')] }], fields: [
           { id: 'l3', label: 'Votre réplique, à la place de celle de Nadia', sub: `M. Benali vient de dire « Et pas trop loin ». Nadia répond : « ${ligne('tout-le-monde').text} » Reprenez le mot de M. Benali, sans juger, et invitez-le à préciser.`, placeholder: 'Ce que Nadia aurait pu dire…', rows: 4,
             model: '« Pas trop loin… La distance compte beaucoup pour vous, Monsieur. Pas trop loin de quoi, surtout ? » D’autres formulations conviennent si elles reprennent le mot du client, ne jugent pas et l’invitent à préciser.' }
         ] }

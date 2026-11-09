@@ -121,9 +121,36 @@
     });
   }
 
+  /* L'ENTRETIEN À LIRE ({ script: { title, intro, lines, focus, until } }) :
+   * le dialogue affiché tel quel, comme un texte de théâtre (qui parle, ce
+   * qu'il dit), sans bulle ni fenêtre. `focus` : les rangs des répliques dont
+   * il est question, surlignées ; `until` : au-delà de ce rang, les lignes sont
+   * estompées (hors du passage étudié). La liste défile d'elle-même jusqu'à
+   * la première réplique surlignée. Ce qui est entre crochets (gestes,
+   * silences) est en italique. */
+  function scriptBlock(s) {
+    const focus = new Set(s.focus || []);
+    const gesture = text => esc(text).replace(/\[([^\]]+)\]/g, '<em class="sc-script-act">$1</em>');
+    root.setTimeout(scrollScripts, 40);
+    return `<section class="sc-script">${s.title ? `<p class="sc-script-title">${esc(s.title)}</p>` : ''}${s.intro ? `<p class="sc-script-intro">${esc(s.intro)}</p>` : ''}
+      <ol class="sc-script-list" ${focus.size ? 'data-focus="1"' : ''}>${s.lines.map((line, i) => `<li class="sc-script-line ${line.who === 'seller' ? 'is-seller' : 'is-client'} ${focus.has(i) ? 'is-focus' : ''} ${s.until != null && i > s.until ? 'is-dim' : ''}">
+        <span class="sc-script-who">${esc(line.label || '')}</span><p>${gesture(line.text)}</p></li>`).join('')}</ol></section>`;
+  }
+  // Centre la première réplique surlignée dans la liste (sans faire défiler la page).
+  function scrollScripts() {
+    if (!root.document) return;
+    root.document.querySelectorAll('.sc-script-list[data-focus]').forEach(list => {
+      const first = list.querySelector('.is-focus');
+      if (!first) return;
+      // La liste est positionnée (CSS) : offsetTop se mesure depuis son haut.
+      list.scrollTop = Math.max(0, first.offsetTop - (list.clientHeight - first.offsetHeight) / 2);
+    });
+  }
+
   function scene(blocks) {
     const list = Array.isArray(blocks) ? blocks : blocks ? [blocks] : [];
     return list.map(block => {
+      if (block.script) return scriptBlock(block.script);
       if (block.media) return mediaBlock(block.media);
       if (block.quote) {
         // La réplique seule du client : sa carte illustrée, un portrait par
