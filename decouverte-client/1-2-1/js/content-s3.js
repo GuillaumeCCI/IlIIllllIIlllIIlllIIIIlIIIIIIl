@@ -38,6 +38,18 @@
     return kase;
   };
 
+  /* Le reflet (3.2) : le champ dit quoi viser (l'émotion, la situation avec
+   * ses mots), avec un exemple pris hors de l'exercice. */
+  const reflet = (...args) => {
+    const kase = client(...args);
+    kase.fields = kase.fields.map(f => Object.assign({}, f, {
+      label: 'Votre reflet : ce qu’il ressent',
+      sub: 'Nommez ce que le client ressent (déception, lassitude, inquiétude…), en reprenant sa situation avec ses mots. Sans juger ni conseiller.',
+      placeholder: 'Ex. : « Vous êtes inquiet de ne pas être livré à temps. »'
+    }));
+    return kase;
+  };
+
   /* Les critères de la grille d'auto-positionnement, repris tels quels. */
   const fidelite = { title: 'Fidélité aux mots du client', text: 'Ma reformulation ne contient ni ajout, ni jugement, ni argument sur un produit.' };
 
@@ -96,7 +108,7 @@
       ] },
       tour: [
         { target: '.fm-scene', title: 'Le client', text: 'Lisez ce que le client vous dit, et ce qu’il ressent.' },
-        { target: '.fm-main .fm-field', title: 'Votre reflet', text: 'Dites-lui ce qu’il ressent, avec ses mots.' },
+        { target: '.fm-main .fm-field', title: 'Votre reflet', text: 'Nommez ce que le client ressent, en reprenant sa situation avec ses mots. Exemple : « Vous êtes inquiet de ne pas être livré à temps. »' },
         { target: '.fm-actions', title: 'Client suivant', text: 'Trois clients : le corrigé arrive après le dernier.' }
       ],
       caseNoun: 'Client',
@@ -105,13 +117,13 @@
       countLabel: 'reflets écrits',
       submitLabel: 'Client suivant',
       cases: [
-        client('La rénovation', 'Une cliente, dans un showroom de carrelage, pour rénover sa maison', 'Ça fait trois fois qu’on a un coup de cœur pour un carrelage. À chaque fois, le temps de se décider, il n’est plus disponible.',
+        reflet('La rénovation', 'Une cliente, dans un showroom de carrelage, pour rénover sa maison', 'Ça fait trois fois qu’on a un coup de cœur pour un carrelage. À chaque fois, le temps de se décider, il n’est plus disponible.',
           'Vous avez l’impression de toujours arriver trop tard, et ça finit par être décourageant.', 'Votre reflet…',
           { image: 'assets/illustrations/dialogues/showroom-carrelage.webp', alt: 'Dans un showroom de matériaux, une cliente pensive écoute un vendeur qui lui montre des échantillons.' }),
-        client('L’automobiliste', 'Le client, chez son concessionnaire automobile', 'C’est la troisième fois que je reviens pour le même bruit. On me dit que c’est réglé, et deux jours après, ça recommence.',
+        reflet('L’automobiliste', 'Le client, chez son concessionnaire automobile', 'C’est la troisième fois que je reviens pour le même bruit. On me dit que c’est réglé, et deux jours après, ça recommence.',
           'Vous en avez assez de revenir pour rien, et vous avez le sentiment de ne pas être pris au sérieux.', 'Votre reflet…',
           { image: 'assets/illustrations/dialogues/concession-automobile.webp', alt: 'Chez un concessionnaire, un client pensif écoute une conseillère qui consulte sa tablette.' }),
-        client('La responsable', 'La responsable des ressources humaines d’une entreprise', 'J’ai déjà payé deux formations l’an dernier, et mes équipes n’en ont rien retiré.',
+        reflet('La responsable', 'La responsable des ressources humaines d’une entreprise', 'J’ai déjà payé deux formations l’an dernier, et mes équipes n’en ont rien retiré.',
           'Vous êtes déçue par ces deux formations, et vous craignez de dépenser encore pour rien.', 'Votre reflet…',
           { image: 'assets/illustrations/dialogues/entretien-rh.webp', alt: 'Dans un bureau, deux femmes discutent autour d’une table, l’une tient une feuille à la main.' })
       ],
