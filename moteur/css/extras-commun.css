@@ -852,3 +852,14 @@ html { background-color: #fbf8f2; }
 #main .result-model.is-shown .result-model-body { overflow: visible; }
 #main .result-model.is-shown .result-model-body > p:first-child { margin-top: 0; }
 #main .result-model.is-shown p { color: var(--navy); font-size: 1rem; line-height: 1.5; }
+
+/* Fenêtres « Le contexte » / « À retenir » : pas de barre de défilement
+   visible (la molette fait défiler si le texte dépasse). Sur un écran peu
+   haut, l'espacement se resserre pour que tout tienne. */
+#info-dialog.is-context { scrollbar-width: none; -ms-overflow-style: none; }
+#info-dialog.is-context::-webkit-scrollbar { display: none; }
+@media (max-height: 760px) {
+  #info-dialog.is-context { padding-top: 24px; }
+  #info-dialog.is-context .k-context ul { gap: 10px; }
+  #info-dialog.is-context .k-context-go { margin-top: 12px; padding-bottom: 24px; }
+}
