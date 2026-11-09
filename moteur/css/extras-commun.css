@@ -832,3 +832,7 @@ html { background-color: #fbf8f2; }
 /* ── Compteur de l'en-tête (« 0 / 6 réponses analysées ») : sur une
    pastille blanche, il reste lisible même posé sur le décor (taches, points). */
 #main .k-head-aside .k-count { display: inline-block; padding: 6px 14px; border-radius: 999px; background: rgb(255 255 255 / 88%); box-shadow: 0 6px 16px rgb(20 40 100 / 10%); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); line-height: 1.3; }
+/* L'en-tête qui porte ces boutons et le compteur laisse de l'air avant
+   l'exercice (onglets, consigne) : ils ne doivent pas sembler en faire partie. */
+#main .k-head:has(.k-head-aside :is(.tour-replay, .k-context-open, .k-count)) { margin-bottom: 14px; }
+#main .k-head-aside:has(.k-context-open) { row-gap: 10px; }
