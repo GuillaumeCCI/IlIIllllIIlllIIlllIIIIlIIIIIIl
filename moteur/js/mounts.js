@@ -152,6 +152,12 @@
         return `<figure class="sc-picture has-bubbles"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async">
           <ol class="sc-talk ${typing ? 'is-typing' : ''}" ${typing ? 'data-tw="1"' : ''}>${block.bubbles.map((b, j) => `<li class="sc-talk-line is-${b.side === 'right' ? 'right' : 'left'} ${b.who === 'seller' ? 'is-seller' : ''} ${typing && TYPED.has(keys[j]) ? 'is-on is-still' : ''}" data-tw-line="${esc(keys[j])}"><small>${esc(b.label || '')}</small><span class="sc-talk-text">«&nbsp;${esc(b.text)}&nbsp;»</span></li>`).join('')}</ol></figure>`;
       }
+      if (block.image && block.say) {
+        // La réplique du client posée en bas de l'image, sur un dégradé
+        // sombre (comme les scènes de 1-1-1) : on lit la scène et la phrase d'un seul regard.
+        return `<figure class="sc-picture has-say"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async" style="object-position:${esc(block.position || 'top')}">
+          <figcaption class="sc-say">${block.sayLabel ? `<small>${esc(block.sayLabel)}</small>` : ''}<span class="sc-say-text"><span class="sc-say-mark" aria-hidden="true">“</span>${esc(block.say)}<span class="sc-say-mark" aria-hidden="true">”</span></span></figcaption></figure>`;
+      }
       if (block.image) {
         return `<figure class="sc-picture ${block.wide ? 'is-wide' : ''}"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async" style="object-position:${esc(block.position || 'center')}">
           ${block.bubble ? `<p class="sc-bubble">« ${esc(block.bubble)} »</p>` : ''}

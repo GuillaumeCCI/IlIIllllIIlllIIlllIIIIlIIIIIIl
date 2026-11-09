@@ -665,3 +665,13 @@ button.crash-passage:hover { background: #fff1d6; }
    soulevé et blanc (on est dessus), la coche dit qu'il est terminé. */
 #main .fm-tab.is-done.is-current .fm-tab-n { background: var(--ok); color: #fff; }
 .fm-stepper li.is-done.is-current .fm-stepper-dot { background: var(--ok); color: #fff; box-shadow: 0 0 0 5px var(--ok-soft); }
+
+/* ── La réplique posée sur l'image (bloc { image, say, sayLabel }) ───────
+   En bas de l'image, texte blanc sur un dégradé bleu nuit qui monte du
+   bord : même allure que les scènes de l'atelier 1-1-1. */
+.sc-picture.has-say img { max-height: none; aspect-ratio: 4 / 3; }
+.sc-say { position: absolute; inset: auto 0 0; padding: 110px 26px 20px; background: linear-gradient(rgb(16 22 60 / 0%), rgb(16 22 60 / 72%) 34%, rgb(16 22 60 / 90%)); color: #fff; }
+.sc-say small { display: block; margin-bottom: 8px; font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 1px 6px rgb(16 22 60 / 60%); }
+.sc-say-text { display: block; font-size: clamp(1.05rem, 1.45vw, 1.3rem); font-style: italic; font-weight: 600; line-height: 1.38; text-shadow: 0 1px 8px rgb(16 22 60 / 40%); }
+.sc-say-mark { font-family: Georgia, serif; font-style: normal; font-size: 1.5em; line-height: 0; opacity: .75; vertical-align: -.25em; margin: 0 .08em; }
+#main .sc-picture.has-say figcaption { background: linear-gradient(rgb(16 22 60 / 0%), rgb(16 22 60 / 72%) 34%, rgb(16 22 60 / 90%)); color: #fff; font-weight: 400; }

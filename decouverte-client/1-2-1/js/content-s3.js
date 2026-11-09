@@ -16,9 +16,12 @@
   const client = (tab, speaker, quote, model, placeholder, portrait) => ({
     tab,
     // Une scène illustrée ({ image, alt }) remplace le portrait : elle s'affiche en grand, au-dessus de la réplique.
+    // La réplique est alors posée sur l'image (dégradé derrière le texte) ;
+    // le corrigé la garde en carte de citation.
     scene: portrait && portrait.image
-      ? [{ image: portrait.image, alt: portrait.alt }, { quote, speaker, portrait: false }]
+      ? [{ image: portrait.image, alt: portrait.alt, say: quote, sayLabel: speaker }]
       : { quote, speaker, portrait },
+    ...(portrait && portrait.image ? { reviewScene: [{ quote, speaker, portrait: false }] } : {}),
     fields: [{ id: 'text', label: 'Votre reformulation', sub: 'Écrivez ce que vous diriez au client, mot pour mot.', placeholder, rows: 3, model }]
   });
 
