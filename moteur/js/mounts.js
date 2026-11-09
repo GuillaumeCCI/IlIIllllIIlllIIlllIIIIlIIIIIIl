@@ -83,25 +83,27 @@
    * est déjà dans la page (invisible tant qu'il n'est pas « tapé ») : la bulle
    * garde sa taille et un lecteur d'écran lit tout. Un échange ne s'écrit
    * qu'une fois ; redessiné ensuite (un choix, un retour), il s'affiche entier. */
+  // Retenu bulle par bulle : changer de réponse ne réécrit que la bulle
+  // nouvelle ; celle qui ne change pas (le client) reste affichée telle quelle.
   const TYPED = new Set();
+  const lineKey = (image, b) => `${image}|${b.who || ''}|${b.text}`;
   const noTyping = () => root.__noTypewriter || (root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches);
   function typeBubbles() {
     if (!root.document) return;
     // Une fenêtre (le contexte) ou la visite guidée cache l'écran : on attend.
     if (root.document.querySelector('dialog[open], .tour')) { root.setTimeout(typeBubbles, 300); return; }
     root.document.querySelectorAll('.sc-talk[data-tw]').forEach(list => {
-      const key = list.dataset.tw;
       list.removeAttribute('data-tw');
-      if (TYPED.has(key) || noTyping()) { list.classList.remove('is-typing'); return; }
-      // Retenu dès le début : un clic pendant la frappe redessine l'écran,
-      // et l'échange doit alors s'afficher entier, pas repartir de zéro.
-      TYPED.add(key);
-      const lines = [...list.querySelectorAll('.sc-talk-line')];
+      const lines = [...list.querySelectorAll('.sc-talk-line:not(.is-still)')].filter(line => !TYPED.has(line.dataset.twLine));
+      if (!lines.length || noTyping()) { lines.forEach(line => TYPED.add(line.dataset.twLine)); list.classList.remove('is-typing'); return; }
       let at = 0;
       const next = () => {
         if (!list.isConnected) return;
         if (at >= lines.length) { list.classList.remove('is-typing'); return; }
         const line = lines[at++];
+        // Retenue dès qu'elle commence : un clic pendant la frappe redessine
+        // l'écran, et la bulle doit alors s'afficher entière.
+        TYPED.add(line.dataset.twLine);
         const span = line.querySelector('.sc-talk-text');
         const full = span.textContent;
         line.classList.add('is-on');
@@ -142,11 +144,13 @@
         // Un échange court posé sur l'image : chaque réplique dans une bulle,
         // du côté de celui qui parle (side), l'une sous l'autre dans l'ordre
         // où elles sont dites. Sur un écran étroit, les bulles passent sous l'image.
-        const key = `${block.image}|${block.bubbles.map(b => b.text).join('|')}`;
-        const typing = !TYPED.has(key) && !noTyping();
+        // Une bulle déjà écrite (même image, même personne, même texte)
+        // reste en place, sans animation ; seules les nouvelles s'écrivent.
+        const keys = block.bubbles.map(b => lineKey(block.image, b));
+        const typing = keys.some(k => !TYPED.has(k)) && !noTyping();
         if (typing) root.setTimeout(typeBubbles, 60);
         return `<figure class="sc-picture has-bubbles"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async">
-          <ol class="sc-talk ${typing ? 'is-typing' : ''}" ${typing ? `data-tw="${esc(key)}"` : ''}>${block.bubbles.map(b => `<li class="sc-talk-line is-${b.side === 'right' ? 'right' : 'left'} ${b.who === 'seller' ? 'is-seller' : ''}"><small>${esc(b.label || '')}</small><span class="sc-talk-text">«&nbsp;${esc(b.text)}&nbsp;»</span></li>`).join('')}</ol></figure>`;
+          <ol class="sc-talk ${typing ? 'is-typing' : ''}" ${typing ? 'data-tw="1"' : ''}>${block.bubbles.map((b, j) => `<li class="sc-talk-line is-${b.side === 'right' ? 'right' : 'left'} ${b.who === 'seller' ? 'is-seller' : ''} ${typing && TYPED.has(keys[j]) ? 'is-on is-still' : ''}" data-tw-line="${esc(keys[j])}"><small>${esc(b.label || '')}</small><span class="sc-talk-text">«&nbsp;${esc(b.text)}&nbsp;»</span></li>`).join('')}</ol></figure>`;
       }
       if (block.image) {
         return `<figure class="sc-picture ${block.wide ? 'is-wide' : ''}"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async" style="object-position:${esc(block.position || 'center')}">
