@@ -54,7 +54,8 @@
   };
   const tour = [
     { target: '.fm-scene', title: 'L’échange', text: 'Lisez ce que dit le client, puis la réponse du vendeur.' },
-    { target: '.fm-main .fm-field', title: '1. L’attitude', text: 'Cliquez sur l’attitude qui correspond à cette réponse.' },
+    // « Cette réponse » : la réplique du vendeur s'éclaire avec les attitudes.
+    { target: '.fm-main .fm-field', also: '.fm-scene .sc-talk-line.is-seller, .fm-scene .sc-line.is-seller', title: '1. L’attitude', text: 'Cliquez sur l’attitude qui correspond à cette réponse.' },
     { target: '.fm-actions', title: '2. L’effet', text: 'Ensuite, vous choisirez son effet sur le client.' },
     { target: '.fm-tabs', title: 'Six réponses', text: 'Le corrigé arrive après la dernière.' }
   ];
@@ -204,7 +205,7 @@
   // Le nom de celui qui répond, dans les messages (« Commercial 2 : faites un choix »).
   const NOUNS = { '2.1': ['Vendeur', 'vendeurs'], '2.2': ['Commercial', 'commerciaux'], '2.3': ['Agent', 'agents'] };
   // Le côté de l'image où se tient le client (le vendeur est de l'autre côté).
-  const CLIENT_SIDE = { '2.1': 'right', '2.2': 'left', '2.3': 'left' };
+  const CLIENT_SIDE = { '2.1': 'left', '2.2': 'left', '2.3': 'left' };
   for (const [id, exercise] of Object.entries(S2)) {
     const [noun, plural] = NOUNS[id];
     exercise.caseNoun = noun;

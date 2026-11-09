@@ -577,6 +577,12 @@ body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; 
    Tout s'assombrit sauf la zone présentée ; une bulle blanche l'explique. */
 .tour { position: fixed; inset: 0; z-index: 1000; }
 .tour-hole { position: fixed; border-radius: 18px; box-shadow: 0 0 0 9999px rgb(11 19 50 / 62%), 0 0 0 3px #fff inset; pointer-events: none; transition: left .3s, top .3s, width .3s, height .3s; }
+/* Deux zones éclairées (option `also`) : le voile, percé de deux trous,
+   assombrit le reste ; chaque trou garde son liseré blanc. */
+.tour-veil, .tour-hole.is-also { display: none; }
+.tour.has-also .tour-veil { display: block; position: fixed; inset: 0; background: rgb(11 19 50 / 62%); pointer-events: none; }
+.tour.has-also .tour-hole { box-shadow: 0 0 0 3px #fff inset; transition: none; }
+.tour.has-also .tour-hole.is-also { display: block; }
 .tour-card { position: fixed; width: min(360px, calc(100vw - 24px)); padding: 20px 22px 18px; border-radius: 18px; background: #fff; color: var(--navy); box-shadow: 0 20px 50px rgb(11 19 50 / 30%); transition: left .3s, top .3s; }
 .tour-card:focus { outline: none; }
 .tour-count { margin: 0 0 6px; color: var(--accent); font-size: .8rem; font-weight: 800; letter-spacing: .08em; }

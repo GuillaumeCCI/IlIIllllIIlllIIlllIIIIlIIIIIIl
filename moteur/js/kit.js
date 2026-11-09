@@ -833,12 +833,14 @@
     try { root.localStorage.setItem(key, '1'); } catch {}
     const layer = doc.createElement('div');
     layer.className = 'tour';
-    layer.innerHTML = `<div class="tour-hole"></div><div class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tour-title" tabindex="-1"></div>`;
+    layer.innerHTML = `<div class="tour-veil"></div><div class="tour-hole"></div><div class="tour-hole is-also"></div><div class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tour-title" tabindex="-1"></div>`;
     doc.body.appendChild(layer);
     // Une zone collée au bas de la page (la barre des boutons) reçoit juste
     // la marge qu'il faut pour ne pas toucher le bord de l'écran.
     const padding = doc.body.style.paddingBottom;
     const hole = layer.querySelector('.tour-hole');
+    const alsoHole = layer.querySelector('.tour-hole.is-also');
+    const veil = layer.querySelector('.tour-veil');
     const card = layer.querySelector('.tour-card');
     let at = 0;
     // Une barre de boutons ne garde que ses boutons et ses textes : le
@@ -863,22 +865,46 @@
       const right = Math.max(...rects.map(r => r.right)), bottom = Math.max(...rects.map(r => r.bottom));
       return { left, top, right, bottom, width: right - left, height: bottom - top };
     };
+    // Le contour arrondi d'une zone, pour le voile percé (clip-path).
+    const RADIUS = 18;
+    const roundRect = (x, y, w, h) => {
+      const q = Math.min(RADIUS, w / 2, h / 2);
+      return `M${x + q} ${y}H${x + w - q}A${q} ${q} 0 0 1 ${x + w} ${y + q}V${y + h - q}A${q} ${q} 0 0 1 ${x + w - q} ${y + h}H${x + q}A${q} ${q} 0 0 1 ${x} ${y + h - q}V${y + q}A${q} ${q} 0 0 1 ${x + q} ${y}Z`;
+    };
     const place = () => {
       const r = zone(steps[at].target);
       if (!r) return;
       const pad = 8;
-      Object.assign(hole.style, { left: `${r.left - pad}px`, top: `${r.top - pad}px`, width: `${r.width + 2 * pad}px`, height: `${r.height + 2 * pad}px` });
-      const vw = root.innerWidth, vh = root.innerHeight, cw = card.offsetWidth, ch = card.offsetHeight, gap = 20;
+      const box = z => ({ x: z.left - pad, y: z.top - pad, w: z.width + 2 * pad, h: z.height + 2 * pad });
+      const b = box(r);
+      Object.assign(hole.style, { left: `${b.x}px`, top: `${b.y}px`, width: `${b.w}px`, height: `${b.h}px` });
+      // `also` : une seconde zone éclairée en même temps (ex. la réplique dont
+      // parle la bulle). Le voile est alors percé de deux trous.
+      const extra = steps[at].also ? zone(steps[at].also) : null;
+      layer.classList.toggle('has-also', Boolean(extra));
+      const vw = root.innerWidth, vh = root.innerHeight;
+      if (extra) {
+        const e = box(extra);
+        Object.assign(alsoHole.style, { left: `${e.x}px`, top: `${e.y}px`, width: `${e.w}px`, height: `${e.h}px` });
+        veil.style.clipPath = `path(evenodd, "M0 0H${vw}V${vh}H0Z${roundRect(b.x, b.y, b.w, b.h)}${roundRect(e.x, e.y, e.w, e.h)}")`;
+      }
+      else veil.style.clipPath = '';
+      const cw = card.offsetWidth, ch = card.offsetHeight, gap = 20;
+      // La bulle ne doit couvrir aucune des zones éclairées.
+      const covers = (x, y) => [r, extra].some(z => z && x < z.right + pad && x + cw > z.left - pad && y < z.bottom + pad && y + ch > z.top - pad);
+      const fits = (x, y) => x >= 12 && y >= 12 && x + cw <= vw - 12 && y + ch <= vh - 12 && !covers(x, y);
       let x, y;
       // Bulle large : sous la zone si elle tient, sinon au-dessus, centrée sur la zone.
       if (steps[at].wide) {
         x = r.left + r.width / 2 - cw / 2;
         y = r.bottom + gap + ch < vh - 12 ? r.bottom + gap : r.top - gap - ch;
       }
-      else if (r.right + gap + cw < vw - 12) { x = r.right + gap; y = r.top; }
-      else if (r.left - gap - cw > 12) { x = r.left - gap - cw; y = r.top; }
-      else if (r.bottom + gap + ch < vh - 12) { x = r.left; y = r.bottom + gap; }
-      else { x = r.left; y = r.top - gap - ch; }
+      else {
+        const spots = [[r.right + gap, r.top], [r.left - gap - cw, r.top], [r.left, r.bottom + gap], [r.left, r.top - gap - ch]];
+        // Sans seconde zone, la règle d'avant : la première place qui tient dans l'écran.
+        const pick = extra ? spots.find(([sx, sy]) => fits(sx, Math.min(Math.max(12, sy), vh - ch - 12))) : null;
+        [x, y] = pick || (r.right + gap + cw < vw - 12 ? spots[0] : r.left - gap - cw > 12 ? spots[1] : r.bottom + gap + ch < vh - 12 ? spots[2] : spots[3]);
+      }
       card.style.left = `${Math.min(Math.max(12, x), vw - cw - 12)}px`;
       card.style.top = `${Math.min(Math.max(12, y), vh - ch - 12)}px`;
     };
