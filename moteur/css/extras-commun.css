@@ -863,3 +863,12 @@ html { background-color: #fbf8f2; }
   #info-dialog.is-context .k-context ul { gap: 10px; }
   #info-dialog.is-context .k-context-go { margin-top: 12px; padding-bottom: 24px; }
 }
+
+/* ── Compteur en barre de progression (mountForm) ───────────────────────
+   « Réponses jugées  3 / 8  ▬▬▬───── » : libellé discret, chiffre fort,
+   barre bleue qui se remplit. */
+#main .k-head-aside .k-count.is-progress { display: inline-flex; align-items: center; gap: 12px; padding: 7px 16px; white-space: nowrap; }
+#main .k-count.is-progress .k-progress-label { color: #56658a; font-size: .92rem; font-weight: 500; }
+#main .k-count.is-progress strong { color: var(--accent); font-size: 1.15rem; font-weight: 800; }
+#main .k-progress-bar { position: relative; display: block; width: clamp(110px, 10vw, 180px); height: 9px; border-radius: 999px; background: #e3e8f2; overflow: hidden; }
+#main .k-progress-bar i { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: var(--accent); transition: width .4s ease; }

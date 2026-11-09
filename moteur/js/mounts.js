@@ -600,6 +600,16 @@
       const fields = fieldsOf(0);
       return `<strong>${fields.filter(f => filledField(0, f)).length} / ${fields.length}</strong> ${esc(content.countLabel || 'étapes')}`;
     };
+    /* Le compteur de l'en-tête en barre de progression : « Réponses jugées
+     * 3 / 8 », puis une barre qui se remplit. (La frise d'étapes garde countLine.) */
+    const progressLine = () => {
+      const fields = n > 1 ? null : fieldsOf(0);
+      const done = n > 1 ? doneCount() : fields.filter(f => filledField(0, f)).length;
+      const total = n > 1 ? n : fields.length;
+      const label = String(content.countLabel || (n > 1 ? 'étapes complétées' : 'étapes'));
+      const pct = total ? Math.round(done / total * 100) : 0;
+      return `<span class="k-progress-label">${esc(label.charAt(0).toUpperCase() + label.slice(1))}</span><strong>${done} / ${total}</strong><span class="k-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}"><i style="width:${pct}%"></i></span>`;
+    };
     const reachable = i => !content.sequential || cases.slice(0, i).every((_, j) => complete(j));
     /* Les cas déjà ouverts (brouillon `seen`) : un onglet distingue « pas
      * encore vu », « vu, pas fini » et « répondu ». */
@@ -1008,7 +1018,7 @@
       if (!reviewing && at < n && !seenList().includes(at)) ex().setValue('seen', [...seenList(), at]);
       return `<div class="k-page fm-page ${content.className || ''}">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count" data-live="fm-count">${countLine()}</p>` : ''}${content.tour && !reviewing ? (introButton(content) || (at === SELF ? kit().contextButton() : '')) + kit().tourButton() : ''}` })}
+          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count is-progress" data-live="fm-progress">${progressLine()}</p>` : ''}${content.tour && !reviewing ? (introButton(content) || (at === SELF ? kit().contextButton() : '')) + kit().tourButton() : ''}` })}
         ${content.side && !reviewing && !content.stepper ? `<div class="k-panel fm-side">${scene(content.side)}</div>` : ''}
         ${reviewing ? reviewScreen() : `${tabs(at)}<form novalidate class="fm-form">${casePanel(at)}</form>`}
         ${reviewing ? '' : kit().utility(content.lock || 'Corrigé disponible après validation')}
@@ -1117,7 +1127,7 @@
     }
     kit().live(() => {
       const at = current();
-      const parts = { 'fm-count': countLine() };
+      const parts = { 'fm-count': countLine(), 'fm-progress': progressLine() };
       if (at === SELF) return parts;
       fieldsOf(at).filter(f => f.type === 'chips').forEach(f => { parts[`chips-${k(at, f)}`] = chipsLine(at, f); });
       return parts;
