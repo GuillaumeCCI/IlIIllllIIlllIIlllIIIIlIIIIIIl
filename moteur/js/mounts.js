@@ -131,7 +131,10 @@
   function scriptBlock(s) {
     const focus = new Set(s.focus || []);
     const gesture = text => esc(text).replace(/\[([^\]]+)\]/g, '<em class="sc-script-act">$1</em>');
+    // Tout de suite, puis une fois l'animation de changement d'étape finie.
     root.setTimeout(scrollScripts, 40);
+    root.setTimeout(scrollScripts, 450);
+    root.setTimeout(scrollScripts, 950);
     return `<section class="sc-script">${s.title ? `<p class="sc-script-title">${esc(s.title)}</p>` : ''}${s.intro ? `<p class="sc-script-intro">${esc(s.intro)}</p>` : ''}
       <ol class="sc-script-list" ${focus.size ? 'data-focus="1"' : ''}>${s.lines.map((line, i) => `<li class="sc-script-line ${line.who === 'seller' ? 'is-seller' : 'is-client'} ${focus.has(i) ? 'is-focus' : ''} ${s.until != null && i > s.until ? 'is-dim' : ''}">
         <span class="sc-script-who">${esc(line.label || '')}</span><p>${gesture(line.text)}</p></li>`).join('')}</ol></section>`;
@@ -143,7 +146,8 @@
       const first = list.querySelector('.is-focus');
       if (!first) return;
       // La liste est positionnée (CSS) : offsetTop se mesure depuis son haut.
-      list.scrollTop = Math.max(0, first.offsetTop - (list.clientHeight - first.offsetHeight) / 2);
+      const top = Math.max(0, first.offsetTop - (list.clientHeight - first.offsetHeight) / 2);
+      if (Math.abs(list.scrollTop - top) > 2) list.scrollTo({ top, behavior: 'instant' });
     });
   }
 
@@ -608,6 +612,8 @@
   function mountForm(key, content) {
     const cases = content.cases;
     const n = cases.length;
+    // Onglets en pastilles : remplacés par la barre de progression à flèches (navLine).
+    const navBar = !!content.pills && n > 1 && !content.stepper;
     const fieldsOf = i => (cases[i].fields || content.fields || []).map(f => Object.assign({}, f, {
       answer: (cases[i].answers || {})[f.id] ?? f.answer,
       model: (cases[i].models || {})[f.id] ?? f.model
@@ -634,9 +640,31 @@
       const done = n > 1 ? doneCount() : fields.filter(f => filledField(0, f)).length;
       const total = n > 1 ? n : fields.length;
       const label = String(content.countLabel || (n > 1 ? 'étapes complétées' : 'étapes'));
+      const head = `<span class="k-progress-label">${esc(label.charAt(0).toUpperCase() + label.slice(1))}</span><strong>${done} / ${total}</strong>`;
+      if (navBar) return navLine(head);
       const pct = total ? Math.round(done / total * 100) : 0;
-      return `<span class="k-progress-label">${esc(label.charAt(0).toUpperCase() + label.slice(1))}</span><strong>${done} / ${total}</strong><span class="k-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}"><i style="width:${pct}%"></i></span>`;
+      return `${head}<span class="k-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}"><i style="width:${pct}%"></i></span>`;
     };
+    /* LA BARRE QUI REMPLACE LES ONGLETS (content.pills) : un segment par cas,
+     * cliquable (bleu plein : répondu ; bleu clair : vu ; gris : pas encore
+     * vu ; le cas ouvert est marqué), et deux flèches pour passer au cas
+     * précédent ou suivant. Après le dernier cas, la flèche mène à
+     * l'auto-évaluation quand elle est ouverte. */
+    function navLine(head) {
+      const at = current();
+      const last = selfOn && doneCount() === n ? SELF : n - 1;
+      const go = (i, dir) => {
+        const ok = i >= 0 && i <= last && (i === SELF || reachable(i));
+        const name = i === SELF ? 'Auto-évaluation' : ok ? cases[i].tab : '';
+        return `<button type="button" class="k-progress-arrow" data-act="fm-case" data-index="${i}" ${ok ? '' : 'disabled'} aria-label="${dir === 'prev' ? 'Précédent' : 'Suivant'}${name ? ` : ${esc(name)}` : ''}" title="${esc(name)}">${icon(dir === 'prev' ? 'arrowLeft' : 'arrowRight', { size: 18 })}</button>`;
+      };
+      const segs = cases.map((c, i) => {
+        const state = complete(i) ? 'is-done' : seen(i) ? 'is-seen' : '';
+        return `<button type="button" class="k-progress-seg ${state} ${i === at ? 'is-current' : ''}" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === at ? 'aria-current="step"' : ''} aria-label="${esc(c.tab)} · ${tabLabel(i, at)}" title="${esc(c.tab)}"></button>`;
+      }).join('');
+      const selfSeg = selfOn ? `<button type="button" class="k-progress-seg is-self ${at === SELF ? 'is-current' : ''}" data-act="fm-case" data-index="${SELF}" ${doneCount() === n ? '' : 'disabled'} aria-label="Auto-évaluation" title="Auto-évaluation"></button>` : '';
+      return `${go(at === SELF ? n - 1 : at - 1, 'prev')}${head}<span class="k-progress-segs" role="group" aria-label="Étapes">${segs}${selfSeg}</span>${go(at === SELF ? SELF + 1 : at + 1, 'next')}`;
+    }
     const reachable = i => !content.sequential || cases.slice(0, i).every((_, j) => complete(j));
     /* Les cas déjà ouverts (brouillon `seen`) : un onglet distingue « pas
      * encore vu », « vu, pas fini » et « répondu ». */
@@ -669,7 +697,7 @@
     }
 
     function tabs(at) {
-      if (n < 2 || content.stepper) return '';
+      if (n < 2 || content.stepper || navBar) return '';
       return `<div class="fm-tabs count-${n} ${content.sequential ? 'is-steps' : ''} ${content.pills ? 'is-pills' : ''}">${cases.map((c, i) => `<button type="button" class="fm-tab ${i === at ? 'is-current' : ''} ${tabState(i, at)}" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === at ? 'aria-current="step"' : ''} title="${tabLabel(i, at).replace(/^./, ch => ch.toUpperCase())}">
         <span class="fm-tab-n">${complete(i) ? icon('check', { size: 18 }) : content.sequential ? i + 1 : String(i + 1).padStart(2, '0')}</span><span class="fm-tab-text">${esc(c.tab)}${c.tabSub && !content.pills ? `<small>${esc(c.tabSub)}</small>` : ''}${c.tabNote && !content.pills ? `<small class="fm-tab-note">${esc(c.tabNote)}</small>` : ''}</span></button>`).join('<span class="fm-tab-line" aria-hidden="true"></span>')}${selfOn ? `
         <button type="button" class="fm-tab is-self ${at === SELF ? 'is-current' : ''}" data-act="fm-case" data-index="${SELF}" ${doneCount() === n ? '' : 'disabled'}>
@@ -1172,7 +1200,12 @@
       ['list', 'Ce qui vous est demandé', 'Relisez vos réponses. Pour chaque critère, répondez « Oui », « En partie » ou « Pas encore ».'],
       ['checkCircle', 'Ensuite', 'Le corrigé s’affiche, avec votre score.']
     ]);
-    if (content.tour) kit().tour(key, content.tour);
+    // Onglets en pastilles remplacés par la barre de progression à flèches :
+    // l'étape de visite qui présentait les onglets présente cette barre.
+    const tourSteps = content.tour && navBar
+      ? content.tour.map(step => (/\.fm-tabs\b/.test(step.target) ? Object.assign({}, step, { target: '.fm-count.is-progress', text: `${step.text} Passez de l’une à l’autre avec les flèches, ou en cliquant sur la barre.` }) : step))
+      : content.tour;
+    if (tourSteps) kit().tour(key, tourSteps);
     ex().mount(key, { screen, validate, intercept, feedback, compactFeedback: true });
   }
 
