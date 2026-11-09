@@ -165,7 +165,7 @@ html[data-embed="solo"] #main { padding-top: 20px; }
 
 #main .fix-tab:hover, #main .fm-tab:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgb(20 40 100 / 11%); }
 
-#main .fix-tab.is-current, #main .fm-tab.is-current { background: #fff; box-shadow: 0 12px 28px rgb(20 40 100 / 14%), inset 0 0 0 1.5px #c9d8fb; }
+#main .fix-tab.is-current, #main .fm-tab.is-current { background: #fff; box-shadow: 0 12px 28px rgb(20 40 100 / 14%); }
 
 #main .k-steps.is-compact { display: inline-flex; flex-wrap: nowrap; gap: 0; margin: 0; padding: 6px; border-radius: 14px; background: #f1f4fa; }
 
@@ -792,3 +792,29 @@ html { background-color: #fbf8f2; }
 /* Téléphone : les boutons Sons et Musique, fixés en haut à droite, ne recouvrent pas
    le titre de l’exercice (quand il n’y a pas d’étiquette au-dessus). */
 @media (max-width: 760px) { body:has(.sound-dock) #main { padding-top: 56px; } }
+
+/* ── SÉLECTION SANS CONTOUR, PARTOUT ────────────────────────────────────
+   Une carte, une option ou un onglet choisi ne prend plus de cadre épais
+   (bordure + anneau) : il se lit à son fond bleu pâle et, s'il en a un,
+   à son rond ou sa case remplis. Les états du corrigé (juste, faux,
+   attendu, figé) gardent leur propre style. Le liseré du clavier
+   (:focus-visible) reste, fin et clair. */
+#main :is(.fm-choice.is-chosen, .cmp-option.is-chosen, .cmp-option:has(input:checked), .check-choice.is-chosen, .check-option.is-chosen,
+  .say-option.is-chosen, .say-option:has(:checked), .ear-option.is-chosen, .ear-action.is-chosen, .six-choice.is-chosen, .nat-zone.is-chosen,
+  .dk-zone.is-chosen, .mt-zone.is-chosen, .sorter-choice.is-chosen, .ladder-card.is-selected, .pair-error.is-selected, .path-card.is-selected,
+  .cap-option:has(:checked), .soncas-motive:has(:checked), .verdict-item:has(:checked), .moment-option:has(:checked), .call-key:has(:checked),
+  .choice-group label:has(:checked), .fab-card.is-on, .soncas-arg.is-on, .cmp-criterion.is-on, .fm-chip.is-on, .tree-branch.is-active,
+  .radio-card.selected, .opening-card.selected):not(.is-static, .is-right, .is-wrong, .is-expected, .is-answer, .is-locked) {
+  border-color: transparent; background: #eaf0ff; box-shadow: 0 6px 18px rgb(20 40 100 / 7%);
+}
+/* Images posées sur la carte : le fond reste blanc, la teinte passe au liseré du bas. */
+#main .soncas-motive.has-picture:has(:checked):not(.is-static, .is-right, .is-wrong) { background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 7%), inset 0 -4px 0 #9db6f5; }
+/* Choix colorés par catégorie ou par outil : même principe, dans leur couleur. */
+#main .k-choice:is(:has(:checked), .is-chosen):not(.is-static, .is-right, .is-wrong) { border-color: transparent; background: color-mix(in srgb, currentColor 10%, #fff); box-shadow: 0 6px 18px rgb(20 40 100 / 7%); }
+#main .sw-tool.is-active { border-color: transparent; background: color-mix(in srgb, var(--sw) 12%, #fff); box-shadow: 0 6px 18px rgb(20 40 100 / 7%); }
+#main .hl-tool.is-active { border-color: transparent; background: #e4ecff; box-shadow: 0 6px 18px rgb(20 40 100 / 9%); }
+/* Onglets : l'onglet ouvert est soulevé et teinté, sans cadre. */
+#main :is(.k-tab, .fab-tab).is-active { border-color: transparent; background: #e9f0ff; box-shadow: 0 8px 20px rgb(20 40 100 / 10%); }
+#main .sorter-choice.is-chosen { border-width: 1.5px; }
+/* Clavier : un liseré fin et clair sur toutes les options. */
+#main :is(.fm-choice, .cmp-option, .check-choice, .check-option, .say-option, .ear-option, .ear-action, .six-choice, .sorter-choice, .ladder-card, .pair-error, .path-card, .fab-card, .soncas-arg, .k-tab, .fab-tab, .fm-tab, .fix-tab):focus-visible { outline: 2px solid #a9c0f6; outline-offset: 2px; }

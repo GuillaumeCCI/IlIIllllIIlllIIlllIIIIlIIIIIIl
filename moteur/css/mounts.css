@@ -621,14 +621,14 @@ button.crash-passage:hover { background: #fff1d6; }
    « vu, pas fini » : numéro cerclé de bleu ;
    « répondu » : pastille teintée de vert, coche blanche sur rond vert.
    L'onglet en cours garde son style (rond bleu plein). */
-#main .fm-tab.is-unseen { background: rgb(255 255 255 / 60%); box-shadow: inset 0 0 0 1.5px #dfe5f0; }
+#main .fm-tab.is-unseen { background: rgb(255 255 255 / 55%); box-shadow: none; }
 #main .fm-tab.is-unseen .fm-tab-n { background: #eef1f6; color: #7d8aa8; }
 #main .fm-tab.is-unseen .fm-tab-text { color: #56658a; }
 #main .fm-tab.is-seen .fm-tab-n { background: #fff; color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
-#main .fm-tab.is-done:not(.is-current) { background: #effaf4; box-shadow: 0 6px 18px rgb(20 40 100 / 7%), inset 0 0 0 1.5px #b9e2cc; }
+#main .fm-tab.is-done:not(.is-current) { background: #e9f7ef; box-shadow: 0 6px 18px rgb(20 40 100 / 7%); }
 #main .fm-tab.is-done:not(.is-current) .fm-tab-n { background: var(--ok); color: #fff; }
 #main .fm-tab.is-done:not(.is-current) .fm-tab-text { color: var(--ok); }
-#main .fm-tab.is-done.is-current { box-shadow: 0 12px 28px rgb(20 40 100 / 14%), inset 0 0 0 1.5px #9fd6b9; }
+#main .fm-tab.is-done.is-current { box-shadow: 0 12px 28px rgb(20 40 100 / 14%); }
 #main .fm-airy .fm-tab.is-unseen, #main .fm-airy .fm-tab.is-done:not(.is-current) { background: none; box-shadow: none; }
 .fm-stepper li.is-unseen .fm-stepper-dot { background: #eef1f6; color: #7d8aa8; }
 .fm-stepper li.is-seen .fm-stepper-dot { background: #fff; color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
