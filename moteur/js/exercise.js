@@ -1054,11 +1054,42 @@
     fitAll();
   }
 
+  /* LE CHOIX QUI SE POSE. Une carte de choix qu'on vient de sélectionner
+   * joue une courte animation (fond qui se pose, rond qui se remplit) :
+   * styles .k-just-chosen dans extras-commun.css. L'écran est souvent
+   * redessiné au clic : on retrouve alors la nouvelle carte par ses
+   * attributs (data-act, data-key, data-id…). Rien ne joue quand on
+   * désélectionne. */
+  const CHOICES = '.fm-choice, .fm-chip, .cmp-option, .cmp-criterion, .check-choice, .check-option, .say-option, .ear-option, .ear-action, .six-choice, .nat-zone, .dk-zone, .mt-zone, .sorter-choice, .ladder-card, .pair-error, .path-card, .cap-option, .soncas-motive, .soncas-arg, .verdict-item, .moment-option, .call-key, .choice-group label, .fab-card, .tree-branch, .radio-card, .opening-card, .k-choice';
+  const CHOSEN = '.is-chosen, .is-selected, .is-on, .is-active, .selected, :has(:checked), [aria-checked="true"], [aria-pressed="true"]';
+  function wireChosen() {
+    let pending = 0;
+    document.addEventListener('click', event => {
+      const el = event.target.closest?.(CHOICES);
+      if (!el || !el.closest('#main') || el.matches('.is-static')) return;
+      const attrs = ['data-act', 'data-action', 'data-key', 'data-id', 'data-index', 'data-field', 'data-value', 'for']
+        .filter(name => el.hasAttribute(name))
+        .map(name => `[${name}="${CSS.escape(el.getAttribute(name))}"]`).join('');
+      const sel = attrs ? `#main .${CSS.escape(el.classList[0])}${attrs}` : '';
+      cancelAnimationFrame(pending);
+      pending = requestAnimationFrame(() => {
+        const card = el.isConnected ? el : sel ? $(sel) : null;
+        if (!card || !card.matches(CHOSEN)) return;
+        card.classList.remove('k-just-chosen');
+        void card.offsetWidth;
+        card.classList.add('k-just-chosen');
+        const off = e => { if (e.target === card && e.animationName === 'k-chosen-in') { card.classList.remove('k-just-chosen'); card.removeEventListener('animationend', off); } };
+        card.addEventListener('animationend', off);
+      });
+    }, true);
+  }
+
   /* ─────────────────────────── Branchements ─────────────────────────── */
 
   function wire() {
     wirePickers();
     wireAutoGrow();
+    wireChosen();
     document.addEventListener('input', event => {
       const input = event.target.closest('[data-field]');
       if (!input) return;

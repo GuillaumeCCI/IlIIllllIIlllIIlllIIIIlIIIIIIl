@@ -818,3 +818,13 @@ html { background-color: #fbf8f2; }
 #main .sorter-choice.is-chosen { border-width: 1.5px; }
 /* Clavier : un liseré fin et clair sur toutes les options. */
 #main :is(.fm-choice, .cmp-option, .check-choice, .check-option, .say-option, .ear-option, .ear-action, .six-choice, .sorter-choice, .ladder-card, .pair-error, .path-card, .fab-card, .soncas-arg, .k-tab, .fab-tab, .fm-tab, .fix-tab):focus-visible { outline: 2px solid #a9c0f6; outline-offset: 2px; }
+
+/* ── LE CHOIX QUI SE POSE (exercise.js, wireChosen) ─────────────────────
+   À la sélection, une seule fois : le fond bleu pâle arrive en fondu, la
+   carte s'enfonce à peine puis revient, le point du rond grandit depuis
+   le centre. Court (0,3 s) et sans rebond. */
+#main .k-just-chosen { animation: k-chosen-in .32s cubic-bezier(.2, .8, .3, 1); }
+@keyframes k-chosen-in { from { background-color: #fff; transform: scale(.985); } }
+#main .k-just-chosen :is(.fm-radio, .check-radio, .say-radio, .cmp-radio, .pair-radio, .duel-radio, .fm-tick, .cmp-tick, .call-key-box) { animation: k-chosen-dot .32s cubic-bezier(.2, .8, .3, 1); }
+@keyframes k-chosen-dot { from { box-shadow: inset 0 0 0 12px #fff; } }
+@media (prefers-reduced-motion: reduce) { #main .k-just-chosen, #main .k-just-chosen * { animation: none; } }
