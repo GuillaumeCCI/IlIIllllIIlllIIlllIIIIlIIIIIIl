@@ -93,12 +93,14 @@
       const key = list.dataset.tw;
       list.removeAttribute('data-tw');
       if (TYPED.has(key) || noTyping()) { list.classList.remove('is-typing'); return; }
+      // Retenu dès le début : un clic pendant la frappe redessine l'écran,
+      // et l'échange doit alors s'afficher entier, pas repartir de zéro.
+      TYPED.add(key);
       const lines = [...list.querySelectorAll('.sc-talk-line')];
       let at = 0;
       const next = () => {
         if (!list.isConnected) return;
-        // Vu en entier une fois : il ne s'écrira plus.
-        if (at >= lines.length) { TYPED.add(key); list.classList.remove('is-typing'); return; }
+        if (at >= lines.length) { list.classList.remove('is-typing'); return; }
         const line = lines[at++];
         const span = line.querySelector('.sc-talk-text');
         const full = span.textContent;
