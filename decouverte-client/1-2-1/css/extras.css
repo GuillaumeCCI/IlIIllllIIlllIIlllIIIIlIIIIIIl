@@ -467,15 +467,18 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-pips i.is-on { background: var(--tone); }
 @media (max-width: 960px) { .a4-recap-grid { grid-template-columns: 1fr; } }
 
-/* A4 : le classement au clic. Les commerciaux sur une ligne : ceux déjà
-   classés passent devant avec leur rang, les autres suivent, estompés. */
-.a4-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 6px; }
-.a4-chip { --tone: var(--accent); --tone-soft: #e8eefc; display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 5px; border: 1.5px dashed #c9d6f2; border-radius: 999px; background: #fff; font: inherit; color: var(--navy); cursor: var(--cursor-hand, pointer); transition: border-color .12s, background .12s; }
-.a4-chip:hover { border-color: var(--tone); }
-.a4-chip.tone-ines { --tone: #1d7a4b; --tone-soft: #e3f5ea; }
-.a4-chip.tone-hugo { --tone: #c4512f; --tone-soft: #fde9e3; }
-.a4-chip .a4-avatar { width: 26px; height: 26px; font-size: .78rem; background: var(--tone); opacity: .8; }
-.a4-chip-total { color: var(--muted); font-size: .82rem; }
-.a4-chip.is-placed { border: 1.5px solid transparent; background: var(--tone-soft); }
-.a4-chip-n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--tone); color: #fff; font-size: .85rem; font-weight: 800; }
-.a4-chips-help { margin: 0 0 22px; color: var(--muted); font-size: .85rem; }
+/* A4 : le classement, une liste déjà rangée d'après les notes ; deux
+   flèches par ligne pour changer l'ordre. */
+.a4-order-help { margin: 8px 0 10px; color: var(--muted); font-size: .9rem; }
+.a4-order { display: grid; gap: 8px; max-width: 520px; margin: 0 0 22px; padding: 0; list-style: none; }
+.a4-order-row { --tone: var(--accent); display: flex; align-items: center; gap: 10px; padding: 8px 8px 8px 10px; border-radius: 14px; background: #f7f9fe; color: var(--navy); }
+.a4-order-row.tone-ines { --tone: #1d7a4b; }
+.a4-order-row.tone-hugo { --tone: #c4512f; }
+.a4-order-n { width: 22px; text-align: center; font-weight: 800; color: var(--muted); }
+.a4-order-row .a4-avatar { width: 28px; height: 28px; font-size: .8rem; background: var(--tone); }
+.a4-order-total { color: var(--muted); font-size: .85rem; }
+.a4-order-moves { display: inline-flex; gap: 4px; margin-left: auto; }
+.a4-move { display: inline-grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--accent); cursor: var(--cursor-hand, pointer); }
+.a4-move.is-up .icon { transform: rotate(180deg); }
+.a4-move:hover:not(:disabled) { border-color: var(--accent); }
+.a4-move:disabled { opacity: .3; cursor: default; }

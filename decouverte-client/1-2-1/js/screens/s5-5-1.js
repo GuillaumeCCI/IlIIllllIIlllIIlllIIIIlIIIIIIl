@@ -20,23 +20,36 @@
   const max = nC * 2;
   const SELF = [{ id: '2', label: 'Oui' }, { id: '1', label: 'En partie' }, { id: '0', label: 'Pas encore' }];
 
-  /* LE CLASSEMENT AU CLIC : les trois commerciaux sur une ligne. Un clic
-   * classe le commercial au rang suivant (il passe devant, numéroté) ; un
-   * clic sur un commercial classé le retire, les suivants remontent. */
+  /* LE CLASSEMENT : la liste arrive déjà rangée d'après les notes de
+   * l'apprenant (à égalité, dans l'ordre de passage). Tant qu'il n'y touche
+   * pas, elle suit ses notes ; les flèches ↑ ↓ changent l'ordre, et il est
+   * alors gardé tel quel (`rankTouched`). */
   const avatar = s => `<span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span>`;
   const sellerOf = id => sellers.find(x => x.id === id);
-  function podium() {
-    const r = ranks().filter(Boolean);
-    const placed = r.map((id, i) => {
-      const s = sellerOf(id);
-      return `<button type="button" class="a4-chip is-placed tone-${esc(s.id)}" data-act="a4-unplace" data-index="${i}" data-field="rank${i}" aria-label="${i + 1}. ${esc(s.name)}, cliquer pour retirer du classement">
-        <span class="a4-chip-n">${i + 1}</span><strong>${esc(s.name)}</strong></button>`;
-    });
-    const rest = sellers.filter(s => !r.includes(s.id)).map(s => `<button type="button" class="a4-chip tone-${esc(s.id)}" data-act="a4-pick" data-id="${esc(s.id)}" ${r.length ? '' : `data-field="rank0"`}>
-        ${avatar(s)}<strong>${esc(s.name)}</strong><span class="a4-chip-total">${total(s)} / ${max}</span></button>`);
-    return `<div class="a4-chips">${[...placed, ...rest].join('')}</div>
-      <p class="a4-chips-help">${r.length === sellers.length ? 'Cliquez sur un commercial pour le retirer du classement.' : 'Cliquez du plus adapté au moins adapté.'}</p>`;
+  function autoRank() {
+    if (ex.value('rankTouched') === true && ranks().every(Boolean)) return;
+    const order = sellers.map((x, i) => ({ id: x.id, t: total(x) ?? 0, i })).sort((p, q) => q.t - p.t || p.i - q.i);
+    order.forEach((o, i) => ex.setValue(`rank${i}`, o.id));
   }
+  function podium() {
+    autoRank();
+    const r = ranks();
+    const rows = r.map((id, i) => {
+      const x = sellerOf(id);
+      return `<li class="a4-order-row tone-${esc(x.id)}" data-field="rank${i}">
+        <span class="a4-order-n">${i + 1}</span>${avatar(x)}<strong>${esc(x.name)}</strong><span class="a4-order-total">${total(x)} / ${max}</span>
+        <span class="a4-order-moves">
+          <button type="button" class="a4-move is-up" data-act="a4-move" data-index="${i}" data-dir="-1" ${i === 0 ? 'disabled' : ''} aria-label="Monter ${esc(x.name)}">${kit.icon('arrowDown', { size: 16 })}</button>
+          <button type="button" class="a4-move" data-act="a4-move" data-index="${i}" data-dir="1" ${i === r.length - 1 ? 'disabled' : ''} aria-label="Descendre ${esc(x.name)}">${kit.icon('arrowDown', { size: 16 })}</button>
+        </span></li>`;
+    }).join('');
+    // Deux commerciaux voisins à égalité : c'est à l'apprenant de trancher.
+    const tie = r.find((id, i) => i && total(sellerOf(id)) === total(sellerOf(r[i - 1])));
+    const tieText = tie ? ` ${esc(sellerOf(r[r.indexOf(tie) - 1]).name)} et ${esc(sellerOf(tie).name)} sont à égalité : à vous de les départager.` : '';
+    return `<p class="a4-order-help">Votre classement, d’après vos notes. Modifiez l’ordre si besoin.${tieText}</p>
+      <ol class="a4-order">${rows}</ol>`;
+  }
+
 
 
 
@@ -219,15 +232,14 @@
   kit.on({
     'a4-go': control => go(Number(control.dataset.index)),
     'a4-prev': () => go(Math.max(0, at() - 1)),
-    'a4-pick': control => {
-      const free = ranks().findIndex(v => !v);
-      if (free === -1) return;
-      ex.setValue(`rank${free}`, control.dataset.id);
-      kit.commit();
-    },
-    'a4-unplace': control => {
-      const left = ranks().filter(Boolean).filter((_, i) => i !== Number(control.dataset.index));
-      sellers.forEach((_, i) => ex.setValue(`rank${i}`, left[i] || ''));
+    'a4-move': control => {
+      const r = ranks();
+      const i = Number(control.dataset.index);
+      const j = i + Number(control.dataset.dir);
+      if (j < 0 || j >= r.length) return;
+      [r[i], r[j]] = [r[j], r[i]];
+      r.forEach((id, k) => ex.setValue(`rank${k}`, id));
+      ex.setValue('rankTouched', true);
       kit.commit();
     }
   });
