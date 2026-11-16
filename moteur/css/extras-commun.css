@@ -906,3 +906,10 @@ html { background-color: #fbf8f2; }
 #main .form-errors > strong { display: none; }
 #main .form-errors ul { margin: 2px 0 0; padding: 0; list-style: none; line-height: 1.5; }
 #main .form-errors li + li { margin-top: 2px; }
+
+/* Les liens de retour du bas d'écran (« Revenir à… », « Changer de
+   client ») : posés sur une pastille blanche, ils restent lisibles même
+   quand le décor coloré du fond passe dessous (tous les modules). */
+#main .k-bar .k-back { padding: 8px 16px 8px 12px; border-radius: 999px; background: #fff; box-shadow: 0 4px 14px rgb(20 40 100 / 10%); color: var(--accent); text-decoration: none; }
+#main .k-bar .k-back:hover { background: #f3f6ff; }
+#main .k-bar .k-back span { text-decoration: underline; text-underline-offset: 3px; }
