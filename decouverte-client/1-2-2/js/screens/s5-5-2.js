@@ -206,7 +206,7 @@
         </dl>
         <p class="a5-rv-label d5-guide-label">Un exemple de guide</p>
         <p class="d5-guide-model">${esc(f.guide)}</p>
-        <p class="k-muted">${esc(content.note)}</p>
+        ${f.note ? `<p class="k-muted">${esc(f.note)}</p>` : ''}
       </section>
       <section class="k-panel a5-review">
         <p class="a4-review-head"><span class="k-label">Mon auto-évaluation</span><span class="a4-review-count"><b>${yes}</b> / ${content.selfCheck.length} critères cochés « Oui »</span></p>

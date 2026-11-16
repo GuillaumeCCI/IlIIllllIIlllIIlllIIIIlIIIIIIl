@@ -116,6 +116,7 @@
           id: 'literie',
           // Les réponses modèles de l'analyse (score estimatif).
           modelValues: { literie_implicite: 'Ne plus être réveillé par son épouse ; dormir pour être en sécurité au volant ; une taille compatible avec la chambre.', literie_prio: 'Des nuits complètes sans douleur au dos.' }, sector: 'Commerce', title: 'Magasin de literie', name: 'M. Garnier', portrait: 'client-tasse',
+          note: 'Le budget de M. Garnier est un sujet sensible. En découverte, on l’écoute et on le note ; on n’en débat pas.',
           profile: 'M. Garnier, 58 ans, revient au magasin. Il dort mal et a mal au dos.',
           context: 'Vous êtes vendeur dans un magasin de literie. M. Garnier, 58 ans, revient au magasin : il dort mal et a mal au dos.',
           topics: [
@@ -166,6 +167,7 @@
           id: 'mandat',
           // Les réponses modèles de l'analyse (score estimatif).
           modelValues: { mandat_implicite: 'Coordonner la vente et l’achat de l’appartement ; des visites filtrées ; associer ses enfants à la décision.', mandat_prio: 'Un calendrier coordonné : trouver l’appartement avant de vendre.' }, sector: 'Immobilier', title: 'Mandat de vente', name: 'Mme Duval', portrait: 'client-cheveux-gris',
+          note: 'L’estimation de Mme Duval (« au moins 320 000 € ») est un sujet sensible. En découverte, on l’écoute et on la note ; on n’en débat pas.',
           profile: 'Mme Duval, 74 ans, veut vendre la maison familiale.',
           context: 'Vous êtes conseiller immobilier. Mme Duval, 74 ans, vous reçoit : elle veut vendre la maison familiale.',
           topics: [
@@ -208,7 +210,7 @@
       ],
 
       deposit: 'Déposez sur la plateforme votre guide et votre analyse. Votre tuteur (ou un pair) vous fera un retour avec la même grille.',
-      note: 'L’estimation de Mme Duval (« au moins 320 000 € ») et le budget de M. Garnier sont des sujets sensibles. En découverte, on les écoute et on les note ; on n’en débat pas.'
+      note: ''
     }
   };
 })(globalThis);
