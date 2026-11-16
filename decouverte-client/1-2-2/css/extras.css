@@ -1083,3 +1083,21 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
   body[data-exercise="s5-5-1"] #main .a4-page:has(.a4-note-grid) > .a4-form > .form-errors { grid-column: 2; grid-row: 4; }
 }
 #main .a4-guide-intro { margin: 2px 0 10px; color: #5b6a8f; font-size: .95rem; }
+
+/* 5.1, réécriture : moins chargé. Chaque question de Yanis dans une bulle
+   teintée à gauche, la réécriture à côté ; champs plus bas ; auto-évaluation
+   en simple ligne. */
+#main .a4-rank-write .a4-rewrite { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: center; gap: 16px; margin-top: 14px; }
+#main .a4-rank-write .a4-rewrite-from { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 10px; margin: 0; padding: 12px 14px; border-radius: 14px; background: #fdf0ec; color: #5a2a1c; font-size: .98rem; line-height: 1.35; }
+#main .a4-rank-write .a4-rewrite-from::before { content: 'Yanis a écrit'; grid-column: 2; grid-row: 1; margin-bottom: 2px; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #c4512f; }
+#main .a4-rank-write .a4-rewrite-from .a4-guide-n { grid-row: 1 / span 2; background: #fff; color: #c4512f; }
+#main .a4-rank-write .a4-rewrite textarea { min-height: 64px; }
+#main .a4-rank-write .a4-self { margin-top: 22px; padding: 16px 0 0; border: 0; border-top: 1px solid #edf0f6; border-radius: 0; background: none; }
+@media (max-width: 900px) { #main .a4-rank-write .a4-rewrite { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+
+/* Échanges (4.2) : les clients à gauche, la conseillère à droite, comme une
+   conversation ; la bulle de la conseillère s'aligne à droite. */
+#main .sc-dialogue .sc-line.is-seller { grid-template-columns: minmax(0, 1fr) 82px; }
+#main .sc-dialogue .sc-line.is-seller > .sc-avatar { grid-column: 2; grid-row: 1; }
+#main .sc-dialogue .sc-line.is-seller > p { grid-column: 1; grid-row: 1; justify-self: end; margin-left: 48px; }
+#main .sc-dialogue .sc-line:not(.is-seller) > p { justify-self: start; margin-right: 48px; }
