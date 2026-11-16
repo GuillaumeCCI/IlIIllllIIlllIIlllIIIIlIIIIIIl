@@ -95,9 +95,16 @@
   const totalLine = s => `Total : <strong>${total(s) === null ? '–' : total(s)} / ${max}</strong>`;
 
   function rankStep() {
+    /* Le rappel de l'échange : la réplique de la cliente, puis les trois
+     * réponses côte à côte, chacune avec la note donnée, critère par critère. */
     return `<section class="k-panel a4-recap">
-        <p class="k-label">Vos notes</p>
-        <ul class="a4-totals">${sellers.map(s => `<li><span>${esc(s.name)}</span><strong>${total(s)} / ${max}</strong></li>`).join('')}</ul>
+        <p class="k-label">Les trois réponses, avec vos notes</p>
+        <p class="a4-recap-client"><strong>${esc(content.client.name)}</strong> « ${esc(content.client.quote)} »</p>
+        <div class="a4-recap-grid">${sellers.map(s => `<article class="a4-recap-card tone-${esc(s.id)}">
+          <header><span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span><strong>${esc(s.name)}</strong><span class="a4-recap-total">${total(s)} / ${max}</span></header>
+          <p class="a4-recap-text">« ${said(s.text)} »</p>
+          <ul class="a4-recap-notes">${criteria.map((c, i) => `<li><span>${esc(c.title)}</span><strong>${esc(note(s, i))}</strong></li>`).join('')}</ul>
+        </article>`).join('')}</div>
       </section>
       <section class="k-panel a4-rank">
         <p class="k-label">Classez-les, du plus adapté au moins adapté</p>

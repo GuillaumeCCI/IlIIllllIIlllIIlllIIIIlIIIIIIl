@@ -446,3 +446,22 @@
 blockquote.is-typing { cursor: pointer; }
 blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 0 0 var(--accent); animation: a4-caret .7s steps(1) infinite; }
 @keyframes a4-caret { 50% { box-shadow: 2px 0 0 0 transparent; } }
+
+/* A4, étape du classement : le rappel de l'échange. La réplique de la
+   cliente, puis les trois réponses côte à côte, avec la note donnée. */
+.a4-recap-client { margin: 6px 0 14px; color: var(--muted); }
+.a4-recap-client strong { color: var(--navy); margin-right: 4px; }
+.a4-recap-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.a4-recap-card { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: 16px; background: #fff; box-shadow: 0 10px 28px rgb(15 35 78 / 8%); border-top: 4px solid var(--accent); }
+.a4-recap-card.tone-ines { border-top-color: #1d7a4b; }
+.a4-recap-card.tone-hugo { border-top-color: #c4512f; }
+.a4-recap-card header { display: flex; align-items: center; gap: 10px; color: var(--navy); }
+.a4-recap-card .a4-avatar { width: 32px; height: 32px; font-size: .9rem; }
+.a4-recap-card.tone-ines .a4-avatar { background: #1d7a4b; }
+.a4-recap-card.tone-hugo .a4-avatar { background: #c4512f; }
+.a4-recap-total { margin-left: auto; padding: 3px 10px; border-radius: 999px; background: var(--tint); color: var(--accent); font-weight: 800; font-size: .9rem; }
+.a4-recap-text { flex: 1; margin: 0; color: var(--navy); font-weight: 600; line-height: 1.5; font-size: .95rem; }
+.a4-recap-notes { display: grid; gap: 4px; margin: 0; padding: 10px 0 0; border-top: 1px solid var(--line); list-style: none; font-size: .85rem; color: var(--muted); }
+.a4-recap-notes li { display: flex; justify-content: space-between; gap: 8px; }
+.a4-recap-notes strong { color: var(--navy); }
+@media (max-width: 960px) { .a4-recap-grid { grid-template-columns: 1fr; } }
