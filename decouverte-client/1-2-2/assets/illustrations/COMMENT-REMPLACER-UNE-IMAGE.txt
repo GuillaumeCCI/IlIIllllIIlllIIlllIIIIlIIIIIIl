@@ -1,0 +1,90 @@
+REMPLACER UNE ILLUSTRATION
+==========================
+
+1. Exportez votre nouvelle image au format PNG.
+2. Renommez-la EXACTEMENT comme le fichier a remplacer (meme casse).
+3. Glissez-la dans le sous-dossier indique et acceptez le remplacement.
+4. Actualisez la page (Ctrl+F5 sous Windows, Cmd+Maj+R sous macOS).
+
+Aucun fichier de code n'est a modifier tant que vous gardez le nom.
+Ajouter une image sous un autre nom ne remplace pas l'ancienne.
+Renommer un JPG en .png ne le convertit pas : exportez vraiment en PNG.
+
+Pour un autre nom, un autre format (.jpg, .webp) ou un nouveau texte
+alternatif : modifiez l'entree de l'exercice dans js/catalog.js.
+
+── ANNONCER LE PRIX ──────────────────────────────────────────────
+
+  1.1 · L’art d’annoncer le prix  (aucune illustration)  
+  1.2 · La méthode sandwich       (aucune illustration)  
+  1.4 · Le prix arrive trop tôt   (aucune illustration)  
+  1.5 · Le duel des annonces      (aucune illustration)  
+  1.7 · Ma banque d’annonces      (aucune illustration)  
+
+── DÉFENDRE LE PRIX ──────────────────────────────────────────────
+
+  2.1 · Défendre son prix sans le brader  (aucune illustration)   
+  2.2 · Quel levier dans cette réponse ?  (aucune illustration)   
+  2.3 · Le prix, remis à l’échelle        s2/1-1-4-S2-i2-3-A.png  Offre 1 : siège ergonomique à 690 €, soit environ 0,38 € par jour sur 5 ans.
+                                          s2/1-1-4-S2-i2-3-B.png  Offre 2 : pack de 10 postes à 17 000 €, soit 1 700 € par poste.
+  2.4 · Quatre faux pas face au prix      (aucune illustration)   
+  2.5 · Deux réponses, laquelle tient ?   (aucune illustration)   
+  2.6 · Ton kit de défense du prix        (aucune illustration)   
+  2.7 · Défendre la valeur                (aucune illustration)   
+
+── CONCLURE LA VENTE ─────────────────────────────────────────────
+
+  3.1 · Attrape le bon signal !             (aucune illustration)   
+  3.2 · À chaque conclusion, sa réplique    (aucune illustration)   
+  3.3 · À vous de conclure !                s3/1-1-4-S3-i3-3-A.png  Une cliente demande si la livraison est possible avant la fin du mois.
+                                            s3/1-1-4-S3-i3-3-B.png  Un client compare deux implantations de bureaux.
+                                            s3/1-1-4-S3-i3-3-C.png  Le client et le commercial se serrent la main.
+  3.4 · Le signal qui méritait une réponse  (aucune illustration)   
+  3.5 · Comparer deux façons de conclure    s3/1-1-4-S3-i3-5.png    Dans une boutique, un client demande quand il pourrait démarrer.
+  3.6 · Conduire la fin du rendez-vous      s3/1-1-4-S3-i3-6.png    Le client demande si les 10 postes pourraient être installés avant la fin du mois.
+  3.7 · Construire sa boîte à conclusions   (aucune illustration)   
+
+── RELANCER ──────────────────────────────────────────────────────
+
+  4.1 · Le Vrai / Faux de la relance  (aucune illustration)  
+  4.2 · L’anatomie d’une relance      (aucune illustration)  
+  4.3 · Trouver l’élément de valeur   (aucune illustration)  
+  4.4 · Analyser une relance à jeter  (aucune illustration)  
+  4.5 · À vous de trancher !          (aucune illustration)  
+  4.6 · Construire la stratégie       (aucune illustration)  
+  4.7 · Créer votre modèle            (aucune illustration)  
+
+── MANIPULATION ──────────────────────────────────────────────────
+
+  1.1 · Annoncer le prix avec assurance  (aucune illustration)  
+  1.2 · À vous d’annoncer le prix        (aucune illustration)  
+  2.1 · Valoriser ou brader ?            (aucune illustration)  
+  2.2 · Défendre le prix                 s5/1-1-4-S5-i2-2.png   Une cliente lit un devis, songeuse, face à un artisan.
+  3.1 · Signal d’achat ou pas ?          (aucune illustration)  
+  3.2 · À vous de conclure               s5/1-1-4-S5-i3-2.png   Une cliente demande au commerçant quand elle pourrait démarrer.
+  4.1 · Les bons réflexes de relance     (aucune illustration)  
+  4.2 · Rédigez votre relance            (aucune illustration)  
+
+AJOUTER UNE ILLUSTRATION LA OU IL N'Y EN A PAS
+
+  Les exercices marques "(aucune illustration)" affichent a la place un
+  schema de leur mecanique, dessine automatiquement. Pour leur donner une
+  vraie illustration :
+
+    1. Deposez votre PNG dans assets/illustrations/<serie>/
+       (creez le dossier s3/ s'il n'existe pas encore)
+    2. Dans js/catalog.js, ajoutez a l'entree de l'exercice :
+         image: 'assets/illustrations/s3/mon-image.png',
+         alt: 'Description de la scene, pour les lecteurs d ecran'
+    3. Rechargez la page : l'illustration remplace le schema.
+
+  Le schema reste utilise tant qu'aucune image n'est declaree : aucune
+  page de contexte ne reste vide.
+
+NOTE SUR LA SERIE 3
+  L exercice 3.4 n a pas d illustration fournie : la scene est affichee
+  sous forme de dialogue. Pour en ajouter une, suivez les etapes ci-dessus.
+
+SITE PUBLIE
+  Remplacer le fichier sur votre ordinateur ne change pas le site en ligne.
+  Envoyez ensuite le fichier modifie sur GitHub, puis rechargez la page.

@@ -1,0 +1,83 @@
+/* Règles propres à ce module. Les règles communes sont dans
+   moteur/css/kit-commun.css, chargée juste avant. */
+
+/* ── Adaptation aux écrans étroits ────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .k-columns, .k-columns.is-even, .k-columns.is-wide-left { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .k-head { flex-wrap: wrap; }
+  .k-head-aside { padding-top: 0; margin-left: 0; text-align: left; }
+  .k-bar { grid-template-columns: minmax(0, 1fr); }
+  .k-bar-right { justify-content: stretch; }
+  .k-bar-right .button { flex: 1; }
+  .k-step-label { display: none; }
+  .k-step.is-active .k-step-label { display: inline; }
+  .k-matrix { font-size: .9rem; }
+  .k-matrix tbody th, .k-matrix tbody td { padding: 8px 6px; }
+  .k-matrix tbody th .k-num { display: none; }
+  .k-why { padding-left: 0; }
+}
+
+/* ── Grille de cartes à qualifier (kit.mountChoiceGrid) ───────────────── */
+.cg-page .k-head { text-align: center; }
+
+.cg-page .k-head-text { display: grid; justify-items: center; }
+
+.cg-page .k-subtitle { color: var(--muted); }
+
+.cg-legend { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: 0; width: min(100%, 1250px); margin: 0 auto; padding: 18px 24px; border-radius: 16px; background: #fff; box-shadow: var(--shadow); }
+
+.cg-legend.count-2 { --n: 2; width: min(100%, 980px); }
+
+.cg-legend.is-chain { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+
+.cg-legend-item { display: flex; align-items: center; gap: 16px; padding: 0 22px; }
+
+.cg-legend:not(.is-chain) .cg-legend-item + .cg-legend-item { border-left: 1px solid var(--line); }
+
+.cg-legend-item strong { display: block; font-size: 1.35rem; }
+
+.cg-legend-item span span { color: var(--muted); }
+
+.cg-letter { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; font-size: 1.8rem; font-weight: 800; flex-shrink: 0; }
+
+.tone-c .cg-letter { background: var(--c-soft); color: var(--c-tone); }
+
+.tone-c strong { color: var(--c-tone); }
+
+.tone-a .cg-letter { background: var(--a-soft); color: var(--a-tone); }
+
+.tone-a strong { color: var(--a-tone); }
+
+.tone-p .cg-letter { background: #ffe1d8; color: #e2553c; }
+
+.tone-p strong { color: #e2553c; }
+
+.chain-arrow { color: #8f9bb8; display: grid; place-items: center; }
+
+.cg-instruction { display: flex; align-items: center; gap: 14px; width: min(100%, 1250px); margin: 0 auto; font-size: 1.1rem; color: var(--navy); }
+
+.cg-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; width: min(100%, 1250px); margin: 0 auto; }
+
+.cg-card { padding: 16px 20px; border-radius: 14px; background: #fff; box-shadow: var(--shadow); border: 1px solid #edf0f6; }
+
+.cg-card.is-ok { border-color: #b8e2cb; }
+
+.cg-card.is-ko { border-color: #f0c0b8; }
+
+.cg-card .k-why { padding-left: 0; margin-top: 8px; }
+
+.cg-text { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; font-size: 1.12rem; color: var(--navy); }
+
+.cg-n { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #eef1f7; font-weight: 700; flex-shrink: 0; }
+
+.cg-page form { display: grid; gap: 14px; }
+
+.cg-page .k-bar { width: min(100%, 1250px); margin: 0 auto; }
+
+@media (max-width: 900px) {
+  .cg-legend, .cg-grid { grid-template-columns: minmax(0, 1fr); }
+  .cg-legend:not(.is-chain) .cg-legend-item + .cg-legend-item { border-left: 0; border-top: 1px solid var(--line); padding-top: 12px; margin-top: 12px; }
+}
