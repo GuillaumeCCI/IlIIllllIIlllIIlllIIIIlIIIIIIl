@@ -109,8 +109,8 @@
     const done = asked(f);
     const open = f.topics.map((_, i) => i).filter(i => ex.value(`${f.id}_ask${i}`) !== true);
     const cur = open.includes(topicPick) ? topicPick : open[0];
-    const thread = done.length ? done.map(i => `<li class="d5-msg is-you"><p><span>Vous · ${esc(f.topics[i].label)}</span>« ${esc(val(`q${i}`))} »</p></li>
-        <li class="d5-msg is-client"><img src="${portrait(f.portrait)}" alt="" aria-hidden="true"><p><span>${esc(f.name)}</span>« ${esc(f.topics[i].answer)} »</p></li>`).join('')
+    const thread = done.length ? done.map(i => `<li class="d5-msg is-you"><p><span>Vous · ${esc(f.topics[i].label)}</span>«&nbsp;${esc(val(`q${i}`))}&nbsp;»</p></li>
+        <li class="d5-msg is-client"><img src="${portrait(f.portrait)}" alt="" aria-hidden="true"><p><span>${esc(f.name)}</span>«&nbsp;${esc(f.topics[i].answer)}&nbsp;»</p></li>`).join('')
       : `<li class="d5-thread-empty">Posez votre première question : la réponse de ${esc(f.name)} s’affichera ici.</li>`;
     const ok = done.length >= content.minAsked;
     return `<section class="k-panel d5-panel">
@@ -134,25 +134,38 @@
   }
 
   /* ── 3 · L'analyse ──────────────────────────────────────────────────── */
+  /* L'analyse : à gauche ce que le client a dit (en bulles), à droite une
+   * question à la fois, avec ses onglets. Tous les champs restent dans la
+   * page (les autres sont masqués) : rien ne se perd en changeant d'onglet. */
+  let anaPick = 0;
+  const ANA = ['Le besoin implicite', 'La motivation', 'La hiérarchie', 'À reformuler'];
   function analysis() {
     const f = fiche();
-    const said = asked(f).map(i => `<li><span>${esc(f.topics[i].label)}</span> « ${esc(f.topics[i].answer)} »</li>`).join('');
+    const said = asked(f).map(i => `<li class="d5-msg is-client"><img src="${portrait(f.portrait)}" alt="" aria-hidden="true"><p><span>${esc(f.topics[i].label)}</span>«&nbsp;${esc(f.topics[i].answer)}&nbsp;»</p></li>`).join('');
     const mot = val('motivation');
+    const filled = [kit.filled(val('implicite')), Boolean(mot), kit.filled(val('prio')), kit.filled(val('ameliorer'))];
+    const pane = (i, body) => `<div class="d5-ana-pane" ${i === anaPick ? '' : 'hidden'}>${body}
+        <div class="d5-floor-nav">${i > 0 ? `<button type="button" class="text-button with-icon" data-act="d5-ana" data-i="${i - 1}">${icon('arrowLeft', { size: 16 })}<span>Question précédente</span></button>` : '<span></span>'}${i < ANA.length - 1 ? `<button type="button" class="button secondary" data-act="d5-ana" data-i="${i + 1}"><span>Question suivante</span>${icon('arrowRight', { size: 16 })}</button>` : ''}</div></div>`;
     return `<section class="k-panel d5-panel">
         ${head(f)}
-        <details class="d5-said" open><summary>Ce que ${esc(f.name)} vous a dit</summary><ul>${said}</ul></details>
-        <div class="fm-field"><p class="fm-label">Un besoin implicite que vous avez découvert</p><p class="fm-sub">Ce dont il a besoin sans l’avoir demandé, avec ses mots.</p>
-          ${ex.field(K('implicite'), 'Le besoin implicite', { placeholder: 'Ce dont il a vraiment besoin…', max: 400, rows: 2, hideLabel: true })}</div>
-        <div class="fm-field"><p class="fm-label">Sa motivation dominante</p>
-          <div class="d5-motivs" role="radiogroup" aria-label="La motivation dominante">${content.motivations.map((m, i) => `<button type="button" class="a4-self-pill ${mot === m.id ? 'is-on' : ''}" role="radio" aria-checked="${mot === m.id}" data-act="d5-motiv" data-id="${m.id}" ${i === 0 ? `data-field="${K('motivation')}"` : ''}>${esc(m.label)}</button>`).join('')}</div></div>
-        <div class="fm-field"><p class="fm-label">Votre hiérarchie provisoire</p><p class="fm-sub">Chaque niveau s’appuie sur les mots du client.</p>
-          <div class="d5-hier">
-            <label>Prioritaire${ex.field(K('prio'), 'Le besoin prioritaire', { placeholder: 'Le besoin prioritaire…', max: 300, rows: 2, hideLabel: true })}</label>
-            <label>Important${ex.field(K('important'), 'Un besoin important', { placeholder: 'Facultatif', max: 300, rows: 2, hideLabel: true })}</label>
-            <label>Secondaire${ex.field(K('secondaire'), 'Un besoin secondaire', { placeholder: 'Facultatif', max: 300, rows: 2, hideLabel: true })}</label>
-          </div></div>
-        <div class="fm-field"><p class="fm-label">Deux questions que vous reformuleriez, et comment</p>
-          ${ex.field(K('ameliorer'), 'Deux questions à reformuler', { placeholder: 'Facultatif : « J’ai demandé… ; je demanderais plutôt… »', max: 600, rows: 3, hideLabel: true })}</div>
+        <div class="d5-chat d5-ana">
+          <div class="d5-chat-thread d5-ana-said"><p class="d5-chat-count">Ce que ${esc(f.name)} vous a dit</p><ol class="d5-thread">${said}</ol></div>
+          <div class="d5-ana-main">
+            <div class="d5-floor-tabs" role="tablist" aria-label="Les questions de l’analyse">${ANA.map((t, i) => `<button type="button" class="d5-floor-tab ${i === anaPick ? 'is-current' : ''} ${filled[i] ? 'is-filled' : ''}" role="tab" aria-selected="${i === anaPick}" data-act="d5-ana" data-i="${i}"><span class="d5-floor-n">${filled[i] ? icon('check', { size: 13, strokeWidth: 3 }) : i + 1}</span><span>${t}</span></button>`).join('')}</div>
+            ${pane(0, `<div class="fm-field"><p class="fm-label">Un besoin implicite que vous avez découvert</p><p class="fm-sub">Ce dont ${esc(f.name)} a besoin sans l’avoir demandé, avec ses mots.</p>
+              ${ex.field(K('implicite'), 'Le besoin implicite', { placeholder: 'Son vrai besoin…', max: 400, rows: 4, hideLabel: true })}</div>`)}
+            ${pane(1, `<div class="fm-field"><p class="fm-label">Sa motivation dominante</p><p class="fm-sub">Ce qui pèse le plus dans sa décision.</p>
+              <div class="d5-motivs" role="radiogroup" aria-label="La motivation dominante">${content.motivations.map((m, i) => `<button type="button" class="a4-self-pill ${mot === m.id ? 'is-on' : ''}" role="radio" aria-checked="${mot === m.id}" data-act="d5-motiv" data-id="${m.id}" ${i === 0 ? `data-field="${K('motivation')}"` : ''}>${esc(m.label)}</button>`).join('')}</div></div>`)}
+            ${pane(2, `<div class="fm-field"><p class="fm-label">Votre hiérarchie provisoire</p><p class="fm-sub">Chaque niveau s’appuie sur les mots du client. Seul le premier est obligatoire.</p>
+              <div class="d5-hier is-stack">
+                <label><span class="d5-hier-k is-p">Prioritaire</span>${ex.field(K('prio'), 'Le besoin prioritaire', { placeholder: 'Le besoin prioritaire…', max: 300, rows: 2, hideLabel: true })}</label>
+                <label><span class="d5-hier-k is-i">Important</span>${ex.field(K('important'), 'Un besoin important', { placeholder: 'Facultatif', max: 300, rows: 2, hideLabel: true })}</label>
+                <label><span class="d5-hier-k is-s">Secondaire</span>${ex.field(K('secondaire'), 'Un besoin secondaire', { placeholder: 'Facultatif', max: 300, rows: 2, hideLabel: true })}</label>
+              </div></div>`)}
+            ${pane(3, `<div class="fm-field"><p class="fm-label">Deux questions que vous reformuleriez, et comment</p><p class="fm-sub">Facultatif : relisez vos questions à gauche.</p>
+              ${ex.field(K('ameliorer'), 'Deux questions à reformuler', { placeholder: '« J’ai demandé… ; je demanderais plutôt… »', max: 600, rows: 4, hideLabel: true })}</div>`)}
+          </div>
+        </div>
       </section>
       ${core.errorsBox()}
       ${kit.bar({ left: kit.back('d5-prev', 'Revenir à la découverte'), right: kit.submit('Passer à la grille') })}`;
@@ -289,6 +302,7 @@
       });
     },
     'd5-topic': control => { topicPick = Number(control.dataset.i); ex.rebuild(); },
+    'd5-ana': control => { anaPick = Number(control.dataset.i); ex.rebuild(); },
     'd5-ask': control => {
       const i = Number(control.dataset.i);
       if (!kit.filled(val(`q${i}`))) { core.toast('Écrivez d’abord votre question.'); document.querySelector(`[data-field="${K(`q${i}`)}"]`)?.focus(); return; }

@@ -1175,3 +1175,16 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 #main .d5-chat-done { margin: 0; padding: 18px; border-radius: 14px; background: #e3f4ea; color: #1d6b43; font-weight: 700; }
 @media (max-width: 900px) { #main .d5-chat { grid-template-columns: minmax(0, 1fr); } }
 #main .d5-msg.is-client img { object-view-box: inset(0% 31% 42% 33%); object-position: center; }
+
+/* 5.2, l'analyse : ce qu'a dit le client à gauche (reste visible), une
+   question à la fois à droite. */
+#main .d5-ana .d5-ana-said { position: sticky; top: 12px; max-height: calc(100vh - 140px); overflow: auto; }
+#main .d5-ana .d5-floor-tabs { margin-top: 0; }
+#main .d5-ana-pane .fm-label { font-size: 1.15rem; }
+#main .d5-hier.is-stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+#main .d5-hier.is-stack label { display: grid; gap: 6px; font-weight: 400; }
+#main .d5-hier-k { justify-self: start; padding: 3px 12px; border-radius: 999px; font-size: .82rem; font-weight: 800; }
+#main .d5-hier-k.is-p { background: #fdece7; color: #c2492c; }
+#main .d5-hier-k.is-i { background: #fdf3dd; color: #a8690a; }
+#main .d5-hier-k.is-s { background: #e3f4ec; color: #23855c; }
+@media (max-width: 900px) { #main .d5-ana .d5-ana-said { position: static; max-height: none; } }
