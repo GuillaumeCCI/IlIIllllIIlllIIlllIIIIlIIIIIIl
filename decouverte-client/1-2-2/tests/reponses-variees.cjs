@@ -71,6 +71,24 @@ R.mauvaises['s3-3.1'] = [
   set(['Rien.', 'D’accord.'], ['Rien.', 'D’accord.'], ['Rien.', 'D’accord.'], ['Rien.', 'D’accord.'], ['Rien.', 'D’accord.']),
   set(['Il a raison.', 'Vous êtes sûr ?'], ['Il a raison.', 'Vous êtes sûr ?'], ['Ils ont raison.', 'Vous êtes sûrs ?'], ['Elle a raison.', 'Vous êtes sûre ?'], ['Elle a raison.', 'Vous êtes sûre ?'])
 ];
+/* 3.1 : bonnes réponses avec d'autres mots (notation élargie). */
+R.justes['s3-3.1'].push(
+  set(['Il craint de rester coincé loin de chez lui, batterie déchargée.', 'Décrivez-moi une journée type avec ce vélo : où allez-vous ?'],
+    ['La gérante est débordée, elle passe ses soirées à refaire le planning.', 'Que se passe-t-il quand un salarié est absent le matin ?'],
+    ['Ils ont un projet de famille : un bébé arrive peut-être.', 'Que représente pour vous cette pièce en plus ?'],
+    ['Une grosse commande client à livrer, avec des pénalités en cas de retard.', 'Racontez-moi ce qui se passe lundi à la production.'],
+    ['Elle passe la journée devant l’ordinateur et a des migraines.', 'À quels moments de la journée la lecture vous gêne-t-elle ?']),
+  set(['Il est inquiet de manquer de jus dans les montées.', 'De quelle façon utiliserez-vous ce vélo ?'],
+    ['Les salariés se plaignent d’erreurs d’horaires et d’oublis.', 'Expliquez-moi comment vous gérez le planning aujourd’hui.'],
+    ['Ils veulent recevoir les grands-parents, et le crédit doit rester raisonnable.', 'Qu’est-ce qui compte le plus pour vous dans ce projet ?'],
+    ['Plusieurs arrêts maladie dans l’équipe, elle est en sous-effectif.', 'Depuis quand la situation est-elle urgente ?'],
+    ['Elle vit mal de devoir porter des lunettes à son âge.', 'Dans quelles occasions avez-vous besoin de lire ?']),
+  set(['Il veut remplacer sa voiture pour aller au boulot tous les jours.', 'Combien de kilomètres faites-vous chaque jour ?'],
+    ['Elle veut savoir en temps réel qui fait quoi sur chaque site.', 'Concrètement, qu’est-ce qui bloque avec vos tableaux ?'],
+    ['Peut-être un atelier ou un bureau pour télétravailler.', 'Comment imaginez-vous utiliser la quatrième pièce ?'],
+    ['Elle a eu une mauvaise expérience avec des intérimaires pas formés.', 'Qu’attendez-vous de ces trois intérimaires dès lundi ?'],
+    ['Peut-être une vision floue de près qui la gêne au travail.', 'Quand avez-vous du mal à lire, précisément ?'])
+);
 R.motsCles['s3-3.1'] = set(['panne', 'batterie'], ['erreurs', 'tableau'], ['bureau', 'pièce'], ['absences', 'lundi'], ['écran', 'lire']);
 R.fautes['s3-3.1'] = [
   set(['il a peur de tombé en pane sur son trajé', 'quel trajet ferez vous avec se vélo ?'],
