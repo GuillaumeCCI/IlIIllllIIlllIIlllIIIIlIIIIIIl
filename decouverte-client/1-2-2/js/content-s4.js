@@ -53,6 +53,12 @@
     { who: 'client', label: 'Mme Benali', text: 'Non. On ne veut pas s’étrangler avec le crédit.' }
   ] };
 
+  /* L'étape de la question : seulement les deux besoins à départager. */
+  const DEPARTAGE = [
+    { info: 'Les Benali n’ont pas tranché entre deux souhaits. Lucas doit savoir lequel compte le plus avant de leur proposer des biens.' },
+    { dialogue: BENALI.dialogue.filter(line => /travaux|chambre d’amis/.test(line.text) && line.who === 'client') }
+  ];
+
   const NIVEAUX = [
     { id: 'prioritaire', label: 'Prioritaire', sub: 'Non négociable.' },
     { id: 'important', label: 'Important', sub: 'Compte, mais se discute.' },
@@ -112,9 +118,11 @@
         { target: '.fm-actions', title: 'Trois étapes', text: 'Les motivations, la hiérarchie, puis la question.' }
       ],
       caseNoun: 'Étape',
+      reviewLayout: 'rows',
       pills: true,
       countLabel: 'étapes faites',
-      submitLabel: 'Étape suivante',
+      nextLabel: 'Étape suivante',
+      submitLabel: 'Voir le corrigé',
       reviewIntro: BENALI,
       reviewIntroTitle: 'L’échange',
       cases: [
@@ -124,15 +132,16 @@
           { id: 'monsieur', label: 'Les motivations de M. Benali', sub: 'Avec les mots qui vous mettent sur la piste.', placeholder: 'Ex. : confort (« … »)', rows: 3,
             model: 'Sécurité (le trajet après ses gardes) ; confort (« mes week-ends, c’est pour récupérer », « pas envie de passer mes week-ends en travaux »).' }
         ] },
-        { tab: 'La hiérarchie', scene: BENALI, fields: [
+        { tab: 'La hiérarchie', scene: BENALI, matrix: true, fields: [
           besoin('trajet', 'Moins de 20 min de trajet depuis l’hôpital', 'prioritaire', 'Non négociable, rappelé spontanément : « c’est toujours le cas ».'),
           besoin('jardin', 'Un jardin sûr pour les enfants', 'prioritaire', '« J’ai eu peur » : cela a fait écarter une maison « parfaite ».'),
           besoin('budget', 'Le budget de 280 000 €', 'prioritaire', '« On ne veut pas s’étrangler » : il est ferme.'),
           besoin('travaux', 'Pas de gros travaux', 'important', '« Pas rédhibitoire » : important, mais négociable.'),
           besoin('chambre', 'Une chambre d’amis', 'secondaire', '« Ce serait bien… mais si ça fait monter le prix » : sacrifiable.')
         ] },
-        { tab: 'La question', scene: BENALI, fields: [
-          { id: 'question', label: 'La question qui départage « pas de travaux » et « chambre d’amis »', sub: 'Quelle question Lucas aurait-il pu poser pour savoir lequel des deux compte le plus ?', placeholder: 'Ex. : « Si vous deviez choisir… »', rows: 2,
+        { tab: 'La question', scene: DEPARTAGE, fields: [
+          { id: 'question', label: 'La question qui départage « pas de travaux » et « chambre d’amis »', sub: 'Quelle question Lucas aurait-il pu poser pour savoir lequel des deux compte le plus ?', placeholder: 'Ex. : « Si vous deviez choisir… »', rows: 4,
+            help: 'Astuce : une question alternative (« entre… et…, lequel… ? ») oblige à choisir, sans souffler la réponse.',
             model: '« Si vous deviez choisir entre une maison sans travaux et une maison avec une chambre d’amis, laquelle prendriez-vous ? » C’est une question alternative, utile ici pour hiérarchiser.' }
         ] }
       ],

@@ -772,6 +772,19 @@
     /* Un cas `numbered` : chaque champ dans sa carte, avec un grand numéro
      * rond dont la couleur alterne. */
     const TONES = ['blue', 'coral', 'green'];
+    /* `matrix: true` sur un cas : ses choix qui ont les mêmes options se
+     * lisent en grille (une ligne par élément, une colonne par option,
+     * cases rondes), comme les grilles d'auto-évaluation. */
+    const matrixFields = (i, fields) => {
+      const options = fields[0].options;
+      return `<table class="k-matrix is-round fm-matrix">
+        <thead><tr><th scope="col" class="k-matrix-label"></th>${options.map(o => `<th scope="col"><strong>${esc(o.label)}</strong>${o.sub ? `<span>${esc(o.sub)}</span>` : ''}</th>`).join('')}</tr></thead>
+        <tbody>${fields.map(f => {
+          const key = k(i, f);
+          return `<tr><th scope="row" class="k-matrix-label"><span class="k-matrix-text">${esc(f.label)}</span></th>${options.map(o => `<td><label class="k-box-label"><input type="radio" class="k-box-input" name="${esc(key)}" data-field="${esc(key)}" value="${esc(o.id)}" ${val(i, f) === o.id ? 'checked' : ''}><span class="k-box" aria-hidden="true">${icon('check', { size: 16 })}</span><span class="sr-only">${esc(f.label)} : ${esc(o.label)}</span></label></td>`).join('')}</tr>`;
+        }).join('')}</tbody>
+      </table>`;
+    };
     const numberedFields = (i, fields) => `<ol class="fm-numbered">${fields.map((f, j) => `<li class="fm-num-card"><span class="fm-num tone-${TONES[j % TONES.length]}">${j + 1}</span><div>${fieldBlock(i, f)}</div></li>`).join('')}</ol>`;
 
     function checksBlock(i) {
@@ -906,7 +919,7 @@
         ${c.title && n > 1 ? `<p class="k-label">${esc(content.caseNoun || 'Cas')} ${i + 1} / ${n}</p>` : ''}${c.title ? `<h2 class="fm-title">${esc(c.title)}</h2>` : ''}
         ${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}
         ${tokens()}
-        ${content.oneField ? `<div class="fm-one ${slideSub(i)}">${fieldBlock(i, fields[subAt(i)])}</div>` : c.numbered ? numberedFields(i, fields) : fieldRows(i, fields)}
+        ${content.oneField ? `<div class="fm-one ${slideSub(i)}">${fieldBlock(i, fields[subAt(i)])}</div>` : c.matrix ? matrixFields(i, fields) : c.numbered ? numberedFields(i, fields) : fieldRows(i, fields)}
         ${checksBlock(i)}
         ${core().errorsBox()}
         <div class="fm-actions">${content.oneField && subAt(i) > 0 ? `<button type="button" class="button secondary" data-act="fm-sub" data-index="${subAt(i) - 1}">${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>` : content.hint || c.hint ? kit().dialogButton(`hint${c.hint ? i : ''}`, content.hintLabel || 'Voir un repère', 'secondary', 'lightbulb') : '<span></span>'}
@@ -1015,7 +1028,7 @@
 
     function reviewScreen() {
       if (content.review) return accordionReview();
-      return scoreHead(key, content.scoreScope) + (content.reviewIntro ? `<section class="fm-review-intro">${content.reviewIntroTitle ? `<p class="fm-review-intro-label">${icon('users', { size: 18 })}<span>${esc(content.reviewIntroTitle)}</span></p>` : ''}${scene(content.reviewIntro)}</section>${content.reviewListTitle ? `<h2 class="fm-review-list-title">${esc(content.reviewListTitle)}</h2>` : ''}` : '') + (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
+      return scoreHead(key, content.scoreScope) + (content.reviewIntro && content.reviewLayout === 'rows' ? `<details class="fm-review-intro is-folded"><summary class="fm-review-intro-label">${icon('users', { size: 18 })}<span>Relire ${esc((content.reviewIntroTitle || 'la situation').toLowerCase().replace(/^l’/, 'l’'))}</span></summary>${scene(content.reviewIntro)}</details>` : '') + (content.reviewIntro && content.reviewLayout !== 'rows' ? `<section class="fm-review-intro">${content.reviewIntroTitle ? `<p class="fm-review-intro-label">${icon('users', { size: 18 })}<span>${esc(content.reviewIntroTitle)}</span></p>` : ''}${scene(content.reviewIntro)}</section>${content.reviewListTitle ? `<h2 class="fm-review-list-title">${esc(content.reviewListTitle)}</h2>` : ''}` : '') + (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
         const fields = fieldsOf(i);
         if (!fields.length && !c.model && !c.lesson) return '';
         // `reviewDialogue: 'seller'` : au corrigé, seule la réponse du vendeur est redite
