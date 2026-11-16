@@ -241,14 +241,6 @@
         <p class="a4-review-head"><span class="k-label">Mon auto-évaluation</span><span class="a4-review-count"><b>${yes}</b> / ${content.selfCheck.length} critères cochés « Oui »</span></p>
         <ul class="a5-self-recap">${content.selfCheck.map((row, i) => `<li><span class="pos-level level-${val(`self${i}`) === 'oui' ? '2' : '0'}">${val(`self${i}`) === 'oui' ? 'Oui' : 'Non'}</span><span>${esc(row.text)}</span></li>`).join('')}</ul>
       </section>
-      <section class="k-panel a5-deposit">
-        <div class="a5-dep-head">
-          <p class="k-label">${icon('folder', { size: 16 })} À déposer sur la plateforme</p>
-          ${kit.act('d5-copy', `${icon('document', { size: 18 })}<span>Copier mon guide et mon analyse</span>`, 'primary small')}
-        </div>
-        <p class="a5-dep-after">${esc(content.deposit)}</p>
-        <pre class="a5-copy-text">${esc(allText(f))}</pre>
-      </section>
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }
 
@@ -286,7 +278,7 @@
     return false;
   }
 
-  const feedback = () => ['Pensez à déposer votre guide et votre analyse : votre tuteur vous répondra avec la même grille.'];
+  const feedback = () => [];
 
   kit.on({
     'd5-go': control => go(Number(control.dataset.index)),
