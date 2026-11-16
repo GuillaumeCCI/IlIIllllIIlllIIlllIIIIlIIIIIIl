@@ -161,21 +161,28 @@
     const text = answer(k);
     const bloc = ouvert && ouvert.blocOf(KEY, k - 1);
     const pts = bloc && bloc.max ? Math.round(bloc.earned / bloc.max * 10 * 2) / 2 : null;
-    const wanted = bloc ? bloc.lines.filter(l => l.kind !== 'warn') : [];
-    const found = wanted.filter(l => l.kind === 'ok').length;
-    const chips = bloc ? `<p class="a4-expect-title">Ce qu’une bonne réponse contient <span>· ${found} sur ${wanted.length} dans la vôtre</span></p>
-      <ul class="a4-expect">${bloc.lines.map(item => {
+    const chips = bloc ? `<ul class="a4-expect a5-expect">${bloc.lines.map(item => {
         const tip = item.kind === 'warn' ? `Repéré : ${(item.found || []).map(w => `« ${w} »`).join(', ')}. ${item.conseil || ''}` : item.kind === 'ok' ? '' : (item.conseil || '');
         return `<li class="is-${item.kind}" ${tip ? `tabindex="0" data-tip="${esc(tip)}"` : ''}><span aria-hidden="true">${MARK[item.kind] || ''}</span>${esc(item.nom)}</li>`;
       }).join('')}</ul>` : '';
     return `<div class="a5-review-step">
-      <h2 class="a5-review-title"><span class="a4-step-n">${k}</span>${esc(tasks[k - 1].title)}${pts !== null ? `<span class="a4-just-score"><b>${String(pts).replace('.', ',')}</b> / 10</span>` : ''}</h2>
-      <p class="a5-review-line">${gestureOf(f.lines[k - 1]) ? `<em>${esc(gestureOf(f.lines[k - 1]))}</em> ` : ''}${esc(f.name)} : « ${esc(wordsOf(f.lines[k - 1]))} »</p>
-      <p class="a5-review-you">Vous</p>
-      ${ouvert ? ouvert.quote(KEY, k - 1, text) : `<p>« ${esc(text)} »</p>`}
-      ${kit.filled(text) ? chips : ''}
-      ${ouvert ? ouvert.model(f.models[k - 1]) : kit.model('Une réponse possible', f.models[k - 1])}
-      ${f.notes[k - 1] ? kit.help(f.notes[k - 1], 'lightbulb') : ''}
+      <div class="a5-rv-head">
+        <h2 class="a5-review-title"><span class="a4-step-n">${k}</span>${esc(MOMENTS[k - 1])}</h2>
+        ${pts !== null ? `<span class="a4-just-score"><b>${String(pts).replace('.', ',')}</b> / 10</span>` : ''}
+      </div>
+      <p class="a5-rv-client">${esc(f.name)} : « ${esc(wordsOf(f.lines[k - 1]))} »</p>
+      <div class="a5-rv-grid">
+        <div class="a5-rv-you">
+          <p class="a5-rv-label">Vous</p>
+          ${ouvert ? ouvert.quote(KEY, k - 1, text) : `<p>« ${esc(text)} »</p>`}
+          ${kit.filled(text) ? chips : ''}
+        </div>
+        <div class="a5-rv-model">
+          <p class="a5-rv-label">Une réponse possible</p>
+          <p class="a5-rv-model-text">« ${esc(f.models[k - 1])} »</p>
+          ${f.notes[k - 1] ? `<p class="a5-rv-note">${esc(f.notes[k - 1])}</p>` : ''}
+        </div>
+      </div>
     </div>`;
   }
 
