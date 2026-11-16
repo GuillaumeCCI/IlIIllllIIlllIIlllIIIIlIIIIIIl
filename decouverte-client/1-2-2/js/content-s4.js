@@ -20,9 +20,21 @@
     { id: 'environnement', label: 'Environnement / éthique', sub: 'Valeurs, local, responsable.' }
   ];
 
+  /* La situation de chaque phrase : qui vous êtes, qui parle. Neutre : elle
+   * ne souffle pas la motivation, qui doit se lire dans les mots du client. */
+  const CONTEXT = {
+    'Le moteur': ['Le client', 'Vous êtes vendeur dans une concession automobile. Un client d’une soixantaine d’années hésite entre deux voitures d’occasion récentes, garées côte à côte.'],
+    'Les collègues': ['Le client', 'Vous êtes vendeur dans un magasin d’informatique. Un cadre commercial cherche un ordinateur portable pour ses rendez-vous chez les clients.'],
+    'La nouveauté': ['La cliente', 'Vous êtes vendeur dans une boutique de téléphonie. Une cliente d’une trentaine d’années vient changer de smartphone et passe en revue les modèles exposés.'],
+    'Le paramétrage': ['La cliente', 'Vous êtes commercial chez un installateur de domotique. Une cliente, infirmière en horaires décalés, envisage de piloter le chauffage de sa maison depuis son téléphone.'],
+    'Les économies': ['La cliente', 'Vous êtes conseiller chez un installateur de panneaux solaires. La propriétaire d’une maison des années 1990 vous reçoit pour un premier devis.'],
+    'Le bon accueil': ['Le client', 'Vous êtes vendeur dans un magasin d’électroménager. Un client revient trois semaines après une première visite ; il cherche un lave-linge.'],
+    'Les enfants': ['La cliente', 'Vous êtes conseiller chez un installateur d’alarmes. Une mère de famille vous reçoit chez elle, dans un lotissement, un mercredi après-midi.'],
+    'Le local': ['La cliente', 'Vous êtes vendeur dans un magasin de meubles. Une cliente cherche une table de salle à manger et compare deux modèles de prix différents.']
+  };
   const phrase = (tab, quote, answer, indice, why, portrait) => ({
     tab,
-    scene: { quote, speaker: 'Le client', portrait },
+    scene: [{ info: (CONTEXT[tab] || [])[1] }, { quote, speaker: (CONTEXT[tab] || ['Le client'])[0], portrait }].filter(b => b.info !== undefined || b.quote),
     fields: [
       { id: 'motivation', type: 'choice', label: '1 · La motivation dominante', options: SONCASE, answer, why },
       { id: 'indice', type: 'input', label: '2 · Le mot ou l’expression qui vous met sur la piste', sub: 'Recopiez-le tel que le client l’a dit.', placeholder: 'Le mot indice…', max: 120, model: indice }

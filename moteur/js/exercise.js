@@ -532,7 +532,9 @@
   let lastSpots = null;
 
   function positions() {
-    const spots = { cursor: { index: cursor() }, wizard: { index: wizardAt() }, stage: { index: Number(value('stage')) || 1 }, case: { index: showingMenu ? -1 : (Number.isInteger(value('openCase')) ? value('openCase') : -1) } };
+    const spots = { cursor: { index: cursor() }, wizard: { index: wizardAt() }, stage: { index: Number(value('stage')) || 1 }, case: { index: showingMenu ? -1 : (Number.isInteger(value('openCase')) ? value('openCase') : -1) },
+      // Le cas en cours d'un formulaire à plusieurs cas (mountForm : client, situation…).
+      formCase: { index: Number.isInteger(value('case')) ? value('case') : 0 } };
     [...($$(`#main ${MARKERS}`) || [])].forEach(marker => {
       const group = marker.classList[0];
       if (!group || spots[group]) return;

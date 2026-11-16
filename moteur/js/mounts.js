@@ -1026,6 +1026,35 @@
         // Un onglet qui se contente de répéter « Situation 2 » n'est pas redit.
         const noun = `${content.caseNoun || 'Cas'} ${i + 1}`;
         const heading = c.tab && c.tab !== noun ? `${noun} · ${c.tab}` : noun;
+        /* `reviewLayout: 'rows'` : un corrigé léger. Le client en une ligne,
+         * puis une ligne par champ : votre réponse (mots repérés, petites
+         * coches, note) à gauche, la réponse possible à droite. */
+        if (content.reviewLayout === 'rows') {
+          const said = [].concat(c.scene || []).find(b => b.quote);
+          const MARK = { ok: '✓', part: '◐', miss: '○', warn: '!' };
+          const row = f => {
+            const text = val(i, f);
+            const b = blocOf(key, k(i, f));
+            const bloc = b >= 0 && ouvert() ? ouvert().blocOf(key, b) : null;
+            const pts = bloc && bloc.max && kit().filled(text) ? Math.round(bloc.earned / bloc.max * 10 * 2) / 2 : null;
+            const marks = bloc && kit().filled(text) ? `<ul class="fm-rv-marks">${bloc.lines.map(item => {
+              const tip = item.kind === 'ok' ? '' : item.kind === 'warn' ? `Repéré : ${(item.found || []).map(w => `« ${w} »`).join(', ')}. ${item.conseil || ''}` : (item.conseil || '');
+              return `<li class="is-${item.kind}" ${tip ? `tabindex="0" data-tip="${esc(tip)}"` : ''}><span aria-hidden="true">${MARK[item.kind] || ''}</span>${esc(item.nom)}</li>`;
+            }).join('')}</ul>` : '';
+            const yours = b >= 0 && ouvert() ? ouvert().quote(key, b, text) : (kit().filled(text) ? `<p class="result-answer-text">« ${esc(text)} »</p>` : '<p class="result-answer-text is-empty"><em>Non renseigné.</em></p>');
+            return `<div class="fm-rv-row">
+              <p class="fm-rv-label">${esc(f.label)}${pts !== null ? `<span class="fm-rv-pts"><b>${String(pts).replace('.', ',')}</b> / 10</span>` : ''}</p>
+              <div class="fm-rv-you">${yours}${marks}</div>
+              <div class="fm-rv-model">${f.model ? `<p>${esc(f.model)}</p>` : ''}</div>
+            </div>`;
+          };
+          return `<section class="k-panel fm-review is-rows">
+            <p class="k-label">${esc(heading)}</p>
+            ${said ? `<p class="fm-rv-said"><span>${esc(said.speaker || 'Le client')}</span> « ${esc(said.quote)} »</p>` : ''}
+            <div class="fm-rv-head" aria-hidden="true"><span></span><span>Votre réponse</span><span>Une réponse possible</span></div>
+            ${fields.map(row).join('')}
+          </section>`;
+        }
         // Les champs courts (un mot, une date) se lisent en tableau.
         const compact = fields.length > 2 && fields.every(f => f.type !== 'choice' && f.type !== 'chips' && blocOf(key, k(i, f)) < 0);
         // Deux décisions ou plus (choix avec réponse attendue) : une ligne chacune.
