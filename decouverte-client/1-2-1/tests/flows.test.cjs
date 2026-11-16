@@ -66,7 +66,7 @@ const CUSTOM = {
     e.setValue('self0', '2');
   },
   // A5 : une fiche, trois réponses, la grille Oui / Non.
-  's6-6-1': (e, c) => {
+  's5-5-2': (e, c) => {
     e.setValue('fiche', c.fiches[1].id);
     [1, 2, 3].forEach(k => e.setValue(`r${k}`, 'Une réponse.'));
     c.selfCheck.forEach((_, i) => e.setValue(`self${i}`, 'oui'));

@@ -59,7 +59,8 @@
     <thead><tr><th scope="col">Si vous voulez retravailler…</th><th scope="col">Refaites…</th></tr></thead>
     <tbody>${grid.redo.map(row => {
       const serie = core.catalog.series.find(s => s.id === row.serie);
-      const target = serie ? `<a href="${esc(core.pageUrl(serie.exercises[0].file))}">${esc(row.activity)}<small>${esc(serie.label)}</small></a>` : `<span>${esc(row.activity)}</span>`;
+      const exercise = serie && (serie.exercises.find(x => x.id === row.exercise) || serie.exercises[0]);
+      const target = exercise ? `<a href="${esc(core.pageUrl(exercise.file))}">${esc(row.activity)}<small>${esc(serie.label)} · ${esc(exercise.label)}</small></a>` : `<span>${esc(row.activity)}</span>`;
       return `<tr><td>${esc(row.topic)}</td><td>${target}</td></tr>`;
     }).join('')}</tbody>
   </table>`;

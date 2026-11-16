@@ -69,27 +69,20 @@ window.ATELIER_CATALOG = {
     },
     {
       id: 's5',
-      label: 'Évaluer une posture',
-      // Mme Royer et ses trois commerciaux, grille et corrigé : fiche M1.2.1, activité A4.
+      label: 'S’adapter au client',
+      // Fiche M1.2.1 : A4 (Mme Royer et ses trois commerciaux) et A5 (trois
+      // fiches client : Garnier, Lefort, Duval), grilles et corrigés.
       sourced: true,
       exercises: [
-        { id: '5.1', file: 's5-5-1', label: 'Trois commerciaux, une cliente pressée', theme: 'blue' }
-      ]
-    },
-    {
-      id: 's6',
-      label: 'À vous de répondre',
-      // Trois fiches client (Garnier, Lefort, Duval), grille et corrigés : fiche M1.2.1, activité A5.
-      sourced: true,
-      exercises: [
-        { id: '6.1', file: 's6-6-1', label: 'Votre réponse, votre voix', theme: 'blue' }
+        { id: '5.1', file: 's5-5-1', label: 'Trois commerciaux, une cliente pressée', theme: 'blue' },
+        { id: '5.2', file: 's5-5-2', label: 'Votre réponse, votre voix', theme: 'blue' }
       ]
     },
     {
       id: 's9',
       label: 'Faire le point',
       // Grille d'auto-positionnement, colonne « Fin », et « Ma progression » :
-      // fiche M1.2.1. Toujours la dernière série : A4 (s5), A5 (s6) et la
+      // fiche M1.2.1. Toujours la dernière série : A4 et A5 (s5) et la
       // synthèse optionnelle se placeront avant elle.
       sourced: true,
       exercises: [

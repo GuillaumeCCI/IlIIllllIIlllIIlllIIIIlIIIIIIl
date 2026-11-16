@@ -124,7 +124,7 @@ window.ATELIER_BRIEFINGS = {
     criteria: ['Le mot du client repris', 'Une invitation à préciser', 'Tourné vers M. Benali']
   },
 
-  /* ══ SÉRIE 5 · ÉVALUER UNE POSTURE ═══════════════════════════════════ */
+  /* ══ SÉRIE 5 · S’ADAPTER AU CLIENT ═══════════════════════════════════ */
 
   's5-5.1': {
     lede: { key: 'Un quart d’heure,', rest: 'trois commerciaux. Qui l’écoute ?' },
@@ -136,9 +136,7 @@ window.ATELIER_BRIEFINGS = {
     criteria: ['Des notes proches du repère', 'Un classement juste', 'Justification par critères']
   },
 
-  /* ══ SÉRIE 6 · À VOUS DE RÉPONDRE ════════════════════════════════════ */
-
-  's6-6.1': {
+    's5-5.2': {
     lede: { key: 'Trois répliques,', rest: 'trois réponses, votre voix.' },
     mission: 'Choisissez un client, celui qui ressemble le plus à votre futur métier. Il vous dit trois choses : répondez à chacune, puis dites vos réponses à voix haute et déposez-les pour le retour de votre tuteur.',
     method: 'Une réplique à la fois, puis l’enregistrement et la grille.',

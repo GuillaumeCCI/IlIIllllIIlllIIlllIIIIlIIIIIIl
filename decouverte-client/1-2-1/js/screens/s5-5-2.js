@@ -1,4 +1,4 @@
-/* S6 6.1 · Votre réponse, votre voix (fiche M1.2.1, A5).
+/* S5 5.2 · Votre réponse, votre voix (fiche M1.2.1, A5).
  *
  * Cinq étapes : choisir une fiche client, répondre à ses trois répliques
  * (compréhension, adaptation au signal, synthèse avec validation), puis
@@ -14,7 +14,7 @@
   const kit = window.AtelierKit;
   const media = window.AtelierMedia;
   const { esc, icon } = kit;
-  const content = window.ATELIER_S6['6.1'];
+  const content = window.ATELIER_S5['5.2'];
   const { fiches, tasks } = content;
   const ORAL = 4;
   const YES_NO = [{ id: 'oui', label: 'Oui' }, { id: 'non', label: 'Non' }];
@@ -172,7 +172,7 @@
     }
   });
 
-  kit.tour('s6-6.1', [
+  kit.tour('s5-5.2', [
     { target: '.a5-fiches', title: 'Votre client', text: 'Choisissez la fiche la plus proche de votre futur métier : commerce, entre entreprises ou immobilier.' },
     { target: '.a4-steps', title: 'Les étapes', text: 'Trois répliques, une réponse pour chacune :',
       items: [
@@ -183,5 +183,5 @@
       after: 'Puis l’oral et votre auto-évaluation.' }
   ]);
 
-  ex.mount('s6-6.1', { screen, validate, feedback, intercept, compactFeedback: true });
+  ex.mount('s5-5.2', { screen, validate, feedback, intercept, compactFeedback: true });
 })();

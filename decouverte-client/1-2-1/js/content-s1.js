@@ -40,15 +40,15 @@
       { id: 'q3', label: 'Quelle activité allez-vous refaire pour le travailler ?', sub: 'Aidez-vous du tableau « Si vous voulez retravailler… ».', placeholder: 'L’activité, et ce que vous y ferez autrement…' }
     ],
 
-    /* « Si tu veux retravailler… Refais… » : `serie` renvoie à la série du
-     * module qui porte l'activité. Tant qu'elle n'est pas en ligne, la ligne
-     * s'affiche sans lien. */
+    /* « Si tu veux retravailler… Refais… » : `serie` et `exercise` renvoient
+     * à l'exercice du module qui porte l'activité. Tant qu'il n'est pas en
+     * ligne, la ligne s'affiche sans lien. */
     redo: [
-      { topic: 'Attitudes d’écoute, attitude de compréhension', activity: 'A1 · Qui parle comme ça ?', serie: 's2' },
-      { topic: 'Reformulation écho, reflet, synthèse', activity: 'A2 · À vous de reformuler', serie: 's3' },
-      { topic: 'Signaux verbaux et non verbaux', activity: 'A3 · Rendez-vous en agence', serie: 's4' },
-      { topic: 'Adaptation, posture d’écoute', activity: 'A4 · Trois commerciaux, une cliente pressée', serie: 's5' },
-      { topic: 'Tous les critères ensemble', activity: 'A5 avec une autre fiche client', serie: 's6' }
+      { topic: 'Attitudes d’écoute, attitude de compréhension', activity: 'A1 · Qui parle comme ça ?', serie: 's2', exercise: '2.1' },
+      { topic: 'Reformulation écho, reflet, synthèse', activity: 'A2 · À vous de reformuler', serie: 's3', exercise: '3.1' },
+      { topic: 'Signaux verbaux et non verbaux', activity: 'A3 · Rendez-vous en agence', serie: 's4', exercise: '4.1' },
+      { topic: 'Adaptation, posture d’écoute', activity: 'A4 · Trois commerciaux, une cliente pressée', serie: 's5', exercise: '5.1' },
+      { topic: 'Tous les critères ensemble', activity: 'A5 avec une autre fiche client', serie: 's5', exercise: '5.2' }
     ]
   };
 
