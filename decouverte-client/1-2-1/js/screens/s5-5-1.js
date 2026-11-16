@@ -19,26 +19,25 @@
   const nC = criteria.length;
   const max = nC * 2;
   const SELF = [{ id: '2', label: 'Oui' }, { id: '1', label: 'En partie' }, { id: '0', label: 'Pas encore' }];
-  const PLACES = [{ n: '1er', sub: 'le plus adapté' }, { n: '2e', sub: '' }, { n: '3e', sub: 'le moins adapté' }];
 
-  /* LE CLASSEMENT AU CLIC : trois places en podium, puis les trois
-   * commerciaux en boutons. Un clic sur un commercial le pose à la
-   * première place libre ; un clic sur une place occupée la libère. */
+  /* LE CLASSEMENT AU CLIC : les trois commerciaux sur une ligne. Un clic
+   * classe le commercial au rang suivant (il passe devant, numéroté) ; un
+   * clic sur un commercial classé le retire, les suivants remontent. */
   const avatar = s => `<span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span>`;
   const sellerOf = id => sellers.find(x => x.id === id);
   function podium() {
-    const r = ranks();
-    const free = r.findIndex(v => !v);
-    const places = PLACES.map((p, i) => {
-      const s = sellerOf(r[i]);
-      return `<button type="button" class="a4-slot ${s ? `is-filled tone-${esc(s.id)}` : ''} ${i === free ? 'is-next' : ''}" data-act="a4-unplace" data-index="${i}" data-field="rank${i}" ${s ? '' : 'disabled'} aria-label="${esc(p.n)}${p.sub ? ` (${esc(p.sub)})` : ''} : ${s ? `${esc(s.name)}, cliquer pour retirer` : 'vide'}">
-        <span class="a4-slot-rank">${i + 1}</span>${s ? `<strong>${esc(s.name)}</strong><span class="a4-slot-x">${kit.icon('close', { size: 13 })}</span>` : ''}
-      </button>`;
-    }).join('');
-    const pool = sellers.filter(s => !r.includes(s.id)).map(s => `<button type="button" class="a4-pick tone-${esc(s.id)}" data-act="a4-pick" data-id="${esc(s.id)}">${avatar(s)}<strong>${esc(s.name)}</strong><span class="a4-pick-total">${total(s)} / ${max}</span></button>`).join('');
-    return `<div class="a4-rankline"><span class="a4-rank-end">Plus adapté</span><div class="a4-slots">${places}</div><span class="a4-rank-end">Moins adapté</span></div>
-      ${free === -1 ? '' : `<div class="a4-pool"><span class="a4-pool-help">Cliquez dans l’ordre :</span>${pool}</div>`}`;
+    const r = ranks().filter(Boolean);
+    const placed = r.map((id, i) => {
+      const s = sellerOf(id);
+      return `<button type="button" class="a4-chip is-placed tone-${esc(s.id)}" data-act="a4-unplace" data-index="${i}" data-field="rank${i}" aria-label="${i + 1}. ${esc(s.name)}, cliquer pour retirer du classement">
+        <span class="a4-chip-n">${i + 1}</span><strong>${esc(s.name)}</strong></button>`;
+    });
+    const rest = sellers.filter(s => !r.includes(s.id)).map(s => `<button type="button" class="a4-chip tone-${esc(s.id)}" data-act="a4-pick" data-id="${esc(s.id)}" ${r.length ? '' : `data-field="rank0"`}>
+        ${avatar(s)}<strong>${esc(s.name)}</strong><span class="a4-chip-total">${total(s)} / ${max}</span></button>`);
+    return `<div class="a4-chips">${[...placed, ...rest].join('')}</div>
+      <p class="a4-chips-help">${r.length === sellers.length ? 'Cliquez sur un commercial pour le retirer du classement.' : 'Cliquez du plus adapté au moins adapté.'}</p>`;
   }
+
 
 
   const note = (s, i) => ex.value(`${s.id}${i}`);
@@ -226,7 +225,11 @@
       ex.setValue(`rank${free}`, control.dataset.id);
       kit.commit();
     },
-    'a4-unplace': control => { ex.setValue(`rank${control.dataset.index}`, ''); kit.commit(); }
+    'a4-unplace': control => {
+      const left = ranks().filter(Boolean).filter((_, i) => i !== Number(control.dataset.index));
+      sellers.forEach((_, i) => ex.setValue(`rank${i}`, left[i] || ''));
+      kit.commit();
+    }
   });
 
   kit.live(() => {

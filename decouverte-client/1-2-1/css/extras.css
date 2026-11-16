@@ -467,25 +467,15 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-pips i.is-on { background: var(--tone); }
 @media (max-width: 960px) { .a4-recap-grid { grid-template-columns: 1fr; } }
 
-/* A4 : le classement au clic, sur une ligne. Trois cases numérotées, la
-   prochaine à remplir soulignée ; dessous, les commerciaux encore à placer. */
-.a4-rankline { display: flex; align-items: center; gap: 14px; margin: 12px 0 14px; }
-.a4-rank-end { flex-shrink: 0; color: var(--muted); font-size: .82rem; font-weight: 700; }
-.a4-slots { flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-.a4-slot { --tone: var(--accent); --tone-soft: #e8eefc; display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 14px; background: #f7f9fe; font: inherit; color: var(--navy); cursor: default; }
-.a4-slot-rank { display: inline-grid; place-items: center; flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: #e3e9f6; color: var(--muted); font-size: .85rem; font-weight: 800; }
-.a4-slot.is-next { border-color: var(--accent); background: #fff; }
-.a4-slot.is-next .a4-slot-rank { background: var(--accent); color: #fff; }
-.a4-slot.is-filled { border-color: transparent; background: var(--tone-soft); cursor: var(--cursor-hand, pointer); }
-.a4-slot.is-filled .a4-slot-rank { background: var(--tone); color: #fff; }
-.a4-slot-x { margin-left: auto; color: var(--muted); display: inline-flex; }
-.a4-slot.is-filled:hover .a4-slot-x { color: var(--tone); }
-.a4-slot.tone-ines, .a4-pick.tone-ines { --tone: #1d7a4b; --tone-soft: #e3f5ea; }
-.a4-slot.tone-hugo, .a4-pick.tone-hugo { --tone: #c4512f; --tone-soft: #fde9e3; }
-.a4-slot .a4-avatar, .a4-pick .a4-avatar { width: 26px; height: 26px; font-size: .78rem; background: var(--tone); }
-.a4-pool { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 22px; }
-.a4-pool-help { margin-right: 4px; color: var(--muted); font-size: .88rem; }
-.a4-pick { --tone: var(--accent); --tone-soft: #e8eefc; display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 5px; border: 1.5px solid var(--line); border-radius: 999px; background: #fff; font: inherit; font-size: .95rem; color: var(--navy); cursor: var(--cursor-hand, pointer); transition: border-color .12s, transform .12s; }
-.a4-pick:hover { border-color: var(--tone); transform: translateY(-1px); }
-.a4-pick-total { color: var(--muted); font-size: .82rem; }
-@media (max-width: 720px) { .a4-rankline { flex-wrap: wrap; } .a4-slots { grid-template-columns: 1fr; flex-basis: 100%; order: 2; } }
+/* A4 : le classement au clic. Les commerciaux sur une ligne : ceux déjà
+   classés passent devant avec leur rang, les autres suivent, estompés. */
+.a4-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 6px; }
+.a4-chip { --tone: var(--accent); --tone-soft: #e8eefc; display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 5px; border: 1.5px dashed #c9d6f2; border-radius: 999px; background: #fff; font: inherit; color: var(--navy); cursor: var(--cursor-hand, pointer); transition: border-color .12s, background .12s; }
+.a4-chip:hover { border-color: var(--tone); }
+.a4-chip.tone-ines { --tone: #1d7a4b; --tone-soft: #e3f5ea; }
+.a4-chip.tone-hugo { --tone: #c4512f; --tone-soft: #fde9e3; }
+.a4-chip .a4-avatar { width: 26px; height: 26px; font-size: .78rem; background: var(--tone); opacity: .8; }
+.a4-chip-total { color: var(--muted); font-size: .82rem; }
+.a4-chip.is-placed { border: 1.5px solid transparent; background: var(--tone-soft); }
+.a4-chip-n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--tone); color: #fff; font-size: .85rem; font-weight: 800; }
+.a4-chips-help { margin: 0 0 22px; color: var(--muted); font-size: .85rem; }
