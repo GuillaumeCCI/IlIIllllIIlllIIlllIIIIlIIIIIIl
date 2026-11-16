@@ -532,3 +532,30 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-expect li[data-tip]::after { content: attr(data-tip); position: absolute; left: 0; bottom: calc(100% + 8px); z-index: 5; width: max-content; max-width: 320px; padding: 9px 12px; border-radius: 10px; background: var(--navy); color: #fff; font-size: .8rem; line-height: 1.45; box-shadow: 0 10px 24px rgb(15 35 78 / 22%); opacity: 0; transform: translateY(4px); pointer-events: none; transition: opacity .15s, transform .15s; }
 .a4-expect li[data-tip]:is(:hover, :focus-visible)::after { opacity: 1; transform: none; }
 @media (max-width: 960px) { .a4-review-grid { grid-template-columns: 1fr; } }
+
+/* A4, corrigé : chaque critère en ligne, « Vous » et « Attendu » côte à
+   côte, puis la marque (✓ même note, ±1 accepté, ✗ deux points). */
+.a4-review-totals { display: flex; align-items: baseline; gap: 10px; margin-left: auto; color: var(--muted); font-size: .8rem; }
+.a4-review-totals b { color: var(--tone); font-size: 1.2rem; font-weight: 800; margin-left: 3px; }
+.a4-review-totals b.is-ref { color: var(--navy); }
+.a4-review-rows { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; font-size: .82rem; color: var(--muted); }
+.a4-review-rows li { position: relative; display: grid; grid-template-columns: 1fr 44px 44px 26px; align-items: center; gap: 6px; margin: 0 -6px; padding: 3px 6px; border-radius: 6px; outline: none; }
+.a4-review-cols { padding-bottom: 0 !important; font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #9aa8c7; }
+.a4-review-cols span:nth-child(2), .a4-review-cols span:nth-child(3) { text-align: center; }
+.a4-review-rows .a4-pips { justify-self: center; }
+.a4-pips-ref { justify-self: center; display: inline-flex; }
+.a4-pips-ref .a4-pips i { background: #e3e9f6; }
+.a4-pips-ref .a4-pips i.is-on { background: #8a98b8; }
+.a4-verdict, .a4-review-legend i { display: inline-grid; place-items: center; min-width: 22px; height: 20px; padding: 0 4px; border-radius: 999px; font-size: .72rem; font-weight: 800; font-style: normal; }
+.a4-review-rows .is-same .a4-verdict, .a4-review-legend .is-same { background: #dcf3e6; color: #1d7a4b; }
+.a4-review-rows .is-near .a4-verdict, .a4-review-legend .is-near { background: #eef1f7; color: var(--muted); }
+.a4-review-rows .is-far .a4-verdict, .a4-review-legend .is-far { background: #fde4de; color: #c4512f; }
+.a4-review-rows li[data-tip] { cursor: help; }
+.a4-review-rows li[data-tip]:is(:hover, :focus-visible) { background: #fff; color: var(--navy); }
+.a4-review-rows li[data-tip]::after { content: attr(data-tip); position: absolute; left: 0; right: 0; bottom: calc(100% + 8px); z-index: 5; padding: 10px 12px; border-radius: 10px; background: var(--navy); color: #fff; font-size: .82rem; line-height: 1.45; box-shadow: 0 10px 24px rgb(15 35 78 / 22%); opacity: 0; transform: translateY(4px); pointer-events: none; transition: opacity .15s, transform .15s; }
+.a4-review-rows li[data-tip]:is(:hover, :focus-visible)::after { opacity: 1; transform: none; }
+.a4-review-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 12px 0 0; color: var(--muted); font-size: .82rem; }
+.a4-review-legend span { display: inline-flex; align-items: center; gap: 6px; }
+/* Les deux notes en chiffres : la vôtre à la couleur du commercial, l'attendue en sobre. */
+.a4-n { justify-self: center; display: inline-grid; place-items: center; width: 28px; height: 24px; border-radius: 8px; background: #eef1f7; color: var(--navy); font-size: .9rem; font-weight: 800; }
+.a4-n.is-mine { background: var(--tone-soft); color: var(--tone); }

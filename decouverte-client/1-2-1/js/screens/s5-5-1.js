@@ -167,19 +167,28 @@
    * celles du corrigé, critère par critère (un écart d'un point est
    * accepté), puis l'explication de la fiche. */
   const pips = (n, label) => `<span class="a4-pips" role="img" aria-label="${esc(label)}">${[0, 1].map(p => `<i class="${p < n ? 'is-on' : ''}"></i>`).join('')}</span>`;
+  /* Chaque ligne : votre note et la note attendue, côte à côte, puis une
+   * marque : ✓ même note, ±1 un point d'écart (accepté), ✗ deux points. */
+  const VERDICT = gap => (gap === 0 ? { cls: 'is-same', mark: '✓', text: 'même note' }
+    : gap === 1 ? { cls: 'is-near', mark: '±1', text: 'un point d’écart, accepté' }
+    : { cls: 'is-far', mark: '✗', text: 'deux points d’écart' });
   function reviewCards() {
     return `<div class="a4-recap-grid a4-review-grid">${sellers.map(x => `<article class="a4-recap-card tone-${esc(x.id)}">
       <header>${avatar(x)}<strong>${esc(x.name)}</strong>
-        <span class="a4-recap-total"><b>${total(x)}</b> / ${max}<small>corrigé ${reference(x)} / ${max}</small></span></header>
-      <ul class="a4-recap-notes a4-review-notes">${criteria.map((c, i) => {
-        const mine = Number(note(x, i));
-        const ref = x.notes[i];
-        const gap = Math.abs(mine - ref);
-        const tip = `Votre note : ${mine}${gap ? ` · corrigé : ${ref}` : ', comme le corrigé'}. ${c.text}`;
-        return `<li tabindex="0" data-tip="${esc(tip)}"><span>${esc(c.title)}</span>${gap ? `<em class="a4-gap ${gap > 1 ? 'is-far' : ''}">corrigé : ${ref}</em>` : ''}${pips(mine, `Votre note : ${mine} sur 2${gap ? `, corrigé : ${ref}` : ''}`)}</li>`;
-      }).join('')}</ul>
+        <span class="a4-review-totals"><span>Vous <b>${total(x)}</b></span><span>Attendu <b class="is-ref">${reference(x)}</b></span><small>sur ${max}</small></span></header>
+      <ul class="a4-review-rows">
+        <li class="a4-review-cols" aria-hidden="true"><span></span><span>Vous</span><span>Attendu</span><span></span></li>
+        ${criteria.map((c, i) => {
+          const mine = Number(note(x, i));
+          const ref = x.notes[i];
+          const v = VERDICT(Math.abs(mine - ref));
+          const tip = `Votre note : ${mine} · attendu : ${ref} (${v.text}). ${c.text}`;
+          return `<li class="${v.cls}" tabindex="0" data-tip="${esc(tip)}"><span class="a4-review-crit">${esc(c.title)}</span><span class="a4-n is-mine" aria-label="Votre note : ${mine} sur 2">${mine}</span><span class="a4-n" aria-label="Note attendue : ${ref} sur 2">${ref}</span><span class="a4-verdict">${v.mark}</span></li>`;
+        }).join('')}
+      </ul>
       <p class="a4-review-why">${esc(x.why)}</p>
-    </article>`).join('')}</div>`;
+    </article>`).join('')}</div>
+    <p class="a4-review-legend"><span><i class="is-same">✓</i> même note</span><span><i class="is-near">±1</i> un point d’écart, accepté</span><span><i class="is-far">✗</i> deux points d’écart</span></p>`;
   }
 
   /* La justification : la réponse (mots repérés surlignés) et son score,
@@ -206,7 +215,7 @@
     const rankOk = ranks().every((id, i) => id === content.ranking[i]);
     return `${clientBlock()}
       <section class="k-panel a4-result">
-        <p class="a4-review-head"><span class="k-label">Vos notes et le corrigé</span><span class="a4-review-count"><b>${close()}</b> / ${sellers.length * nC} notes justes, à un point près</span></p>
+        <p class="a4-review-head"><span class="k-label">Vos notes et les notes attendues</span><span class="a4-review-count"><b>${close()}</b> / ${sellers.length * nC} notes justes, à un point près</span></p>
         ${reviewCards()}
       </section>
       <section class="k-panel a4-result">
