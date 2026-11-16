@@ -69,7 +69,7 @@ window.ATELIER_BRIEFINGS = {
   },
   's4-4.2': {
     lede: { key: 'Deux conjoints,', rest: 'deux façons de choisir.' },
-    mission: 'Deuxième rendez-vous à l’agence : Lucas fait le point avec M. et Mme Benali. Relevez les motivations de chacun, hiérarchisez leurs besoins, puis trouvez la question qui aurait départagé deux de leurs souhaits.',
+    mission: 'Deuxième rendez-vous à l’agence : Laura fait le point avec M. et Mme Benali. Relevez les motivations de chacun, hiérarchisez leurs besoins, puis trouvez la question qui aurait départagé deux de leurs souhaits.',
     method: 'Trois étapes, l’échange toujours sous les yeux.',
     situation: 'Les Benali cherchent une maison avec jardin, autour de 280 000 €. Après une première visite, chacun dit ce qui compte pour lui.',
     task: 'Les motivations de Mme Benali et de M. Benali, avec leurs mots ; cinq besoins à classer (prioritaire, important, secondaire) ; une question pour départager « pas de travaux » et « chambre d’amis ».',

@@ -41,21 +41,21 @@
     ]
   });
 
-  /* Le deuxième rendez-vous des Benali, avec Lucas (fiche M1.2.2). */
+  /* Le deuxième rendez-vous des Benali, avec Laura (fiche M1.2.2). */
   const BENALI = { dialogue: [
-    { who: 'seller', label: 'Lucas', text: 'La dernière fois, vous m’avez dit que le trajet de M. Benali après ses gardes était la priorité. Qu’est-ce qui a changé depuis votre visite ?' },
-    { who: 'client', label: 'Mme Benali', text: 'Rien, c’est toujours le cas. La maison à 15 minutes était parfaite… mais le jardin donnait sur une route passante. Avec les enfants, j’ai eu peur.' },
-    { who: 'client', label: 'M. Benali', text: 'Et franchement, la cuisine était neuve, tout était refait. Je n’ai pas envie de passer mes week-ends en travaux.' },
-    { who: 'seller', label: 'Lucas', text: 'Les travaux, c’est rédhibitoire pour vous ?' },
-    { who: 'client', label: 'M. Benali', text: 'Pas rédhibitoire. Mais je travaille de nuit : mes week-ends, c’est pour récupérer.' },
-    { who: 'client', label: 'Mme Benali', text: 'Moi, avec ma sœur qui vient souvent, une chambre d’amis ce serait bien. Mais si ça fait monter le prix…' },
-    { who: 'seller', label: 'Lucas', text: 'Vous aviez un budget autour de 280 000 €. Il a bougé ?' },
-    { who: 'client', label: 'Mme Benali', text: 'Non. On ne veut pas s’étrangler avec le crédit.' }
+    { who: 'seller', label: 'Laura', face: 'laura', text: 'La dernière fois, vous m’avez dit que le trajet de M. Benali après ses gardes était la priorité. Qu’est-ce qui a changé depuis votre visite ?' },
+    { who: 'client', label: 'Mme Benali', face: 'mme-benali', text: 'Rien, c’est toujours le cas. La maison à 15 minutes était parfaite… mais le jardin donnait sur une route passante. Avec les enfants, j’ai eu peur.' },
+    { who: 'client', label: 'M. Benali', face: 'm-benali', text: 'Et franchement, la cuisine était neuve, tout était refait. Je n’ai pas envie de passer mes week-ends en travaux.' },
+    { who: 'seller', label: 'Laura', face: 'laura', text: 'Les travaux, c’est rédhibitoire pour vous ?' },
+    { who: 'client', label: 'M. Benali', face: 'm-benali', text: 'Pas rédhibitoire. Mais je travaille de nuit : mes week-ends, c’est pour récupérer.' },
+    { who: 'client', label: 'Mme Benali', face: 'mme-benali', text: 'Moi, avec ma sœur qui vient souvent, une chambre d’amis ce serait bien. Mais si ça fait monter le prix…' },
+    { who: 'seller', label: 'Laura', face: 'laura', text: 'Vous aviez un budget autour de 280 000 €. Il a bougé ?' },
+    { who: 'client', label: 'Mme Benali', face: 'mme-benali', text: 'Non. On ne veut pas s’étrangler avec le crédit.' }
   ] };
 
   /* L'étape de la question : seulement les deux besoins à départager. */
   const DEPARTAGE = [
-    { info: 'Les Benali n’ont pas tranché entre deux souhaits. Lucas doit savoir lequel compte le plus avant de leur proposer des biens.' },
+    { info: 'Les Benali n’ont pas tranché entre deux souhaits. Laura doit savoir lequel compte le plus avant de leur proposer des biens.' },
     { dialogue: BENALI.dialogue.filter(line => /travaux|chambre d’amis/.test(line.text) && line.who === 'client') }
   ];
 
@@ -106,10 +106,10 @@
     '4.2': {
       eyebrow: 'Les motivations d’achat · Les Benali',
       title: 'Retour chez les Benali',
-      subtitle: 'Les Benali, un couple, cherchent une maison avec jardin.\nAprès une première visite, Lucas, leur conseiller immobilier, fait le point avec eux.\nRelevez les motivations de chacun, hiérarchisez leurs besoins, puis trouvez la question qui départage.',
+      subtitle: 'Les Benali, un couple, cherchent une maison avec jardin.\nAprès une première visite, Laura, leur conseillère immobilière, fait le point avec eux.\nRelevez les motivations de chacun, hiérarchisez leurs besoins, puis trouvez la question qui départage.',
       welcome: { title: 'Le deuxième rendez-vous', rows: [
         ['users', 'Les Benali', 'Un couple avec des enfants : ils cherchent une maison avec jardin, autour de 280 000 €.'],
-        ['chat', 'Ce qui se passe', 'Après une première visite, Lucas, leur conseiller, fait le point avec eux.'],
+        ['chat', 'Ce qui se passe', 'Après une première visite, Laura, leur conseillère, fait le point avec eux.'],
         ['pencil', 'Ce qui vous est demandé', 'Les motivations de chacun, la hiérarchie de leurs besoins, puis une question pour départager deux souhaits.']
       ] },
       tour: [
@@ -140,7 +140,7 @@
           besoin('chambre', 'Une chambre d’amis', 'secondaire', '« Ce serait bien… mais si ça fait monter le prix » : sacrifiable.')
         ] },
         { tab: 'La question', scene: DEPARTAGE, fields: [
-          { id: 'question', label: 'La question qui départage « pas de travaux » et « chambre d’amis »', sub: 'Quelle question Lucas aurait-il pu poser pour savoir lequel des deux compte le plus ?', placeholder: 'Ex. : « Si vous deviez choisir… »', rows: 4,
+          { id: 'question', label: 'La question qui départage « pas de travaux » et « chambre d’amis »', sub: 'Quelle question Laura aurait-elle pu poser pour savoir lequel des deux compte le plus ?', placeholder: 'Ex. : « Si vous deviez choisir… »', rows: 4,
             help: 'Astuce : une question alternative (« entre… et…, lequel… ? ») oblige à choisir, sans souffler la réponse.',
             model: '« Si vous deviez choisir entre une maison sans travaux et une maison avec une chambre d’amis, laquelle prendriez-vous ? » C’est une question alternative, utile ici pour hiérarchiser.' }
         ] }

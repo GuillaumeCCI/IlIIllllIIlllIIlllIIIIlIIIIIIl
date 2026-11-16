@@ -40,11 +40,7 @@
           why: 'Le guide de Yanis est un interrogatoire de questions fermées. Les questions 5, 6 et 8 sont de la vente déguisée : il parle de son offre avant d’avoir compris le besoin. La question 7, sur le budget, arrive sans contexte.' },
         { id: 'clara', name: 'Clara', summary: 'Cinq étapes, de l’atelier à la validation, avec des questions ouvertes.',
           groups: [
-            { title: 'Comprendre l’atelier', questions: ['Pouvez-vous me présenter votre garage et votre activité ?', 'Comment s’organise une journée type à l’atelier ?'] },
-            { title: 'Les difficultés', questions: ['Qu’est-ce qui vous fait perdre le plus de temps aujourd’hui ?', 'Que se passe-t-il quand une pièce n’arrive pas ?', 'Qu’est-ce que ça vous coûte, concrètement ?'] },
-            { title: 'Préciser', questions: ['Combien de livraisons recevez-vous par jour ?', 'Ce sont plutôt des pièces courantes ou spécifiques qui manquent ?'] },
-            { title: 'Ce qui compte', questions: ['Si vous changiez de fournisseur, qu’est-ce qui devrait absolument être meilleur ?'] },
-            { title: 'Valider', questions: ['Si je résume… c’est bien ça ?'] }
+            { title: '', questions: ['Pouvez-vous me présenter votre garage et votre activité ?', 'Comment s’organise une journée type à l’atelier ?', 'Qu’est-ce qui vous fait perdre le plus de temps aujourd’hui ?', 'Que se passe-t-il quand une pièce n’arrive pas ?', 'Qu’est-ce que ça vous coûte, concrètement ?', 'Combien de livraisons recevez-vous par jour ?', 'Ce sont plutôt des pièces courantes ou spécifiques qui manquent ?', 'Si vous changiez de fournisseur, qu’est-ce qui devrait absolument être meilleur ?', 'Si je résume… c’est bien ça ?'] }
           ],
           notes: [2, 2, 2, 1, 2, 2],
           why: 'Le guide de Clara est nettement meilleur : il suit l’entonnoir, fait raconter, cherche le coût du problème et prévoit une validation. Ce qu’elle peut améliorer : une seule question sur ce qui compte pour Mme Lefort ; il manque une question sur sa relation avec son fournisseur actuel et sur qui décide.' }

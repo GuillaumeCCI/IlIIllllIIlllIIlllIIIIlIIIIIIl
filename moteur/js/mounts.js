@@ -177,7 +177,7 @@
           const text = line.mark && line.text.includes(line.mark)
             ? `${esc(line.text.slice(0, line.text.indexOf(line.mark)))}<mark>${esc(line.mark)}</mark>${esc(line.text.slice(line.text.indexOf(line.mark) + line.mark.length))}`
             : esc(line.text);
-          return `<li class="sc-line ${seller ? 'is-seller' : ''}"><span class="sc-avatar ${seller ? 'is-seller' : ''}">${icon(seller ? 'headset' : 'users', { size: 24 })}<small>${esc(line.label || (seller ? 'Commercial' : 'Client'))}</small></span><p>« ${text} »</p></li>`;
+          return `<li class="sc-line ${seller ? 'is-seller' : ''}"><span class="sc-avatar ${seller ? 'is-seller' : ''} ${line.face ? 'has-face' : ''}">${line.face ? `<img class="sc-avatar-face" src="../assets/illustrations/visages/${esc(line.face)}.webp" alt="" decoding="async">` : icon(seller ? 'headset' : 'users', { size: 24 })}<small>${esc(line.label || (seller ? 'Commercial' : 'Client'))}</small></span><p>« ${text} »</p></li>`;
         }).join('')}</ol>`;
       }
       if (block.image && block.bubbles) {
