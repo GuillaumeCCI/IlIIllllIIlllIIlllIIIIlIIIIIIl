@@ -993,4 +993,19 @@ body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) #main .fm-scene .cli
   body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page .k-head-text { padding-right: 0; }
   body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page .k-head-aside .tour-replay { position: static; }
 }
-body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) #main .fm-panel.is-side > .k-panel:not(.fm-scene) { display: flex; flex-direction: column; justify-content: center; }
+
+/* 4.1 : les deux colonnes partent du haut ; portrait plus petit ; les sept
+   motivations en cartes douces, sans rond à cocher : la choisie passe en
+   bleu, avec une coche. */
+body[data-exercise="s4-4-1"] .fm-panel.is-side { align-items: start; }
+body[data-exercise="s4-4-1"] .fm-scene { padding: 26px 28px; gap: 18px; }
+body[data-exercise="s4-4-1"] #main .fm-scene .client-card-who img { max-height: 170px; }
+body[data-exercise="s4-4-1"] #main .fm-choices { gap: 10px; }
+body[data-exercise="s4-4-1"] #main .fm-choice { position: relative; padding: 14px 44px 14px 18px; border: 0; border-radius: 14px; background: #f6f8fc; box-shadow: none; transition: background .12s, transform .12s; }
+body[data-exercise="s4-4-1"] #main .fm-choice:hover { background: #edf2fc; transform: translateY(-1px); }
+body[data-exercise="s4-4-1"] #main .fm-choice .fm-radio { display: none; }
+body[data-exercise="s4-4-1"] #main .fm-choice strong { font-size: 1.05rem; font-weight: 700; color: #16205e; }
+body[data-exercise="s4-4-1"] #main .fm-choice small { font-size: .88rem; color: #5b6a8f; }
+body[data-exercise="s4-4-1"] #main .fm-choice.is-chosen { border: 0; background: var(--accent); box-shadow: 0 8px 20px rgb(19 75 215 / 22%); }
+body[data-exercise="s4-4-1"] #main .fm-choice.is-chosen strong, body[data-exercise="s4-4-1"] #main .fm-choice.is-chosen small { color: #fff; }
+body[data-exercise="s4-4-1"] #main .fm-choice.is-chosen::after { content: ''; position: absolute; right: 16px; top: 50%; width: 18px; height: 18px; margin-top: -9px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7'/%3E%3C/svg%3E") center / contain no-repeat; }
