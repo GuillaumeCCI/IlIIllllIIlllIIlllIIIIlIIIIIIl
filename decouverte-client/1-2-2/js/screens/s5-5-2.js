@@ -78,16 +78,21 @@
       ${kit.bar({ right: kit.submit('Préparer mon guide') })}`;
   }
 
+  let floorPick = null;
   /* ── 1 · Le guide ───────────────────────────────────────────────────── */
   function guide() {
     const f = fiche();
+    // L'étage affiché : le premier encore vide, ou celui choisi dans les onglets.
+    const floorAt = Number.isInteger(floorPick) ? floorPick : Math.max(0, floors.findIndex(fl => !kit.filled(val(fl.id))));
     return `<section class="k-panel d5-panel">
         ${head(f)}
         <p class="d5-intro">Pour chaque étage de l’entonnoir, écrivez 2 ou 3 questions que vous poserez à ${esc(f.name)}.</p>
-        <ol class="d5-floors">${floors.map((fl, i) => `<li class="d5-floor">
-          <p class="d5-floor-title"><span class="d5-floor-n">${i + 1}</span>${esc(fl.title)}</p>
+        <div class="d5-floor-tabs" role="tablist" aria-label="Les étages de l’entonnoir">${floors.map((fl, i) => `<button type="button" class="d5-floor-tab ${i === floorAt ? 'is-current' : ''} ${kit.filled(val(fl.id)) ? 'is-filled' : ''}" role="tab" aria-selected="${i === floorAt}" data-act="d5-floor" data-i="${i}"><span class="d5-floor-n">${kit.filled(val(fl.id)) ? icon('check', { size: 13, strokeWidth: 3 }) : i + 1}</span><span>${esc(fl.title)}</span></button>`).join('')}</div>
+        <ol class="d5-floors is-one">${floors.map((fl, i) => `<li class="d5-floor" ${i === floorAt ? '' : 'hidden'}>
+          <p class="d5-floor-title"><span class="d5-floor-n">${i + 1}</span>Étage ${i + 1} sur ${floors.length} · ${esc(fl.title)}</p>
           <p class="fm-sub">${esc(fl.aim)}</p>
-          ${ex.field(K(fl.id), fl.title, { placeholder: 'Vos questions, une par ligne…', max: 600, rows: 3, hideLabel: true })}
+          ${ex.field(K(fl.id), fl.title, { placeholder: 'Vos questions, une par ligne…', max: 600, rows: 5, hideLabel: true })}
+          <div class="d5-floor-nav">${i > 0 ? `<button type="button" class="text-button with-icon" data-act="d5-floor" data-i="${i - 1}">${icon('arrowLeft', { size: 16 })}<span>Étage précédent</span></button>` : '<span></span>'}${i < floors.length - 1 ? `<button type="button" class="button secondary" data-act="d5-floor" data-i="${i + 1}"><span>Étage suivant</span>${icon('arrowRight', { size: 16 })}</button>` : ''}</div>
         </li>`).join('')}</ol>
       </section>
       ${core.errorsBox()}
@@ -262,6 +267,7 @@
   kit.on({
     'd5-go': control => go(Number(control.dataset.index)),
     'd5-prev': () => go(Math.max(0, at() - 1)),
+    'd5-floor': control => { floorPick = Number(control.dataset.i); ex.changed(); kit.commit(); },
     'd5-fiche': control => {
       ex.setValue('fiche', control.dataset.id);
       ex.changed();

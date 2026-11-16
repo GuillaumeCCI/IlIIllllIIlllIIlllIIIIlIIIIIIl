@@ -1136,3 +1136,16 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 #main .a4-rw-col.is-model p { padding: 8px 12px; border-radius: 10px; background: #f5f7fc; color: #2b3768; }
 #main .a4-rw-col .a4-expect { margin: 2px 0 0; }
 @media (max-width: 900px) { #main .a4-rw-row { grid-template-columns: minmax(0, 1fr); } }
+
+/* 5.2, le guide : un étage à la fois. Les cinq étages en onglets (coche
+   quand l'étage est rempli), puis l'étage affiché et ses boutons. */
+#main .d5-floor-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 20px; }
+#main .d5-floor-tab { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px 8px 8px; border: 0; border-radius: 999px; background: #f2f5fb; color: #4c5f86; font: inherit; font-size: .92rem; font-weight: 700; cursor: var(--cursor-hand, pointer); transition: background .12s; }
+#main .d5-floor-tab:hover { background: #e7edf9; }
+#main .d5-floor-tab .d5-floor-n { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #fff; color: var(--accent); font-size: .85rem; }
+#main .d5-floor-tab.is-filled .d5-floor-n { background: #23955f; color: #fff; }
+#main .d5-floor-tab.is-current { background: var(--accent); color: #fff; box-shadow: 0 6px 16px rgb(19 75 215 / 22%); }
+#main .d5-floor-tab.is-current .d5-floor-n { background: #fff; color: var(--accent); }
+#main .d5-floors.is-one { list-style: none; margin: 0; padding: 0; }
+#main .d5-floors.is-one .d5-floor-title { font-size: 1.15rem; }
+#main .d5-floor-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
