@@ -34,7 +34,7 @@
         <section class="k-panel pos-panel">
           ${reviewing
             ? `<p class="k-label">Votre point de départ</p>${recap()}`
-            : kit.matrix({ key: KEY, rows: grid.criteria, columns: grid.levels, head: 'Critère', round: true })}
+            : S1.pills(KEY, ex, kit)}
         </section>
         ${reviewing ? `${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
           : `${core.errorsBox()}${kit.bar({ right: kit.submit(content.submit) })}`}
@@ -50,6 +50,8 @@
   const feedback = () => [content.after];
 
   kit.live(() => ({ count: `${count()} / ${grid.criteria.length}` }));
+
+  kit.on({ 'pos-pick': control => S1.pick(control, ex, kit) });
 
   ex.mount('s1-1.1', { screen, validate, feedback, compactFeedback: true });
 })();

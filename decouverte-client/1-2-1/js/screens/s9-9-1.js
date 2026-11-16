@@ -78,7 +78,7 @@
       return `<div class="k-page pos-page">
         ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside })}
         <form novalidate>
-          <section class="k-panel pos-panel">${kit.matrix({ key: FIN, rows: grid.criteria, columns: grid.levels, head: 'Critère', round: true })}</section>
+          <section class="k-panel pos-panel">${window.ATELIER_S1.pills(FIN, ex, kit)}</section>
           ${core.errorsBox()}${kit.bar({ right: kit.submit(content.submitGrid) })}
         </form>
       </div>`;
@@ -110,6 +110,8 @@
   const feedback = () => ['Votre bilan est enregistré. Gardez en tête l’activité que vous avez choisi de refaire : c’est là que votre progression continue.'];
 
   kit.live(() => ({ count: `${kit.answered(FIN, n)} / ${n}` }));
+
+  kit.on({ 'pos-pick': control => window.ATELIER_S1.pick(control, ex, kit) });
 
   ex.mount('s9-9.1', { screen, validate, feedback, intercept, compactFeedback: true });
 })();

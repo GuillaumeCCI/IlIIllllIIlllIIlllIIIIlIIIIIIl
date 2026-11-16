@@ -52,8 +52,35 @@
     ]
   };
 
+  /* LA GRILLE EN PASTILLES : une ligne par critère (numéro, titre, phrase),
+   * puis trois boutons ; le niveau choisi se remplit de sa couleur, avec une
+   * coche. `key` : préfixe des champs (« deb », « fin »). Un clic enregistre
+   * le niveau (data-act="pos-pick", géré par chaque écran). */
+  const pills = (key, ex, kit) => `<ol class="pos-rows">${grid.criteria.map((c, i) => {
+    const chosen = ex.value(`${key}${i}`);
+    return `<li class="pos-row">
+      <span class="pos-row-n">${i + 1}</span>
+      <span class="pos-row-text"><strong>${kit.esc(c.title)}</strong><small>${kit.esc(c.text)}</small></span>
+      <span class="pos-pills" role="radiogroup" aria-label="${kit.esc(c.title)}">${grid.levels.map((l, j) => `<button type="button" class="pos-pill level-${l.id} ${chosen === l.id ? 'is-on' : ''}" role="radio" aria-checked="${chosen === l.id}" data-act="pos-pick" data-key="${key}${i}" data-id="${l.id}" ${j === 0 ? `data-field="${key}${i}"` : ''}>${kit.icon('check', { size: 14, strokeWidth: 3 })}<span>${kit.esc(l.label)}</span></button>`).join('')}</span>
+    </li>`;
+  }).join('')}</ol>`;
+
+  /* Le clic sur une pastille : le niveau est enregistré, la ligne se met à jour. */
+  const pick = (control, ex, kit) => {
+    ex.setValue(control.dataset.key, control.dataset.id);
+    ex.changed();
+    control.parentElement.querySelectorAll('.pos-pill').forEach(b => {
+      const on = b === control;
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-checked', String(on));
+    });
+    kit.refreshLive();
+  };
+
   root.ATELIER_S1 = {
     grid,
+    pills,
+    pick,
 
     /* ── 1.1 · Mon point de départ (colonne « Début ») ─────────────────── */
     '1.1': {

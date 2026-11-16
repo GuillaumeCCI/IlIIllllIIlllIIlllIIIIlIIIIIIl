@@ -776,3 +776,33 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 /* A5, « À déposer » : le lecteur de l'enregistrement et son téléchargement. */
 .a5-dep-audio { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 4px 0 10px 32px; }
 .a5-dep-audio audio { height: 40px; max-width: 100%; }
+
+/* ── Grille d'auto-positionnement en pastilles ──────────────────────────
+   Une ligne par critère ; trois boutons : à retravailler (rouille), en
+   bonne voie (prune), maîtrisé (vert). Le choisi se remplit, avec une coche. */
+.pos-page { --pos-0: #b9420f; --pos-1: #7b0d63; --pos-2: #1d7a4b; }
+.pos-rows { margin: 0; padding: 0; list-style: none; }
+.pos-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 14px 4px; border-bottom: 1px solid var(--line); }
+.pos-row:last-child { border-bottom: 0; }
+.pos-row-n { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--pos-1); color: #fff; font-size: .82rem; font-weight: 800; align-self: start; margin-top: 2px; }
+.pos-row-text strong { display: block; color: var(--navy); font-size: 1.05rem; }
+.pos-row-text small { display: block; margin-top: 3px; color: var(--muted); font-size: .92rem; line-height: 1.45; }
+.pos-pills { display: inline-flex; gap: 8px; }
+.pos-pill { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 150px; padding: 10px 16px; border: 1.5px solid #e3e6ee; border-radius: 999px; background: #fff; font: inherit; font-size: .92rem; font-weight: 700; color: #a3a9b8; cursor: var(--cursor-hand, pointer); transition: background .15s, border-color .15s, color .15s; }
+.pos-pill .icon { display: none; }
+.pos-pill:hover { border-color: #c9cfdc; color: var(--navy); }
+.pos-pill.is-on .icon { display: inline-block; }
+#main .pos-pill.level-0.is-on { background: var(--pos-0); border-color: var(--pos-0); color: #fff; }
+#main .pos-pill.level-1.is-on { background: var(--pos-1); border-color: var(--pos-1); color: #fff; }
+#main .pos-pill.level-2.is-on { background: var(--pos-2); border-color: var(--pos-2); color: #fff; }
+.pos-pill[aria-invalid="true"] { border-color: #f0a796; }
+/* Les pastilles de relecture et de comparaison, dans les mêmes couleurs. */
+.pos-page .pos-level.level-0 { background: var(--pos-0); color: #fff; }
+.pos-page .pos-level.level-1 { background: var(--pos-1); color: #fff; }
+.pos-page .pos-level.level-2 { background: var(--pos-2); color: #fff; }
+.pos-page .k-num, .pos-page .pos-recap .k-num, .pos-page .pos-compare .k-num { background: var(--pos-1); color: #fff; }
+@media (max-width: 900px) {
+  .pos-row { grid-template-columns: auto minmax(0, 1fr); }
+  .pos-pills { grid-column: 1 / -1; flex-wrap: wrap; }
+  .pos-pill { min-width: 0; flex: 1 1 120px; }
+}
