@@ -33,7 +33,10 @@
     const free = sellers.findIndex(s => !rated(s));
     return free === -1 ? RANK : free;
   };
-  const go = k => { ex.setValue('at', k); ex.rebuild(); window.scrollTo({ top: 0, behavior: 'instant' }); };
+  /* Le commercial qui vient d'arriver (-1 : aucun) : sa carte glisse en
+   * place et s'annonce, le temps d'un rendu. */
+  let arriving = -1;
+  const go = k => { arriving = k < RANK && k !== at() ? k : -1; ex.setValue('at', k); ex.rebuild(); window.scrollTo({ top: 0, behavior: 'instant' }); };
 
   // Les indications entre crochets (« 3 minutes plus tard ») en italique.
   const said = text => esc(text).replace(/\[([^\]]+)\]/g, '<em class="a4-act">($1)</em>');
@@ -47,10 +50,13 @@
   /* L'échange sur un même plan : la situation en bandeau, puis la réplique
    * de la cliente à gauche et la réponse du commercial à droite, alignées
    * en haut et de même hauteur. */
-  const exchange = s => `<section class="k-panel a4-exchange">
+  const exchange = (s, k) => `<section class="k-panel a4-exchange">
       <div class="a4-exchange-head">${situation()}</div>
       <div class="a4-exchange-client">${quoteCard()}</div>
-      <div class="a4-exchange-reply">${sellerBlock(s)}</div>
+      <div class="a4-exchange-reply ${arriving === k ? 'is-arriving' : ''}">
+        <p class="a4-new tone-${esc(s.id)}" role="status">${arriving === k ? `${icon('sparkle', { size: 15 })}<span>Nouvelle réponse à noter · ${k + 1} sur ${RANK}</span>` : `<span>Réponse ${k + 1} sur ${RANK}</span>`}</p>
+        ${sellerBlock(s)}
+      </div>
     </section>`;
 
   /* La réponse du commercial, dans le même gabarit que la carte de la
@@ -76,9 +82,9 @@
 
   function noteStep(k) {
     const s = sellers[k];
-    return `${exchange(s)}
+    return `${exchange(s, k)}
       <section class="k-panel a4-rate">
-        <p class="k-label">Notez ${esc(s.name)}</p>
+        <p class="k-label">Notez ${k ? 'maintenant ' : ''}${esc(s.name)}</p>
         ${kit.matrix({ key: s.id, rows: criteria, columns: levels, head: 'Critère', round: true })}
         <p class="a4-total" data-live="total">${totalLine(s)}</p>
       </section>
@@ -176,7 +182,7 @@
   /* Un commercial noté : « valider » passe au suivant, puis au classement. */
   function intercept() {
     const k = at();
-    if (k < RANK && rated(sellers[k])) { ex.setValue('at', k + 1); return true; }
+    if (k < RANK && rated(sellers[k])) { arriving = k + 1 < RANK ? k + 1 : -1; ex.setValue('at', k + 1); return true; }
     return false;
   }
 
@@ -204,5 +210,8 @@
     { target: '.a4-steps', title: 'Les étapes', text: 'Trois commerciaux à noter, puis votre classement et votre justification.' }
   ]);
 
-  ex.mount('s5-5.1', { screen, validate, feedback, intercept, compactFeedback: true });
+  // L'annonce ne vaut que pour le rendu qui suit le changement de commercial.
+  const onMount = () => { if (arriving !== -1) setTimeout(() => { arriving = -1; }, 0); };
+
+  ex.mount('s5-5.1', { screen, validate, feedback, intercept, onMount, compactFeedback: true });
 })();

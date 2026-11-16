@@ -419,3 +419,22 @@
 @media (max-width: 960px) {
   .a4-exchange { grid-template-columns: 1fr; row-gap: 14px; }
 }
+
+/* A4 : un nouveau commercial à noter. La cliente ne bouge pas ; la carte
+   du commercial glisse en place depuis la droite, entourée d'un halo à sa
+   couleur, et la pastille « Nouvelle réponse à noter » s'annonce. */
+.a4-exchange-reply { position: relative; }
+.a4-new { position: absolute; top: 14px; right: 16px; z-index: 1; display: inline-flex; align-items: center; gap: 6px; margin: 0; padding: 5px 12px; border-radius: 999px; background: var(--tint); color: var(--accent); font-size: .8rem; font-weight: 800; letter-spacing: .02em; }
+.a4-new.tone-ines { background: #dcf3e6; color: #1d7a4b; }
+.a4-new.tone-hugo { background: #fde4de; color: #a8402c; }
+.a4-exchange-reply.is-arriving .a4-new { animation: a4-new-pop .5s .35s cubic-bezier(.2, .9, .3, 1.3) both; }
+.a4-exchange-reply.is-arriving .client-card { animation: a4-arrive .55s cubic-bezier(.2, .8, .3, 1) both, a4-halo 1.1s .55s ease-out 2; }
+.a4-exchange-reply.is-arriving .a4-seller.tone-ines .client-card { --a4-halo: rgb(29 122 75 / 35%); }
+.a4-exchange-reply.is-arriving .a4-seller.tone-hugo .client-card { --a4-halo: rgb(196 81 47 / 35%); }
+@keyframes a4-arrive { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: none; } }
+@keyframes a4-halo { 0% { box-shadow: 0 0 0 0 var(--a4-halo, rgb(19 75 215 / 35%)), var(--client-card-shadow); } 100% { box-shadow: 0 0 0 16px transparent, var(--client-card-shadow); } }
+@keyframes a4-new-pop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .a4-exchange-reply.is-arriving .client-card, .a4-exchange-reply.is-arriving .a4-new { animation: none; }
+  .a4-exchange-reply.is-arriving .client-card { box-shadow: 0 0 0 3px var(--a4-halo, rgb(19 75 215 / 35%)), var(--client-card-shadow); }
+}
