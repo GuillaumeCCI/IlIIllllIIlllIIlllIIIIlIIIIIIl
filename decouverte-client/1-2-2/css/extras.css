@@ -888,3 +888,25 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-rank-write .a4-rewrites { margin-top: 0; }
 .a4-rank-write .a4-self { flex-wrap: wrap; gap: 10px; }
 @media (max-width: 1100px) { .a4-rank-grid { grid-template-columns: minmax(0, 1fr); } .a4-rank-grid .a4-rank:first-child { position: static; } }
+
+/* Cartes à quatre réponses (2.1 types de questions, 2.2 étages de l'entonnoir).
+   La carte de la question : l'aquarelle déborde un peu et la carte la coupe,
+   pour que ses bords clairs ne se voient pas ; la barre de progression suit
+   les coins arrondis. Phrase posée sur l'aquarelle, sans bloc de fond. */
+.dk-card.has-banner { overflow: hidden; border: 0; background: #fbfaf7; }
+.dk-card.has-banner::before { inset: -16px -18px; border-radius: 0; }
+.dk-card.has-banner .dk-body { background: none; padding: 12px 8px 4px; min-height: 0; }
+.dk-card.has-banner .dk-text { font-weight: 600; letter-spacing: -.02em; line-height: 1.2; color: #16205e; }
+.dk-board:has(.dk-zones:not(.count-2)) .dk-question { margin-top: 10px; font-size: 1.2rem; font-weight: 700; color: #16205e; }
+
+/* Les réponses : cartes décorées comme les cartes de choix des modules
+   techniques de vente (papier blanc cassé, feuillages aquarelle dans les
+   angles bas), sans contour, ombre douce. */
+.dk-zones:not(.count-2) { gap: 20px 24px; width: min(100%, 960px); }
+.dk-zones:not(.count-2) .dk-zone { gap: 18px; min-height: 104px; padding: 18px 96px 18px 20px; border: 0; border-radius: 20px; background: url('../../../moteur/assets/illustrations/carte-deco-droite.webp') right bottom / auto 70px no-repeat, #fbfaf7; color: #16205e; box-shadow: 0 10px 26px rgb(20 40 100 / 9%), 0 1px 3px rgb(20 40 100 / 6%); transition: transform .12s, box-shadow .12s, background-color .12s; }
+.dk-zones:not(.count-2) .dk-zone:hover, .dk-zones:not(.count-2) .dk-zone.is-over { transform: translateY(-2px); border: 0; box-shadow: 0 16px 32px rgb(20 40 100 / 13%), 0 1px 3px rgb(20 40 100 / 6%); }
+.dk-zones:not(.count-2) .dk-zone-mark { width: 56px; height: 56px; background: #e8eefb; color: #1d3f9a; font-size: 1.45rem; }
+.dk-zones:not(.count-2) .dk-zone strong { font-size: 1.25rem; font-weight: 700; color: #16205e; }
+.dk-zones:not(.count-2) .dk-zone small { color: #55607e; }
+#main .dk-zones:not(.count-2) .dk-zone.is-chosen { border: 0; background: url('../../../moteur/assets/illustrations/carte-deco-droite.webp') right bottom / auto 70px no-repeat, #eef3ff; box-shadow: 0 12px 28px rgb(19 75 215 / 16%); }
+#main .dk-zones:not(.count-2) .dk-zone.is-chosen .dk-zone-mark { background: var(--accent); color: #fff; }

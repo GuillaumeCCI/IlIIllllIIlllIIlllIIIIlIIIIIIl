@@ -237,11 +237,12 @@
   /* content : eyebrow, title, subtitle, context { situation, read, choose }
    * (fenêtre ouverte à l'arrivée sur l'exercice), legend (une ligne de rappel), question, cardLabel, letters (a, b, c…), symbol, quoted, zones
    * [{ id, label, sub, tone, symbol, letter }], cards [{ text, answer, why }]. */
-  /* Un fond illustré différent pour la carte de chaque exercice. */
+  /* Un fond illustré différent pour la carte de chaque exercice ; content.banner
+   * (numéro de carte-NN.webp, ou false) le choisit depuis le contenu. */
   const DECK_BANNERS = { 's1-1.1': 1, 's2-2.1': 2, 's3-3.1': 3, 's4-4.1': 4, 's5-1.1': 5, 's5-2.1': 6, 's5-3.1': 7, 's5-4.1': 8 };
 
   function mountDeck(key, content) {
-    const banner = DECK_BANNERS[key];
+    const banner = content.banner ?? DECK_BANNERS[key];
     const cards = content.cards;
     const zones = content.zones;
     const total = cards.length;
@@ -365,7 +366,7 @@
   const MATCH_BANNERS = { 's2-2.2': 9, 's3-3.2': 10 };
 
   function mountMatch(key, content) {
-    const banner = MATCH_BANNERS[key];
+    const banner = content.banner ?? MATCH_BANNERS[key];
     const cards = content.cards;
     const zones = content.zones;
     const n = cards.length;
