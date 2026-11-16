@@ -482,3 +482,8 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-move.is-up .icon { transform: rotate(180deg); }
 .a4-move:hover:not(:disabled) { border-color: var(--accent); }
 .a4-move:disabled { opacity: .3; cursor: default; }
+/* La ligne qu'on vient de déplacer : un halo à sa couleur, qui s'éteint. */
+.a4-order-row { position: relative; }
+.a4-order-row.is-moved { animation: a4-moved .9s ease-out both; z-index: 1; }
+@keyframes a4-moved { 0% { box-shadow: 0 0 0 2px var(--tone), 0 10px 24px rgb(15 35 78 / 14%); background: #fff; } 100% { box-shadow: 0 0 0 0 transparent; background: #f7f9fe; } }
+@media (prefers-reduced-motion: reduce) { .a4-order-row.is-moved { animation: none; } }

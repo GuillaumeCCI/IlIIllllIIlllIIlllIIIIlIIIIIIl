@@ -36,7 +36,7 @@
     const r = ranks();
     const rows = r.map((id, i) => {
       const x = sellerOf(id);
-      return `<li class="a4-order-row tone-${esc(x.id)}" data-field="rank${i}">
+      return `<li class="a4-order-row tone-${esc(x.id)}" data-field="rank${i}" data-id="${esc(x.id)}">
         <span class="a4-order-n">${i + 1}</span>${avatar(x)}<strong>${esc(x.name)}</strong><span class="a4-order-total">${total(x)} / ${max}</span>
         <span class="a4-order-moves">
           <button type="button" class="a4-move is-up" data-act="a4-move" data-index="${i}" data-dir="-1" ${i === 0 ? 'disabled' : ''} aria-label="Monter ${esc(x.name)}">${kit.icon('arrowDown', { size: 16 })}</button>
@@ -238,9 +238,23 @@
       const j = i + Number(control.dataset.dir);
       if (j < 0 || j >= r.length) return;
       [r[i], r[j]] = [r[j], r[i]];
+      // L'animation (FLIP) : la place de chaque ligne avant le changement…
+      const before = new Map([...document.querySelectorAll('.a4-order-row')].map(row => [row.dataset.id, row.getBoundingClientRect().top]));
+      const moved = r[i];
       r.forEach((id, k) => ex.setValue(`rank${k}`, id));
       ex.setValue('rankTouched', true);
       kit.commit();
+      // … puis chaque ligne repart de là et glisse jusqu'à sa nouvelle place.
+      document.querySelectorAll('.a4-order-row').forEach(row => {
+        const dy = (before.get(row.dataset.id) ?? row.getBoundingClientRect().top) - row.getBoundingClientRect().top;
+        if (row.dataset.id === moved) row.classList.add('is-moved');
+        if (!dy || calm()) return;
+        row.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.2, .8, .3, 1)' });
+      });
+      // Le focus suit la ligne déplacée, sur la même flèche si elle reste possible.
+      const row = document.querySelector(`.a4-order-row[data-id="${moved}"]`);
+      const again = row && row.querySelector(`.a4-move[data-dir="${control.dataset.dir}"]:not(:disabled)`);
+      (again || (row && row.querySelector('.a4-move:not(:disabled)')))?.focus({ preventScroll: true });
     }
   });
 
