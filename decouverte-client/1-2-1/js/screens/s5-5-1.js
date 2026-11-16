@@ -41,7 +41,7 @@
   const situation = () => `<p class="k-label">La situation</p>
       <p class="a4-role"><strong>${esc(content.client.name)}</strong> · ${esc(content.client.role)}</p>
       <p class="a4-signal">${icon('clock', { size: 18 })}<span>${esc(content.client.signal)}</span></p>`;
-  const quoteCard = () => kit.clientCard(content.client.quote, content.client.portrait, `${content.client.name} vous dit`);
+  const quoteCard = () => kit.clientCard(content.client.quote, content.client.portrait, `${content.client.name} dit au commercial`);
   const clientBlock = () => `<section class="k-panel a4-client">${situation()}${quoteCard()}</section>`;
 
   /* L'échange sur un même plan : la situation en bandeau, puis la réplique
@@ -59,7 +59,7 @@
   const mark = name => esc(core.asset(`assets/illustrations/clients/${name}.webp`));
   const sellerBlock = s => `<div class="client-card-box a4-seller tone-${esc(s.id)}"><section class="client-card is-long no-portrait">
       <div class="client-card-said">
-        <p class="client-card-label a4-seller-label"><span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span><span>${esc(s.name)} vous répond</span></p>
+        <p class="client-card-label a4-seller-label"><span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span><span>${esc(s.name)}, ${esc(s.role)}, lui répond</span></p>
         <div class="client-card-quote"><img class="client-card-mark" src="${mark('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${said(s.text)}</blockquote><img class="client-card-mark is-closing" src="${mark('guillemet-fermant')}" alt="" aria-hidden="true"></div>
       </div>
     </section></div>`;

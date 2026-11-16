@@ -26,15 +26,16 @@
         portrait: 'client-chignon'
       },
 
+      // `role` : affiché avec le nom (« Inès, commerciale, lui répond »).
       // `text` : la réponse ; les passages entre crochets sont des indications.
       sellers: [
-        { id: 'thomas', name: 'Thomas', text: 'Très bien. Alors, avant tout, je vais vous présenter notre groupe : nous existons depuis 1987, nous avons 12 agences… [3 minutes plus tard] …voilà. Et donc, quels sont vos besoins ?',
+        { id: 'thomas', name: 'Thomas', role: 'commercial', text: 'Très bien. Alors, avant tout, je vais vous présenter notre groupe : nous existons depuis 1987, nous avons 12 agences… [3 minutes plus tard] …voilà. Et donc, quels sont vos besoins ?',
           notes: [0, 0, 0, 1],
           why: 'Thomas ignore totalement la contrainte de la cliente et parle de lui. Sa question finale est ouverte, mais trop tardive et trop vague.' },
-        { id: 'ines', name: 'Inès', text: 'Un quart d’heure, c’est noté, je vais à l’essentiel. Si je vous suis bien, ces pannes à répétition vous mettent en première ligne face aux équipes, et c’est ça qui devient pesant. Pour bien cibler, combien de pannes environ par mois, et sur quels appareils ?',
+        { id: 'ines', name: 'Inès', role: 'commerciale', text: 'Un quart d’heure, c’est noté, je vais à l’essentiel. Si je vous suis bien, ces pannes à répétition vous mettent en première ligne face aux équipes, et c’est ça qui devient pesant. Pour bien cibler, combien de pannes environ par mois, et sur quels appareils ?',
           notes: [2, 2, 1, 2],
           why: 'Inès montre qu’elle a capté le signal de temps, fait un reflet de l’émotion (« c’est moi qui prends ») puis lance la découverte. Ce qu’elle peut améliorer : elle n’attend pas la validation de sa reformulation (« c’est bien ça ? ») avant d’enchaîner sur ses questions.' },
-        { id: 'hugo', name: 'Hugo', text: 'Ah, les pannes, classique ! Votre prestataire ne fait sûrement pas de maintenance préventive, ils sont tous pareils. Chez nous, intervention en 4 h, ça règle le problème.',
+        { id: 'hugo', name: 'Hugo', role: 'commercial', text: 'Ah, les pannes, classique ! Votre prestataire ne fait sûrement pas de maintenance préventive, ils sont tous pareils. Chez nous, intervention en 4 h, ça règle le problème.',
           notes: [2, 0, 0, 0],
           why: 'Hugo est le piège : rapide et sûr de lui, il paraît efficace. Mais il juge (« ils sont tous pareils »), dénigre le concurrent et propose une solution sans connaître le problème. Les pannes viennent peut-être de machines inadaptées au volume, pas de la maintenance.' }
       ],
