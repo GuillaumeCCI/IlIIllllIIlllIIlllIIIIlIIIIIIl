@@ -1116,3 +1116,23 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 #main .fm-review-intro.is-folded:not([open]) > summary { margin: 0; }
 #main .ana-score { gap: 10px; padding: 16px 20px; }
 @media (max-width: 900px) { #main .fm-review.is-rows .fm-rv-row { grid-template-columns: minmax(0, 1fr); } }
+
+/* 5.1, corrigé des notes : le verdict en mots, pas en icônes à décoder. */
+#main .a4-review-rows li { grid-template-columns: minmax(0, 1fr) 44px 44px 150px; }
+.a4-verdict-word { justify-self: start; padding: 2px 10px; border-radius: 999px; font-size: .8rem; font-weight: 700; white-space: nowrap; }
+.a4-verdict-word.is-same { background: #e3f4ea; color: #1d6b43; }
+.a4-verdict-word.is-near { background: #eef6f1; color: #3f7a5a; }
+.a4-verdict-word.is-far { background: #fde8e4; color: #a33a26; }
+#main .a4-review-totals { display: inline-flex; gap: 16px; color: #5b6a8f; font-size: .92rem; }
+
+/* 5.1, corrigé des réécritures : une ligne par question, trois colonnes
+   titrées (Yanis a écrit · Votre réécriture · Une réécriture possible). */
+#main .a4-rw-row { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.1fr) minmax(0, 1.1fr); gap: 18px; align-items: start; margin-top: 14px; padding-top: 14px; border-top: 1px solid #f0f2f7; }
+#main .a4-rw-col { display: grid; gap: 6px; align-content: start; }
+#main .a4-rw-col p { margin: 0; line-height: 1.45; }
+#main .a4-rw-k { display: inline-flex; align-items: center; gap: 8px; color: #6b7aa1; font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+#main .a4-rw-col.is-from p { color: #7a3a26; }
+#main .a4-rw-col.is-from .a4-guide-n { background: #fdf0ec; color: #c4512f; }
+#main .a4-rw-col.is-model p { padding: 8px 12px; border-radius: 10px; background: #f5f7fc; color: #2b3768; }
+#main .a4-rw-col .a4-expect { margin: 2px 0 0; }
+@media (max-width: 900px) { #main .a4-rw-row { grid-template-columns: minmax(0, 1fr); } }

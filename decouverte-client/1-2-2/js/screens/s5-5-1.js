@@ -166,14 +166,14 @@
   const pips = (n, label) => `<span class="a4-pips" role="img" aria-label="${esc(label)}">${[0, 1].map(p => `<i class="${p < n ? 'is-on' : ''}"></i>`).join('')}</span>`;
   /* Chaque ligne : votre note et la note attendue, côte à côte, puis une
    * marque : ✓ même note, ±1 un point d'écart (accepté), ✗ deux points. */
-  const VERDICT = gap => (gap === 0 ? { cls: 'is-same', icon: 'check', text: 'même note' }
-    : gap === 1 ? { cls: 'is-near', icon: 'check', text: 'un point d’écart, accepté' }
-    : { cls: 'is-far', icon: 'close', text: 'deux points d’écart' });
+  const VERDICT = gap => (gap === 0 ? { cls: 'is-same', icon: 'check', text: 'même note', word: 'Juste' }
+    : gap === 1 ? { cls: 'is-near', icon: 'check', text: 'un point d’écart, accepté', word: 'À un point près' }
+    : { cls: 'is-far', icon: 'close', text: 'deux points d’écart', word: 'Deux points d’écart' });
   const verdictMark = v => `<span class="a4-verdict ${v.cls}" aria-hidden="true">${kit.icon(v.icon, { size: 13, strokeWidth: 3 })}</span>`;
   function reviewCards() {
     return `<div class="a4-recap-grid a4-review-grid">${sellers.map(x => `<article class="a4-recap-card tone-${esc(x.id)}">
       <header>${avatar(x)}<strong>${esc(x.name)}</strong>
-        <span class="a4-review-totals"><span>Vous <b>${total(x)}</b></span><span>Attendu <b class="is-ref">${reference(x)}</b></span><small>sur ${max}</small></span></header>
+        <span class="a4-review-totals"><span>Votre total <b>${total(x)}</b> / ${max}</span><span>Total attendu <b class="is-ref">${reference(x)}</b> / ${max}</span></span></header>
       <ul class="a4-review-rows">
         <li class="a4-review-cols" aria-hidden="true"><span></span><span>Vous</span><span>Attendu</span><span></span></li>
         ${criteria.map((c, i) => {
@@ -181,7 +181,7 @@
           const ref = x.notes[i];
           const v = VERDICT(Math.abs(mine - ref));
           const tip = `Votre note : ${mine} · attendu : ${ref} (${v.text}). ${c.text}`;
-          return `<li class="${v.cls}" tabindex="0" data-tip="${esc(tip)}"><span class="a4-review-crit">${esc(c.title)}</span><span class="a4-n is-mine" aria-label="Votre note : ${mine} sur 2">${mine}</span><span class="a4-n" aria-label="Note attendue : ${ref} sur 2">${ref}</span>${verdictMark(v)}</li>`;
+          return `<li class="${v.cls}" tabindex="0" data-tip="${esc(tip)}"><span class="a4-review-crit">${esc(c.title)}</span><span class="a4-n is-mine" aria-label="Votre note : ${mine} sur 2">${mine}</span><span class="a4-n" aria-label="Note attendue : ${ref} sur 2">${ref}</span><span class="a4-verdict-word ${v.cls}">${v.word}</span></li>`;
         }).join('')}
       </ul>
       <p class="a4-review-why">${esc(x.why)}</p>
@@ -202,11 +202,10 @@
           const tip = item.kind === 'warn' ? `Repéré : ${(item.found || []).map(w => `« ${w} »`).join(', ')}. ${item.conseil || ''}` : item.kind === 'ok' ? '' : (item.conseil || '');
           return `<li class="is-${item.kind}" ${tip ? `tabindex="0" data-tip="${esc(tip)}"` : ''}><span aria-hidden="true">${MARK[item.kind] || ''}</span>${esc(item.nom)}</li>`;
         }).join('')}</ul>` : '';
-        return `<div class="a4-rewrite-review">
-          <p class="a4-rewrite-from"><span class="a4-guide-n">${i + 1}</span>Yanis : « ${esc(r.from)} »</p>
-          ${ouvert ? ouvert.quote('s5-5.1', i, text) : `<p>« ${esc(text)} »</p>`}
-          ${chips}
-          <p class="a4-rewrite-model"><span>Une réécriture possible</span> ${esc(r.model)}</p>
+        return `<div class="a4-rewrite-review a4-rw-row">
+          <div class="a4-rw-col is-from"><span class="a4-rw-k"><span class="a4-guide-n">${i + 1}</span>Yanis a écrit</span><p>« ${esc(r.from)} »</p></div>
+          <div class="a4-rw-col is-yours"><span class="a4-rw-k">Votre réécriture</span>${ouvert ? ouvert.quote('s5-5.1', i, text) : `<p>« ${esc(text)} »</p>`}${chips}</div>
+          <div class="a4-rw-col is-model"><span class="a4-rw-k">Une réécriture possible</span><p>${esc(r.model)}</p></div>
         </div>`;
       }).join('')}
     </div>`;
@@ -228,7 +227,7 @@
   function review() {
     return `${clientBlock()}
       <section class="k-panel a4-result">
-        <div class="a4-review-head"><p class="a4-review-title"><span class="k-label">Vos notes et les notes attendues</span><span class="a4-review-count"><b>${close()}</b> / ${sellers.length * nC} notes justes, à un point près</span></p><p class="a4-review-legend">${[0, 1, 2].map(g => { const v = VERDICT(g); return `<span>${verdictMark(v)}${v.text.charAt(0).toUpperCase() + v.text.slice(1).replace(', accepté', ' : accepté')}</span>`; }).join('')}</p></div>
+        <div class="a4-review-head"><p class="a4-review-title"><span class="k-label">Vos notes et les notes attendues</span><span class="a4-review-count"><b>${close()}</b> / ${sellers.length * nC} notes justes, à un point près</span></p></div>
         ${reviewCards()}
       </section>
       <section class="k-panel a4-result">
