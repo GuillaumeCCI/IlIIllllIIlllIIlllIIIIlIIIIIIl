@@ -912,4 +912,4 @@ html { background-color: #fbf8f2; }
    quand le décor coloré du fond passe dessous (tous les modules). */
 #main .k-bar .k-back { padding: 8px 16px 8px 12px; border-radius: 999px; background: #fff; box-shadow: 0 4px 14px rgb(20 40 100 / 10%); color: var(--accent); text-decoration: none; }
 #main .k-bar .k-back:hover { background: #f3f6ff; }
-#main .k-bar .k-back span { text-decoration: underline; text-underline-offset: 3px; }
+#main .k-bar .k-back, #main .k-bar .k-back span { text-decoration: none; }
