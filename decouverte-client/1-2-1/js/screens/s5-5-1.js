@@ -163,39 +163,54 @@
 
   const close = () => sellers.reduce((n, s) => n + criteria.filter((_, i) => Math.abs(Number(note(s, i)) - s.notes[i]) <= 1).length, 0);
 
-  function reviewTable() {
-    const cell = (s, i) => {
-      const mine = Number(note(s, i));
-      const gap = Math.abs(mine - s.notes[i]);
-      return `<td><strong class="a4-mine">${mine}</strong>${kit.mark(gap <= 1, `repère ${s.notes[i]}${gap === 1 ? ' · un point d’écart' : ''}`)}</td>`;
-    };
-    return `<table class="a4-review">
-      <thead><tr><th scope="col">Critère</th>${sellers.map(s => `<th scope="col">${esc(s.name)}</th>`).join('')}</tr></thead>
-      <tbody>${criteria.map((c, i) => `<tr><th scope="row"><strong>${esc(c.title)}</strong><small>${esc(c.text)}</small></th>${sellers.map(s => cell(s, i)).join('')}</tr>`).join('')}
-        <tr class="a4-review-total"><th scope="row"><strong>Total</strong></th>${sellers.map(s => `<td><strong class="a4-mine">${total(s)} / ${max}</strong><span class="a4-ref">repère ${reference(s)} / ${max}</span></td>`).join('')}</tr>
-      </tbody>
-    </table>`;
+  /* Le corrigé, en trois cartes : pour chaque commercial, vos notes et
+   * celles du corrigé, critère par critère (un écart d'un point est
+   * accepté), puis l'explication de la fiche. */
+  const pips = (n, label) => `<span class="a4-pips" role="img" aria-label="${esc(label)}">${[0, 1].map(p => `<i class="${p < n ? 'is-on' : ''}"></i>`).join('')}</span>`;
+  function reviewCards() {
+    return `<div class="a4-recap-grid a4-review-grid">${sellers.map(x => `<article class="a4-recap-card tone-${esc(x.id)}">
+      <header>${avatar(x)}<strong>${esc(x.name)}</strong>
+        <span class="a4-recap-total"><b>${total(x)}</b> / ${max}<small>corrigé ${reference(x)} / ${max}</small></span></header>
+      <ul class="a4-recap-notes a4-review-notes">${criteria.map((c, i) => {
+        const mine = Number(note(x, i));
+        const ref = x.notes[i];
+        const gap = Math.abs(mine - ref);
+        return `<li><span>${esc(c.title)}</span>${gap ? `<em class="a4-gap ${gap > 1 ? 'is-far' : ''}">corrigé : ${ref}</em>` : ''}${pips(mine, `Votre note : ${mine} sur 2${gap ? `, corrigé : ${ref}` : ''}`)}</li>`;
+      }).join('')}</ul>
+      <p class="a4-review-why">${esc(x.why)}</p>
+    </article>`).join('')}</div>`;
+  }
+
+  /* La justification : la réponse (mots repérés surlignés) et son score,
+   * puis ce qu'on attendait, en pastilles (le conseil en info-bulle). */
+  const MARK = { ok: '✓', part: '◐', miss: '○', warn: '!' };
+  function justification() {
+    const text = ex.value('why');
+    const scored = ouvert && ouvert.result('s5-5.1');
+    const bloc = ouvert && ouvert.blocOf('s5-5.1', 0);
+    const chips = bloc ? `<ul class="a4-expect">${bloc.lines.map(item => {
+      const tip = item.kind === 'warn' ? `Repéré : ${(item.found || []).map(w => `« ${w} »`).join(', ')}. ${item.conseil || ''}` : item.kind === 'ok' ? '' : (item.conseil || '');
+      return `<li class="is-${item.kind}" ${tip ? `tabindex="0" data-tip="${esc(tip)}"` : ''}><span aria-hidden="true">${MARK[item.kind] || ''}</span>${esc(item.nom)}</li>`;
+    }).join('')}</ul>` : '';
+    return `<div class="a4-just">
+        <p class="a4-just-title"><span>Votre justification</span>${scored ? `<span class="a4-just-score"><b>${String(scored.points).replace('.', ',')}</b> / ${scored.total}</span>` : ''}</p>
+        ${ouvert ? ouvert.quote('s5-5.1', 0, text) : `<p>« ${esc(text)} »</p>`}
+        ${kit.filled(text) ? chips : ''}
+        ${ouvert ? ouvert.model(content.models.why) : kit.model('Une réponse possible', content.models.why)}
+      </div>`;
   }
 
   function review() {
     const chosen = ranks().map(nameOf).join(', puis ');
     const rankOk = ranks().every((id, i) => id === content.ranking[i]);
-    const selfLabel = (SELF.find(o => o.id === ex.value('self0')) || {}).label || '';
     return `${clientBlock()}
       <section class="k-panel a4-result">
-        ${kit.result(close(), sellers.length * nC, 'notes à un point près du repère, ou moins')}
-        <p class="k-muted">${esc(content.tolerance)}</p>
-        ${reviewTable()}
+        <p class="a4-review-head"><span class="k-label">Vos notes et le corrigé</span><span class="a4-review-count"><b>${close()}</b> / ${sellers.length * nC} notes justes, à un point près</span></p>
+        ${reviewCards()}
       </section>
       <section class="k-panel a4-result">
         ${kit.picked(rankOk, chosen, content.rankingText, 'Votre classement')}
-        ${ouvert ? `${ouvert.head('s5-5.1')}${ouvert.answer('s5-5.1', 0, { title: 'Votre justification', text: ex.value('why'), model: content.models.why })}`
-          : `${kit.yours('Votre justification', ex.value('why'))}${kit.model('Une justification possible', content.models.why)}`}
-        <p class="a4-self-recap"><strong>${esc(content.selfCheck.title)}</strong> · votre réponse : ${esc(selfLabel)}</p>
-      </section>
-      <section class="k-panel a4-result">
-        <p class="k-label">Le corrigé, commercial par commercial</p>
-        ${sellers.map(s => `${sellerBlock(s)}${kit.explain(s.why, `${s.name} · ${reference(s)} / ${max}`)}`).join('')}
+        ${justification()}
       </section>
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }

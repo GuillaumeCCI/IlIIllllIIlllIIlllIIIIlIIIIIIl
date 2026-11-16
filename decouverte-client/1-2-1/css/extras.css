@@ -505,3 +505,30 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-recap-notes li::before { content: ''; position: absolute; right: 22px; bottom: calc(100% + 2px); z-index: 5; border: 6px solid transparent; border-top-color: var(--navy); opacity: 0; transition: opacity .15s; pointer-events: none; }
 .a4-recap-notes li:is(:hover, :focus-visible)::after { opacity: 1; transform: none; }
 .a4-recap-notes li:is(:hover, :focus-visible)::before { opacity: 1; }
+
+/* A4, corrigé : trois cartes (vos notes, le corrigé quand il diffère,
+   l'explication), puis la justification en version compacte. */
+.a4-review-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin: 0 0 14px; }
+.a4-review-head .k-label { margin: 0; }
+.a4-review-count { color: var(--muted); font-size: .9rem; }
+.a4-review-count b { color: var(--navy); font-size: 1.15rem; }
+.a4-review-grid { align-items: stretch; }
+.a4-recap-total small { display: block; text-align: right; color: var(--muted); font-size: .75rem; font-weight: 400; }
+.a4-review-notes li { cursor: default; }
+.a4-gap { margin-left: auto; margin-right: 8px; color: var(--muted); font-size: .75rem; font-style: normal; }
+.a4-gap.is-far { color: #c4512f; font-weight: 700; }
+.a4-review-why { margin: 4px 0 0; padding-top: 10px; border-top: 1px solid #e3e9f6; color: #2b3866; font-size: .88rem; line-height: 1.5; }
+.a4-just { margin-top: 18px; }
+.a4-just-title { display: flex; align-items: baseline; gap: 12px; margin: 0 0 6px; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #4c5f86; }
+.a4-just-score { letter-spacing: 0; text-transform: none; font-size: .9rem; font-weight: 400; color: var(--muted); }
+.a4-just-score b { color: var(--accent); font-size: 1.2rem; font-weight: 800; }
+.a4-expect { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; padding: 0; list-style: none; }
+.a4-expect li { position: relative; display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px 4px 8px; border-radius: 999px; background: #eef1f7; color: var(--muted); font-size: .85rem; outline: none; }
+.a4-expect li > span { font-weight: 800; }
+.a4-expect li.is-ok { background: #dcf3e6; color: #1d7a4b; }
+.a4-expect li.is-part { background: #fdf1cf; color: #8a6400; }
+.a4-expect li.is-warn { background: #fde4de; color: #a8402c; }
+.a4-expect li[data-tip] { cursor: help; }
+.a4-expect li[data-tip]::after { content: attr(data-tip); position: absolute; left: 0; bottom: calc(100% + 8px); z-index: 5; width: max-content; max-width: 320px; padding: 9px 12px; border-radius: 10px; background: var(--navy); color: #fff; font-size: .8rem; line-height: 1.45; box-shadow: 0 10px 24px rgb(15 35 78 / 22%); opacity: 0; transform: translateY(4px); pointer-events: none; transition: opacity .15s, transform .15s; }
+.a4-expect li[data-tip]:is(:hover, :focus-visible)::after { opacity: 1; transform: none; }
+@media (max-width: 960px) { .a4-review-grid { grid-template-columns: 1fr; } }
