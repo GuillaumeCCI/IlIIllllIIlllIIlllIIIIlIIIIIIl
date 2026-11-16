@@ -175,6 +175,38 @@
         pieges: [PIEGE_JUGEMENT] }
     ] },
 
+    // S5 5.1 · A4 : justifier son premier choix par les critères de la grille.
+    's5-5.1': { integre: true, blocs: [
+      { titre: 'Pourquoi ce premier choix', champs: ['why'],
+        criteres: [
+          { nom: 'Inès, en premier', points: 2, conseil: 'Nommez le commercial que vous placez en premier : Inès.',
+            mots: ['inès', 'ines'] },
+          { nom: 'La contrainte de temps', points: 2, conseil: 'Dites qu’elle tient compte du temps de la cliente : « un quart d’heure, c’est noté ».',
+            mots: ['temps', 'quart d’heure', 'un quart d’heure', '15 minutes', 'quinze minutes', 'pressée', 'pressé', 'montre', 'essentiel', 'l’essentiel', 'contrainte',
+              'délai', 'comité', '11 h', 'onze heures', 'va droit', 'droit au but', 'court', 'brève', 'bref', 'concise', 'concis', 'vite', 'horaire', 'disponibilité'] },
+          { nom: 'L’écoute de la cliente', points: 2, conseil: 'Dites qu’elle reformule ce que ressent la cliente, sans juger : « c’est moi qui prends ».',
+            mots: ['reformul*', 'reflet', 'ressent', 'ressenti', 'émotion', 'émotions', 'compréhension', 'comprend', 'compris', 'empathie', 'empathique', 'écoute',
+              'écouté', 'écoutée', 'pesant', 'pèse', 'première ligne', 'c’est moi qui prends', 'qui prends', 'sans juger', 'ne juge pas', 'ne juge', 'vécu', 'vit',
+              'situation', 'frustration', 'stress', 'se sent comprise', 'comprise', 'à sa place'] },
+          { nom: 'La découverte ouverte', points: 2, conseil: 'Dites qu’elle ouvre la découverte : ses questions précises (combien de pannes, quels appareils).',
+            mots: ['question', 'questions', 'découverte', 'découvrir', 'combien', 'pannes par mois', 'appareils', 'quels appareils', 'cibler', 'cible', 'précise',
+              'précises', 'précis', 'creuse', 'creuser', 'en dire plus', 'besoin', 'besoins', 'interroge', 'demande', 'informations', 'chiffres', 'fréquence'] },
+          { nom: 'Une comparaison', points: 1, conseil: 'Comparez-la aux deux autres : Thomas parle de lui, Hugo juge et propose une solution.',
+            mots: ['seule', 'seul', 'thomas', 'hugo', 'les autres', 'les deux autres', 'contrairement', 'alors que', 'tandis que', 'à la différence', 'au contraire',
+              'meilleure note', 'meilleur score', 'plus de points', '7 sur 8', '7/8', '7 / 8', 'note', 'grille', 'critère', 'critères'] }
+        ],
+        phrases: { attendues: 1, points: 1 },
+        pieges: [
+          { nom: 'Une impression, pas un critère', points: 2, conseil: 'Appuyez-vous sur les critères de la grille, pas sur votre impression.',
+            mots: ['sympa', 'sympathique', 'gentille', 'agréable', 'polie', 'souriante', 'je la trouve', 'elle a l’air', 'j’aime bien', 'je préfère', 'feeling', 'instinct',
+              'impression générale', 'je sens', 'elle me plaît', 'elle est bien'] },
+          { nom: 'L’argument d’Hugo', points: 3, conseil: 'Proposer une solution rapide n’est pas écouter : Hugo juge et répond sans connaître le problème.',
+            mots: ['intervention', 'en 4 h', '4 heures', 'quatre heures', 'maintenance', 'préventive', 'règle le problème', 'ça règle', 'sûr de lui', 'tous pareils'] },
+          { nom: 'La présentation de Thomas', points: 3, conseil: 'Présenter son entreprise n’est pas écouter : Thomas ignore le temps de la cliente.',
+            mots: ['1987', '12 agences', 'douze agences', 'son groupe', 'présente son groupe', 'présente son entreprise', 'historique', 'agences'] }
+        ] }
+    ] },
+
     // S4 4.4 · La réplique « comme tout le monde », réécrite avec une attitude de compréhension.
     's4-4.4': { integre: true, blocs: [
       { titre: 'Votre réplique à la place de celle de Nadia', champs: ['c0_l3'],

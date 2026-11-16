@@ -175,3 +175,31 @@ module.exports = {
     ]
   }
 };
+
+/* S5 5.1 · A4 : la justification du premier choix (champ `why`). */
+const A4 = module.exports;
+A4.justes['s5-5.1'] = [
+  { why: 'Inès tient compte du temps de la cliente, elle reformule ce qu’elle ressent et pose des questions précises pour ouvrir la découverte.' },
+  { why: 'Inès est la seule à respecter le quart d’heure. Elle fait un reflet de « c’est moi qui prends » puis elle demande combien de pannes par mois.' },
+  { why: "Ines va à l'essentiel car la cliente est pressée, elle montre qu'elle a compris sa situation et elle lui pose des questions sur les appareils." },
+  { why: 'Je mets Inès en premier : elle prend en compte la contrainte de temps, elle reformule sans juger et elle creuse le besoin avec ses questions. Thomas et Hugo, eux, ne l’écoutent pas.' },
+  { why: 'Inès a la meilleure note sur la grille : elle note le délai de 15 minutes, elle reformule l’émotion de la cliente et elle ouvre la découverte.' },
+  { why: 'Contrairement à Hugo qui juge, Inès écoute : elle reprend le ressenti de la cliente, respecte son temps et lui demande des précisions sur les pannes.' },
+  { why: 'Parce qu’Inès s’adapte au temps disponible, montre de l’empathie (elle est en première ligne face aux équipes) et cherche à cibler le besoin avec deux questions.' },
+  { why: 'Inès : elle dit « un quart d’heure, c’est noté », elle reformule la situation pesante de la cliente puis elle l’invite à en dire plus.' },
+  { why: "Inès coche presque tous les critères : elle respecte le temps, elle fait preuve d'écoute avec sa reformulation et elle lance la découverte avec des questions." },
+  { why: 'Inès reste brève parce que la cliente regarde sa montre, elle comprend ce qu’elle vit au quotidien et ses questions sur les pannes vont permettre de découvrir son vrai besoin.' },
+  { why: 'Elle seule, Inès, prend en compte la contrainte horaire, reformule ce que vit la cliente et l’interroge sur la fréquence des pannes.' },
+  { why: 'Inès est la plus adaptée : elle est concise, elle reformule le stress de la cliente et elle demande des informations précises, alors que Thomas parle de lui.' }
+];
+A4.mauvaises['s5-5.1'] = [
+  { why: 'Hugo, parce qu’il propose une intervention en 4 h et ça règle le problème.' },
+  { why: 'Thomas présente bien son groupe : 12 agences depuis 1987, c’est rassurant.' },
+  { why: 'Je la trouve sympa et souriante, elle a l’air agréable.' },
+  { why: 'Hugo est sûr de lui et il connaît la maintenance préventive.' }
+];
+A4.motsCles['s5-5.1'] = { why: 'Inès temps' };
+A4.fautes['s5-5.1'] = [
+  { why: 'ines tien conte du tant de la cliente, elle reformul ce quel ressen et elle pose des question precise pour la decouverte' },
+  { why: 'Inès respecte le car dheure, elle fai un reflet de cest moi qui prend et elle demande conbien de panne par mois' }
+];

@@ -65,6 +65,9 @@
         model: 'Inès est la seule à tenir compte du temps de la cliente, à reformuler ce qu’elle ressent (« c’est moi qui prends ») et à ouvrir la découverte par des questions précises. Seul manque : elle n’attend pas que la cliente valide sa reformulation.'
       },
 
+      // La réponse possible de chaque champ rédigé (score estimatif, js/grilles.js).
+      models: { why: 'Inès est la seule à tenir compte du temps de la cliente, à reformuler ce qu’elle ressent (« c’est moi qui prends ») et à ouvrir la découverte par des questions précises. Seul manque : elle n’attend pas que la cliente valide sa reformulation.' },
+
       // Le critère spécifique de l'auto-évaluation de la fiche.
       selfCheck: { title: 'Justification par critères', text: 'Mon classement s’appuie sur la grille, pas sur mon impression générale.' },
 

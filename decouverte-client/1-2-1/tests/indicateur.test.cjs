@@ -30,6 +30,8 @@ const contentOf = key => { const [, s, id] = key.match(/^s(\d+)-(.+)$/); return 
 /* Les réponses possibles affichées au corrigé, champ par champ. */
 function modeles(key) {
   const values = {};
+  // Un écran propre au module (sans cas) déclare ses modèles champ par champ.
+  if (!contentOf(key).cases) return Object.assign(values, contentOf(key).models);
   contentOf(key).cases.forEach((kase, i) => (kase.fields || []).forEach(f => { if (f.model) values[`c${i}_${f.id}`] = f.model; }));
   return values;
 }

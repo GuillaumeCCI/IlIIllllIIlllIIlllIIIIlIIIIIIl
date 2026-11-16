@@ -11,6 +11,7 @@
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
+  const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S5['5.1'];
   const { sellers, criteria, levels } = content;
@@ -101,9 +102,10 @@
         <p class="k-label">Les trois réponses, avec vos notes</p>
         <p class="a4-recap-client"><strong>${esc(content.client.name)}</strong> « ${esc(content.client.quote)} »</p>
         <div class="a4-recap-grid">${sellers.map(s => `<article class="a4-recap-card tone-${esc(s.id)}">
-          <header><span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span><strong>${esc(s.name)}</strong><span class="a4-recap-total">${total(s)} / ${max}</span></header>
+          <header><span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span><strong>${esc(s.name)}</strong>
+            <span class="a4-recap-total"><b>${total(s)}</b> / ${max}</span></header>
           <p class="a4-recap-text">« ${said(s.text)} »</p>
-          <ul class="a4-recap-notes">${criteria.map((c, i) => `<li><span>${esc(c.title)}</span><strong>${esc(note(s, i))}</strong></li>`).join('')}</ul>
+          <ul class="a4-recap-notes">${criteria.map((c, i) => `<li><span>${esc(c.title)}</span><span class="a4-pips" role="img" aria-label="${esc(note(s, i))} sur 2">${[0, 1].map(p => `<i class="${p < Number(note(s, i)) ? 'is-on' : ''}"></i>`).join('')}</span></li>`).join('')}</ul>
         </article>`).join('')}</div>
       </section>
       <section class="k-panel a4-rank">
@@ -148,8 +150,8 @@
       </section>
       <section class="k-panel a4-result">
         ${kit.picked(rankOk, chosen, content.rankingText, 'Votre classement')}
-        ${kit.yours('Votre justification', ex.value('why'))}
-        ${kit.model('Une justification possible', content.justify.model)}
+        ${ouvert ? `${ouvert.head('s5-5.1')}${ouvert.answer('s5-5.1', 0, { title: 'Votre justification', text: ex.value('why'), model: content.models.why })}`
+          : `${kit.yours('Votre justification', ex.value('why'))}${kit.model('Une justification possible', content.models.why)}`}
         <p class="a4-self-recap"><strong>${esc(content.selfCheck.title)}</strong> · votre réponse : ${esc(selfLabel)}</p>
       </section>
       <section class="k-panel a4-result">
