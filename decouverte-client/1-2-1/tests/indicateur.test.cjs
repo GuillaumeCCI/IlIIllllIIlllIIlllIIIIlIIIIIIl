@@ -22,8 +22,11 @@ for (const file of ['../../moteur/js/indicateur.js', 'js/grilles.js', ...content
 const W = sandbox.window;
 const { AtelierAnalyse: A, ATELIER_GRILLES: G } = W;
 const { justes: JUSTES, mauvaises: MAUVAISES, motsCles: MOTS_CLES } = require('./reponses-variees.cjs');
-const points = (key, values) => (A.score(G[key], values) || { points: 0 }).points;
-const champs = key => G[key].blocs.flatMap(b => b.champs || []);
+/* Une grille qui dépend du cas (`parCas`, ex. le client choisi en A5) : le
+ * cas est donné dans les réponses de test (`cas`, 0 par défaut). */
+const gridOf = (key, values = {}) => (G[key].parCas ? G[key].parCas(values.cas ?? 0) : G[key]);
+const points = (key, values) => (A.score(gridOf(key, values), values) || { points: 0 }).points;
+const champs = key => [...new Set(Array.from({ length: G[key].cas || 1 }, (_, c) => gridOf(key, { cas: c }).blocs.flatMap(b => b.champs || [])).flat())];
 const fill = (key, text) => Object.fromEntries(champs(key).map(f => [f, text]));
 const contentOf = key => { const [, s, id] = key.match(/^s(\d+)-(.+)$/); return (W[`ATELIER_S${s}`] || {})[id]; };
 
@@ -31,9 +34,17 @@ const contentOf = key => { const [, s, id] = key.match(/^s(\d+)-(.+)$/); return 
 function modeles(key) {
   const values = {};
   // Un écran propre au module (sans cas) déclare ses modèles champ par champ.
-  if (!contentOf(key).cases) return Object.assign(values, contentOf(key).models);
+  if (!contentOf(key).cases) return Object.assign(values, contentOf(key).models || modelesParCas(key)[0]);
   contentOf(key).cases.forEach((kase, i) => (kase.fields || []).forEach(f => { if (f.model) values[`c${i}_${f.id}`] = f.model; }));
   return values;
+}
+
+/* Les modèles de chaque cas d'une grille `parCas` (A5 : un jeu par fiche
+ * client, champs r1 à r3), chacun avec son numéro de cas. */
+function modelesParCas(key) {
+  const c = contentOf(key);
+  if (!c.fiches) return [];
+  return c.fiches.map((fiche, cas) => Object.assign({ cas }, Object.fromEntries(fiche.models.map((m, i) => [`r${i + 1}`, m]))));
 }
 
 let passed = 0;
@@ -63,7 +74,8 @@ test('chaque grille lit des champs que son exercice demande', () => {
 });
 
 test('les réponses possibles du module obtiennent au moins 8 / 10', () => {
-  const low = Object.keys(G).map(key => [key, points(key, modeles(key))]).filter(([, p]) => p < 8);
+  const low = Object.keys(G).flatMap(key => (G[key].parCas && modelesParCas(key).length ? modelesParCas(key) : [modeles(key)])
+    .map(values => [`${key}${values.cas !== undefined ? ` (cas ${values.cas})` : ''}`, points(key, values)])).filter(([, p]) => p < 8);
   assert.deepStrictEqual(low, []);
 });
 

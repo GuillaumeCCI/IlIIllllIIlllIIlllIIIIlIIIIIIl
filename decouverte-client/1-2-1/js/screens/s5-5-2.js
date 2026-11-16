@@ -13,6 +13,8 @@
   const ex = window.AtelierExercise;
   const kit = window.AtelierKit;
   const media = window.AtelierMedia;
+  const ouvert = window.AtelierOuvert;
+  const KEY = 's5-5.2';
   const { esc, icon } = kit;
   const content = window.ATELIER_S5['5.2'];
   const { fiches, tasks } = content;
@@ -116,18 +118,40 @@
   /* ── Relecture ──────────────────────────────────────────────────────── */
   const allText = f => [1, 2, 3].map(k => `Réplique ${k} · ${f.name} : « ${wordsOf(f.lines[k - 1])} »\nMa réponse : ${answer(k)}`).join('\n\n');
 
+  /* Une réponse au corrigé : la réplique du client, votre réponse (mots
+   * repérés surlignés) et son score, ce qu'une bonne réponse contient (en
+   * pastilles, le conseil en info-bulle), puis la réponse possible. */
+  const MARK = { ok: '✓', part: '◐', miss: '○', warn: '!' };
+  function answerReview(f, k) {
+    const text = answer(k);
+    const bloc = ouvert && ouvert.blocOf(KEY, k - 1);
+    const pts = bloc && bloc.max ? Math.round(bloc.earned / bloc.max * 10 * 2) / 2 : null;
+    const wanted = bloc ? bloc.lines.filter(l => l.kind !== 'warn') : [];
+    const found = wanted.filter(l => l.kind === 'ok').length;
+    const chips = bloc ? `<p class="a4-expect-title">Ce qu’une bonne réponse contient <span>· ${found} sur ${wanted.length} dans la vôtre</span></p>
+      <ul class="a4-expect">${bloc.lines.map(item => {
+        const tip = item.kind === 'warn' ? `Repéré : ${(item.found || []).map(w => `« ${w} »`).join(', ')}. ${item.conseil || ''}` : item.kind === 'ok' ? '' : (item.conseil || '');
+        return `<li class="is-${item.kind}" ${tip ? `tabindex="0" data-tip="${esc(tip)}"` : ''}><span aria-hidden="true">${MARK[item.kind] || ''}</span>${esc(item.nom)}</li>`;
+      }).join('')}</ul>` : '';
+    return `<div class="a5-review-step">
+      <h2 class="a5-review-title"><span class="a4-step-n">${k}</span>${esc(tasks[k - 1].title)}${pts !== null ? `<span class="a4-just-score"><b>${String(pts).replace('.', ',')}</b> / 10</span>` : ''}</h2>
+      <p class="a5-review-line">${gestureOf(f.lines[k - 1]) ? `<em>${esc(gestureOf(f.lines[k - 1]))}</em> ` : ''}${esc(f.name)} : « ${esc(wordsOf(f.lines[k - 1]))} »</p>
+      <p class="a5-review-you">Vous</p>
+      ${ouvert ? ouvert.quote(KEY, k - 1, text) : `<p>« ${esc(text)} »</p>`}
+      ${kit.filled(text) ? chips : ''}
+      ${ouvert ? ouvert.model(f.models[k - 1]) : kit.model('Une réponse possible', f.models[k - 1])}
+      ${f.notes[k - 1] ? kit.help(f.notes[k - 1], 'lightbulb') : ''}
+    </div>`;
+  }
+
   function review() {
     const f = fiche();
+    if (ouvert) ouvert.forCase(KEY, fiches.indexOf(f));
+    const scored = ouvert && ouvert.result(KEY);
     const yes = content.selfCheck.filter((_, i) => ex.value(`self${i}`) === 'oui').length;
     return `<section class="k-panel a5-review">
-        <p class="k-label">${esc(f.sector)} · ${esc(f.title)} · ${esc(f.name)}</p>
-        ${[1, 2, 3].map(k => `<div class="a5-review-step">
-          <h2 class="a5-review-title"><span class="a4-step-n">${k}</span>${esc(tasks[k - 1].title)}</h2>
-          <p class="a5-review-line">${gestureOf(f.lines[k - 1]) ? `<em>${esc(gestureOf(f.lines[k - 1]))}</em> ` : ''}« ${esc(wordsOf(f.lines[k - 1]))} »</p>
-          ${kit.yours('Votre réponse', answer(k))}
-          ${kit.model('Une réponse possible', f.models[k - 1])}
-          ${f.notes[k - 1] ? kit.help(f.notes[k - 1], 'lightbulb') : ''}
-        </div>`).join('')}
+        <p class="a4-review-head"><span class="k-label">${esc(f.sector)} · ${esc(f.title)} · ${esc(f.name)}</span>${scored ? `<span class="a4-review-count">Vos trois réponses : <b>${String(scored.points).replace('.', ',')}</b> / 10</span>` : ''}</p>
+        ${[1, 2, 3].map(k => answerReview(f, k)).join('')}
         <p class="k-muted">Ce sont des exemples, pas des réponses uniques : toute réponse qui respecte la grille est valable.</p>
       </section>
       <section class="k-panel a5-review">
@@ -190,12 +214,7 @@
         { key: '3', tone: 'green', text: 'une synthèse qui se termine par une validation.' }
       ],
       after: 'Puis l’oral et votre auto-évaluation.' },
-    // La suite, à la première réplique.
-    { later: true, target: '.a5-exchange-head', title: 'Le client', text: 'Qui il est, ce qu’il vous a déjà dit, et ce qu’il montre sans le dire.' },
-    { later: true, target: '.a5-exchange-client', title: 'Sa réplique', text: 'Lisez ce qu’il vous dit maintenant.' },
-    { later: true, target: '.a5-you-card', title: 'Votre réponse', text: 'Écrivez-la comme vous la diriez à voix haute. La consigne au-dessus du champ dit ce qu’elle doit faire.' },
-    { later: true, target: '.a5-forbidden', title: 'Une seule règle', text: 'Vous êtes en découverte : pas de produit, pas de solution.' },
-    // L'oral (rejoué par « Visite guidée »).
+    // L'oral, la première fois qu'on y arrive.
     { later: true, target: '.a5-oral .oral-practice', title: 'L’enregistrement', text: 'Lisez vos trois réponses à voix haute, réécoutez-vous, puis téléchargez le fichier pour le déposer.' },
     { later: true, target: '.a5-self', title: 'Votre auto-évaluation', text: 'Oui ou non pour chaque critère, avant de voir le corrigé. Votre tuteur utilisera la même grille.' }
   ]);

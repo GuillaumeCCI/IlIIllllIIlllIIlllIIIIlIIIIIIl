@@ -84,6 +84,134 @@
     pieges: [PIEGE_AJOUT, PIEGE_JUGEMENT]
   });
 
+  /* ── A5 · Votre réponse, votre voix ───────────────────────────────── */
+
+  // Ce que le vendeur dit pour montrer qu'il a compris, sans juger.
+  const COMPRIS = ['ça doit', 'cela doit', 'doit être', 'j’imagine', 'imagine', 'je comprends', 'je comprend', 'compren*', 'pénible', 'difficile', 'dur', 'pèse', 'peser',
+    'épuisant', 'fatigant', 'usant', 'au quotidien', 'vos journées', 'votre quotidien', 'gênant', 'gêne', 'vous en avez assez', 'pas facile', 'pas simple',
+    'désagréable', 'inquiét*', 'stress*', 'frustr*', 'lourd', 'compliqué', 'jongler', 'déraille', 'désorganis*'];
+  // Les rassurances toutes faites (« ne vous inquiétez pas ») : un soutien banal.
+  const PIEGE_BANAL = { nom: 'Une rassurance toute faite', points: 2,
+    mots: ['ne vous inquiétez pas', 'ne vous en faites pas', 'pas de souci', 'pas de soucis', 'pas de panique', 'rassurez-vous', 'c’est la vie', 'courage',
+      'ça va aller', 'tout va bien se passer', 'c’est normal', 'tout le monde'],
+    conseil: 'Pas de formule toute faite : dites ce que vous avez compris de sa situation.' };
+  const produit = (mots, conseil) => ({ nom: 'Un produit ou une solution', points: 3, conseil,
+    mots: ['je vous propose', 'je vous conseille', 'je vous recommande', 'je vais vous montrer', 'nous avons', 'notre gamme', 'nos modèles', 'notre offre',
+      'promotion', 'promo', 'remise', 'réduction', 'garantie', 'essayez', 'prenez', 'il vous faut', 'il vous faudrait', 'la solution'].concat(mots) });
+  const VALIDE = ['c’est bien ça', 'c’est ça', 'est-ce bien ça', 'ai-je bien compris', 'j’ai bien compris', 'est-ce que j’ai bien compris', 'vous confirmez',
+    'je résume bien', 'correct', 'exact', 'n’est-ce pas', 'je me trompe', 'autre chose', 'quelque chose à ajouter', 'à ajouter', 'oublié', 'rien oublié',
+    'ça correspond', 'on est d’accord', 'c’est juste', 'bien compris'];
+  const RESUME = ['si je résume', 'je résume', 'pour résumer', 'en résumé', 'si je comprends bien', 'si je vous ai bien compris', 'si j’ai bien compris', 'donc', 'récapitul*'];
+
+  /* Réplique 1 : comprendre ce que vit le client. */
+  const r1 = (vecu, pieges) => ({ titre: 'Réplique 1 · Une réponse en attitude de compréhension', champs: ['r1'],
+    criteres: [
+      { nom: 'Ce qu’il vit', mots: vecu, points: 4, conseil: 'Reprenez ce que le client vous a dit de sa situation, avec ses mots.' },
+      { nom: 'Ce que ça lui fait', mots: COMPRIS, points: 3, conseil: 'Montrez que vous mesurez ce que cela représente : « ça doit peser sur vos journées ».' },
+      { nom: 'Tourné vers le client', mots: ['vous', 'votre', 'vos'], points: 1, conseil: 'Parlez du client : « vous », « vos nuits ».' }
+    ],
+    phrases: { attendues: 1, points: 1 },
+    pieges: [PIEGE_BANAL, PIEGE_JUGEMENT].concat(pieges) });
+
+  /* Réplique 3 : la synthèse, les éléments du client puis une validation. */
+  const r3 = (elements, pieges) => ({ titre: 'Réplique 3 · Une reformulation-synthèse', champs: ['r3'],
+    criteres: elements.map(([nom, mots]) => ({ nom, mots, points: 2, conseil: `Reprenez aussi cet élément : ${nom.toLowerCase()}.` }))
+      .concat([{ nom: 'Une validation', mots: VALIDE, points: 2, conseil: 'Terminez par une question : « C’est bien ça ? ».' },
+        { nom: 'Une annonce de synthèse', mots: RESUME, points: 1, conseil: 'Annoncez-la : « Si je résume… ».' }]),
+    phrases: { attendues: 2, points: 1 },
+    regles: [{ regle: 'avecQuestion', nom: 'Une question pour finir', points: 1 }],
+    pieges });
+
+  const A5 = [
+    // 0 · M. Garnier, magasin de literie.
+    [
+      r1(['dors mal', 'dormir', 'dormez', 'sommeil', 'nuit', 'nuits', 'mauvaises nuits', 'dos', 'mal au dos', 'douleur*', 'réveil*', 'réveillez', 'des mois',
+        'depuis des mois', 'compote', 'courbatu*', 'fatigu*', 'repos'],
+        [produit(['matelas', 'ferme', 'fermeté', 'mémoire de forme', 'ressorts', 'latex', 'sommier', 'oreiller', 'orthopédique', 'ergonomique'],
+          'À ce stade, pas de matelas : montrez d’abord que vous avez compris ce qu’il vit.')]),
+      { titre: 'Réplique 2 · Tenir compte du signal', champs: ['r2'],
+        criteres: [
+          { nom: 'Le signal perçu', points: 4, conseil: 'Montrez que vous avez vu sa réaction au prix : « Le prix vous fait réagir ».',
+            mots: ['prix', '1 200', '1200', 'budget', 'coût', 'cher', 'investissement', 'somme', 'montant', 'réagir', 'réagit', 'réaction', 'grimace', 'tarif',
+              'dépense', 'hésit*', 'surpris', 'étiquette'] },
+          { nom: 'Une vérification', points: 3, conseil: 'Vérifiez ce qu’il pense, sans argumenter : « vous voulez être sûr que ça en vaut la peine, c’est ça ? ».',
+            mots: ['être sûr', 'vaut la peine', 'en vaut', 'vous voulez', 'vous souhaitez', 'c’est ça', 'est-ce', 'qu’est-ce', 'important', 'pour vous',
+              'vous hésitez', 'je comprends', 'compren*', 'vous attendez', 'vos attentes', 'justifié', 'raisonnable'] },
+          { nom: 'Tourné vers lui', mots: ['vous', 'votre', 'vos'], points: 1, conseil: 'Parlez de lui : « vous voulez être sûr… ».' }
+        ],
+        phrases: { attendues: 1, points: 1 },
+        regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 1 }],
+        pieges: [PIEGE_JUGEMENT, { nom: 'Un argument sur le prix', points: 3, conseil: 'Ne défendez pas le prix : vérifiez d’abord ce que sa réaction veut dire.',
+          mots: ['pas si cher', 'pas cher', 'ça vaut le coup', 'qualité', 'garantie', 'remise', 'promotion', 'promo', 'réduction', 'en plusieurs fois', '3 fois',
+            'trois fois sans frais', 'sans frais', 'facilité', 'facilités', 'durable', 'dure dix ans', '10 ans', 'rentable', 'je peux vous faire', 'geste commercial'] }] },
+      r3([
+        ['Son dos et ses nuits', ['dos', 'soulager', 'douleur*', 'nuits', 'nuit', 'sommeil', 'dormir', 'réveil*', 'reposé', 'complètes']],
+        ['La fermeté, à deux', ['ferme', 'fermeté', 'votre femme', 'votre épouse', 'épouse', 'madame', 'tous les deux', 'à deux', 'vous deux', 'tous deux']],
+        ['Le 140 trop juste', ['140', 'place', 'taille', 'plus grand', 'plus large', '160', 'gêne', 'gênez', 'juste', 'étroit', 'dimension*']],
+        ['Un investissement justifié', ['prix', 'budget', '1 200', '1200', 'investissement', 'vaut', 'justifié', 'en vaut la peine', 'coût', 'dépense']]
+      ], [produit(['matelas ferme', 'mémoire de forme', 'ressorts', 'latex', 'sommier', 'orthopédique'], 'La synthèse reprend ce qu’il a dit, sans produit.')])
+    ],
+    // 1 · Mme Lefort, distributeur de pièces auto.
+    [
+      r1(['pièce', 'pièces', 'manque', 'manquante', 'manquantes', 'pont', 'bloqué', 'bloquée', 'immobilis*', 'voiture', 'livraison', 'livraisons', 'fournisseur',
+        'une fois sur trois', 'planning', 'attente', 'attendre', 'retard*', 'atelier'],
+        [produit(['nos livraisons', 'livraison garantie', 'nous livrons', 'stock', 'catalogue', 'en 2 heures', 'plateforme', 'commande en ligne'],
+          'À ce stade, pas d’offre : montrez d’abord que vous avez compris ce qu’elle vit.'),
+          { nom: 'Juger le fournisseur', points: 2, conseil: 'Ne dénigrez pas son fournisseur : parlez de ce qu’elle vit.',
+            mots: ['pas sérieux', 'incompétent', 'incompétents', 'ils sont tous pareils', 'changez de fournisseur', 'nul'] }]),
+      { titre: 'Réplique 2 · Tenir compte du signal', champs: ['r2'],
+        criteres: [
+          { nom: 'Le signal perçu', points: 3, conseil: 'Montrez que vous voyez qu’on l’attend : « je vois que l’atelier a besoin de vous ».',
+            mots: ['téléphone', 'appel', 'appels', 'atelier', 'occupée', 'besoin de vous', 'vous attend', 'on vous attend', 'on vous appelle', 'mécanicien',
+              'sollicit*', 'pas le temps', 'peu de temps', 'votre temps', 'pressée', 'je vois', 'dérange*', 'débordée', 'chargée'] },
+          { nom: 'Plus bref, elle garde la main', points: 4, conseil: 'Raccourcissez et laissez-la choisir : « trois questions, ou on cale un autre moment ? ».',
+            mots: ['bref', 'brève', 'court', 'courte', 'rapide*', 'vite', 'deux minutes', '2 minutes', 'cinq minutes', 'trois questions', 'une question',
+              'deux questions', 'quelques questions', 'je fais court', 'je vais faire court', 'autre moment', 'rappeler', 'rappelle', 'plus tard', 'repasser',
+              'rendez-vous', 'quand vous voulez', 'l’essentiel', 'à l’essentiel', 'ça vous va', 'vous préférez', 'si vous préférez', 'quand vous serez'] }
+        ],
+        phrases: { attendues: 1, points: 1 },
+        regles: [{ regle: 'maxMots:40', nom: 'Une réponse courte', points: 1 }],
+        pieges: [{ nom: 'Un argumentaire', points: 3, conseil: 'Elle est pressée : pas de présentation, pas d’argument.',
+          mots: ['je vous présente', 'notre entreprise', 'notre société', 'nous existons', 'nos agences', 'notre offre', 'nos tarifs', 'nous livrons',
+            'je vous propose', 'notre catalogue'] }] },
+      r3([
+        ['La fiabilité des livraisons', ['fiabilité', 'fiable', 'fiables', 'livraison', 'livraisons', 'bonne pièce', 'au bon moment', 'à temps', 'sans erreur',
+          'complète', 'complètes', 'pièce', 'pièces']],
+        ['Le pont immobilisé', ['pont', 'ponts', 'immobilis*', 'bloqué', 'bloquée', 'voiture', 'attente', 'temps perdu', 'du temps']],
+        ['Les clients à rappeler', ['clients', 'client', 'rappeler', 'décaler', 'report*', 'image', 'réputation', 'planning', 'rendez-vous']],
+        ['Le prix vient après', ['prix', 'tarif', 'coût', 'après', 'secondaire', 'passe après', 'vient après', 'pas la priorité', 'moins important', 'regardez moins']]
+      ], [produit(['nos livraisons', 'nous livrons', 'notre stock', 'catalogue'], 'La synthèse reprend ce qu’elle a dit, sans offre.')])
+    ],
+    // 2 · Mme Duval, mandat de vente.
+    [
+      r1(['jardin', 'étage', 'escalier', 'escaliers', 'genoux', 'genou', 'entretenir', 'entretien', 'maison', 'monter', 'plus adaptée', 'adaptée', 'trop grande',
+        'difficile*', 'au quotidien', 'fatigu*'],
+        [produit(['estimation', 'estimer', 'vendre vite', 'acheteur', 'acheteurs', 'mandat', 'visites', 'plain-pied', 'appartement'],
+          'À ce stade, pas d’estimation : montrez d’abord que vous avez compris ce qu’elle vit.')]),
+      { titre: 'Réplique 2 · Tenir compte du signal', champs: ['r2'],
+        criteres: [
+          { nom: 'L’émotion reconnue', points: 4, conseil: 'Nommez ce que la maison représente : « une maison pleine de souvenirs ».',
+            mots: ['souvenir', 'souvenirs', 'enfants', 'grandi', 'famille', 'familiale', 'photo', 'attach*', 'émotion*', 'votre vie', 'une vie', 'toute une vie',
+              'histoire', 'pleine de', 'chargée', 'compte pour vous', 'tient à cœur', 'cœur'] },
+          { nom: 'Ralentir, respecter', points: 3, conseil: 'Ralentissez : laissez un silence, reconnaissez que la décision n’est pas facile.',
+            mots: ['pas facile', 'pas une décision facile', 'décision', 'difficile', 'prendre le temps', 'prenons le temps', 'votre temps', 'rien ne presse',
+              'je comprends', 'compren*', 'silence', 'un temps', 'pause', 'émouvant', 'touchant', 'naturel', 'important'] },
+          { nom: 'Tournée vers elle', mots: ['vous', 'votre', 'vos'], points: 1, conseil: 'Parlez d’elle : « vos enfants », « pour vous ».' }
+        ],
+        phrases: { attendues: 1, points: 1 },
+        pieges: [PIEGE_BANAL, { nom: 'Passer à la vente', points: 3, conseil: 'Ne passez pas à l’estimation : laissez-lui le temps.',
+          mots: ['estimation', 'estimer', 'prix', 'vendre vite', 'acheteur', 'acheteurs', 'passons', 'revenons', 'parlons du prix', 'visite', 'mandat'] }] },
+      r3([
+        ['La maison plus adaptée', ['plus adaptée', 'adaptée', 'jardin', 'étage', 'genoux', 'entretenir', 'entretien', 'trop grande', 'difficile']],
+        ['Le fils pressé', ['fils', 'vite', 'rapide', 'rapidement', 'avant l’hiver', 'hiver']],
+        ['L’appartement près de sa sœur', ['appartement', 'sœur', 'soeur', 'près de', 'proche', 'installation', 'installer', 'trouvé', 'avant de partir', 'déménag*', 'logement']],
+        ['Deux calendriers à coordonner', ['coordonner', 'calendrier', 'calendriers', 'en même temps', 'à la fois', 'organiser', 'les deux', 'd’abord', 'synchronis*',
+          'concilier', 'accorder', 'ordre', 'priorité', 'votre priorité', 'pour vous', 'l’essentiel']]
+      ], [{ nom: 'Une estimation ou une solution', points: 3, conseil: 'La synthèse reprend ce qu’elle a dit, sans estimation.',
+        mots: ['estimation', 'estimer', 'je vous propose', 'acheteurs', 'mandat exclusif', 'prix de vente'] }])
+    ]
+  ];
+
   root.ATELIER_GRILLES = {
 
     // S3 3.1 · L'écho, sur trois clients.
@@ -206,6 +334,10 @@
             mots: ['1987', '12 agences', 'douze agences', 'son groupe', 'présente son groupe', 'présente son entreprise', 'historique', 'agences'] }
         ] }
     ] },
+
+    // S5 5.2 · A5 : trois répliques par client. La grille dépend de la fiche
+    // choisie (`parCas` : 0 literie, 1 pièces auto, 2 mandat de vente).
+    's5-5.2': { integre: true, cas: 3, parCas: index => ({ blocs: (A5[index] || A5[0]) }) },
 
     // S4 4.4 · La réplique « comme tout le monde », réécrite avec une attitude de compréhension.
     's4-4.4': { integre: true, blocs: [

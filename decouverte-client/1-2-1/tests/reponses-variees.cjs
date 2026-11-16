@@ -203,3 +203,63 @@ A4.fautes['s5-5.1'] = [
   { why: 'ines tien conte du tant de la cliente, elle reformul ce quel ressen et elle pose des question precise pour la decouverte' },
   { why: 'Inès respecte le car dheure, elle fai un reflet de cest moi qui prend et elle demande conbien de panne par mois' }
 ];
+
+/* S5 5.2 · A5 : trois réponses par client (r1 compréhension, r2 signal,
+ * r3 synthèse). `cas` : la fiche choisie (0 literie, 1 pièces auto, 2 mandat). */
+const A5 = module.exports;
+A5.justes['s5-5.2'] = [
+  // M. Garnier
+  { cas: 0, r1: 'Des mois de mauvaises nuits et le dos douloureux au réveil, ça doit vraiment peser sur vos journées.',
+    r2: 'Le prix vous fait réagir. C’est un budget important et vous voulez être sûr que ça en vaut la peine, c’est ça ?',
+    r3: 'Si je résume : votre priorité, c’est de soulager votre dos et de retrouver des nuits complètes. Il faut une fermeté qui convienne à vous deux, le 140 devient juste, et l’investissement doit être justifié. C’est bien ça ?' },
+  { cas: 0, r1: 'Vous dormez mal depuis des mois et vous vous réveillez avec mal au dos. Ça doit être épuisant au quotidien.',
+    r2: 'Je vois que le prix vous surprend. Qu’est-ce qui est important pour vous dans cet achat ?',
+    r3: 'Donc si je comprends bien, vous voulez soulager votre dos et mieux dormir, trouver une fermeté qui plaise aussi à votre femme, plus de place qu’un 140, pour un budget qui en vaut la peine. J’ai bien compris ?' },
+  { cas: 0, r1: "Se réveiller le dos en compote après des nuits difficiles, j'imagine que c'est pénible.",
+    r2: "1 200 €, ça vous fait hésiter. Vous voulez être sûr que c'est justifié ?",
+    r3: "Si je résume, vos nuits et votre dos d'abord, une fermeté à trouver à deux, un 140 trop étroit, et un prix qui doit valoir la peine. C'est ça ?" },
+  { cas: 0, r1: 'Je comprends : depuis des mois votre sommeil est mauvais et votre dos vous fait souffrir le matin.',
+    r2: 'Le montant vous fait réagir, c’est un vrai investissement. Vous voulez être certain qu’il en vaut la peine, c’est bien ça ?',
+    r3: 'Pour résumer : vous cherchez à soulager votre dos et à retrouver le sommeil, avec une fermeté qui vous convienne tous les deux, plus de place qu’en 140, et une dépense justifiée. Ai-je oublié quelque chose ?' },
+  // Mme Lefort
+  { cas: 1, r1: 'Une pièce qui manque, c’est un pont bloqué et un planning qui déraille. Vous devez jongler toute la journée.',
+    r2: 'Je vois que l’atelier a besoin de vous, je vais être bref. Trois questions, et si besoin on cale un autre moment, ça vous va ?',
+    r3: 'Si je résume : votre priorité, c’est la fiabilité des livraisons, la bonne pièce au bon moment, parce que chaque pont immobilisé vous oblige à rappeler vos clients. Le prix vient après. C’est bien ça ?' },
+  { cas: 1, r1: 'Une fois sur trois il manque une pièce et la voiture reste sur le pont : ça doit être très frustrant pour votre atelier.',
+    r2: 'On vous appelle sans arrêt, je fais court : deux questions et je vous laisse, ou je repasse plus tard si vous préférez ?',
+    r3: 'Donc, ce qui compte pour vous, ce sont des livraisons fiables et complètes, pour ne plus avoir de pont bloqué ni de clients à décaler. Le tarif passe après. J’ai bien compris ?' },
+  { cas: 1, r1: "Des livraisons incomplètes et des voitures immobilisées, j'imagine que ça désorganise tout votre planning.",
+    r2: "Je vois que vous êtes très sollicitée. Je vais à l'essentiel : une seule question, ça vous va ?",
+    r3: "Si je résume, il vous faut la bonne pièce à temps, parce qu'un pont immobilisé vous coûte du temps et vous oblige à rappeler les clients, et le prix n'est pas la priorité. C'est ça ?" },
+  { cas: 1, r1: 'Je comprends : votre fournisseur livre souvent avec une pièce manquante et vos ponts restent bloqués, c’est pénible au quotidien.',
+    r2: 'L’atelier vous attend, je ne vais pas vous retenir. Je peux vous rappeler à un autre moment ?',
+    r3: 'Pour résumer : la fiabilité des livraisons d’abord, pour ne plus avoir de voiture bloquée sur le pont ni de rendez-vous clients à reporter. Le prix vient après. Vous confirmez ?' },
+  // Mme Duval
+  { cas: 2, r1: 'Le jardin et l’étage deviennent difficiles au quotidien. La maison n’est plus adaptée à ce dont vous avez besoin aujourd’hui.',
+    r2: '(Laisser un silence.) C’est une maison pleine de souvenirs. Ce n’est pas une décision facile.',
+    r3: 'Si je résume : vous vendez parce que la maison n’est plus adaptée. Votre fils souhaite une vente rapide avant l’hiver, et pour vous, l’essentiel est d’avoir trouvé un appartement près de votre sœur avant de partir. Il faudra donc coordonner les deux calendriers. Est-ce que j’ai bien compris ?' },
+  { cas: 2, r1: 'Entretenir le jardin et monter à l’étage avec vos genoux, ça devient pénible. Je comprends que la maison soit devenue trop grande.',
+    r2: 'Vos enfants ont grandi ici, cette maison compte beaucoup pour vous. Prenons le temps.',
+    r3: 'Donc, la maison n’est plus adaptée à cause du jardin et de l’étage, votre fils voudrait vendre vite, avant l’hiver, et vous voulez d’abord un appartement près de votre sœur. Il faudra organiser les deux en même temps. C’est bien ça ?' },
+  { cas: 2, r1: "L'entretien du jardin et l'escalier sont devenus difficiles avec vos genoux, la maison n'est plus adaptée.",
+    r2: "C'est toute une histoire de famille, cette maison. Je comprends que ce soit émouvant, rien ne presse.",
+    r3: "Si je résume, la maison est devenue difficile à entretenir, votre fils est pressé de vendre avant l'hiver, et pour vous l'essentiel est d'être installée près de votre sœur. On doit coordonner tout ça. C'est juste ?" },
+  { cas: 2, r1: 'Je comprends, avec vos genoux, l’étage et le jardin vous pèsent au quotidien.',
+    r2: 'Je vois que ces souvenirs vous touchent. Ce n’est pas une décision facile, nous avons le temps.',
+    r3: 'Pour résumer : la maison n’est plus adaptée, votre fils veut vendre rapidement, et vous souhaitez avoir trouvé un appartement proche de votre sœur avant de partir. Il faut accorder les deux calendriers. Ai-je bien compris ?' }
+];
+A5.mauvaises['s5-5.2'] = [
+  { cas: 0, r1: 'Je vous propose notre matelas à mémoire de forme, idéal pour le dos.', r2: 'Ce n’est pas si cher pour cette qualité, et nous avons une remise.', r3: 'Prenez le matelas ferme en 160.' },
+  { cas: 1, r1: 'Votre fournisseur n’est pas sérieux, nous livrons en 2 heures.', r2: 'Je vous présente notre entreprise : nous existons depuis 1990 et notre catalogue est complet.', r3: 'Je vous propose notre offre.' },
+  { cas: 2, r1: 'Ne vous inquiétez pas, je vais faire une estimation.', r2: 'Ne vous en faites pas, c’est la vie. Parlons du prix.', r3: 'Je vous propose un mandat exclusif.' },
+  { cas: 0, r1: 'C’est normal à votre âge.', r2: 'Garantie dix ans, ça vaut le coup.', r3: 'Essayez celui-là.' }
+];
+A5.motsCles['s5-5.2'] = { cas: 1, r1: 'pièce pont', r2: 'bref', r3: 'livraisons pont clients prix' };
+A5.fautes['s5-5.2'] = [
+  { cas: 0, r1: 'des mois de movaises nuit et le dos en conpote au reveil, sa doit peser sur vos journé',
+    r2: 'le pris vous fait reagir, cest un gros budget et vous voulez etre sur que sa en vaut la peine cest sa ?',
+    r3: 'si je resume votre priorité cest soulagé votre dos et dormir, une fermté qui vous va a tous les deux, le 140 est trop juste et le budget doit etre justifier. cest bien sa ?' },
+  { cas: 2, r1: 'le jardin et letage devienne dificile avec vos genous, la maison est plus adapté',
+    r2: 'cest une maison plaine de souvenir, cest pas une décision facile',
+    r3: 'si je resume la maison est plus adapté, votre fis veut vendre vite avant lhiver et vous voulez un apartement pres de votre soeur, il faut coordoné les deux. cest bien sa ?' }
+];
