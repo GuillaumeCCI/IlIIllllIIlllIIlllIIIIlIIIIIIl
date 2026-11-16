@@ -109,12 +109,11 @@
     return `<section class="k-panel a5-exchange">
         <div class="a5-exchange-head">
           ${k === 1 ? `<p class="a4-role">${esc(f.context || f.profile)}</p>` : ''}
-          ${moments(f, k)}
           ${history(f, k)}
         </div>
         <div class="a5-exchange-client">
           ${thread(f, k)}
-          ${kit.clientCard(wordsOf(line), f.portrait, SPEAKS[k - 1].replace('{nom}', f.name))}
+          ${kit.clientCard(wordsOf(line), f.portrait, `Moment ${k} sur 3 · ${SPEAKS[k - 1].replace('{nom}', f.name)}`)}
           <p class="a5-task"><strong>${esc(task.title)} :</strong> ${esc(task.text.charAt(0).toLowerCase() + task.text.slice(1))}</p>
         </div>
         <div class="a5-exchange-you">

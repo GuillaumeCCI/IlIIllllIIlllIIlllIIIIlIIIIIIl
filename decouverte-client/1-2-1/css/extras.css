@@ -738,3 +738,5 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 /* A5 : le récit en une ligne, juste au-dessus de la carte du client. */
 .a5-exchange-client .a5-thread-next { margin: 0 4px 12px; color: var(--muted); font-size: .92rem; font-style: italic; line-height: 1.5; }
 .a5-exchange-head .a5-moments:first-child { margin-top: 0; }
+/* Un en-tête vide (moment 2) ne laisse pas de trou. */
+.a5-exchange-head:not(:has(> *)) { display: none; }
