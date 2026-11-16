@@ -1101,3 +1101,18 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 #main .sc-dialogue .sc-line.is-seller > .sc-avatar { grid-column: 2; grid-row: 1; }
 #main .sc-dialogue .sc-line.is-seller > p { grid-column: 1; grid-row: 1; justify-self: end; margin-left: 48px; }
 #main .sc-dialogue .sc-line:not(.is-seller) > p { justify-self: start; margin-right: 48px; }
+
+/* Corrigés en lignes (3.1, 4.1, 4.2) : allégés. Colonnes resserrées, la
+   réponse possible plus large et sur fond pâle neutre, filets discrets,
+   bandeau « Relire l'échange » mince, pastilles plus petites. */
+#main .fm-review.is-rows :is(.fm-rv-head, .fm-rv-row) { grid-template-columns: 210px minmax(0, .8fr) minmax(0, 1.25fr); gap: 4px 28px; }
+#main .fm-review.is-rows .fm-rv-row { padding: 12px 0; border-top: 1px solid #f0f2f7; }
+#main .fm-review.is-rows .fm-rv-label { font-size: .92rem; font-weight: 700; }
+#main .fm-review.is-rows .fm-rv-model p { padding: 8px 14px; background: #f5f7fc; color: #2b3768; font-size: .95rem; line-height: 1.45; }
+#main .fm-review.is-rows .fm-rv-model strong { color: #16205e; }
+#main .fm-review.is-rows .fm-rv-marks li { padding: 1px 9px; font-size: .76rem; }
+#main .fm-review.is-rows .fm-rv-pick { padding: 3px 12px 3px 4px; font-size: .95rem; }
+#main .fm-review-intro.is-folded { padding: 10px 18px !important; min-height: 0 !important; height: auto !important; }
+#main .fm-review-intro.is-folded:not([open]) > summary { margin: 0; }
+#main .ana-score { gap: 10px; padding: 16px 20px; }
+@media (max-width: 900px) { #main .fm-review.is-rows .fm-rv-row { grid-template-columns: minmax(0, 1fr); } }
