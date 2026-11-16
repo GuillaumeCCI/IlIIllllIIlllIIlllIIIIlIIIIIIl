@@ -14,6 +14,9 @@ window.ATELIER_CATALOG = {
   // Clé de sauvegarde propre au module : il ne se mélange à aucun autre.
   storageKey: 'decouverte-client-1-2-2-v1',
 
+  // Le menu ☰ montre tous les exercices du module, pas seulement la série.
+  menu: 'module',
+
   code: '1-2-2',
   title: 'Questionnement · module 1-2-2',
   intro: 'Poser la bonne question au bon moment, faire émerger le besoin réel, repérer les motivations d’achat et préparer sa découverte.',

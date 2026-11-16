@@ -363,19 +363,39 @@
     return true;
   }
 
+  /* `catalog.menu: 'module'` : le menu liste tous les exercices du module,
+   * rangés par série, et la progression porte sur tout le module. Sans
+   * cette option, il ne montre que la série en cours (intégration par série). */
   function renderMenu(current, serie) {
     if (!menu && !buildMenu()) return;
-    menu.querySelector('.av-menu-nav').setAttribute('aria-label', `Les exercices de la série ${serie.label}`);
-    menu.querySelector('.av-menu-serie').textContent = serie.label;
-    menu.querySelector('.av-menu-list').innerHTML = serie.exercises.map(ex => {
-      const key = `${serie.id}-${ex.id}`;
+    const whole = catalog.menu === 'module';
+    const item = (s, ex) => {
+      const key = `${s.id}-${ex.id}`;
       const active = key === current.key;
       const done = isDone(key);
       return `<li><a href="${esc(pageUrl(ex.file))}" class="${active ? 'active' : ''} ${done ? 'is-done' : ''}" ${active ? 'aria-current="step"' : ''}>
         <span class="av-menu-label">${esc(ex.label)}</span>
         <span class="av-menu-check">${done ? icon('check', { size: 16, strokeWidth: 3, label: 'terminé' }) : '<span class="sr-only">à faire</span>'}</span>
       </a></li>`;
-    }).join('');
+    };
+    menu.classList.toggle('is-module', whole);
+    menu.querySelector('.av-menu-nav').setAttribute('aria-label', whole ? 'Les exercices du module' : `Les exercices de la série ${serie.label}`);
+    menu.querySelector('.av-menu-serie').textContent = whole ? (catalog.title || serie.label) : serie.label;
+    menu.querySelector('.av-menu-list').innerHTML = whole
+      ? catalog.series.map(s => `<li class="av-menu-group ${s.id === current.series ? 'is-current' : ''}"><p class="av-menu-group-title">${esc(s.label)}</p><ol>${s.exercises.map(ex => item(s, ex)).join('')}</ol></li>`).join('')
+      : serie.exercises.map(ex => item(serie, ex)).join('');
+    if (whole) {
+      const keys = catalog.series.flatMap(s => s.exercises.map(ex => `${s.id}-${ex.id}`));
+      const done = keys.filter(isDone).length;
+      const percent = keys.length ? Math.round(done / keys.length * 100) : 0;
+      const progress = menu.querySelector('.av-menu-progress');
+      progress.setAttribute('role', 'img');
+      progress.setAttribute('aria-label', `Progression du module : ${percent} %`);
+      progress.title = `Module : ${done} exercice${done > 1 ? 's' : ''} sur ${keys.length}`;
+      menu.querySelector('.av-menu-percent').textContent = `${percent} %`;
+      menu.querySelector('.av-menu-fill').style.height = `${percent}%`;
+      return;
+    }
     // La progression du thème : les exercices de la série en cours.
     const keys = serie.exercises.map(ex => `${serie.id}-${ex.id}`);
     const done = keys.filter(isDone).length;

@@ -341,6 +341,13 @@ body.has-menu { padding-left: var(--menu-rail); }
 
 .av-menu-list a.active { background: rgb(255 255 255 / 12%); color: #fff; font-weight: 700; }
 
+/* Menu du module entier (catalog.menu = 'module') : les séries en groupes. */
+.av-menu.is-module .av-menu-list { gap: 14px; }
+.av-menu-group ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.av-menu-group-title { margin: 0 0 4px; padding: 0 12px; color: rgb(255 255 255 / 55%); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.av-menu-group.is-current .av-menu-group-title { color: #ff936b; }
+.av-menu.is-module .av-menu-list a { padding: 8px 12px; }
+
 .av-menu-check { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border: 2px solid rgb(255 255 255 / 32%); border-radius: 50%; }
 
 .av-menu-list a.is-done .av-menu-check { border-color: #ff936b; background: #ff936b; color: var(--navy); }
