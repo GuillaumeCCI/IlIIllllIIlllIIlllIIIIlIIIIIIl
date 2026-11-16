@@ -11,10 +11,10 @@
   'use strict';
 
   const TYPES = [
-    { id: 'ouverte', letter: 'O', label: 'Ouverte', sub: 'Elle fait parler.' },
-    { id: 'fermee', letter: 'F', label: 'Fermée', sub: 'Oui, non ou une information précise.' },
-    { id: 'alternative', letter: 'A', label: 'Alternative', sub: 'Un choix entre deux ou trois options.' },
-    { id: 'orientee', letter: '!', label: 'Orientée', sub: 'Elle contient déjà la réponse.' }
+    { id: 'ouverte', letter: '1', label: 'Ouverte', sub: 'Elle fait parler.' },
+    { id: 'fermee', letter: '2', label: 'Fermée', sub: 'Oui, non ou une information précise.' },
+    { id: 'alternative', letter: '3', label: 'Alternative', sub: 'Un choix entre deux ou trois options.' },
+    { id: 'orientee', letter: '4', label: 'Orientée', sub: 'Elle contient déjà la réponse.' }
   ];
 
   const ETAGES = [
