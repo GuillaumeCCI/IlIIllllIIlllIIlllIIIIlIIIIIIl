@@ -13,6 +13,17 @@
  */
 window.ATELIER_BRIEFINGS = {
 
+  /* ══ SÉRIE 1 · SE POSITIONNER ════════════════════════════════════════ */
+
+  's1-1.1': {
+    lede: { key: 'Avant de commencer,', rest: 'où en êtes-vous ?' },
+    mission: 'Huit critères décrivent un vendeur qui écoute vraiment son client. Pour chacun, cochez votre niveau aujourd’hui : à retravailler, en bonne voie ou maîtrisé.',
+    method: 'Une grille, une case par critère. Personne ne vous note.',
+    situation: 'C’est votre point de départ. À la fin du module, vous remplirez la même grille sans revoir celle-ci, puis vous comparerez les deux.',
+    task: 'Huit critères : attitudes d’écoute, attitude de compréhension, écho, reflet, synthèse, signaux, adaptation et posture d’écoute.',
+    criteria: ['Un niveau pour chaque critère', 'Une réponse honnête, pas idéale']
+  },
+
   /* ══ SÉRIE 2 · LES ATTITUDES D'ÉCOUTE ═════════════════════════════════ */
 
   's2-2.1': {
@@ -111,5 +122,16 @@ window.ATELIER_BRIEFINGS = {
     situation: 'M. Benali vient de dire « Et pas trop loin », sans lever les yeux de son téléphone. Nadia répond : « comme tout le monde ».',
     task: 'Une réplique qui reprend le mot du client, ne juge pas et l’invite à préciser.',
     criteria: ['Le mot du client repris', 'Une invitation à préciser', 'Tourné vers M. Benali']
+  },
+
+  /* ══ SÉRIE 9 · FAIRE LE POINT ════════════════════════════════════════ */
+
+  's9-9.1': {
+    lede: { key: 'Le module est fini.', rest: 'Qu’est-ce qui a bougé ?' },
+    mission: 'Remplissez à nouveau la grille du début, sans chercher à vous souvenir de vos premières réponses. Puis comparez les deux colonnes et décidez de ce que vous allez retravailler.',
+    method: 'La grille d’abord, puis la comparaison et trois questions.',
+    situation: 'Vous avez rempli cette grille avant le module. Vos deux colonnes s’affichent côte à côte une fois la seconde remplie.',
+    task: 'Huit critères à recocher, puis trois questions : où vous avez le plus progressé, ce qui reste à travailler, l’activité que vous allez refaire.',
+    criteria: ['Un niveau pour chaque critère', 'Un exemple précis tiré d’une activité', 'Une activité choisie pour continuer']
   }
 };

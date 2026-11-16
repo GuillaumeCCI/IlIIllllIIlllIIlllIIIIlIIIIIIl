@@ -279,3 +279,44 @@
 .rva-open .result-answer-text { margin: 0; color: var(--navy); font-size: .95rem; font-weight: 600; line-height: 1.5; }
 .rva-open mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
 .rva-open .ana-line { font-size: .85rem; }
+
+/* ── Grille d'auto-positionnement (S1 1.1 et S9 9.1) ────────────────────
+   Les niveaux en pastilles : corail (à retravailler), or (en bonne voie),
+   vert (maîtrisé). Relecture de la colonne « Début », comparaison
+   Début / Fin, tableau « Refaites… ». */
+.pos-page .pos-panel + .pos-panel { margin-top: 18px; }
+.pos-page .k-matrix-text small { display: block; margin-top: 3px; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+.pos-level { display: inline-block; padding: 5px 12px; border-radius: 999px; font-size: .85rem; font-weight: 700; white-space: nowrap; }
+.pos-level.level-0 { background: #fde4de; color: #a8402c; }
+.pos-level.level-1 { background: #fdf1cf; color: #8a6400; }
+.pos-level.level-2 { background: #dcf3e6; color: #1d7a4b; }
+.pos-level.level-none { background: #eef1f7; color: var(--muted); font-weight: 400; }
+
+.pos-recap { display: grid; gap: 0; margin: 8px 0 0; padding: 0; list-style: none; }
+.pos-recap li { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; padding: 12px 4px; border-bottom: 1px solid var(--line); }
+.pos-recap .k-num, .pos-compare .k-num { display: inline-grid; place-items: center; width: 30px; height: 30px; flex-shrink: 0; border-radius: 50%; background: var(--tint); color: var(--accent); font-weight: 700; font-size: .9rem; }
+.pos-recap-text strong, .pos-compare th strong { display: block; color: var(--navy); }
+.pos-recap-text small, .pos-compare th small { display: block; margin-top: 2px; color: var(--muted); font-size: .86rem; line-height: 1.45; }
+
+.pos-compare, .pos-redo { width: 100%; margin-top: 8px; border-collapse: collapse; }
+.pos-compare thead th, .pos-redo thead th { padding: 10px 12px; border-bottom: 1px solid var(--line); color: var(--accent); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; text-align: left; }
+.pos-compare tbody th, .pos-compare tbody td, .pos-redo td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.pos-compare tbody th { display: flex; align-items: center; gap: 12px; font-weight: 400; text-align: left; }
+.pos-compare td { width: 1%; white-space: nowrap; }
+.pos-trend { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: .85rem; }
+.pos-trend.is-up { color: #1d7a4b; font-weight: 700; }
+.pos-trend.is-up .icon { transform: rotate(-45deg); }
+.pos-trend.is-down { color: var(--accent); font-weight: 700; }
+.pos-page .k-help { margin-top: 14px; }
+
+.pos-redo td:first-child { color: var(--navy); }
+.pos-redo a { display: inline-grid; color: var(--accent); font-weight: 700; text-decoration: none; }
+.pos-redo a:hover { text-decoration: underline; }
+.pos-redo small { color: var(--muted); font-size: .82rem; font-weight: 400; }
+.pos-answer + .pos-answer, .pos-page .fm-field + .fm-field { margin-top: 16px; }
+.pos-answer p:last-child { margin: 4px 0 0; color: var(--navy); }
+
+@media (max-width: 720px) {
+  .pos-compare tbody th { min-width: 200px; }
+  .pos-compare td:last-child { display: none; }
+}

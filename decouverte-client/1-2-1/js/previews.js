@@ -225,6 +225,8 @@
   /* ── Correspondance exercice → aperçu ────────────────────────────────── */
   /* Chaque exercice reçoit sa famille et ses paramètres réels. */
   const MAP = {
+    's1-1.1': () => choicePreview(3),
+    's9-9.1': () => choicePreview(3),
     's2-2.1': () => choicePreview(6),
     's2-2.2': () => choicePreview(6),
     's2-2.3': () => choicePreview(6),

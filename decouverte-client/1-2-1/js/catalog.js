@@ -21,6 +21,16 @@ window.ATELIER_CATALOG = {
 
   series: [
     {
+      id: 's1',
+      label: 'Se positionner',
+      // Grille d'auto-positionnement, colonne « Début » : fiche M1.2.1.
+      // La grille est dans js/content-s1.js ; sa colonne « Fin » est la série s9.
+      sourced: true,
+      exercises: [
+        { id: '1.1', file: 's1-1-1', label: 'Mon point de départ', theme: 'blue' }
+      ]
+    },
+    {
       id: 's2',
       label: 'Les attitudes d’écoute',
       // Situations 1 et 2 et leurs corrigés : fiche M1.2.1, activité A1.
@@ -55,6 +65,17 @@ window.ATELIER_CATALOG = {
         { id: '4.2', file: 's4-4-2', label: 'Les signaux manqués', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.' },
         { id: '4.3', file: 's4-4-3', label: 'Pourquoi la fin de l’entretien change tout', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.' },
         { id: '4.4', file: 's4-4-4', label: 'Réécrire « Comme tout le monde ! »', theme: 'blue', mount: 'form', image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.' }
+      ]
+    },
+    {
+      id: 's9',
+      label: 'Faire le point',
+      // Grille d'auto-positionnement, colonne « Fin », et « Ma progression » :
+      // fiche M1.2.1. Toujours la dernière série : A4 (s5), A5 (s6) et la
+      // synthèse optionnelle se placeront avant elle.
+      sourced: true,
+      exercises: [
+        { id: '9.1', file: 's9-9-1', label: 'Mon point d’arrivée', theme: 'blue' }
       ]
     }
   ]
