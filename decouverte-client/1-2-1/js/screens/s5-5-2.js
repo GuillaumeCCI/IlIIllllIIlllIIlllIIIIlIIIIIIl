@@ -64,9 +64,12 @@
       ${kit.bar({ right: kit.submit('Écouter le client') })}`;
   }
 
-  /* L'échange jusqu'ici : les répliques passées et vos réponses. */
-  const history = (f, k) => (k > 1 ? `<details class="a5-history-fold"><summary>Revoir l’échange (${k - 1} réplique${k > 2 ? 's' : ''})</summary><ol class="a5-history">${f.lines.slice(0, k - 1).map((line, i) => `
-      <li><p class="a5-history-client"><strong>${esc(f.name)}</strong> « ${esc(wordsOf(line))} »</p><p class="a5-history-you"><strong>Vous</strong> « ${esc(answer(i + 1))} »</p></li>`).join('')}</ol></details>` : '');
+  /* Ce que le client a déjà dit : seulement à la réplique 3, où la synthèse
+   * doit reprendre tout l'échange. Ses mots seuls, affichés d'emblée. */
+  const history = (f, k) => (k === 3 ? `<div class="a5-said">
+      <p class="a5-said-title">Ce que ${esc(f.name)} vous a dit</p>
+      <ol>${f.lines.slice(0, 2).map(line => `<li>« ${esc(wordsOf(line))} »</li>`).join('')}</ol>
+    </div>` : '');
 
   /* ── Étapes 1 à 3 : une réplique, une réponse ───────────────────────── */
   function reply(k) {
