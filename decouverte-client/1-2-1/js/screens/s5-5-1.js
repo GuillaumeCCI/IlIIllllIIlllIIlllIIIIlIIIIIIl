@@ -53,7 +53,16 @@
       <div class="a4-exchange-reply">${sellerBlock(s)}</div>
     </section>`;
 
-  const sellerBlock = s => `<div class="a4-seller"><p class="a4-seller-name">${icon('user', { size: 18 })}<span>${esc(s.name)} répond</span></p><p class="a4-seller-text">« ${said(s.text)} »</p></div>`;
+  /* La réponse du commercial, dans le même gabarit que la carte de la
+   * cliente (moteur : .client-card), sans portrait : un médaillon à son
+   * initiale, un libellé, sa réplique entre guillemets dessinés. */
+  const mark = name => esc(core.asset(`assets/illustrations/clients/${name}.webp`));
+  const sellerBlock = s => `<div class="client-card-box a4-seller tone-${esc(s.id)}"><section class="client-card is-long no-portrait">
+      <div class="client-card-said">
+        <p class="client-card-label a4-seller-label"><span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span><span>${esc(s.name)} vous répond</span></p>
+        <div class="client-card-quote"><img class="client-card-mark" src="${mark('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${said(s.text)}</blockquote><img class="client-card-mark is-closing" src="${mark('guillemet-fermant')}" alt="" aria-hidden="true"></div>
+      </div>
+    </section></div>`;
 
   /* La barre d'étapes : un segment par commercial, puis le classement. */
   function progress(k) {

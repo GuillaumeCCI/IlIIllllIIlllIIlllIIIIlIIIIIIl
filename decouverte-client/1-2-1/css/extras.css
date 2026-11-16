@@ -336,11 +336,20 @@
 
 .a4-role { margin: 6px 0 4px; color: var(--navy); }
 .a4-signal { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; color: #a8402c; font-weight: 700; }
-.a4-seller { margin: 0 0 18px; padding: 16px 20px; border-left: 4px solid var(--accent); border-radius: 0 14px 14px 0; background: var(--tint); }
 .a4-seller + .k-explain { margin-bottom: 20px; }
-.a4-seller-name { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; color: var(--accent); font-weight: 700; }
-.a4-seller-text { margin: 0; color: var(--navy); font-size: 1.05rem; line-height: 1.55; }
-.a4-act { color: var(--muted); }
+.a4-act { color: var(--muted); font-weight: 600; font-style: italic; }
+
+/* La réponse du commercial : la carte de la cliente, sans portrait, avec un
+   médaillon à l'initiale. Libellé souligné de bleu (la cliente : corail). */
+#main .a4-seller .client-card { width: 100%; --client-card-accent: var(--accent); }
+.a4-seller-label { display: flex; align-items: center; gap: 10px; }
+.a4-seller-label::after { display: none !important; }
+.a4-seller-label > span:last-child::after { content: ''; display: block; width: 46px; height: 3px; margin-top: 8px; border-radius: 3px; background: var(--accent); }
+.a4-avatar { display: inline-grid; place-items: center; flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 1rem; font-weight: 800; letter-spacing: 0; }
+.a4-seller.tone-ines .a4-avatar { background: #1d7a4b; }
+.a4-seller.tone-hugo .a4-avatar { background: #c4512f; }
+.a4-exchange-reply > .a4-seller { flex: 1; display: flex; margin: 0; }
+.a4-exchange-reply .client-card { height: 100%; }
 .a4-total { margin: 12px 4px 0; text-align: right; color: var(--navy); }
 
 .a4-totals { display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 0; padding: 0; list-style: none; }
@@ -407,7 +416,6 @@
 .a4-exchange-client, .a4-exchange-reply { display: flex; min-width: 0; }
 .a4-exchange-client > .client-card-box { flex: 1; display: flex; margin: 0; }
 .a4-exchange-client .client-card { flex: 1; margin: 0; height: 100%; }
-.a4-exchange-reply .a4-seller { flex: 1; margin: 0; }
 @media (max-width: 960px) {
   .a4-exchange { grid-template-columns: 1fr; row-gap: 14px; }
 }
