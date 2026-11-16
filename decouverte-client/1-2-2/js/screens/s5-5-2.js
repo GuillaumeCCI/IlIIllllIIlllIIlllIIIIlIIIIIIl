@@ -195,7 +195,7 @@
     return `<div class="a5-review-step">
       <div class="a5-rv-head"><h2 class="a5-review-title">${esc(title)}</h2>${pts !== null ? `<span class="a4-just-score"><b>${String(pts).replace('.', ',')}</b> / 10</span>` : ''}</div>
       <div class="a5-rv-grid">
-        <div class="a5-rv-you"><p class="a5-rv-label">Vous</p>${ouvert ? ouvert.quote(KEY, index, text) : `<p>« ${esc(text)} »</p>`}${chips}</div>
+        <div class="a5-rv-you"><p class="a5-rv-label">Vous</p>${ouvert ? ouvert.quote(KEY, index, text) : `<p>« ${esc(text)} »</p>`}</div>
         <div class="a5-rv-model"><p class="a5-rv-label">Ce qu’il fallait faire émerger</p><p class="a5-rv-model-text">${esc(model)}</p></div>
       </div>
     </div>`;

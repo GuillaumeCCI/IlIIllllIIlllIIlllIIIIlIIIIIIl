@@ -204,7 +204,7 @@
         }).join('')}</ul>` : '';
         return `<div class="a4-rewrite-review a4-rw-row">
           <div class="a4-rw-col is-from"><span class="a4-rw-k"><span class="a4-guide-n">${i + 1}</span>Yanis a écrit</span><p>« ${esc(r.from)} »</p></div>
-          <div class="a4-rw-col is-yours"><span class="a4-rw-k">Votre réécriture</span>${ouvert ? ouvert.quote('s5-5.1', i, text) : `<p>« ${esc(text)} »</p>`}${chips}</div>
+          <div class="a4-rw-col is-yours"><span class="a4-rw-k">Votre réécriture</span>${ouvert ? ouvert.quote('s5-5.1', i, text) : `<p>« ${esc(text)} »</p>`}</div>
           <div class="a4-rw-col is-model"><span class="a4-rw-k">Une réécriture possible</span><p>${esc(r.model)}</p></div>
         </div>`;
       }).join('')}
