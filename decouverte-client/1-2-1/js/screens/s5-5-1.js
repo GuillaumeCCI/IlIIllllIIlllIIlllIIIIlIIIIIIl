@@ -175,7 +175,8 @@
         const mine = Number(note(x, i));
         const ref = x.notes[i];
         const gap = Math.abs(mine - ref);
-        return `<li><span>${esc(c.title)}</span>${gap ? `<em class="a4-gap ${gap > 1 ? 'is-far' : ''}">corrigé : ${ref}</em>` : ''}${pips(mine, `Votre note : ${mine} sur 2${gap ? `, corrigé : ${ref}` : ''}`)}</li>`;
+        const tip = `Votre note : ${mine}${gap ? ` · corrigé : ${ref}` : ', comme le corrigé'}. ${c.text}`;
+        return `<li tabindex="0" data-tip="${esc(tip)}"><span>${esc(c.title)}</span>${gap ? `<em class="a4-gap ${gap > 1 ? 'is-far' : ''}">corrigé : ${ref}</em>` : ''}${pips(mine, `Votre note : ${mine} sur 2${gap ? `, corrigé : ${ref}` : ''}`)}</li>`;
       }).join('')}</ul>
       <p class="a4-review-why">${esc(x.why)}</p>
     </article>`).join('')}</div>`;
