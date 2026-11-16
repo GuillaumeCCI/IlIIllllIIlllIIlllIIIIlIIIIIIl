@@ -890,14 +890,16 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 @media (max-width: 1100px) { .a4-rank-grid { grid-template-columns: minmax(0, 1fr); } .a4-rank-grid .a4-rank:first-child { position: static; } }
 
 /* Cartes à quatre réponses (2.1 types de questions, 2.2 étages de l'entonnoir).
-   La carte de la question : l'aquarelle déborde un peu et la carte la coupe,
-   pour que ses bords clairs ne se voient pas ; la barre de progression suit
-   les coins arrondis. Phrase posée sur l'aquarelle, sans bloc de fond. */
-.dk-card.has-banner { overflow: hidden; border: 0; background: #fbfaf7; }
-.dk-card.has-banner::before { inset: -16px -18px; border-radius: 0; }
-.dk-card.has-banner .dk-body { background: none; padding: 12px 8px 4px; min-height: 0; }
-.dk-card.has-banner .dk-text { font-weight: 600; letter-spacing: -.02em; line-height: 1.2; color: #16205e; }
+   La carte de la question : décorée comme les cartes de choix des modules
+   techniques de vente (papier blanc cassé, feuillages aquarelle dans les deux
+   angles bas, images affichées plus petites que nature, donc nettes) ; la
+   barre de progression suit les coins arrondis. */
+.dk-board:has(.dk-zones:not(.count-2)) .dk-card { overflow: hidden; width: min(100%, 880px); padding: 22px 110px 30px; border: 0; background: url('../../../moteur/assets/illustrations/carte-deco-gauche.webp') left bottom / auto 104px no-repeat, url('../../../moteur/assets/illustrations/carte-deco-droite.webp') right bottom / auto 78px no-repeat, #fbfaf7; box-shadow: 0 14px 34px rgb(20 40 100 / 10%), 0 1px 3px rgb(20 40 100 / 6%); }
+.dk-board:has(.dk-zones:not(.count-2)) .dk-pos { margin-left: -86px; }
+.dk-board:has(.dk-zones:not(.count-2)) .dk-body { background: none; padding: 14px 0 6px; min-height: 0; }
+.dk-board:has(.dk-zones:not(.count-2)) .dk-text { font-weight: 600; letter-spacing: -.02em; line-height: 1.2; color: #16205e; }
 .dk-board:has(.dk-zones:not(.count-2)) .dk-question { margin-top: 10px; font-size: 1.2rem; font-weight: 700; color: #16205e; }
+@media (max-width: 640px) { .dk-board:has(.dk-zones:not(.count-2)) .dk-card { padding: 18px 22px 64px; } .dk-board:has(.dk-zones:not(.count-2)) .dk-pos { margin-left: 0; } }
 
 /* Les réponses : cartes décorées comme les cartes de choix des modules
    techniques de vente (papier blanc cassé, feuillages aquarelle dans les

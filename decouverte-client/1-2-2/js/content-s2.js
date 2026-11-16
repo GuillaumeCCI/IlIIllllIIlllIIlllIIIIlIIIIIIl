@@ -36,7 +36,7 @@
     '2.1': {
       eyebrow: 'Poser la bonne question · Les types',
       title: 'Quel type de question ?',
-      banner: 2,
+      banner: false,
       subtitle: 'Pour chaque question du vendeur à M. Garnier, indiquez son type.',
       context,
       question: 'Quel est le type de cette question ?',
@@ -62,7 +62,7 @@
     '2.2': {
       eyebrow: 'Poser la bonne question · L’entonnoir',
       title: 'Les étages de l’entonnoir',
-      banner: 7,
+      banner: false,
       subtitle: 'Placez chaque question à l’étage de l’entonnoir qui lui correspond.',
       context,
       question: 'À quel étage de l’entonnoir ?',
