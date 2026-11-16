@@ -85,8 +85,7 @@
         </div>
         <div class="a5-exchange-client">
           ${kit.clientCard(wordsOf(line), f.portrait, `Réplique ${k} · ${f.name} vous dit`)}
-          <p class="a5-task">${icon('target', { size: 18 })}<span><strong>${esc(task.title)}</strong> ${esc(task.text)}</span></p>
-          <p class="a5-forbidden">${icon('ban', { size: 15 })}<span>${esc(content.forbidden)}</span></p>
+          <p class="a5-task"><strong>${esc(task.title)} :</strong> ${esc(task.text.charAt(0).toLowerCase() + task.text.slice(1))}</p>
         </div>
         <div class="a5-exchange-you">
           <div class="a5-you-card">

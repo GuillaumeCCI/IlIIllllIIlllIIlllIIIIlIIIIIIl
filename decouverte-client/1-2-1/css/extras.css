@@ -643,3 +643,20 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a5-exchange-client .a5-task { display: flex; align-items: flex-start; gap: 10px; margin: 12px 0 0; padding: 12px 14px; border-radius: 14px; background: #f7f9fe; color: var(--muted); font-size: .88rem; line-height: 1.45; }
 .a5-exchange-client .a5-task .icon { flex-shrink: 0; margin-top: 1px; color: var(--accent); }
 .a5-exchange-client .a5-task strong { display: block; color: var(--navy); font-size: .95rem; }
+/* A5 : un seul cadre pour la réponse. La carte devient transparente (son
+   libellé « Vous lui répondez » au-dessus) ; le champ prend l'allure de la
+   carte du client : blanc, arrondi, même ombre, sans bordure. */
+#main .a5-you-card { padding: 0; border-radius: 0; background: none; box-shadow: none; gap: 10px; }
+#main .a5-you-label { padding: 4px 4px 0; }
+#main .a5-you-card .input-wrap { border-radius: var(--client-card-radius, 20px); }
+#main .a5-you-card textarea { padding: 20px 22px 30px; border: 0; border-radius: var(--client-card-radius, 20px); background: #fff; box-shadow: var(--client-card-shadow, 0 14px 40px rgb(15 35 78 / 7%)); font-size: 1.02rem; line-height: 1.55; color: var(--navy); }
+#main .a5-you-card textarea:focus { outline: none; box-shadow: 0 0 0 2px var(--accent), 0 14px 40px rgb(15 35 78 / 10%); }
+#main .a5-you-card .counter { right: 18px; bottom: 12px; }
+/* Le libellé « Vous lui répondez » posé dans le champ, en haut : le champ et
+   la carte du client commencent à la même hauteur. */
+#main .a5-you-card { position: relative; gap: 0; }
+#main .a5-you-label { position: absolute; top: 16px; left: 20px; z-index: 1; padding: 0; pointer-events: none; }
+#main .a5-you-card textarea { padding-top: 72px; }
+/* A5 : la consigne de la réplique en une ligne simple sous la carte, sans encadré. */
+.a5-exchange-client .a5-task { display: block; margin: 14px 6px 0; padding: 0; background: none; color: var(--muted); font-size: .9rem; line-height: 1.5; }
+.a5-exchange-client .a5-task strong { display: inline; color: var(--navy); font-size: inherit; }
