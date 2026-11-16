@@ -399,12 +399,15 @@
 .a5-copy-text { margin: 12px 0; padding: 14px 16px; border-radius: 12px; background: #f7f9fe; color: var(--navy); font: inherit; font-size: .92rem; white-space: pre-wrap; }
 @media (max-width: 900px) { .a5-fiches { grid-template-columns: 1fr; } }
 
-/* A4 : la cliente et la réponse du commercial côte à côte, sur un même plan. */
-.a4-exchange { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
-.a4-exchange .client-card-box, .a4-exchange .client-card { margin-bottom: 0; }
-.a4-exchange-reply { padding-left: 28px; border-left: 1px solid var(--line); }
-.a4-exchange-reply .a4-seller { margin: 6px 0 0; }
+/* A4 : la situation en bandeau, puis la réplique de la cliente (gauche) et
+   la réponse du commercial (droite), alignées en haut et de même hauteur. */
+.a4-exchange { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 24px; row-gap: 4px; align-items: stretch; }
+.a4-exchange-head { grid-column: 1 / -1; }
+.a4-exchange-head .a4-signal { margin-bottom: 8px; }
+.a4-exchange-client, .a4-exchange-reply { display: flex; min-width: 0; }
+.a4-exchange-client > .client-card-box { flex: 1; display: flex; margin: 0; }
+.a4-exchange-client .client-card { flex: 1; margin: 0; height: 100%; }
+.a4-exchange-reply .a4-seller { flex: 1; margin: 0; }
 @media (max-width: 960px) {
-  .a4-exchange { grid-template-columns: 1fr; }
-  .a4-exchange-reply { padding-left: 0; border-left: 0; }
+  .a4-exchange { grid-template-columns: 1fr; row-gap: 14px; }
 }
