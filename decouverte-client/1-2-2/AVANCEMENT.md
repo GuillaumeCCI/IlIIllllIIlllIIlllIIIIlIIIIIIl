@@ -32,5 +32,4 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 ## Reste à faire
 
 - Vérifier en capture les écrans d’A5 (guide, découverte, analyse, corrigé) et d’A4 (classement, corrigé), avec les enseignements du 1-2-1 (aéré, pas d’encadrés empilés, libellés clairs).
-- Mettre à jour decouverte-client/TRAME-M1-2.md (A3, A4, A5 du 1-2-2 sont faits).
 - Synthèse optionnelle de 1-2-1 et 1-2-2 : non commencée.
