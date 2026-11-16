@@ -50,6 +50,16 @@ window.ATELIER_CATALOG = {
       ]
     },
     {
+      id: 's4',
+      label: 'Les motivations d’achat',
+      // SONCASE et les Benali, corrigés : fiche M1.2.2, activité A3.
+      sourced: true,
+      exercises: [
+        { id: '4.1', file: 's4-4-1', label: 'Les mots qui trahissent les motivations', theme: 'blue', mount: 'form' },
+        { id: '4.2', file: 's4-4-2', label: 'Retour chez les Benali', theme: 'blue', mount: 'form' }
+      ]
+    },
+    {
       id: 's9',
       label: 'Faire le point',
       // Grille d'auto-positionnement, colonne « Fin », et « Ma progression ».

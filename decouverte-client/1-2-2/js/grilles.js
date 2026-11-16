@@ -106,9 +106,58 @@
     verifier('Les lunettes · la question', 'c4_question', ['lire', 'lecture', 'juste pour lire', 'situations', 'situation', 'moments', 'quand', 'du mal', 'difficulté', 'difficultés', 'voir', 'lunettes'])
   ];
 
+  /* ── A3 · Les mots qui trahissent les motivations ──────────────────── */
+
+  // 4.1 : le mot indice, recopié de la phrase du client.
+  const indice = (titre, champ, mots) => ({ titre, champs: [champ],
+    criteres: [{ nom: 'Le mot du client', mots, points: 4, conseil: 'Recopiez le mot exact du client qui révèle sa motivation.' }],
+    phrases: { points: 0 } });
+  const A3_INDICES = [
+    indice('Le moteur', 'c0_indice', ['être sûr', 'sûr', 'lâchera', 'lâcher', 'ne me lâchera pas', 'deux ans']),
+    indice('Les collègues', 'c1_indice', ['collègues', 'mes collègues', 'haut de gamme', 'au rabais', 'rabais', 'avoir l’air']),
+    indice('La nouveauté', 'c2_indice', ['nouveau', 'vraiment nouveau', 'dernière génération', 'génération', 'dernière']),
+    indice('Le paramétrage', 'c3_indice', ['simple', 'pas envie', 'paramétrer', 'mes soirées', 'soirées']),
+    indice('Les économies', 'c4_indice', ['combien', 'économiser', 'réellement économiser', 'par an']),
+    indice('Le bon accueil', 'c5_indice', ['très bien reçu', 'bien reçu', 'reçu', 'votre collègue', 'je reviens', 'reviens']),
+    indice('Les enfants', 'c6_indice', ['peur', 'avoir peur', 'seuls', 'enfants', 'trois enfants']),
+    indice('Le local', 'c7_indice', ['fabriqué près d’ici', 'près d’ici', 'fabriqué', 'respecte', 'respecte ses salariés', 'salariés', 'payer un peu plus'])
+  ];
+
+  // 4.2 : les motivations de chaque conjoint, avec leurs mots.
+  const SECURITE = ['sécurité', 'sécuritaire', 'rassur*', 'peur', 'danger', 'dangereux', 'protéger', 'protection', 'risque', 'sûr', 'sûre'];
+  const CONFORT = ['confort', 'récupérer', 'repos', 'reposer', 'tranquille', 'tranquillité', 'bien-être', 'pas de travaux', 'sans travaux', 'travaux', 'week-ends', 'week-end', 'fatigue', 'chambre d’amis', 'famille', 'sœur', 'soeur', 'recevoir', 'accueillir'];
+  const ARGENT = ['argent', 'budget', 'prix', 'crédit', 'étrangler', 's’étrangler', 'économ*', 'coût', '280 000', 'finances', 'financier', 'moyens'];
+  const A3_BENALI = [
+    { titre: 'Mme Benali · ses motivations', champs: ['c0_madame'],
+      criteres: [
+        { nom: 'Sécurité', mots: SECURITE.concat(['enfants', 'route passante', 'route', 'jardin']), points: 3, conseil: 'Sa peur pour les enfants : « avec les enfants, j’ai eu peur ».' },
+        { nom: 'Confort ou famille', mots: ['chambre d’amis', 'chambre', 'sœur', 'soeur', 'famille', 'recevoir', 'accueillir', 'confort'], points: 2, conseil: 'La chambre d’amis pour sa sœur.' },
+        { nom: 'Argent', mots: ARGENT, points: 2, conseil: 'Le budget : « on ne veut pas s’étrangler avec le crédit ».' }
+      ],
+      phrases: { points: 0 } },
+    { titre: 'M. Benali · ses motivations', champs: ['c0_monsieur'],
+      criteres: [
+        { nom: 'Confort', mots: CONFORT, points: 4, conseil: 'Ses week-ends pour récupérer, sans travaux.' },
+        { nom: 'Sécurité', mots: SECURITE.concat(['trajet', 'gardes', 'nuit', 'route', 'hôpital', 'conduire', 'volant']), points: 3, conseil: 'Le trajet après ses gardes de nuit.' }
+      ],
+      phrases: { points: 0 } },
+    { titre: 'La question qui départage', champs: ['c2_question'],
+      criteres: [
+        { nom: 'Les deux souhaits', mots: ['travaux', 'sans travaux', 'chambre d’amis', 'chambre', 'refaite', 'neuve', 'sœur', 'soeur'], points: 3, min: 2, conseil: 'Mettez en balance les deux : pas de travaux, chambre d’amis.' },
+        { nom: 'Un choix à faire', mots: ['choisir', 'choix', 'entre', 'ou', 'plutôt', 'lequel', 'laquelle', 'préférez', 'préféreriez', 'prendriez', 'passerait avant', 'plus important', 'le plus', 'compte le plus', 'priorité', 'sacrifier', 'renoncer'], points: 4, conseil: 'Faites choisir : « Si vous deviez choisir entre… laquelle prendriez-vous ? ».' }
+      ],
+      phrases: { points: 0 },
+      regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 2 }],
+      pieges: [{ nom: 'Un argument ou une maison proposée', points: 3, mots: ['je vous propose', 'j’ai une maison', 'nous avons', 'je vous conseille', 'il vous faut'], conseil: 'Pas de proposition : la question sert à hiérarchiser.' }] }
+  ];
+
   root.ATELIER_GRILLES = {
     // S3 3.1 · A2 : l'hypothèse et la question, pour chacun des cinq clients.
     's3-3.1': { integre: true, blocs: A2 },
+    // S4 4.1 · A3 : le mot indice de chaque phrase.
+    's4-4.1': { integre: true, blocs: A3_INDICES },
+    // S4 4.2 · A3 : les motivations des Benali et la question qui départage.
+    's4-4.2': { integre: true, blocs: A3_BENALI },
     // @@GRILLES@@
   };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -79,3 +79,46 @@ R.fautes['s3-3.1'] = [
     ['elle a un pic d activiter ou des absence', 'qu esce qui rend lundi si urgen ?'],
     ['elle a une fatige visuel a cause de l ecran', 'dans quel situation avez vous du mal a lire ?'])
 ];
+
+/* S4 4.1 · A3 : le mot indice de chaque phrase (cN_indice). */
+const idx = (...w) => Object.fromEntries(w.map((t, i) => [`c${i}_indice`, t]));
+R.justes['s4-4.1'] = [
+  idx('être sûr', 'au rabais', 'dernière génération', 'simple', 'économiser', 'très bien reçu', 'peur', 'fabriqué près d’ici'),
+  idx('« ne me lâchera pas »', '« mes collègues »', '« nouveau »', '« pas envie »', '« combien »', '« bien reçu »', '« avoir peur »', '« respecte ses salariés »'),
+  idx('sûr', 'haut de gamme', 'vraiment nouveau', 'paramétrer', 'réellement économiser', 'votre collègue', 'seuls à la maison', 'près d’ici'),
+  idx('Être sûr que le moteur ne lâchera pas', 'Mes collègues ont tous un modèle haut de gamme', 'Je veux la dernière génération', 'que ce soit simple', 'Combien je vais économiser', 'il m’avait très bien reçu', 'je ne veux plus avoir peur', 'fabriqué près d’ici'),
+  idx('lâchera', 'rabais', 'génération', 'simple, pas envie', 'économiser par an', 'je reviens', 'peur', 'respecte'),
+  idx('être sûr, lâchera', 'collègues, au rabais', 'nouveau, dernière génération', 'simple', 'combien, économiser', 'très bien reçu', 'peur', 'fabriqué près d’ici, respecte'),
+  idx("être sûr", "avoir l'air au rabais", "dernière génération", "pas envie de paramétrer", "économiser", "bien reçu", "peur", "l'entreprise respecte ses salariés"),
+  idx('Sûr', 'Collègues', 'Nouveau', 'Simple', 'Combien', 'Reçu', 'Peur', 'Fabriqué'),
+  idx('ne me lâchera pas au bout de deux ans', 'haut de gamme', 'nouveau', 'mes soirées à paramétrer', 'économiser', 'votre collègue m’avait très bien reçu', 'seuls', 'payer un peu plus pour du local'),
+  idx('être sûr que', 'avoir l’air au rabais', 'la dernière génération', 'simple', 'réellement économiser', 'très bien reçu la dernière fois', 'avoir peur', 'près d’ici')
+];
+R.mauvaises['s4-4.1'] = [
+  idx('moteur', 'modèle', 'quelque chose', 'soirées', 'an', 'dernière fois', 'maison', 'payer'),
+  idx('le client', 'le client', 'le client', 'le client', 'le client', 'le client', 'le client', 'le client'),
+  idx('je ne sais pas', 'rien', 'aucun', '?', 'non', 'oui', 'rien', 'aucun')
+];
+R.fautes['s4-4.1'] = [idx('etre sur', 'au rabé', 'derniere generation', 'simpl', 'economisé', 'tres bien recu', 'peure', 'fabriker pres d ici')];
+
+/* S4 4.2 · A3 : les motivations de chaque conjoint (c0_madame, c0_monsieur) et la question (c2_question). */
+const ben = (madame, monsieur, question) => ({ c0_madame: madame, c0_monsieur: monsieur, c2_question: question });
+R.justes['s4-4.2'] = [
+  ben('Sécurité : « avec les enfants, j’ai eu peur ». Famille : la chambre d’amis pour sa sœur. Argent : « pas s’étrangler avec le crédit ».', 'Sécurité (le trajet après ses gardes) et confort : « mes week-ends, c’est pour récupérer ».', 'Si vous deviez choisir entre une maison sans travaux et une maison avec une chambre d’amis, laquelle prendriez-vous ?'),
+  ben('La sécurité des enfants (route passante), une chambre pour sa sœur, et le budget.', 'Le confort : pas de travaux, récupérer le week-end ; la sécurité du trajet de nuit.', 'Entre pas de travaux et une chambre d’amis, qu’est-ce qui compte le plus pour vous ?'),
+  ben("Peur pour les enfants, budget à ne pas dépasser, chambre d'amis si possible.", "Ne pas passer ses week-ends en travaux pour se reposer, trajet sûr après la nuit.", "Vous préférez une maison sans travaux ou une maison avec une chambre d'amis ?"),
+  ben('Sécurité (« j’ai eu peur »), argent (« s’étrangler »), confort (chambre d’amis).', 'Confort (« récupérer »), sécurité (gardes de nuit, trajet).', 'Si l’une des deux devait passer avant, ce serait la maison sans travaux ou la chambre d’amis ?'),
+  ben('Elle veut un jardin sûr à cause de la route, elle ne veut pas s’étrangler avec le crédit, et aimerait recevoir sa sœur.', 'Il veut se reposer le week-end, donc pas de travaux, et un trajet court après l’hôpital.', 'Que choisiriez-vous : une maison refaite sans chambre d’amis, ou une chambre d’amis avec des travaux ?'),
+  ben('Sécurité, famille, argent.  « peur », « ma sœur », « crédit ».', 'Confort et sécurité : « récupérer », trajet après ses gardes.', 'Lequel est le plus important pour vous : éviter les travaux ou avoir une chambre d’amis ?'),
+  ben('Mme Benali : sécurité des enfants, budget serré, chambre d’amis pour sa sœur.', 'M. Benali : récupérer le week-end (pas de travaux), trajet de nuit sûr.', 'Si vous deviez renoncer à l’un des deux, les travaux ou la chambre d’amis, lequel ?'),
+  ben('Elle a eu peur pour les enfants (sécurité) et elle ne veut pas trop dépenser (argent).', 'Il veut du repos (confort), pas de week-ends en travaux.', 'Plutôt une maison sans travaux ou une maison avec une chambre d’amis ?'),
+  ben('Protéger ses enfants : sécurité. Recevoir sa sœur. Ne pas s’étrangler : argent.', 'Récupérer de ses nuits : confort. Le trajet après les gardes : sécurité.', 'Entre une maison sans travaux et une chambre d’amis, laquelle passerait avant ?'),
+  ben('La sécurité (« peur »), la famille (« ma sœur »), l’argent (« crédit »).', 'Le confort (« récupérer », « pas envie… travaux »).', 'Si vous ne pouviez avoir qu’une des deux, pas de travaux ou une chambre d’amis, laquelle choisiriez-vous ?')
+];
+R.mauvaises['s4-4.2'] = [
+  ben('Elle est sympa.', 'Il est fatigué.', 'Je vous propose une maison avec quatre chambres.'),
+  ben('Rien de particulier.', 'Rien de particulier.', 'Vous voulez visiter ?'),
+  ben('Elle veut une belle maison.', 'Il veut une belle maison.', 'J’ai une maison parfaite pour vous.')
+];
+R.motsCles['s4-4.2'] = ben('peur budget', 'récupérer', 'travaux chambre');
+R.fautes['s4-4.2'] = [ben('securiter des enfan, sa soeur, le credi', 'il veut recuperer le weekend, pas de travo, et le trajé apres les garde', 'si vous deviez choisir entre pas de travo ou une chambre d ami, laquel ?')];

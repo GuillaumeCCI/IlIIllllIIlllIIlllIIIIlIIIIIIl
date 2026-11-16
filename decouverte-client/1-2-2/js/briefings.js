@@ -56,6 +56,26 @@ window.ATELIER_BRIEFINGS = {
     criteria: ['Le besoin explicite, avec ses mots', 'Une hypothèse plausible', 'Hypothèse vérifiée, pas supposée']
   },
 
+  /* ══ SÉRIE 4 · LES MOTIVATIONS D'ACHAT ══════════════════════════════ */
+
+  's4-4.1': {
+    lede: { key: 'Un mot,', rest: 'et la motivation apparaît.' },
+    mission: 'Huit clients parlent de ce qu’ils veulent. Pour chacun, trouvez sa motivation dominante, puis le mot ou l’expression qui vous a mis sur la piste.',
+    method: 'Une phrase à la fois : la motivation, puis le mot indice.',
+    quote: 'Je veux être sûr que le moteur ne me lâchera pas au bout de deux ans.',
+    situation: 'Sept motivations d’achat (SONCASE) : sécurité, orgueil, nouveauté, confort, argent, sympathie, environnement et éthique.',
+    task: 'Huit phrases : pour chacune, la motivation dominante et le mot indice, recopié tel que le client l’a dit.',
+    criteria: ['La bonne motivation', 'Le mot du client, pas votre impression']
+  },
+  's4-4.2': {
+    lede: { key: 'Deux conjoints,', rest: 'deux façons de choisir.' },
+    mission: 'Deuxième rendez-vous à l’agence : Lucas fait le point avec M. et Mme Benali. Relevez les motivations de chacun, hiérarchisez leurs besoins, puis trouvez la question qui aurait départagé deux de leurs souhaits.',
+    method: 'Trois étapes, l’échange toujours sous les yeux.',
+    situation: 'Les Benali cherchent une maison avec jardin, autour de 280 000 €. Après une première visite, chacun dit ce qui compte pour lui.',
+    task: 'Les motivations de Mme Benali et de M. Benali, avec leurs mots ; cinq besoins à classer (prioritaire, important, secondaire) ; une question pour départager « pas de travaux » et « chambre d’amis ».',
+    criteria: ['Les motivations de chacun', 'Hiérarchie justifiée par les mots du client', 'Une question qui fait choisir']
+  },
+
   /* @@SERIES@@ */
 
   /* ══ SÉRIE 9 · FAIRE LE POINT ════════════════════════════════════════ */

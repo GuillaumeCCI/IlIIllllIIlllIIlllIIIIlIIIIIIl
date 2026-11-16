@@ -806,3 +806,7 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
   .pos-pills { grid-column: 1 / -1; flex-wrap: wrap; }
   .pos-pill { min-width: 0; flex: 1 1 120px; }
 }
+
+/* 1-2-2, 4.2 : les trois niveaux d'un besoin sur une ligne. */
+#main .fm-choices.count-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+#main .fm-choices.count-3 .fm-choice small { display: none; }
