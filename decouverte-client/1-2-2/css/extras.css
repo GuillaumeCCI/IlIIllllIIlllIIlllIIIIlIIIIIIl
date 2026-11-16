@@ -873,3 +873,11 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .d5-guide-label { margin-top: 6px; }
 .d5-guide-model { margin: 4px 0 12px; padding: 12px 16px; border-radius: 14px; background: #f3f9f5; color: #24533b; line-height: 1.6; }
 @media (max-width: 900px) { .d5-hier, .d5-emerge { grid-template-columns: 1fr; } }
+
+/* 1-2-2, A4 : le guide et la grille côte à côte. */
+.a4-note-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 20px; align-items: start; }
+.a4-note-grid > .k-panel { margin: 0; }
+.a4-note-grid > .a4-exchange { position: sticky; top: 12px; }
+.a4-note-grid .a4-exchange-reply .a4-new { justify-self: start; }
+.a4-note-grid .a4-rate .k-matrix th:not(.k-matrix-label), .a4-note-grid .a4-rate .k-matrix td { width: 74px; }
+@media (max-width: 1100px) { .a4-note-grid { grid-template-columns: minmax(0, 1fr); } .a4-note-grid > .a4-exchange { position: static; } }

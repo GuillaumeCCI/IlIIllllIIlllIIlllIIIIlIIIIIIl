@@ -121,12 +121,14 @@
 
   function noteStep(k) {
     const s = sellers[k];
-    return `${exchange(s, k)}
+    // Le guide à gauche (il reste à l'écran), la grille à droite : on note
+    // en lisant, sans faire défiler l'un pour retrouver l'autre.
+    return `<div class="a4-note-grid">${exchange(s, k)}
       <section class="k-panel a4-rate">
-        <p class="k-label">Notez ${k ? 'maintenant ' : ''}${esc(s.name)}</p>
+        <p class="k-label">Notez ${k ? 'maintenant ' : ''}le guide de ${esc(s.name)}</p>
         ${kit.matrix({ key: s.id, rows: criteria, columns: levels, head: 'Critère', round: true })}
         <p class="a4-total" data-live="total">${totalLine(s)}</p>
-      </section>
+      </section></div>
       ${core.errorsBox()}
       ${kit.bar({ left: k ? kit.back('a4-prev', `Revenir à ${sellers[k - 1].name}`) : '',
         right: kit.submit(k < RANK - 1 ? `Noter le guide de ${sellers[k + 1].name}` : content.rankLabel) })}`;
