@@ -880,6 +880,11 @@
       const pad = 8;
       const box = z => ({ x: z.left - pad, y: z.top - pad, w: z.width + 2 * pad, h: z.height + 2 * pad });
       const b = box(r);
+      // Le cadre reste dans la partie visible, sous la barre du haut : une
+      // zone plus haute que l'écran ne déborde pas sur l'en-tête.
+      const topLimit = Math.max(4, (doc.querySelector('.topbar')?.getBoundingClientRect().bottom || 0) + 4);
+      if (b.y < topLimit) { b.h -= topLimit - b.y; b.y = topLimit; }
+      if (b.y + b.h > root.innerHeight - 4) b.h = Math.max(40, root.innerHeight - 4 - b.y);
       Object.assign(hole.style, { left: `${b.x}px`, top: `${b.y}px`, width: `${b.w}px`, height: `${b.h}px` });
       // `also` : une seconde zone éclairée en même temps (ex. la réplique dont
       // parle la bulle). Le voile est alors percé de deux trous.

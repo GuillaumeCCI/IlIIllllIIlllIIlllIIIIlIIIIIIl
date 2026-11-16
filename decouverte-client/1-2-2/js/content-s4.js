@@ -90,13 +90,13 @@
       countLabel: 'phrases analysées',
       submitLabel: 'Phrase suivante',
       cases: [
-        phrase('Le moteur', 'Je veux être sûr que le moteur ne me lâchera pas au bout de deux ans.', 'securite', '« être sûr », « lâchera »', '« Être sûr », « ne me lâchera pas » : il veut éviter le risque.', 'client-tasse'),
+        phrase('Le moteur', 'Je veux être sûr que le moteur ne me lâchera pas au bout de deux ans.', 'securite', '« être sûr », « lâchera »', 'Il craint une panne coûteuse : il veut éviter le risque.', 'client-tasse'),
         phrase('Les collègues', 'Mes collègues ont tous un modèle haut de gamme, je ne veux pas avoir l’air de m’équiper au rabais.', 'orgueil', '« mes collègues », « au rabais »', 'Il se compare à ses collègues : c’est son image qui compte.', 'client-tasse'),
-        phrase('La nouveauté', 'Vous avez quelque chose de vraiment nouveau ? Je veux la dernière génération.', 'nouveaute', '« nouveau », « dernière génération »', '« Nouveau », « dernière génération » : il cherche l’innovation.', 'client-pull-clair'),
-        phrase('Le paramétrage', 'Ce qui compte, c’est que ce soit simple : je n’ai pas envie de passer mes soirées à paramétrer.', 'confort', '« simple », « pas envie »', '« Simple », « pas envie de passer mes soirées » : il veut de la tranquillité.', 'client-veste-verte'),
-        phrase('Les économies', 'Combien je vais réellement économiser par an ?', 'argent', '« combien », « économiser »', '« Combien », « économiser » : la rentabilité.', 'client-chignon'),
+        phrase('La nouveauté', 'Vous avez quelque chose de vraiment nouveau ? Je veux la dernière génération.', 'nouveaute', '« nouveau », « dernière génération »', 'Elle veut ce qui vient de sortir : elle cherche l’innovation.', 'client-pull-clair'),
+        phrase('Le paramétrage', 'Ce qui compte, c’est que ce soit simple : je n’ai pas envie de passer mes soirées à paramétrer.', 'confort', '« simple », « pas envie »', 'Elle ne veut ni effort ni temps perdu : elle cherche la facilité.', 'client-veste-verte'),
+        phrase('Les économies', 'Combien je vais réellement économiser par an ?', 'argent', '« combien », « économiser »', 'Elle compte ce que l’installation lui rapportera : c’est la rentabilité.', 'client-chignon'),
         phrase('Le bon accueil', 'Je reviens parce que votre collègue m’avait très bien reçu la dernière fois.', 'sympathie', '« très bien reçu »', 'Il revient pour la relation : c’est la confiance qui le guide.', 'client-tasse'),
-        phrase('Les enfants', 'Avec trois enfants, je ne veux plus avoir peur en les laissant seuls à la maison.', 'securite', '« peur »', '« Avoir peur » : il veut être rassuré.', 'client-cheveux-gris'),
+        phrase('Les enfants', 'Avec trois enfants, je ne veux plus avoir peur en les laissant seuls à la maison.', 'securite', '« peur »', 'Elle veut protéger sa famille : elle cherche à être rassurée.', 'client-cheveux-gris'),
         phrase('Le local', 'Si c’est fabriqué près d’ici et que l’entreprise respecte ses salariés, je veux bien payer un peu plus.', 'environnement', '« fabriqué près d’ici », « respecte »', 'Le local et le respect des salariés : ce sont ses valeurs.', 'client-pull-clair')
       ],
       keyPoint: 'À retenir : une motivation se repère dans les mots du client, pas dans ce qu’on imagine de lui. Notez le mot exact : c’est lui que vous reprendrez en argumentant.'
