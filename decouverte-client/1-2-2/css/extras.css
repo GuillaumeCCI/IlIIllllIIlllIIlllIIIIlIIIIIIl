@@ -946,3 +946,24 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
   .dk-board:has(.dk-zone[data-zone="4"]) .dk-zone[data-zone="3"] { --w: 80%; }
   .dk-board:has(.dk-zone[data-zone="4"]) .dk-zone[data-zone="4"] { --w: 70%; }
 }
+
+/* ── Corrigé des cartes (2.1, 2.2) : des cartes sur deux colonnes ───────
+   Plus de colonnes « Votre réponse / Réponse attendue » au bout de lignes
+   très larges : chaque carte réunit la question, puis « Vous » et
+   « Attendu » côte à côte, puis l'explication. Ni contour ni couleur de
+   bord : ombre douce, la coche ou la croix dit si c'est juste. */
+#main .deck-recap.has-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 18px; }
+#main .deck-recap.has-columns > .deck-review-head { display: none !important; }
+#main .deck-recap.has-columns > li { grid-template-columns: 36px max-content minmax(0, 1fr); align-items: start; gap: 8px 12px; padding: 16px 18px; border: 0; border-radius: 16px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 7%), 0 1px 2px rgb(20 40 100 / 4%); }
+#main .deck-recap.has-columns > li.is-ok { background: #f6fbf8; }
+#main .deck-recap.has-columns .deck-recap-n { grid-column: 1; grid-row: 1 / span 2; padding-top: 2px; }
+#main .deck-recap.has-columns .deck-recap-text { grid-column: 2 / 4; grid-row: 1; display: grid; gap: 4px; }
+#main .deck-recap.has-columns .deck-recap-text small { order: 2; color: #55607e; font-size: .92rem; line-height: 1.4; }
+#main .deck-recap.has-columns .deck-review-yours, #main .deck-recap.has-columns .deck-review-expected { grid-row: 2; justify-content: flex-start; }
+#main .deck-recap.has-columns .deck-review-yours { grid-column: 2; }
+#main .deck-recap.has-columns .deck-review-expected { grid-column: 3; }
+#main .deck-recap.has-columns .deck-review-expected { margin-left: 18px; }
+#main .deck-recap.has-columns .deck-review-yours::before { content: 'Vous :'; color: var(--muted); font-size: .85rem; }
+#main .deck-recap.has-columns .deck-review-expected::before { content: 'Attendu :'; color: var(--muted); font-size: .85rem; }
+@media (max-width: 1100px) { #main .deck-recap.has-columns { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { #main .deck-recap.has-columns .deck-review-expected { grid-column: 2 / 4; grid-row: 3; margin-left: 0; } #main .deck-recap.has-columns .deck-recap-n { grid-row: 1 / span 3; } }
