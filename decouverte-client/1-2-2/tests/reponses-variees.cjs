@@ -122,3 +122,25 @@ R.mauvaises['s4-4.2'] = [
 ];
 R.motsCles['s4-4.2'] = ben('peur budget', 'récupérer', 'travaux chambre');
 R.fautes['s4-4.2'] = [ben('securiter des enfan, sa soeur, le credi', 'il veut recuperer le weekend, pas de travo, et le trajé apres les garde', 'si vous deviez choisir entre pas de travo ou une chambre d ami, laquel ?')];
+
+/* S5 5.1 · A4 : trois questions de Yanis réécrites (rw0 à rw2). */
+const rw = (a, b, c) => ({ rw0: a, rw1: b, rw2: c });
+R.justes['s5-5.1'] = [
+  rw('Comment travaillez-vous aujourd’hui avec votre fournisseur ?', 'Qu’est-ce qui fonctionne bien avec lui, et qu’est-ce que vous aimeriez améliorer ?', 'Que se passe-t-il à l’atelier quand une pièce manque ?'),
+  rw('Pouvez-vous me parler de votre fournisseur actuel ?', 'Qu’est-ce qui vous plaît dans votre relation avec lui ?', 'Comment ça se passe quand une pièce n’arrive pas ?'),
+  rw("Comment s'organisent vos livraisons aujourd'hui ?", "Qu'est-ce que vous aimeriez améliorer avec votre fournisseur ?", "Qu'est-ce qui se passe quand il manque une pièce ?"),
+  rw('Racontez-moi comment se passent vos commandes de pièces.', 'Qu’est-ce qui fonctionne bien avec votre fournisseur actuel ?', 'Quand une pièce manque, comment faites-vous à l’atelier ?'),
+  rw('Comment choisissez-vous vos fournisseurs de pièces ?', 'Qu’est-ce que vous changeriez dans votre façon de travailler avec lui ?', 'Que se passe-t-il pour vos clients quand une pièce manque ?'),
+  rw('Comment travaillez-vous avec votre fournisseur aujourd’hui ?', 'Qu’est-ce qui vous satisfait le plus, et le moins, avec lui ?', 'Comment gérez-vous les ruptures de pièces ?'),
+  rw('Parlez-moi de votre fournisseur : comment ça se passe ?', 'Qu’aimeriez-vous améliorer dans vos livraisons ?', 'Que se passe-t-il quand une voiture attend une pièce sur le pont ?'),
+  rw('Comment se passent vos approvisionnements aujourd’hui avec votre fournisseur ?', 'Qu’est-ce qui compte pour vous dans la relation avec votre fournisseur ?', 'Qu’est-ce que ça change à l’atelier quand une pièce manque ?'),
+  rw('Comment est organisée la livraison des pièces chez vous ?', 'Qu’est-ce qui marche bien avec votre fournisseur actuel ?', 'Que faites-vous quand une pièce n’est pas livrée ?'),
+  rw('Comment travaillez-vous aujourd’hui pour vos pièces ?', 'Qu’est-ce que vous attendez de votre fournisseur ?', 'Quelles conséquences quand il manque une pièce à l’atelier ?')
+];
+R.mauvaises['s5-5.1'] = [
+  rw('Vous connaissez notre service de livraison express ?', 'Notre catalogue de 80 000 références vous intéresserait ?', 'On peut vous faire une offre ?'),
+  rw('Vous travaillez avec qui ?', 'Vous êtes satisfaite ?', 'Vous avez des ruptures ?'),
+  rw('Je vous propose notre offre.', 'Chez nous, c’est mieux.', 'Nous livrons en express.')
+];
+R.motsCles['s5-5.1'] = rw('fournisseur', 'améliorer', 'pièce manque');
+R.fautes['s5-5.1'] = [rw('coment travailler vous aujourd hui avec votre fournisseur ?', 'qu esce qui fonctione bien avec lui et qu aimeriez vous amelioré ?', 'que se passe t il a l atelier quand une piece manque ?')];

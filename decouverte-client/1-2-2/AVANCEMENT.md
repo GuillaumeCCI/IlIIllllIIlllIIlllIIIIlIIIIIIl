@@ -26,3 +26,4 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 - Étape 1 : catalogue, grilles s1/s9 (critères M1.2.2), A1 (2.1 et 2.2 en cartes à classer), tests adaptés. Prochaine : A2 (s3).
 - Étape 2 : A2 (s3-3.1, mountForm, 10 grilles hypothèse/question, banque de réponses : justes 9,5-10, mauvaises ≤ 1). Prochaine : A3 (s4).
 - Étape 3 : A3 (4.1 motivation SONCASE + mot indice noté ; 4.2 Benali : motivations notées, hiérarchie en choix, question notée). Trame M1.2 écrite dans decouverte-client/TRAME-M1-2.md. Prochaine : A4 (s5-5.1, écran propre à adapter de 1-2-1 s5-5-1).
+- Étape 4 : A4 (s5-5.1, écran adapté de 1-2-1 : guides Yanis/Clara notés avec tolérance, meilleur guide, 3 réécritures notées). Prochaine : A5 (s5-5.2 : choix du client, guide en 5 étages, client virtuel thème par thème, analyse et hiérarchie, grille Oui/Non, dépôt).

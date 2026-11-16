@@ -76,6 +76,17 @@ window.ATELIER_BRIEFINGS = {
     criteria: ['Les motivations de chacun', 'Hiérarchie justifiée par les mots du client', 'Une question qui fait choisir']
   },
 
+  /* ══ SÉRIE 5 · PRÉPARER ET MENER LA DÉCOUVERTE ═══════════════════════ */
+
+  's5-5.1': {
+    lede: { key: 'Deux guides,', rest: 'un seul fait parler.' },
+    mission: 'Deux commerciaux préparent leur premier rendez-vous avec Mme Lefort, gérante d’un garage. Notez chaque guide de questions avec la grille, désignez le meilleur, puis réécrivez trois questions de l’autre.',
+    method: 'Un guide à la fois : six critères notés de 0 à 2, puis le choix et les réécritures.',
+    situation: 'Mme Lefort gère un garage indépendant de 6 salariés : vous l’avez rencontrée en M1.2.1. Yanis et Clara, d’un distributeur de pièces automobiles, ont chacun rédigé leur guide.',
+    task: 'Six critères par guide : l’entonnoir, les questions ouvertes, les problèmes et leurs coûts, les critères de choix, ni question orientée ni vente déguisée, une validation. Puis trois questions de Yanis à réécrire.',
+    criteria: ['Des notes proches du corrigé', 'Le meilleur guide', 'Réécriture qui ouvre']
+  },
+
   /* @@SERIES@@ */
 
   /* ══ SÉRIE 9 · FAIRE LE POINT ════════════════════════════════════════ */

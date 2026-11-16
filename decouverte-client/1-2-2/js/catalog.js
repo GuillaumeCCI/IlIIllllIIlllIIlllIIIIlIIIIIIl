@@ -60,6 +60,15 @@ window.ATELIER_CATALOG = {
       ]
     },
     {
+      id: 's5',
+      label: 'Préparer et mener la découverte',
+      // Fiche M1.2.2 : A4 (les guides de Yanis et Clara) et A5 (votre guide, votre découverte).
+      sourced: true,
+      exercises: [
+        { id: '5.1', file: 's5-5-1', label: 'Le guide qui fait parler', theme: 'blue' }
+      ]
+    },
+    {
       id: 's9',
       label: 'Faire le point',
       // Grille d'auto-positionnement, colonne « Fin », et « Ma progression ».

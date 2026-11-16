@@ -62,7 +62,8 @@ const CUSTOM = {
   's5-5-1': (e, c) => {
     c.sellers.forEach(s => s.notes.forEach((n, i) => e.setValue(`${s.id}${i}`, String(n))));
     c.ranking.forEach((id, i) => e.setValue(`rank${i}`, id));
-    e.setValue('why', 'Elle tient compte du temps et reformule.');
+    (c.rewrites || []).forEach(r => e.setValue(r.id, 'Comment ça se passe ?'));
+    if (!c.rewrites) e.setValue('why', 'Elle tient compte du temps et reformule.');
     e.setValue('self0', '2');
   },
   // A5 : une fiche, trois réponses, la grille Oui / Non.

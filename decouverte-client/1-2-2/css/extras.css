@@ -810,3 +810,30 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 /* 1-2-2, 4.2 : les trois niveaux d'un besoin sur une ligne. */
 #main .fm-choices.count-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 #main .fm-choices.count-3 .fm-choice small { display: none; }
+
+/* 1-2-2, A4 : le guide de questions en pleine largeur, sous la situation. */
+#main .a4-exchange.is-guide { grid-template-columns: minmax(0, 1fr); }
+.a4-exchange.is-guide .a4-exchange-reply { display: block; }
+.a4-signal-info { color: var(--muted) !important; font-weight: 400 !important; }
+.a4-guide { position: relative; padding: 20px 24px; border-radius: 20px; background: #fff; box-shadow: 0 14px 40px rgb(15 35 78 / 7%); }
+.a4-guide.tone-yanis { --tone: #c4512f; }
+.a4-guide.tone-clara { --tone: #1d7a4b; }
+.a4-guide .a4-avatar { background: var(--tone); }
+.a4-guide .a4-seller-label { margin: 0 0 12px; }
+.a4-guide-group { margin: 12px 0 4px; color: var(--tone); font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.a4-guide-list { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.a4-guide-list li { display: flex; align-items: baseline; gap: 10px; color: var(--navy); font-size: 1.02rem; line-height: 1.45; }
+.a4-guide-n { display: inline-grid; place-items: center; flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: #eef1f7; color: var(--muted); font-size: .75rem; font-weight: 800; }
+.a4-recap-card.tone-yanis, .a4-order-row.tone-yanis, .a4-rank-who.tone-yanis { --tone: #c4512f; --tone-soft: #fde4de; }
+.a4-recap-card.tone-clara, .a4-order-row.tone-clara { --tone: #1d7a4b; --tone-soft: #dcf3e6; }
+.a4-new.tone-yanis { background: #fde4de; color: #a8402c; }
+.a4-new.tone-clara { background: #dcf3e6; color: #1d7a4b; }
+.a4-rewrites { margin: 20px 0 0; }
+.a4-rewrite { margin-top: 12px; }
+.a4-rewrite-from { display: flex; align-items: baseline; gap: 8px; margin: 0 0 6px; color: var(--muted); font-size: .92rem; }
+.a4-rewrite-review { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+.a4-rewrite-review .result-answer-text { margin: 0; color: var(--navy); }
+.a4-rewrite-model { margin: 8px 0 0; padding: 8px 12px; border-radius: 10px; background: #f3f9f5; color: #24533b; font-size: .92rem; }
+.a4-rewrite-model span { display: block; color: #4c5f86; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+#main .a4-exchange-reply > .a4-guide { display: block; }
+.a4-guide .a4-guide-list + .a4-guide-group { margin-top: 16px; }

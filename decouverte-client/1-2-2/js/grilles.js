@@ -151,6 +151,26 @@
       pieges: [{ nom: 'Un argument ou une maison proposée', points: 3, mots: ['je vous propose', 'j’ai une maison', 'nous avons', 'je vous conseille', 'il vous faut'], conseil: 'Pas de proposition : la question sert à hiérarchiser.' }] }
   ];
 
+  /* ── A4 · Le guide qui fait parler : trois questions de Yanis réécrites ─ */
+  const SITUATION_LEFORT = ['fournisseur', 'fournisseurs', 'atelier', 'pièce', 'pièces', 'livraison', 'livraisons', 'livré', 'livrée', 'garage', 'travaillez', 'travail',
+    'organisez', 'organisation', 'fonctionne', 'manque', 'manquent', 'rupture', 'ruptures', 'pont', 'ponts', 'clients', 'améliorer', 'satisf*', 'relation', 'journée'];
+  // Une question fermée, comme celles de Yanis : on répond par oui ou non.
+  const PIEGE_FERMEE = { nom: 'Une question fermée', points: 3,
+    mots: ['vous êtes satisfaite', 'vous êtes satisfait', 'vous avez des', 'vous travaillez avec qui', 'vous travaillez avec quel', 'vous connaissez', 'est-ce que vous avez', 'vous êtes livrée', 'on peut vous'],
+    conseil: 'On y répond par oui ou par non : ouvrez la question.' };
+  const PIEGE_YANIS = { nom: 'Votre offre', points: 3,
+    mots: ['notre service', 'notre catalogue', 'notre offre', 'nos références', 'livraison express', 'express', '80 000', 'références', 'nous proposons', 'je vous propose', 'faire une offre', 'nous livrons', 'chez nous'],
+    conseil: 'Ne parlez pas de votre offre : partez de sa situation.' };
+  const reecrire = (titre, champ) => ({ titre, champs: [champ],
+    criteres: [
+      { nom: 'Une question ouverte', mots: OUVERTE, points: 4, conseil: 'Ouvrez : « Comment… ? », « Qu’est-ce qui… ? », « Que se passe-t-il quand… ? ».' },
+      { nom: 'Sa situation', mots: SITUATION_LEFORT, points: 3, conseil: 'Partez de sa situation : son fournisseur, son atelier, les pièces qui manquent.' }
+    ],
+    phrases: { points: 0 },
+    regles: [{ regle: 'avecQuestion', nom: 'Un point d’interrogation', points: 2 }],
+    pieges: [PIEGE_YANIS, PIEGE_ORIENTEE, PIEGE_FERMEE] });
+  const A4_REECRITURES = [reecrire('Question 1 · le fournisseur', 'rw0'), reecrire('Question 3 · la satisfaction', 'rw1'), reecrire('Question 4 · les ruptures', 'rw2')];
+
   root.ATELIER_GRILLES = {
     // S3 3.1 · A2 : l'hypothèse et la question, pour chacun des cinq clients.
     's3-3.1': { integre: true, blocs: A2 },
@@ -158,6 +178,8 @@
     's4-4.1': { integre: true, blocs: A3_INDICES },
     // S4 4.2 · A3 : les motivations des Benali et la question qui départage.
     's4-4.2': { integre: true, blocs: A3_BENALI },
+    // S5 5.1 · A4 : les trois questions de Yanis réécrites.
+    's5-5.1': { integre: true, blocs: A4_REECRITURES },
     // @@GRILLES@@
   };
 })(typeof window !== 'undefined' ? window : globalThis);
