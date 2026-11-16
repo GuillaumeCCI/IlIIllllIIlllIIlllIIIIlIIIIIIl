@@ -169,9 +169,10 @@
   const pips = (n, label) => `<span class="a4-pips" role="img" aria-label="${esc(label)}">${[0, 1].map(p => `<i class="${p < n ? 'is-on' : ''}"></i>`).join('')}</span>`;
   /* Chaque ligne : votre note et la note attendue, côte à côte, puis une
    * marque : ✓ même note, ±1 un point d'écart (accepté), ✗ deux points. */
-  const VERDICT = gap => (gap === 0 ? { cls: 'is-same', mark: '✓', text: 'même note' }
-    : gap === 1 ? { cls: 'is-near', mark: '±1', text: 'un point d’écart, accepté' }
-    : { cls: 'is-far', mark: '✗', text: 'deux points d’écart' });
+  const VERDICT = gap => (gap === 0 ? { cls: 'is-same', icon: 'check', text: 'même note' }
+    : gap === 1 ? { cls: 'is-near', icon: 'check', text: 'un point d’écart, accepté' }
+    : { cls: 'is-far', icon: 'close', text: 'deux points d’écart' });
+  const verdictMark = v => `<span class="a4-verdict ${v.cls}" aria-hidden="true">${kit.icon(v.icon, { size: 13, strokeWidth: 3 })}</span>`;
   function reviewCards() {
     return `<div class="a4-recap-grid a4-review-grid">${sellers.map(x => `<article class="a4-recap-card tone-${esc(x.id)}">
       <header>${avatar(x)}<strong>${esc(x.name)}</strong>
@@ -183,12 +184,12 @@
           const ref = x.notes[i];
           const v = VERDICT(Math.abs(mine - ref));
           const tip = `Votre note : ${mine} · attendu : ${ref} (${v.text}). ${c.text}`;
-          return `<li class="${v.cls}" tabindex="0" data-tip="${esc(tip)}"><span class="a4-review-crit">${esc(c.title)}</span><span class="a4-n is-mine" aria-label="Votre note : ${mine} sur 2">${mine}</span><span class="a4-n" aria-label="Note attendue : ${ref} sur 2">${ref}</span><span class="a4-verdict">${v.mark}</span></li>`;
+          return `<li class="${v.cls}" tabindex="0" data-tip="${esc(tip)}"><span class="a4-review-crit">${esc(c.title)}</span><span class="a4-n is-mine" aria-label="Votre note : ${mine} sur 2">${mine}</span><span class="a4-n" aria-label="Note attendue : ${ref} sur 2">${ref}</span>${verdictMark(v)}</li>`;
         }).join('')}
       </ul>
       <p class="a4-review-why">${esc(x.why)}</p>
     </article>`).join('')}</div>
-    <p class="a4-review-legend"><span><i class="is-same">✓</i> même note</span><span><i class="is-near">±1</i> un point d’écart, accepté</span><span><i class="is-far">✗</i> deux points d’écart</span></p>`;
+    <p class="a4-review-legend">${[0, 1, 2].map(g => { const v = VERDICT(g); return `<span>${verdictMark(v)}${v.text.charAt(0).toUpperCase() + v.text.slice(1).replace(', accepté', ' : accepté')}</span>`; }).join('')}</p>`;
   }
 
   /* La justification : la réponse (mots repérés surlignés) et son score,
@@ -210,16 +211,20 @@
       </div>`;
   }
 
+  /* Le classement en deux tuiles, chaque commercial avec sa place :
+   * « 1er Hugo · 2e Thomas · 3e Inès ». */
+  const PLACE_SHORT = ['1er', '2e', '3e'];
+  const placed = ids => ids.map((id, i) => `${PLACE_SHORT[i]} ${nameOf(id)}`).join(' · ');
+  const rankReview = () => kit.picked(ranks().every((id, i) => id === content.ranking[i]), placed(ranks()), placed(content.ranking), 'Votre classement, du plus adapté au moins adapté');
+
   function review() {
-    const chosen = ranks().map(nameOf).join(', puis ');
-    const rankOk = ranks().every((id, i) => id === content.ranking[i]);
     return `${clientBlock()}
       <section class="k-panel a4-result">
         <p class="a4-review-head"><span class="k-label">Vos notes et les notes attendues</span><span class="a4-review-count"><b>${close()}</b> / ${sellers.length * nC} notes justes, à un point près</span></p>
         ${reviewCards()}
       </section>
       <section class="k-panel a4-result">
-        ${kit.picked(rankOk, chosen, content.rankingText, 'Votre classement')}
+        ${rankReview()}
         ${justification()}
       </section>
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
