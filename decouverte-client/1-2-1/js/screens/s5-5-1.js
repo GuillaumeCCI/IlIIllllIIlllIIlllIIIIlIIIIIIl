@@ -28,24 +28,18 @@
   const sellerOf = id => sellers.find(x => x.id === id);
   function podium() {
     const r = ranks();
+    const free = r.findIndex(v => !v);
     const places = PLACES.map((p, i) => {
       const s = sellerOf(r[i]);
-      return `<button type="button" class="a4-slot ${s ? `is-filled tone-${esc(s.id)}` : ''}" data-act="a4-unplace" data-index="${i}" data-field="rank${i}" ${s ? '' : 'disabled'} aria-label="${esc(p.n)}${p.sub ? ` (${esc(p.sub)})` : ''} : ${s ? `${esc(s.name)}, cliquer pour retirer` : 'vide'}">
-        <span class="a4-slot-rank">${esc(p.n)}</span>${p.sub ? `<span class="a4-slot-sub">${esc(p.sub)}</span>` : '<span class="a4-slot-sub">&nbsp;</span>'}
-        <span class="a4-slot-who">${s ? `${avatar(s)}<strong>${esc(s.name)}</strong>${kit.icon('close', { size: 14 })}` : '<em>À placer</em>'}</span>
+      return `<button type="button" class="a4-slot ${s ? `is-filled tone-${esc(s.id)}` : ''} ${i === free ? 'is-next' : ''}" data-act="a4-unplace" data-index="${i}" data-field="rank${i}" ${s ? '' : 'disabled'} aria-label="${esc(p.n)}${p.sub ? ` (${esc(p.sub)})` : ''} : ${s ? `${esc(s.name)}, cliquer pour retirer` : 'vide'}">
+        <span class="a4-slot-rank">${i + 1}</span>${s ? `<strong>${esc(s.name)}</strong><span class="a4-slot-x">${kit.icon('close', { size: 13 })}</span>` : ''}
       </button>`;
     }).join('');
-    const free = r.findIndex(v => !v);
-    const pool = sellers.map(s => {
-      const at = r.indexOf(s.id);
-      return `<button type="button" class="a4-pick tone-${esc(s.id)} ${at !== -1 ? 'is-placed' : ''}" data-act="a4-pick" data-id="${esc(s.id)}" ${at !== -1 || free === -1 ? 'disabled' : ''}>
-        ${avatar(s)}<strong>${esc(s.name)}</strong><span class="a4-pick-total">${total(s)} / ${max}</span>${at !== -1 ? `<span class="a4-pick-rank">${esc(PLACES[at].n)}</span>` : ''}
-      </button>`;
-    }).join('');
-    return `<div class="a4-podium">${places}</div>
-      <p class="a4-pool-help">${free === -1 ? 'Classement complet. Cliquez sur une place pour la libérer.' : `Cliquez sur le commercial à placer en ${esc(PLACES[free].n)}.`}</p>
-      <div class="a4-pool">${pool}</div>`;
+    const pool = sellers.filter(s => !r.includes(s.id)).map(s => `<button type="button" class="a4-pick tone-${esc(s.id)}" data-act="a4-pick" data-id="${esc(s.id)}">${avatar(s)}<strong>${esc(s.name)}</strong><span class="a4-pick-total">${total(s)} / ${max}</span></button>`).join('');
+    return `<div class="a4-rankline"><span class="a4-rank-end">Plus adapté</span><div class="a4-slots">${places}</div><span class="a4-rank-end">Moins adapté</span></div>
+      ${free === -1 ? '' : `<div class="a4-pool"><span class="a4-pool-help">Cliquez dans l’ordre :</span>${pool}</div>`}`;
   }
+
 
   const note = (s, i) => ex.value(`${s.id}${i}`);
   const rated = s => criteria.every((_, i) => note(s, i) !== '');
