@@ -136,20 +136,14 @@
   const totalLine = s => `Total : <strong>${total(s) === null ? '–' : total(s)} / ${max}</strong>`;
 
   function rankStep() {
-    /* Le rappel de l'échange : la réplique de la cliente, puis les trois
-     * réponses côte à côte, chacune avec la note donnée, critère par critère. */
-    return `<section class="k-panel a4-recap">
-        <p class="k-label">Les deux guides, avec vos notes</p>
-        <div class="a4-recap-grid">${sellers.map(s => `<article class="a4-recap-card tone-${esc(s.id)}">
-          <header><span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span><strong>${esc(s.name)}</strong>
-            <span class="a4-recap-total"><b>${total(s)}</b> / ${max}</span></header>
-          <p class="a4-recap-text">${esc(s.summary)}</p>
-          <ul class="a4-recap-notes">${criteria.map((c, i) => `<li tabindex="0" data-tip="${esc(tipOf(s, c, i))}"><span>${esc(c.title)}</span><span class="a4-pips" role="img" aria-label="${esc(note(s, i))} sur 2">${[0, 1].map(p => `<i class="${p < Number(note(s, i)) ? 'is-on' : ''}"></i>`).join('')}</span></li>`).join('')}</ul>
-        </article>`).join('')}</div>
-      </section>
+    /* Deux blocs côte à côte : le classement (les notes données y sont
+     * rappelées), puis les trois réécritures et l'auto-évaluation. */
+    return `<div class="a4-rank-grid">
       <section class="k-panel a4-rank">
         <p class="k-label">${esc(content.rankTitle)}</p>
         ${podium()}
+      </section>
+      <section class="k-panel a4-rank a4-rank-write">
         <div class="a4-rewrites">
           <p class="fm-label">Réécrivez ces trois questions de Yanis</p>
           <p class="fm-sub">Pour qu’elles fassent vraiment parler Mme Lefort : ouvertes, parties de sa situation, sans parler de votre offre.</p>
@@ -160,7 +154,7 @@
           <p class="a4-self-q"><span class="k-label">Auto-évaluation</span><span>${esc(content.selfCheck.text)}</span></p>
           <div class="a4-self-pills" role="radiogroup" aria-label="${esc(content.selfCheck.title)}">${SELF.map(o => `<button type="button" class="a4-self-pill ${ex.value('self0') === o.id ? 'is-on' : ''}" role="radio" aria-checked="${ex.value('self0') === o.id}" data-act="a4-self" data-id="${o.id}" ${o.id === SELF[0].id ? 'data-field="self0"' : ''}>${esc(o.label)}</button>`).join('')}</div>
         </div>
-      </section>
+      </section></div>
       ${core.errorsBox()}
       ${kit.bar({ left: kit.back('a4-prev', `Revenir à ${sellers[RANK - 1].name}`), right: kit.submit('Voir le corrigé') })}`;
   }

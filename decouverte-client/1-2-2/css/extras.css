@@ -881,3 +881,10 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-note-grid .a4-exchange-reply .a4-new { justify-self: start; }
 .a4-note-grid .a4-rate .k-matrix th:not(.k-matrix-label), .a4-note-grid .a4-rate .k-matrix td { width: 74px; }
 @media (max-width: 1100px) { .a4-note-grid { grid-template-columns: minmax(0, 1fr); } .a4-note-grid > .a4-exchange { position: static; } }
+/* 1-2-2, A4 : le classement à gauche, les réécritures à droite. */
+.a4-rank-grid { display: grid; grid-template-columns: minmax(280px, .7fr) minmax(0, 1.6fr); gap: 20px; align-items: start; }
+#main .a4-rank-grid > .k-panel, #main .a4-note-grid > .k-panel { margin: 0; }
+.a4-rank-grid .a4-rank:first-child { position: sticky; top: 12px; }
+.a4-rank-write .a4-rewrites { margin-top: 0; }
+.a4-rank-write .a4-self { flex-wrap: wrap; gap: 10px; }
+@media (max-width: 1100px) { .a4-rank-grid { grid-template-columns: minmax(0, 1fr); } .a4-rank-grid .a4-rank:first-child { position: static; } }
