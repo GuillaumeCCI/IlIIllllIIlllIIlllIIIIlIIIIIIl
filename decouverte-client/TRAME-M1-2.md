@@ -42,7 +42,7 @@ l'ordre. Liens en ligne : https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIl
    → site 1-2-2 · *Les motivations d'achat* (2 exercices)
 6. **A4 · Le guide qui fait parler** (25 min)
    → site 1-2-2 · *Préparer et mener la découverte* · 5.1
-7. **A5 · Ton guide, ta découverte** (45 min, activité socle, dépôt)
+7. **A5 · Votre guide, votre découverte** (45 min, activité socle, dépôt)
    → site 1-2-2 · *Préparer et mener la découverte* · 5.2
 8. *Synthèse optionnelle* (45-60 min, hors enveloppe) → pas encore dans le site
 9. **Grille d'auto-positionnement · Fin + Ma progression** (10 min)

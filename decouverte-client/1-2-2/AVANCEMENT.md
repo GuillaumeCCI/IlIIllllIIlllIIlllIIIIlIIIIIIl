@@ -34,4 +34,3 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 ## Reste à faire
 
 - Synthèse optionnelle de 1-2-1 et 1-2-2 : non commencée.
-- Titre d’A5 : la trame dit « Ton guide, ta découverte », l’écran « Votre guide, votre découverte » (à trancher avec l’utilisateur).
