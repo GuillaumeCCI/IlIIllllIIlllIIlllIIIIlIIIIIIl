@@ -68,6 +68,7 @@
   function choose() {
     return `<section class="k-panel">
         <p class="k-label">Choisissez la fiche la plus proche de votre futur métier</p>
+        <p class="a5-choose-help">Vous menez ensuite <strong>un seul entretien</strong> avec ce client, en trois moments : <strong>1</strong> comprendre le client, <strong>2</strong> tenir compte de son signal, <strong>3</strong> faire la synthèse.</p>
         ${ex.radioCards('fiche', fiches.map(f => ({ id: f.id, label: `${f.sector} · ${f.title}`, description: f.profile, symbol: f.id === 'literie' ? 'armchair' : f.id === 'pieces' ? 'truck' : 'building' })), 'a5-fiches')}
         ${kit.help(content.forbidden, 'ban')}
       </section>
@@ -225,7 +226,7 @@
   });
 
   kit.tour('s5-5.2', [
-    { target: '.a5-fiches', title: 'Votre client', text: 'Choisissez la fiche la plus proche de votre futur métier : commerce, entre entreprises ou immobilier.' },
+    { target: '.a5-fiches', title: 'Votre client', text: 'Choisissez la fiche la plus proche de votre futur métier : commerce, entre entreprises ou immobilier. Vous menez ensuite un seul entretien avec ce client.' },
     { target: '.k-count.is-progress', title: 'Les étapes', text: 'Un même entretien, en trois moments. Une réponse à chaque moment :',
       items: [
         { key: '1', tone: 'blue', text: 'une réponse en attitude de compréhension ;' },

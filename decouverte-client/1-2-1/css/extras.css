@@ -688,3 +688,6 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a5-moments li.is-done .a5-moments-n { background: #1d7a4b; color: #fff; }
 .a5-moments li.is-current { color: #fff; background: var(--accent); }
 .a5-moments li.is-current .a5-moments-n { background: #fff; color: var(--accent); }
+
+.a5-choose-help { margin: 2px 0 12px; color: var(--muted); font-size: .92rem; }
+.a5-choose-help strong { color: var(--navy); }

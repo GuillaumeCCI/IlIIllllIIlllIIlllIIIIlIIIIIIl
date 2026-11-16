@@ -137,12 +137,12 @@ window.ATELIER_BRIEFINGS = {
   },
 
     's5-5.2': {
-    lede: { key: 'Trois répliques,', rest: 'trois réponses, votre voix.' },
-    mission: 'Choisissez un client, celui qui ressemble le plus à votre futur métier. Il vous dit trois choses : répondez à chacune, puis dites vos réponses à voix haute et déposez-les pour le retour de votre tuteur.',
-    method: 'Une réplique à la fois, puis l’enregistrement et la grille.',
-    situation: 'M. Garnier dans un magasin de literie, Mme Lefort dans son garage, ou Mme Duval qui vend la maison familiale. Chacun parle de son problème, et montre plus qu’il ne dit.',
-    task: 'Réplique 1 : une réponse en attitude de compréhension. Réplique 2 : une réponse qui tient compte du signal non verbal, en adaptant votre rythme ou votre ton. Réplique 3 : une synthèse de tout l’échange, terminée par une validation. Aucun produit, aucune solution.',
-    criteria: ['Compréhension, sans jugement ni solution', 'Adaptation au signal', 'Synthèse complète et validée', 'Ton posé à l’oral']
+    lede: { key: 'Un client, un entretien,', rest: 'trois moments.' },
+    mission: 'Choisissez un client, celui qui ressemble le plus à votre futur métier, et menez avec lui un seul entretien de découverte. À trois moments de cet entretien, il vous parle : répondez-lui à chaque fois. Puis dites vos réponses à voix haute et déposez-les pour le retour de votre tuteur.',
+    method: 'Un même entretien, un moment à la fois, puis l’enregistrement et la grille.',
+    situation: 'M. Garnier dans un magasin de literie, Mme Lefort dans son garage, ou Mme Duval qui vend la maison familiale. L’entretien avance : au début il se confie, un peu plus tard il réagit sans le dire, pour finir il précise ce qui compte.',
+    task: 'Moment 1, au début : une réponse en attitude de compréhension. Moment 2, un peu plus tard : une réponse qui tient compte de son signal non verbal, en adaptant votre rythme ou votre ton. Moment 3, pour finir : une synthèse de tout l’entretien, terminée par une validation. Aucun produit, aucune solution.',
+    criteria: ['Compréhension, sans jugement ni solution', 'Adaptation au signal', 'Synthèse de tout l’entretien, validée', 'Ton posé à l’oral']
   },
 
   /* ══ SÉRIE 9 · FAIRE LE POINT ════════════════════════════════════════ */
