@@ -65,17 +65,26 @@
     const line = f.lines[k - 1];
     const gesture = gestureOf(line);
     const task = tasks[k - 1];
-    return `<section class="k-panel a5-client">
-        <p class="k-label">${esc(f.sector)} · ${esc(f.title)}</p>
-        <p class="a4-role">${esc(f.profile)}</p>
-        ${history(f, k)}
-        ${gesture ? `<p class="a4-signal a5-gesture">${icon('eye', { size: 18 })}<span>${esc(gesture)}</span></p>` : ''}
-        ${kit.clientCard(wordsOf(line), f.portrait, `Réplique ${k} · ${f.name} vous dit`)}
-      </section>
-      <section class="k-panel a5-answer">
-        <div class="fm-field"><p class="fm-label">${icon(k === 1 ? 'ear' : k === 2 ? 'eye' : 'list', { size: 20 })}<span>${esc(task.title)}</span></p><p class="fm-sub">${esc(task.text)}</p>
-          ${ex.field(`r${k}`, task.title, { placeholder: 'Votre réponse, comme vous la diriez…', max: k === 3 ? 700 : 400, rows: k === 3 ? 5 : 3, hideLabel: true })}</div>
-        ${kit.help(content.forbidden, 'ban')}
+    /* Un seul panneau : le client en bandeau, puis sa réplique (gauche) et
+     * votre réponse (droite), côte à côte et de même hauteur. */
+    return `<section class="k-panel a5-exchange">
+        <div class="a5-exchange-head">
+          <p class="k-label">${esc(f.sector)} · ${esc(f.title)}</p>
+          <p class="a4-role">${esc(f.context || f.profile)}</p>
+          ${history(f, k)}
+          ${gesture ? `<p class="a5-gesture">${icon('eye', { size: 16 })}<span>${esc(gesture)}</span></p>` : ''}
+        </div>
+        <div class="a5-exchange-client">
+          ${kit.clientCard(wordsOf(line), f.portrait, `Réplique ${k} · ${f.name} vous dit`)}
+        </div>
+        <div class="a5-exchange-you">
+          <div class="a5-you-card">
+            <p class="client-card-label a5-you-label"><span class="a4-avatar" aria-hidden="true">V</span><span>Vous lui répondez</span></p>
+            <p class="a5-task"><strong>${esc(task.title)}</strong> ${esc(task.text)}</p>
+            ${ex.field(`r${k}`, task.title, { placeholder: 'Votre réponse, comme vous la diriez…', max: k === 3 ? 700 : 400, rows: k === 3 ? 5 : 4, hideLabel: true })}
+          </div>
+        </div>
+        <p class="a5-forbidden">${icon('ban', { size: 15 })}<span>${esc(content.forbidden)}</span></p>
       </section>
       ${core.errorsBox()}
       ${kit.bar({ left: kit.back('a5-prev', k === 1 ? 'Changer de client' : `Revenir à la réplique ${k - 1}`),
@@ -180,7 +189,15 @@
         { key: '2', tone: 'gold', text: 'une réponse adaptée au signal non verbal ;' },
         { key: '3', tone: 'green', text: 'une synthèse qui se termine par une validation.' }
       ],
-      after: 'Puis l’oral et votre auto-évaluation.' }
+      after: 'Puis l’oral et votre auto-évaluation.' },
+    // La suite, à la première réplique.
+    { later: true, target: '.a5-exchange-head', title: 'Le client', text: 'Qui il est, ce qu’il vous a déjà dit, et ce qu’il montre sans le dire.' },
+    { later: true, target: '.a5-exchange-client', title: 'Sa réplique', text: 'Lisez ce qu’il vous dit maintenant.' },
+    { later: true, target: '.a5-you-card', title: 'Votre réponse', text: 'Écrivez-la comme vous la diriez à voix haute. La consigne au-dessus du champ dit ce qu’elle doit faire.' },
+    { later: true, target: '.a5-forbidden', title: 'Une seule règle', text: 'Vous êtes en découverte : pas de produit, pas de solution.' },
+    // L'oral (rejoué par « Visite guidée »).
+    { later: true, target: '.a5-oral .oral-practice', title: 'L’enregistrement', text: 'Lisez vos trois réponses à voix haute, réécoutez-vous, puis téléchargez le fichier pour le déposer.' },
+    { later: true, target: '.a5-self', title: 'Votre auto-évaluation', text: 'Oui ou non pour chaque critère, avant de voir le corrigé. Votre tuteur utilisera la même grille.' }
   ]);
 
   ex.mount('s5-5.2', { screen, validate, feedback, intercept, compactFeedback: true });

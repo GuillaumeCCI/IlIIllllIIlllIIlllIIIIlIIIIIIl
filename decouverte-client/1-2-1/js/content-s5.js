@@ -98,6 +98,8 @@
         {
           id: 'literie', sector: 'Commerce', title: 'Magasin de literie', name: 'M. Garnier', portrait: 'client-tasse',
           profile: 'M. Garnier, 58 ans, se tient le bas du dos en s’asseyant sur un matelas.',
+          // Le contexte affiché pendant l'échange : qui vous êtes, où vous êtes.
+          context: 'Vous êtes vendeur dans un magasin de literie. M. Garnier, 58 ans, entre dans le magasin et s’assoit sur un matelas en se tenant le bas du dos.',
           lines: [
             'Je dors mal depuis des mois, je me réveille avec le dos en compote.',
             '[Il regarde l’étiquette et grimace] Bon… 1 200 €, quand même.',
@@ -113,6 +115,7 @@
         {
           id: 'pieces', sector: 'Entre entreprises', title: 'Distributeur de pièces auto', name: 'Mme Lefort', portrait: 'client-veste-verte',
           profile: 'Mme Lefort gère un garage indépendant de 6 salariés.',
+          context: 'Vous êtes commercial chez un distributeur de pièces auto. Vous rencontrez pour la première fois Mme Lefort, qui gère un garage indépendant de 6 salariés, dans son garage.',
           lines: [
             'Mon fournisseur livre deux fois par jour, mais une fois sur trois il manque une pièce et la voiture reste sur le pont.',
             '[Son téléphone sonne sans arrêt, un mécanicien l’appelle depuis l’atelier] Allez-y, je vous écoute, mais faites vite.',
@@ -128,6 +131,7 @@
         {
           id: 'mandat', sector: 'Immobilier', title: 'Mandat de vente', name: 'Mme Duval', portrait: 'client-cheveux-gris',
           profile: 'Mme Duval, 74 ans, veuve, vend la maison familiale.',
+          context: 'Vous êtes conseiller dans une agence immobilière. Mme Duval, 74 ans, veuve, vous reçoit chez elle : elle souhaite vendre la maison familiale.',
           lines: [
             'Je n’arrive plus à entretenir le jardin, et l’étage, avec mes genoux…',
             '[Elle regarde longuement une photo au mur, sa voix baisse] Mes enfants ont grandi ici, vous savez.',

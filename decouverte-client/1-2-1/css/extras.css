@@ -575,3 +575,28 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-review-title .k-label { margin: 0; }
 #main .a4-review-head .a4-review-legend { margin: 0; }
 .a4-review-legend span { line-height: 22px; }
+
+/* A5, une réplique : le client en bandeau, puis sa réplique (gauche) et
+   votre réponse (droite) dans le même gabarit de carte, de même hauteur. */
+.a5-exchange { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 24px; row-gap: 8px; align-items: stretch; }
+.a5-exchange-head { grid-column: 1 / -1; }
+.a5-exchange-head .a4-role { margin-bottom: 6px; }
+.a5-exchange-client, .a5-exchange-you { display: flex; flex-direction: column; min-width: 0; }
+.a5-exchange-client > .client-card-box { flex: 1; display: flex; margin: 0; }
+.a5-exchange-client .client-card { flex: 1; width: 100%; margin: 0; }
+.a5-gesture { display: flex; align-items: center; gap: 6px; margin: 0 0 8px; color: var(--accent); font-size: .9rem; font-weight: 700; font-style: italic; }
+.a5-you-card { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 16px 20px 18px; border-radius: var(--client-card-radius, 20px); background: #fff; box-shadow: var(--client-card-shadow, 0 14px 40px rgb(15 35 78 / 7%)); }
+.a5-you-label { display: flex; align-items: center; gap: 10px; margin: 0 !important; }
+.a5-you-label::after { display: none !important; }
+.a5-you-label > span:last-child::after { content: ''; display: block; width: 46px; height: 3px; margin-top: 8px; border-radius: 3px; background: var(--accent); }
+.a5-you-label .a4-avatar { width: 34px; height: 34px; background: var(--accent); }
+.a5-task { margin: 2px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+.a5-task strong { display: block; color: var(--navy); font-size: .95rem; }
+.a5-you-card .field { flex: 1; display: flex; flex-direction: column; }
+.a5-you-card .input-wrap { flex: 1; display: flex; }
+.a5-you-card textarea { flex: 1; min-height: 110px; }
+.a5-forbidden { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; margin: 6px 0 0; color: var(--muted); font-size: .82rem; }
+@media (max-width: 960px) { .a5-exchange { grid-template-columns: 1fr; row-gap: 14px; } }
+/* La carte du client tient dans sa demi-largeur : portrait réduit, réplique moins grande. */
+#main .a5-exchange-client .client-card { --client-card-portrait: 180px; --client-card-portrait-max: 210px; --client-card-size: clamp(1.05rem, 1.3vw, 1.25rem); --client-card-mark: 44px; padding-right: 24px; }
+.a5-exchange-head .a5-gesture { margin: 4px 0 0; }
