@@ -65,12 +65,20 @@
 
 
   /* ── Étape 0 : le choix du client ───────────────────────────────────── */
+  /* Trois cartes de client : le portrait, le secteur, le lieu, le client.
+   * Un clic sur la carte la choisit (contour bleu, coche). */
+  const portrait = name => esc(core.asset(`assets/illustrations/clients/${name}.webp`));
   function choose() {
-    return `<section class="k-panel">
-        <p class="k-label">Choisissez la fiche la plus proche de votre futur métier</p>
-        <p class="a5-choose-help">Vous menez ensuite <strong>un seul entretien</strong> avec ce client, en trois moments : <strong>1</strong> comprendre le client, <strong>2</strong> tenir compte de son signal, <strong>3</strong> faire la synthèse.</p>
-        ${ex.radioCards('fiche', fiches.map(f => ({ id: f.id, label: `${f.sector} · ${f.title}`, description: f.profile, symbol: f.id === 'literie' ? 'armchair' : f.id === 'pieces' ? 'truck' : 'building' })), 'a5-fiches')}
-        ${kit.help(content.forbidden, 'ban')}
+    const chosen = ex.value('fiche');
+    return `<section class="k-panel a5-choose">
+        <p class="k-label">Choisissez le client le plus proche de votre futur métier</p>
+        <p class="a5-choose-help">Vous menez ensuite <strong>un seul entretien</strong> avec lui, en trois moments : comprendre le client, tenir compte de son signal, faire la synthèse.</p>
+        <div class="a5-fiches" role="radiogroup" aria-label="Le client">${fiches.map((x, i) => `<button type="button" class="a5-fiche ${chosen === x.id ? 'is-on' : ''}" role="radio" aria-checked="${chosen === x.id}" data-act="a5-fiche" data-id="${esc(x.id)}" ${i === 0 ? 'data-field="fiche"' : ''}>
+            <span class="a5-fiche-art"><img src="${portrait(x.portrait)}" alt="" decoding="async"></span>
+            <span class="a5-fiche-body"><span class="a5-fiche-sector">${esc(x.sector)}</span><strong>${esc(x.title)}</strong><span class="a5-fiche-who">${esc(x.profile)}</span></span>
+            <span class="a5-fiche-check" aria-hidden="true">${icon('check', { size: 16, strokeWidth: 3 })}</span>
+          </button>`).join('')}</div>
+        <p class="a5-choose-rule">${icon('ban', { size: 15 })}<span>${esc(content.forbidden)}</span></p>
       </section>
       ${core.errorsBox()}
       ${kit.bar({ right: kit.submit('Écouter le client') })}`;
@@ -214,6 +222,15 @@
   const feedback = () => ['Pensez à déposer le texte de vos réponses et votre enregistrement : votre tuteur vous répondra avec la même grille.'];
 
   kit.on({
+    'a5-fiche': control => {
+      ex.setValue('fiche', control.dataset.id);
+      ex.changed();
+      document.querySelectorAll('.a5-fiche').forEach(card => {
+        const on = card.dataset.id === control.dataset.id;
+        card.classList.toggle('is-on', on);
+        card.setAttribute('aria-checked', String(on));
+      });
+    },
     'a5-go': control => { media.stopAll(); go(Number(control.dataset.index)); },
     'a5-prev': () => { media.stopAll(); go(Math.max(0, at() - 1)); },
     'a5-record': () => media.toggleRecording({ max: content.oral.max, status: 'Réécoutez-vous, puis téléchargez l’enregistrement pour le déposer. Il sera effacé en quittant la page.' }),
