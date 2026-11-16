@@ -38,11 +38,16 @@
   // Les indications entre crochets (« 3 minutes plus tard ») en italique.
   const said = text => esc(text).replace(/\[([^\]]+)\]/g, '<em class="a4-act">($1)</em>');
 
-  const clientBlock = () => `<section class="k-panel a4-client">
-      <p class="k-label">La situation</p>
+  const clientInner = () => `<p class="k-label">La situation</p>
       <p class="a4-role"><strong>${esc(content.client.name)}</strong> · ${esc(content.client.role)}</p>
       <p class="a4-signal">${icon('clock', { size: 18 })}<span>${esc(content.client.signal)}</span></p>
-      ${kit.clientCard(content.client.quote, content.client.portrait, `${content.client.name} vous dit`)}
+      ${kit.clientCard(content.client.quote, content.client.portrait, `${content.client.name} vous dit`)}`;
+  const clientBlock = () => `<section class="k-panel a4-client">${clientInner()}</section>`;
+
+  /* L'échange sur un même plan : la cliente à gauche, le commercial à droite. */
+  const exchange = s => `<section class="k-panel a4-exchange">
+      <div class="a4-client">${clientInner()}</div>
+      <div class="a4-exchange-reply"><p class="k-label">La réponse</p>${sellerBlock(s)}</div>
     </section>`;
 
   const sellerBlock = s => `<div class="a4-seller"><p class="a4-seller-name">${icon('user', { size: 18 })}<span>${esc(s.name)} répond</span></p><p class="a4-seller-text">« ${said(s.text)} »</p></div>`;
@@ -59,9 +64,8 @@
 
   function noteStep(k) {
     const s = sellers[k];
-    return `${clientBlock()}
+    return `${exchange(s)}
       <section class="k-panel a4-rate">
-        ${sellerBlock(s)}
         <p class="k-label">Notez ${esc(s.name)}</p>
         ${kit.matrix({ key: s.id, rows: criteria, columns: levels, head: 'Critère', round: true })}
         <p class="a4-total" data-live="total">${totalLine(s)}</p>
@@ -177,7 +181,7 @@
   });
 
   kit.tour('s5-5.1', [
-    { target: '.a4-client', title: 'La cliente', text: 'Mme Royer est pressée : elle le dit, et elle le montre.' },
+    { target: '.a4-exchange .a4-client', title: 'La cliente', text: 'Mme Royer est pressée : elle le dit, et elle le montre.' },
     { target: '.a4-seller', title: 'Le commercial', text: 'Lisez sa réponse en entier avant de noter.' },
     { target: '.a4-rate .k-matrix', title: 'La grille', text: 'Pour chaque critère, une note :',
       items: [
