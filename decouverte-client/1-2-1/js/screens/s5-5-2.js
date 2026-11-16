@@ -20,7 +20,6 @@
   const { fiches, tasks } = content;
   const ORAL = 4;
   const YES_NO = [{ id: 'oui', label: 'Oui' }, { id: 'non', label: 'Non' }];
-  const STEPS = ['Le client', 'Réplique 1', 'Réplique 2', 'Réplique 3', 'Oral et grille'];
 
   const fiche = () => fiches.find(f => f.id === ex.value('fiche')) || null;
   const answer = k => ex.value(`r${k}`);
@@ -38,13 +37,21 @@
   const gestureOf = line => (line.match(/^\[([^\]]+)\]/) || [])[1] || '';
   const wordsOf = line => line.replace(/^\[[^\]]+\]\s*/, '');
 
+  const STEP_LABELS = ['Le client', 'Réplique 1', 'Réplique 2', 'Réplique 3', 'Oral et grille'];
+  const stepIsDone = i => stepDone(i);
+  const stepReachable = i => reachable(i);
+  /* La barre d'étapes des autres exercices (moteur : .k-progress-*), dans
+   * l'en-tête : flèche, « Étapes 2 / 5 », un segment par étape (plein :
+   * faite ; cerclé : en cours), flèche. */
   function progress(k) {
-    return `<nav class="a4-steps" aria-label="Étapes">${STEPS.map((label, i) => {
-      const done = stepDone(i);
-      return `<button type="button" class="a4-step ${i === k ? 'is-current' : ''} ${done ? 'is-done' : ''}" data-act="a5-go" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === k ? 'aria-current="step"' : ''}>
-        <span class="a4-step-n">${done ? icon('check', { size: 15 }) : i + 1}</span><span>${esc(label)}</span></button>`;
-    }).join('')}</nav>`;
+    const go = (i, dir) => {
+      const ok = i >= 0 && i < STEP_LABELS.length && stepReachable(i);
+      return `<button type="button" class="k-progress-arrow" data-act="a5-go" data-index="${i}" ${ok ? '' : 'disabled'} aria-label="${dir === 'prev' ? 'Précédent' : 'Suivant'}${ok ? ` : ${esc(STEP_LABELS[i])}` : ''}" title="${ok ? esc(STEP_LABELS[i]) : ''}">${icon(dir === 'prev' ? 'arrowLeft' : 'arrowRight', { size: 18 })}</button>`;
+    };
+    const segs = STEP_LABELS.map((label, i) => `<button type="button" class="k-progress-seg ${stepIsDone(i) ? 'is-done' : ''} ${i === k ? 'is-current' : ''}" data-act="a5-go" data-index="${i}" ${stepReachable(i) ? '' : 'disabled'} ${i === k ? 'aria-current="step"' : ''} aria-label="${esc(label)}" title="${esc(label)}"></button>`).join('');
+    return `<p class="k-count fm-count is-progress">${go(k - 1, 'prev')}<span class="k-progress-label">${esc(STEP_LABELS[k] || 'Étapes')}</span><strong>${Math.min(k + 1, STEP_LABELS.length)} / ${STEP_LABELS.length}</strong><span class="k-progress-segs" role="group" aria-label="Étapes">${segs}</span>${go(k + 1, 'next')}</p>`;
   }
+
 
   /* ── Étape 0 : le choix du client ───────────────────────────────────── */
   function choose() {
@@ -78,15 +85,15 @@
         </div>
         <div class="a5-exchange-client">
           ${kit.clientCard(wordsOf(line), f.portrait, `Réplique ${k} · ${f.name} vous dit`)}
+          <p class="a5-task">${icon('target', { size: 18 })}<span><strong>${esc(task.title)}</strong> ${esc(task.text)}</span></p>
+          <p class="a5-forbidden">${icon('ban', { size: 15 })}<span>${esc(content.forbidden)}</span></p>
         </div>
         <div class="a5-exchange-you">
           <div class="a5-you-card">
             <p class="client-card-label a5-you-label"><span class="a4-avatar" aria-hidden="true">V</span><span>Vous lui répondez</span></p>
-            <p class="a5-task"><strong>${esc(task.title)}</strong> ${esc(task.text)}</p>
             ${ex.field(`r${k}`, task.title, { placeholder: 'Votre réponse, comme vous la diriez…', max: k === 3 ? 700 : 400, rows: k === 3 ? 5 : 4, hideLabel: true })}
           </div>
         </div>
-        <p class="a5-forbidden">${icon('ban', { size: 15 })}<span>${esc(content.forbidden)}</span></p>
       </section>
       ${core.errorsBox()}
       ${kit.bar({ left: kit.back('a5-prev', k === 1 ? 'Changer de client' : `Revenir à la réplique ${k - 1}`),
@@ -171,8 +178,7 @@
     const reviewing = ex.reviewing() && fiche();
     const k = at();
     return `<div class="k-page a4-page a5-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : kit.tourButton() })}
-      ${reviewing ? '' : progress(k)}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : progress(k) + kit.tourButton() })}
       <form novalidate>${reviewing ? review() : k === 0 ? choose() : k <= 3 ? reply(k) : oral()}</form>
     </div>`;
   }
@@ -207,7 +213,7 @@
 
   kit.tour('s5-5.2', [
     { target: '.a5-fiches', title: 'Votre client', text: 'Choisissez la fiche la plus proche de votre futur métier : commerce, entre entreprises ou immobilier.' },
-    { target: '.a4-steps', title: 'Les étapes', text: 'Trois répliques, une réponse pour chacune :',
+    { target: '.k-count.is-progress', title: 'Les étapes', text: 'Trois répliques, une réponse pour chacune :',
       items: [
         { key: '1', tone: 'blue', text: 'une réponse en attitude de compréhension ;' },
         { key: '2', tone: 'gold', text: 'une réponse adaptée au signal non verbal ;' },

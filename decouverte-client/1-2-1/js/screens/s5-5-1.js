@@ -108,15 +108,21 @@
       </div>
     </section></div>`;
 
-  /* La barre d'étapes : un segment par commercial, puis le classement. */
+  const STEP_LABELS = [...sellers.map(s => `Noter ${s.name}`), 'Classement'];
+  const stepIsDone = i => (i < RANK ? rated(sellers[i]) : false);
+  const stepReachable = i => reachable(i);
+  /* La barre d'étapes des autres exercices (moteur : .k-progress-*), dans
+   * l'en-tête : flèche, « Étapes 2 / 5 », un segment par étape (plein :
+   * faite ; cerclé : en cours), flèche. */
   function progress(k) {
-    const labels = [...sellers.map(s => s.name), 'Classement'];
-    return `<nav class="a4-steps" aria-label="Étapes">${labels.map((label, i) => {
-      const done = i < RANK ? rated(sellers[i]) : false;
-      return `<button type="button" class="a4-step ${i === k ? 'is-current' : ''} ${done ? 'is-done' : ''}" data-act="a4-go" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === k ? 'aria-current="step"' : ''}>
-        <span class="a4-step-n">${done ? icon('check', { size: 15 }) : i + 1}</span><span>${esc(label)}</span></button>`;
-    }).join('')}</nav>`;
+      const go = (i, dir) => {
+      const ok = i >= 0 && i < STEP_LABELS.length && stepReachable(i);
+      return `<button type="button" class="k-progress-arrow" data-act="a4-go" data-index="${i}" ${ok ? '' : 'disabled'} aria-label="${dir === 'prev' ? 'Précédent' : 'Suivant'}${ok ? ` : ${esc(STEP_LABELS[i])}` : ''}" title="${ok ? esc(STEP_LABELS[i]) : ''}">${icon(dir === 'prev' ? 'arrowLeft' : 'arrowRight', { size: 18 })}</button>`;
+    };
+    const segs = STEP_LABELS.map((label, i) => `<button type="button" class="k-progress-seg ${stepIsDone(i) ? 'is-done' : ''} ${i === k ? 'is-current' : ''}" data-act="a4-go" data-index="${i}" ${stepReachable(i) ? '' : 'disabled'} ${i === k ? 'aria-current="step"' : ''} aria-label="${esc(label)}" title="${esc(label)}"></button>`).join('');
+    return `<p class="k-count fm-count is-progress">${go(k - 1, 'prev')}<span class="k-progress-label">${esc(STEP_LABELS[k] || 'Étapes')}</span><strong>${Math.min(k + 1, STEP_LABELS.length)} / ${STEP_LABELS.length}</strong><span class="k-progress-segs" role="group" aria-label="Étapes">${segs}</span>${go(k + 1, 'next')}</p>`;
   }
+
 
   function noteStep(k) {
     const s = sellers[k];
@@ -236,8 +242,7 @@
     const reviewing = ex.reviewing();
     const k = at();
     return `<div class="k-page a4-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : kit.tourButton() })}
-      ${reviewing ? '' : progress(k)}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : progress(k) + kit.tourButton() })}
       <form novalidate class="a4-form">${reviewing ? review() : k < RANK ? noteStep(k) : rankStep()}</form>
     </div>`;
   }
@@ -320,7 +325,7 @@
         { key: '1', tone: 'gold', text: 'partiel ;' },
         { key: '2', tone: 'green', text: 'maîtrisé.' }
       ] },
-    { target: '.a4-steps', title: 'Les étapes', text: 'Trois commerciaux à noter, puis votre classement et votre justification.' }
+    { target: '.k-count.is-progress', title: 'Les étapes', text: 'Trois commerciaux à noter, puis votre classement et votre justification.' }
   ]);
 
   /* LA MACHINE À ÉCRIRE : la réponse d'un commercial s'écrit sous les yeux

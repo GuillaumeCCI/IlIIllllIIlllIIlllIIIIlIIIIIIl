@@ -619,3 +619,27 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 #main .a4-step.is-done .a4-step-n { background: #dcf3e6; color: #1d7a4b; }
 #main .a4-step.is-current .a4-step-n { background: var(--accent); color: #fff; }
 #main .a4-step:not(:disabled):hover > span:last-child { color: var(--navy); }
+/* A5 : la carte du client remplit sa hauteur (portrait plus grand, réplique
+   plus grande) ; la carte de réponse reste compacte. */
+#main .a5-exchange-client .client-card { --client-card-portrait: 210px; --client-card-portrait-max: 250px; --client-card-size: clamp(1.2rem, 1.55vw, 1.45rem); --client-card-mark: 50px; align-items: center; }
+#main .a5-exchange-client .client-card-who { align-self: stretch; align-items: flex-end; }
+#main .a5-exchange-client .client-card-who img { max-height: 100%; }
+.a5-you-card textarea { min-height: 84px; }
+/* A5 : chaque carte à sa hauteur naturelle, alignées en haut (la carte du
+   client ne s'étire plus, elle n'a donc plus de vide). */
+.a5-exchange { align-items: start; }
+.a5-exchange-client > .client-card-box { flex: 0 0 auto; }
+#main .a5-exchange-client .client-card { --client-card-portrait: 190px; --client-card-portrait-max: 210px; }
+.a5-you-card { flex: 0 0 auto; }
+/* A5 : l'interdit sous la carte du client, dans la colonne de gauche. */
+.a5-exchange-client .a5-forbidden { grid-column: auto; margin: 12px 4px 0; }
+
+/* A5 : à gauche, la carte du client, la consigne de la réplique et
+   l'interdit ; à droite, votre réponse, dont le champ prend toute la
+   hauteur de la colonne de gauche. */
+.a5-exchange { align-items: stretch; }
+.a5-exchange-you .a5-you-card { flex: 1 1 auto; }
+.a5-you-card textarea { min-height: 96px; }
+.a5-exchange-client .a5-task { display: flex; align-items: flex-start; gap: 10px; margin: 12px 0 0; padding: 12px 14px; border-radius: 14px; background: #f7f9fe; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+.a5-exchange-client .a5-task .icon { flex-shrink: 0; margin-top: 1px; color: var(--accent); }
+.a5-exchange-client .a5-task strong { display: block; color: var(--navy); font-size: .95rem; }
