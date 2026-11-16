@@ -320,3 +320,53 @@
   .pos-compare tbody th { min-width: 200px; }
   .pos-compare td:last-child { display: none; }
 }
+
+/* ── S5 5.1 · Trois commerciaux, une cliente pressée (A4) ───────────────
+   Barre d'étapes (un commercial par étape, puis le classement), la
+   cliente et sa réplique, la réponse du commercial, la grille 0 / 1 / 2,
+   le classement en trois places, puis le corrigé en tableau. */
+.a4-page .k-panel + .k-panel, .a4-page .k-panel + .form-errors { margin-top: 18px; }
+.a4-steps { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 18px; }
+.a4-step { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px 8px 8px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--muted); font: inherit; font-weight: 700; cursor: var(--cursor-hand, pointer); }
+.a4-step:disabled { opacity: .55; cursor: default; }
+.a4-step-n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--tint); color: var(--accent); font-size: .85rem; }
+.a4-step.is-done .a4-step-n { background: #dcf3e6; color: #1d7a4b; }
+.a4-step.is-current { border-color: var(--accent); color: var(--navy); box-shadow: 0 0 0 2px rgb(19 75 215 / 12%); }
+.a4-step.is-current .a4-step-n { background: var(--accent); color: #fff; }
+
+.a4-role { margin: 6px 0 4px; color: var(--navy); }
+.a4-signal { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; color: #a8402c; font-weight: 700; }
+.a4-seller { margin: 0 0 18px; padding: 16px 20px; border-left: 4px solid var(--accent); border-radius: 0 14px 14px 0; background: var(--tint); }
+.a4-seller + .k-explain { margin-bottom: 20px; }
+.a4-seller-name { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; color: var(--accent); font-weight: 700; }
+.a4-seller-text { margin: 0; color: var(--navy); font-size: 1.05rem; line-height: 1.55; }
+.a4-act { color: var(--muted); }
+.a4-total { margin: 12px 4px 0; text-align: right; color: var(--navy); }
+
+.a4-totals { display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 0; padding: 0; list-style: none; }
+.a4-totals li { display: flex; gap: 10px; align-items: baseline; padding: 10px 16px; border-radius: 12px; background: var(--tint); color: var(--navy); }
+.a4-places { display: grid; gap: 10px; margin: 10px 0 20px; }
+.a4-place { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.a4-place .a4-place-label { flex: 0 0 210px; }
+.a4-place > select, .a4-place > .pick { flex: 0 1 300px; min-width: 180px; }
+.a4-place-n { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; }
+.a4-place-label { color: var(--navy); font-weight: 700; }
+.a4-self-label { margin-top: 20px; }
+
+.a4-review { width: 100%; margin-top: 14px; border-collapse: collapse; }
+.a4-review thead th { padding: 10px 12px; border-bottom: 1px solid var(--line); color: var(--accent); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; text-align: center; }
+.a4-review thead th:first-child { text-align: left; }
+.a4-review tbody th, .a4-review td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.a4-review tbody th { font-weight: 400; text-align: left; }
+.a4-review tbody th strong { display: block; color: var(--navy); }
+.a4-review tbody th small { color: var(--muted); font-size: .86rem; }
+.a4-review td { text-align: center; border-left: 1px solid var(--line); }
+.a4-review td .mark { margin-top: 4px; }
+.a4-mine { display: block; color: var(--navy); font-size: 1.1rem; }
+.a4-ref { display: block; color: var(--muted); font-size: .85rem; }
+.a4-review-total th, .a4-review-total td { background: #f7f9fe; }
+.a4-self-recap { margin: 16px 0 0; color: var(--navy); }
+
+@media (max-width: 720px) {
+  .a4-place > select, .a4-place > .pick { flex-basis: 100%; }
+}

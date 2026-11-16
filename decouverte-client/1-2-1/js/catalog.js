@@ -68,6 +68,15 @@ window.ATELIER_CATALOG = {
       ]
     },
     {
+      id: 's5',
+      label: 'Évaluer une posture',
+      // Mme Royer et ses trois commerciaux, grille et corrigé : fiche M1.2.1, activité A4.
+      sourced: true,
+      exercises: [
+        { id: '5.1', file: 's5-5-1', label: 'Trois commerciaux, une cliente pressée', theme: 'blue' }
+      ]
+    },
+    {
       id: 's9',
       label: 'Faire le point',
       // Grille d'auto-positionnement, colonne « Fin », et « Ma progression » :

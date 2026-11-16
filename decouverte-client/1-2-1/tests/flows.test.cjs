@@ -58,6 +58,13 @@ const FILL = {
 const CUSTOM = {
   // La grille d'auto-positionnement : une case par critère, aucune n'est « juste ».
   's1-1-1': (e, c, w) => w.ATELIER_S1.grid.criteria.forEach((_, i) => e.setValue(`deb${i}`, '1')),
+  // A4 : les notes du repère, le classement de la fiche.
+  's5-5-1': (e, c) => {
+    c.sellers.forEach(s => s.notes.forEach((n, i) => e.setValue(`${s.id}${i}`, String(n))));
+    c.ranking.forEach((id, i) => e.setValue(`rank${i}`, id));
+    e.setValue('why', 'Elle tient compte du temps et reformule.');
+    e.setValue('self0', '2');
+  },
   's9-9-1': (e, c, w) => {
     w.ATELIER_S1.grid.criteria.forEach((_, i) => e.setValue(`fin${i}`, '2'));
     w.ATELIER_S1.grid.questions.forEach(q => e.setValue(q.id, 'Une réponse.'));

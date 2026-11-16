@@ -124,6 +124,18 @@ window.ATELIER_BRIEFINGS = {
     criteria: ['Le mot du client repris', 'Une invitation à préciser', 'Tourné vers M. Benali']
   },
 
+  /* ══ SÉRIE 5 · ÉVALUER UNE POSTURE ═══════════════════════════════════ */
+
+  's5-5.1': {
+    lede: { key: 'Un quart d’heure,', rest: 'trois commerciaux. Qui l’écoute ?' },
+    mission: 'Mme Royer est pressée et ses copieurs tombent en panne. Trois commerciaux lui répondent. Notez chacun avec la grille, classez-les du plus adapté au moins adapté, puis justifiez votre premier choix.',
+    method: 'Un commercial à la fois : quatre critères notés de 0 à 2, puis le classement.',
+    quote: 'J’ai un quart d’heure, on a un comité de direction à 11 h. Nos copieurs tombent en panne sans arrêt, les commerciaux râlent, et c’est moi qui prends.',
+    situation: 'Mme Royer est office manager dans une entreprise de 80 salariés. Elle reçoit un commercial d’un distributeur de photocopieurs. Elle parle vite et regarde sa montre.',
+    task: 'Quatre critères par commercial : la contrainte de temps, l’attitude d’écoute, la reformulation, l’ouverture de la découverte. Puis un classement et deux lignes de justification.',
+    criteria: ['Des notes proches du repère', 'Un classement juste', 'Justification par critères']
+  },
+
   /* ══ SÉRIE 9 · FAIRE LE POINT ════════════════════════════════════════ */
 
   's9-9.1': {
