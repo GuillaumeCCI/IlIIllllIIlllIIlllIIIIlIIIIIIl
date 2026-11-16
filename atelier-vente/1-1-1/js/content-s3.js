@@ -272,7 +272,7 @@ window.ATELIER_S3 = {
       {
         label: 'Vélo électrique',
         vous: 'Vendeur chez Cycles Martin, un magasin de vélos en centre-ville.',
-        client: 'Paul, 52 ans, qui veut aller au travail à vélo : 12 km par jour, aller-retour.',
+        client: 'Paul, qui veut aller au travail à vélo : 12 km par jour, aller-retour.',
         situation: 'Il vient d’essayer un modèle à 2 400 € sur le parking du magasin. Il a aimé, mais il hésite.',
         objection: '2 400 €, c’est trop cher pour un vélo.',
         atouts: [

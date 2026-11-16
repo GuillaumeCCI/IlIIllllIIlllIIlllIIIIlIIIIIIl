@@ -112,8 +112,8 @@
           // Les réponses modèles de l'analyse (score estimatif).
           modelValues: { literie_implicite: 'Ne plus être réveillé par son épouse ; dormir pour être en sécurité au volant ; une taille compatible avec la chambre.', literie_prio: 'Des nuits complètes sans douleur au dos.' }, sector: 'Commerce', title: 'Magasin de literie', name: 'M. Garnier', portrait: 'client-tasse',
           note: 'Le budget de M. Garnier est un sujet sensible. En découverte, on l’écoute et on le note ; on n’en débat pas.',
-          profile: 'M. Garnier, 58 ans, revient au magasin. Il dort mal et a mal au dos.',
-          context: 'Vous êtes vendeur dans un magasin de literie. M. Garnier, 58 ans, revient au magasin : il dort mal et a mal au dos.',
+          profile: 'M. Garnier revient au magasin. Il dort mal et a mal au dos.',
+          context: 'Vous êtes vendeur dans un magasin de literie. M. Garnier revient au magasin : il dort mal et a mal au dos.',
           topics: [
             { label: 'Ses nuits, son sommeil', answer: 'Je me réveille vers 4 h avec le bas du dos bloqué, et je ne me rendors pas.' },
             { label: 'Sa douleur, sa santé', answer: 'Mon kinésithérapeute dit que mon matelas s’affaisse au milieu.' },
@@ -163,8 +163,8 @@
           // Les réponses modèles de l'analyse (score estimatif).
           modelValues: { mandat_implicite: 'Coordonner la vente et l’achat de l’appartement ; des visites filtrées ; associer ses enfants à la décision.', mandat_prio: 'Un calendrier coordonné : trouver l’appartement avant de vendre.' }, sector: 'Immobilier', title: 'Mandat de vente', name: 'Mme Duval', portrait: 'client-cheveux-gris',
           note: 'L’estimation de Mme Duval (« au moins 320 000 € ») est un sujet sensible. En découverte, on l’écoute et on la note ; on n’en débat pas.',
-          profile: 'Mme Duval, 74 ans, veut vendre la maison familiale.',
-          context: 'Vous êtes conseiller immobilier. Mme Duval, 74 ans, vous reçoit : elle veut vendre la maison familiale.',
+          profile: 'Mme Duval veut vendre la maison familiale.',
+          context: 'Vous êtes conseiller immobilier. Mme Duval vous reçoit : elle veut vendre la maison familiale.',
           topics: [
             { label: 'Son projet', answer: 'Je vends la maison pour prendre un appartement près de ma sœur, à Tours.' },
             { label: 'La maison', answer: '140 m², 800 m² de jardin, construite en 1978. La toiture a été refaite il y a cinq ans.' },

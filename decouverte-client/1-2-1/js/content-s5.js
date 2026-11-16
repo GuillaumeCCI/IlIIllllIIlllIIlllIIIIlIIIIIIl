@@ -96,9 +96,9 @@
       fiches: [
         {
           id: 'literie', sector: 'Commerce', title: 'Magasin de literie', name: 'M. Garnier', portrait: 'client-tasse',
-          profile: 'M. Garnier, 58 ans, se tient le bas du dos en s’asseyant sur un matelas.',
+          profile: 'M. Garnier se tient le bas du dos en s’asseyant sur un matelas.',
           // Le contexte affiché pendant l'échange : qui vous êtes, où vous êtes.
-          context: 'Vous êtes vendeur dans un magasin de literie. M. Garnier, 58 ans, entre dans le magasin et s’assoit sur un matelas en se tenant le bas du dos.',
+          context: 'Vous êtes vendeur dans un magasin de literie. M. Garnier entre dans le magasin et s’assoit sur un matelas en se tenant le bas du dos.',
           lines: [
             'Je dors mal depuis des mois, je me réveille avec le dos en compote.',
             '[Il regarde l’étiquette et grimace] Bon… 1 200 €, quand même.',
@@ -132,8 +132,8 @@
         },
         {
           id: 'mandat', sector: 'Immobilier', title: 'Mandat de vente', name: 'Mme Duval', portrait: 'client-cheveux-gris',
-          profile: 'Mme Duval, 74 ans, veuve, vend la maison familiale.',
-          context: 'Vous êtes conseiller dans une agence immobilière. Mme Duval, 74 ans, veuve, vous reçoit chez elle : elle souhaite vendre la maison familiale.',
+          profile: 'Mme Duval, veuve, vend la maison familiale.',
+          context: 'Vous êtes conseiller dans une agence immobilière. Mme Duval, veuve, vous reçoit chez elle : elle souhaite vendre la maison familiale.',
           lines: [
             'Je n’arrive plus à entretenir le jardin, et l’étage, avec mes genoux…',
             '[Elle regarde longuement une photo au mur, sa voix baisse] Mes enfants ont grandi ici, vous savez.',

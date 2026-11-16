@@ -25,7 +25,7 @@
   ];
 
   const context = {
-    situation: 'M. Garnier, 58 ans, revient au magasin de literie : il dort mal et a mal au dos. Le vendeur lui pose des questions pour découvrir son besoin.',
+    situation: 'M. Garnier revient au magasin de literie : il dort mal et a mal au dos. Le vendeur lui pose des questions pour découvrir son besoin.',
     read: 'Lisez chaque question du vendeur.',
     choose: 'Classez-la dans la bonne zone.'
   };
@@ -37,7 +37,7 @@
       eyebrow: 'Poser la bonne question · Les types',
       title: 'Quel type de question ?',
       banner: false,
-      subtitle: 'M. Garnier, 58 ans, revient au magasin de literie : il dort mal et a mal au dos.\nLe vendeur lui pose dix questions pour comprendre son besoin.\nIndiquez le type de chacune.',
+      subtitle: 'M. Garnier revient au magasin de literie : il dort mal et a mal au dos.\nLe vendeur lui pose dix questions pour comprendre son besoin.\nIndiquez le type de chacune.',
       context,
       question: 'Quel est le type de cette question ?',
       cardLabel: 'Le vendeur demande',
@@ -63,7 +63,7 @@
       eyebrow: 'Poser la bonne question · L’entonnoir',
       title: 'Les étages de l’entonnoir',
       banner: false,
-      subtitle: 'M. Garnier, 58 ans, revient au magasin de literie : il dort mal et a mal au dos.\nLe vendeur lui pose six questions, des plus larges aux plus précises.\nPlacez chacune à l’étage de l’entonnoir qui lui correspond.',
+      subtitle: 'M. Garnier revient au magasin de literie : il dort mal et a mal au dos.\nLe vendeur lui pose six questions, des plus larges aux plus précises.\nPlacez chacune à l’étage de l’entonnoir qui lui correspond.',
       context,
       question: 'À quel étage de l’entonnoir ?',
       cardLabel: 'Le vendeur demande',
