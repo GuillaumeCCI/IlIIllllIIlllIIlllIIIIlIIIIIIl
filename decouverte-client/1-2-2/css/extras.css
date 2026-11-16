@@ -1188,3 +1188,12 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 #main .d5-hier-k.is-i { background: #fdf3dd; color: #a8690a; }
 #main .d5-hier-k.is-s { background: #e3f4ec; color: #23855c; }
 @media (max-width: 900px) { #main .d5-ana .d5-ana-said { position: static; max-height: none; } }
+
+/* « Relire l'échange » au corrigé : un petit bouton blanc (comme « Le
+   contexte ») au lieu d'une bande orangée ; ouvert, un panneau blanc. */
+#main details.fm-review-intro.is-folded { border: 0 !important; background: #fff !important; box-shadow: 0 6px 18px rgb(20 40 100 / 8%), 0 1px 3px rgb(20 40 100 / 5%) !important; }
+#main details.fm-review-intro.is-folded:not([open]) { width: fit-content; margin: 4px 0 4px; padding: 0 !important; border-radius: 999px; }
+#main details.fm-review-intro.is-folded:not([open]) > summary { padding: 10px 18px 10px 16px; }
+#main details.fm-review-intro.is-folded[open] { border-radius: 18px; padding: 16px 20px !important; }
+#main details.fm-review-intro.is-folded > summary { color: #1d3f9a !important; font-size: .95rem; font-weight: 700; letter-spacing: 0; text-transform: none; }
+#main details.fm-review-intro.is-folded > summary .icon { color: var(--accent); }
