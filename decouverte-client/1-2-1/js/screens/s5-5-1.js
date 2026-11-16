@@ -26,6 +26,11 @@
    * alors gardé tel quel (`rankTouched`). */
   const avatar = s => `<span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span>`;
   const sellerOf = id => sellers.find(x => x.id === id);
+  // L'info-bulle d'une ligne du rappel : la note en clair, puis le critère.
+  const tipOf = (x, c, i) => {
+    const level = levels.find(l => l.id === String(note(x, i)));
+    return `${c.title} · ${note(x, i)} / 2, ${level ? level.sub.toLowerCase() : ''}. ${c.text}`;
+  };
   function autoRank() {
     if (ex.value('rankTouched') === true && ranks().every(Boolean)) return;
     const order = sellers.map((x, i) => ({ id: x.id, t: total(x) ?? 0, i })).sort((p, q) => q.t - p.t || p.i - q.i);
@@ -137,7 +142,7 @@
           <header><span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span><strong>${esc(s.name)}</strong>
             <span class="a4-recap-total"><b>${total(s)}</b> / ${max}</span></header>
           <p class="a4-recap-text">« ${said(s.text)} »</p>
-          <ul class="a4-recap-notes">${criteria.map((c, i) => `<li><span>${esc(c.title)}</span><span class="a4-pips" role="img" aria-label="${esc(note(s, i))} sur 2">${[0, 1].map(p => `<i class="${p < Number(note(s, i)) ? 'is-on' : ''}"></i>`).join('')}</span></li>`).join('')}</ul>
+          <ul class="a4-recap-notes">${criteria.map((c, i) => `<li tabindex="0" data-tip="${esc(tipOf(s, c, i))}"><span>${esc(c.title)}</span><span class="a4-pips" role="img" aria-label="${esc(note(s, i))} sur 2">${[0, 1].map(p => `<i class="${p < Number(note(s, i)) ? 'is-on' : ''}"></i>`).join('')}</span></li>`).join('')}</ul>
         </article>`).join('')}</div>
       </section>
       <section class="k-panel a4-rank">

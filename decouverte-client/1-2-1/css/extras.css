@@ -496,3 +496,12 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-self-pill { padding: 7px 16px; border: 1.5px solid var(--line); border-radius: 999px; background: #fff; font: inherit; font-size: .92rem; font-weight: 700; color: var(--navy); cursor: var(--cursor-hand, pointer); transition: border-color .12s, background .12s; }
 .a4-self-pill:hover { border-color: var(--accent); }
 #main .a4-self-pill.is-on { border-color: var(--accent); background: var(--accent); color: #fff; }
+
+/* A4, rappel des réponses : au survol (ou au focus clavier) d'une ligne de
+   critère, une bulle donne la note en clair et ce que le critère mesure. */
+.a4-recap-notes li { position: relative; margin: 0 -6px; padding: 2px 6px; border-radius: 6px; cursor: help; outline: none; }
+.a4-recap-notes li:is(:hover, :focus-visible) { background: #fff; color: var(--navy); }
+.a4-recap-notes li::after { content: attr(data-tip); position: absolute; left: 0; right: 0; bottom: calc(100% + 8px); z-index: 5; padding: 10px 12px; border-radius: 10px; background: var(--navy); color: #fff; font-size: .82rem; line-height: 1.45; box-shadow: 0 10px 24px rgb(15 35 78 / 22%); opacity: 0; transform: translateY(4px); pointer-events: none; transition: opacity .15s, transform .15s; }
+.a4-recap-notes li::before { content: ''; position: absolute; right: 22px; bottom: calc(100% + 2px); z-index: 5; border: 6px solid transparent; border-top-color: var(--navy); opacity: 0; transition: opacity .15s; pointer-events: none; }
+.a4-recap-notes li:is(:hover, :focus-visible)::after { opacity: 1; transform: none; }
+.a4-recap-notes li:is(:hover, :focus-visible)::before { opacity: 1; }
