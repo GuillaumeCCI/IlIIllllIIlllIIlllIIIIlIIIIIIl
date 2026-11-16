@@ -223,7 +223,20 @@
 
   kit.on({
     'a5-fiche': control => {
-      ex.setValue('fiche', control.dataset.id);
+      /* Un brouillon par client : en changeant de client, les réponses du
+       * précédent sont mises de côté (`<client>_r1`…) et celles du nouveau
+       * reviennent (vides la première fois). L'auto-évaluation, qui porte
+       * sur ces réponses, repart de zéro. */
+      const before = ex.value('fiche');
+      const next = control.dataset.id;
+      if (before && before !== next) {
+        [1, 2, 3].forEach(k => {
+          ex.setValue(`${before}_r${k}`, answer(k));
+          ex.setValue(`r${k}`, ex.value(`${next}_r${k}`) || '');
+        });
+        content.selfCheck.forEach((_, i) => ex.setValue(`self${i}`, ''));
+      }
+      ex.setValue('fiche', next);
       ex.changed();
       document.querySelectorAll('.a5-fiche').forEach(card => {
         const on = card.dataset.id === control.dataset.id;
