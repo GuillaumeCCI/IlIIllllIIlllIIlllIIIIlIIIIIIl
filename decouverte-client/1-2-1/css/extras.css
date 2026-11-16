@@ -466,3 +466,28 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-pips i { width: 18px; height: 6px; border-radius: 3px; background: var(--tone-soft); }
 .a4-pips i.is-on { background: var(--tone); }
 @media (max-width: 960px) { .a4-recap-grid { grid-template-columns: 1fr; } }
+
+/* A4 : le classement au clic. Trois places en podium (la 1re un peu plus
+   haute), puis les trois commerciaux en boutons. */
+.a4-podium { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: end; margin: 12px 0 10px; }
+.a4-slot { --tone: var(--accent); --tone-soft: #e8eefc; display: grid; justify-items: center; gap: 4px; min-height: 128px; padding: 16px 12px; border: 2px dashed #c9d6f2; border-radius: 16px; background: #fbfcff; font: inherit; color: var(--muted); cursor: default; }
+.a4-slot:first-child { min-height: 148px; }
+.a4-slot-rank { font-size: 1.4rem; font-weight: 800; color: var(--navy); line-height: 1; }
+.a4-slot-sub { font-size: .8rem; color: var(--muted); }
+.a4-slot-who { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; }
+.a4-slot-who em { color: #9aa8c7; font-style: normal; font-weight: 600; }
+.a4-slot.is-filled { border-style: solid; border-color: var(--tone); background: var(--tone-soft); cursor: var(--cursor-hand, pointer); }
+.a4-slot.is-filled .a4-slot-who { color: var(--navy); }
+.a4-slot.is-filled .a4-slot-who .icon { color: var(--muted); }
+.a4-slot.is-filled:hover .a4-slot-who .icon { color: var(--tone); }
+.a4-slot.tone-ines, .a4-pick.tone-ines { --tone: #1d7a4b; --tone-soft: #e3f5ea; }
+.a4-slot.tone-hugo, .a4-pick.tone-hugo { --tone: #c4512f; --tone-soft: #fde9e3; }
+.a4-slot .a4-avatar, .a4-pick .a4-avatar { width: 30px; height: 30px; font-size: .85rem; background: var(--tone); }
+.a4-pool-help { margin: 0 0 8px; color: var(--muted); font-size: .9rem; }
+.a4-pool { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+.a4-pick { --tone: var(--accent); --tone-soft: #e8eefc; display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px; border: 1.5px solid var(--line); border-radius: 999px; background: #fff; font: inherit; color: var(--navy); cursor: var(--cursor-hand, pointer); box-shadow: 0 4px 12px rgb(15 35 78 / 6%); transition: transform .12s, border-color .12s; }
+.a4-pick:hover:not(:disabled) { border-color: var(--tone); transform: translateY(-1px); }
+.a4-pick-total { color: var(--muted); font-size: .85rem; }
+.a4-pick.is-placed, .a4-pick:disabled { opacity: .45; cursor: default; box-shadow: none; }
+.a4-pick-rank { padding: 2px 8px; border-radius: 999px; background: var(--tone-soft); color: var(--tone); font-size: .78rem; font-weight: 800; }
+@media (max-width: 720px) { .a4-podium { grid-template-columns: 1fr; } .a4-slot, .a4-slot:first-child { min-height: 0; } }

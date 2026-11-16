@@ -19,7 +19,33 @@
   const nC = criteria.length;
   const max = nC * 2;
   const SELF = [{ id: '2', label: 'Oui' }, { id: '1', label: 'En partie' }, { id: '0', label: 'Pas encore' }];
-  const PLACES = ['1er · le plus adapté', '2e', '3e · le moins adapté'];
+  const PLACES = [{ n: '1er', sub: 'le plus adapté' }, { n: '2e', sub: '' }, { n: '3e', sub: 'le moins adapté' }];
+
+  /* LE CLASSEMENT AU CLIC : trois places en podium, puis les trois
+   * commerciaux en boutons. Un clic sur un commercial le pose à la
+   * première place libre ; un clic sur une place occupée la libère. */
+  const avatar = s => `<span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span>`;
+  const sellerOf = id => sellers.find(x => x.id === id);
+  function podium() {
+    const r = ranks();
+    const places = PLACES.map((p, i) => {
+      const s = sellerOf(r[i]);
+      return `<button type="button" class="a4-slot ${s ? `is-filled tone-${esc(s.id)}` : ''}" data-act="a4-unplace" data-index="${i}" data-field="rank${i}" ${s ? '' : 'disabled'} aria-label="${esc(p.n)}${p.sub ? ` (${esc(p.sub)})` : ''} : ${s ? `${esc(s.name)}, cliquer pour retirer` : 'vide'}">
+        <span class="a4-slot-rank">${esc(p.n)}</span>${p.sub ? `<span class="a4-slot-sub">${esc(p.sub)}</span>` : '<span class="a4-slot-sub">&nbsp;</span>'}
+        <span class="a4-slot-who">${s ? `${avatar(s)}<strong>${esc(s.name)}</strong>${kit.icon('close', { size: 14 })}` : '<em>À placer</em>'}</span>
+      </button>`;
+    }).join('');
+    const free = r.findIndex(v => !v);
+    const pool = sellers.map(s => {
+      const at = r.indexOf(s.id);
+      return `<button type="button" class="a4-pick tone-${esc(s.id)} ${at !== -1 ? 'is-placed' : ''}" data-act="a4-pick" data-id="${esc(s.id)}" ${at !== -1 || free === -1 ? 'disabled' : ''}>
+        ${avatar(s)}<strong>${esc(s.name)}</strong><span class="a4-pick-total">${total(s)} / ${max}</span>${at !== -1 ? `<span class="a4-pick-rank">${esc(PLACES[at].n)}</span>` : ''}
+      </button>`;
+    }).join('');
+    return `<div class="a4-podium">${places}</div>
+      <p class="a4-pool-help">${free === -1 ? 'Classement complet. Cliquez sur une place pour la libérer.' : `Cliquez sur le commercial à placer en ${esc(PLACES[free].n)}.`}</p>
+      <div class="a4-pool">${pool}</div>`;
+  }
 
   const note = (s, i) => ex.value(`${s.id}${i}`);
   const rated = s => criteria.every((_, i) => note(s, i) !== '');
@@ -110,7 +136,7 @@
       </section>
       <section class="k-panel a4-rank">
         <p class="k-label">Classez-les, du plus adapté au moins adapté</p>
-        <div class="a4-places">${PLACES.map((place, i) => `<div class="a4-place"><span class="a4-place-n">${i + 1}</span><span class="a4-place-label">${esc(place)}</span>${ex.select(`rank${i}`, place, sellers.map(s => ({ id: s.id, label: s.name })), 'Choisir…')}</div>`).join('')}</div>
+        ${podium()}
         <div class="fm-field a4-justify"><p class="fm-label">${esc(content.justify.label)}</p><p class="fm-sub">${esc(content.justify.sub)}</p>
           ${ex.field('why', content.justify.label, { placeholder: content.justify.placeholder, max: 400, rows: 3, hideLabel: true })}</div>
         <p class="k-label a4-self-label">Auto-évaluation</p>
@@ -199,7 +225,14 @@
 
   kit.on({
     'a4-go': control => go(Number(control.dataset.index)),
-    'a4-prev': () => go(Math.max(0, at() - 1))
+    'a4-prev': () => go(Math.max(0, at() - 1)),
+    'a4-pick': control => {
+      const free = ranks().findIndex(v => !v);
+      if (free === -1) return;
+      ex.setValue(`rank${free}`, control.dataset.id);
+      kit.commit();
+    },
+    'a4-unplace': control => { ex.setValue(`rank${control.dataset.index}`, ''); kit.commit(); }
   });
 
   kit.live(() => {
