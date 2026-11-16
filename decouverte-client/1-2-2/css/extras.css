@@ -1197,3 +1197,26 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 #main details.fm-review-intro.is-folded[open] { border-radius: 18px; padding: 16px 20px !important; }
 #main details.fm-review-intro.is-folded > summary { color: #1d3f9a !important; font-size: .95rem; font-weight: 700; letter-spacing: 0; text-transform: none; }
 #main details.fm-review-intro.is-folded > summary .icon { color: var(--accent); }
+
+/* Corrigé des cartes (2.1, 2.2), plus clair : la question, puis « Votre
+   choix » et « Bonne réponse » côte à côte, puis « Pourquoi » ; fond vert
+   pâle si c'est juste, rose pâle sinon. */
+#main .deck-recap.has-columns > li { grid-template-columns: 36px max-content minmax(0, 1fr); gap: 10px 14px; }
+#main .deck-recap.has-columns > li.is-ok { background: #f3faf6; }
+#main .deck-recap.has-columns > li.is-ko { background: #fff7f5; }
+#main .deck-recap.has-columns .deck-recap-n { grid-row: 1 / span 3; }
+#main .deck-recap.has-columns .deck-recap-text { display: contents; }
+#main .deck-recap.has-columns .deck-recap-text strong { grid-column: 2 / 4; grid-row: 1; color: #16205e; }
+#main .deck-recap.has-columns .deck-recap-text small { grid-column: 2 / 4; grid-row: 3; order: 0; }
+#main .deck-recap.has-columns .deck-recap-text small::before { content: 'Pourquoi : '; font-weight: 700; color: #2b3768; }
+#main .deck-recap.has-columns .deck-review-yours { grid-column: 2; grid-row: 2; }
+#main .deck-recap.has-columns .deck-review-expected { grid-column: 3; grid-row: 2; margin-left: 10px; }
+#main .deck-recap.has-columns .deck-review-yours::before { content: 'Votre choix :'; }
+#main .deck-recap.has-columns .deck-review-expected::before { content: 'Bonne réponse :'; }
+#main .deck-recap.has-columns .deck-review-expected .deck-recap-zone { background: #e3f4ea; color: #1d6b43; }
+#main .deck-recap.has-columns .is-ko .deck-recap-zone.is-yours { background: #fde8e4; color: #a33a26; opacity: 1; }
+#main .deck-recap.has-columns .deck-review-yours > .icon { display: none; }
+#main .deck-recap.has-columns .is-ok .deck-review-expected { display: none; }
+#main .deck-recap.has-columns .is-ok .deck-recap-zone.is-yours { background: #e3f4ea; color: #1d6b43; }
+#main .deck-recap.has-columns .is-ok .deck-review-yours::after { content: '✓ juste'; margin-left: 4px; color: #1d6b43; font-weight: 700; font-size: .85rem; }
+@media (max-width: 560px) { #main .deck-recap.has-columns .deck-review-expected { grid-column: 2 / 4; grid-row: 3; margin-left: 0; } #main .deck-recap.has-columns .deck-recap-text small { grid-row: 4; } }
