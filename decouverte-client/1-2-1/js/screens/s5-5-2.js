@@ -84,6 +84,13 @@
       ${kit.bar({ right: kit.submit('Écouter le client') })}`;
   }
 
+  /* Le fil de l'entretien, en tête des moments 2 et 3 : ce que vous venez
+   * de lui répondre, puis ce qui se passe ensuite (`bridges`). */
+  const thread = (f, k) => (k > 1 ? `<div class="a5-thread">
+      <p class="a5-thread-you"><span>Vous venez de lui répondre</span> « ${esc(answer(k - 1))} »</p>
+      ${f.bridges && f.bridges[k - 1] ? `<p class="a5-thread-next">${esc(f.bridges[k - 1])}${gestureOf(f.lines[k - 1]) ? ` ${esc(gestureOf(f.lines[k - 1]))}.` : ''}</p>` : ''}
+    </div>` : '');
+
   /* Ce que le client a déjà dit : seulement à la réplique 3, où la synthèse
    * doit reprendre tout l'échange. Ses mots seuls, affichés d'emblée. */
   const history = (f, k) => (k === 3 ? `<div class="a5-said">
@@ -103,11 +110,11 @@
         <div class="a5-exchange-head">
           <p class="a4-role">${esc(f.context || f.profile)}</p>
           ${moments(f, k)}
+          ${thread(f, k)}
           ${history(f, k)}
         </div>
         <div class="a5-exchange-client">
           ${kit.clientCard(wordsOf(line), f.portrait, SPEAKS[k - 1].replace('{nom}', f.name))}
-          ${gesture ? `<p class="a5-gesture">${icon('eye', { size: 16 })}<span>${esc(gesture)}</span></p>` : ''}
           <p class="a5-task"><strong>${esc(task.title)} :</strong> ${esc(task.text.charAt(0).toLowerCase() + task.text.slice(1))}</p>
         </div>
         <div class="a5-exchange-you">

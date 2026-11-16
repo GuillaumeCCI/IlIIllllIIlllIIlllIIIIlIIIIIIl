@@ -726,3 +726,11 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 #main .a5-fiche.is-on::after { box-shadow: inset 0 0 0 2.5px var(--accent); }
 #main .a5-fiche.is-on { box-shadow: 0 14px 32px rgb(19 75 215 / 16%); }
 .a5-fiche-check { z-index: 2; }
+
+/* A5 : le fil de l'entretien entre deux moments (votre réponse précédente,
+   puis ce qui se passe), relié par un trait vertical. */
+.a5-thread { position: relative; display: grid; gap: 6px; margin: 18px 0 0; padding: 2px 0 2px 18px; }
+.a5-thread::before { content: ''; position: absolute; top: 4px; bottom: 4px; left: 3px; width: 2px; border-radius: 2px; background: #d3dcf6; }
+.a5-thread-you { margin: 0; color: var(--accent); font-size: .92rem; line-height: 1.5; }
+.a5-thread-you span { display: block; color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.a5-thread-next { margin: 0; color: var(--navy); font-size: .95rem; font-style: italic; line-height: 1.5; }

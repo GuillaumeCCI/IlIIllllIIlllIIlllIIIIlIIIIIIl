@@ -110,7 +110,9 @@
             'Le prix vous fait réagir. C’est un budget important, et vous voulez être sûr que ça en vaut la peine, c’est ça ?',
             'Si je résume : votre priorité, c’est de soulager votre dos et de retrouver des nuits complètes. Il faut trouver une fermeté qui vous convienne à tous les deux, le 140 devient un peu juste, et vous voulez que l’investissement soit justifié. C’est bien ça ? Il y a autre chose d’important ?'
           ],
-          notes: ['', '', '']
+          notes: ['', '', ''],
+          // Ce qui se passe entre deux moments (avant le moment 2, avant le moment 3).
+          bridges: ['', 'Il hoche la tête, se relève et va voir le matelas exposé à côté.', 'Vous l’invitez à vous dire ce qu’il attend de son futur matelas. Il se rassoit et poursuit.']
         },
         {
           id: 'pieces', sector: 'Entre entreprises', title: 'Distributeur de pièces auto', name: 'Mme Lefort', portrait: 'client-veste-verte',
@@ -126,7 +128,8 @@
             'Je vois que l’atelier a besoin de vous, je vais être bref. Trois questions, et si besoin on cale un autre moment, ça vous va ?',
             'Si je résume : votre priorité, c’est la fiabilité des livraisons, la bonne pièce au bon moment, parce que chaque pont immobilisé vous coûte du temps et de l’image auprès de vos clients. Le prix vient après. C’est bien ça ?'
           ],
-          notes: ['', 'Adaptation : raccourcir et laisser la cliente garder la main.', '']
+          notes: ['', 'Adaptation : raccourcir et laisser la cliente garder la main.', ''],
+          bridges: ['', 'Elle acquiesce et commence à vous expliquer comment elle s’organise.', 'Vous lui posez vos questions, rapidement. Elle y répond, puis ajoute.']
         },
         {
           id: 'mandat', sector: 'Immobilier', title: 'Mandat de vente', name: 'Mme Duval', portrait: 'client-cheveux-gris',
@@ -142,7 +145,8 @@
             '(Laisser un silence.) C’est une maison pleine de souvenirs. Ce n’est pas une décision facile.',
             'Si je résume : vous vendez parce que la maison n’est plus adaptée. Votre fils souhaite une vente rapide avant l’hiver, et pour vous, l’essentiel est d’avoir trouvé un appartement près de votre sœur avant de partir. Il faudra donc coordonner le calendrier de la vente et celui de votre installation. Est-ce que j’ai bien compris ?'
           ],
-          notes: ['', 'Adaptation : ralentir, ne pas enchaîner sur l’estimation. À éviter : un soutien banal du type « ne vous inquiétez pas ».', 'La synthèse distingue la priorité de la cliente de celle de son fils.']
+          notes: ['', 'Adaptation : ralentir, ne pas enchaîner sur l’estimation. À éviter : un soutien banal du type « ne vous inquiétez pas ».', 'La synthèse distingue la priorité de la cliente de celle de son fils.'],
+          bridges: ['', 'Elle vous fait visiter le rez-de-chaussée. Dans le salon, elle s’arrête.', 'Après un moment, vous l’invitez à vous parler de son projet. Elle se reprend et vous explique.']
         }
       ],
 
