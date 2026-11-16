@@ -691,3 +691,12 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 
 .a5-choose-help { margin: 2px 0 12px; color: var(--muted); font-size: .92rem; }
 .a5-choose-help strong { color: var(--navy); }
+
+/* A5, une réplique : de l'air entre les blocs. */
+#main .a5-exchange { padding: 30px 34px 32px; column-gap: 36px; row-gap: 26px; }
+.a5-exchange-head .a4-role { line-height: 1.55; }
+.a5-exchange-head .a5-moments { margin-top: 16px; }
+.a5-exchange-head .a5-said { margin-top: 18px; }
+.a5-exchange-client .a5-gesture { margin-top: 18px; }
+.a5-exchange-client .a5-task { margin-top: 18px; line-height: 1.6; }
+.a5-exchange-client .a5-gesture + .a5-task { margin-top: 8px; }
