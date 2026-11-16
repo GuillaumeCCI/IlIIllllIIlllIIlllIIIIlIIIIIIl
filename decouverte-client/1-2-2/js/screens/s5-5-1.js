@@ -151,10 +151,6 @@
           ${content.rewrites.map((r, i) => `<div class="fm-field a4-rewrite"><p class="a4-rewrite-from"><span class="a4-guide-n">${i + 1}</span>« ${esc(r.from)} »</p>
             ${ex.field(r.id, `Réécriture de : ${r.from}`, { placeholder: 'Votre question ouverte…', max: 300, rows: 2, hideLabel: true })}</div>`).join('')}
         </div>
-        <div class="a4-self">
-          <p class="a4-self-q"><span class="k-label">Auto-évaluation</span><span>${esc(content.selfCheck.text)}</span></p>
-          <div class="a4-self-pills" role="radiogroup" aria-label="${esc(content.selfCheck.title)}">${SELF.map(o => `<button type="button" class="a4-self-pill ${ex.value('self0') === o.id ? 'is-on' : ''}" role="radio" aria-checked="${ex.value('self0') === o.id}" data-act="a4-self" data-id="${o.id}" ${o.id === SELF[0].id ? 'data-field="self0"' : ''}>${esc(o.label)}</button>`).join('')}</div>
-        </div>
       </section></div>
       ${core.errorsBox()}
       ${kit.bar({ left: kit.back('a4-prev', `Revenir à ${sellers[RANK - 1].name}`), right: kit.submit('Voir le corrigé') })}`;
@@ -222,6 +218,13 @@
   const placed = ids => ids.map((id, i) => `${PLACE_SHORT[i]} ${nameOf(id)}`).join(' · ');
   const rankReview = () => kit.picked(ranks().every((id, i) => id === content.ranking[i]), placed(ranks()), placed(content.ranking), 'Le meilleur guide');
 
+  /* L'auto-évaluation, proposée une fois le corrigé affiché : on juge ses
+   * réécritures en les comparant aux réécritures possibles. */
+  const selfBlock = () => `<div class="a4-self">
+      <p class="a4-self-q"><span class="k-label">Auto-évaluation</span><span>${esc(content.selfCheck.text)}</span></p>
+      <div class="a4-self-pills" role="radiogroup" aria-label="${esc(content.selfCheck.title)}">${SELF.map(o => `<button type="button" class="a4-self-pill ${ex.value('self0') === o.id ? 'is-on' : ''}" role="radio" aria-checked="${ex.value('self0') === o.id}" data-act="a4-self" data-id="${o.id}" ${o.id === SELF[0].id ? 'data-field="self0"' : ''}>${esc(o.label)}</button>`).join('')}</div>
+      </div>`;
+
   function review() {
     return `${clientBlock()}
       <section class="k-panel a4-result">
@@ -231,6 +234,7 @@
       <section class="k-panel a4-result">
         ${rankReview()}
         ${justification()}
+        ${selfBlock()}
       </section>
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }
@@ -257,7 +261,6 @@
     if (empty !== -1) errors.push({ key: `rank${empty}`, message: 'Classez les deux guides.' });
     const missing = content.rewrites.find(r => !kit.filled(values[r.id]));
     if (missing) errors.push({ key: missing.id, message: 'Réécrivez les trois questions de Yanis.' });
-    if (!values.self0) errors.push({ key: 'self0', message: 'Répondez à l’auto-évaluation.' });
     return errors;
   }
 
