@@ -84,7 +84,7 @@
     '5.2': {
       eyebrow: 'S’adapter au client · Votre réponse, votre voix',
       title: 'Votre réponse, votre voix',
-      subtitle: 'Choisissez un client, répondez à ses trois répliques, puis dites vos réponses à voix haute.',
+      subtitle: 'Choisissez un client et menez l’entretien : trois moments, une réponse à chacun, puis dites-les à voix haute.',
       forbidden: 'Interdit : proposer un produit ou une solution. Vous êtes en découverte, pas en argumentation.',
 
       // Ce que chaque réponse doit faire, réplique par réplique.

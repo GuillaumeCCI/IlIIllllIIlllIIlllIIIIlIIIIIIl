@@ -37,7 +37,18 @@
   const gestureOf = line => (line.match(/^\[([^\]]+)\]/) || [])[1] || '';
   const wordsOf = line => line.replace(/^\[[^\]]+\]\s*/, '');
 
-  const STEP_LABELS = ['Le client', 'Réplique 1', 'Réplique 2', 'Réplique 3', 'Oral et grille'];
+  /* Un même entretien en trois moments : leur nom (barre d'étapes, repère de
+   * parcours, boutons) et la façon dont le client prend la parole. */
+  const MOMENTS = ['Comprendre le client', 'Tenir compte du signal', 'Faire la synthèse'];
+  const SPEAKS = ['Au début de l’entretien, {nom} vous dit', 'Un peu plus tard, {nom} ajoute', 'Pour finir, {nom} vous dit'];
+  const STEP_LABELS = ['Le client', ...MOMENTS, 'Oral et grille'];
+
+  /* Le repère de parcours : « Un même entretien avec M. Garnier, en trois
+   * moments », les trois moments, celui en cours mis en avant. */
+  const moments = (f, k) => `<div class="a5-moments">
+      <span class="a5-moments-title">Un même entretien avec ${esc(f.name)}, en trois moments</span>
+      <ol>${MOMENTS.map((m, i) => `<li class="${i + 1 === k ? 'is-current' : i + 1 < k ? 'is-done' : ''}" ${i + 1 === k ? 'aria-current="step"' : ''}><span class="a5-moments-n">${i + 1 < k ? icon('check', { size: 12, strokeWidth: 3 }) : i + 1}</span>${esc(m)}</li>`).join('')}</ol>
+    </div>`;
   const stepIsDone = i => stepDone(i);
   const stepReachable = i => reachable(i);
   /* La barre d'étapes des autres exercices (moteur : .k-progress-*), dans
@@ -82,10 +93,11 @@
     return `<section class="k-panel a5-exchange">
         <div class="a5-exchange-head">
           <p class="a4-role">${esc(f.context || f.profile)}</p>
+          ${moments(f, k)}
           ${history(f, k)}
         </div>
         <div class="a5-exchange-client">
-          ${kit.clientCard(wordsOf(line), f.portrait, `Réplique ${k} · ${f.name} vous dit`)}
+          ${kit.clientCard(wordsOf(line), f.portrait, SPEAKS[k - 1].replace('{nom}', f.name))}
           ${gesture ? `<p class="a5-gesture">${icon('eye', { size: 16 })}<span>${esc(gesture)}</span></p>` : ''}
           <p class="a5-task"><strong>${esc(task.title)} :</strong> ${esc(task.text.charAt(0).toLowerCase() + task.text.slice(1))}</p>
         </div>
@@ -97,8 +109,8 @@
         </div>
       </section>
       ${core.errorsBox()}
-      ${kit.bar({ left: kit.back('a5-prev', k === 1 ? 'Changer de client' : `Revenir à la réplique ${k - 1}`),
-        right: kit.submit(k < 3 ? `Réplique ${k + 1}` : 'Passer à l’oral') })}`;
+      ${kit.bar({ left: kit.back('a5-prev', k === 1 ? 'Changer de client' : `Revenir au moment ${k - 1}`),
+        right: kit.submit(k < 3 ? 'Suite de l’entretien' : 'Passer à l’oral') })}`;
   }
 
   /* ── Étape 4 : l'oral, puis la grille ───────────────────────────────── */
@@ -120,7 +132,7 @@
         ${kit.matrix({ key: 'self', rows: content.selfCheck, columns: YES_NO, head: 'Critère', round: true })}
       </section>
       ${core.errorsBox()}
-      ${kit.bar({ left: kit.back('a5-prev', 'Revenir à la réplique 3'), right: kit.submit('Voir le corrigé') })}`;
+      ${kit.bar({ left: kit.back('a5-prev', 'Revenir au moment 3'), right: kit.submit('Voir le corrigé') })}`;
   }
 
   /* ── Relecture ──────────────────────────────────────────────────────── */
@@ -187,7 +199,7 @@
   function validate(values) {
     const k = at();
     if (k === 0) return values.fiche ? [] : [{ key: 'fiche', message: 'Choisissez un client.' }];
-    if (k <= 3) return kit.filled(values[`r${k}`]) ? [] : [{ key: `r${k}`, message: `Écrivez votre réponse à la réplique ${k}.` }];
+    if (k <= 3) return kit.filled(values[`r${k}`]) ? [] : [{ key: `r${k}`, message: `Écrivez votre réponse (moment ${k} : ${MOMENTS[k - 1].toLowerCase()}).` }];
     const missing = content.selfCheck.findIndex((_, i) => !values[`self${i}`]);
     return missing === -1 ? [] : [{ key: `self${missing}`, message: `Répondez Oui ou Non à chacun des ${content.selfCheck.length} critères.` }];
   }
@@ -214,7 +226,7 @@
 
   kit.tour('s5-5.2', [
     { target: '.a5-fiches', title: 'Votre client', text: 'Choisissez la fiche la plus proche de votre futur métier : commerce, entre entreprises ou immobilier.' },
-    { target: '.k-count.is-progress', title: 'Les étapes', text: 'Trois répliques, une réponse pour chacune :',
+    { target: '.k-count.is-progress', title: 'Les étapes', text: 'Un même entretien, en trois moments. Une réponse à chaque moment :',
       items: [
         { key: '1', tone: 'blue', text: 'une réponse en attitude de compréhension ;' },
         { key: '2', tone: 'gold', text: 'une réponse adaptée au signal non verbal ;' },

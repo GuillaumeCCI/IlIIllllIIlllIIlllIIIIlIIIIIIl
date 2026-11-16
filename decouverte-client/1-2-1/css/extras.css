@@ -677,3 +677,14 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a5-said { margin: 10px 0 2px; padding: 10px 14px; border-radius: 12px; background: #f7f9fe; }
 .a5-said-title { margin: 0 0 4px; color: var(--navy); font-size: .85rem; font-weight: 700; }
 .a5-said ol { display: grid; gap: 2px; margin: 0; padding-left: 20px; color: #2b3866; font-size: .9rem; line-height: 1.45; }
+
+/* A5 : le repère de parcours, les trois moments du même entretien. */
+.a5-moments { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin: 10px 0 2px; }
+.a5-moments-title { color: var(--muted); font-size: .85rem; }
+.a5-moments ol { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.a5-moments li { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px 4px 5px; border-radius: 999px; background: #f2f5fb; color: #8a98b8; font-size: .85rem; font-weight: 700; }
+.a5-moments-n { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #e3e9f6; font-size: .75rem; }
+.a5-moments li.is-done { color: #1d7a4b; background: #e9f6ef; }
+.a5-moments li.is-done .a5-moments-n { background: #1d7a4b; color: #fff; }
+.a5-moments li.is-current { color: #fff; background: var(--accent); }
+.a5-moments li.is-current .a5-moments-n { background: #fff; color: var(--accent); }
