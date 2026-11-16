@@ -660,3 +660,15 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 /* A5 : la consigne de la réplique en une ligne simple sous la carte, sans encadré. */
 .a5-exchange-client .a5-task { display: block; margin: 14px 6px 0; padding: 0; background: none; color: var(--muted); font-size: .9rem; line-height: 1.5; }
 .a5-exchange-client .a5-task strong { display: inline; color: var(--navy); font-size: inherit; }
+
+/* A5 : en-tête allégé (le contexte, puis l'échange replié derrière un lien) ;
+   le geste du client sous sa carte, avant la consigne. */
+.a5-exchange-head .a4-role { margin: 0; }
+.a5-history-fold { margin: 6px 0 4px; }
+.a5-history-fold summary { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: .88rem; font-weight: 700; cursor: var(--cursor-hand, pointer); list-style: none; }
+.a5-history-fold summary::-webkit-details-marker { display: none; }
+.a5-history-fold summary::before { content: '›'; display: inline-block; font-size: 1.1rem; line-height: 1; transition: transform .15s; }
+.a5-history-fold[open] summary::before { transform: rotate(90deg); }
+.a5-history-fold .a5-history { margin-top: 8px; }
+.a5-exchange-client .a5-gesture { margin: 12px 6px 0; font-size: .9rem; }
+.a5-exchange-client .a5-gesture + .a5-task { margin-top: 6px; }

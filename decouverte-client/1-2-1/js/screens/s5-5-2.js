@@ -65,8 +65,8 @@
   }
 
   /* L'échange jusqu'ici : les répliques passées et vos réponses. */
-  const history = (f, k) => (k > 1 ? `<ol class="a5-history">${f.lines.slice(0, k - 1).map((line, i) => `
-      <li><p class="a5-history-client"><strong>${esc(f.name)}</strong> « ${esc(wordsOf(line))} »</p><p class="a5-history-you"><strong>Vous</strong> « ${esc(answer(i + 1))} »</p></li>`).join('')}</ol>` : '');
+  const history = (f, k) => (k > 1 ? `<details class="a5-history-fold"><summary>Revoir l’échange (${k - 1} réplique${k > 2 ? 's' : ''})</summary><ol class="a5-history">${f.lines.slice(0, k - 1).map((line, i) => `
+      <li><p class="a5-history-client"><strong>${esc(f.name)}</strong> « ${esc(wordsOf(line))} »</p><p class="a5-history-you"><strong>Vous</strong> « ${esc(answer(i + 1))} »</p></li>`).join('')}</ol></details>` : '');
 
   /* ── Étapes 1 à 3 : une réplique, une réponse ───────────────────────── */
   function reply(k) {
@@ -78,13 +78,12 @@
      * votre réponse (droite), côte à côte et de même hauteur. */
     return `<section class="k-panel a5-exchange">
         <div class="a5-exchange-head">
-          <p class="k-label">${esc(f.sector)} · ${esc(f.title)}</p>
           <p class="a4-role">${esc(f.context || f.profile)}</p>
           ${history(f, k)}
-          ${gesture ? `<p class="a5-gesture">${icon('eye', { size: 16 })}<span>${esc(gesture)}</span></p>` : ''}
         </div>
         <div class="a5-exchange-client">
           ${kit.clientCard(wordsOf(line), f.portrait, `Réplique ${k} · ${f.name} vous dit`)}
+          ${gesture ? `<p class="a5-gesture">${icon('eye', { size: 16 })}<span>${esc(gesture)}</span></p>` : ''}
           <p class="a5-task"><strong>${esc(task.title)} :</strong> ${esc(task.text.charAt(0).toLowerCase() + task.text.slice(1))}</p>
         </div>
         <div class="a5-exchange-you">
