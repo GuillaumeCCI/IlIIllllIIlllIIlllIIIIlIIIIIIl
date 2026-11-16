@@ -1059,3 +1059,27 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) td { display: block !important; width: 100% !important; }
 body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) td > .k-box-label { display: grid !important; }
 body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-label > .k-box { width: 100% !important; box-sizing: border-box; }
+
+/* 4.2 : une couleur par niveau. Prioritaire corail, Important ocre,
+   Secondaire vert ; teinte légère au repos, pleine une fois choisi. */
+body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) td:nth-child(2) { --lv: #d9563a; --lv-soft: #fdece7; }
+body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) td:nth-child(3) { --lv: #c27c0e; --lv-soft: #fdf3dd; }
+body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) td:nth-child(4) { --lv: #23855c; --lv-soft: #e3f4ec; }
+body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-label > .k-box { background: var(--lv-soft) !important; box-shadow: none !important; }
+body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box::before { color: var(--lv); }
+body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-label:hover .k-box { filter: brightness(.97); }
+body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checked + .k-box { background: var(--lv) !important; box-shadow: 0 6px 16px color-mix(in srgb, var(--lv) 35%, transparent) !important; }
+body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checked + .k-box::before, body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checked + .k-box::after { color: #fff; }
+
+/* 5.1 : le bouton juste sous la grille de notation, dans la colonne de
+   droite, au lieu de tout en bas après le guide (formulaire « déplié »). */
+@media (min-width: 1101px) {
+  body[data-exercise="s5-5-1"] #main .a4-page:has(.a4-note-grid) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); column-gap: 20px; align-items: start; }
+  body[data-exercise="s5-5-1"] #main .a4-page:has(.a4-note-grid) > .k-head { grid-column: 1 / -1; }
+  body[data-exercise="s5-5-1"] #main .a4-page:has(.a4-note-grid) > .a4-form, body[data-exercise="s5-5-1"] #main .a4-page:has(.a4-note-grid) .a4-note-grid { display: contents; }
+  body[data-exercise="s5-5-1"] #main .a4-page:has(.a4-note-grid) .a4-exchange { grid-column: 1; grid-row: 2 / span 3; }
+  body[data-exercise="s5-5-1"] #main .a4-page:has(.a4-note-grid) .a4-rate { grid-column: 2; grid-row: 2; }
+  body[data-exercise="s5-5-1"] #main .a4-page:has(.a4-note-grid) > .k-bar { grid-column: 2; grid-row: 3; margin-top: 18px; }
+  body[data-exercise="s5-5-1"] #main .a4-page:has(.a4-note-grid) > .a4-form > .form-errors { grid-column: 2; grid-row: 4; }
+}
+#main .a4-guide-intro { margin: 2px 0 10px; color: #5b6a8f; font-size: .95rem; }

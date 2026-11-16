@@ -108,7 +108,7 @@
       title: 'Retour chez les Benali',
       subtitle: 'Les Benali, un couple, cherchent une maison avec jardin.\nAprès une première visite, Lucas, leur conseiller immobilier, fait le point avec eux.\nRelevez les motivations de chacun, hiérarchisez leurs besoins, puis trouvez la question qui départage.',
       welcome: { title: 'Le deuxième rendez-vous', rows: [
-        ['users', 'Les Benali', 'Vous les avez rencontrés en M1.2.1 : ils cherchent une maison avec jardin, autour de 280 000 €.'],
+        ['users', 'Les Benali', 'Un couple avec des enfants : ils cherchent une maison avec jardin, autour de 280 000 €.'],
         ['chat', 'Ce qui se passe', 'Après une première visite, Lucas, leur conseiller, fait le point avec eux.'],
         ['pencil', 'Ce qui vous est demandé', 'Les motivations de chacun, la hiérarchie de leurs besoins, puis une question pour départager deux souhaits.']
       ] },

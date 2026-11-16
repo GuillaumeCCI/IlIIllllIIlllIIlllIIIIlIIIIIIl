@@ -88,7 +88,7 @@
   const exchange = (s, k) => `<section class="k-panel a4-exchange is-guide">
       <div class="a4-exchange-head">${situation()}</div>
       <div class="a4-exchange-reply ${arriving === k ? 'is-arriving' : ''}" data-seller="${esc(s.id)}">
-        <p class="a4-new tone-${esc(s.id)}" role="status">${arriving === k ? `${icon('sparkle', { size: 15 })}<span>Nouveau guide à noter · ${k + 1} sur ${RANK}</span>` : `<span>Guide ${k + 1} sur ${RANK}</span>`}</p>
+        <p class="a4-new tone-${esc(s.id)}" role="status">${arriving === k ? `${icon('sparkle', { size: 15 })}<span>Guide ${k + 1} sur ${RANK} · notez-le dans la grille à droite</span>` : `<span>Guide ${k + 1} sur ${RANK} · notez-le dans la grille à droite</span>`}</p>
         ${sellerBlock(s)}
       </div>
     </section>`;
@@ -99,6 +99,7 @@
     let n = 0;
     return `<div class="a4-seller a4-guide tone-${esc(s.id)}">
       <p class="client-card-label a4-seller-label"><span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span><span>Le guide de ${esc(s.name)}</span></p>
+      <p class="a4-guide-intro">Les questions que ${esc(s.name)} a préparées pour le rendez-vous${s.groups.some(g => g.title) ? ', rangées par étape' : ''}.</p>
       ${s.groups.map(g => `${g.title ? `<p class="a4-guide-group">${esc(g.title)}</p>` : ''}<ol class="a4-guide-list">${g.questions.map(q => `<li><span class="a4-guide-n">${++n}</span>« ${esc(q)} »</li>`).join('')}</ol>`).join('')}
     </div>`;
   };

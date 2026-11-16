@@ -1051,7 +1051,7 @@
             if (f.type === 'choice') {
               const accepted = [].concat(f.answer || []);
               const ok = accepted.includes(val(i, f));
-              const yours = val(i, f) ? `<p class="fm-rv-pick ${accepted.length ? (ok ? 'is-ok' : 'is-ko') : ''}">${accepted.length ? `<span aria-hidden="true">${ok ? '✓' : '✗'}</span>` : ''}${esc(optionLabel(f, val(i, f)))}${accepted.length ? `<span class="sr-only">${ok ? ' : bonne réponse' : ' : à revoir'}</span>` : ''}</p>` : '<p class="result-answer-text is-empty"><em>Non renseigné.</em></p>';
+              const yours = val(i, f) ? `<p class="fm-rv-pick ${accepted.length ? (ok ? 'is-ok' : 'is-ko') : ''}">${accepted.length ? `<span class="fm-rv-mark" aria-hidden="true">${icon(ok ? 'check' : 'close', { size: 12, strokeWidth: 3.2 })}</span>` : ''}${esc(optionLabel(f, val(i, f)))}${accepted.length ? `<span class="sr-only">${ok ? ' : bonne réponse' : ' : à revoir'}</span>` : ''}</p>` : '<p class="result-answer-text is-empty"><em>Non renseigné.</em></p>';
               const model = accepted.length ? `<p><strong>${esc(accepted.map(id => optionLabel(f, id)).join(' ou '))}</strong>${f.why ? `<br>${esc(f.why)}` : ''}</p>` : '';
               return `<div class="fm-rv-row">
                 <p class="fm-rv-label">${esc(f.label)}</p>

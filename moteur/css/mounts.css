@@ -724,6 +724,10 @@ button.crash-passage:hover { background: #fff1d6; }
 .fm-rv-pick { display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 4px 12px; border-radius: 999px; background: #f1f3f8; color: var(--navy); font-weight: 700; }
 .fm-rv-pick.is-ok { background: #e6f4ec; color: #1f6b43; }
 .fm-rv-pick.is-ko { background: #fde8e4; color: #a33a26; }
+/* La marque juste / faux : une pastille ronde pleine, l'icône en blanc. */
+.fm-rv-mark { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #8b97b8; color: #fff; flex-shrink: 0; }
+.fm-rv-pick.is-ok .fm-rv-mark { background: #23955f; }
+.fm-rv-pick.is-ko .fm-rv-mark { background: #d8452f; }
 .fm-rv-model strong { color: #1b4a33; }
 /* L'échange replié au-dessus du corrigé « rows ». */
 #main .fm-review-intro.is-folded { padding: 12px 18px; min-height: 0; }

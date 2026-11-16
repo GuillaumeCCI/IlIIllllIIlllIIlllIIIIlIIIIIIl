@@ -19,7 +19,7 @@
 
       client: {
         name: 'Mme Lefort',
-        role: 'Gérante d’un garage indépendant de 6 salariés, rencontrée en M1.2.1.',
+        role: 'Gérante d’un garage indépendant de 6 salariés.',
         signal: 'Deux commerciaux d’un distributeur de pièces automobiles préparent leur premier rendez-vous avec elle.'
       },
 
