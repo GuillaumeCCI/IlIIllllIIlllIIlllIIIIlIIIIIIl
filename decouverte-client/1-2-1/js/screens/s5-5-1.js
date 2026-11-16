@@ -145,8 +145,10 @@
         ${podium()}
         <div class="fm-field a4-justify"><p class="fm-label">${esc(content.justify.label)}</p><p class="fm-sub">${esc(content.justify.sub)}</p>
           ${ex.field('why', content.justify.label, { placeholder: content.justify.placeholder, max: 400, rows: 3, hideLabel: true })}</div>
-        <p class="k-label a4-self-label">Auto-évaluation</p>
-        ${kit.matrix({ key: 'self', rows: [content.selfCheck], columns: SELF, head: 'Critère', round: true, numbered: false })}
+        <div class="a4-self">
+          <p class="a4-self-q"><span class="k-label">Auto-évaluation</span><span>${esc(content.selfCheck.text)}</span></p>
+          <div class="a4-self-pills" role="radiogroup" aria-label="${esc(content.selfCheck.title)}">${SELF.map(o => `<button type="button" class="a4-self-pill ${ex.value('self0') === o.id ? 'is-on' : ''}" role="radio" aria-checked="${ex.value('self0') === o.id}" data-act="a4-self" data-id="${o.id}" ${o.id === SELF[0].id ? 'data-field="self0"' : ''}>${esc(o.label)}</button>`).join('')}</div>
+        </div>
       </section>
       ${core.errorsBox()}
       ${kit.bar({ left: kit.back('a4-prev', `Revenir à ${sellers[RANK - 1].name}`), right: kit.submit('Voir le corrigé') })}`;
@@ -232,6 +234,15 @@
   kit.on({
     'a4-go': control => go(Number(control.dataset.index)),
     'a4-prev': () => go(Math.max(0, at() - 1)),
+    'a4-self': control => {
+      ex.setValue('self0', control.dataset.id);
+      ex.changed();
+      document.querySelectorAll('.a4-self-pill').forEach(pill => {
+        const on = pill.dataset.id === control.dataset.id;
+        pill.classList.toggle('is-on', on);
+        pill.setAttribute('aria-checked', String(on));
+      });
+    },
     'a4-move': control => {
       const r = ranks();
       const i = Number(control.dataset.index);

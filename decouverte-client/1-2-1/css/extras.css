@@ -487,3 +487,12 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-order-row.is-moved { animation: a4-moved .9s ease-out both; z-index: 1; }
 @keyframes a4-moved { 0% { box-shadow: 0 0 0 2px var(--tone), 0 10px 24px rgb(15 35 78 / 14%); background: #fff; } 100% { box-shadow: 0 0 0 0 transparent; background: #f7f9fe; } }
 @media (prefers-reduced-motion: reduce) { .a4-order-row.is-moved { animation: none; } }
+
+/* A4 : l'auto-évaluation, une question et trois pastilles sur une ligne. */
+.a4-self { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-top: 18px; padding: 14px 18px; border-radius: 14px; background: #f7f9fe; }
+.a4-self-q { display: grid; gap: 2px; margin: 0; color: var(--navy); }
+.a4-self-q .k-label { margin: 0; }
+.a4-self-pills { display: inline-flex; gap: 6px; }
+.a4-self-pill { padding: 7px 16px; border: 1.5px solid var(--line); border-radius: 999px; background: #fff; font: inherit; font-size: .92rem; font-weight: 700; color: var(--navy); cursor: var(--cursor-hand, pointer); transition: border-color .12s, background .12s; }
+.a4-self-pill:hover { border-color: var(--accent); }
+#main .a4-self-pill.is-on { border-color: var(--accent); background: var(--accent); color: #fff; }
