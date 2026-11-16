@@ -31,6 +31,23 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 
 - Étape 6 : vérification en capture d’A4 et d’A5 (toutes les étapes et les corrigés). Corrigé : A5, analyse aérée et texte de la hiérarchie en graisse normale ; corrigé, intitulés alignés et note « sujet sensible » propre à chaque client ; A4, cartes Yanis / Clara sur deux colonnes (au lieu de trois héritées de 1-2-1).
 
+- Étape 7 (16/11/2026, retours de l'utilisateur écran par écran) :
+  - 2.1 / 2.2 : cartes décorées (taches aquarelle sur la question, feuillage sur les réponses), 2.1 numéroté 1-4, 2.2 en vrai entonnoir (clic seulement, pas de glisser-déposer), relecture et corrigé en cartes sur deux colonnes (Votre choix / Bonne réponse / Pourquoi), explications réécrites en phrases complètes.
+  - 3.1 / 4.1 : citation en blanc sur dégradé bleu posée sur le portrait, en-tête compact ; notation de 3.1 très élargie (+15 réponses justes de test) ; 4.1 motivations en cartes douces, explications sans doublon.
+  - 4.2 : visages découpés (Laura à droite, M. et Mme Benali à gauche ; Lucas devenu Laura), hiérarchie en boutons colorés, corrigé allégé, « Relire l'échange » en petit bouton.
+  - 5.1 : guide de Clara sans titres d'étapes, réécriture allégée, auto-évaluation au corrigé, plus de tolérance d'un point (aussi en 1-2-1), corrigé en mots et trois colonnes, sans pastilles de critères.
+  - 5.2 : guide étage par étage, découverte en conversation (« Découvrir sa réponse »), analyse une question à la fois, plus de bloc « À déposer ».
+  - Partout : plus d'âge des personnages (1-1-1, 1-2-1, 1-2-2), plus de renvoi à M1.2.1.
+  - Moteur : content.banner, body data-exercise, visage dans les échanges (line.face), cadre de visite sous la barre du haut, marque juste/faux en pastille, relecture des cartes sur deux colonnes, espaces insécables dans les cartes.
+
+## Reprise prévue (17/11/2026)
+
+- Synthèse optionnelle M1.2.2 (fiche Fiche_M1-2-2_Activite_synthese_optionnelle.docx, zip Downloads/Téléchargements/OneDrive_1_02-11-2026.zip) : 3 options, Le coach (dossiers A cuisiniste / B entre entreprises), L'entretien dont tu es le héros (concession automobile), Ma banque de questions terrain. Proposition : commencer par l'option 2.
+- À trancher avec l'utilisateur : dépôt ou pas pour la synthèse (le bloc « À déposer » a été retiré de 5.2) ; adapter les âges du dossier A (« 6, 9 et 12 ans ») et le cadre du dossier B (établissement pour personnes âgées).
+- Ensuite : synthèse optionnelle 1-2-1, puis M1.2.3 (situation intégratrice) et M1.2.4 (approfondissement), sans fiche fournie.
+- Connu : le test général du site signale 8 exercices sans fenêtre « Le contexte » (s1, s5-5.1, s5-5.2, s9 de 1-2-1 et 1-2-2), antérieur à cette journée.
+- Non vérifié en capture : 4.2 étape 3 remplie ; portrait de M. Benali (seul homme disponible, plus âgé que le personnage).
+
 ## Reste à faire
 
 - Synthèse optionnelle de 1-2-1 et 1-2-2 : non commencée.
