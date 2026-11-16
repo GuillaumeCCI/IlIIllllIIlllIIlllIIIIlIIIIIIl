@@ -41,6 +41,15 @@ window.ATELIER_CATALOG = {
       ]
     },
     {
+      id: 's3',
+      label: 'Le besoin réel',
+      // Cinq clients, explicite / implicite / question, corrigé : fiche M1.2.2, activité A2.
+      sourced: true,
+      exercises: [
+        { id: '3.1', file: 's3-3-1', label: 'Du besoin exprimé au besoin réel', theme: 'blue', mount: 'form' }
+      ]
+    },
+    {
       id: 's9',
       label: 'Faire le point',
       // Grille d'auto-positionnement, colonne « Fin », et « Ma progression ».

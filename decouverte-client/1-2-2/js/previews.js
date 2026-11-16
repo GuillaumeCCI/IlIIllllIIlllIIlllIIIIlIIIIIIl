@@ -229,6 +229,7 @@
     's9-9.1': () => choicePreview(3),
     's2-2.1': () => sortPreview(),
     's2-2.2': () => sortPreview(),
+    's3-3.1': () => writePreview(3),
     // @@MAP@@
   };
 

@@ -44,6 +44,18 @@ window.ATELIER_BRIEFINGS = {
     criteria: ['Le bon étage pour chaque question', 'Le bon outil au bon moment']
   },
 
+  /* ══ SÉRIE 3 · LE BESOIN RÉEL ═══════════════════════════════════════ */
+
+  's3-3.1': {
+    lede: { key: 'Ce qu’il demande,', rest: 'et ce dont il a besoin.' },
+    mission: 'Cinq clients vous disent ce qu’ils veulent. Pour chacun, notez ce qu’il demande, faites une hypothèse sur ce qui se cache derrière, puis écrivez la question qui vous permettrait de la vérifier.',
+    method: 'Un client à la fois : trois réponses, puis le client suivant.',
+    quote: 'Je veux le vélo avec la plus grosse batterie.',
+    situation: 'Un magasin de vélos électriques, un éditeur de logiciel de planning, une agence immobilière, une agence d’intérim, un opticien. Chaque demande cache peut-être autre chose.',
+    task: 'Pour chaque client : le besoin explicite, un besoin implicite possible, et une question ouverte qui part de ses mots, sans souffler votre hypothèse.',
+    criteria: ['Le besoin explicite, avec ses mots', 'Une hypothèse plausible', 'Hypothèse vérifiée, pas supposée']
+  },
+
   /* @@SERIES@@ */
 
   /* ══ SÉRIE 9 · FAIRE LE POINT ════════════════════════════════════════ */
