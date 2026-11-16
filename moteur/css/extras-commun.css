@@ -891,3 +891,18 @@ html { background-color: #fbf8f2; }
 #main .k-progress-seg.is-current { height: 14px; box-shadow: 0 0 0 2px #fff, 0 0 0 4px #16205e; }
 #main .k-progress-seg:disabled { cursor: default; opacity: .55; }
 #main .k-progress-seg:hover:not(:disabled):not(.is-current) { height: 12px; }
+
+/* ── Ce qui reste à compléter, en douceur (tous les modules) ────────────
+   Le champ concerné : un contour corail léger et un fond à peine teinté,
+   plutôt qu'un cadre rouge épais. Le message : une pastille discrète
+   (icône « ! », texte sur une ligne), plutôt qu'un bandeau rose pleine
+   largeur. Le titre « Quelques éléments… » s'efface : chaque ligne se lit
+   seule (« Justifiez votre premier choix. »). */
+#main :is(textarea, input[type="text"])[aria-invalid="true"] { border-color: transparent !important; background: #fffaf8; box-shadow: 0 4px 16px rgb(20 40 100 / 6%), inset 0 0 0 1.5px #f0a796; }
+#main .pick:has(select[aria-invalid="true"]) .pick-button { box-shadow: inset 0 0 0 1.5px #f0a796; }
+#main .form-errors { display: flex; align-items: flex-start; gap: 10px; width: fit-content; max-width: 100%; margin: 14px 0; padding: 10px 16px 10px 12px; border: 0; border-radius: 14px; background: #fff; color: #9a3a2b; font-size: .9rem; box-shadow: 0 6px 18px rgb(20 40 100 / 8%); }
+#main .form-errors[hidden] { display: none; }
+#main .form-errors::before { content: '!'; display: inline-grid; place-items: center; flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: #fde4de; color: #c4512f; font-weight: 800; font-size: .8rem; }
+#main .form-errors > strong { display: none; }
+#main .form-errors ul { margin: 2px 0 0; padding: 0; list-style: none; line-height: 1.5; }
+#main .form-errors li + li { margin-top: 2px; }
