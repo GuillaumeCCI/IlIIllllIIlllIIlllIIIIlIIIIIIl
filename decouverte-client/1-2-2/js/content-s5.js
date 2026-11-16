@@ -83,7 +83,6 @@
       // Le critère spécifique de l'auto-évaluation de la fiche.
       selfCheck: { title: 'Réécriture qui ouvre', text: 'Mes trois questions réécrites sont ouvertes, partent de la situation de Mme Lefort et ne parlent pas du produit.' },
 
-      tolerance: 'Un écart d’un point sur un critère reste acceptable, si votre justification tient.'
     },
 
     /* ── 5.2 · Votre guide, votre découverte (fiche M1.2.2, A5) ───────────

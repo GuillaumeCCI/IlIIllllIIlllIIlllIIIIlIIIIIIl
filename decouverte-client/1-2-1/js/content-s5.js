@@ -71,7 +71,6 @@
       // Le critère spécifique de l'auto-évaluation de la fiche.
       selfCheck: { title: 'Justification par critères', text: 'Mon classement s’appuie sur la grille, pas sur mon impression générale.' },
 
-      tolerance: 'Un écart d’un point sur un critère reste acceptable, si votre justification tient.'
     },
 
     /* ── 5.2 · Votre réponse, votre voix (fiche M1.2.1, A5) ───────────────

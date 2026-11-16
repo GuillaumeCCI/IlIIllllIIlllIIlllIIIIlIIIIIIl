@@ -1,7 +1,7 @@
 /* S5 5.1 · Le guide qui fait parler (fiche M1.2.2, A4).
  *
  * Adapté de l'A4 du module 1-2-1 : deux guides de questions (Yanis, Clara)
- * notés sur six critères (0 à 2, un point d'écart accepté), puis le meilleur
+ * notés sur six critères (0 à 2, seule la même note est juste), puis le meilleur
  * guide désigné et trois questions de Yanis réécrites (score estimatif).
  */
 (() => {
@@ -158,16 +158,16 @@
 
   /* ── Relecture ──────────────────────────────────────────────────────── */
 
-  const close = () => sellers.reduce((n, s) => n + criteria.filter((_, i) => Math.abs(Number(note(s, i)) - s.notes[i]) <= 1).length, 0);
+  const close = () => sellers.reduce((n, s) => n + criteria.filter((_, i) => Number(note(s, i)) === s.notes[i]).length, 0);
 
   /* Le corrigé, en trois cartes : pour chaque commercial, vos notes et
    * celles du corrigé, critère par critère (un écart d'un point est
    * accepté), puis l'explication de la fiche. */
   const pips = (n, label) => `<span class="a4-pips" role="img" aria-label="${esc(label)}">${[0, 1].map(p => `<i class="${p < n ? 'is-on' : ''}"></i>`).join('')}</span>`;
   /* Chaque ligne : votre note et la note attendue, côte à côte, puis une
-   * marque : ✓ même note, ±1 un point d'écart (accepté), ✗ deux points. */
+   * marque : ✓ même note, ✗ un ou deux points d’écart (seule la même note est juste). */
   const VERDICT = gap => (gap === 0 ? { cls: 'is-same', icon: 'check', text: 'même note', word: 'Juste' }
-    : gap === 1 ? { cls: 'is-near', icon: 'check', text: 'un point d’écart, accepté', word: 'À un point près' }
+    : gap === 1 ? { cls: 'is-far', icon: 'close', text: 'un point d’écart', word: 'Un point d’écart' }
     : { cls: 'is-far', icon: 'close', text: 'deux points d’écart', word: 'Deux points d’écart' });
   const verdictMark = v => `<span class="a4-verdict ${v.cls}" aria-hidden="true">${kit.icon(v.icon, { size: 13, strokeWidth: 3 })}</span>`;
   function reviewCards() {
@@ -227,7 +227,7 @@
   function review() {
     return `${clientBlock()}
       <section class="k-panel a4-result">
-        <div class="a4-review-head"><p class="a4-review-title"><span class="k-label">Vos notes et les notes attendues</span><span class="a4-review-count"><b>${close()}</b> / ${sellers.length * nC} notes justes, à un point près</span></p></div>
+        <div class="a4-review-head"><p class="a4-review-title"><span class="k-label">Vos notes et les notes attendues</span><span class="a4-review-count"><b>${close()}</b> / ${sellers.length * nC} notes justes</span></p></div>
         ${reviewCards()}
       </section>
       <section class="k-panel a4-result">
