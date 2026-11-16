@@ -151,7 +151,7 @@
   }
 
   /* ── Relecture ──────────────────────────────────────────────────────── */
-  const allText = f => [1, 2, 3].map(k => `Réplique ${k} · ${f.name} : « ${wordsOf(f.lines[k - 1])} »\nMa réponse : ${answer(k)}`).join('\n\n');
+  const allText = f => `Entretien avec ${f.name} · ${f.title}\n\n` + [1, 2, 3].map(k => `Moment ${k} · ${MOMENTS[k - 1]}\n${f.name} : « ${wordsOf(f.lines[k - 1])} »\nMa réponse : ${answer(k)}`).join('\n\n');
 
   /* Une réponse au corrigé : la réplique du client, votre réponse (mots
    * repérés surlignés) et son score, ce qu'une bonne réponse contient (en
@@ -201,10 +201,20 @@
         <ul class="a5-self-recap">${content.selfCheck.map((row, i) => `<li><span class="pos-level level-${ex.value(`self${i}`) === 'oui' ? '2' : '0'}">${ex.value(`self${i}`) === 'oui' ? 'Oui' : 'Non'}</span><span>${esc(row.text)}</span></li>`).join('')}</ul>
       </section>
       <section class="k-panel a5-deposit">
-        <p class="k-label">${icon('folder', { size: 16 })} À déposer</p>
-        <p>${esc(content.deposit)}</p>
-        <pre class="a5-copy-text">${esc(allText(f))}</pre>
-        <div class="a5-deposit-actions">${kit.act('a5-copy', `${icon('document', { size: 18 })}<span>Copier mes réponses</span>`, 'secondary')}</div>
+        <div class="a5-dep-head">
+          <p class="k-label">${icon('folder', { size: 16 })} À déposer sur la plateforme</p>
+          ${kit.act('a5-copy', `${icon('document', { size: 18 })}<span>Copier mes réponses</span>`, 'primary small')}
+        </div>
+        <ul class="a5-dep-list">
+          <li><span class="a5-dep-n">1</span><span><strong>Vos trois réponses</strong>, en texte : copiez-les avec le bouton, puis collez-les dans votre dépôt.</span></li>
+          <li><span class="a5-dep-n">2</span><span><strong>Votre enregistrement</strong>, le fichier téléchargé à l’étape de l’oral.</span></li>
+        </ul>
+        <p class="a5-dep-after">Votre tuteur (ou un pair) vous fera un retour avec la même grille.</p>
+        <div class="a5-dep-cards">${[1, 2, 3].map(k => `<article class="a5-dep-card">
+          <p class="a5-dep-moment"><span class="a4-step-n">${k}</span>${esc(MOMENTS[k - 1])}</p>
+          <p class="a5-dep-client">${esc(f.name)} : « ${esc(wordsOf(f.lines[k - 1]))} »</p>
+          <p class="a5-dep-you">« ${esc(answer(k))} »</p>
+        </article>`).join('')}</div>
       </section>
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }

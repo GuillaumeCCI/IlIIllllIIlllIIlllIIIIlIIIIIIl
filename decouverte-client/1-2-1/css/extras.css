@@ -755,3 +755,20 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a5-rv-note { margin: 8px 0 0; color: var(--muted); font-size: .82rem; line-height: 1.45; }
 #main .a5-review-step + .a5-review-step { margin-top: 18px; padding-top: 16px; }
 @media (max-width: 900px) { .a5-rv-grid { grid-template-columns: 1fr; margin-left: 0; } .a5-rv-client { margin-left: 0; } }
+
+/* A5, « À déposer » : titre et bouton sur une ligne, ce qu'il faut déposer,
+   puis les trois réponses en cartes. */
+.a5-dep-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.a5-dep-head .k-label { display: flex; align-items: center; gap: 6px; margin: 0; }
+.a5-dep-list { display: grid; gap: 8px; margin: 14px 0 6px; padding: 0; list-style: none; color: #2b3866; font-size: .93rem; }
+.a5-dep-list li { display: flex; align-items: flex-start; gap: 10px; }
+.a5-dep-n { display: inline-grid; place-items: center; flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: .78rem; font-weight: 800; }
+.a5-dep-list strong { color: var(--navy); }
+.a5-dep-after { margin: 0 0 16px 32px; color: var(--muted); font-size: .85rem; }
+.a5-dep-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.a5-dep-card { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border-radius: 14px; background: #f7f9fe; }
+.a5-dep-moment { display: flex; align-items: center; gap: 8px; margin: 0; color: var(--navy); font-size: .88rem; font-weight: 800; }
+.a5-dep-moment .a4-step-n { width: 22px; height: 22px; font-size: .75rem; }
+.a5-dep-client { margin: 0; color: var(--muted); font-size: .82rem; line-height: 1.45; }
+.a5-dep-you { margin: 0; color: var(--navy); font-size: .93rem; font-weight: 600; line-height: 1.5; }
+@media (max-width: 900px) { .a5-dep-cards { grid-template-columns: 1fr; } }
