@@ -912,3 +912,9 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .dk-zones:not(.count-2) .dk-zone small { color: #55607e; }
 #main .dk-zones:not(.count-2) .dk-zone.is-chosen { border: 0; background: url('../../../moteur/assets/illustrations/carte-deco-droite.webp') right bottom / auto 70px no-repeat, #eef3ff; box-shadow: 0 12px 28px rgb(19 75 215 / 16%); }
 #main .dk-zones:not(.count-2) .dk-zone.is-chosen .dk-zone-mark { background: var(--accent); color: #fff; }
+
+/* Sous-titres en plusieurs phrases : une phrase par ligne (\n dans le
+   contenu), et jamais sous le bouton « Le contexte » posé en haut à droite. */
+#main .k-subtitle { white-space: pre-line; max-width: min(100%, 900px); line-height: 1.45; }
+.dk-page .k-head-text { padding-right: 190px; }
+@media (max-width: 760px) { .dk-page .k-head-text { padding-right: 0; } }

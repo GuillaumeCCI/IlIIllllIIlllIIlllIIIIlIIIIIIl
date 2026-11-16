@@ -343,6 +343,9 @@
 .k-bar-center .deck-dots { display: flex; justify-content: center; margin: 0 auto 6px; }
 
 .deck-recap { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 8px; }
+/* Relecture avant validation, écran large : deux colonnes (01-05 | 06-10), pour
+   que la réponse choisie reste près de sa question sans laisser de vide. */
+@media (min-width: 1100px) { .deck-recap:not(.has-columns, .is-review) { display: block; columns: 2; column-gap: 20px; } .deck-recap:not(.has-columns, .is-review) > li { break-inside: avoid; margin-bottom: 8px; } }
 
 .deck-recap li { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto auto; align-items: center; gap: 14px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
 

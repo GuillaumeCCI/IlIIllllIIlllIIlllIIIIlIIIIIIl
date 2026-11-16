@@ -106,7 +106,7 @@
     '4.2': {
       eyebrow: 'Les motivations d’achat · Les Benali',
       title: 'Retour chez les Benali',
-      subtitle: 'Deuxième rendez-vous avec Lucas. Relevez les motivations de chacun, hiérarchisez leurs besoins, puis trouvez la question qui départage.',
+      subtitle: 'Les Benali, un couple, cherchent une maison avec jardin.\nAprès une première visite, Lucas, leur conseiller immobilier, fait le point avec eux.\nRelevez les motivations de chacun, hiérarchisez leurs besoins, puis trouvez la question qui départage.',
       welcome: { title: 'Le deuxième rendez-vous', rows: [
         ['users', 'Les Benali', 'Vous les avez rencontrés en M1.2.1 : ils cherchent une maison avec jardin, autour de 280 000 €.'],
         ['chat', 'Ce qui se passe', 'Après une première visite, Lucas, leur conseiller, fait le point avec eux.'],
