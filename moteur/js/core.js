@@ -487,6 +487,8 @@
    * seule la teinte de la page passe du crème au blanc. */
   function applyBackground(ex) {
     document.body.dataset.theme = ex?.theme || 'blue';
+    // Le fichier de l'exercice (« s3-3-1 »…) : une mise en page propre à un écran peut s'y accrocher.
+    document.body.dataset.exercise = ex?.file || '';
     const layers = [ex?.background, catalog.commonBackground].filter(Boolean).map(p => `url(${JSON.stringify(asset(p))})`);
     document.body.style.backgroundImage = layers.join(', ');
   }

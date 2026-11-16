@@ -967,3 +967,30 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 #main .deck-recap.has-columns .deck-review-expected::before { content: 'Attendu :'; color: var(--muted); font-size: .85rem; }
 @media (max-width: 1100px) { #main .deck-recap.has-columns { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 560px) { #main .deck-recap.has-columns .deck-review-expected { grid-column: 2 / 4; grid-row: 3; margin-left: 0; } #main .deck-recap.has-columns .deck-recap-n { grid-row: 1 / span 3; } }
+
+/* ── 3.1 et 4.1 · formulaire à côté de la carte du client ─────────────
+   La carte du client occupe toute la hauteur du formulaire, portrait plus
+   grand ; la situation est une phrase simple, sans encadré orangé ; le
+   compteur « Clients analysés » passe au-dessus du formulaire, à droite. */
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); column-gap: 18px; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page > .k-head { display: contents; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page .k-head-text { grid-column: 1; grid-row: 1; padding-right: 0; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page > .k-head > .k-head-aside { grid-column: 2; grid-row: 1; display: flex; flex-wrap: wrap; align-items: center; align-content: flex-start; justify-content: flex-end; gap: 12px 14px; margin: 0 0 18px; position: static !important; width: auto !important; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page .k-head-aside .k-count { order: 2; flex-basis: 100%; display: flex; justify-content: flex-end; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page > .fm-form { grid-column: 1 / -1; grid-row: 2; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-panel.is-side { align-items: stretch; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-scene { align-content: center; gap: 26px; padding: 34px 32px; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-scene .sc-info { align-items: flex-start; padding: 0; background: none; font-weight: 500; font-size: 1.08rem; line-height: 1.55; color: #2b3768; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-scene .sc-info .icon { margin-top: 4px; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) #main .fm-scene .client-card-box { margin: 0; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) #main .fm-scene .client-card { width: 100%; grid-template-columns: 1fr; justify-items: center; padding: 0 32px; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) #main .fm-scene .client-card-who { padding: 24px 0 0; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) #main .fm-scene .client-card-who img { width: auto; max-width: 100%; max-height: 220px; }
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) #main .fm-scene .client-card-said { padding: 18px 0 28px; }
+@media (max-width: 1000px) {
+  body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page { display: block; }
+  body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page > .k-head { display: flex; }
+  body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page .k-head-text { padding-right: 0; }
+  body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) .fm-page .k-head-aside .tour-replay { position: static; }
+}
+body:is([data-exercise="s3-3-1"], [data-exercise="s4-4-1"]) #main .fm-panel.is-side > .k-panel:not(.fm-scene) { display: flex; flex-direction: column; justify-content: center; }
