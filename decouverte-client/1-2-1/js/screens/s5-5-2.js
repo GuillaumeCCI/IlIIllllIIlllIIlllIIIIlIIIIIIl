@@ -197,7 +197,7 @@
         <p class="k-muted">Ce sont des exemples, pas des réponses uniques : toute réponse qui respecte la grille est valable.</p>
       </section>
       <section class="k-panel a5-review">
-        ${kit.result(yes, content.selfCheck.length, 'critères cochés « Oui » dans votre auto-évaluation')}
+        <p class="a4-review-head"><span class="k-label">Mon auto-évaluation</span><span class="a4-review-count"><b>${yes}</b> / ${content.selfCheck.length} critères cochés « Oui »</span></p>
         <ul class="a5-self-recap">${content.selfCheck.map((row, i) => `<li><span class="pos-level level-${ex.value(`self${i}`) === 'oui' ? '2' : '0'}">${ex.value(`self${i}`) === 'oui' ? 'Oui' : 'Non'}</span><span>${esc(row.text)}</span></li>`).join('')}</ul>
       </section>
       <section class="k-panel a5-deposit">
