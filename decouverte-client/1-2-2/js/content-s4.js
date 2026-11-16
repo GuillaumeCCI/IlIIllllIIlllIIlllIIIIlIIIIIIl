@@ -78,6 +78,7 @@
         { target: '.fm-actions', title: 'Phrase suivante', text: 'Huit phrases : le corrigé arrive après la dernière.' }
       ],
       caseNoun: 'Phrase',
+      reviewLayout: 'rows',
       pills: true,
       oneField: true,
       countLabel: 'phrases analysées',

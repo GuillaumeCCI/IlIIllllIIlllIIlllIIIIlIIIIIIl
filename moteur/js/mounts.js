@@ -1033,6 +1033,17 @@
           const said = [].concat(c.scene || []).find(b => b.quote);
           const MARK = { ok: '✓', part: '◐', miss: '○', warn: '!' };
           const row = f => {
+            if (f.type === 'choice') {
+              const accepted = [].concat(f.answer || []);
+              const ok = accepted.includes(val(i, f));
+              const yours = val(i, f) ? `<p class="fm-rv-pick ${accepted.length ? (ok ? 'is-ok' : 'is-ko') : ''}">${accepted.length ? `<span aria-hidden="true">${ok ? '✓' : '✗'}</span>` : ''}${esc(optionLabel(f, val(i, f)))}${accepted.length ? `<span class="sr-only">${ok ? ' : bonne réponse' : ' : à revoir'}</span>` : ''}</p>` : '<p class="result-answer-text is-empty"><em>Non renseigné.</em></p>';
+              const model = accepted.length ? `<p><strong>${esc(accepted.map(id => optionLabel(f, id)).join(' ou '))}</strong>${f.why ? `<br>${esc(f.why)}` : ''}</p>` : '';
+              return `<div class="fm-rv-row">
+                <p class="fm-rv-label">${esc(f.label)}</p>
+                <div class="fm-rv-you">${yours}</div>
+                <div class="fm-rv-model">${model}</div>
+              </div>`;
+            }
             const text = val(i, f);
             const b = blocOf(key, k(i, f));
             const bloc = b >= 0 && ouvert() ? ouvert().blocOf(key, b) : null;
