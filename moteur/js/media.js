@@ -91,7 +91,10 @@
         stream.getTracks().forEach(track => track.stop());
         if (version !== session || !$('#record-playback')) return;
         if (recordUrl) URL.revokeObjectURL(recordUrl);
-        recordUrl = URL.createObjectURL(new Blob(chunks, { type: active.mimeType || 'audio/webm' }));
+        const blob = new Blob(chunks, { type: active.mimeType || 'audio/webm' });
+        recordUrl = URL.createObjectURL(blob);
+        // L'écran peut garder l'enregistrement (options.onRecorded(blob)).
+        if (typeof options.onRecorded === 'function') { try { options.onRecorded(blob); } catch { /* sans effet sur la lecture */ } }
         $('#record-playback').src = recordUrl;
         $('#record-playback').hidden = false;
         $('#record-button').textContent = 'Refaire un essai oral';

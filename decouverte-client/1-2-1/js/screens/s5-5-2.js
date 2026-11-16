@@ -31,6 +31,42 @@
     const free = [0, 1, 2, 3].find(k => !stepDone(k));
     return free === undefined ? ORAL : free;
   };
+  /* L'ENREGISTREMENT, GARDÉ DANS LE NAVIGATEUR (IndexedDB), un par client :
+   * on le retrouve à l'étape de l'oral et dans « À déposer », même après un
+   * rechargement. Rien n'est envoyé : l'apprenant le télécharge et le dépose. */
+  const AUDIO_DB = 'decouverte-client-1-2-1-audio';
+  const recordings = {};   // client → { blob, url }
+  const extOf = type => (/ogg/.test(type) ? 'ogg' : /mp4|aac/.test(type) ? 'm4a' : 'webm');
+  const fileName = (f, blob) => `entretien-${f.name.toLowerCase().replace(/^(m\.|mme)\s*/, '').replace(/[^a-z]+/g, '-')}.${extOf(blob.type)}`;
+  function audioStore(mode, fn) {
+    return new Promise(resolve => {
+      if (!window.indexedDB) { resolve(null); return; }
+      const open = indexedDB.open(AUDIO_DB, 1);
+      open.onupgradeneeded = () => open.result.createObjectStore('audio');
+      open.onerror = () => resolve(null);
+      open.onsuccess = () => {
+        try {
+          const req = fn(open.result.transaction('audio', mode).objectStore('audio'));
+          req.onsuccess = () => resolve(req.result ?? null);
+          req.onerror = () => resolve(null);
+        } catch { resolve(null); }
+      };
+    });
+  }
+  function keep(id, blob) {
+    if (recordings[id]) URL.revokeObjectURL(recordings[id].url);
+    recordings[id] = { blob, url: URL.createObjectURL(blob) };
+  }
+  const saveRecording = (id, blob) => { keep(id, blob); audioStore('readwrite', st => st.put(blob, id)); };
+  let loaded = false;
+  function loadRecordings() {
+    if (loaded) return;
+    loaded = true;
+    Promise.all(fiches.map(x => audioStore('readonly', st => st.get(x.id)).then(blob => { if (blob) keep(x.id, blob); })))
+      .then(() => { if (Object.keys(recordings).length) ex.rebuild(); });
+  }
+  const recordingOf = f => (f && recordings[f.id]) || null;
+
   const go = k => { ex.setValue('at', k); ex.rebuild(); window.scrollTo({ top: 0, behavior: 'instant' }); };
 
   // Une réplique : le geste entre crochets à part, les mots du client ensuite.
@@ -137,9 +173,9 @@
         <ol class="a5-script">${[1, 2, 3].map(k => `<li><span class="a5-script-client">${esc(f.name)} : « ${esc(wordsOf(f.lines[k - 1]))} »</span><span class="a5-script-you">« ${esc(answer(k))} »</span></li>`).join('')}</ol>
         <div class="oral-practice">
           ${kit.act('a5-record', `${icon('microphone', { size: 18 })}<span>Commencer l’enregistrement</span>`, 'secondary', 'id="record-button"')}
-          <p class="asset-note" id="record-status">L’enregistrement reste dans ce navigateur : téléchargez-le avant de quitter la page.</p>
-          <audio id="record-playback" controls hidden aria-label="Réécouter votre enregistrement"></audio>
-          <a id="record-download" class="button secondary small" hidden>${icon('arrowDown', { size: 16 })}<span>Télécharger l’enregistrement</span></a>
+          <p class="asset-note" id="record-status">${recordingOf(f) ? 'Votre dernier enregistrement est prêt : réécoutez-le, ou recommencez.' : 'Votre enregistrement reste dans ce navigateur : vous le retrouverez au moment du dépôt.'}</p>
+          <audio id="record-playback" controls ${recordingOf(f) ? `src="${recordingOf(f).url}"` : 'hidden'} aria-label="Réécouter votre enregistrement"></audio>
+          <a id="record-download" class="button secondary small" ${recordingOf(f) ? `href="${recordingOf(f).url}" download="${esc(fileName(f, recordingOf(f).blob))}"` : 'hidden'}>${icon('arrowDown', { size: 16 })}<span>Télécharger l’enregistrement</span></a>
         </div>
       </section>
       <section class="k-panel a5-self">
@@ -207,8 +243,10 @@
         </div>
         <ul class="a5-dep-list">
           <li><span class="a5-dep-n">1</span><span><strong>Vos trois réponses</strong>, en texte : copiez-les avec le bouton, puis collez-les dans votre dépôt.</span></li>
-          <li><span class="a5-dep-n">2</span><span><strong>Votre enregistrement</strong>, le fichier téléchargé à l’étape de l’oral.</span></li>
+          <li><span class="a5-dep-n">2</span><span><strong>Votre enregistrement</strong> : ${recordingOf(f) ? 'téléchargez-le ici, puis joignez le fichier à votre dépôt.' : 'vous n’en avez pas encore fait. Revenez à l’étape de l’oral pour vous enregistrer.'}</span></li>
         </ul>
+        ${recordingOf(f) ? `<div class="a5-dep-audio"><audio controls src="${recordingOf(f).url}" aria-label="Votre enregistrement"></audio>
+          <a class="button primary small" href="${recordingOf(f).url}" download="${esc(fileName(f, recordingOf(f).blob))}">${icon('arrowDown', { size: 16 })}<span>Télécharger l’enregistrement</span></a></div>` : ''}
         <p class="a5-dep-after">Votre tuteur (ou un pair) vous fera un retour avec la même grille.</p>
         <div class="a5-dep-cards">${[1, 2, 3].map(k => `<article class="a5-dep-card">
           <p class="a5-dep-moment"><span class="a4-step-n">${k}</span>${esc(MOMENTS[k - 1])}</p>
@@ -269,7 +307,15 @@
     },
     'a5-go': control => { media.stopAll(); go(Number(control.dataset.index)); },
     'a5-prev': () => { media.stopAll(); go(Math.max(0, at() - 1)); },
-    'a5-record': () => media.toggleRecording({ max: content.oral.max, status: 'Réécoutez-vous, puis téléchargez l’enregistrement pour le déposer. Il sera effacé en quittant la page.' }),
+    'a5-record': () => {
+      const f = fiche();
+      media.toggleRecording({ max: content.oral.max, status: 'Enregistrement prêt : réécoutez-vous. Vous le retrouverez aussi au moment du dépôt.',
+        onRecorded: blob => {
+          saveRecording(f.id, blob);
+          const link = document.querySelector('#record-download');
+          if (link) link.download = fileName(f, blob);
+        } });
+    },
     'a5-copy': () => {
       const text = allText(fiche());
       const done = () => core.toast('Vos réponses sont copiées : collez-les dans votre dépôt.');
@@ -291,6 +337,8 @@
     { later: true, target: '.a5-oral .oral-practice', title: 'L’enregistrement', text: 'Lisez vos trois réponses à voix haute, réécoutez-vous, puis téléchargez le fichier pour le déposer.' },
     { later: true, target: '.a5-self', title: 'Votre auto-évaluation', text: 'Oui ou non pour chaque critère, avant de voir le corrigé. Votre tuteur utilisera la même grille.' }
   ]);
+
+  loadRecordings();
 
   ex.mount('s5-5.2', { screen, validate, feedback, intercept, compactFeedback: true });
 })();

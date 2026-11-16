@@ -772,3 +772,7 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a5-dep-client { margin: 0; color: var(--muted); font-size: .82rem; line-height: 1.45; }
 .a5-dep-you { margin: 0; color: var(--navy); font-size: .93rem; font-weight: 600; line-height: 1.5; }
 @media (max-width: 900px) { .a5-dep-cards { grid-template-columns: 1fr; } }
+
+/* A5, « À déposer » : le lecteur de l'enregistrement et son téléchargement. */
+.a5-dep-audio { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 4px 0 10px 32px; }
+.a5-dep-audio audio { height: 40px; max-width: 100%; }
