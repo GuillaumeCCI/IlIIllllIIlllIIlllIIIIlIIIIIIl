@@ -918,3 +918,31 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 #main .k-subtitle { white-space: pre-line; max-width: min(100%, 900px); line-height: 1.45; }
 .dk-page .k-head-text { padding-right: 190px; }
 @media (max-width: 760px) { .dk-page .k-head-text { padding-right: 0; } }
+
+/* ── 2.2 · Les étages de l'entonnoir : un vrai entonnoir ────────────────
+   La carte de la question à gauche, l'entonnoir à droite : quatre bandes
+   empilées, de plus en plus étroites et de plus en plus foncées vers le bas.
+   (Seul 2.2 a une zone « 4 » : le sélecteur ne touche pas 2.1.) */
+.dk-board:has(.dk-zone[data-zone="4"]) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "card funnel" "ask funnel"; align-items: center; gap: 18px 48px; width: min(100%, 1180px); margin: 0 auto; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-card { grid-area: card; width: 100%; align-self: end; padding-left: 44px; padding-right: 44px; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-pos { margin-left: 0; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-question { grid-area: ask; margin-top: 4px; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-zones { grid-area: funnel; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; filter: drop-shadow(0 10px 18px rgb(20 40 100 / 14%)); }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-zone { --w: 100%; --bg: #e7eefc; --fg: #16205e; --x: 18%; width: var(--w); min-height: 84px; justify-content: flex-start; gap: 14px; padding: 10px 30px 10px calc(var(--x) + 40px - (100% - var(--w)) / 2); border: 0; border-radius: 0; background: var(--bg); color: var(--fg); text-align: center; clip-path: polygon(0 0, 100% 0, calc(100% - 26px) 100%, 26px 100%); box-shadow: none; transition: transform .12s, background .12s; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-zone[data-zone="2"] { --w: 88%; --bg: #c9d8f8; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-zone[data-zone="3"] { --w: 76%; --bg: #8fb0ef; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-zone[data-zone="4"] { --w: 64%; --bg: #3d6bd9; --fg: #fff; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-zone:hover, .dk-board:has(.dk-zone[data-zone="4"]) .dk-zone.is-over { transform: scale(1.03); box-shadow: none; border: 0; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-zone-mark { width: 38px; height: 38px; background: rgb(255 255 255 / 70%) !important; color: #1d3f9a !important; font-size: 1.1rem; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-zone-words { flex: 0 1 auto; text-align: left; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-zone strong { font-size: 1.08rem; font-weight: 700; color: inherit; }
+.dk-board:has(.dk-zone[data-zone="4"]) .dk-zone small { font-size: .88rem; color: inherit; opacity: .8; }
+#main .dk-board:has(.dk-zone[data-zone="4"]) .dk-zone.is-chosen { --bg: #16205e; --fg: #fff; border: 0; background: var(--bg); color: var(--fg); box-shadow: none; }
+#main .dk-board:has(.dk-zone[data-zone="4"]) .dk-zone.is-chosen .dk-zone-mark { background: #fff !important; color: #16205e !important; }
+@media (max-width: 900px) {
+  .dk-board:has(.dk-zone[data-zone="4"]) { grid-template-columns: minmax(0, 1fr); grid-template-areas: "card" "ask" "funnel"; }
+  .dk-board:has(.dk-zone[data-zone="4"]) .dk-zone { --w: 100%; --x: 15%; padding-right: 20px; padding-left: calc(var(--x) + 26px - (100% - var(--w)) / 2); }
+  .dk-board:has(.dk-zone[data-zone="4"]) .dk-zone[data-zone="2"] { --w: 90%; }
+  .dk-board:has(.dk-zone[data-zone="4"]) .dk-zone[data-zone="3"] { --w: 80%; }
+  .dk-board:has(.dk-zone[data-zone="4"]) .dk-zone[data-zone="4"] { --w: 70%; }
+}

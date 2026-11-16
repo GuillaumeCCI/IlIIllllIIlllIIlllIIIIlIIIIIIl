@@ -70,7 +70,7 @@
       quoted: true,
       zones: ETAGES,
       cards: [
-        { text: 'Comment dormez-vous en ce moment ?', answer: '1', why: 'Une question large pour ouvrir : on part de la situation générale.' },
+        { text: 'Parlez-moi de vos nuits en ce moment : comment ça se passe ?', answer: '1', why: 'Une question large pour ouvrir : on part de la situation générale.' },
         { text: 'Qu’est-ce qui vous réveille, plus précisément ?', answer: '2', why: 'On creuse le problème avec une question ouverte ciblée.' },
         { text: 'La douleur arrive plutôt au réveil ou en cours de nuit ?', answer: '3', why: 'Une alternative pour préciser un détail.' },
         { text: 'Et pour votre épouse, qu’est-ce qui compte dans un matelas ?', answer: '2', why: 'Encore une attente à explorer, ouverte : celle de son épouse.' },

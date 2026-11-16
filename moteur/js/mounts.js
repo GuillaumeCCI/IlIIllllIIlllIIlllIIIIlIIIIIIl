@@ -249,7 +249,8 @@
     const noun = content.cardLabel || 'Affirmation';
     const pick = () => (zones.some(z => z.id === ex().value('pick')) ? ex().value('pick') : '');
     const label = i => `${noun} ${content.letters ? `${LETTERS[i]} · ` : ''}${i + 1} / ${total}`;
-    const text = card => (content.quoted ? `« ${esc(card.text)} »` : esc(card.text));
+    // Espaces insécables avant ? ! : ; et dans les guillemets : jamais un « » » ou un « ? » seul en début de ligne.
+    const text = card => (content.quoted ? `« ${esc(card.text).replace(/ ([?!:;])/g, ' $1')} »` : esc(card.text));
 
     function confirm(zone) {
       kit().deckPlace(total, zone);
