@@ -144,3 +144,24 @@ R.mauvaises['s5-5.1'] = [
 ];
 R.motsCles['s5-5.1'] = rw('fournisseur', 'améliorer', 'pièce manque');
 R.fautes['s5-5.1'] = [rw('coment travailler vous aujourd hui avec votre fournisseur ?', 'qu esce qui fonctione bien avec lui et qu aimeriez vous amelioré ?', 'que se passe t il a l atelier quand une piece manque ?')];
+
+/* S5 5.2 · A5 : l'analyse (besoin implicite, prioritaire), champs préfixés par le client. */
+const an = (cas, id, imp, prio) => ({ cas, [`${id}_implicite`]: imp, [`${id}_prio`]: prio });
+R.justes['s5-5.2'] = [
+  an(0, 'literie', 'Ne plus être réveillé par sa femme qui bouge, et bien dormir pour être en sécurité au volant.', 'Des nuits complètes, sans douleur au dos.'),
+  an(0, 'literie', 'Il est chauffeur-livreur : mal dormi, il n’est pas en sécurité sur la route. Et la chambre est petite.', 'Soulager son dos et retrouver le sommeil.'),
+  an(0, 'literie', "Sa femme le réveille la nuit ; il faut une taille qui rentre dans la chambre.", "Dormir sans se réveiller à 4 h avec le dos bloqué."),
+  an(0, 'literie', 'Indépendance de couchage, et sécurité au travail sur la route.', 'Ses nuits et son dos.'),
+  an(1, 'pieces', 'Ne pas perdre ses clients fidèles, et ne pas trahir son fournisseur ami : changer progressivement.', 'La bonne pièce du premier coup.'),
+  an(1, 'pieces', 'Moins d’erreurs de référence, et garder sa réputation auprès des clients du quartier.', 'Des livraisons fiables, sans pièce manquante.'),
+  an(1, 'pieces', "Elle ne veut pas tout changer d'un coup : son fournisseur est un ami de son père.", "La fiabilité : la bonne pièce, pour ne pas bloquer un pont."),
+  an(2, 'mandat', 'Coordonner la vente avec l’achat de l’appartement près de sa sœur, et filtrer les visites.', 'Un calendrier coordonné : trouver l’appartement avant de vendre.'),
+  an(2, 'mandat', 'Associer ses enfants (l’héritage) et limiter les visites d’inconnus qui vont juger la maison.', 'Avoir trouvé son appartement avant de partir.'),
+  an(2, 'mandat', "Elle a peur des visites à répétition ; ses enfants doivent être d'accord.", "Organiser la vente et l'achat en même temps.")
+];
+R.mauvaises['s5-5.2'] = [
+  an(0, 'literie', 'Je vous propose notre matelas.', 'Le prix.'),
+  an(1, 'pieces', 'Nous avons un catalogue complet.', 'Le prix le plus bas.'),
+  an(2, 'mandat', 'Je vous propose une estimation.', 'Vendre cher.')
+];
+R.fautes['s5-5.2'] = [an(0, 'literie', 'sa femme le reveil la nuit, et il doit bien dormir pour sa securiter au volan', 'des nuit complete sans douleur au do')];

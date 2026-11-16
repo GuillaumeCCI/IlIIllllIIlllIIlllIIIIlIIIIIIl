@@ -67,7 +67,19 @@ const CUSTOM = {
     e.setValue('self0', '2');
   },
   // A5 : une fiche, trois réponses, la grille Oui / Non.
+  // A5 (1-2-2) : un client, son guide, quatre questions posées, l'analyse, la grille.
   's5-5-2': (e, c) => {
+    if (c.floors) {
+      const id = c.fiches[0].id;
+      e.setValue('fiche', id);
+      c.floors.forEach(fl => e.setValue(`${id}_${fl.id}`, 'Comment ça se passe ?'));
+      for (let i = 0; i < c.minAsked; i++) { e.setValue(`${id}_q${i}`, 'Comment ?'); e.setValue(`${id}_ask${i}`, true); }
+      e.setValue(`${id}_implicite`, 'Sa femme le réveille.');
+      e.setValue(`${id}_motivation`, c.fiches[0].motivation);
+      e.setValue(`${id}_prio`, 'Des nuits complètes.');
+      c.selfCheck.forEach((_, i) => e.setValue(`${id}_self${i}`, 'oui'));
+      return;
+    }
     e.setValue('fiche', c.fiches[1].id);
     [1, 2, 3].forEach(k => e.setValue(`r${k}`, 'Une réponse.'));
     c.selfCheck.forEach((_, i) => e.setValue(`self${i}`, 'oui'));

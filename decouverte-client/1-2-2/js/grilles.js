@@ -171,6 +171,33 @@
     pieges: [PIEGE_YANIS, PIEGE_ORIENTEE, PIEGE_FERMEE] });
   const A4_REECRITURES = [reecrire('Question 1 · le fournisseur', 'rw0'), reecrire('Question 3 · la satisfaction', 'rw1'), reecrire('Question 4 · les ruptures', 'rw2')];
 
+  /* ── A5 · Votre guide, votre découverte : l'analyse, par client ────── */
+  const analyse = (id, implicites, prio) => [
+    { titre: 'Le besoin implicite', champs: [`${id}_implicite`],
+      criteres: implicites.map(([nom, mots]) => ({ nom, mots, points: 2, conseil: `Une piste : ${nom.toLowerCase()}.` })),
+      phrases: { points: 0 }, pieges: [PIEGE_OFFRE] },
+    { titre: 'Le besoin prioritaire', champs: [`${id}_prio`],
+      criteres: [{ nom: 'Le vrai prioritaire', mots: prio, points: 4, conseil: 'Ce qui compte le plus pour le client, avec ses mots.' }],
+      phrases: { points: 0 }, pieges: [PIEGE_OFFRE] }
+  ];
+  const A5_ANALYSE = [
+    analyse('literie', [
+      ['Ne plus être réveillé par son épouse', ['épouse', 'femme', 'réveille', 'réveillé', 'bouge', 'chaud', 'à deux', 'indépendance', 'couchage', 'conjointe']],
+      ['Dormir pour être en sécurité au volant', ['volant', 'route', 'conduire', 'conduite', 'sécurité', 'chauffeur', 'livreur', 'livraisons', '6 h', 'travail', 'accident']],
+      ['Une taille compatible avec la chambre', ['chambre', 'petite', 'taille', '160', '140', 'place', 'dimension*']]
+    ], ['nuits', 'nuit', 'dormir', 'sommeil', 'dos', 'douleur*', 'soulager', 'mal au dos', 'complètes', 'réveil*', 'reposé']),
+    analyse('pieces', [
+      ['Garder ses clients fidèles', ['clients', 'fidèles', 'fidélité', 'image', 'réputation', 'perdre', 'quartier', 'voiture prêtée', 'prêté']],
+      ['Ne pas trahir son fournisseur, changer progressivement', ['fournisseur', 'ami', 'père', 'trahir', 'progressi*', 'petit à petit', 'pas tout changer', 'd’un coup', 'douze ans', 'relation', 'gêne']],
+      ['Moins d’erreurs de référence', ['erreur', 'erreurs', 'erronée', 'erronées', 'référence', 'références', 'demi-heure', 'temps perdu']]
+    ], ['bonne pièce', 'pièce', 'pièces', 'premier coup', 'fiabilité', 'fiable', 'livraison', 'livraisons', 'sans erreur', 'pont', 'immobilis*']),
+    analyse('mandat', [
+      ['Coordonner la vente et l’achat', ['coordonner', 'calendrier', 'appartement', 'avant de partir', 'trouver', 'sœur', 'soeur', 'en même temps', 'hiver', 'fils']],
+      ['Des visites filtrées', ['visites', 'visite', 'inconnus', 'juger', 'filtrer', 'filtrées', 'peur', 'sélection*']],
+      ['Associer ses enfants', ['enfants', 'héritage', 'd’accord', 'famille', 'associer', 'fils']]
+    ], ['calendrier', 'coordonn*', 'appartement', 'avant de vendre', 'avant de partir', 'trouver', 'trouvé', 'sœur', 'soeur', 'en même temps', 'organiser', 'ordre'])
+  ];
+
   root.ATELIER_GRILLES = {
     // S3 3.1 · A2 : l'hypothèse et la question, pour chacun des cinq clients.
     's3-3.1': { integre: true, blocs: A2 },
@@ -180,6 +207,8 @@
     's4-4.2': { integre: true, blocs: A3_BENALI },
     // S5 5.1 · A4 : les trois questions de Yanis réécrites.
     's5-5.1': { integre: true, blocs: A4_REECRITURES },
+    // S5 5.2 · A5 : l'analyse ; la grille dépend du client (0 literie, 1 garage, 2 mandat).
+    's5-5.2': { integre: true, cas: 3, parCas: index => ({ blocs: A5_ANALYSE[index] || A5_ANALYSE[0] }) },
     // @@GRILLES@@
   };
 })(typeof window !== 'undefined' ? window : globalThis);

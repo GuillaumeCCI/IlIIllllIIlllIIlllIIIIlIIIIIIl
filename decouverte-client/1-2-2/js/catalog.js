@@ -65,7 +65,8 @@ window.ATELIER_CATALOG = {
       // Fiche M1.2.2 : A4 (les guides de Yanis et Clara) et A5 (votre guide, votre découverte).
       sourced: true,
       exercises: [
-        { id: '5.1', file: 's5-5-1', label: 'Le guide qui fait parler', theme: 'blue' }
+        { id: '5.1', file: 's5-5-1', label: 'Le guide qui fait parler', theme: 'blue' },
+        { id: '5.2', file: 's5-5-2', label: 'Votre guide, votre découverte', theme: 'blue' }
       ]
     },
     {

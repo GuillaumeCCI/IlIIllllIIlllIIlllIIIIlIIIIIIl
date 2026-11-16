@@ -837,3 +837,35 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a4-rewrite-model span { display: block; color: #4c5f86; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 #main .a4-exchange-reply > .a4-guide { display: block; }
 .a4-guide .a4-guide-list + .a4-guide-group { margin-top: 16px; }
+
+/* 1-2-2, A5 : le guide, le client virtuel, l'analyse. */
+.d5-panel { padding: 28px 32px; }
+.d5-intro { margin: 10px 0 16px; color: var(--muted); }
+.d5-floors, .d5-topics { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.d5-floor-title { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--navy); font-weight: 800; }
+.d5-floor-n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-size: .85rem; }
+.d5-floor .fm-sub { margin: 2px 0 6px 36px; }
+.d5-floor .field { margin-left: 36px; }
+.d5-topic { padding: 12px 16px; border-radius: 14px; background: #f7f9fe; }
+.d5-topic-label { margin: 0 0 8px; color: var(--navy); font-weight: 800; }
+.d5-topic-ask { display: flex; align-items: center; gap: 10px; }
+.d5-topic-ask .field { flex: 1; margin: 0; }
+.d5-topic-you { margin: 0 0 8px; color: var(--accent); }
+.d5-topic-you span, .d5-topic-answer p span { display: block; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.d5-topic-answer { display: flex; align-items: flex-end; gap: 12px; padding: 10px 14px; border-radius: 14px; background: #fff; box-shadow: 0 8px 22px rgb(15 35 78 / 7%); }
+.d5-topic-answer img { width: 64px; height: auto; flex-shrink: 0; }
+.d5-topic-answer p { margin: 0; color: var(--navy); font-weight: 700; line-height: 1.45; }
+.d5-topic.is-asked { background: #eef6f1; }
+.d5-said { margin: 14px 0 18px; padding: 10px 14px; border-radius: 12px; background: #f7f9fe; }
+.d5-said summary { color: var(--accent); font-weight: 700; cursor: var(--cursor-hand, pointer); }
+.d5-said ul { margin: 8px 0 0; padding-left: 18px; color: #2b3866; font-size: .92rem; line-height: 1.5; }
+.d5-said li span { color: var(--muted); font-weight: 700; }
+.d5-motivs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.d5-hier { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.d5-hier label { display: grid; gap: 4px; color: var(--navy); font-weight: 800; font-size: .88rem; }
+.d5-emerge { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 8px 16px; margin: 12px 0 18px; }
+.d5-emerge dt { color: var(--navy); font-weight: 800; }
+.d5-emerge dd { margin: 0; color: #2b3866; }
+.d5-guide-label { margin-top: 6px; }
+.d5-guide-model { margin: 4px 0 12px; padding: 12px 16px; border-radius: 14px; background: #f3f9f5; color: #24533b; line-height: 1.6; }
+@media (max-width: 900px) { .d5-hier, .d5-emerge { grid-template-columns: 1fr; } }

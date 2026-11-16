@@ -16,7 +16,7 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 | s2 · Poser la bonne question | A1 | 2.1 Quel type de question ? (deck, 10 cartes) · 2.2 Les étages de l'entonnoir (deck, 6 cartes) | ✅ fait |
 | s3 · Le besoin réel | A2 | 3.1 Du besoin exprimé au besoin réel (5 clients, rédigé + score) | ✅ fait |
 | s4 · Les motivations d'achat | A3 | 4.1 Les mots qui trahissent (8 phrases) · 4.2 Retour chez les Benali | ✅ fait |
-| s5 · Préparer et mener la découverte | A4, A5 | 5.1 Le guide qui fait parler (Yanis / Clara) · 5.2 Votre guide, votre découverte (client virtuel) | à faire |
+| s5 · Préparer et mener la découverte | A4, A5 | 5.1 Le guide qui fait parler (Yanis / Clara) · 5.2 Votre guide, votre découverte (client virtuel) | ✅ construit, tests OK · rendu à vérifier en capture |
 | s9 · Faire le point | grille « Fin » + « Ma progression » | 9.1 Mon point d'arrivée | ✅ fait |
 | — | synthèse optionnelle (3 options) | non prévue dans cette passe (comme en 1-2-1) | — |
 
@@ -27,3 +27,10 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 - Étape 2 : A2 (s3-3.1, mountForm, 10 grilles hypothèse/question, banque de réponses : justes 9,5-10, mauvaises ≤ 1). Prochaine : A3 (s4).
 - Étape 3 : A3 (4.1 motivation SONCASE + mot indice noté ; 4.2 Benali : motivations notées, hiérarchie en choix, question notée). Trame M1.2 écrite dans decouverte-client/TRAME-M1-2.md. Prochaine : A4 (s5-5.1, écran propre à adapter de 1-2-1 s5-5-1).
 - Étape 4 : A4 (s5-5.1, écran adapté de 1-2-1 : guides Yanis/Clara notés avec tolérance, meilleur guide, 3 réécritures notées). Prochaine : A5 (s5-5.2 : choix du client, guide en 5 étages, client virtuel thème par thème, analyse et hiérarchie, grille Oui/Non, dépôt).
+- Étape 5 : A5 (s5-5-2, écran propre : choix du client en cartes, guide en 5 étages, client virtuel thème par thème (question écrite puis réponse révélée, 4 minimum), analyse (implicite et prioritaire notés par client, motivation SONCASE), grille Oui/Non, corrigé + dépôt). Réponses rangées par client (<client>_<champ>). Tous les tests passent (41 + 17 + 14).
+
+## Reste à faire
+
+- Vérifier en capture les écrans d’A5 (guide, découverte, analyse, corrigé) et d’A4 (classement, corrigé), avec les enseignements du 1-2-1 (aéré, pas d’encadrés empilés, libellés clairs).
+- Mettre à jour decouverte-client/TRAME-M1-2.md (A3, A4, A5 du 1-2-2 sont faits).
+- Synthèse optionnelle de 1-2-1 et 1-2-2 : non commencée.

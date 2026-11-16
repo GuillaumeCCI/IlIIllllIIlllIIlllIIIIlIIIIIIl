@@ -87,6 +87,15 @@ window.ATELIER_BRIEFINGS = {
     criteria: ['Des notes proches du corrigé', 'Le meilleur guide', 'Réécriture qui ouvre']
   },
 
+  's5-5.2': {
+    lede: { key: 'Votre guide,', rest: 'votre découverte.' },
+    mission: 'Choisissez un client, celui qui ressemble le plus à votre futur métier. Préparez votre guide de questions, menez la découverte avec lui, puis analysez ce que vous avez découvert. Vous déposez ensuite votre guide et votre analyse pour le retour de votre tuteur.',
+    method: 'Cinq étapes : le client, le guide, la découverte, l’analyse, la grille.',
+    situation: 'M. Garnier au magasin de literie, Mme Lefort dans son garage, ou Mme Duval qui vend la maison familiale. Le client répond à vos questions, thème par thème : vous ne découvrez sa réponse qu’après avoir posé votre question.',
+    task: 'Un guide en cinq étages (situation, problèmes et enjeux, précisions, motivations, validation) ; au moins quatre questions posées ; un besoin implicite, la motivation dominante, une hiérarchie provisoire. Aucun produit proposé.',
+    criteria: ['Un guide en entonnoir', 'Une découverte réelle', 'Une hiérarchie appuyée sur les mots du client']
+  },
+
   /* @@SERIES@@ */
 
   /* ══ SÉRIE 9 · FAIRE LE POINT ════════════════════════════════════════ */

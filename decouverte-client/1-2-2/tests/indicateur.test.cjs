@@ -44,7 +44,7 @@ function modeles(key) {
 function modelesParCas(key) {
   const c = contentOf(key);
   if (!c.fiches) return [];
-  return c.fiches.map((fiche, cas) => Object.assign({ cas }, Object.fromEntries(fiche.models.map((m, i) => [`r${i + 1}`, m]))));
+  return c.fiches.map((fiche, cas) => Object.assign({ cas }, fiche.modelValues || Object.fromEntries(fiche.models.map((m, i) => [`r${i + 1}`, m]))));
 }
 
 let passed = 0;
@@ -68,7 +68,7 @@ test('chaque grille est intégrée à son corrigé et a ses réponses de test', 
 
 test('chaque grille lit des champs que son exercice demande', () => {
   for (const key of Object.keys(G)) {
-    const fields = Object.keys(modeles(key));
+    const fields = G[key].parCas && modelesParCas(key).length ? modelesParCas(key).flatMap(Object.keys) : Object.keys(modeles(key));
     for (const champ of champs(key)) assert.ok(fields.includes(champ), `${key} : champ ${champ} inconnu de l’exercice`);
   }
 });
