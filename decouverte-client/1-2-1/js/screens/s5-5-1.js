@@ -188,8 +188,7 @@
         }).join('')}
       </ul>
       <p class="a4-review-why">${esc(x.why)}</p>
-    </article>`).join('')}</div>
-    <p class="a4-review-legend">${[0, 1, 2].map(g => { const v = VERDICT(g); return `<span>${verdictMark(v)}${v.text.charAt(0).toUpperCase() + v.text.slice(1).replace(', accepté', ' : accepté')}</span>`; }).join('')}</p>`;
+    </article>`).join('')}</div>`;
   }
 
   /* La justification : la réponse (mots repérés surlignés) et son score,
@@ -199,7 +198,10 @@
     const text = ex.value('why');
     const scored = ouvert && ouvert.result('s5-5.1');
     const bloc = ouvert && ouvert.blocOf('s5-5.1', 0);
-    const chips = bloc ? `<ul class="a4-expect">${bloc.lines.map(item => {
+    const wanted = bloc ? bloc.lines.filter(l => l.kind !== 'warn') : [];
+    const found = wanted.filter(l => l.kind === 'ok').length;
+    const chips = bloc ? `<p class="a4-expect-title">Ce qu’une bonne justification contient <span>· ${found} sur ${wanted.length} dans la vôtre</span></p>
+      <p class="a4-expect-help"><b>✓</b> présent dans votre réponse · <b>○</b> manquant, survolez-le pour un conseil</p><ul class="a4-expect">${bloc.lines.map(item => {
       const tip = item.kind === 'warn' ? `Repéré : ${(item.found || []).map(w => `« ${w} »`).join(', ')}. ${item.conseil || ''}` : item.kind === 'ok' ? '' : (item.conseil || '');
       return `<li class="is-${item.kind}" ${tip ? `tabindex="0" data-tip="${esc(tip)}"` : ''}><span aria-hidden="true">${MARK[item.kind] || ''}</span>${esc(item.nom)}</li>`;
     }).join('')}</ul>` : '';
@@ -220,7 +222,7 @@
   function review() {
     return `${clientBlock()}
       <section class="k-panel a4-result">
-        <p class="a4-review-head"><span class="k-label">Vos notes et les notes attendues</span><span class="a4-review-count"><b>${close()}</b> / ${sellers.length * nC} notes justes, à un point près</span></p>
+        <div class="a4-review-head"><p class="a4-review-title"><span class="k-label">Vos notes et les notes attendues</span><span class="a4-review-count"><b>${close()}</b> / ${sellers.length * nC} notes justes, à un point près</span></p><p class="a4-review-legend">${[0, 1, 2].map(g => { const v = VERDICT(g); return `<span>${verdictMark(v)}${v.text.charAt(0).toUpperCase() + v.text.slice(1).replace(', accepté', ' : accepté')}</span>`; }).join('')}</p></div>
         ${reviewCards()}
       </section>
       <section class="k-panel a4-result">
