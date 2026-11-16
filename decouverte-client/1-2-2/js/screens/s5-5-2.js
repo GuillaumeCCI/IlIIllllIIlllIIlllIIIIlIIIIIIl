@@ -100,23 +100,34 @@
   }
 
   /* ── 2 · La découverte, avec le client virtuel ──────────────────────── */
+  /* La découverte en conversation : à gauche le fil (vos questions, ses
+   * réponses), à droite le thème à explorer et votre question, puis
+   * « Découvrir sa réponse ». */
+  let topicPick = null;
   function discovery() {
     const f = fiche();
     const done = asked(f);
+    const open = f.topics.map((_, i) => i).filter(i => ex.value(`${f.id}_ask${i}`) !== true);
+    const cur = open.includes(topicPick) ? topicPick : open[0];
+    const thread = done.length ? done.map(i => `<li class="d5-msg is-you"><p><span>Vous · ${esc(f.topics[i].label)}</span>« ${esc(val(`q${i}`))} »</p></li>
+        <li class="d5-msg is-client"><img src="${portrait(f.portrait)}" alt="" aria-hidden="true"><p><span>${esc(f.name)}</span>« ${esc(f.topics[i].answer)} »</p></li>`).join('')
+      : `<li class="d5-thread-empty">Posez votre première question : la réponse de ${esc(f.name)} s’affichera ici.</li>`;
+    const ok = done.length >= content.minAsked;
     return `<section class="k-panel d5-panel">
         ${head(f)}
-        <p class="d5-intro">Choisissez un thème, écrivez la question que vous posez, puis découvrez la réponse de ${esc(f.name)}. Au moins ${content.minAsked} questions. <strong>${done.length} posée${done.length > 1 ? 's' : ''}.</strong></p>
-        <ol class="d5-topics">${f.topics.map((t, i) => {
-          const isAsked = ex.value(`${f.id}_ask${i}`) === true;
-          return `<li class="d5-topic ${isAsked ? 'is-asked' : ''}">
-            <p class="d5-topic-label">${esc(t.label)}</p>
-            ${isAsked
-              ? `<p class="d5-topic-you"><span>Vous</span> « ${esc(val(`q${i}`))} »</p>
-                 <div class="d5-topic-answer"><img src="${portrait(f.portrait)}" alt="" aria-hidden="true"><p><span>${esc(f.name)}</span> « ${esc(t.answer)} »</p></div>`
-              : `<div class="d5-topic-ask">${ex.field(K(`q${i}`), `Votre question sur : ${t.label}`, { placeholder: 'Votre question…', max: 300, rows: 1, hideLabel: true, type: 'input' })}
-                 ${kit.act('d5-ask', `${icon('chat', { size: 16 })}<span>Poser la question</span>`, 'secondary small', `data-i="${i}"`)}</div>`}
-          </li>`;
-        }).join('')}</ol>
+        <div class="d5-chat">
+          <div class="d5-chat-thread">
+            <p class="d5-chat-count ${ok ? 'is-ok' : ''}"><b>${done.length}</b> question${done.length > 1 ? 's' : ''} posée${done.length > 1 ? 's' : ''} · au moins ${content.minAsked}</p>
+            <ol class="d5-thread">${thread}</ol>
+          </div>
+          <div class="d5-chat-ask">${cur === undefined ? `<p class="d5-chat-done">Vous avez exploré tous les thèmes. Passez à l’analyse.</p>` : `
+            <p class="fm-label">1 · Choisissez un thème</p>
+            <div class="d5-topic-chips" role="radiogroup" aria-label="Les thèmes">${open.map(i => `<button type="button" class="d5-topic-chip ${i === cur ? 'is-on' : ''}" role="radio" aria-checked="${i === cur}" data-act="d5-topic" data-i="${i}">${esc(f.topics[i].label)}</button>`).join('')}</div>
+            <p class="fm-label">2 · Écrivez votre question</p>
+            ${ex.field(K(`q${cur}`), `Votre question sur : ${f.topics[cur].label}`, { placeholder: 'Votre question…', max: 300, rows: 3, hideLabel: true })}
+            <div class="d5-chat-send">${kit.act('d5-ask', `${icon('chat', { size: 16 })}<span>Découvrir sa réponse</span>`, 'primary', `data-i="${cur}"`)}</div>`}
+          </div>
+        </div>
       </section>
       ${core.errorsBox()}
       ${kit.bar({ left: kit.back('d5-prev', 'Revenir à mon guide'), right: kit.submit('Analyser ma découverte') })}`;
@@ -277,6 +288,7 @@
         card.setAttribute('aria-checked', String(on));
       });
     },
+    'd5-topic': control => { topicPick = Number(control.dataset.i); ex.rebuild(); },
     'd5-ask': control => {
       const i = Number(control.dataset.i);
       if (!kit.filled(val(`q${i}`))) { core.toast('Écrivez d’abord votre question.'); document.querySelector(`[data-field="${K(`q${i}`)}"]`)?.focus(); return; }

@@ -1149,3 +1149,29 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 #main .d5-floors.is-one { list-style: none; margin: 0; padding: 0; }
 #main .d5-floors.is-one .d5-floor-title { font-size: 1.15rem; }
 #main .d5-floor-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+
+/* 5.2, la découverte en conversation. */
+#main .d5-chat { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px; align-items: start; margin-top: 16px; }
+#main .d5-chat-thread { padding: 18px; border-radius: 18px; background: #f5f7fc; min-height: 320px; }
+#main .d5-chat-count { margin: 0 0 12px; color: #5b6a8f; font-size: .9rem; }
+#main .d5-chat-count b { color: var(--accent); font-size: 1.1rem; }
+#main .d5-chat-count.is-ok b { color: #23955f; }
+#main .d5-thread { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+#main .d5-thread-empty { padding: 40px 10px; color: #8190b3; text-align: center; }
+#main .d5-msg p { margin: 0; padding: 10px 14px; border-radius: 16px; line-height: 1.45; }
+#main .d5-msg p span { display: block; margin-bottom: 2px; font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; opacity: .75; }
+#main .d5-msg.is-you { display: flex; justify-content: flex-end; }
+#main .d5-msg.is-you p { max-width: 85%; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+#main .d5-msg.is-client { display: flex; align-items: flex-end; gap: 10px; }
+#main .d5-msg.is-client img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; object-position: 50% 15%; background: #fff; flex-shrink: 0; }
+#main .d5-msg.is-client p { max-width: 85%; background: #fff; color: #16205e; font-weight: 600; border-bottom-left-radius: 4px; box-shadow: 0 2px 8px rgb(20 40 100 / 6%); }
+#main .d5-chat-ask { display: grid; gap: 10px; }
+#main .d5-chat-ask .fm-label { margin: 6px 0 0; }
+#main .d5-topic-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+#main .d5-topic-chip { padding: 8px 14px; border: 0; border-radius: 999px; background: #f2f5fb; color: #2b3768; font: inherit; font-size: .92rem; font-weight: 700; cursor: var(--cursor-hand, pointer); }
+#main .d5-topic-chip:hover { background: #e7edf9; }
+#main .d5-topic-chip.is-on { background: var(--accent); color: #fff; }
+#main .d5-chat-send { display: flex; justify-content: flex-end; }
+#main .d5-chat-done { margin: 0; padding: 18px; border-radius: 14px; background: #e3f4ea; color: #1d6b43; font-weight: 700; }
+@media (max-width: 900px) { #main .d5-chat { grid-template-columns: minmax(0, 1fr); } }
+#main .d5-msg.is-client img { object-view-box: inset(0% 31% 42% 33%); object-position: center; }
