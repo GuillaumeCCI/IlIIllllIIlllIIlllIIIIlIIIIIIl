@@ -53,9 +53,9 @@
   const exchange = (s, k) => `<section class="k-panel a4-exchange">
       <div class="a4-exchange-head">${situation()}</div>
       <div class="a4-exchange-client">${quoteCard()}</div>
-      <div class="a4-exchange-reply ${arriving === k ? 'is-arriving' : ''}">
+      <div class="a4-exchange-reply ${arriving === k ? 'is-arriving' : ''}" data-seller="${esc(s.id)}">
         <p class="a4-new tone-${esc(s.id)}" role="status">${arriving === k ? `${icon('sparkle', { size: 15 })}<span>Nouvelle réponse à noter · ${k + 1} sur ${RANK}</span>` : `<span>Réponse ${k + 1} sur ${RANK}</span>`}</p>
-        ${sellerBlock(s)}
+        ${sellerBlock(s, !TYPED.has(s.id))}
       </div>
     </section>`;
 
@@ -63,10 +63,10 @@
    * cliente (moteur : .client-card), sans portrait : un médaillon à son
    * initiale, un libellé, sa réplique entre guillemets dessinés. */
   const mark = name => esc(core.asset(`assets/illustrations/clients/${name}.webp`));
-  const sellerBlock = s => `<div class="client-card-box a4-seller tone-${esc(s.id)}"><section class="client-card is-long no-portrait">
+  const sellerBlock = (s, typing = false) => `<div class="client-card-box a4-seller tone-${esc(s.id)}"><section class="client-card is-long no-portrait">
       <div class="client-card-said">
         <p class="client-card-label a4-seller-label"><span class="a4-avatar" aria-hidden="true">${esc(s.name.charAt(0))}</span><span>${esc(s.name)}, ${esc(s.role)}, lui répond</span></p>
-        <div class="client-card-quote"><img class="client-card-mark" src="${mark('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote>${said(s.text)}</blockquote><img class="client-card-mark is-closing" src="${mark('guillemet-fermant')}" alt="" aria-hidden="true"></div>
+        <div class="client-card-quote"><img class="client-card-mark" src="${mark('guillemet-ouvrant')}" alt="" aria-hidden="true"><blockquote ${typing ? 'data-tw class="is-typing"' : ''}>${said(s.text)}</blockquote><img class="client-card-mark is-closing" src="${mark('guillemet-fermant')}" alt="" aria-hidden="true"></div>
       </div>
     </section></div>`;
 
@@ -210,8 +210,47 @@
     { target: '.a4-steps', title: 'Les étapes', text: 'Trois commerciaux à noter, puis votre classement et votre justification.' }
   ]);
 
+  /* LA MACHINE À ÉCRIRE : la réponse d'un commercial s'écrit sous les yeux
+   * de l'apprenant, la première fois qu'elle s'affiche. Le texte à venir
+   * reste en place, transparent : la carte garde sa taille, rien ne bouge.
+   * On avance caractère par caractère dans les nœuds de texte, ce qui
+   * préserve l'italique des indications (« 3 minutes plus tard »). Un clic
+   * sur la carte affiche tout ; « réduire les animations » aussi. */
+  const TYPED = new Set();
+  const calm = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function typeReply() {
+    const quote = document.querySelector('.a4-exchange-reply blockquote[data-tw]');
+    if (!quote) return;
+    const id = quote.closest('[data-seller]').dataset.seller;
+    // Une fenêtre, la visite guidée ou l'apparition de l'écran : on attend.
+    if (document.querySelector('dialog[open], .tour') || quote.closest('.is-revealing')) { setTimeout(typeReply, 250); return; }
+    quote.removeAttribute('data-tw');
+    TYPED.add(id);
+    const chars = [];
+    const walk = node => [...node.childNodes].forEach(child => {
+      if (child.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        for (const ch of child.textContent) { const span = document.createElement('span'); span.className = 'a4-tw'; span.textContent = ch; frag.appendChild(span); chars.push(span); }
+        child.replaceWith(frag);
+      } else walk(child);
+    });
+    walk(quote);
+    let n = 0;
+    const finish = () => { n = chars.length; chars.forEach(c => c.classList.add('is-on')); quote.classList.remove('is-typing'); };
+    if (calm()) { finish(); return; }
+    quote.closest('.client-card').addEventListener('click', finish, { once: true });
+    const tick = () => {
+      if (!quote.isConnected || n >= chars.length) { quote.classList.remove('is-typing'); return; }
+      chars.slice(n, n + 2).forEach(c => c.classList.add('is-on'));
+      n += 2;
+      // Une petite pause après une ponctuation forte, comme à l'oral.
+      setTimeout(tick, /[.!?…]/.test(chars[n - 1]?.textContent || '') ? 260 : 24);
+    };
+    setTimeout(tick, arriving !== -1 ? 650 : 200);
+  }
+
   // L'annonce ne vaut que pour le rendu qui suit le changement de commercial.
-  const onMount = () => { if (arriving !== -1) setTimeout(() => { arriving = -1; }, 0); };
+  const onMount = () => { typeReply(); if (arriving !== -1) setTimeout(() => { arriving = -1; }, 0); };
 
   ex.mount('s5-5.1', { screen, validate, feedback, intercept, onMount, compactFeedback: true });
 })();

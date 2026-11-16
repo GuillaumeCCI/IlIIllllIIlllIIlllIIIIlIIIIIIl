@@ -438,3 +438,11 @@
   .a4-exchange-reply.is-arriving .client-card, .a4-exchange-reply.is-arriving .a4-new { animation: none; }
   .a4-exchange-reply.is-arriving .client-card { box-shadow: 0 0 0 3px var(--a4-halo, rgb(19 75 215 / 35%)), var(--client-card-shadow); }
 }
+
+/* A4 : la machine à écrire. Les lettres à venir sont là, transparentes ;
+   un curseur clignote au bout de la réponse tant qu'elle s'écrit. */
+.a4-tw { color: transparent; }
+.a4-tw.is-on { color: inherit; }
+blockquote.is-typing { cursor: pointer; }
+blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 0 0 var(--accent); animation: a4-caret .7s steps(1) infinite; }
+@keyframes a4-caret { 50% { box-shadow: 2px 0 0 0 transparent; } }
