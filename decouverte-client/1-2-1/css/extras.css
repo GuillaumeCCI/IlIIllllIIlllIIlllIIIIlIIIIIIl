@@ -734,3 +734,7 @@ blockquote.is-typing .a4-tw.is-on:has(+ .a4-tw:not(.is-on)) { box-shadow: 2px 0 
 .a5-thread-you { margin: 0; color: var(--accent); font-size: .92rem; line-height: 1.5; }
 .a5-thread-you span { display: block; color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
 .a5-thread-next { margin: 0; color: var(--navy); font-size: .95rem; font-style: italic; line-height: 1.5; }
+
+/* A5 : le récit en une ligne, juste au-dessus de la carte du client. */
+.a5-exchange-client .a5-thread-next { margin: 0 4px 12px; color: var(--muted); font-size: .92rem; font-style: italic; line-height: 1.5; }
+.a5-exchange-head .a5-moments:first-child { margin-top: 0; }
