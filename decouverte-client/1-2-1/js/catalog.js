@@ -77,6 +77,15 @@ window.ATELIER_CATALOG = {
       ]
     },
     {
+      id: 's6',
+      label: 'À vous de répondre',
+      // Trois fiches client (Garnier, Lefort, Duval), grille et corrigés : fiche M1.2.1, activité A5.
+      sourced: true,
+      exercises: [
+        { id: '6.1', file: 's6-6-1', label: 'Votre réponse, votre voix', theme: 'blue' }
+      ]
+    },
+    {
       id: 's9',
       label: 'Faire le point',
       // Grille d'auto-positionnement, colonne « Fin », et « Ma progression » :

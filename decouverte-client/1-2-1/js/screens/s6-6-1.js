@@ -1,0 +1,187 @@
+/* S6 6.1 · Votre réponse, votre voix (fiche M1.2.1, A5).
+ *
+ * Cinq étapes : choisir une fiche client, répondre à ses trois répliques
+ * (compréhension, adaptation au signal, synthèse avec validation), puis
+ * s'enregistrer à l'oral et remplir la grille Oui / Non de la fiche. En
+ * relecture : chaque réponse face au corrigé modèle de la fiche choisie,
+ * la grille, et ce qu'il faut déposer sur la plateforme (texte copiable,
+ * enregistrement téléchargeable avant de quitter la page).
+ */
+(() => {
+  'use strict';
+  const core = window.AtelierCore;
+  const ex = window.AtelierExercise;
+  const kit = window.AtelierKit;
+  const media = window.AtelierMedia;
+  const { esc, icon } = kit;
+  const content = window.ATELIER_S6['6.1'];
+  const { fiches, tasks } = content;
+  const ORAL = 4;
+  const YES_NO = [{ id: 'oui', label: 'Oui' }, { id: 'non', label: 'Non' }];
+  const STEPS = ['Le client', 'Réplique 1', 'Réplique 2', 'Réplique 3', 'Oral et grille'];
+
+  const fiche = () => fiches.find(f => f.id === ex.value('fiche')) || null;
+  const answer = k => ex.value(`r${k}`);
+  const stepDone = k => (k === 0 ? Boolean(fiche()) : k <= 3 ? kit.filled(answer(k)) : false);
+  const reachable = k => Array.from({ length: k }, (_, i) => i).every(stepDone);
+  const at = () => {
+    const asked = Number(ex.value('at')) || 0;
+    if (reachable(asked)) return Math.min(asked, ORAL);
+    const free = [0, 1, 2, 3].find(k => !stepDone(k));
+    return free === undefined ? ORAL : free;
+  };
+  const go = k => { ex.setValue('at', k); ex.rebuild(); window.scrollTo({ top: 0, behavior: 'instant' }); };
+
+  // Une réplique : le geste entre crochets à part, les mots du client ensuite.
+  const gestureOf = line => (line.match(/^\[([^\]]+)\]/) || [])[1] || '';
+  const wordsOf = line => line.replace(/^\[[^\]]+\]\s*/, '');
+
+  function progress(k) {
+    return `<nav class="a4-steps" aria-label="Étapes">${STEPS.map((label, i) => {
+      const done = stepDone(i);
+      return `<button type="button" class="a4-step ${i === k ? 'is-current' : ''} ${done ? 'is-done' : ''}" data-act="a5-go" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === k ? 'aria-current="step"' : ''}>
+        <span class="a4-step-n">${done ? icon('check', { size: 15 }) : i + 1}</span><span>${esc(label)}</span></button>`;
+    }).join('')}</nav>`;
+  }
+
+  /* ── Étape 0 : le choix du client ───────────────────────────────────── */
+  function choose() {
+    return `<section class="k-panel">
+        <p class="k-label">Choisissez la fiche la plus proche de votre futur métier</p>
+        ${ex.radioCards('fiche', fiches.map(f => ({ id: f.id, label: `${f.sector} · ${f.title}`, description: f.profile, symbol: f.id === 'literie' ? 'armchair' : f.id === 'pieces' ? 'truck' : 'building' })), 'a5-fiches')}
+        ${kit.help(content.forbidden, 'ban')}
+      </section>
+      ${core.errorsBox()}
+      ${kit.bar({ right: kit.submit('Écouter le client') })}`;
+  }
+
+  /* L'échange jusqu'ici : les répliques passées et vos réponses. */
+  const history = (f, k) => (k > 1 ? `<ol class="a5-history">${f.lines.slice(0, k - 1).map((line, i) => `
+      <li><p class="a5-history-client"><strong>${esc(f.name)}</strong> « ${esc(wordsOf(line))} »</p><p class="a5-history-you"><strong>Vous</strong> « ${esc(answer(i + 1))} »</p></li>`).join('')}</ol>` : '');
+
+  /* ── Étapes 1 à 3 : une réplique, une réponse ───────────────────────── */
+  function reply(k) {
+    const f = fiche();
+    const line = f.lines[k - 1];
+    const gesture = gestureOf(line);
+    const task = tasks[k - 1];
+    return `<section class="k-panel a5-client">
+        <p class="k-label">${esc(f.sector)} · ${esc(f.title)}</p>
+        <p class="a4-role">${esc(f.profile)}</p>
+        ${history(f, k)}
+        ${gesture ? `<p class="a4-signal a5-gesture">${icon('eye', { size: 18 })}<span>${esc(gesture)}</span></p>` : ''}
+        ${kit.clientCard(wordsOf(line), f.portrait, `Réplique ${k} · ${f.name} vous dit`)}
+      </section>
+      <section class="k-panel a5-answer">
+        <div class="fm-field"><p class="fm-label">${icon(k === 1 ? 'ear' : k === 2 ? 'eye' : 'list', { size: 20 })}<span>${esc(task.title)}</span></p><p class="fm-sub">${esc(task.text)}</p>
+          ${ex.field(`r${k}`, task.title, { placeholder: 'Votre réponse, comme vous la diriez…', max: k === 3 ? 700 : 400, rows: k === 3 ? 5 : 3, hideLabel: true })}</div>
+        ${kit.help(content.forbidden, 'ban')}
+      </section>
+      ${core.errorsBox()}
+      ${kit.bar({ left: kit.back('a5-prev', k === 1 ? 'Changer de client' : `Revenir à la réplique ${k - 1}`),
+        right: kit.submit(k < 3 ? `Réplique ${k + 1}` : 'Passer à l’oral') })}`;
+  }
+
+  /* ── Étape 4 : l'oral, puis la grille ───────────────────────────────── */
+  function oral() {
+    const f = fiche();
+    return `<section class="k-panel a5-oral">
+        <p class="k-label">${esc(content.oral.title)}</p>
+        <p>${esc(content.oral.text)}</p>
+        <ol class="a5-script">${[1, 2, 3].map(k => `<li><span class="a5-script-client">${esc(f.name)} : « ${esc(wordsOf(f.lines[k - 1]))} »</span><span class="a5-script-you">« ${esc(answer(k))} »</span></li>`).join('')}</ol>
+        <div class="oral-practice">
+          ${kit.act('a5-record', `${icon('microphone', { size: 18 })}<span>Commencer l’enregistrement</span>`, 'secondary', 'id="record-button"')}
+          <p class="asset-note" id="record-status">L’enregistrement reste dans ce navigateur : téléchargez-le avant de quitter la page.</p>
+          <audio id="record-playback" controls hidden aria-label="Réécouter votre enregistrement"></audio>
+          <a id="record-download" class="button secondary small" hidden>${icon('arrowDown', { size: 16 })}<span>Télécharger l’enregistrement</span></a>
+        </div>
+      </section>
+      <section class="k-panel a5-self">
+        <p class="k-label">Auto-évaluation · avant le corrigé</p>
+        ${kit.matrix({ key: 'self', rows: content.selfCheck, columns: YES_NO, head: 'Critère', round: true })}
+      </section>
+      ${core.errorsBox()}
+      ${kit.bar({ left: kit.back('a5-prev', 'Revenir à la réplique 3'), right: kit.submit('Voir le corrigé') })}`;
+  }
+
+  /* ── Relecture ──────────────────────────────────────────────────────── */
+  const allText = f => [1, 2, 3].map(k => `Réplique ${k} · ${f.name} : « ${wordsOf(f.lines[k - 1])} »\nMa réponse : ${answer(k)}`).join('\n\n');
+
+  function review() {
+    const f = fiche();
+    const yes = content.selfCheck.filter((_, i) => ex.value(`self${i}`) === 'oui').length;
+    return `<section class="k-panel a5-review">
+        <p class="k-label">${esc(f.sector)} · ${esc(f.title)} · ${esc(f.name)}</p>
+        ${[1, 2, 3].map(k => `<div class="a5-review-step">
+          <h2 class="a5-review-title"><span class="a4-step-n">${k}</span>${esc(tasks[k - 1].title)}</h2>
+          <p class="a5-review-line">${gestureOf(f.lines[k - 1]) ? `<em>${esc(gestureOf(f.lines[k - 1]))}</em> ` : ''}« ${esc(wordsOf(f.lines[k - 1]))} »</p>
+          ${kit.yours('Votre réponse', answer(k))}
+          ${kit.model('Une réponse possible', f.models[k - 1])}
+          ${f.notes[k - 1] ? kit.help(f.notes[k - 1], 'lightbulb') : ''}
+        </div>`).join('')}
+        <p class="k-muted">Ce sont des exemples, pas des réponses uniques : toute réponse qui respecte la grille est valable.</p>
+      </section>
+      <section class="k-panel a5-review">
+        ${kit.result(yes, content.selfCheck.length, 'critères cochés « Oui » dans votre auto-évaluation')}
+        <ul class="a5-self-recap">${content.selfCheck.map((row, i) => `<li><span class="pos-level level-${ex.value(`self${i}`) === 'oui' ? '2' : '0'}">${ex.value(`self${i}`) === 'oui' ? 'Oui' : 'Non'}</span><span>${esc(row.text)}</span></li>`).join('')}</ul>
+      </section>
+      <section class="k-panel a5-deposit">
+        <p class="k-label">${icon('folder', { size: 16 })} À déposer</p>
+        <p>${esc(content.deposit)}</p>
+        <pre class="a5-copy-text">${esc(allText(f))}</pre>
+        <div class="a5-deposit-actions">${kit.act('a5-copy', `${icon('document', { size: 18 })}<span>Copier mes réponses</span>`, 'secondary')}</div>
+      </section>
+      ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
+  }
+
+  function screen() {
+    const reviewing = ex.reviewing() && fiche();
+    const k = at();
+    return `<div class="k-page a4-page a5-page">
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : kit.tourButton() })}
+      ${reviewing ? '' : progress(k)}
+      <form novalidate>${reviewing ? review() : k === 0 ? choose() : k <= 3 ? reply(k) : oral()}</form>
+    </div>`;
+  }
+
+  function validate(values) {
+    const k = at();
+    if (k === 0) return values.fiche ? [] : [{ key: 'fiche', message: 'Choisissez un client.' }];
+    if (k <= 3) return kit.filled(values[`r${k}`]) ? [] : [{ key: `r${k}`, message: `Écrivez votre réponse à la réplique ${k}.` }];
+    const missing = content.selfCheck.findIndex((_, i) => !values[`self${i}`]);
+    return missing === -1 ? [] : [{ key: `self${missing}`, message: `Répondez Oui ou Non à chacun des ${content.selfCheck.length} critères.` }];
+  }
+
+  function intercept() {
+    const k = at();
+    if (k < ORAL && stepDone(k)) { media.stopAll(); ex.setValue('at', k + 1); return true; }
+    return false;
+  }
+
+  const feedback = () => ['Pensez à déposer le texte de vos réponses et votre enregistrement : votre tuteur vous répondra avec la même grille.'];
+
+  kit.on({
+    'a5-go': control => { media.stopAll(); go(Number(control.dataset.index)); },
+    'a5-prev': () => { media.stopAll(); go(Math.max(0, at() - 1)); },
+    'a5-record': () => media.toggleRecording({ max: content.oral.max, status: 'Réécoutez-vous, puis téléchargez l’enregistrement pour le déposer. Il sera effacé en quittant la page.' }),
+    'a5-copy': () => {
+      const text = allText(fiche());
+      const done = () => core.toast('Vos réponses sont copiées : collez-les dans votre dépôt.');
+      if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(done, () => core.toast('Copie impossible : sélectionnez le texte ci-dessus.'));
+      else core.toast('Copie impossible : sélectionnez le texte ci-dessus.');
+    }
+  });
+
+  kit.tour('s6-6.1', [
+    { target: '.a5-fiches', title: 'Votre client', text: 'Choisissez la fiche la plus proche de votre futur métier : commerce, entre entreprises ou immobilier.' },
+    { target: '.a4-steps', title: 'Les étapes', text: 'Trois répliques, une réponse pour chacune :',
+      items: [
+        { key: '1', tone: 'blue', text: 'une réponse en attitude de compréhension ;' },
+        { key: '2', tone: 'gold', text: 'une réponse adaptée au signal non verbal ;' },
+        { key: '3', tone: 'green', text: 'une synthèse qui se termine par une validation.' }
+      ],
+      after: 'Puis l’oral et votre auto-évaluation.' }
+  ]);
+
+  ex.mount('s6-6.1', { screen, validate, feedback, intercept, compactFeedback: true });
+})();

@@ -65,6 +65,12 @@ const CUSTOM = {
     e.setValue('why', 'Elle tient compte du temps et reformule.');
     e.setValue('self0', '2');
   },
+  // A5 : une fiche, trois réponses, la grille Oui / Non.
+  's6-6-1': (e, c) => {
+    e.setValue('fiche', c.fiches[1].id);
+    [1, 2, 3].forEach(k => e.setValue(`r${k}`, 'Une réponse.'));
+    c.selfCheck.forEach((_, i) => e.setValue(`self${i}`, 'oui'));
+  },
   's9-9-1': (e, c, w) => {
     w.ATELIER_S1.grid.criteria.forEach((_, i) => e.setValue(`fin${i}`, '2'));
     w.ATELIER_S1.grid.questions.forEach(q => e.setValue(q.id, 'Une réponse.'));

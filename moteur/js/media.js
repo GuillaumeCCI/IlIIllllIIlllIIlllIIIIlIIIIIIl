@@ -62,7 +62,12 @@
 
   /* ───────────────────────── Entraînement oral ──────────────────────── */
 
-  async function toggleRecording() {
+  /* `options` : { max } la durée maximale en millisecondes (2 minutes par
+   * défaut), { status } la phrase affichée après l'arrêt. Si l'écran a un
+   * lien #record-download, il permet de télécharger l'enregistrement
+   * (pour le déposer sur la plateforme). */
+  async function toggleRecording(options = {}) {
+    const max = Number(options.max) || 120000;
     if (recordingPending) return;
     if (recorder?.state === 'recording') { recorder.stop(); return; }
     if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
@@ -90,13 +95,20 @@
         $('#record-playback').src = recordUrl;
         $('#record-playback').hidden = false;
         $('#record-button').textContent = 'Refaire un essai oral';
-        $('#record-status').textContent = 'Réécoutez-vous, puis complétez votre réponse écrite. Cet audio sera effacé en quittant cet exercice.';
+        const download = $('#record-download');
+        if (download) {
+          const type = active.mimeType || 'audio/webm';
+          download.href = recordUrl;
+          download.download = `enregistrement.${/ogg/.test(type) ? 'ogg' : /mp4|aac/.test(type) ? 'm4a' : 'webm'}`;
+          download.hidden = false;
+        }
+        $('#record-status').textContent = options.status || 'Réécoutez-vous, puis complétez votre réponse écrite. Cet audio sera effacé en quittant cet exercice.';
       };
       recorder.onerror = () => { core.toast('L’enregistrement a été interrompu. Vous pouvez poursuivre à l’écrit.'); stopAll(); };
       recorder.start();
       $('#record-button').textContent = 'Arrêter l’enregistrement';
-      $('#record-status').textContent = 'Enregistrement en cours · arrêt automatique après 2 minutes.';
-      recordTimeout = setTimeout(() => { if (active.state === 'recording') active.stop(); }, 120000);
+      $('#record-status').textContent = `Enregistrement en cours · arrêt automatique après ${Math.round(max / 60000)} minutes.`;
+      recordTimeout = setTimeout(() => { if (active.state === 'recording') active.stop(); }, max);
     } catch {
       recordStream?.getTracks().forEach(track => track.stop());
       if (version === session && $('#record-status')) $('#record-status').textContent = 'Microphone indisponible ou autorisation refusée. Vous pouvez poursuivre à l’écrit.';

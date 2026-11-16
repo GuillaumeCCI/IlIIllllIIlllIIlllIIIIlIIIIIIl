@@ -136,6 +136,17 @@ window.ATELIER_BRIEFINGS = {
     criteria: ['Des notes proches du repère', 'Un classement juste', 'Justification par critères']
   },
 
+  /* ══ SÉRIE 6 · À VOUS DE RÉPONDRE ════════════════════════════════════ */
+
+  's6-6.1': {
+    lede: { key: 'Trois répliques,', rest: 'trois réponses, votre voix.' },
+    mission: 'Choisissez un client, celui qui ressemble le plus à votre futur métier. Il vous dit trois choses : répondez à chacune, puis dites vos réponses à voix haute et déposez-les pour le retour de votre tuteur.',
+    method: 'Une réplique à la fois, puis l’enregistrement et la grille.',
+    situation: 'M. Garnier dans un magasin de literie, Mme Lefort dans son garage, ou Mme Duval qui vend la maison familiale. Chacun parle de son problème, et montre plus qu’il ne dit.',
+    task: 'Réplique 1 : une réponse en attitude de compréhension. Réplique 2 : une réponse qui tient compte du signal non verbal, en adaptant votre rythme ou votre ton. Réplique 3 : une synthèse de tout l’échange, terminée par une validation. Aucun produit, aucune solution.',
+    criteria: ['Compréhension, sans jugement ni solution', 'Adaptation au signal', 'Synthèse complète et validée', 'Ton posé à l’oral']
+  },
+
   /* ══ SÉRIE 9 · FAIRE LE POINT ════════════════════════════════════════ */
 
   's9-9.1': {
