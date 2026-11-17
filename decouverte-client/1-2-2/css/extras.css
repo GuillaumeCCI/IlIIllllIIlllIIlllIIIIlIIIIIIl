@@ -1414,3 +1414,9 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
   .h6-stage-foot { width: min(100%, 1290px); }
   .h6-stage-foot .button { font-size: 1.08rem; padding: 14px 24px; }
 }
+/* 6.1 · Le rappel au moment de choisir : ce qu'elle vient de dire. */
+.h6-recall { display: grid; gap: 8px; justify-items: start; width: min(100%, 1100px); padding: 16px 22px; background: rgb(255 255 255 / 92%); box-shadow: 0 8px 20px rgb(15 35 78 / 10%); }
+.h6-recall-scene { margin: 0; color: #4a5a86; font-style: italic; }
+.h6-recall .h6-said img { width: 52px; height: 52px; }
+.h6-recall .h6-said p { font-size: 1.05rem; }
+@media (min-width: 1600px) { .h6-recall { width: min(100%, 1324px); } .h6-recall .h6-said p { font-size: 1.15rem; } }

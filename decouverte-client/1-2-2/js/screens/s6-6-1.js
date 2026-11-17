@@ -174,7 +174,13 @@
         </div>
         <div class="h6-stage-foot">${next('Continuer', 'h6-flag', s.says ? 1.1 : 0.5, `data-name="seen${k}"`)}</div>`;
     } else if (b.kind === 'choose') {
-      body = choiceBlock({ title: 'Les questions possibles', ask: s.prompt || 'Que lui demandez-vous ?', order: s.order, choices: s.choices, act: 'h6-pick', data: `data-step="${k}"`, field: `c${k}` });
+      // Le rappel : ce qui vient de se passer, au-dessus des questions. Sans
+      // nouvelle phrase à cette étape, sa dernière réponse.
+      const last = !s.says && k > 0 ? steps[k - 1].choices[choiceAt(k - 1)] : null;
+      const lastSaid = s.says || (last && last.reply) || '';
+      const scene = [s.scene, s.after].filter(Boolean).map(t => `<p class="h6-recall-scene">${esc(t)}</p>`).join('');
+      body = `${scene || lastSaid ? `<div class="h6-card h6-recall h6-in">${s.scene ? scene : ''}${lastSaid ? said(lastSaid) : ''}${!s.scene && s.after ? scene : ''}</div>` : ''}
+        ${choiceBlock({ title: 'Les questions possibles', ask: s.prompt || 'Que lui demandez-vous ?', order: s.order, choices: s.choices, act: 'h6-pick', data: `data-step="${k}"`, field: `c${k}` })}`;
     } else if (b.kind === 'reply') {
       const c = s.choices[choiceAt(k)];
       body = `<div class="h6-card h6-exchange">
