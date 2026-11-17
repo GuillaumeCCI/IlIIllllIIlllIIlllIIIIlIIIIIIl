@@ -259,7 +259,17 @@
   const badgeHtml = (f, text) => {
     if (f.kind !== 'q' || !kit.filled(text)) return '';
     const c = fieldCheck(f, text);
-    return `<span class="h7-dot ${c.ok ? 'is-ok' : 'is-ko'}" aria-hidden="true"></span>${esc(c.label)}${c.ok ? '' : ` · on attend : ${esc(f.expect.map(e => TYPE_LABEL[e].toLowerCase()).join(' ou '))}${f.prio ? ', qui fait choisir' : ''}`}`;
+    return `<span class="h7-dot ${c.ok ? 'is-ok' : 'is-ko'}" aria-hidden="true"></span>${esc(c.label || 'Type non reconnu')}${c.ok ? '' : ` · on attend : ${esc(f.expect.map(e => TYPE_LABEL[e].toLowerCase()).join(' ou '))}${f.prio ? ', qui fait choisir' : ''}`}`;
+  };
+  // Le type d'une question, en pastille au bout de la ligne (pages de questions groupées).
+  const chipHtml = (f, text) => {
+    if (!kit.filled(text)) return '';
+    const c = fieldCheck(f, text);
+    const want = f.expect.map(e => TYPE_LABEL[e].toLowerCase()).join(' ou ');
+    const label = c.label || 'Type non reconnu';
+    if (c.ok) return `<span class="h8-chip is-ok">${icon('check', { size: 12, strokeWidth: 3.5 })}${esc(label)}</span>`;
+    const why = f.prio && f.expect.includes(c.type) ? 'elle doit faire choisir' : `on attend : ${want}`;
+    return `<span class="h8-chip is-ko">${esc(label)}<small>${esc(why)}</small></span>`;
   };
   function fichesStep() {
     const list = chosen();
@@ -291,16 +301,16 @@
       const fs = g.ids.map(id => page.fields.find(f => f.id === id));
       const f0 = fs[0];
       const own = s.fx && s.fx[f0.id];
-      const aid = help === 'example' ? `<p class="h8-aid"><span>${own ? 'Exemple' : 'Exemple chez un vendeur en électroménager'}</span>${q(own || f0.example)}</p>` : help === 'hint' ? `<p class="h8-aid"><span>Indice</span>${esc(f0.hint)}</p>` : '';
+      const aid = help === 'example' ? `<p class="h8-gaid"><span>${own ? 'Par exemple' : 'Par exemple, chez un vendeur en électroménager'}</span>${q(own || f0.example)}</p>` : help === 'hint' ? `<p class="h8-gaid"><span>Indice</span>${esc(f0.hint)}</p>` : '';
       return `<div class="h7-write h8-field h8-group">
           <p class="h8-field-label">${esc(g.title)}</p>
           <p class="h7-write-note">${esc(g.sub)}</p>
           ${fs.map((f, n) => {
             const name = `f${j}_${f.id}`;
-            return `<div class="h8-qrow">${fs.length > 1 ? `<span class="h8-qrow-n" aria-hidden="true">${n + 1}</span>` : ''}<div class="h8-qrow-body">
-                ${ex.field(name, `${g.title}, question ${n + 1}`, { placeholder: 'Votre question… ?', max: 220, rows: 1, hideLabel: true })}
-                <p class="h8-badge" data-badge="${name}" aria-live="polite">${badgeHtml(f, v(name))}</p>
-              </div></div>`;
+            return `<div class="h8-qrow"><span class="h8-qrow-n" aria-hidden="true">${n + 1}</span>
+                <div class="h8-qrow-body">${ex.field(name, `${g.title}, question ${n + 1}`, { placeholder: 'Votre question… ?', max: 220, rows: 1, hideLabel: true })}</div>
+                <span class="h8-qrow-chip" data-badge="${name}" data-chip="1" aria-live="polite">${chipHtml(f, v(name))}</span>
+              </div>`;
           }).join('')}
           ${aid}
         </div>`;
@@ -536,7 +546,10 @@
     if (m) {
       const f = QFIELDS.find(x => x.id === m[1]);
       const badge = f && document.querySelector(`[data-badge="${field}"]`);
-      if (badge) badge.innerHTML = badgeHtml(f, event.target.value);
+      if (badge) badge.innerHTML = badge.dataset.chip ? chipHtml(f, event.target.value) : badgeHtml(f, event.target.value);
+      // La ligne s'agrandit avec la question (si le navigateur ne le fait pas seul).
+      const t = event.target;
+      if (t.tagName === 'TEXTAREA' && t.closest('.h8-group') && !CSS.supports('field-sizing', 'content')) { t.style.height = 'auto'; t.style.height = `${t.scrollHeight}px`; }
       return;
     }
     if (/^r\d$/.test(field)) {

@@ -61,7 +61,9 @@ const BANK = {
     'Vous roulez beaucoup sur autoroute ?',
     'C’est pour un usage professionnel ?',
     'Vous êtes propriétaire de votre logement ?',
-    'Le chantier peut-il commencer en mars ?'
+    'Le chantier peut-il commencer en mars ?',
+    'Vous l’avez vu sur notre site ?',
+    'Vous connaissez déjà nos magasins ?'
   ],
   alternative: [
     'Livraison seule, ou avec installation ?',

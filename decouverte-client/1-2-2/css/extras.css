@@ -2244,12 +2244,22 @@ p.h7-question { margin-bottom: 12px; }
 /* 6.3 · Questions groupées : des lignes courtes, numérotées. */
 .h8-group { gap: 6px; }
 .h8-group .h7-write-note { margin-bottom: 6px; }
-.h8-qrow { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; margin-top: 4px; }
-.h8-qrow-body { display: grid; gap: 2px; min-width: 0; }
-.h8-qrow-n { display: grid; place-items: center; width: 24px; height: 24px; margin-top: 4px; border-radius: 50%; background: #eef1fb; color: #1b2370; font-size: .78rem; font-weight: 800; }
-#main .h8-group textarea { min-height: 64px; padding-bottom: 0; }
+.h8-group .h7-write-note { margin-bottom: 10px; }
+.h8-qrow { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1.5px solid #e9edf5; transition: border-color .2s; }
+.h8-qrow:focus-within { border-bottom-color: #1b2370; }
+.h8-qrow-body { min-width: 0; }
+.h8-qrow-body .field { margin: 0; }
+.h8-qrow-n { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #eef1fb; color: #1b2370; font-size: .8rem; font-weight: 800; transition: background .2s, color .2s; }
+.h8-qrow:focus-within .h8-qrow-n { background: #1b2370; color: #fff; }
+#main .h8-group textarea { display: block; min-height: 0; height: auto; padding: 0; background-image: none; line-height: 1.5; resize: none; overflow: hidden; field-sizing: content; }
 #main .h8-group .counter { display: none; }
-.h8-group .h8-badge { min-height: 1.2em; font-size: .84rem; }
+.h8-qrow-chip:empty { display: none; }
+.h8-chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 11px; border-radius: 999px; font-size: .8rem; font-weight: 700; white-space: nowrap; animation: h7-pop .25s ease-out both; }
+.h8-chip.is-ok { background: #e3f3f3; color: #1d6f6f; }
+.h8-chip.is-ko { flex-direction: column; align-items: flex-start; gap: 0; padding: 4px 12px; border-radius: 12px; background: #fdf0e6; color: #a5521b; line-height: 1.25; }
+.h8-chip small { color: #b26a37; font-size: .72rem; font-weight: 600; }
+.h8-gaid { display: grid; gap: 2px; margin: 14px 0 0; color: #5a6584; font-size: .9rem; line-height: 1.45; }
+.h8-gaid span { color: #8a93ad; font-size: .72rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
 
 /* 6.3 · En-tête de la fiche : le client, « Fiche 1 sur 3 · pour Lucas », les 3 fiches en visages. */
 .h8-fhead { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; }
