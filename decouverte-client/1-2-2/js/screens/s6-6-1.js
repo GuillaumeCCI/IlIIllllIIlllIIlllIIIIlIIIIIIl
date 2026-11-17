@@ -55,7 +55,7 @@
     const k = steps.findIndex((_, i) => !yes(`ack${i}`));
     if (k === -1) return { kind: 'end' };
     if (!choiceAt(k)) return { kind: yes(`seen${k}`) ? 'choose' : 'ctx', k };
-    return { kind: yes(`rs${k}`) ? 'fb' : 'reply', k };
+    return { kind: 'fb', k };
   }
 
   /* Vos acquis : la première question sans réponse lue. */
@@ -125,14 +125,14 @@
     mid: { icon: 'thought', face: 'formatrice-presque', label: 'Ce n’est pas tout à fait la réponse attendue', title: 'Pas tout à fait…' },
     ko: { icon: 'close', face: 'formatrice-attention', label: 'Ceci n’est pas une réponse appropriée', title: 'À éviter…' }
   };
-  function feedbackCard(tone, text, { better = '', betterLabel = 'Il valait mieux demander', quoted = true, points = null, button }) {
+  function feedbackCard(tone, text, { better = '', betterLabel = 'Il valait mieux demander', quoted = true, points = null, button, wait = 0 }) {
     const verdict = VERDICT[tone];
     // La formatrice à gauche ; son commentaire dans une bulle qui pointe vers
     // elle. Le verdict n'est dit qu'une fois, dans une pastille de sa couleur.
     return `<div class="h6-fb tone-${tone}">
         <div class="h6-fb-row">
-          <img class="h6-fb-face h6-in" src="${esc(core.asset(`../../moteur/assets/illustrations/retours/${verdict.face}.webp`))}" alt="" aria-hidden="true">
-          <div class="h6-fb-bubble h6-in" ${delay(0.15)}>
+          <img class="h6-fb-face h6-in" ${delay(wait)} src="${esc(core.asset(`../../moteur/assets/illustrations/retours/${verdict.face}.webp`))}" alt="" aria-hidden="true">
+          <div class="h6-fb-bubble h6-in" ${delay(wait + 0.15)}>
             <p class="h6-fb-head"><span class="h6-fb-chip">${esc(verdict.title)}</span><span class="sr-only">${esc(verdict.label)}.</span>${points === null ? '' : `<span class="h6-fb-points">${points > 0 ? '+2' : points < 0 ? '−2' : '0'} sur la jauge</span>`}</p>
             <p class="h6-fb-say">${esc(text)}</p>
             ${better ? `<div class="h6-fb-better"><span>${esc(betterLabel)}</span><p>${quoted ? q(better) : esc(better)}</p></div>` : ''}
@@ -181,18 +181,14 @@
       const scene = [s.scene, s.after].filter(Boolean).map(t => `<p class="h6-recall-scene">${esc(t)}</p>`).join('');
       body = `${scene || lastSaid ? `<div class="h6-card h6-recall h6-in">${s.scene ? scene : ''}${lastSaid ? said(lastSaid) : ''}${!s.scene && s.after ? scene : ''}</div>` : ''}
         ${choiceBlock({ title: 'Les questions possibles', ask: s.prompt || 'Que lui demandez-vous ?', order: s.order, choices: s.choices, act: 'h6-pick', data: `data-step="${k}"`, field: `c${k}` })}`;
-    } else if (b.kind === 'reply') {
-      const c = s.choices[choiceAt(k)];
-      body = `<div class="h6-card h6-exchange">
-          <div class="h6-you h6-in"><span>Vous</span>${q(c.text)}</div>
-          ${c.reply ? `<div class="h6-typing h6-in" aria-hidden="true"><span></span><span></span><span></span></div>${said(c.reply, 1.05)}` : ''}
-        </div>
-        <div class="h6-stage-foot">${next('Continuer', 'h6-flag', c.reply ? 1.6 : 0.5, `data-name="rs${k}"`)}</div>`;
     } else if (b.kind === 'fb') {
       const id = choiceAt(k);
       const c = s.choices[id];
       const ok = id === s.best;
-      body = feedbackCard(ok ? 'ok' : c.points < 0 ? 'ko' : 'mid', ok ? s.why : c.note, { better: ok ? '' : s.choices[s.best].text, points: c.points, button: next(k === steps.length - 1 ? 'Voir la fin de l’entretien' : 'Continuer', 'h6-flag', 0.4, `data-name="ack${k}"`) });
+      // Sa réaction d'abord (elle « écrit », puis répond), le retour ensuite.
+      const wait = c.reply ? 1.6 : 0.2;
+      body = `${c.reply ? `<div class="h6-reaction"><div class="h6-typing" aria-hidden="true"><span></span><span></span><span></span></div>${said(c.reply, 1.05)}</div>` : ''}
+        ${feedbackCard(ok ? 'ok' : c.points < 0 ? 'ko' : 'mid', ok ? s.why : c.note, { better: ok ? '' : s.choices[s.best].text, points: c.points, wait, button: next(k === steps.length - 1 ? 'Voir la fin de l’entretien' : 'Continuer', 'h6-flag', wait + 0.5, `data-name="ack${k}"`) })}`;
     } else {
       const end = ending();
       body = `<div class="h6-card h6-end tone-${end.tone} h6-in">
