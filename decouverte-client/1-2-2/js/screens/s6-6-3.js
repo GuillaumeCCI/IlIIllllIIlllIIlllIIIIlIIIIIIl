@@ -5,7 +5,7 @@
  *
  * Six étapes :
  *   0. Les situations : la mission (Nadia, la responsable ; Lucas, le nouveau
- *      collègue) et votre métier en une ligne ; puis 3 situations parmi 8 ;
+ *      collègue) et votre métier en une ligne ; puis 2 situations parmi 8 ;
  *      bilan : le piège et la question clé de chacune.
  *   1. Le bon réflexe : pour chaque situation, un client parle, trois
  *      réponses (nouvel essai après une réponse moins juste) ; bilan.
@@ -29,6 +29,7 @@
   const kit = window.AtelierKit;
   const { esc, icon } = kit;
   const KEY = 's6-6.3';
+  const N = 2; // nombre de situations (et de fiches)
   const content = window.ATELIER_S6['6.3'];
   const QT = window.ATELIER_QTYPE;
   const { situations, pages, themes, manager, newcomer } = content;
@@ -61,7 +62,7 @@
     const type = QT.classify(text);
     let ok = f.expect.includes(type);
     if (ok && f.prio && !QT.prioritizes(text)) ok = false;
-    const name = (TYPE_LABEL[type] || '').toLowerCase();
+    const name = (TYPE_LABEL[type] || 'de type non reconnu').toLowerCase();
     let say;
     if (f.trap) say = ok ? `${f.label} : c’est bien un piège (question ${name === 'vente déguisée' ? 'qui pousse un produit' : name}). Lucas saura le reconnaître.` : `${f.label} : écrivez la question à NE PAS poser, celle qui souffle la réponse ou pousse un produit.`;
     else if (ok) say = `${f.label} : question ${name}, c’est ce qu’on attend.`;
@@ -78,8 +79,8 @@
   /* ── Les étapes ──────────────────────────────────────────────────────── */
   const stepDone = k => {
     if (k === 0) return yes('sitok');
-    if (k === 1) return chosen().length === 3 && chosen().every((_, j) => yes(`ack${j}`));
-    if (k === 2) return chosen().length === 3 && chosen().every((_, j) => yes(`f${j}_ok`));
+    if (k === 1) return chosen().length === N && chosen().every((_, j) => yes(`ack${j}`));
+    if (k === 2) return chosen().length === N && chosen().every((_, j) => yes(`f${j}_ok`));
     if (k === 3) return yes('rok');
     if (k === 4) return yes('tok') || yes('tskip');
     return content.selfCheck.every((_, i) => Boolean(v(`self${i}`)));
@@ -186,8 +187,8 @@
           <span class="h8-sit-line">${esc(s.line)}</span>
         </button>`;
     }).join('');
-    const dots = [0, 1, 2].map(i => `<span class="${i < ids.length ? 'is-on' : ''}"></span>`).join('');
-    const bilan = done ? msgBox('ok', `<p>Vos 3 situations, et ce que Lucas doit savoir de chacune :</p>
+    const dots = Array.from({ length: N }, (_, i) => i).map(i => `<span class="${i < ids.length ? 'is-on' : ''}"></span>`).join('');
+    const bilan = done ? msgBox('ok', `<p>Vos 2 situations, et ce que Lucas doit savoir de chacune :</p>
         <div class="h8-sum">${chosen().map((s, i) => `<article class="h8-sum-card h6-in" ${delay(0.12 * i)}>
             <img class="h8-sum-face" src="${img(s.face)}" alt="" aria-hidden="true">
             <p class="h8-sum-title">${esc(s.title)}</p>
@@ -196,11 +197,11 @@
           </article>`).join('')}</div>`, 'Bon choix') : '';
     return `<section class="k-panel d5-panel h7-panel">
         <div class="h8-sit-head">
-          <p class="h7-question">Quelles sont les 3 situations de découverte que vous rencontrez le plus souvent ?</p>
-          ${done ? '' : `<p class="h8-sit-count" aria-live="polite"><span class="h8-sit-dots" aria-hidden="true">${dots}</span><span><b>${ids.length}</b> / 3 choisies</span></p>`}
+          <p class="h7-question">Quelles sont les 2 situations de découverte que vous rencontrez le plus souvent ?</p>
+          ${done ? '' : `<p class="h8-sit-count" aria-live="polite"><span class="h8-sit-dots" aria-hidden="true">${dots}</span><span><b>${ids.length}</b> / ${N} choisies</span></p>`}
         </div>
-        <div class="h8-sits ${ids.length >= 3 ? 'is-full' : ''}">${cards}</div>
-        ${done ? bilan : `<div class="h7-actions">${kit.act('h8-sit-check', `${icon('check', { size: 18 })}<span>Valider mes 3 situations</span>`, 'primary', ids.length === 3 ? '' : 'disabled')}</div>`}
+        <div class="h8-sits ${ids.length >= N ? 'is-full' : ''}">${cards}</div>
+        ${done ? bilan : `<div class="h7-actions">${kit.act('h8-sit-check', `${icon('check', { size: 18 })}<span>Valider mes 2 situations</span>`, 'primary', ids.length === N ? '' : 'disabled')}</div>`}
       </section>
       ${core.errorsBox()}
       ${kit.bar({ right: done ? kit.submit('Trouver le bon réflexe') : '' })}`;
@@ -212,10 +213,10 @@
     const j = list.findIndex((_, i) => !yes(`ack${i}`));
     if (j === -1) {
       const n = reflexRight();
-      const tone = n === 3 ? 'ok' : n >= 2 ? 'mid' : 'ko';
+      const tone = n === N ? 'ok' : n >= 1 ? 'mid' : 'ko';
       return stage(`<div class="h6-card h7-bilan h6-in">
             <p class="k-label">Bilan de l’étape 2 · Le bon réflexe</p>
-            ${msgBox(tone, `<p>Vous avez trouvé du premier coup <b>${n} bon${n > 1 ? 's' : ''} réflexe${n > 1 ? 's' : ''} sur 3</b>. Gardez en tête la question clé de chaque situation : elle ouvrira vos fiches.</p>`, n === 3 ? 'Bien vu !' : n >= 2 ? 'Un bon début' : 'À retravailler')}
+            ${msgBox(tone, `<p>Vous avez trouvé du premier coup <b>${n} bon${n > 1 ? 's' : ''} réflexe${n > 1 ? 's' : ''} sur ${N}</b>. Gardez en tête la question clé de chaque situation : elle ouvrira vos fiches.</p>`, n === 3 ? 'Bien vu !' : n >= 2 ? 'Un bon début' : 'À retravailler')}
             <ul class="h7-bilan-list">${list.map(s => `<li><span class="h7-bilan-q">${esc(s.title)}</span><span class="h7-bilan-a">La question clé : <b>${q(s.key)}</b></span></li>`).join('')}</ul>
           </div>
           <div class="h6-stage-foot">${kit.submit('Remplir mes fiches')}</div>`);
@@ -230,7 +231,7 @@
               <div class="h8-newc">
                 <img class="h8-newc-face" src="${img(s.face)}" alt="" aria-hidden="true">
                 <div class="h8-newc-text">
-                  <p class="h8-newc-tag">${j === 0 ? 'Premier client' : 'Nouveau client'}<span class="h8-newc-dots" aria-label="Situation ${j + 1} sur 3">${[0, 1, 2].map(i => `<i class="${i < j ? 'is-done' : i === j ? 'is-now' : ''}"></i>`).join('')}</span></p>
+                  <p class="h8-newc-tag">${j === 0 ? 'Premier client' : 'Nouveau client'}<span class="h8-newc-dots" aria-label="Situation ${j + 1} sur ${N}">${Array.from({ length: N }, (_, i) => i).map(i => `<i class="${i < j ? 'is-done' : i === j ? 'is-now' : ''}"></i>`).join('')}</span></p>
                   <p class="h8-newc-title">${esc(s.title)}</p>
                 </div>
               </div>
@@ -248,7 +249,7 @@
     const ok = tone === 'ok';
     return stage(feedbackCard(tone, ok ? r.why : r.choices[id].note, {
       better: ok ? '' : 'Revenez aux réponses et essayez-en une autre.', betterLabel: 'À vous de rejouer',
-      button: ok ? next(j === 2 ? 'Voir le bilan' : `Client suivant : ${list[j + 1].title.charAt(0).toLowerCase()}${list[j + 1].title.slice(1)}`, 'h8-ack', 0.5, `data-j="${j}"`)
+      button: ok ? next(j === N - 1 ? 'Voir le bilan' : `Client suivant : ${list[j + 1].title.charAt(0).toLowerCase()}${list[j + 1].title.slice(1)}`, 'h8-ack', 0.5, `data-j="${j}"`)
         : `<button type="button" class="button primary h6-next h6-in" ${delay(0.5)} data-act="h8-retry" data-j="${j}">${icon('arrowLeft', { size: 18 })}<span>Revenir aux réponses</span></button>`
     }), 'is-fb');
   }
@@ -271,6 +272,23 @@
     const why = f.prio && f.expect.includes(c.type) ? 'elle doit faire choisir' : `on attend : ${want}`;
     return `<span class="h8-chip is-ko">${esc(label)}<small>${esc(why)}</small></span>`;
   };
+  // Le bilan de la fiche : un nom court par rubrique, et un conseil en une phrase.
+  const SHORT = { sit: 'Le cas vécu', disc: 'Ce que Lucas doit découvrir', o1: 'Lancer la conversation, question 1', o2: 'Lancer la conversation, question 2', c1: 'Aller plus loin, question 1', c2: 'Aller plus loin, question 2', p1: 'Vérifier un détail, question 1', p2: 'Vérifier un détail, question 2', h: 'Faire choisir', ind: 'Les mots à guetter', piege: 'La question à ne pas poser' };
+  const advice = c => {
+    const f = c.f;
+    if (c.empty) return f.kind === 'q' ? 'Pas encore écrite.' : 'Pas encore rempli.';
+    if (f.kind === 'text') return 'Un peu court : ajoutez un détail concret de votre métier.';
+    if (f.trap) return 'Écrivez la question à ne pas poser : celle qui souffle la réponse ou pousse un produit.';
+    const want = f.expect.map(e => TYPE_LABEL[e].toLowerCase()).join(' ou ');
+    if (f.prio && f.expect.includes(c.type)) return 'Elle doit faire choisir le client : « Entre A et B, qu’est-ce qui compte le plus ? »';
+    if (c.type === 'pas-question') return 'Ce n’est pas encore une question : terminez-la par un point d’interrogation.';
+    if (c.type === 'produit') return `Elle pousse un produit ; il faut une question ${want}.`;
+    if (c.type === 'orientee') return `Elle souffle la réponse ; il faut une question ${want}.`;
+    if (!c.label) return `On ne reconnaît pas une question ${want}. Reformulez-la.`;
+    return `Elle est ${c.label.toLowerCase()} ; il faut une question ${want}.`;
+  };
+  // Les mots à guetter, en étiquettes (séparés par des virgules).
+  const wordChips = text => String(text || '').split(/[,;\n]+/).map(w => w.replace(/[«»"]/g, '').trim()).filter(Boolean).slice(0, 12).map(w => `<span class="h8-word">${esc(w)}</span>`).join('');
   function fichesStep() {
     const list = chosen();
     const free = list.findIndex((_, i) => !yes(`f${i}_ok`));
@@ -296,24 +314,95 @@
           ${aid}
         </div>`;
     };
-    // Pages de questions : une carte par groupe, des questions courtes numérotées, une seule aide par carte.
-    const groupHtml = g => {
-      const fs = g.ids.map(id => page.fields.find(f => f.id === id));
-      const f0 = fs[0];
-      const own = s.fx && s.fx[f0.id];
-      const aid = help === 'example' ? `<p class="h8-gaid"><span>${own ? 'Par exemple' : 'Par exemple, chez un vendeur en électroménager'}</span>${q(own || f0.example)}</p>` : help === 'hint' ? `<p class="h8-gaid"><span>Indice</span>${esc(f0.hint)}</p>` : '';
-      return `<div class="h7-write h8-field h8-group">
-          <p class="h8-field-label">${esc(g.title)}</p>
-          <p class="h7-write-note">${esc(g.sub)}</p>
-          ${fs.map((f, n) => {
-            const name = `f${j}_${f.id}`;
-            return `<div class="h8-qrow"><span class="h8-qrow-n" aria-hidden="true">${n + 1}</span>
-                <div class="h8-qrow-body">${ex.field(name, `${g.title}, question ${n + 1}`, { placeholder: 'Votre question… ?', max: 220, rows: 1, hideLabel: true })}</div>
-                <span class="h8-qrow-chip" data-badge="${name}" data-chip="1" aria-live="polite">${chipHtml(f, v(name))}</span>
-              </div>`;
-          }).join('')}
-          ${aid}
+    /* Chaque page a sa forme, qui traduit ce qu'on y fait :
+     * 1 · une scène et une liste ; 2 et 3 · l'entonnoir, qu'on descend ;
+     * 4 · les mots en étiquettes, et le piège dans un panneau d'alerte. */
+    const fieldOf = id => pages.flatMap(p => p.fields).find(f => f.id === id);
+    const aidFor = f => {
+      const own = s.fx && s.fx[f.id];
+      const text = own || f.example;
+      if (help === 'example') return `<p class="h8-gaid"><span>${own ? 'Par exemple' : 'Par exemple, chez un vendeur en électroménager'}</span>${f.kind === 'q' ? q(text) : esc(text)}</p>`;
+      if (help === 'hint') return `<p class="h8-gaid"><span>Indice</span>${esc(f.hint)}</p>`;
+      return '';
+    };
+    const qRow = (f, n, many, label) => {
+      const name = `f${j}_${f.id}`;
+      return `<div class="h8-qrow h8-line">${many ? `<span class="h8-qrow-n" aria-hidden="true">${n + 1}</span>` : '<span></span>'}
+          <div class="h8-qrow-body">${ex.field(name, label, { placeholder: 'Votre question… ?', max: 220, rows: 1, hideLabel: true })}</div>
+          <span class="h8-qrow-chip" data-badge="${name}" data-chip="1" aria-live="polite">${chipHtml(f, v(name))}</span>
         </div>`;
+    };
+    const sitPage = () => {
+      const fs = fieldOf('sit');
+      const fd = fieldOf('disc');
+      return `<div class="h8-p1">
+          <div class="h7-write h8-field h8-scenecard">
+            <div class="h8-scenecard-head"><img src="${img(s.face)}" alt="" aria-hidden="true"><div><p class="h8-tag">La scène</p><p class="h8-field-label">${esc(fs.label)}</p></div></div>
+            <p class="h7-write-note">${esc(fs.sub)}</p>
+            ${ex.field(`f${j}_sit`, fs.label, { placeholder: fs.placeholder || 'Racontez…', max: 400, rows: 4, hideLabel: true })}
+            ${aidFor(fs)}
+          </div>
+          <div class="h7-write h8-field h8-listcard">
+            <p class="h8-tag">Pour ${esc(newcomer.name)}</p>
+            <p class="h8-field-label">${esc(fd.label)}</p>
+            <p class="h7-write-note">${esc(fd.sub)} Une information par ligne.</p>
+            ${ex.field(`f${j}_disc`, fd.label, { placeholder: fd.placeholder || 'Listez…', max: 400, rows: 3, hideLabel: true })}
+            ${aidFor(fd)}
+          </div>
+        </div>`;
+    };
+    // L'entonnoir : les 4 étages des pages 2 et 3 ; ceux de l'autre page restent visibles, en petit.
+    const LEVELS = pages.filter(p => p.groups).flatMap(p => p.groups);
+    // Pages 2 et 3 : un petit entonnoir dessiné montre où l'on en est ; les questions s'écrivent à côté.
+    const funnelPage = active => `<div class="h8-fpage">
+        <aside class="h8-fmap" aria-hidden="true">
+          ${LEVELS.map((g, i) => `<div class="h8-fmap-l lvl-${i + 1} ${active.includes(i) ? 'is-on' : ''}" style="--w:${100 - i * 17}%"><span>${esc(g.title.replace(/^Pour /, ''))}</span></div>`).join('')}
+          <p class="h8-fmap-cap">${active[0] === 0 ? 'Vous êtes en haut de l’entonnoir : on ouvre large.' : 'Vous êtes en bas de l’entonnoir : on précise, puis on fait choisir.'}</p>
+        </aside>
+        <div class="h7-write h8-field h8-fmain">${active.map((i, k) => {
+          const g = LEVELS[i];
+          const fs = g.ids.map(fieldOf);
+          return `<section class="h8-fsec lvl-${i + 1} h6-in" ${delay(0.12 * k)}>
+              <p class="h8-fsec-title">${esc(g.title)}</p>
+              <p class="h8-fsec-sub">${esc(g.sub)}</p>
+              ${fs.map((f, n) => qRow(f, n, fs.length > 1, `${g.title}, question ${n + 1}`)).join('')}
+              ${aidFor(fs[0])}
+            </section>`;
+        }).join('')}</div>
+      </div>`;
+    const trapsPage = () => {
+      const fi = fieldOf('ind');
+      const fp = fieldOf('piege');
+      const nameI = `f${j}_ind`;
+      const nameP = `f${j}_piege`;
+      return `<div class="h8-p4">
+          <div class="h7-write h8-field h8-words">
+            <p class="h8-tag">À guetter</p>
+            <p class="h8-field-label">Les mots qui trahissent une motivation</p>
+            <p class="h7-write-note">${esc(fi.sub)} Séparez-les par des virgules : chacun devient une étiquette.</p>
+            <div class="h8-wordbox">
+              <div class="h8-wordchips" data-words="${nameI}" aria-hidden="true">${wordChips(v(nameI))}</div>
+              <div class="h8-line">${ex.field(nameI, fi.label, { placeholder: 'avis, le meilleur, garantie…', max: 400, rows: 1, hideLabel: true })}</div>
+            </div>
+            ${aidFor(fi)}
+          </div>
+          <div class="h8-alert">
+            <div class="h8-alert-head"><span class="h8-alert-mark" aria-hidden="true">!</span><div><p class="h8-alert-tag">À ne pas dire</p><p class="h8-alert-title">La question que ${esc(newcomer.name)} ne doit pas poser</p></div></div>
+            <div class="h8-alert-body">
+              <p class="h8-alert-sub">${esc(fp.sub)}</p>
+              <div class="h8-alert-bubble h8-line">${ex.field(nameP, fp.label, { placeholder: 'La question piège… ?', max: 220, rows: 1, hideLabel: true })}</div>
+              <span class="h8-qrow-chip" data-badge="${nameP}" data-chip="1" aria-live="polite">${chipHtml(fp, v(nameP))}</span>
+              ${aidFor(fp)}
+            </div>
+          </div>
+        </div>`;
+    };
+    const pageBody = () => {
+      if (page.id === 'sit') return sitPage();
+      if (page.id === 'open') return funnelPage([0, 1]);
+      if (page.id === 'precise') return funnelPage([2, 3]);
+      if (page.id === 'traps') return trapsPage();
+      return `<div class="h8-fields">${page.fields.map(fieldHtml).join('')}</div>`;
     };
     const lastPage = pageP === pages.length - 1;
     const nav = `<div class="h7-fiche-nav">${pageP > 0 ? `<button type="button" class="text-button with-icon" data-act="h8-page" data-p="${pageP - 1}">${icon('arrowLeft', { size: 16 })}<span>Page précédente</span></button>` : '<span></span>'}${lastPage ? (okJ ? '' : kit.act('h8-fiche-check', `${icon('check', { size: 18 })}<span>Vérifier ma fiche</span>`, 'primary', `data-j="${j}"`)) : `<button type="button" class="button primary small" data-act="h8-page" data-p="${pageP + 1}"><span>Page suivante</span>${icon('arrowRight', { size: 16 })}</button>`}</div>`;
@@ -322,23 +411,34 @@
       const cs = ficheChecks(j);
       const good = cs.filter(c => c.ok).length;
       const tone = good === cs.length ? 'ok' : good >= cs.length - 3 ? 'mid' : 'ko';
-      bilan = msgBox(tone, `<p>Votre fiche « ${esc(s.title)} » : ${good} rubrique${good > 1 ? 's' : ''} sur ${cs.length} au point.</p><ul class="h7-msg-checks">${cs.map(c => `<li><span class="h7-dot ${c.ok ? 'is-ok' : 'is-ko'}" aria-hidden="true"></span><span>${esc(c.text)}</span></li>`).join('')}</ul><p class="h7-msg-note">Vous pouvez encore corriger vos questions : elles seront reprises telles quelles dans la banque.</p>`, `Bilan de la fiche ${j + 1}`)
-        + (j < 2 ? `<div class="h7-actions"><button type="button" class="button primary" data-act="h8-fiche" data-j="${j + 1}"><span>Fiche suivante</span>${icon('arrowRight', { size: 16 })}</button></div>` : '');
+      const todo = cs.filter(c => !c.ok);
+      const tiles = pages.map((p, n) => {
+        const mine = cs.filter(c => p.fields.includes(c.f));
+        const ok = mine.filter(c => c.ok).length;
+        return `<div class="h8-btile ${ok === mine.length ? 'is-ok' : 'is-ko'}"><span class="h8-btile-n">${ok === mine.length ? icon('check', { size: 12, strokeWidth: 3.5 }) : n + 1}</span><span class="h8-btile-t">${esc(p.tab)}</span><span class="h8-btile-s">${ok} sur ${mine.length}</span></div>`;
+      }).join('');
+      const fix = todo.length ? `<p class="h8-bfix-h">À reprendre</p><ul class="h8-bfix">${todo.map(c => {
+        const p = pages.findIndex(pg => pg.fields.includes(c.f));
+        return `<li><button type="button" class="h8-bfix-item" data-act="h8-page" data-p="${p}"><span class="h8-bfix-name">${esc(SHORT[c.f.id] || c.f.label)}</span><span class="h8-bfix-why">${esc(advice(c))}</span><span class="h8-bfix-go">Corriger${icon('arrowRight', { size: 14 })}</span></button></li>`;
+      }).join('')}</ul>` : '';
+      const lead = todo.length ? `${good} rubrique${good > 1 ? 's' : ''} sur ${cs.length} ${good > 1 ? 'sont' : 'est'} au point. Reprenez les autres : chaque ligne vous ramène à la bonne page.` : 'Toutes les rubriques sont au point : Lucas peut s’en servir telle quelle.';
+      bilan = msgBox(tone, `<p>${lead}</p><div class="h8-btiles">${tiles}</div>${fix}`, `Votre fiche « ${s.title} »`)
+        + (j < N - 1 ? `<div class="h7-actions"><button type="button" class="button primary" data-act="h8-fiche" data-j="${j + 1}"><span>Fiche suivante</span>${icon('arrowRight', { size: 16 })}</button></div>` : '');
     }
     return `<section class="k-panel d5-panel h7-panel">
         <div class="h8-fhead">
           <img class="h8-fhead-face" src="${img(s.face)}" alt="" aria-hidden="true">
           <div class="h8-fhead-text">
-            <p class="h8-fhead-tag">Fiche ${j + 1} sur 3 · pour ${esc(newcomer.name)}</p>
+            <p class="h8-fhead-tag">Fiche ${j + 1} sur ${N} · pour ${esc(newcomer.name)}</p>
             <p class="h8-fhead-title">${esc(s.title)}</p>
             <p class="h8-fhead-sub">À partir d’un cas réel de votre métier. <span class="h8-fhead-help">${helpLabel}</span></p>
           </div>
-          <div class="h8-fminis" role="tablist" aria-label="Vos 3 fiches">${tabs}</div>
+          <div class="h8-fminis" role="tablist" aria-label="Vos 2 fiches">${tabs}</div>
         </div>
         <div class="h8-steps" role="group" aria-label="Les pages de la fiche">${pageTabs}</div>
         <p class="h7-question">${esc(page.ask)}</p>
         ${page.intro ? `<p class="h8-expect"><span>Ce qu’on attend de vous</span>${esc(page.intro.replace('{situation}', s.title.charAt(0).toLowerCase() + s.title.slice(1)))}</p>` : ''}
-        <div class="h8-fields">${page.groups ? page.groups.map(groupHtml).join('') : page.fields.map(fieldHtml).join('')}</div>
+        ${pageBody()}
         ${nav}
         ${bilan}
       </section>
@@ -409,8 +509,8 @@
     return `<section class="k-panel h6-review h7-review">
         <p class="k-label">Votre parcours</p>
         <ul class="h7-path">
-          <li><span>Le bon réflexe</span>${reflexRight()} sur 3 trouvés du premier coup</li>
-          <li><span>Vos fiches</span>${qScore()} questions sur ${QFIELDS.length * 3} au point</li>
+          <li><span>Le bon réflexe</span>${reflexRight()} sur ${N} trouvés du premier coup</li>
+          <li><span>Vos fiches</span>${qScore()} questions sur ${QFIELDS.length * N} au point</li>
           <li><span>Vos règles d’or</span>${c.length} thèmes sur ${themes.length} couverts</li>
           <li><span>Le test terrain</span>${yes('tok') ? 'prévu' : 'passé'}</li>
         </ul>
@@ -452,9 +552,9 @@
 
   function validate(values) {
     const k = at();
-    if (k === 0) return yes('sitok') ? [] : [{ key: 'sit', message: 'Choisissez et validez vos 3 situations.' }];
+    if (k === 0) return yes('sitok') ? [] : [{ key: 'sit', message: 'Choisissez et validez vos 2 situations.' }];
     if (k === 1) return stepDone(1) ? [] : [{ key: 'sit', message: 'Trouvez le bon réflexe pour chaque situation.' }];
-    if (k === 2) return stepDone(2) ? [] : [{ key: 'sit', message: 'Remplissez et vérifiez vos trois fiches.' }];
+    if (k === 2) return stepDone(2) ? [] : [{ key: 'sit', message: 'Remplissez et vérifiez vos deux fiches.' }];
     if (k === 3) return yes('rok') ? [] : [{ key: 'r0', message: 'Écrivez et vérifiez vos 5 règles d’or.' }];
     if (k === 4) return stepDone(4) ? [] : [{ key: 't_when', message: 'Engagez-vous à tester une question, ou passez cette étape.' }];
     const missing = content.selfCheck.findIndex((_, i) => !values[`self${i}`]);
@@ -482,7 +582,7 @@
       const id = control.dataset.id;
       const now = chosenIds();
       const on = !now.includes(id);
-      if (on && now.length >= 3) { core.toast('Trois situations au plus : retirez-en une d’abord.'); return; }
+      if (on && now.length >= N) { core.toast('Deux situations au plus : retirez-en une d’abord.'); return; }
       const nextIds = on ? [...now, id] : now.filter(x => x !== id);
       ex.setValue('sit', nextIds); ex.changed();
       control.classList.toggle('is-on', on);
@@ -491,11 +591,11 @@
       if (count) count.textContent = String(nextIds.length);
       document.querySelectorAll('.h8-sit-dots span').forEach((d, i) => d.classList.toggle('is-on', i < nextIds.length));
       const grid = document.querySelector('.h8-sits');
-      if (grid) grid.classList.toggle('is-full', nextIds.length >= 3);
+      if (grid) grid.classList.toggle('is-full', nextIds.length >= N);
       const check = document.querySelector('[data-act="h8-sit-check"]');
-      if (check) check.disabled = nextIds.length !== 3;
+      if (check) check.disabled = nextIds.length !== N;
     },
-    'h8-sit-check': () => { if (chosenIds().length === 3) { advance('sitok'); showMsg(); } },
+    'h8-sit-check': () => { if (chosenIds().length === N) { advance('sitok'); showMsg(); } },
     'h8-pick': control => {
       const j = Number(control.dataset.j);
       const id = control.dataset.id;
@@ -544,12 +644,14 @@
     if (!field) return;
     const m = /^f\d_(.+)$/.exec(field);
     if (m) {
+      const words = document.querySelector(`[data-words="${field}"]`);
+      if (words) words.innerHTML = wordChips(event.target.value);
       const f = QFIELDS.find(x => x.id === m[1]);
       const badge = f && document.querySelector(`[data-badge="${field}"]`);
       if (badge) badge.innerHTML = badge.dataset.chip ? chipHtml(f, event.target.value) : badgeHtml(f, event.target.value);
       // La ligne s'agrandit avec la question (si le navigateur ne le fait pas seul).
       const t = event.target;
-      if (t.tagName === 'TEXTAREA' && t.closest('.h8-group') && !CSS.supports('field-sizing', 'content')) { t.style.height = 'auto'; t.style.height = `${t.scrollHeight}px`; }
+      if (t.tagName === 'TEXTAREA' && t.closest('.h8-line') && !CSS.supports('field-sizing', 'content')) { t.style.height = 'auto'; t.style.height = `${t.scrollHeight}px`; }
       return;
     }
     if (/^r\d$/.test(field)) {
@@ -559,7 +661,7 @@
   });
 
   kit.tour(KEY, [
-    { target: '.h6-stage, .k-panel', title: 'Votre banque', text: 'Pour Lucas, le nouveau collègue : trois situations de votre métier, le bon réflexe, une fiche de questions pour chacune, puis vos règles d’or.' },
+    { target: '.h6-stage, .k-panel', title: 'Votre banque', text: 'Pour Lucas, le nouveau collègue : deux situations de votre métier, le bon réflexe, une fiche de questions pour chacune, puis vos règles d’or.' },
     { target: '.k-count.is-progress', title: 'Les étapes', text: 'Les situations, le bon réflexe, vos fiches, vos règles d’or, le test terrain, puis la grille.' }
   ]);
 

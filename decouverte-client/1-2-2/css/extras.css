@@ -2197,7 +2197,7 @@ p.h7-question { margin-bottom: 12px; }
 .h8-lucas img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
 
 /* 6.3 · Bilan des situations : trois cartes illustrées, le piège puis la question clé. */
-.h8-sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 14px; }
+.h8-sum { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 14px; }
 .h8-sum-card { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px 18px 18px; border-radius: 18px; background: #fff; box-shadow: 0 4px 14px rgb(15 35 78 / 8%), inset 0 0 0 1px #e7ebf4; text-align: center; }
 .h8-sum-face { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 4px #fbf3e4; }
 .h8-sum-title { margin: 0; color: var(--navy); font-weight: 700; line-height: 1.35; }
@@ -2322,3 +2322,76 @@ p.h7-question { margin-bottom: 12px; }
 .h8-bank dt { color: var(--muted); font-size: .86rem; font-weight: 700; }
 .h8-bank dd { margin: 0; color: #24305a; }
 @media (max-width: 860px) { .h8-fields, .h8-rules-grid { grid-template-columns: 1fr; } .h8-bank dl > div { grid-template-columns: 1fr; gap: 2px; } }
+
+/* 6.3 · Une forme par page de la fiche. */
+.h8-tag { margin: 0; color: #2a8f8f; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+
+/* Page 1 : la scène (fond crème, visage du client) et la liste pour Lucas (puces). */
+.h8-p1 { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px; margin: 4px 0 16px; align-items: start; }
+.h8-scenecard { background: #fbf6ec !important; box-shadow: 0 6px 18px rgb(120 90 40 / 8%), inset 0 0 0 1px #f0e6d2 !important; }
+.h8-scenecard-head { display: flex; align-items: center; gap: 14px; }
+.h8-scenecard-head img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 4px #fff; }
+#main .h8-scenecard textarea { background-image: repeating-linear-gradient(to bottom, transparent 0 31px, #eadfc8 31px 32px); }
+#main .h8-listcard textarea { padding-left: 22px; background-image: radial-gradient(circle at 6px 16px, #2a8f8f 0 3px, transparent 3.5px), radial-gradient(circle, rgb(27 35 112 / 22%) .9px, transparent 1.3px); background-size: 100% 32px, 6px 32px; background-position: 0 0, 0 14.5px; background-repeat: repeat-y, repeat; }
+
+/* Toutes les lignes d'écriture de 6.3 : ni cadre, ni ombre, ni fond (le moteur en met). */
+#main .h8-line textarea, #main .h8-line textarea:focus, #main .h8-line textarea:hover { display: block; min-height: 0; height: auto; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; line-height: 1.5; resize: none; overflow: hidden; field-sizing: content; font-size: 1.05rem; }
+#main .h8-line .counter { display: none; }
+
+/* Pages 2 et 3 : un petit entonnoir dessiné à gauche (où l'on en est), les questions à droite. */
+.h8-fpage { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 28px; margin: 4px 0 16px; align-items: start; }
+.h8-fmap { position: sticky; top: 90px; display: grid; justify-items: center; gap: 6px; padding: 8px 0; }
+.h8-fmap-l { width: var(--w); height: 50px; display: grid; place-items: center; clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 12px 100%); background: var(--lvl); opacity: .22; transition: opacity .3s; }
+.h8-fmap-l.is-on { opacity: 1; }
+.h8-fmap-l span { padding: 0 14px; color: #fff; font-size: .74rem; font-weight: 800; line-height: 1.15; text-align: center; }
+.lvl-1 { --lvl: #2f3f9e; } .lvl-2 { --lvl: #6f93d6; } .lvl-3 { --lvl: #7fa274; } .lvl-4 { --lvl: #e07a55; }
+.h8-fmap-cap { margin: 10px 0 0; color: #4c5a80; font-size: .86rem; line-height: 1.45; text-align: center; }
+.h8-fmain { gap: 0 !important; padding: 8px 26px !important; }
+.h8-fsec { display: grid; gap: 4px; padding: 18px 0; }
+.h8-fsec + .h8-fsec { border-top: 1px solid #eef1f7; }
+.h8-fsec-title { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--navy); font-size: 1.08rem; font-weight: 800; }
+.h8-fsec-title::before { content: ''; width: 12px; height: 12px; border-radius: 3px; background: var(--lvl); }
+.h8-fsec-sub { margin: 0 0 4px 22px; color: #5a6584; font-size: .92rem; }
+.h8-fsec .h8-gaid { margin-left: 22px; }
+.h8-fsec .h8-qrow { border-bottom: 0; background-image: radial-gradient(circle, rgb(27 35 112 / 28%) .9px, transparent 1.3px); background-size: 6px 3px; background-repeat: repeat-x; background-position: 0 100%; }
+.h8-fsec .h8-qrow:focus-within { background-image: linear-gradient(var(--lvl), var(--lvl)); background-size: 100% 2px; }
+.h8-fsec .h8-qrow-n { background: color-mix(in srgb, var(--lvl) 14%, #fff); color: var(--navy); }
+.h8-fsec .h8-qrow:focus-within .h8-qrow-n { background: var(--lvl); color: #fff; }
+
+/* Page 4 : à gauche, les mots en étiquettes dans le champ ; à droite, un panneau « À ne pas dire ». */
+.h8-p4 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin: 4px 0 16px; align-items: stretch; }
+.h8-words { background: #fbf6ec !important; box-shadow: 0 6px 18px rgb(120 90 40 / 8%), inset 0 0 0 1px #f0e6d2 !important; }
+.h8-wordbox { display: grid; gap: 10px; padding: 14px 16px; border-radius: 14px; background: #fff; box-shadow: 0 2px 8px rgb(120 90 40 / 8%); }
+.h8-wordchips { display: flex; flex-wrap: wrap; gap: 8px; }
+.h8-wordchips:empty { display: none; }
+.h8-word { padding: 5px 12px; border-radius: 999px; background: #e3f3f3; color: #1d6f6f; font-size: .9rem; font-weight: 700; animation: h7-pop .25s ease-out both; }
+.h8-alert { display: grid; grid-template-rows: auto 1fr; overflow: hidden; border-radius: 18px; background: #fff; box-shadow: 0 6px 18px rgb(168 61 116 / 12%), inset 0 0 0 1.5px #f1d3e2; }
+.h8-alert-head { display: flex; align-items: center; gap: 14px; padding: 16px 22px; background: #a83d74; color: #fff; }
+.h8-alert-mark { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #fff; color: #a83d74; font-size: 1.1rem; font-weight: 900; }
+.h8-alert-tag { margin: 0; color: #f6d3e4; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h8-alert-title { margin: 0; color: #fff; font-size: 1.08rem; font-weight: 800; }
+.h8-alert-body { display: grid; gap: 12px; align-content: start; padding: 18px 22px 20px; }
+.h8-alert-sub { margin: 0; color: #6e3d58; font-size: .92rem; }
+.h8-alert-bubble { position: relative; padding: 14px 18px; border-radius: 18px 18px 18px 4px; background: #fbf0f5; }
+#main .h8-alert-bubble textarea:not(:focus):not(:placeholder-shown) { color: #7a2f57; text-decoration: line-through; text-decoration-color: #a83d74; text-decoration-thickness: 2px; }
+.h8-alert .h8-qrow-chip { justify-self: start; }
+@media (max-width: 860px) { .h8-p1, .h8-p4, .h8-fpage { grid-template-columns: 1fr; } .h8-fmap { position: static; max-width: 260px; margin: 0 auto; } }
+
+/* 6.3 · Bilan de la fiche : les 4 pages en tuiles, puis seulement ce qui reste à reprendre. */
+.h8-btiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 12px 0 4px; }
+.h8-btile { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 10px; align-items: center; padding: 10px 12px; border-radius: 14px; background: #f6f8fc; }
+.h8-btile.is-ok { background: #e9f5f5; }
+.h8-btile-n { grid-row: span 2; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #fdf0e6; color: #a5521b; font-size: .8rem; font-weight: 800; }
+.h8-btile.is-ok .h8-btile-n { background: #2a8f8f; color: #fff; }
+.h8-btile-t { color: var(--navy); font-size: .88rem; font-weight: 700; line-height: 1.25; }
+.h8-btile-s { color: #6a7392; font-size: .8rem; }
+.h8-bfix-h { margin: 16px 0 6px; color: #a5521b; font-size: .74rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h8-bfix { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.h8-bfix li + li { border-top: 1px solid #eef1f7; }
+.h8-bfix-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name go" "why go"; gap: 2px 16px; align-items: center; width: 100%; padding: 10px 4px; border: 0; background: none; font: inherit; text-align: left; cursor: var(--cursor-hand, pointer); border-radius: 10px; transition: background .15s; }
+.h8-bfix-item:hover { background: #f6f8fc; }
+.h8-bfix-item:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; }
+.h8-bfix-name { grid-area: name; color: var(--navy); font-weight: 700; }
+.h8-bfix-why { grid-area: why; color: #4c5a80; font-size: .92rem; line-height: 1.45; }
+.h8-bfix-go { grid-area: go; display: inline-flex; align-items: center; gap: 4px; color: var(--accent); font-size: .86rem; font-weight: 700; }
+@media (max-width: 760px) { .h8-btiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

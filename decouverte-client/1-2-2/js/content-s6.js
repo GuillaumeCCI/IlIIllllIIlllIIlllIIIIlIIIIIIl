@@ -695,7 +695,7 @@
 
     /* OPTION 3 « MA BANQUE DE QUESTIONS TERRAIN » (Bloom 6, ≈ 60 min). La
      * responsable demande de préparer une banque de questions pour un
-     * nouveau collègue. Trois situations parmi huit ; pour chacune, « Le bon
+     * nouveau collègue. Deux situations parmi huit ; pour chacune, « Le bon
      * réflexe » (une scène, trois réponses), puis une fiche ; puis cinq règles
      * d'or, le test terrain (facultatif), la grille. Les questions écrites sont
      * jugées sur leur FORME (ATELIER_QTYPE) : le métier de l'apprenant n'est
@@ -710,7 +710,7 @@
       ask: 'Lucas arrive lundi en alternance. Je voudrais que vous lui prépariez une banque de questions pour réussir ses découvertes client. Vous connaissez nos clients mieux que personne : appuyez-vous sur ce que vous vivez au comptoir.',
       mission: [
         'Dire en une ligne quel est votre métier.',
-        'Choisir 3 situations de découverte que vous rencontrez souvent.',
+        'Choisir 2 situations de découverte que vous rencontrez souvent.',
         'Pour chacune, trouver le bon réflexe, puis remplir une fiche de questions.',
         'Écrire vos 5 règles d’or, puis vérifier votre banque avec la grille.'
       ],
@@ -858,10 +858,10 @@
 
       // Les pages de transition (avant chaque étape), comme en 6.2.
       transitions: [
-        { done: 'Vous savez ce que Nadia attend de vous.', why: 'Voici votre chemin : six étapes, des situations de votre métier jusqu’à la banque que vous remettrez à Lucas.', todo: 'Choisissez les 3 situations de découverte que vous rencontrez le plus souvent.' },
-        { done: 'Vous avez choisi vos 3 situations.', why: 'Lucas arrive lundi, et il vous accompagne pour sa première semaine. Avant de lui écrire des fiches, montrez-lui l’exemple : dans chacune de vos 3 situations, un client vous parle, et Lucas regarde comment vous démarrez la découverte. Ce qu’il verra, il le refera.', todo: 'Pour chaque situation, lisez la scène, puis choisissez la réponse que vous donneriez au client devant Lucas. Après chaque choix, on vous dit pourquoi c’est le bon réflexe, ou pas.' },
+        { done: 'Vous savez ce que Nadia attend de vous.', why: 'Voici votre chemin : six étapes, des situations de votre métier jusqu’à la banque que vous remettrez à Lucas.', todo: 'Choisissez les 2 situations de découverte que vous rencontrez le plus souvent.' },
+        { done: 'Vous avez choisi vos 2 situations.', why: 'Lucas arrive lundi, et il vous accompagne pour sa première semaine. Avant de lui écrire des fiches, montrez-lui l’exemple : dans chacune de vos 2 situations, un client vous parle, et Lucas regarde comment vous démarrez la découverte. Ce qu’il verra, il le refera.', todo: 'Pour chaque situation, lisez la scène, puis choisissez la réponse que vous donneriez au client devant Lucas. Après chaque choix, on vous dit pourquoi c’est le bon réflexe, ou pas.' },
         { done: 'Vous avez trouvé le bon réflexe pour chaque situation.', why: 'Maintenant, c’est votre métier qui parle : Lucas a besoin de questions prêtes à l’emploi, avec vos clients et vos produits.', todo: 'Remplissez une fiche par situation. Chaque question est vérifiée au fur et à mesure.' },
-        { done: 'Vos trois fiches sont prêtes.', why: 'Lucas ne retiendra pas tout. Ce qu’il gardera en tête, ce sont quelques règles simples.', todo: 'Écrivez vos 5 règles d’or du questionnement.' },
+        { done: 'Vos deux fiches sont prêtes.', why: 'Lucas ne retiendra pas tout. Ce qu’il gardera en tête, ce sont quelques règles simples.', todo: 'Écrivez vos 5 règles d’or du questionnement.' },
         { done: 'Votre banque est complète.', why: 'Une question ne vaut que si elle marche au comptoir. Le mieux est d’en tester une cette semaine.', todo: 'Choisissez la question que vous testerez, et quand. Cette étape est facultative.' },
         { done: 'Vous avez prévu votre test terrain.', why: 'Avant de remettre la banque à Lucas, relisez-la avec les critères de votre tuteur.', todo: 'Répondez Oui ou Non à chaque critère de la grille.' }
       ],

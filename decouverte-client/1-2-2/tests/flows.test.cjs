@@ -109,11 +109,11 @@ const CUSTOM = {
     c.fiche.forEach(r => e.setValue(`f_${r.id}`, d.model[r.id]));
     c.selfCheck.forEach((_, i) => e.setValue(`self${i}`, 'oui'));
   },
-  // Synthèse (option 3, Ma banque) : 3 situations, les bons réflexes, les fiches d'exemple, les règles d'exemple.
+  // Synthèse (option 3, Ma banque) : 2 situations, les bons réflexes, les fiches d'exemple, les règles d'exemple.
   's6-6-3': (e, c) => {
     [0, 1, 2, 3, 4, 5].forEach(k => e.setValue(`tr${k}`, true));
     e.setValue('intro', true); e.setValue('metier', 'Conseiller en magasin d’électroménager');
-    const ids = ['sait', 'regarde', 'accompagne'];
+    const ids = ['sait', 'accompagne'];
     e.setValue('sit', ids); e.setValue('sitok', true);
     ids.forEach((id, j) => { const s = c.situations.find(x => x.id === id); e.setValue(`c${j}`, s.reflex.best); e.setValue(`ack${j}`, true); c.pages.forEach(p => p.fields.forEach(f => e.setValue(`f${j}_${f.id}`, f.example))); e.setValue(`f${j}_ok`, true); });
     c.rulesExample.forEach((r, i) => e.setValue(`r${i}`, r)); e.setValue('rok', true);
