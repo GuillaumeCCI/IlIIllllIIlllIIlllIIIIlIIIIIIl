@@ -2331,11 +2331,13 @@ p.h7-question { margin-bottom: 12px; }
 .h8-bank-block { padding: 16px 20px; border-radius: 14px; background: #f7f9fc; }
 .h8-bank-h { margin: 0 0 8px; color: var(--navy); font-weight: 800; }
 .h8-bank ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; color: #24305a; }
-.h8-bank dl { margin: 0; display: grid; gap: 6px; }
-.h8-bank dl > div { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 12px; }
+.h8-bank dl { margin: 0; display: grid; gap: 0; }
+.h8-bank-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.h8-bank dl > div { display: grid; gap: 2px; padding: 8px 0; border-bottom: 1px solid #e8edf6; }
+.h8-bank dl > div:last-child { border-bottom: 0; }
 .h8-bank dt { color: var(--muted); font-size: .86rem; font-weight: 700; }
-.h8-bank dd { margin: 0; color: #24305a; }
-@media (max-width: 860px) { .h8-fields, .h8-rules-grid { grid-template-columns: 1fr; } .h8-bank dl > div { grid-template-columns: 1fr; gap: 2px; } }
+.h8-bank dd { margin: 0; color: #24305a; overflow-wrap: anywhere; }
+@media (max-width: 860px) { .h8-fields, .h8-rules-grid { grid-template-columns: 1fr; } .h8-bank-pair { grid-template-columns: 1fr; } }
 
 /* 6.3 · Une forme par page de la fiche. */
 .h8-tag { margin: 0; color: #2a8f8f; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
