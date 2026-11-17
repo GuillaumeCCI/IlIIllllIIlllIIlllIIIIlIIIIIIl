@@ -42,6 +42,20 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 
 - Étape 8 (17/11/2026) : synthèse optionnelle, option 2 (s6-6-1, écran propre). Scénario de Mme Rivière en conversation (7 étapes, choix mélangés, jauge 5/10 bornée, réaction aussitôt, fin selon la jauge), carte des besoins en six rubriques une à la fois (la partie jouée à gauche), grille Oui / Non (7 critères dont Traçabilité), corrigé : votre parcours face au meilleur choix (note sous un choix moins bon), votre carte face à l’exemple, bouton « Copier ma carte » (pas de bloc de dépôt). Puis : choix sans biais (longueurs 4 mêlées / 2 bonne plus courte / 1 bonne un peu plus longue, positions 3/2/2), échange animé pas à pas, scénario cohérent sur tous les chemins (chaque étape amène son contexte par la cliente ; la fin 1 exige la bonne validation). Puis, d’après l’exemple Genially fourni (audit, réunion d’ouverture) et les choix de l’utilisateur : mise en scène (décor de la concession flouté, un carton à la fois, « Vous, Antoine » face aux questions numérotées), retour immédiat après chaque choix (« Absolument ! » / « Pas tout à fait… » / « À éviter… », explication, meilleure question ; la jauge compte le premier choix, pas de nouvel essai), question d’accroche et étape « Vos acquis » (4 questions). Images fournies par l’utilisateur (décor vide, Mme Rivière, Antoine, formatrice des retours dans moteur/assets/illustrations/retours). Puis enchaînement de l’exemple : situation, choix par INTENTIONS (« Lui faire classer ses critères »), écran « Votre réponse » (vous décidez de…, la formulation exacte, la réaction), retour (panneau blanc à gauche avec la formatrice, carte à droite). Intentions équilibrées (4 mêlées / 2 bonne plus courte / 1 un peu plus longue). Sources de conception de l’utilisateur (Marie-Jo Leroux, DataVille) : référence de conception, textes dans Documents/Sources-conception. Chrono des 30 minutes (d’après DataVille) : chaque intention coûte des minutes (affichées), « Il me reste {reste} » suit le vrai temps, essai écourté s’il reste moins de 10 minutes ; parcours idéal 17 min. Décisions de l’utilisateur : dépôt « ça dépend » ; l’âge des enfants se garde si le client en parle ; le cadre « maison de retraite » (option 1, dossier B) est à changer.
 
+## État de 6.1 « L'entretien dont vous êtes le héros » (17/11/2026, fin de journée)
+
+Fichiers : `js/content-s6.js` (scénario, intentions, minutes, retours, accroche, acquis, carte, grille), `js/screens/s6-6-1.js` (écran), `css/extras.css` (blocs « 6.1 · … »), images dans `assets/illustrations/` (dialogues/concession-bureau, dialogues/riviere-espace-conseil, visages/mme-riviere, visages/antoine) et `moteur/assets/illustrations/retours/` (formatrice-oui / -presque / -attention).
+
+Déroulé (quatre étapes) :
+1. Le scénario, en scène (décor de l'espace conseil flouté) : accroche « Selon vous… ? » avec retour ; puis 7 étapes, chacune : situation (carte + Continuer) → choix par INTENTIONS numérotées avec leur coût en minutes (carte de gauche : la cliente, sa dernière phrase, son geste, « Vous, Antoine » en petit) → « Votre réponse » (Vous décidez de…, la formulation exacte, sa réaction) → retour comme l'exemple Genially (panneau blanc à gauche sur toute la hauteur : la formatrice et « Ceci est une réponse appropriée » ; carte à droite : Absolument ! / Pas tout à fait… / À éviter…, explication, « Il valait mieux… »). Jauge de découverte (départ 5, ±2) et chrono en cadran SVG (30 min, il en faut 10 pour l'essai ; parcours idéal 17 min). Fin selon jauge, validation et temps (essai écourté).
+2. Vos acquis : 4 questions, retour immédiat.
+3. La carte des besoins : 6 rubriques, une à la fois, la partie à gauche.
+4. La grille Oui / Non (7 critères). Puis le corrigé : parcours (intention + question, verdict, explication), temps, carte face à l'exemple, auto-évaluation, « Copier ma carte ».
+
+Règles tenues : choix sans biais (longueurs et positions vérifiées par script : 4 mêlées / 2 bonne plus courte / 1 un peu plus longue ; positions 3/2/2), scénario cohérent sur tous les chemins, tout au « vous ». Couleurs : vert sarcelle #2a8f8f (bonne), indigo #5a67b8 (pas tout à fait), framboise #a83d74 (à éviter).
+
+Idées en attente (validées en principe, pas faites) : rendre l'entretien rejouable (banque d'options, réactions variées), « Voilà ce que ça donne… », conséquences qui reviennent plus loin.
+
 ## Reprise prévue (17/11/2026)
 
 - Synthèse optionnelle M1.2.2 (fiche Fiche_M1-2-2_Activite_synthese_optionnelle.docx, zip Downloads/Téléchargements/OneDrive_1_02-11-2026.zip) : 3 options, Le coach (dossiers A cuisiniste / B entre entreprises), L'entretien dont tu es le héros (concession automobile), Ma banque de questions terrain. Proposition : commencer par l'option 2.
@@ -52,5 +66,8 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 
 ## Reste à faire
 
-- Synthèse optionnelle 1-2-2 : options 1 (Le coach, dossier B à changer de cadre) et 3 (Ma banque de questions terrain), si l’utilisateur les veut.
+- 6.1 : idées en attente ci-dessus, si l'utilisateur les veut.
+- Synthèse optionnelle 1-2-2 : options 1 (Le coach ; dossier B : changer le cadre « maison de retraite ») et 3 (Ma banque de questions terrain).
 - Synthèse optionnelle de 1-2-1 : non commencée.
+- Puis M1.2.3 (situation intégratrice) et M1.2.4 (approfondissement), sans fiche fournie.
+- Avant toute conception : relire la référence de conception (mémoire « conseils-conception-sources », textes dans Documents/Sources-conception).

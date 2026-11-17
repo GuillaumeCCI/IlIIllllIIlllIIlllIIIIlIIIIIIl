@@ -1574,3 +1574,31 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h6-meters { flex-wrap: nowrap; }
 .h6-meters .h6-gauge { flex: 0 1 420px; }
 @media (max-width: 700px) { .h6-meters { flex-wrap: wrap; } }
+/* 6.1 · Le chrono en cadran. */
+.h6-clock { gap: 10px; padding: 6px 14px 6px 8px; white-space: nowrap; }
+.h6-dial { width: 46px; height: 46px; flex: none; overflow: visible; }
+.h6-dial-track { fill: #fff; stroke: #e6eaf4; stroke-width: 5; }
+.h6-dial-fill { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset .6s cubic-bezier(.2, .8, .3, 1); }
+.h6-dial-cap { fill: #9aa6c8; }
+.h6-dial-num { fill: var(--navy); font: 800 15px/1 inherit; font-family: inherit; text-anchor: middle; dominant-baseline: middle; font-variant-numeric: tabular-nums; }
+.h6-clock-text { display: grid; line-height: 1.2; }
+.h6-clock-text b { color: var(--navy); font-size: .8rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.h6-clock-text span { color: var(--muted); font-size: .8rem; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.h6-clock.is-short .h6-dial-fill { stroke: #c0485b; }
+.h6-clock.is-short .h6-dial-num, .h6-clock.is-short .h6-clock-text b { fill: #a3412c; color: #a3412c; }
+.h6-clock.is-short { background: #fff; }
+@media (prefers-reduced-motion: reduce) { .h6-dial-fill { transition: none; } }
+/* 6.1 · Sans barre du haut (vos acquis), le contenu se centre dans la scène. */
+.h6-stage > .h6-stage-body:first-child { grid-row: 1 / -1; }
+/* 6.1 · Une seule famille de couleurs : le vert sarcelle des bonnes réponses
+ * partout ; la carte de fin en blanc, le résultat dans une pastille. */
+.h6-gauge-fill.tone-ok { background: #2a8f8f; }
+.h6-fb-better, .h6-gfb-card .h6-fb-better { border-left-color: #2a8f8f; background: #eef7f7; }
+.h6-fb-better span { color: #4f7373; }
+.h6-fb-better p { color: #1d5c5c; }
+.h6-stage .h6-end, .h6-stage .h6-end.tone-ok, .h6-stage .h6-end.tone-mid, .h6-stage .h6-end.tone-ko { background: #fff; }
+.h6-stage .h6-end { --tone: #5a67b8; }
+.h6-stage .h6-end.tone-ok { --tone: #2a8f8f; }
+.h6-stage .h6-end.tone-ko { --tone: #a83d74; }
+.h6-stage .h6-end-title { justify-self: start; padding: 6px 16px; border-radius: 999px; background: var(--tone); color: #fff; font-size: 1.1rem; }
+.h6-stage .h6-end .h6-said p { background: #f3f5fb; }

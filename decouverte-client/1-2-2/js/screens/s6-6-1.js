@@ -114,7 +114,20 @@
       <strong>${value} / 10</strong>
     </div>`;
 
-  const clockBadge = n => `<div class="h6-clock ${n < content.testMin ? 'is-short' : ''}" role="img" aria-label="Temps restant : ${n} minutes">${icon('clock', { size: 18 })}<span>Reste</span><strong>${n} min</strong></div>`;
+  /* Le chrono : un cadran SVG dont l'anneau se vide avec les minutes, le
+   * nombre au centre, « Temps restant / sur 30 min » à côté. */
+  const clockBadge = n => {
+    const r = 19; const c = 2 * Math.PI * r; const part = Math.max(0, Math.min(1, n / content.minutes));
+    return `<div class="h6-clock ${n < content.testMin ? 'is-short' : ''}" role="img" aria-label="Temps restant : ${n} minutes sur ${content.minutes}">
+        <svg class="h6-dial" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+          <circle cx="24" cy="24" r="${r}" class="h6-dial-track"/>
+          <circle cx="24" cy="24" r="${r}" class="h6-dial-fill" stroke-dasharray="${c.toFixed(2)}" stroke-dashoffset="${(c * (1 - part)).toFixed(2)}" transform="rotate(-90 24 24)"/>
+          <rect x="21" y="1" width="6" height="3" rx="1" class="h6-dial-cap"/>
+          <text x="24" y="25" class="h6-dial-num">${n}</text>
+        </svg>
+        <span class="h6-clock-text"><b>Temps restant</b><span>sur ${content.minutes} min</span></span>
+      </div>`;
+  };
 
   /* La conversation (relue en scène, et à gauche de la carte). */
   function thread() {
