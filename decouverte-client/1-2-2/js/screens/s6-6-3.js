@@ -548,20 +548,30 @@
     const yesCount = content.selfCheck.filter((_, i) => v(`self${i}`) === 'oui').length;
     const noRows = content.selfCheck.filter((_, i) => v(`self${i}`) !== 'oui');
     const c = covered();
-    const tile = (n, total, label) => `<div class="h8-rtile"><p class="h8-rtile-n"><b>${n}</b>${total ? ` / ${total}` : ''}</p><p class="h8-rtile-t">${label}</p></div>`;
+    // Le parcours, mis en avant : un anneau par étape, le chiffre au centre, un mot de verdict.
+    const R = 34;
+    const C = 2 * Math.PI * R;
+    const ring = (ratio, inner, label, word, tone, i) => `<div class="h8-ring tone-${tone} h6-in" ${delay(0.1 * i)}>
+        <div class="h8-ring-g"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="${R}" class="h8-ring-bg"/><circle cx="40" cy="40" r="${R}" class="h8-ring-fg" style="--c:${C.toFixed(1)};--o:${(C * (1 - Math.max(0, Math.min(1, ratio)))).toFixed(1)}"/></svg><p class="h8-ring-n">${inner}</p></div>
+        <p class="h8-ring-t">${label}</p><p class="h8-ring-w">${word}</p>
+      </div>`;
+    const judge = r => (r >= 0.8 ? ['Très bien', 'ok'] : r >= 0.5 ? ['En bonne voie', 'mid'] : ['À reprendre', 'ko']);
+    const tile = (n, total, label, i) => { const r = total ? n / total : 0; const [w, t] = judge(r); return ring(r, `<b>${n}</b><span>/ ${total}</span>`, label, w, t, i); };
     const cards = list.map((sit, j) => `<article class="h8-rcard">
         <div class="h8-rcard-head"><img src="${img(sit.face)}" alt="" aria-hidden="true"><p>${esc(sit.title)}</p></div>
         <p class="h8-rcard-k">Pour ouvrir</p><p class="h8-rcard-q">${bankValue(j, 'o1')}</p>
         <p class="h8-rcard-k is-trap">À ne pas dire</p><p class="h8-rcard-q is-trap">${bankValue(j, 'piege')}</p>
       </article>`).join('');
     const firstQ = v('f0_o1');
+    const score = (reflexRight() / N + qScore() / (QFIELDS.length * N) + c.length / themes.length) / 3;
+    const verdict = score >= 0.8 ? 'Une banque solide : Lucas peut s’en servir dès lundi.' : score >= 0.5 ? 'Une bonne base : quelques questions à reprendre avant de la remettre.' : 'Une première ébauche : reprenez vos fiches avant de la remettre à Lucas.';
     return `<section class="k-panel h6-review h7-review">
-        <p class="k-label">Votre parcours</p>
-        <div class="h8-rtiles">
-          ${tile(reflexRight(), N, 'bons réflexes du premier coup')}
-          ${tile(qScore(), QFIELDS.length * N, 'questions au point dans vos fiches')}
-          ${tile(c.length, themes.length, 'thèmes couverts par vos règles d’or')}
-          <div class="h8-rtile"><p class="h8-rtile-n"><b>${yes('tok') ? 'Prévu' : 'Passé'}</b></p><p class="h8-rtile-t">le test terrain</p></div>
+        <div class="h8-rhead"><p class="h8-rhead-tag">Votre parcours</p><p class="h8-rhead-title">${esc(verdict)}</p></div>
+        <div class="h8-rings">
+          ${tile(reflexRight(), N, 'bons réflexes du premier coup', 0)}
+          ${tile(qScore(), QFIELDS.length * N, 'questions au point dans vos fiches', 1)}
+          ${tile(c.length, themes.length, 'thèmes couverts par vos règles d’or', 2)}
+          ${ring(yes('tok') ? 1 : 0, `<b class="is-word">${yes('tok') ? 'Prévu' : 'Passé'}</b>`, 'le test terrain, facultatif', yes('tok') ? 'À faire cette semaine' : 'Quand vous voudrez', yes('tok') ? 'ok' : 'off', 3)}
         </div>
       </section>
       <section class="k-panel h6-review h7-review">
