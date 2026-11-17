@@ -539,7 +539,7 @@
         <p class="k-label">La banque de Lucas · ${esc(v('metier') || '')}</p>
         <div class="h8-bank">
           <div class="h8-bank-block"><p class="h8-bank-h">Mes 5 règles d’or</p><ol>${[0, 1, 2, 3, 4].map(i => `<li>${esc(v(`r${i}`) || '')}</li>`).join('')}</ol></div>
-          <div class="h8-bank-pair">${list.map((s, j) => `<div class="h8-bank-block"><p class="h8-bank-h">${esc(s.title)}</p><dl>${ALLFIELDS.map(f => `<div><dt>${esc(f.label)}</dt><dd>${f.kind === 'q' ? q(v(`f${j}_${f.id}`) || '') : esc(v(`f${j}_${f.id}`) || '')}</dd></div>`).join('')}</dl></div>`).join('')}</div>
+          <div class="h8-bank-pair">${list.map((s, j) => `<div class="h8-bank-block"><p class="h8-bank-h h8-bank-who"><img src="${img(s.face)}" alt="" aria-hidden="true"><span>${esc(s.title)}</span></p><dl>${ALLFIELDS.map(f => `<div><dt>${esc(f.label)}</dt><dd>${f.kind === 'q' && filled(`f${j}_${f.id}`) ? q(v(`f${j}_${f.id}`)) : esc(v(`f${j}_${f.id}`) || '')}</dd></div>`).join('')}</dl></div>`).join('')}</div>
         </div>
         <div class="h6-copy">${kit.act('h8-copy', `${icon('document', { size: 18 })}<span>Copier ma banque</span>`, 'secondary small')}<span>Pour la remettre à Lucas, ou à votre tuteur.</span></div>
       </section>
