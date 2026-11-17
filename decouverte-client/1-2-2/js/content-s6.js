@@ -704,9 +704,9 @@
       eyebrow: 'Pour aller plus loin · Synthèse facultative',
       title: 'Ma banque de questions terrain',
       subtitle: 'Préparez, pour un nouveau collègue, les questions qui réussissent les découvertes dans votre métier.',
-      decor: 'dialogues/entreprise.webp',
+      decor: 'dialogues/salle-equipe.webp',
       manager: { name: 'Nadia', role: 'Votre responsable', face: 'visages/responsable.webp' },
-      newcomer: { name: 'Lucas', role: 'Nouveau collègue, en alternance', face: 'visages/antoine.webp' },
+      newcomer: { name: 'Lucas', role: 'Nouveau collègue, en alternance', face: 'visages/nouveau-collegue.webp' },
       ask: 'Lucas arrive lundi en alternance. Je voudrais que vous lui prépariez une banque de questions pour réussir ses découvertes client. Vous connaissez nos clients mieux que personne : appuyez-vous sur ce que vous vivez au comptoir.',
       mission: [
         'Dire en une ligne quel est votre métier.',

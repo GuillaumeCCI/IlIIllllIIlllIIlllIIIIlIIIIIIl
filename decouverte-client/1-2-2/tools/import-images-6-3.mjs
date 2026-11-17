@@ -19,9 +19,12 @@ const out = join(root, 'assets', 'illustrations');
 
 const CHEMIN = 'Présentation institutionnelle en six étapes.png';
 const FACES = [
-  ['Portrait d’une manager en veste sauge.png', 'visages/responsable.webp']
+  ['Portrait d’une manager en veste sauge.png', 'visages/responsable.webp'],
+  ['Lucas, portrait risographique sur fond crème.png', 'visages/nouveau-collegue.webp']
 ];
-const DECORS = [];
+const DECORS = [
+  ['Salle d’équipe vide, tableau en entonnoir.png', 'dialogues/salle-equipe.webp']
+];
 
 const have = f => { const ok = existsSync(join(dl, f)); if (!ok) console.log(`absente : ${f}`); return ok; };
 
