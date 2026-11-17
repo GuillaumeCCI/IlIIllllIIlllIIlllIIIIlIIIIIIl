@@ -56,6 +56,8 @@ Règles tenues : choix sans biais (longueurs et positions vérifiées par script
 
 Rejouer une étape (17/11/2026) : après un choix moins bon, le retour propose « Revenir aux propositions » (« À vous de rejouer ») ; les intentions déjà essayées sont grisées (« Déjà essayé »). On avance seulement après la bonne intention. Le premier choix compte seul pour la jauge, le chrono et la fin ; les points ne s'affichent qu'au premier retour. Le corrigé ajoute « Puis vous avez essayé : … ». Champs : `x{k}` (liste des essais), `retry{k}`. Chemin vérifié par simulation.
 
+Échanges plus crédibles (17/11/2026) : répliques de Mme Rivière plus longues et plus naturelles (hésitations, détails concrets : kiné, double file, location, « je suis à mon compte »), y compris après un choix moins bon ; à l'étape 6, elle dit elle-même « je ne veux plus me retrouver à pied » (la voiture de prêt reste cohérente sur tous les chemins) ; fins plus naturelles. Questions d'Antoine et intentions inchangées (équilibre des longueurs conservé). Bulle d'aide au survol / au clavier sur la jauge et le chrono.
+
 Idées en attente (validées en principe, pas faites) : rendre l'entretien rejouable (banque d'options, réactions variées), « Voilà ce que ça donne… », conséquences qui reviennent plus loin.
 
 ## Reprise prévue (17/11/2026)

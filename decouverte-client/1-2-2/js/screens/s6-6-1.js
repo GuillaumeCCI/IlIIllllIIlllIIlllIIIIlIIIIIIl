@@ -112,7 +112,10 @@
   const said = (text, t = 0) => `<div class="h6-said h6-in" ${delay(t)}><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(text)}</p></div>`;
   const next = (label, act, t = 0, extra = '') => `<button type="button" class="button primary h6-next h6-in" ${delay(t)} data-act="${act}" ${extra}><span>${esc(label)}</span>${icon('arrowRight', { size: 18 })}</button>`;
 
-  const gaugeBar = (value, label = 'Jauge de découverte') => `<div class="h6-gauge" role="img" aria-label="${esc(label)} : ${value} sur 10">
+  // Au survol (ou au clavier), une bulle explique la jauge et le chrono.
+  const GAUGE_TIP = 'La jauge mesure la qualité de votre découverte. Elle part de 5 sur 10 : une bonne question la fait monter de 2, une question qui ferme l’échange la fait baisser de 2, les autres la laissent stable. À la fin, elle décide de la suite de l’entretien.';
+  const CLOCK_TIP = 'Mme Rivière n’a que 30 minutes, essai compris. Chaque question prend du temps : son coût s’affiche sur chaque choix. Gardez au moins 10 minutes pour l’essai.';
+  const gaugeBar = (value, label = 'Jauge de découverte') => `<div class="h6-gauge has-tip" tabindex="0" data-tip="${esc(GAUGE_TIP)}" role="img" aria-label="${esc(label)} : ${value} sur 10. ${esc(GAUGE_TIP)}">
       <span class="h6-gauge-label">${esc(label)}</span>
       <span class="h6-gauge-track"><span class="h6-gauge-fill tone-${value >= 8 ? 'ok' : value >= 4 ? 'mid' : 'ko'}" style="width:${value * 10}%"></span></span>
       <strong>${value} / 10</strong>
@@ -122,7 +125,7 @@
    * nombre au centre, « Temps restant / sur 30 min » à côté. */
   const clockBadge = n => {
     const r = 19; const c = 2 * Math.PI * r; const part = Math.max(0, Math.min(1, n / content.minutes));
-    return `<div class="h6-clock ${n < content.testMin ? 'is-short' : ''}" role="img" aria-label="Temps restant : ${n} minutes sur ${content.minutes}">
+    return `<div class="h6-clock has-tip ${n < content.testMin ? 'is-short' : ''}" tabindex="0" data-tip="${esc(CLOCK_TIP)}" role="img" aria-label="Temps restant : ${n} minutes sur ${content.minutes}. ${esc(CLOCK_TIP)}">
         <svg class="h6-dial" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
           <circle cx="24" cy="24" r="${r}" class="h6-dial-track"/>
           <circle cx="24" cy="24" r="${r}" class="h6-dial-fill" stroke-dasharray="${c.toFixed(2)}" stroke-dashoffset="${(c * (1 - part)).toFixed(2)}" transform="rotate(-90 24 24)"/>
