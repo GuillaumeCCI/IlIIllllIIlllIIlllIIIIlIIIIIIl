@@ -127,12 +127,16 @@
   };
   function feedbackCard(tone, text, { better = '', betterLabel = 'Il valait mieux demander', quoted = true, points = null, button }) {
     const verdict = VERDICT[tone];
+    // La formatrice à gauche ; son commentaire dans une bulle qui pointe vers
+    // elle. Le verdict n'est dit qu'une fois, dans une pastille de sa couleur.
     return `<div class="h6-fb tone-${tone}">
-        <div class="h6-fb-side h6-in"><img class="h6-fb-face" src="${esc(core.asset(`../../moteur/assets/illustrations/retours/${verdict.face}.webp`))}" alt="" aria-hidden="true"><p>${esc(verdict.label)}</p></div>
-        <div class="h6-card h6-fb-text h6-in" ${delay(0.15)}>
-          <p class="h6-fb-title">${esc(verdict.title)}${points === null ? '' : `<span class="h6-delta is-${points > 0 ? 'up' : points < 0 ? 'down' : 'same'}">${points > 0 ? '+2' : points < 0 ? '−2' : '0'} sur la jauge</span>`}</p>
-          <p>${esc(text)}</p>
-          ${better ? `<p class="h6-better"><span>${esc(betterLabel)}</span>${quoted ? q(better) : esc(better)}</p>` : ''}
+        <div class="h6-fb-row">
+          <img class="h6-fb-face h6-in" src="${esc(core.asset(`../../moteur/assets/illustrations/retours/${verdict.face}.webp`))}" alt="" aria-hidden="true">
+          <div class="h6-fb-bubble h6-in" ${delay(0.15)}>
+            <p class="h6-fb-head"><span class="h6-fb-chip">${esc(verdict.title)}</span><span class="sr-only">${esc(verdict.label)}.</span>${points === null ? '' : `<span class="h6-fb-points">${points > 0 ? '+2' : points < 0 ? '−2' : '0'} sur la jauge</span>`}</p>
+            <p class="h6-fb-say">${esc(text)}</p>
+            ${better ? `<div class="h6-fb-better"><span>${esc(betterLabel)}</span><p>${quoted ? q(better) : esc(better)}</p></div>` : ''}
+          </div>
         </div>
         <div class="h6-stage-foot">${button}</div>
       </div>`;

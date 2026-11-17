@@ -1328,20 +1328,6 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h6-you { justify-self: end; max-width: 85%; padding: 12px 16px; border-radius: 16px 16px 4px 16px; background: var(--accent); color: #fff; font-size: 1.02rem; font-weight: 600; line-height: 1.45; }
 .h6-you span { color: rgb(255 255 255 / 75%); }
 .h6-exchange .h6-typing { margin-left: 68px; }
-/* Le retour : le verdict à gauche, l'explication à droite. */
-.h6-fb { display: grid; grid-template-columns: minmax(180px, 240px) minmax(0, 640px); gap: 0; align-items: stretch; justify-content: center; width: 100%; }
-.h6-fb .h6-stage-foot { grid-column: 1 / -1; margin-top: 16px; width: auto; }
-.h6-fb-side { display: grid; justify-items: center; align-content: center; gap: 10px; padding: 22px; border-radius: 16px 0 0 16px; background: #fff; text-align: center; }
-.h6-fb-side p { margin: 0; font-weight: 700; line-height: 1.35; }
-.h6-fb-icon { display: grid; place-items: center; width: 70px; height: 70px; border-radius: 50%; color: #fff; }
-.h6-fb.tone-ok .h6-fb-icon { background: #2a8f8f; } .h6-fb.tone-ok .h6-fb-side p, .h6-fb.tone-ok .h6-fb-title { color: #1f7272; }
-.h6-fb.tone-mid .h6-fb-icon { background: #c98a1e; } .h6-fb.tone-mid .h6-fb-side p, .h6-fb.tone-mid .h6-fb-title { color: #94610f; }
-.h6-fb.tone-ko .h6-fb-icon { background: #b0386e; } .h6-fb.tone-ko .h6-fb-side p, .h6-fb.tone-ko .h6-fb-title { color: #93285a; }
-.h6-fb-text { width: auto; border-radius: 0 16px 16px 0; display: grid; gap: 10px; align-content: center; }
-.h6-fb-text p { margin: 0; color: #24305a; line-height: 1.55; }
-.h6-fb-title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 1.15rem; font-weight: 800; }
-.h6-better { padding: 10px 14px; border-radius: 12px; background: #f1f7f3; color: #1f5a3c !important; font-weight: 600; }
-.h6-better span { display: block; margin-bottom: 2px; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .h6-next { animation-duration: .35s; }
 .h6-stage .h6-end { width: min(100%, 720px); }
 /* Relire l'échange, sans quitter la scène. */
@@ -1350,8 +1336,7 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h6-replay > summary::-webkit-details-marker { display: none; }
 .h6-replay[open] > .d5-thread { position: absolute; right: 0; top: calc(100% + 8px); z-index: 5; width: min(560px, 80vw); max-height: 60vh; overflow-y: auto; padding: 14px; border-radius: 16px; background: #f7f9fe; box-shadow: 0 18px 40px rgb(15 35 78 / 22%); }
 @media (max-width: 900px) {
-  .h6-choose, .h6-fb { grid-template-columns: minmax(0, 1fr); }
-  .h6-fb-side { border-radius: 16px 16px 0 0; } .h6-fb-text { border-radius: 0 0 16px 16px; }
+  .h6-choose { grid-template-columns: minmax(0, 1fr); }
   .h6-stage { min-height: 0; }
 }
 /* 6.1 : les vraies images (visages, Mme Rivière dans l'espace conseil). */
@@ -1364,8 +1349,25 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h6-situation.has-picture .h6-picture { width: min(100%, 420px); justify-self: center; }
 @media (max-width: 700px) { .h6-banner { grid-template-columns: minmax(0, 1fr); } }
 .h6-banner.is-text { grid-template-columns: minmax(0, 1fr); text-align: center; width: min(100%, 760px); }
-/* 6.1 : la formatrice commente le choix (moteur/assets/illustrations/retours/). */
-.h6-fb-face { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; object-position: 50% 20%; background: #fbf4e6; }
-.h6-fb.tone-ok .h6-fb-face { box-shadow: 0 0 0 5px #2a8f8f; }
-.h6-fb.tone-mid .h6-fb-face { box-shadow: 0 0 0 5px #c98a1e; }
-.h6-fb.tone-ko .h6-fb-face { box-shadow: 0 0 0 5px #b0386e; }
+
+/* 6.1 · Le retour de la formatrice : elle à gauche, son commentaire dans une
+ * bulle qui pointe vers elle ; le verdict une seule fois, en pastille. */
+.h6-fb { --tone: #5a67b8; --tone-soft: #eceefb; --tone-ink: #3d4890; display: grid; gap: 16px; width: min(100%, 900px); }
+.h6-fb.tone-ok { --tone: #2a8f6a; --tone-soft: #e5f4ec; --tone-ink: #1d6a4c; }
+.h6-fb.tone-ko { --tone: #c0485b; --tone-soft: #fbe9ec; --tone-ink: #93283a; }
+.h6-fb-row { display: grid; grid-template-columns: 136px minmax(0, 1fr); gap: 26px; align-items: center; }
+.h6-fb-face { width: 136px; height: 136px; border-radius: 50%; object-fit: cover; object-position: 50% 18%; background: #fbf4e6; border: 5px solid #fff; box-shadow: 0 0 0 4px var(--tone), 0 12px 26px rgb(15 35 78 / 18%); }
+.h6-fb-bubble { position: relative; display: grid; gap: 12px; padding: 22px 26px; border-radius: 18px; background: #fff; box-shadow: 0 12px 30px rgb(15 35 78 / 14%); }
+.h6-fb-bubble::before { content: ''; position: absolute; left: -9px; top: calc(50% - 9px); width: 18px; height: 18px; background: #fff; transform: rotate(45deg); border-radius: 3px; box-shadow: -4px 4px 8px rgb(15 35 78 / 6%); }
+.h6-fb-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin: 0; }
+.h6-fb-chip { padding: 5px 14px; border-radius: 999px; background: var(--tone); color: #fff; font-size: 1rem; font-weight: 800; }
+.h6-fb-points { color: var(--tone-ink); font-size: .85rem; font-weight: 700; }
+.h6-fb-say { margin: 0; color: #24305a; font-size: 1.04rem; line-height: 1.6; }
+.h6-fb-better { padding: 12px 16px; border-left: 4px solid #2a8f6a; border-radius: 4px 12px 12px 4px; background: #f3f8f5; }
+.h6-fb-better span { display: block; margin-bottom: 3px; color: #4c6a5c; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h6-fb-better p { margin: 0; color: #1d4f39; font-weight: 600; line-height: 1.5; }
+.h6-fb .h6-stage-foot { width: auto; }
+@media (max-width: 700px) {
+  .h6-fb-row { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .h6-fb-bubble::before { left: calc(50% - 9px); top: -9px; }
+}
