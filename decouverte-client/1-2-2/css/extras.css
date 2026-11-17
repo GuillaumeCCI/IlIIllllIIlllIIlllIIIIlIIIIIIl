@@ -1364,3 +1364,8 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h6-situation.has-picture .h6-picture { width: min(100%, 420px); justify-self: center; }
 @media (max-width: 700px) { .h6-banner { grid-template-columns: minmax(0, 1fr); } }
 .h6-banner.is-text { grid-template-columns: minmax(0, 1fr); text-align: center; width: min(100%, 760px); }
+/* 6.1 : la formatrice commente le choix (moteur/assets/illustrations/retours/). */
+.h6-fb-face { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; object-position: 50% 20%; background: #fbf4e6; }
+.h6-fb.tone-ok .h6-fb-face { box-shadow: 0 0 0 5px #2a8f8f; }
+.h6-fb.tone-mid .h6-fb-face { box-shadow: 0 0 0 5px #c98a1e; }
+.h6-fb.tone-ko .h6-fb-face { box-shadow: 0 0 0 5px #b0386e; }

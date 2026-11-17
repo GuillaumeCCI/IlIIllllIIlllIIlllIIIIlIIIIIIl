@@ -121,14 +121,14 @@
 
   /* Un retour, dans le style du formateur : le verdict à gauche, l'explication à droite. */
   const VERDICT = {
-    ok: { icon: 'check', label: 'Ceci est une réponse appropriée', title: 'Absolument !' },
-    mid: { icon: 'thought', label: 'Ce n’est pas tout à fait la réponse attendue', title: 'Pas tout à fait…' },
-    ko: { icon: 'close', label: 'Ceci n’est pas une réponse appropriée', title: 'À éviter…' }
+    ok: { icon: 'check', face: 'formatrice-oui', label: 'Ceci est une réponse appropriée', title: 'Absolument !' },
+    mid: { icon: 'thought', face: 'formatrice-presque', label: 'Ce n’est pas tout à fait la réponse attendue', title: 'Pas tout à fait…' },
+    ko: { icon: 'close', face: 'formatrice-attention', label: 'Ceci n’est pas une réponse appropriée', title: 'À éviter…' }
   };
   function feedbackCard(tone, text, { better = '', betterLabel = 'Il valait mieux demander', quoted = true, points = null, button }) {
     const verdict = VERDICT[tone];
     return `<div class="h6-fb tone-${tone}">
-        <div class="h6-fb-side h6-in"><span class="h6-fb-icon">${icon(verdict.icon, { size: 34, strokeWidth: 3 })}</span><p>${esc(verdict.label)}</p></div>
+        <div class="h6-fb-side h6-in"><img class="h6-fb-face" src="${esc(core.asset(`../../moteur/assets/illustrations/retours/${verdict.face}.webp`))}" alt="" aria-hidden="true"><p>${esc(verdict.label)}</p></div>
         <div class="h6-card h6-fb-text h6-in" ${delay(0.15)}>
           <p class="h6-fb-title">${esc(verdict.title)}${points === null ? '' : `<span class="h6-delta is-${points > 0 ? 'up' : points < 0 ? 'down' : 'same'}">${points > 0 ? '+2' : points < 0 ? '−2' : '0'} sur la jauge</span>`}</p>
           <p>${esc(text)}</p>
