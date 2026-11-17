@@ -798,6 +798,10 @@
           ] },
         { id: 'open', tab: 'Ouvrir et creuser', ask: 'Quelles questions posez-vous pour faire parler le client ?',
           intro: 'Écrivez 4 questions que Lucas pourra poser telles quelles dans « {situation} » : 2 pour lancer la conversation, 2 pour aller plus loin. Toutes doivent être ouvertes : sous chaque question, vous voyez aussitôt de quel type elle est.',
+          groups: [
+            { title: 'Pour lancer la conversation', sub: 'Des questions larges, qui font raconter.', ids: ['o1', 'o2'] },
+            { title: 'Pour aller plus loin', sub: 'Elles font parler d’un problème, d’une gêne, de ce que ça coûte.', ids: ['c1', 'c2'] }
+          ],
           fields: [
             { id: 'o1', kind: 'q', expect: ['ouverte'], label: 'Question d’ouverture 1', sub: 'Large, adaptée à la situation : elle fait raconter.', example: 'Qu’est-ce qui vous a fait choisir ce modèle ?', hint: 'Une question qui fait raconter.' },
             { id: 'o2', kind: 'q', expect: ['ouverte'], label: 'Question d’ouverture 2', sub: 'Une autre façon d’ouvrir.', example: 'Comment l’utiliserez-vous, au quotidien ?', hint: 'Sur l’usage, le quotidien.' },
@@ -806,6 +810,10 @@
           ] },
         { id: 'precise', tab: 'Préciser et classer', ask: 'Comment précisez-vous, puis faites-vous classer ?',
           intro: 'Écrivez 2 questions courtes qui vérifient un détail (une réponse par oui ou non, ou un choix entre deux options), puis 1 question qui fait dire au client ce qui compte le plus pour lui.',
+          groups: [
+            { title: 'Pour vérifier un détail', sub: 'Une réponse par oui ou non, ou un choix entre deux options.', ids: ['p1', 'p2'] },
+            { title: 'Pour faire choisir', sub: 'Le client dit ce qui compte le plus pour lui.', ids: ['h'] }
+          ],
           fields: [
             { id: 'p1', kind: 'q', expect: ['fermee', 'alternative'], label: 'Question de précision 1', sub: 'Fermée ou alternative : elle précise un détail.', example: 'L’emplacement fait-il 60 cm de large ?', hint: 'Une mesure, un délai, une contrainte.' },
             { id: 'p2', kind: 'q', expect: ['fermee', 'alternative'], label: 'Question de précision 2', sub: 'Une autre précision.', example: 'Livraison seule, ou avec installation ?', hint: 'Un choix entre deux options.' },

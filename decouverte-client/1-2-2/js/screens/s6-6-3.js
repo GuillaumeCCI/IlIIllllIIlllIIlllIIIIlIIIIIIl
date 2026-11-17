@@ -286,6 +286,25 @@
           ${aid}
         </div>`;
     };
+    // Pages de questions : une carte par groupe, des questions courtes numérotées, une seule aide par carte.
+    const groupHtml = g => {
+      const fs = g.ids.map(id => page.fields.find(f => f.id === id));
+      const f0 = fs[0];
+      const own = s.fx && s.fx[f0.id];
+      const aid = help === 'example' ? `<p class="h8-aid"><span>${own ? 'Exemple' : 'Exemple chez un vendeur en électroménager'}</span>${q(own || f0.example)}</p>` : help === 'hint' ? `<p class="h8-aid"><span>Indice</span>${esc(f0.hint)}</p>` : '';
+      return `<div class="h7-write h8-field h8-group">
+          <p class="h8-field-label">${esc(g.title)}</p>
+          <p class="h7-write-note">${esc(g.sub)}</p>
+          ${fs.map((f, n) => {
+            const name = `f${j}_${f.id}`;
+            return `<div class="h8-qrow">${fs.length > 1 ? `<span class="h8-qrow-n" aria-hidden="true">${n + 1}</span>` : ''}<div class="h8-qrow-body">
+                ${ex.field(name, `${g.title}, question ${n + 1}`, { placeholder: 'Votre question… ?', max: 220, rows: 1, hideLabel: true })}
+                <p class="h8-badge" data-badge="${name}" aria-live="polite">${badgeHtml(f, v(name))}</p>
+              </div></div>`;
+          }).join('')}
+          ${aid}
+        </div>`;
+    };
     const lastPage = pageP === pages.length - 1;
     const nav = `<div class="h7-fiche-nav">${pageP > 0 ? `<button type="button" class="text-button with-icon" data-act="h8-page" data-p="${pageP - 1}">${icon('arrowLeft', { size: 16 })}<span>Page précédente</span></button>` : '<span></span>'}${lastPage ? (okJ ? '' : kit.act('h8-fiche-check', `${icon('check', { size: 18 })}<span>Vérifier ma fiche</span>`, 'primary', `data-j="${j}"`)) : `<button type="button" class="button primary small" data-act="h8-page" data-p="${pageP + 1}"><span>Page suivante</span>${icon('arrowRight', { size: 16 })}</button>`}</div>`;
     let bilan = '';
@@ -309,7 +328,7 @@
         <div class="h8-steps" role="group" aria-label="Les pages de la fiche">${pageTabs}</div>
         <p class="h7-question">${esc(page.ask)}</p>
         ${page.intro ? `<p class="h8-expect"><span>Ce qu’on attend de vous</span>${esc(page.intro.replace('{situation}', s.title.charAt(0).toLowerCase() + s.title.slice(1)))}</p>` : ''}
-        <div class="h8-fields">${page.fields.map(fieldHtml).join('')}</div>
+        <div class="h8-fields">${page.groups ? page.groups.map(groupHtml).join('') : page.fields.map(fieldHtml).join('')}</div>
         ${nav}
         ${bilan}
       </section>

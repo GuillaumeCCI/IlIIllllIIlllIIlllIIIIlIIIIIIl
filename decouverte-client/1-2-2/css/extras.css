@@ -2241,6 +2241,16 @@ p.h7-question { margin-bottom: 12px; }
 #main .h8-field textarea { margin-top: 2px; padding: 0 0 26px; line-height: 32px; min-height: 104px; background-image: repeating-linear-gradient(to bottom, transparent 0 31px, #e6eaf3 31px 32px); background-attachment: local; }
 #main .h8-field .counter { color: #a3abc2; font-size: .75rem; }
 
+/* 6.3 · Questions groupées : des lignes courtes, numérotées. */
+.h8-group { gap: 6px; }
+.h8-group .h7-write-note { margin-bottom: 6px; }
+.h8-qrow { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; margin-top: 4px; }
+.h8-qrow-body { display: grid; gap: 2px; min-width: 0; }
+.h8-qrow-n { display: grid; place-items: center; width: 24px; height: 24px; margin-top: 4px; border-radius: 50%; background: #eef1fb; color: #1b2370; font-size: .78rem; font-weight: 800; }
+#main .h8-group textarea { min-height: 64px; padding-bottom: 0; }
+#main .h8-group .counter { display: none; }
+.h8-group .h8-badge { min-height: 1.2em; font-size: .84rem; }
+
 /* 6.3 · En-tête de la fiche : le client, « Fiche 1 sur 3 · pour Lucas », les 3 fiches en visages. */
 .h8-fhead { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; }
 .h8-fhead-face { flex: none; width: 72px; height: 72px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 4px #fbf3e4; }
