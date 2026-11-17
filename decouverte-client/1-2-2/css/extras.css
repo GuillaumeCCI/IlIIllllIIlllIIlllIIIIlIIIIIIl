@@ -1617,3 +1617,27 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h6-stage .h6-clock.has-tip::before { left: auto; right: 26px; }
 .h6-stage .has-tip:is(:hover, :focus-visible)::after { opacity: 1; transform: none; }
 .h6-stage .has-tip:is(:hover, :focus-visible)::before { opacity: 1; }
+/* 6.1 · « Relire l'échange » : un vrai panneau (en-tête, étapes, bulles légères). */
+.h6-replay > summary:hover { background: #ecf4ff; }
+.h6-replay[open] > summary { background: var(--accent); color: #fff; }
+.h6-replay[open] > .h6-replay-panel { position: absolute; right: 0; top: calc(100% + 10px); z-index: 40; display: grid; grid-template-rows: auto 1fr; width: min(600px, 82vw); max-height: min(60vh, 600px); overflow: hidden; border-radius: 18px; background: #fff; box-shadow: 0 22px 48px rgb(15 35 78 / 26%), 0 0 0 1px rgb(15 35 78 / 6%); animation: h6-replay-in .18s ease-out; }
+.h6-replay[open] > .h6-replay-panel::before { content: ''; position: absolute; right: 44px; top: -7px; width: 14px; height: 14px; background: #fff; transform: rotate(45deg); }
+@keyframes h6-replay-in { from { opacity: 0; transform: translateY(-6px); } }
+.h6-replay-head { position: relative; display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid #e7ebf4; background: #fff; }
+.h6-replay-head img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #fff, 0 0 0 3px #d9e2f5; }
+.h6-replay-head p { flex: 1; margin: 0; display: grid; line-height: 1.3; }
+.h6-replay-head b { color: var(--navy); font-size: 1rem; }
+.h6-replay-head span { color: var(--muted); font-size: .84rem; }
+.h6-replay-close { display: grid; place-items: center; width: 34px; height: 34px; border: 0; border-radius: 50%; background: #f1f4fa; color: var(--navy); cursor: var(--cursor-hand, pointer); }
+.h6-replay-close:hover { background: #e3e9f6; }
+.h6-replay-close:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; }
+#main .h6-replay-list { min-height: 0; margin: 0; padding: 6px 18px 18px; overflow-y: auto; overscroll-behavior: contain; background: #f6f8fc; scrollbar-width: thin; scrollbar-color: #c6cfe2 transparent; display: grid; gap: 8px; }
+#main .h6-replay-list::-webkit-scrollbar { width: 8px; }
+#main .h6-replay-list::-webkit-scrollbar-thumb { border-radius: 8px; background: #c6cfe2; }
+#main .h6-replay-list .d5-msg p { font-weight: 400; font-size: .95rem; line-height: 1.5; box-shadow: 0 2px 6px rgb(15 35 78 / 6%); }
+#main .h6-replay-list .d5-msg.is-client p { background: #fff; color: var(--navy); }
+#main .h6-replay-list .d5-msg p span { font-size: .66rem; }
+#main .h6-replay-list .d5-msg img { width: 32px; height: 32px; }
+#main .h6-replay-list .h6-scene { margin: 2px 0; padding: 6px 12px; border-radius: 10px; background: #eceff7; color: #5a6584; font-size: .85rem; line-height: 1.45; text-align: left; }
+.h6-step-sep { list-style: none; display: flex; align-items: center; gap: 10px; margin: 10px 0 2px; color: #7a86a6; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.h6-step-sep::before, .h6-step-sep::after { content: ''; flex: 1; height: 1px; background: #dde3ef; }

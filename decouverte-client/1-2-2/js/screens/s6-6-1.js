@@ -141,12 +141,13 @@
     const items = [];
     steps.forEach((s, k) => {
       if (!yes(`seen${k}`) && !choiceAt(k)) return;
+      items.push(`<li class="h6-step-sep"><span>Étape ${k + 1}</span></li>`);
       if (s.scene) items.push(`<li class="h6-scene">${esc(s.scene)}</li>`);
       if (sayOf(s, k)) items.push(`<li class="d5-msg is-client"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(sayOf(s, k))}</p></li>`);
       if (s.after) items.push(`<li class="h6-scene">${esc(s.after)}</li>`);
       const c = s.choices[currentAt(k)];
       if (!c) return;
-      items.push(`<li class="d5-msg is-you"><p><span>Vous · étape ${k + 1}</span>${q(c.text)}</p></li>`);
+      items.push(`<li class="d5-msg is-you"><p><span>Vous</span>${q(c.text)}</p></li>`);
       if (c.reply) items.push(`<li class="d5-msg is-client"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(c.reply)}</p></li>`);
     });
     return items.join('') || '<li class="d5-thread-empty">La conversation s’affichera ici.</li>';
@@ -284,7 +285,12 @@
     return `<section class="h6-stage ${isFb ? 'is-fb' : ''}" style="--h6-decor:url('${decor}')">
         <div class="h6-stage-top">
           ${inGame ? `<div class="h6-meters">${gaugeBar(gauge())}${clockBadge(left())}</div>` : '<span></span>'}
-          ${inGame && played() ? `<details class="h6-replay"><summary>${icon('chat', { size: 16 })}<span>Relire l’échange</span></summary><ol class="d5-thread">${thread()}</ol></details>` : ''}
+          ${inGame && played() ? `<details class="h6-replay"><summary>${icon('chat', { size: 16 })}<span>Relire l’échange</span></summary>
+            <div class="h6-replay-panel" role="region" aria-label="L’échange jusqu’ici">
+              <div class="h6-replay-head"><img src="${portrait}" alt="" aria-hidden="true"><p><b>L’échange jusqu’ici</b><span>${esc(client.name)} · ${played()} étape${played() > 1 ? 's' : ''} jouée${played() > 1 ? 's' : ''}</span></p>
+                <button type="button" class="h6-replay-close" data-act="h6-replay-close" aria-label="Fermer">${icon('close', { size: 16 })}</button></div>
+              <ol class="d5-thread h6-replay-list">${thread()}</ol>
+            </div></details>` : ''}
         </div>
         <div class="h6-stage-body is-${b.kind}">${body}</div>
       </section>
@@ -444,6 +450,7 @@
       ex.setValue(`rs${k}`, false);
       advance(`retry${k}`, false);
     },
+    'h6-replay-close': control => { const box = control.closest('details'); if (box) { box.open = false; box.querySelector('summary').focus(); } },
     'h6-retry': control => { const k = Number(control.dataset.step); ex.setValue(`rs${k}`, false); advance(`retry${k}`, true); },
     'h6-quiz': control => { const i = Number(control.dataset.i); if (!v(`q${i}`)) advance(`q${i}`, control.dataset.id); },
     'h6-map': control => { mapPick = Number(control.dataset.i); ex.rebuild(); },
@@ -459,6 +466,22 @@
     { target: '.h6-stage', title: 'L’entretien', text: 'Vous êtes Antoine. À chaque étape : la situation, votre question, la réaction de la cliente, puis un retour sur votre choix.' },
     { target: '.k-count.is-progress', title: 'Les étapes', text: 'L’entretien, vos acquis, la carte des besoins, puis la grille.' }
   ]);
+
+  /* « Relire l'échange » : à l'ouverture, on descend au dernier message ; un
+   * clic à côté ou la touche Échap referme le panneau. */
+  document.addEventListener('toggle', event => {
+    const box = event.target;
+    if (!box.matches || !box.matches('.h6-replay') || !box.open) return;
+    const list = box.querySelector('.h6-replay-list');
+    if (list) list.scrollTop = list.scrollHeight;
+  }, true);
+  document.addEventListener('click', event => {
+    document.querySelectorAll('.h6-replay[open]').forEach(box => { if (!box.contains(event.target)) box.open = false; });
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    document.querySelectorAll('.h6-replay[open]').forEach(box => { box.open = false; box.querySelector('summary').focus(); });
+  });
 
   ex.mount(KEY, { screen, validate, feedback, intercept, compactFeedback: true });
 })();
