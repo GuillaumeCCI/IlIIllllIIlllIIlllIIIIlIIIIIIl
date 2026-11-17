@@ -88,8 +88,10 @@
     return `<p class="k-count fm-count is-progress">${arrow(k - 1, 'prev')}<span class="k-progress-label">${esc(STEPS[k])}</span><strong>${k + 1} / ${STEPS.length}</strong><span class="k-progress-segs" role="group" aria-label="Étapes">${segs}</span>${arrow(k + 1, 'next')}</p>`;
   }
 
-  const portrait = esc(core.asset(`assets/illustrations/clients/${client.portrait}.webp`));
-  const decor = esc(core.asset('assets/illustrations/dialogues/concession-automobile.webp'));
+  const img = path => esc(core.asset(`assets/illustrations/${path}`));
+  const portrait = img(client.face);
+  const decor = img(client.decor);
+  const picture = `<img class="h6-picture" src="${img(client.picture)}" alt="${esc(client.name)}, assise dans l’espace conseil, se tient l’épaule droite.">`;
   const q = text => `«&nbsp;${esc(text)}&nbsp;»`;
   const delay = t => `style="animation-delay:${t.toFixed(2)}s"`;
   const said = (text, t = 0) => `<div class="h6-said h6-in" ${delay(t)}><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(text)}</p></div>`;
@@ -139,7 +141,7 @@
   /* Des choix numérotés, face à la personne qui pose la question. */
   function choiceBlock({ title, ask, order, choices, act, data = '', field = '' }) {
     return `<div class="h6-choose">
-        <div class="h6-card h6-who h6-in"><span class="h6-who-badge">${icon('user', { size: 34 })}</span><p class="h6-who-name">Vous, Antoine</p><p class="h6-who-ask">${esc(ask)}</p></div>
+        <div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${img(client.seller)}" alt="" aria-hidden="true"><p class="h6-who-name">Vous, Antoine</p><p class="h6-who-ask">${esc(ask)}</p></div>
         <div class="h6-options" role="group" aria-label="${esc(title)}">${order.map((id, n) => `<button type="button" class="h6-option h6-in" ${delay(0.2 + n * 0.15)} data-act="${act}" data-id="${id}" ${data} ${n === 0 && field ? `data-field="${field}"` : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(choices[id].text)}</span></button>`).join('')}</div>
       </div>`;
   }
@@ -151,14 +153,15 @@
     const s = steps[k];
     let body = '';
     if (b.kind === 'warm') {
-      body = `<div class="h6-card h6-banner h6-in"><p class="k-label">Avant de commencer</p><p>${esc(client.context)}</p></div>
+      body = `<div class="h6-card h6-banner h6-in">${picture}<div><p class="k-label">Avant de commencer</p><p>${esc(client.context)}</p></div></div>
         ${choiceBlock({ title: 'Question d’accroche', ask: warmup.question, order: warmup.order, choices: warmup.choices, act: 'h6-warm', field: 'warm' })}`;
     } else if (b.kind === 'warm-fb') {
       const id = v('warm');
       const ok = id === warmup.best;
       body = feedbackCard(ok ? 'ok' : 'mid', warmup.choices[id].fb, { better: ok ? '' : warmup.choices[warmup.best].text, betterLabel: 'La réponse attendue', quoted: false, button: next('Commencer l’entretien', 'h6-flag', 0.4, 'data-name="wok"') });
     } else if (b.kind === 'ctx') {
-      body = `<div class="h6-card h6-situation h6-in">
+      body = `<div class="h6-card h6-situation ${s.picture ? 'has-picture' : ''} h6-in">
+          ${s.picture ? picture : ''}
           <p class="k-label">Étape ${k + 1} sur ${steps.length}</p>
           ${s.scene ? `<p class="h6-scene-text">${esc(s.scene)}</p>` : ''}
           ${s.says ? said(s.says, 0.35) : ''}

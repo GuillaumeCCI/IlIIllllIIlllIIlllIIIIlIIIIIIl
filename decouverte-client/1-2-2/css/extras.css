@@ -1354,3 +1354,12 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
   .h6-fb-side { border-radius: 16px 16px 0 0; } .h6-fb-text { border-radius: 0 0 16px 16px; }
   .h6-stage { min-height: 0; }
 }
+/* 6.1 : les vraies images (visages, Mme Rivière dans l'espace conseil). */
+#main .h6-page .d5-msg.is-client img, #main .h6-page .h6-said img { object-view-box: none; object-position: 50% 30%; }
+.h6-stage::before { filter: blur(4px) saturate(.85); }
+.h6-who-face { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 4px #dfe8ff; }
+.h6-banner { display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr); gap: 18px; align-items: center; text-align: left; width: min(100%, 860px); }
+.h6-banner .k-label { margin: 0 0 4px; }
+.h6-picture { display: block; width: 100%; border-radius: 12px; aspect-ratio: 16 / 9; object-fit: cover; }
+.h6-situation.has-picture .h6-picture { width: min(100%, 420px); justify-self: center; }
+@media (max-width: 700px) { .h6-banner { grid-template-columns: minmax(0, 1fr); } }

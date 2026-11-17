@@ -25,6 +25,12 @@
         name: 'Mme Rivière',
         role: 'Infirmière libérale',
         portrait: 'client-chignon',
+        // Les images de la scène (assets/illustrations/) : son visage, elle dans
+        // l'espace conseil, le visage d'Antoine, le décor vide.
+        face: 'visages/mme-riviere.webp',
+        picture: 'dialogues/riviere-espace-conseil.webp',
+        seller: 'visages/antoine.webp',
+        decor: 'dialogues/concession-bureau.webp',
         context: 'Vous êtes Antoine, conseiller dans une concession automobile. Mme Rivière, infirmière libérale, revient jeudi à 13 h pour un essai. Elle a 30 minutes. Avant l’essai, vous voulez comprendre ses besoins pour lui proposer le bon véhicule.'
       },
 
@@ -104,6 +110,7 @@
         },
         {
           says: 'Et puis il y a le coffre. Mon sac de soins, je le sors vingt fois par jour…',
+          picture: true,
           after: 'En le disant, elle se touche l’épaule droite.',
           order: ['b', 'c', 'a'],
           choices: {
