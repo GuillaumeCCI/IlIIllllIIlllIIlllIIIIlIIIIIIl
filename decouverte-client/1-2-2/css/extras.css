@@ -1907,3 +1907,10 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
  * les deux boutons d’aide au-dessus. */
 .h7-analyse-main .h7-helps { margin: 0; justify-content: flex-end; }
 p.h7-question { margin: 0; width: 100%; padding: 14px 20px; border-radius: 14px; background: rgb(255 255 255 / 88%); color: var(--navy); font-size: 1.22rem; font-weight: 700; line-height: 1.4; box-shadow: 0 4px 14px rgb(15 35 78 / 8%); }
+
+/* 6.2 · Même disposition, autre habillage : la question en bandeau bleu nuit
+ * (texte blanc), distincte des réponses blanches ; boutons d’aide plus fins. */
+p.h7-question { padding: 16px 22px; border-radius: 16px; background: #1b2370; color: #fff; font-size: 1.2rem; font-weight: 700; letter-spacing: .005em; box-shadow: 0 10px 24px rgb(27 35 112 / 22%); }
+.h7-analyse-main .h7-help { padding: 5px 12px; background: rgb(255 255 255 / 70%); color: #1b2370; font-size: .84rem; font-weight: 600; box-shadow: inset 0 0 0 1px rgb(27 35 112 / 14%); backdrop-filter: blur(4px); }
+.h7-analyse-main .h7-help:hover { background: #fff; color: var(--accent); }
+.h7-analyse-main .h7-help .icon { width: 15px; height: 15px; }
