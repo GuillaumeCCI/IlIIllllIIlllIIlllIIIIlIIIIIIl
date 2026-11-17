@@ -665,7 +665,7 @@
        * ce que vous venez de faire, pourquoi la suite, ce qu'on vous demande.
        * {name} : le prénom du collègue ; {il} : il ou elle. */
       transitions: [
-        null,
+        { done: 'Vous connaissez la règle d’or du coach.', why: 'Voici votre chemin : six étapes, de la lecture de l’entretien jusqu’à la fiche que vous remettrez à {name}.', todo: 'Lisez l’entretien de {name} en entier, puis analysez ses questions une à une.' },
         { done: 'Vous avez analysé les dix moments de l’entretien de {name}.', why: 'Toutes les questions ne se valent pas : quelques-unes seulement ont fait basculer la découverte. Un bon coach se concentre sur elles.', todo: 'Choisissez les 3 moments qui ont le plus pesé.' },
         { done: 'Vous avez repéré les moments qui ont tout changé.', why: 'Dire ce qui n’a pas marché ne suffit pas : {name} a besoin de savoir quoi dire à la place.', todo: 'Pour chaque moment décisif, écrivez la question que vous auriez posée.' },
         { done: 'Vous avez proposé de meilleures questions.', why: 'En questionnant mieux, {name} serait reparti{e} avec des informations précises sur le client. Ce sont elles qui permettent de faire la bonne proposition.', todo: 'Classez ce que {name} aurait dû apprendre, puis mettez les priorités du client dans l’ordre.' },

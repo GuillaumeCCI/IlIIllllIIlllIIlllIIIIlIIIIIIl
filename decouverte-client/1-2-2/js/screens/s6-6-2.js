@@ -578,21 +578,37 @@
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }
 
-  /* La page de transition : ce que vous venez de faire, pourquoi la suite,
-   * ce qu'on vous demande. Dans la scène, comme l'entretien. */
+  /* La page de transition, sur la carte du chemin (image fournie) : les
+   * étapes faites cochées, les suivantes estompées, le pion « Vous » qui
+   * glisse de l'étape terminée jusqu'à la suivante. À côté : ce que vous
+   * venez de faire, pourquoi la suite, ce qu'on vous demande. */
+  // Les positions sur l'image (en %) : le centre de chaque étape et son numéro.
+  const SPOTS = [[19, 27], [49, 27], [80, 27], [80, 69], [49, 69], [19, 69]];
+  const BADGES = [[10, 14], [40.2, 14], [70.6, 14], [70.6, 58], [40.2, 58], [10, 58]];
   function transition(k) {
     const t = content.transitions[k];
     const fillT = text => text.split('{name}').join(D().seller.name).split('{il}').join(D().seller.fem ? 'elle' : 'il').split('{e}').join(D().seller.fem ? 'e' : '');
+    const from = SPOTS[Math.max(0, k - 1)];
+    const to = SPOTS[k];
+    const map = `<div class="h7-map h6-in" role="img" aria-label="Le chemin de l’exercice : étape ${k + 1} sur ${STEPS.length}, ${esc(STEPS[k])}.">
+        <img src="${img('parcours/coach-chemin.webp')}" alt="">
+        ${SPOTS.map(([x, y], i) => (i > k ? `<span class="h7-map-veil" style="left:${x}%;top:${y}%"></span>` : '')).join('')}
+        ${BADGES.map(([x, y], i) => (i < k ? `<span class="h7-map-done" style="left:${x}%;top:${y}%">${icon('check', { size: 18, strokeWidth: 3.5 })}</span>` : '')).join('')}
+        <span class="h7-map-pawn ${k > 0 ? 'is-moving' : 'is-landing'}" style="--fx:${from[0]}%;--fy:${from[1]}%;--tx:${to[0]}%;--ty:${to[1]}%"><b>Vous</b></span>
+      </div>`;
     return `<section class="h6-stage" style="--h6-decor:url('${decorOf()}')">
         <div class="h6-stage-body">
-          <div class="h6-card h7-trans h6-in">
-            <p class="k-label">Étape ${k + 1} sur ${STEPS.length}</p>
-            <p class="h7-trans-title">${esc(STEPS[k])}</p>
-            <p class="h7-trans-done">${icon('check', { size: 16, strokeWidth: 3 })}<span>${esc(fillT(t.done))}</span></p>
-            <p class="h7-trans-why">${esc(fillT(t.why))}</p>
-            <p class="h7-trans-todo"><span>À vous</span>${esc(fillT(t.todo))}</p>
+          <div class="h7-way">
+            ${map}
+            <div class="h6-card h7-trans h6-in" ${delay(0.3)}>
+              <p class="k-label">Étape ${k + 1} sur ${STEPS.length}</p>
+              <p class="h7-trans-title">${esc(STEPS[k])}</p>
+              <p class="h7-trans-done">${icon('check', { size: 16, strokeWidth: 3 })}<span>${esc(fillT(t.done))}</span></p>
+              <p class="h7-trans-why">${esc(fillT(t.why))}</p>
+              <p class="h7-trans-todo"><span>À vous</span>${esc(fillT(t.todo))}</p>
+            </div>
           </div>
-          <div class="h6-stage-foot">${next('C’est parti', 'h7-tr', 0.5, `data-k="${k}"`)}</div>
+          <div class="h6-stage-foot">${next('C’est parti', 'h7-tr', 1.2, `data-k="${k}"`)}</div>
         </div>
       </section>`;
   }
@@ -601,7 +617,10 @@
     const reviewing = ex.reviewing() && D();
     const k = at();
     // Avant chaque étape (à partir de la 2e) : une page de transition.
-    const body = reviewing ? review() : k > 0 && !yes(`tr${k}`) ? transition(k) : [scenario, decisiveStep, rewriteStep, knowStep, ficheStep, grid][k]();
+    // Une page de transition avant chaque étape : avant l'étape 1, au moment
+    // de commencer la lecture ; ensuite, à l'entrée de chaque étape.
+    const before0 = k === 0 && D() && yes('wok') && !yes('read') && !yes('tr0');
+    const body = reviewing ? review() : before0 || (k > 0 && !yes(`tr${k}`)) ? transition(k) : [scenario, decisiveStep, rewriteStep, knowStep, ficheStep, grid][k]();
     return `<div class="k-page a4-page a5-page d5-page h6-page h7-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: D() ? `Analysez l’entretien de ${D().seller.name}, repérez ce qui a ouvert ou fermé la découverte, et aidez-${D().seller.fem ? 'la' : 'le'} à progresser.` : content.subtitle, aside: reviewing ? '' : progress(k) + kit.tourButton() })}
       <form novalidate>${body}</form>
