@@ -28,6 +28,57 @@
         context: 'Vous êtes Antoine, conseiller dans une concession automobile. Mme Rivière, infirmière libérale, revient jeudi à 13 h pour un essai. Elle a 30 minutes. Avant l’essai, vous voulez comprendre ses besoins pour lui proposer le bon véhicule.'
       },
 
+      /* La question d'accroche, avant la partie, et les questions de
+       * vérification, après (une à la fois, retour aussitôt). Mêmes règles que
+       * le scénario : longueurs mêlées, bonne réponse à des places variées. */
+      warmup: {
+        question: 'Selon vous, à quoi sert la découverte avec Mme Rivière, avant l’essai ?',
+        order: ['b', 'c', 'a'], best: 'a',
+        choices: {
+          a: { text: 'À comprendre ses besoins et ce qui compte pour elle, pour lui faire essayer le bon véhicule.', fb: 'C’est tout l’enjeu : l’essai n’a de sens que sur un véhicule choisi à partir de ses besoins. Trente minutes suffisent si vos questions la font parler.' },
+          b: { text: 'À présenter rapidement la gamme, pour qu’elle choisisse le modèle à essayer en connaissance de cause.', fb: 'Présenter la gamme, c’est parler de vous avant de parler d’elle. Sans connaître ses besoins, vous risquez de lui faire essayer un véhicule qui ne lui convient pas.' },
+          c: { text: 'À vérifier son budget avant tout, pour ne pas perdre de temps sur l’essai.', fb: 'Le budget compte, mais commencer par lui ferme l’échange : elle répond à une question d’argent sans dire ce qu’elle attend de sa voiture.' }
+        }
+      },
+      quiz: [
+        {
+          question: 'Une cliente se touche l’épaule en parlant du coffre. Que faites-vous ?',
+          order: ['a', 'c', 'b'], best: 'a',
+          choices: {
+            a: { text: 'Je lui demande ce qui se passe, en partant de son geste.', fb: 'Un signal comme ce geste est une porte d’entrée : une question ouverte qui part de lui la laisse expliquer elle-même son vrai besoin.' },
+            b: { text: 'Je note qu’il lui faut un grand coffre, et je passe à la question suivante.', fb: 'Vous interprétez à sa place et vous passez à côté de l’essentiel : ce n’est pas la taille du coffre, c’est son épaule.' },
+            c: { text: 'Je lui propose aussitôt un modèle équipé d’un hayon électrique, pour la soulager.', fb: 'L’intention est bonne, mais c’est une solution avant d’avoir compris le problème. La discussion risque de partir sur le prix de l’option.' }
+          }
+        },
+        {
+          question: 'Quelle question fait le mieux dire à la cliente ce que lui coûte son problème ?',
+          order: ['c', 'a', 'b'], best: 'a',
+          choices: {
+            a: { text: 'Que se passerait-il si votre voiture vous lâchait de nouveau ?', fb: 'Une question ouverte sur les conséquences : elle mesure elle-même l’enjeu, en euros et en patients perdus.' },
+            b: { text: 'Une panne, ce serait embêtant, n’est-ce pas ?', fb: 'La question est orientée : elle appelle un « oui » sans rien vous apprendre de plus.' },
+            c: { text: 'Vous avez déjà eu beaucoup de pannes avec votre voiture actuelle ?', fb: 'La question est fermée : vous saurez combien de pannes, pas ce qu’elles lui coûtent.' }
+          }
+        },
+        {
+          question: 'Pour faire hiérarchiser ses besoins à la cliente, quelle question posez-vous ?',
+          order: ['b', 'c', 'a'], best: 'a',
+          choices: {
+            a: { text: 'Si vous deviez choisir, qu’est-ce qui passe en premier pour vous ?', fb: 'Une question qui oblige à choisir : c’est elle qui classe, et votre hiérarchie reposera sur ses mots.' },
+            b: { text: 'Tout est important pour vous, j’imagine ?', fb: '« Tout est important » est toujours vrai : la cliente acquiesce, et vous ne savez toujours pas ce qui compte le plus.' },
+            c: { text: 'C’est bien le budget qui compte le plus pour vous, n’est-ce pas ?', fb: 'Vous lui soufflez votre propre hiérarchie. Elle peut acquiescer par politesse, ou vous contredire sans vous dire ce qui compte vraiment.' }
+          }
+        },
+        {
+          question: 'Avant l’essai, à quoi sert la reformulation finale ?',
+          order: ['a', 'b', 'c'], best: 'a',
+          choices: {
+            a: { text: 'À vérifier avec elle ce que vous avez compris, et dans quel ordre.', fb: 'La reformulation est une validation : la cliente confirme ou corrige. Vous partez à l’essai sur des besoins vérifiés.' },
+            b: { text: 'À lui montrer que vous l’avez écoutée, avant de lui présenter le véhicule le mieux adapté.', fb: 'Montrer qu’on a écouté est un effet, pas le but. Et glisser le véhicule dans la foulée transforme la validation en vente.' },
+            c: { text: 'À résumer l’entretien pour votre fiche client, une fois qu’elle est partie.', fb: 'La reformulation se fait avec la cliente, pendant l’entretien : sinon, personne ne valide ce que vous avez compris.' }
+          }
+        }
+      ],
+
       start: 5,
       steps: [
         {

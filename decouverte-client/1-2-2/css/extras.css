@@ -1293,3 +1293,64 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h6-explain { margin: 0; color: #2b3866; line-height: 1.5; }
 .h6-best-label { margin: 0 0 4px; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .h6-path-best .h6-best-q { margin-bottom: 6px; }
+
+/* ── 6.1 en scène : le décor de la concession flouté, un carton à la fois ── */
+.h6-stage { position: relative; isolation: isolate; overflow: hidden; display: grid; grid-template-rows: auto 1fr; gap: 14px; min-height: 540px; padding: 18px 22px 22px; border-radius: 22px; box-shadow: 0 14px 34px rgb(15 35 78 / 10%); }
+.h6-stage::before { content: ''; position: absolute; inset: -24px; z-index: -2; background: var(--h6-decor) center / cover no-repeat; filter: blur(7px) saturate(.75); }
+.h6-stage::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(244 240 232 / 62%), rgb(236 241 250 / 70%)); }
+.h6-stage-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; }
+.h6-stage-top .h6-gauge { flex: 0 1 460px; }
+.h6-stage-body { display: grid; align-content: center; justify-items: center; gap: 16px; }
+.h6-stage-foot { display: flex; justify-content: flex-end; width: min(100%, 980px); }
+.h6-card { width: min(100%, 720px); padding: 22px 26px; border-radius: 16px; background: #fff; color: var(--navy); box-shadow: 0 10px 26px rgb(15 35 78 / 12%), 0 3px 0 rgb(18 73 216 / 85%); }
+.h6-banner { text-align: center; }
+.h6-banner p:last-child { margin: 6px 0 0; color: #2b3866; }
+.h6-situation { display: grid; gap: 12px; text-align: center; }
+.h6-situation .k-label { margin: 0; }
+.h6-scene-text { margin: 0; color: #3a4a7a; font-size: 1.08rem; font-style: italic; line-height: 1.5; }
+.h6-said { display: flex; align-items: flex-end; gap: 12px; text-align: left; }
+.h6-said img { width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%; object-fit: cover; object-position: top; background: #eef2fb; }
+.h6-said p { margin: 0; padding: 12px 16px; border-radius: 16px 16px 16px 4px; background: #f3f6fd; color: var(--navy); font-size: 1.05rem; font-weight: 700; line-height: 1.45; }
+.h6-said p span, .h6-you span { display: block; margin-bottom: 2px; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+/* Votre choix : vous à gauche, les questions numérotées à droite. */
+.h6-choose { display: grid; grid-template-columns: minmax(220px, 300px) minmax(0, 560px); gap: 22px; align-items: center; justify-content: center; width: 100%; }
+.h6-who { display: grid; justify-items: center; gap: 8px; text-align: center; border: 2px dashed #9aa9d6; box-shadow: 0 10px 26px rgb(15 35 78 / 12%); }
+.h6-who-badge { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; background: #dfe8ff; color: var(--accent); }
+.h6-who-name { margin: 0; color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h6-who-ask { margin: 0; color: var(--accent); font-size: 1.05rem; font-weight: 700; line-height: 1.4; }
+.h6-options { display: grid; gap: 10px; }
+.h6-option { display: flex; align-items: flex-start; gap: 12px; width: 100%; padding: 13px 16px; border: 0; border-radius: 12px; background: #fff; color: var(--accent); font: inherit; font-weight: 600; line-height: 1.45; text-align: left; cursor: var(--cursor-hand, pointer); box-shadow: 0 6px 16px rgb(15 35 78 / 10%); transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
+.h6-option:hover, .h6-option:focus-visible { transform: translateX(3px); background: #f4f7ff; box-shadow: 0 8px 20px rgb(18 73 216 / 18%); }
+.h6-option-n { display: inline-grid; place-items: center; flex: none; width: 24px; height: 24px; margin-top: 1px; border-radius: 50%; background: var(--accent); color: #fff; font-size: .82rem; font-weight: 800; }
+.h6-quiz-n { margin: 0; padding: 4px 12px; border-radius: 999px; background: #fff; }
+/* Votre question et sa réaction. */
+.h6-exchange { display: grid; gap: 12px; }
+.h6-you { justify-self: end; max-width: 85%; padding: 12px 16px; border-radius: 16px 16px 4px 16px; background: var(--accent); color: #fff; font-size: 1.02rem; font-weight: 600; line-height: 1.45; }
+.h6-you span { color: rgb(255 255 255 / 75%); }
+.h6-exchange .h6-typing { margin-left: 68px; }
+/* Le retour : le verdict à gauche, l'explication à droite. */
+.h6-fb { display: grid; grid-template-columns: minmax(180px, 240px) minmax(0, 640px); gap: 0; align-items: stretch; justify-content: center; width: 100%; }
+.h6-fb .h6-stage-foot { grid-column: 1 / -1; margin-top: 16px; width: auto; }
+.h6-fb-side { display: grid; justify-items: center; align-content: center; gap: 10px; padding: 22px; border-radius: 16px 0 0 16px; background: #fff; text-align: center; }
+.h6-fb-side p { margin: 0; font-weight: 700; line-height: 1.35; }
+.h6-fb-icon { display: grid; place-items: center; width: 70px; height: 70px; border-radius: 50%; color: #fff; }
+.h6-fb.tone-ok .h6-fb-icon { background: #2a8f8f; } .h6-fb.tone-ok .h6-fb-side p, .h6-fb.tone-ok .h6-fb-title { color: #1f7272; }
+.h6-fb.tone-mid .h6-fb-icon { background: #c98a1e; } .h6-fb.tone-mid .h6-fb-side p, .h6-fb.tone-mid .h6-fb-title { color: #94610f; }
+.h6-fb.tone-ko .h6-fb-icon { background: #b0386e; } .h6-fb.tone-ko .h6-fb-side p, .h6-fb.tone-ko .h6-fb-title { color: #93285a; }
+.h6-fb-text { width: auto; border-radius: 0 16px 16px 0; display: grid; gap: 10px; align-content: center; }
+.h6-fb-text p { margin: 0; color: #24305a; line-height: 1.55; }
+.h6-fb-title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 1.15rem; font-weight: 800; }
+.h6-better { padding: 10px 14px; border-radius: 12px; background: #f1f7f3; color: #1f5a3c !important; font-weight: 600; }
+.h6-better span { display: block; margin-bottom: 2px; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h6-next { animation-duration: .35s; }
+.h6-stage .h6-end { width: min(100%, 720px); }
+/* Relire l'échange, sans quitter la scène. */
+.h6-replay { position: relative; }
+.h6-replay > summary { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: #fff; color: var(--accent); font-weight: 700; list-style: none; cursor: var(--cursor-hand, pointer); box-shadow: 0 4px 12px rgb(15 35 78 / 10%); }
+.h6-replay > summary::-webkit-details-marker { display: none; }
+.h6-replay[open] > .d5-thread { position: absolute; right: 0; top: calc(100% + 8px); z-index: 5; width: min(560px, 80vw); max-height: 60vh; overflow-y: auto; padding: 14px; border-radius: 16px; background: #f7f9fe; box-shadow: 0 18px 40px rgb(15 35 78 / 22%); }
+@media (max-width: 900px) {
+  .h6-choose, .h6-fb { grid-template-columns: minmax(0, 1fr); }
+  .h6-fb-side { border-radius: 16px 16px 0 0; } .h6-fb-text { border-radius: 0 0 16px 16px; }
+  .h6-stage { min-height: 0; }
+}

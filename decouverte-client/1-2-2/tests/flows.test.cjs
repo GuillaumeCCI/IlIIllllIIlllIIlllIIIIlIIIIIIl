@@ -86,7 +86,9 @@ const CUSTOM = {
   },
   // Synthèse (option 2) : la meilleure question à chaque étape, la carte, la grille.
   's6-6-1': (e, c) => {
-    c.steps.forEach((s, k) => e.setValue(`c${k}`, s.best));
+    e.setValue('warm', c.warmup.best); e.setValue('wok', true);
+    c.steps.forEach((s, k) => { e.setValue(`seen${k}`, true); e.setValue(`c${k}`, s.best); e.setValue(`rs${k}`, true); e.setValue(`ack${k}`, true); });
+    c.quiz.forEach((item, i) => { e.setValue(`q${i}`, item.best); e.setValue(`qa${i}`, true); });
     c.map.forEach(r => e.setValue(`m_${r.id}`, r.model));
     c.selfCheck.forEach((_, i) => e.setValue(`self${i}`, 'oui'));
   },
