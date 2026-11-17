@@ -303,8 +303,13 @@
     const okJ = yes(`f${j}_ok`);
     const help = j === 0 ? 'example' : j === 1 ? 'hint' : '';
     const tabs = list.map((x, i) => `<button type="button" class="h8-fmini ${i === j ? 'is-current' : ''} ${yes(`f${i}_ok`) ? 'is-filled' : ''}" role="tab" aria-selected="${i === j}" aria-label="Fiche ${i + 1} : ${esc(x.title)}" title="${esc(x.title)}" data-act="h8-fiche" data-j="${i}" ${i > 0 && !yes(`f${i - 1}_ok`) ? 'disabled' : ''}><img src="${img(x.face)}" alt=""><span class="h8-fmini-n">${yes(`f${i}_ok`) ? icon('check', { size: 11, strokeWidth: 3.5 }) : i + 1}</span></button>`).join('');
-    const page = pages[pageP];
-    const pageTabs = pages.map((p, n) => `<button type="button" class="h8-step ${n === pageP ? 'is-current' : ''} ${n < pageP ? 'is-past' : ''}" data-act="h8-page" data-p="${n}" ${n === pageP ? 'aria-current="step"' : ''}><span class="h8-step-n">${n + 1}</span><span class="h8-step-t">${esc(p.tab)}</span></button>`).join('');
+    // Une cinquième page, le bilan, une fois la fiche vérifiée.
+    const BILAN = pages.length;
+    if (pageP === BILAN && !okJ) pageP = BILAN - 1;
+    const onBilan = pageP === BILAN;
+    const page = pages[pageP] || {};
+    const bilanTab = `<button type="button" class="h8-step ${onBilan ? 'is-current' : ''}" data-act="h8-page" data-p="${BILAN}" ${onBilan ? 'aria-current="step"' : ''} ${okJ ? '' : 'disabled'}><span class="h8-step-n">${icon('check', { size: 14, strokeWidth: 3 })}</span><span class="h8-step-t">Le bilan</span></button>`;
+    const pageTabs = pages.map((p, n) => `<button type="button" class="h8-step ${n === pageP ? 'is-current' : ''} ${n < pageP ? 'is-past' : ''}" data-act="h8-page" data-p="${n}" ${n === pageP ? 'aria-current="step"' : ''}><span class="h8-step-n">${n + 1}</span><span class="h8-step-t">${esc(p.tab)}</span></button>`).join('') + bilanTab;
     const helpLabel = help === 'example' ? 'Aide : un exemple par rubrique' : help === 'hint' ? 'Aide : un indice par rubrique' : 'Sans aide, cette fois';
     const fieldHtml = f => {
       const name = `f${j}_${f.id}`;
@@ -411,9 +416,9 @@
       return `<div class="h8-fields">${page.fields.map(fieldHtml).join('')}</div>`;
     };
     const lastPage = pageP === pages.length - 1;
-    const nav = `<div class="h7-fiche-nav">${pageP > 0 ? `<button type="button" class="text-button with-icon" data-act="h8-page" data-p="${pageP - 1}">${icon('arrowLeft', { size: 16 })}<span>Page précédente</span></button>` : '<span></span>'}${lastPage ? (okJ ? '' : kit.act('h8-fiche-check', `${icon('check', { size: 18 })}<span>Vérifier ma fiche</span>`, 'primary', `data-j="${j}"`)) : `<button type="button" class="button primary small" data-act="h8-page" data-p="${pageP + 1}"><span>Page suivante</span>${icon('arrowRight', { size: 16 })}</button>`}</div>`;
+    const nav = `<div class="h7-fiche-nav">${pageP > 0 ? `<button type="button" class="text-button with-icon" data-act="h8-page" data-p="${pageP - 1}">${icon('arrowLeft', { size: 16 })}<span>Page précédente</span></button>` : '<span></span>'}${onBilan ? '<span></span>' : lastPage ? (okJ ? `<button type="button" class="button primary small" data-act="h8-page" data-p="${BILAN}"><span>Revoir le bilan</span>${icon('arrowRight', { size: 16 })}</button>` : kit.act('h8-fiche-check', `${icon('check', { size: 18 })}<span>Vérifier ma fiche</span>`, 'primary', `data-j="${j}"`)) : `<button type="button" class="button primary small" data-act="h8-page" data-p="${pageP + 1}"><span>Page suivante</span>${icon('arrowRight', { size: 16 })}</button>`}</div>`;
     let bilan = '';
-    if (okJ) {
+    if (onBilan) {
       const cs = ficheChecks(j);
       const good = cs.filter(c => c.ok).length;
       const tone = good === cs.length ? 'ok' : good >= cs.length - 3 ? 'mid' : 'ko';
@@ -444,7 +449,7 @@
           <div class="h8-fminis" role="tablist" aria-label="Vos 2 fiches">${tabs}</div>
         </div>
         <div class="h8-steps" role="group" aria-label="Les pages de la fiche">${pageTabs}</div>
-        <div class="h8-brief">
+        ${onBilan ? '' : `<div class="h8-brief">
           <p class="h8-brief-ask"><span class="h8-brief-n">${icon('pencil', { size: 18 })}</span>${esc(page.ask)}</p>
           ${page.intro ? `<p class="h8-brief-label">Ce qu’on attend de vous</p><ul class="h8-brief-list${[].concat(page.intro).length === 1 ? ' is-single' : ''}">${[].concat(page.intro).map(line => {
             if (line === '<s>') return `<li class="h8-brief-sit"><img src="${img(s.face)}" alt="" aria-hidden="true"><span><strong>La situation : ${esc(s.title.charAt(0).toLowerCase() + s.title.slice(1))}.</strong> ${esc(s.line)}</span></li>`;
@@ -453,10 +458,9 @@
             const tag = where === 'g' ? `<span class="h8-brief-side">${icon('arrowLeft', { size: 14 })}À gauche</span>` : where === 'd' ? `<span class="h8-brief-side">À droite${icon('arrowRight', { size: 14 })}</span>` : '<span class="h8-brief-dot" aria-hidden="true"></span>';
             return `<li class="${where ? 'has-side' : ''}">${tag}<span>${t}</span></li>`;
           }).join('')}</ul>` : ''}
-        </div>
-        ${pageBody()}
-        ${nav}
-        ${bilan}
+        </div>`}
+        ${onBilan ? '' : pageBody()}
+        ${onBilan ? bilan + nav : nav}
       </section>
       ${core.errorsBox()}
       ${kit.bar({ right: stepDone(2) ? kit.submit('Écrire mes règles d’or') : '' })}`;
@@ -623,12 +627,12 @@
     'h8-retry': control => advance(`retry${Number(control.dataset.j)}`, true),
     'h8-ack': control => { advance(`ack${Number(control.dataset.j)}`); window.scrollTo({ top: 0, behavior: 'instant' }); },
     'h8-fiche': control => { ficheJ = Number(control.dataset.j); pageP = 0; ex.rebuild(); window.scrollTo({ top: 0, behavior: 'instant' }); },
-    'h8-page': control => { pageP = Number(control.dataset.p); ex.rebuild(); },
+    'h8-page': control => { pageP = Number(control.dataset.p); ex.rebuild(); window.scrollTo({ top: 0, behavior: 'instant' }); },
     'h8-fiche-check': control => {
       const j = Number(control.dataset.j);
       const empty = ALLFIELDS.find(f => !filled(`f${j}_${f.id}`));
       if (empty) { pageP = pages.findIndex(p => p.fields.includes(empty)); ex.rebuild(); core.toast(`Remplissez « ${empty.label} ».`); return; }
-      ficheJ = j; advance(`f${j}_ok`); showMsg();
+      ficheJ = j; pageP = pages.length; advance(`f${j}_ok`); window.scrollTo({ top: 0, behavior: 'instant' });
     },
     'h8-rules-check': () => {
       if ([0, 1, 2, 3, 4].some(i => !filled(`r${i}`))) { core.toast('Écrivez vos 5 règles d’or.'); return; }

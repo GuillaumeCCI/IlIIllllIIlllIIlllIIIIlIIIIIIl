@@ -119,8 +119,8 @@ window.ATELIER_BRIEFINGS = {
   's6-6.3': {
     lede: { key: 'Vos clients,', rest: 'vos questions.' },
     mission: 'Lucas arrive lundi en alternance. Votre responsable vous demande de lui préparer une banque de questions pour réussir ses découvertes client, à partir de ce que vous vivez dans votre métier. Cette activité est facultative.',
-    method: 'Vos 3 situations, le bon réflexe pour chacune, une fiche de questions par situation, vos 5 règles d’or, un test terrain, puis la grille.',
-    situation: 'Vous choisissez 3 situations parmi 8 : le client qui sait ce qu’il veut, celui qui « regarde juste », le premier rendez-vous avec une entreprise, l’appel entrant, le client accompagné, le client pressé, le renouvellement, le client qui revient après un problème.',
+    method: 'Vos 2 situations, le bon réflexe pour chacune, une fiche de questions par situation, vos 5 règles d’or, un test terrain, puis la grille.',
+    situation: 'Vous choisissez 2 situations parmi 8 : le client qui sait ce qu’il veut, celui qui « regarde juste », le premier rendez-vous avec une entreprise, l’appel entrant, le client accompagné, le client pressé, le renouvellement, le client qui revient après un problème.',
     task: 'Trois fiches (situation réelle, ce qu’il faut découvrir, questions pour ouvrir, creuser, préciser et classer, mots indices, piège à éviter) et cinq règles d’or.',
     criteria: ['Des questions ouvertes pour ouvrir et creuser', 'Des questions fermées réservées aux précisions', 'Une banque ancrée dans votre métier']
   },
