@@ -719,7 +719,7 @@
       // Les huit situations (fiche), leur piège et leur question clé (repères du tuteur).
       // « reflex » : la scène du bon réflexe, trois réponses (best, mid, ko).
       situations: [
-        { id: 'sait', title: 'Le client qui sait ce qu’il veut', line: 'Il arrive avec une demande précise : un modèle, une référence.', trap: 'Le servir sans comprendre, ou le contredire.', key: 'Qu’est-ce qui vous a fait choisir ce modèle ?', face: 'clients/client-pull-clair.webp',
+        { id: 'sait', fx: { sit: 'Un samedi, une cliente arrive avec la référence d’un lave-linge vu sur Internet : « le modèle X, 9 kg ». Elle a tout comparé et veut juste savoir s’il est en stock.', disc: 'Pourquoi ce modèle, comment elle l’utilisera, où il sera installé.' }, title: 'Le client qui sait ce qu’il veut', line: 'Il arrive avec une demande précise : un modèle, une référence.', trap: 'Le servir sans comprendre, ou le contredire.', key: 'Qu’est-ce qui vous a fait choisir ce modèle ?', face: 'clients/client-pull-clair.webp',
           reflex: { who: 'La cliente', context: 'Samedi matin, en magasin. Une cliente s’avance droit vers vous, son téléphone à la main : elle a noté une référence.', says: 'Bonjour ! Je viens pour le lave-linge X, le 9 kg, celui que j’ai vu sur votre site hier soir. J’ai déjà tout comparé, hein. Vous l’avez en stock ?', order: ['b', 'c', 'a'], best: 'a',
             choices: {
               a: { text: 'Il est bien en stock. Qu’est-ce qui vous a fait choisir celui-là ?' },
@@ -727,7 +727,7 @@
               c: { text: 'Celui-là est bien, mais on a beaucoup mieux pour le même prix, vous savez.', tone: 'ko', note: 'Vous contredisez son choix avant de le comprendre : elle se sent jugée et se ferme.' }
             },
             why: 'Vous confirmez, puis vous cherchez la raison de son choix. C’est elle qui dira si ce modèle lui convient.' } },
-        { id: 'regarde', title: 'Le client qui « regarde juste »', line: 'Il n’exprime aucun besoin.', trap: 'Insister, ou le laisser partir.', key: 'Qu’est-ce qui vous amène aujourd’hui ?', face: 'clients/client-veste-verte.webp',
+        { id: 'regarde', fx: { sit: 'Un client flâne dans le magasin depuis dix minutes. Quand je m’approche, il me répond « Je regarde juste », sans lever les yeux.', disc: 'Ce qui l’a fait entrer aujourd’hui, s’il a un projet, et pour quand.' }, title: 'Le client qui « regarde juste »', line: 'Il n’exprime aucun besoin.', trap: 'Insister, ou le laisser partir.', key: 'Qu’est-ce qui vous amène aujourd’hui ?', face: 'clients/client-veste-verte.webp',
           reflex: { who: 'La cliente', context: 'En fin d’après-midi, une cliente entre et flâne entre les rayons. Elle s’arrête, touche un article, repart. Vous vous approchez en souriant.', says: 'Oh, non merci, je regarde juste… Je passais devant, alors je suis entrée. On verra bien.', order: ['b', 'a', 'c'], best: 'b',
             choices: {
               a: { text: 'Pas de souci, je vous laisse regarder tranquillement. Je suis là si besoin.', tone: 'mid', note: 'C’est poli, mais vous la laissez partir sans rien savoir. Une question légère, sans pression, ouvre la porte.' },
@@ -735,7 +735,7 @@
               c: { text: 'Vous êtes sûre ? On a justement une belle promotion sur toute cette allée.', tone: 'ko', note: 'Vous insistez et vous parlez produit : elle se sent poussée et s’éloigne.' }
             },
             why: 'Une question ouverte, légère, sans pression : elle peut répondre, ou non, mais la porte est ouverte.' } },
-        { id: 'entreprise', title: 'Le premier rendez-vous avec une entreprise', line: 'Un prospect que vous ne connaissez pas encore.', trap: 'Présenter son entreprise d’abord.', key: 'Comment fonctionne votre activité aujourd’hui ?', face: 'clients/client-tasse.webp',
+        { id: 'entreprise', fx: { sit: 'Premier rendez-vous chez le dirigeant d’une PME de 30 salariés. Il me reçoit entre deux réunions et me donne vingt minutes.', disc: 'Comment fonctionne son activité, ce qui lui pose problème aujourd’hui, qui décide avec lui.' }, title: 'Le premier rendez-vous avec une entreprise', line: 'Un prospect que vous ne connaissez pas encore.', trap: 'Présenter son entreprise d’abord.', key: 'Comment fonctionne votre activité aujourd’hui ?', face: 'clients/client-tasse.webp',
           reflex: { who: 'Le dirigeant', context: 'Premier rendez-vous chez un prospect. Le dirigeant d’une PME vous reçoit dans son bureau, entre deux réunions ; il pose son téléphone face cachée.', says: 'Bon. On m’a dit de vous recevoir, alors je vous écoute. Je vous préviens, j’ai une réunion juste après : vous avez vingt minutes.', order: ['c', 'a', 'b'], best: 'b',
             choices: {
               a: { text: 'Merci. Je vous présente d’abord notre société et nos trois offres phares.', tone: 'ko', note: 'Vous parlez de vous avant de parler de lui : il écoute poliment, et vous ne savez toujours rien de ses besoins.' },
@@ -743,7 +743,7 @@
               c: { text: 'Merci. Combien de salariés avez-vous, et sur combien de sites ?', tone: 'mid', note: 'Ces chiffres serviront, mais deux questions fermées pour commencer, c’est un interrogatoire. Faites-le d’abord raconter.' }
             },
             why: 'Une question ouverte et large : il raconte son activité, et ses enjeux apparaissent d’eux-mêmes.' } },
-        { id: 'appel', title: 'L’appel entrant', line: 'Un client téléphone pour se renseigner.', trap: 'Donner un prix tout de suite.', key: 'Pour vous répondre au mieux, quelle est votre situation ?', face: 'clients/client-cheveux-gris.webp',
+        { id: 'appel', fx: { sit: 'Une cliente appelle : « C’est combien, votre formule d’entretien ? » Elle appelle plusieurs magasins pour comparer les prix.', disc: 'Son équipement, ce qu’elle attend d’un entretien, ce qui compte pour elle à part le prix.' }, title: 'L’appel entrant', line: 'Un client téléphone pour se renseigner.', trap: 'Donner un prix tout de suite.', key: 'Pour vous répondre au mieux, quelle est votre situation ?', face: 'clients/client-cheveux-gris.webp',
           reflex: { who: 'Au téléphone', context: 'Le téléphone sonne. Au bout du fil, une cliente qui ne vous connaît pas encore : on entend du bruit derrière elle, elle appelle sans doute entre deux choses.', says: 'Oui, bonjour, je voulais juste un renseignement. C’est combien, votre formule d’entretien ? J’appelle un peu partout pour comparer.', order: ['a', 'c', 'b'], best: 'c',
             choices: {
               a: { text: 'Elle est à 89 € par an, pièces et main-d’œuvre comprises, sans engagement.', tone: 'ko', note: 'Un prix sec, sans contexte : elle compare, et raccroche pour appeler le concurrent.' },
@@ -751,7 +751,7 @@
               c: { text: 'Pour vous donner le bon prix, pouvez-vous me décrire votre situation ?' }
             },
             why: 'Vous expliquez pourquoi vous posez la question, et vous la laissez décrire sa situation : le prix viendra, et il sera juste.' } },
-        { id: 'accompagne', title: 'Le client accompagné', line: 'Un couple, des associés, une famille : plusieurs décideurs.', trap: 'Ne parler qu’à un seul.', key: 'Et pour vous, qu’est-ce qui compte ?', face: 'visages/mme-leroy.webp',
+        { id: 'accompagne', fx: { sit: 'Un couple vient pour un projet commun. Madame parle beaucoup et veut « que ce soit joli » ; Monsieur reste en retrait et regarde les prix.', disc: 'Ce qui compte pour chacun des deux, qui décide, et le budget qu’ils se sont fixé.' }, title: 'Le client accompagné', line: 'Un couple, des associés, une famille : plusieurs décideurs.', trap: 'Ne parler qu’à un seul.', key: 'Et pour vous, qu’est-ce qui compte ?', face: 'visages/mme-leroy.webp',
           reflex: { who: 'Madame', context: 'Un couple entre ensemble pour un projet commun. Elle parle tout de suite ; lui reste un pas en retrait, les bras croisés, et regarde les étiquettes de prix.', says: 'Alors nous, enfin moi surtout, je veux que ce soit joli. On va vivre avec tous les jours, je ne veux pas d’un truc triste.', order: ['b', 'a', 'c'], best: 'a',
             choices: {
               a: { text: 'C’est noté. Et pour vous, Monsieur, qu’est-ce qui compte ?' },
@@ -759,7 +759,7 @@
               c: { text: 'Et côté budget, vous avez prévu combien ?', tone: 'mid', note: 'Vous restez avec elle, et sur une question fermée : celui qui se tait ne dira rien.' }
             },
             why: 'Vous donnez la parole à celui qui se tait : c’est souvent lui qui pose les conditions.' } },
-        { id: 'presse', title: 'Le client pressé', line: 'Il vous donne cinq minutes.', trap: 'L’interrogatoire, ou le silence.', key: 'En deux mots, qu’est-ce qui est le plus important ?', face: 'visages/m-vidal.webp',
+        { id: 'presse', fx: { sit: 'Un client entre à midi, ses clés de voiture à la main : « J’ai cinq minutes, il me faut quelque chose rapidement. »', disc: 'Le besoin le plus important pour lui, et pour quand il lui faut une solution.' }, title: 'Le client pressé', line: 'Il vous donne cinq minutes.', trap: 'L’interrogatoire, ou le silence.', key: 'En deux mots, qu’est-ce qui est le plus important ?', face: 'visages/m-vidal.webp',
           reflex: { who: 'Le client', context: 'Midi et demi. Un client entre d’un pas rapide, les clés de voiture encore à la main ; il est garé juste devant.', says: 'Bonjour, je suis entre deux rendez-vous, alors j’ai cinq minutes, pas plus. Il me faut quelque chose rapidement.', order: ['b', 'c', 'a'], best: 'b',
             choices: {
               a: { text: 'D’accord, je vous laisse regarder, et je reviens vers vous dans un moment.', tone: 'mid', note: 'Vous respectez son temps, mais vous ne découvrez rien : il repartira sans avoir trouvé.' },
@@ -767,7 +767,7 @@
               c: { text: 'Pas de souci. Taille, budget, couleur, délai : on fait vite ?', tone: 'ko', note: 'Quatre questions fermées d’affilée : un interrogatoire. Il répond vite, sans dire l’essentiel.' }
             },
             why: 'Une seule question ouverte, qui va droit à l’essentiel : en cinq minutes, c’est elle qui compte.' } },
-        { id: 'renouvellement', title: 'Le renouvellement', line: 'Un client qui doit remplacer un équipement ou renouveler un contrat.', trap: 'Reconduire à l’identique.', key: 'Qu’est-ce qui a changé depuis la dernière fois ?', face: 'visages/m-leroy.webp',
+        { id: 'renouvellement', fx: { sit: 'Un client fidèle, sous contrat depuis trois ans, vient me voir : « Mon contrat se termine, on repart sur la même chose ? »', disc: 'Ce qui a changé pour lui depuis trois ans, ce qui lui a plu et ce qui l’a gêné.' }, title: 'Le renouvellement', line: 'Un client qui doit remplacer un équipement ou renouveler un contrat.', trap: 'Reconduire à l’identique.', key: 'Qu’est-ce qui a changé depuis la dernière fois ?', face: 'visages/m-leroy.webp',
           reflex: { who: 'Le client', context: 'Un client que vous connaissez passe vous voir : il a signé chez vous il y a trois ans, et son contrat arrive à échéance.', says: 'Bonjour ! Mon contrat se termine le mois prochain, j’ai reçu le courrier. Franchement, je n’ai pas trop le temps de m’en occuper : on repart sur la même chose ?', order: ['b', 'a', 'c'], best: 'b',
             choices: {
               a: { text: 'Bien sûr, je vous renouvelle tout à l’identique, c’est plus simple.', tone: 'ko', note: 'Vous reconduisez sans rien demander : si ses besoins ont changé, le contrat ne lui conviendra plus.' },
@@ -775,7 +775,7 @@
               c: { text: 'Vous êtes satisfait du contrat actuel ?', tone: 'mid', note: 'Une question fermée : il dira « oui », et vous ne saurez pas ce qui a changé.' }
             },
             why: 'Trois ans ont passé : vous faites dire ce qui a changé, avant de reconduire quoi que ce soit.' } },
-        { id: 'retour', title: 'Le client qui revient après un problème', line: 'Il a eu une mauvaise expérience et vous redonne une chance.', trap: 'Se justifier.', key: 'Qu’est-ce qui s’était mal passé, de votre point de vue ?', face: 'visages/mme-benali.webp',
+        { id: 'retour', fx: { sit: 'Une cliente revient pour un nouvel achat. La dernière fois, sa livraison a eu trois semaines de retard et personne ne l’a rappelée.', disc: 'Ce qui l’a le plus gênée la dernière fois, et ce qu’il faudrait pour qu’elle soit rassurée.' }, title: 'Le client qui revient après un problème', line: 'Il a eu une mauvaise expérience et vous redonne une chance.', trap: 'Se justifier.', key: 'Qu’est-ce qui s’était mal passé, de votre point de vue ?', face: 'visages/mme-benali.webp',
           reflex: { who: 'La cliente', context: 'Une cliente revient vous voir pour un nouvel achat. La dernière fois, tout ne s’est pas bien passé : elle s’assoit, son sac sur les genoux, un peu sur la défensive.', says: 'Je vous préviens tout de suite : la dernière fois, la livraison avait trois semaines de retard, et personne ne m’avait rappelée. J’ai hésité à revenir, vous savez. J’espère que ça ne se reproduira pas.', order: ['b', 'a', 'c'], best: 'c',
             choices: {
               a: { text: 'C’était la faute du transporteur, vous savez : chez nous, ça n’arrive jamais.', tone: 'ko', note: 'Vous vous justifiez : elle entend une excuse, pas une écoute.' },
@@ -790,12 +790,14 @@
        * fiche 1, un exemple (fiche, électroménager) ; fiche 2, un indice ;
        * fiche 3, rien. */
       pages: [
-        { id: 'sit', tab: 'La situation', ask: 'Quelle situation réelle avez-vous en tête ?',
+        { id: 'sit', tab: 'La situation', ask: 'Quand avez-vous vécu cette situation ?',
+          intro: 'Pensez à une fois où vous avez vécu « {situation} » dans votre métier. À gauche, racontez ce cas ; à droite, notez ce que Lucas devra apprendre du client avant de proposer quoi que ce soit.',
           fields: [
-            { id: 'sit', kind: 'text', label: 'La situation réelle', sub: 'Un cas vécu ou observé dans votre entreprise, en deux ou trois lignes.', min: 60, example: 'Un client arrive avec la référence d’un lave-linge vu sur Internet : le modèle X, 9 kg.', hint: 'Qui, où, et ce que le client a dit en arrivant.' },
-            { id: 'disc', kind: 'text', label: 'Ce que vous devez découvrir', sub: 'Les informations indispensables avant de proposer quoi que ce soit.', min: 30, example: 'Pourquoi ce modèle, l’usage réel, les contraintes d’installation.', hint: 'Ce qu’il faut savoir avant de proposer.' }
+            { id: 'sit', kind: 'text', label: 'Le cas que vous avez vécu', sub: 'Qui était le client, où vous étiez, et ce qu’il vous a dit en arrivant. Deux ou trois lignes.', placeholder: 'Racontez…', min: 60, example: 'Un client arrive avec la référence d’un lave-linge vu sur Internet : le modèle X, 9 kg.', hint: 'Qui, où, et ce que le client a dit en arrivant.' },
+            { id: 'disc', kind: 'text', label: 'Ce que Lucas doit découvrir', sub: 'Les deux ou trois informations à obtenir du client avant de lui proposer quoi que ce soit.', placeholder: 'Listez…', min: 30, example: 'Pourquoi ce modèle, l’usage réel, les contraintes d’installation.', hint: 'Ce qu’il faut savoir avant de proposer.' }
           ] },
         { id: 'open', tab: 'Ouvrir et creuser', ask: 'Quelles questions posez-vous pour faire parler le client ?',
+          intro: 'Écrivez 4 questions que Lucas pourra poser telles quelles dans « {situation} » : 2 pour lancer la conversation, 2 pour aller plus loin. Toutes doivent être ouvertes : sous chaque question, vous voyez aussitôt de quel type elle est.',
           fields: [
             { id: 'o1', kind: 'q', expect: ['ouverte'], label: 'Question d’ouverture 1', sub: 'Large, adaptée à la situation : elle fait raconter.', example: 'Qu’est-ce qui vous a fait choisir ce modèle ?', hint: 'Une question qui fait raconter.' },
             { id: 'o2', kind: 'q', expect: ['ouverte'], label: 'Question d’ouverture 2', sub: 'Une autre façon d’ouvrir.', example: 'Comment l’utiliserez-vous, au quotidien ?', hint: 'Sur l’usage, le quotidien.' },
@@ -803,12 +805,14 @@
             { id: 'c2', kind: 'q', expect: ['ouverte'], label: 'Question pour creuser 2', sub: 'Elle va plus loin sur ce qui a été dit.', example: 'Que se passerait-il s’il tombait en panne pendant une semaine ?', hint: 'Sur ce que le problème coûte.' }
           ] },
         { id: 'precise', tab: 'Préciser et classer', ask: 'Comment précisez-vous, puis faites-vous classer ?',
+          intro: 'Écrivez 2 questions courtes qui vérifient un détail (une réponse par oui ou non, ou un choix entre deux options), puis 1 question qui fait dire au client ce qui compte le plus pour lui.',
           fields: [
             { id: 'p1', kind: 'q', expect: ['fermee', 'alternative'], label: 'Question de précision 1', sub: 'Fermée ou alternative : elle précise un détail.', example: 'L’emplacement fait-il 60 cm de large ?', hint: 'Une mesure, un délai, une contrainte.' },
             { id: 'p2', kind: 'q', expect: ['fermee', 'alternative'], label: 'Question de précision 2', sub: 'Une autre précision.', example: 'Livraison seule, ou avec installation ?', hint: 'Un choix entre deux options.' },
             { id: 'h', kind: 'q', expect: ['ouverte', 'alternative'], prio: true, label: 'Votre question pour hiérarchiser', sub: 'Elle aide le client à classer ses priorités.', example: 'Entre la capacité et le niveau sonore, qu’est-ce qui compte le plus pour vous ?', hint: 'Faites choisir entre deux critères.' }
           ] },
         { id: 'traps', tab: 'Indices et piège', ask: 'Que faut-il guetter, et que faut-il éviter ?',
+          intro: 'À gauche, notez les mots qui, dans la bouche de vos clients, trahissent ce qui les motive. À droite, écrivez la question que Lucas ne doit surtout pas poser dans « {situation} ».',
           fields: [
             { id: 'ind', kind: 'text', label: 'Les mots indices de motivation', sub: 'Les mots qui trahissent la motivation dominante, dans votre secteur.', min: 20, example: '« avis », « le meilleur » (orgueil, sécurité) ; « consommation » (argent, environnement).', hint: 'Les mots qu’ils emploient, et la motivation derrière.' },
             { id: 'piege', kind: 'q', expect: ['orientee', 'produit'], trap: true, label: 'Le piège à éviter', sub: 'La question orientée, ou la vente déguisée, typique de cette situation.', example: 'Vous savez qu’on a mieux pour le même prix ?', hint: 'La phrase qui pousse un produit trop tôt.' }

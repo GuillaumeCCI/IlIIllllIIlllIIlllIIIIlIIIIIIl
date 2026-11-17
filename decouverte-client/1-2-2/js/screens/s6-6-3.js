@@ -274,11 +274,14 @@
     const helpLabel = help === 'example' ? 'Aide : un exemple par rubrique' : help === 'hint' ? 'Aide : un indice par rubrique' : 'Sans aide, cette fois';
     const fieldHtml = f => {
       const name = `f${j}_${f.id}`;
-      const aid = help === 'example' ? `<p class="h8-aid"><span>Exemple</span>${f.kind === 'q' ? q(f.example) : esc(f.example)}</p>` : help === 'hint' ? `<p class="h8-aid"><span>Indice</span>${esc(f.hint)}</p>` : '';
+      const own = s.fx && s.fx[f.id];
+      const exText = own || f.example;
+      const exLabel = own ? 'Exemple' : 'Exemple chez un vendeur en électroménager';
+      const aid = help === 'example' ? `<p class="h8-aid"><span>${exLabel}</span>${f.kind === 'q' ? q(exText) : esc(exText)}</p>` : help === 'hint' ? `<p class="h8-aid"><span>Indice</span>${esc(f.hint)}</p>` : '';
       return `<div class="h7-write h8-field">
           <p class="h8-field-label">${esc(f.label)}</p>
           <p class="h7-write-note">${esc(f.sub)}</p>
-          ${ex.field(name, f.label, { placeholder: f.kind === 'q' ? 'Votre question… ?' : 'Votre réponse…', max: f.kind === 'q' ? 220 : 400, rows: f.kind === 'q' ? 2 : 3, hideLabel: true })}
+          ${ex.field(name, f.label, { placeholder: f.kind === 'q' ? 'Votre question… ?' : (f.placeholder || 'Votre réponse…'), max: f.kind === 'q' ? 220 : 400, rows: f.kind === 'q' ? 2 : 3, hideLabel: true })}
           ${f.kind === 'q' ? `<p class="h8-badge" data-badge="${name}" aria-live="polite">${badgeHtml(f, v(name))}</p>` : ''}
           ${aid}
         </div>`;
@@ -305,6 +308,7 @@
         </div>
         <div class="h8-steps" role="group" aria-label="Les pages de la fiche">${pageTabs}</div>
         <p class="h7-question">${esc(page.ask)}</p>
+        ${page.intro ? `<p class="h8-expect"><span>Ce qu’on attend de vous</span>${esc(page.intro.replace('{situation}', s.title.charAt(0).toLowerCase() + s.title.slice(1)))}</p>` : ''}
         <div class="h8-fields">${page.fields.map(fieldHtml).join('')}</div>
         ${nav}
         ${bilan}
