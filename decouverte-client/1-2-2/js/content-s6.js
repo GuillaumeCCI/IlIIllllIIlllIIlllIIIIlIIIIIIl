@@ -797,7 +797,7 @@
             { id: 'disc', kind: 'text', label: 'Ce que Lucas doit découvrir', sub: 'Les deux ou trois informations à obtenir du client avant de lui proposer quoi que ce soit.', placeholder: 'Listez…', min: 30, example: 'Pourquoi ce modèle, l’usage réel, les contraintes d’installation.', hint: 'Ce qu’il faut savoir avant de proposer.' }
           ] },
         { id: 'open', tab: 'Ouvrir et creuser', ask: 'Quelles questions posez-vous pour faire parler le client ?',
-          intro: ['Écrivez 4 questions que Lucas pourra poser telles quelles dans « {situation} ».', '2 pour lancer la conversation, 2 pour aller plus loin.', 'Toutes doivent être ouvertes.', 'Sous chaque question, vous voyez aussitôt de quel type elle est.'],
+          intro: ['<s>', 'Lucas va vivre cette situation. Il ne sait pas encore ce que veut le client : il doit le faire parler.', 'Écrivez pour lui 4 questions, mot pour mot, comme il les dira au client.', '2 pour lancer la conversation, 2 pour aller plus loin.', 'Toutes doivent être ouvertes. Sous chaque question, vous voyez aussitôt de quel type elle est.'],
           groups: [
             { title: 'Pour lancer la conversation', sub: 'Des questions larges, qui font raconter.', ids: ['o1', 'o2'] },
             { title: 'Pour aller plus loin', sub: 'Elles font parler d’un problème, d’une gêne, de ce que ça coûte.', ids: ['c1', 'c2'] }
@@ -809,7 +809,7 @@
             { id: 'c2', kind: 'q', expect: ['ouverte'], label: 'Question pour creuser 2', sub: 'Elle va plus loin sur ce qui a été dit.', example: 'Que se passerait-il s’il tombait en panne pendant une semaine ?', hint: 'Sur ce que le problème coûte.' }
           ] },
         { id: 'precise', tab: 'Préciser et classer', ask: 'Comment précisez-vous, puis faites-vous classer ?',
-          intro: ['Écrivez 2 questions courtes qui vérifient un détail : une réponse par oui ou non, ou un choix entre deux options.', 'Puis écrivez 1 question qui fait dire au client ce qui compte le plus pour lui.'],
+          intro: ['<s>', 'La conversation est lancée : le client a commencé à raconter.', 'Lucas doit maintenant vérifier des détails, puis savoir ce qui compte le plus pour le client.', 'Écrivez 2 questions courtes qui vérifient un détail : une réponse par oui ou non, ou un choix entre deux options.', 'Puis écrivez 1 question qui fait dire au client ce qui compte le plus pour lui.'],
           groups: [
             { title: 'Pour vérifier un détail', sub: 'Une réponse par oui ou non, ou un choix entre deux options.', ids: ['p1', 'p2'] },
             { title: 'Pour faire choisir', sub: 'Le client dit ce qui compte le plus pour lui.', ids: ['h'] }
