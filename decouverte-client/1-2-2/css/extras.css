@@ -2544,3 +2544,8 @@ button.h8-brow:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; 
 .h8-cintro-tag { margin: 0; color: #2a8f8f; font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .h8-cintro-title { margin: 0; color: var(--navy); font-size: 1.6rem; font-weight: 800; line-height: 1.25; }
 .h8-cintro-line { margin: 2px 0 0; color: #4c5a80; font-size: 1.05rem; line-height: 1.5; }
+
+/* 6.3 · Fiche : la question et la consigne en simple texte (plus de bandeau ni d'encadré). */
+.h8-ask { display: grid; gap: 6px; max-width: 980px; margin: 6px 0 22px; }
+.h8-ask-q { margin: 0; color: var(--navy); font-size: 1.45rem; font-weight: 800; line-height: 1.25; }
+.h8-ask-x { margin: 0; color: #4c5a80; font-size: 1.02rem; line-height: 1.55; }

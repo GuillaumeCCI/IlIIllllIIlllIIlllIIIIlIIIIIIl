@@ -455,8 +455,10 @@
         </div>
         ${okJ && showBilan ? `<div class="h8-bilan-screen h6-in">${bilan}<div class="h7-fiche-nav"><button type="button" class="text-button with-icon" data-act="h8-page" data-p="0">${icon('arrowLeft', { size: 16 })}<span>Revoir ma fiche</span></button>${j < N - 1 ? `<button type="button" class="button primary" data-act="h8-fiche" data-j="${j + 1}"><span>Fiche suivante</span>${icon('arrowRight', { size: 16 })}</button>` : '<span></span>'}</div></div>` : `
         <div class="h8-steps" role="group" aria-label="Les pages de la fiche">${pageTabs}</div>
-        <p class="h7-question">${esc(page.ask)}</p>
-        ${page.intro ? `<p class="h8-expect"><span>Ce qu’on attend de vous</span>${esc(page.intro.replace('{situation}', s.title.charAt(0).toLowerCase() + s.title.slice(1)))}</p>` : ''}
+        <div class="h8-ask h6-in">
+          <p class="h8-ask-q">${esc(page.ask)}</p>
+          ${page.intro ? `<p class="h8-ask-x">${esc(page.intro.replace('{situation}', s.title.charAt(0).toLowerCase() + s.title.slice(1)))}</p>` : ''}
+        </div>
         ${pageBody()}
         ${nav}`}
       </section>
