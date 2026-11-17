@@ -2148,3 +2148,12 @@ p.h7-question { margin-bottom: 12px; }
 .h7-aside ul { gap: 2px; }
 .h7-aside li { position: relative; padding: 8px 0 8px 18px; border-bottom: 0; color: #3a4a7a; }
 .h7-aside li::before { content: ''; position: absolute; left: 2px; top: 16px; width: 7px; height: 7px; border-radius: 50%; background: #2a8f8f; }
+
+/* 6.2 · Plus de cadre dans le cadre : la carte blanche EST le champ. Le champ
+ * n'a ni bordure, ni ombre, ni fond ; à l'écriture, c'est la carte qui
+ * s'entoure d'un anneau bleu. */
+#main .h7-write textarea, #main .h7-write input[type="text"] { border: 0; border-radius: 0; box-shadow: none; background: transparent; padding: 4px 0 26px; min-height: 110px; }
+#main .h7-write textarea:focus, #main .h7-write input[type="text"]:focus { outline: 0; }
+#main .h7-write .counter { right: 0; }
+.h7-write { transition: box-shadow .15s; }
+.h7-write:focus-within { box-shadow: 0 0 0 2px var(--accent), 0 6px 16px rgb(15 35 78 / 8%) !important; }
