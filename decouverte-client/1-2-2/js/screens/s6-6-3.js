@@ -543,7 +543,7 @@
         </div>
         <div class="h6-copy">${kit.act('h8-copy', `${icon('document', { size: 18 })}<span>Copier ma banque</span>`, 'secondary small')}<span>Pour la remettre à Lucas, ou à votre tuteur.</span></div>
       </section>
-      <details class="k-panel h6-review h7-review h8-fold" open>
+      <details class="k-panel h6-review h7-review h8-fold">
         <summary class="h8-fold-sum"><span class="k-label">Un exemple · magasin d’électroménager</span><span class="h8-fold-btn"><span class="h8-fold-open">Replier</span><span class="h8-fold-closed">Déplier</span>${icon('chevronRight', { size: 16 })}</span></summary>
         <p class="h7-review-line">Voici la banque d’un vendeur en électroménager. Votre métier est sans doute différent, et il n’y a pas une seule bonne banque.</p>
         <p class="h7-review-line">Ne comparez donc pas les produits : comparez la façon de poser les questions (ouvertes pour faire parler, précises pour vérifier, une pour faire choisir).</p>
