@@ -41,7 +41,8 @@
   const filled = name => kit.filled(v(name));
 
   /* ── Les données de l'apprenant ──────────────────────────────────────── */
-  const chosenIds = () => (Array.isArray(v('sit')) ? v('sit') : []);
+  // Une progression enregistrée quand il y avait 3 situations n'en garde que les N premières.
+  const chosenIds = () => (Array.isArray(v('sit')) ? v('sit').slice(0, N) : []);
   const chosen = () => chosenIds().map(id => situations.find(s => s.id === id)).filter(Boolean);
   const choiceAt = j => v(`c${j}`) || null;
   const tries = j => { const x = v(`x${j}`); return Array.isArray(x) && x.length ? x : (choiceAt(j) ? [choiceAt(j)] : []); };
