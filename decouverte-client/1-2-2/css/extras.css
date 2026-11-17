@@ -2435,3 +2435,10 @@ button.h8-brow:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; 
 /* 6.3 · Pages 2 et 3 : plus de pointillés sous les questions (le numéro et la pastille suffisent). */
 .h8-fsec .h8-qrow, .h8-fsec .h8-qrow:focus-within { background-image: none; }
 .h8-fsec .h8-qrow { padding: 8px 0; }
+
+/* 6.3 · Test terrain : la question choisie se voit (fond sarcelle pâle, coche pleine), les autres s'estompent. */
+.h8-qitem { transition: background .2s, opacity .2s, border-color .2s; }
+.h8-qitem.is-on { border-color: transparent; background: #e6f4f4; color: #134f4f; font-weight: 700; }
+.h8-qitem.is-on .h7-dm-tick { background: #2a8f8f; box-shadow: none; animation: h7-pop .3s ease-out both; }
+.h8-qpick:has(.is-on) .h8-qitem:not(.is-on) { opacity: .55; }
+.h8-qpick:has(.is-on) .h8-qitem:not(.is-on):hover { opacity: .85; }
