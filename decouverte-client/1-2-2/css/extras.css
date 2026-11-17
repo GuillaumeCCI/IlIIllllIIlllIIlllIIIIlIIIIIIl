@@ -2456,3 +2456,14 @@ p.h7-question { margin-bottom: 12px; }
 .h8-qitem.is-on .h8-qtick { background: var(--accent); box-shadow: none; }
 .h8-qitem.is-on:hover:not(:disabled) { background: #dde6ff; }
 .h8-bank dd.h8-lines { white-space: pre-line; }
+
+/* 6.3 · L'exemple, pliable (déplié au départ). */
+.h8-fold > .h8-fold-sum { display: flex; align-items: center; justify-content: space-between; gap: 12px; list-style: none; cursor: var(--cursor-hand, pointer); }
+.h8-fold > .h8-fold-sum::-webkit-details-marker { display: none; }
+.h8-fold > .h8-fold-sum .k-label { margin: 0; }
+.h8-fold-btn { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: #eef1fb; color: var(--accent); font-size: .86rem; font-weight: 700; }
+.h8-fold-btn svg { transform: rotate(90deg); transition: transform .2s; }
+.h8-fold:not([open]) .h8-fold-btn svg { transform: rotate(0deg); }
+.h8-fold[open] .h8-fold-closed, .h8-fold:not([open]) .h8-fold-open { display: none; }
+.h8-fold[open] > .h8-fold-sum { margin-bottom: 8px; }
+.h8-fold-sum:focus-visible { outline: 3px solid #ff936b; outline-offset: 4px; border-radius: 8px; }
