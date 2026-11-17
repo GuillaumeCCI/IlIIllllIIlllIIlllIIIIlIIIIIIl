@@ -82,7 +82,7 @@ Six étapes : 1. Les situations (message de Nadia, la responsable, pour Lucas, l
 
 Juge de la FORME d’une question (le métier n’est pas connu d’avance) : `ATELIER_QTYPE` (ouverte, fermée, alternative, orientée, produit, pas une question ; et « fait-elle hiérarchiser ? ») + banque de tests `tests/banque.test.cjs` (~70 questions de métiers variés, dans npm test). Réponses du bon réflexe sans biais (vérifié : jamais nettement plus longue, positions 3/2/3).
 
-Images PROVISOIRES : carte du chemin `parcours/banque-chemin.webp` (générée, même gabarit que celle de 6.2 : à remplacer), Nadia = visages/mme-riviere, Lucas = visages/antoine, décor = dialogues/entreprise. Descriptions données à l’utilisateur (banque-chemin, responsable, nouveau-collegue, salle-equipe).
+Images : `tools/import-images-6-3.mjs` importe celles des Téléchargements (ignore les absentes ; ajouter les noms de fichiers dans FACES / DECORS quand elles arrivent). Fournies (17/11) : carte du chemin `parcours/banque-chemin.webp` (barre du milieu masquée, même gabarit que 6.2, positions inchangées), Nadia = `visages/responsable.webp`. Encore PROVISOIRES : Lucas = visages/antoine (attendu : nouveau-collegue), décor = dialogues/entreprise (attendu : salle-equipe).
 
 ## Reprise prévue (17/11/2026)
 
