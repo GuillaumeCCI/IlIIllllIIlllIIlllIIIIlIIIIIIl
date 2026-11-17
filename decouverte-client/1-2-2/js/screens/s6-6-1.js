@@ -51,7 +51,12 @@
   // Au scénario, la conversation s'ouvre sur son dernier message.
   const toLatest = () => requestAnimationFrame(() => {
     const list = document.querySelector('.h6-chat .d5-thread');
-    if (list) { list.style.scrollBehavior = 'auto'; list.scrollTop = list.scrollHeight; list.style.scrollBehavior = ''; }
+    if (!list) return;
+    list.style.scrollBehavior = 'auto'; list.scrollTop = list.scrollHeight; list.style.scrollBehavior = '';
+    // Les bulles animées grandissent la liste : on la suit jusqu'au bout.
+    [500, 1300, 1900].forEach(ms => setTimeout(() => { list.scrollTop = list.scrollHeight; }, ms));
+    // Les trois points disparaissent quand la réponse arrive.
+    setTimeout(() => list.querySelectorAll('.h6-typing').forEach(dot => dot.remove()), 1350);
   });
 
   function progress(k) {
@@ -73,12 +78,15 @@
     const items = [];
     steps.forEach((s, k) => {
       if (k > upto || (k === upto && !withCurrent)) return;
-      if (s.scene) items.push(`<li class="h6-scene">${esc(s.scene)}</li>`);
-      if (s.says) items.push(`<li class="d5-msg is-client"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(s.says)}</p></li>`);
+      const next = fresh >= 0 && k === fresh + 1 ? 'h6-in is-next-in' : '';
+      if (s.scene) items.push(`<li class="h6-scene ${next}">${esc(s.scene)}</li>`);
+      if (s.says) items.push(`<li class="d5-msg is-client ${next}"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(s.says)}</p></li>`);
       const c = s.choices[choiceAt(k)];
       if (!c) return;
-      items.push(`<li class="d5-msg is-you"><p><span>Vous · étape ${k + 1}</span>${q(c.text)}</p></li>`);
-      if (c.reply) items.push(`<li class="d5-msg is-client"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(c.reply)}</p></li>`);
+      const anim = k === fresh;
+      items.push(`<li class="d5-msg is-you ${anim ? 'h6-in is-you-in' : ''}"><p><span>Vous · étape ${k + 1}</span>${q(c.text)}</p></li>`);
+      if (c.reply && anim) items.push('<li class="h6-typing" aria-hidden="true"><span></span><span></span><span></span></li>');
+      if (c.reply) items.push(`<li class="d5-msg is-client ${anim ? 'h6-in is-reply-in' : ''}"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(c.reply)}</p></li>`);
     });
     return items.join('');
   }
@@ -91,6 +99,7 @@
 
   /* ── 0 · Le scénario ─────────────────────────────────────────────────── */
   let lastDelta = null;
+  let fresh = -1; // l'étape qui vient d'être jouée (animée une fois)
   function scenario() {
     const k = played();
     const done = scenarioDone();
@@ -105,7 +114,7 @@
             <ol class="d5-thread">${thread(done ? steps.length - 1 : k)}</ol>
           </div>
           <div class="d5-chat-ask h6-ask">${done ? `
-            <div class="h6-end tone-${end.tone}">
+            <div class="h6-end tone-${end.tone} h6-in is-end-in">
               <p class="k-label">La fin de votre partie</p>
               <p class="h6-end-title">${esc(end.title)}</p>
               <div class="d5-msg is-client"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(end.says)}</p></div>
@@ -114,7 +123,7 @@
             <p class="fm-sub">Votre partie est jouée : c’est elle qui compte pour votre carte. L’analyse de vos choix arrive au corrigé.</p>` : `
             <p class="k-label">Étape ${k + 1} sur ${steps.length}</p>
             <p class="fm-label">${esc(s.prompt || 'Quelle question posez-vous ?')}</p>
-            <div class="h6-choices" role="group" aria-label="Les questions possibles">${s.order.map(id => `<button type="button" class="h6-choice" data-act="h6-pick" data-step="${k}" data-id="${id}" ${id === s.order[0] ? 'data-field="c' + k + '"' : ''}>${q(s.choices[id].text)}</button>`).join('')}</div>`}
+            <div class="h6-choices ${fresh >= 0 ? 'is-after' : ''}" role="group" aria-label="Les questions possibles">${s.order.map(id => `<button type="button" class="h6-choice" data-act="h6-pick" data-step="${k}" data-id="${id}" ${id === s.order[0] ? 'data-field="c' + k + '"' : ''}>${q(s.choices[id].text)}</button>`).join('')}</div>`}
           </div>
         </div>
       </section>
@@ -230,7 +239,7 @@
 
   function intercept() {
     const k = at();
-    if (k < LAST && stepDone(k)) { ex.setValue('at', k + 1); lastDelta = null; return true; }
+    if (k < LAST && stepDone(k)) { ex.setValue('at', k + 1); lastDelta = null; fresh = -1; return true; }
     return false;
   }
 
@@ -244,6 +253,7 @@
       if (choiceAt(k) || k !== played()) return; // un choix fait reste fait
       ex.setValue(`c${k}`, control.dataset.id);
       lastDelta = gaugeAfter(k + 1) - gaugeAfter(k);
+      fresh = k;
       ex.changed();
       ex.rebuild();
       toLatest();

@@ -35,19 +35,19 @@
           says: 'Bonjour. J’ai trente minutes, pas plus.',
           order: ['b', 'a', 'c'],
           choices: {
-            a: { text: 'Trente minutes, c’est noté : je vous propose dix minutes pour parler de vos journées, puis l’essai. Racontez-moi une journée de tournée.', points: 2, reply: 'Je pars à 7 h, une quinzaine de patients, surtout en centre-ville et dans deux villages.' },
-            b: { text: 'Vous préférez diesel ou essence ?', points: 0, reply: 'Ce qui consomme le moins, je suppose.', note: 'Une précision trop tôt.' },
-            c: { text: 'J’ai la voiture parfaite pour vous, une citadine hybride : on va l’essayer tout de suite !', points: -2, reply: 'Attendez, vous ne savez même pas ce que je fais.', note: 'Une solution, qui ferme l’échange.' }
+            a: { text: 'Trente minutes, c’est noté : dix minutes pour parler de vos journées, puis l’essai. Racontez-moi une journée de tournée.', points: 2, reply: 'Je pars à 7 h, une quinzaine de patients, surtout en centre-ville et dans deux villages.' },
+            b: { text: 'Trente minutes, c’est noté. Pour gagner du temps : vous roulez plutôt en diesel, en essence ou en hybride, en ce moment ?', points: 0, reply: 'Ce qui consomme le moins, je suppose.', note: 'Une précision trop tôt.' },
+            c: { text: 'J’ai une citadine hybride qui ira parfaitement pour vos tournées : on va l’essayer tout de suite ?', points: -2, reply: 'Attendez, vous ne savez même pas ce que je fais.', note: 'Une solution, qui ferme l’échange.' }
           },
           best: 'a', why: 'Elle cadre le temps et ouvre large : c’est le premier étage de l’entonnoir.'
         },
         {
           says: 'Voilà, c’est à peu près ça.',
-          order: ['c', 'a', 'b'],
+          order: ['a', 'c', 'b'],
           choices: {
             a: { text: 'Qu’est-ce qui vous complique le plus la vie avec une voiture, pendant vos tournées ?', points: 2, reply: 'Me garer. Et sortir mon sac de soins du coffre vingt fois par jour, avec mon épaule…' },
-            b: { text: 'Vous faites beaucoup d’autoroute ?', points: 0, reply: 'Un peu, pour les villages.', note: 'Fermée, elle apprend peu.' },
-            c: { text: 'En ville, une petite voiture, c’est ce qu’il y a de mieux, vous êtes d’accord ?', points: -2, reply: 'Si vous le dites…', note: 'Orientée, elle impose votre avis.' }
+            b: { text: 'Sur une journée comme celle-là, vous faites beaucoup d’autoroute pour rejoindre les deux villages ?', points: 0, reply: 'Un peu, pour les villages.', note: 'Fermée, elle apprend peu.' },
+            c: { text: 'En centre-ville, une petite voiture reste ce qu’il y a de plus pratique, vous êtes d’accord ?', points: -2, reply: 'Si vous le dites…', note: 'Orientée, elle impose votre avis.' }
           },
           best: 'a', why: 'Une question ouverte, ciblée sur ses difficultés : le deuxième étage.'
         },
@@ -57,17 +57,17 @@
           choices: {
             a: { text: 'Votre épaule ?', points: 2, reply: 'Une tendinite. Mon ancien coffre était haut, je soulevais le sac à bout de bras.' },
             b: { text: 'Il vous faut un grand coffre, alors.', points: 0, reply: 'Pas forcément grand. Facile d’accès, surtout.', note: 'Vous interprétez à sa place.' },
-            c: { text: 'On a des modèles avec hayon électrique, en option.', points: -2, reply: 'Et ça coûte combien, l’option ?', note: 'Une solution, et la discussion part sur le prix.' }
+            c: { text: 'On a des modèles avec hayon électrique.', points: -2, reply: 'Et ça coûte combien, l’option ?', note: 'Une solution, et la discussion part sur le prix.' }
           },
           best: 'a', why: 'Un écho sur un signal : son geste vers l’épaule. Elle explique elle-même.'
         },
         {
           says: 'Bref, je ne veux plus revivre la semaine dernière.',
-          order: ['a', 'c', 'b'],
+          order: ['a', 'b', 'c'],
           choices: {
             a: { text: 'Que se passerait-il si votre voiture vous lâchait de nouveau ?', points: 2, reply: 'Je devrais louer, 60 € par jour, et annuler des patients. La dernière fois, j’ai perdu 1 500 €.' },
-            b: { text: 'Vous avez une assurance avec véhicule de prêt ?', points: 0, reply: 'Non, je ne crois pas.', note: 'Fermée.' },
-            c: { text: 'Avec nous, aucun risque de panne.', points: -2, reply: 'On m’a déjà dit ça.', note: 'Une promesse générale, qui ne la rassure pas.' }
+            b: { text: 'Votre assurance actuelle vous prévoit-elle un véhicule de prêt en cas de panne ?', points: 0, reply: 'Non, je ne crois pas.', note: 'Fermée.' },
+            c: { text: 'Avec nous, plus de souci : nos modèles sont fiables.', points: -2, reply: 'On m’a déjà dit ça.', note: 'Une promesse générale, qui ne la rassure pas.' }
           },
           best: 'a', why: 'Elle fait dire le coût du problème : la cliente mesure elle-même l’enjeu.'
         },
@@ -76,28 +76,28 @@
           order: ['c', 'b', 'a'],
           choices: {
             a: { text: 'Qu’est-ce qui ferait que vous vous sentiez vraiment sereine avec votre prochaine voiture ?', points: 2, reply: 'Savoir qu’on me dépanne vite et qu’on me prête une voiture. Et ne pas me ruiner : je suis à mon compte.' },
-            b: { text: 'Vous voulez une couleur particulière ?', points: 0, reply: 'Peu importe.', note: 'Hors sujet.' },
-            c: { text: 'Vous préférez sûrement le modèle le plus fiable, même s’il est un peu plus cher ?', points: -2, reply: 'Tout dépend du prix.', note: 'Orientée, elle souffle la réponse.' }
+            b: { text: 'Pour la voiture, vous avez une préférence de couleur ou de finition ?', points: 0, reply: 'Peu importe.', note: 'Hors sujet.' },
+            c: { text: 'Vous préférez sûrement le modèle le plus fiable de la gamme, même s’il coûte un peu plus cher ?', points: -2, reply: 'Tout dépend du prix.', note: 'Orientée, elle souffle la réponse.' }
           },
           best: 'a', why: 'Elle fait exprimer sa motivation, avec ses mots.'
         },
         {
           says: 'Il me reste un quart d’heure.',
-          order: ['b', 'a', 'c'],
+          order: ['c', 'a', 'b'],
           choices: {
-            a: { text: 'Si vous deviez classer : vous garer facilement, un coffre accessible, une voiture de prêt en cas de panne, le budget… qu’est-ce qui passe en premier ?', points: 2, reply: 'La voiture de prêt. Sans voiture, je ne travaille pas. Ensuite le coffre, pour mon épaule. Puis le budget.' },
-            b: { text: 'Tout est important, j’imagine ?', points: 0, reply: 'Oui…', note: 'N’apprend rien.' },
-            c: { text: 'Le budget reste votre priorité, non ?', points: -2, reply: 'Non, pas forcément.', note: 'Orientée.' }
+            a: { text: 'Si vous deviez classer : vous garer, un coffre accessible, une voiture de prêt en cas de panne, le budget… qu’est-ce qui passe en premier ?', points: 2, reply: 'La voiture de prêt. Sans voiture, je ne travaille pas. Ensuite le coffre, pour mon épaule. Puis le budget.' },
+            b: { text: 'Le stationnement, le coffre, la voiture de prêt, le budget : j’imagine que tout compte pour vous ?', points: 0, reply: 'Oui…', note: 'N’apprend rien.' },
+            c: { text: 'Entre le stationnement, le coffre et la voiture de prêt en cas de panne, c’est quand même le budget, au fond, qui passe en premier pour vous, non ?', points: -2, reply: 'Non, pas forcément.', note: 'Orientée.' }
           },
           best: 'a', why: 'Une question alternative pour hiérarchiser : elle classe elle-même.'
         },
         {
           prompt: 'Avant l’essai, quelle validation faites-vous ?',
-          order: ['c', 'a', 'b'],
+          order: ['a', 'c', 'b'],
           choices: {
-            a: { text: 'Si je résume : il vous faut avant tout une solution de prêt en cas de panne, parce que sans voiture vous ne travaillez pas ; ensuite un coffre facile d’accès pour votre épaule ; une voiture simple à garer en centre-ville ; et un budget maîtrisé, puisque vous êtes à votre compte. C’est bien dans cet ordre ?', points: 2, reply: '' },
-            b: { text: 'Si je résume : une petite voiture pas chère. C’est ça ?', points: 0, reply: 'C’est un peu court.', note: 'Incomplète.' },
-            c: { text: 'Si je résume : il vous faut notre citadine hybride avec hayon électrique. On l’essaie ?', points: -2, reply: 'Vous allez vite…', note: 'Un produit glissé dans la synthèse.' }
+            a: { text: 'Si je résume : d’abord une voiture de prêt en cas de panne, sans quoi vous ne travaillez pas ; puis un coffre facile d’accès pour votre épaule ; une voiture simple à garer ; un budget maîtrisé. Dans cet ordre ?', points: 2, reply: '' },
+            b: { text: 'Si je résume : une petite voiture, facile à garer en centre-ville et pas trop chère, puisque vous êtes à votre compte et que vous roulez beaucoup dans la journée, entre vos patients. C’est bien ça ?', points: 0, reply: 'C’est un peu court.', note: 'Incomplète.' },
+            c: { text: 'Si je résume : une voiture fiable, un coffre pratique pour votre épaule, facile à garer en ville… notre citadine hybride avec hayon électrique coche toutes les cases. On l’essaie ?', points: -2, reply: 'Vous allez vite…', note: 'Un produit glissé dans la synthèse.' }
           },
           best: 'a', why: 'Une synthèse ordonnée, avec ses raisons, qu’elle peut valider.'
         }

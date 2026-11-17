@@ -1267,3 +1267,29 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 @media (prefers-reduced-motion: reduce) { .h6-delta, .h6-gauge-fill { animation: none; transition: none; } }
 /* La conversation défile dans son cadre : la page garde sa hauteur. */
 .h6-panel .d5-chat-thread .d5-thread { max-height: min(56vh, 520px); overflow-y: auto; padding-right: 6px; scroll-behavior: smooth; }
+/* 6.1 : l'échange arrive pas à pas. Votre question (0 s), la cliente
+ * « écrit » (trois points), sa réponse (≈ 1 s), la suite de l'étape, puis
+ * les trois questions suivantes, l'une après l'autre. */
+@keyframes h6-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes h6-typing { 0%, 100% { opacity: 0; max-height: 0; margin: 0; padding-block: 0; } 8%, 88% { opacity: 1; max-height: 40px; margin: 4px 0; padding-block: 10px; } }
+@keyframes h6-dot { 0%, 80%, 100% { transform: translateY(0); opacity: .35; } 40% { transform: translateY(-4px); opacity: 1; } }
+.h6-in { animation: h6-rise .38s cubic-bezier(.2, .8, .3, 1) both; }
+.h6-in.is-you-in { animation-delay: .05s; }
+.h6-in.is-reply-in { animation-delay: 1.05s; }
+.h6-in.is-next-in { animation-delay: 1.45s; }
+.h6-in.is-end-in { animation-delay: 1.5s; }
+.h6-typing { list-style: none; display: flex; gap: 5px; align-items: center; width: max-content; padding: 10px 14px; margin-left: 58px; border-radius: 14px; background: #fff; overflow: hidden; animation: h6-typing 1s ease .3s both; }
+.h6-typing span { width: 7px; height: 7px; border-radius: 50%; background: #8a97b8; animation: h6-dot .9s ease-in-out infinite; }
+.h6-typing span:nth-child(2) { animation-delay: .15s; }
+.h6-typing span:nth-child(3) { animation-delay: .3s; }
+.h6-choices .h6-choice { animation: h6-rise .38s cubic-bezier(.2, .8, .3, 1) both; }
+.h6-choices .h6-choice:nth-child(2) { animation-delay: .14s; }
+.h6-choices .h6-choice:nth-child(3) { animation-delay: .28s; }
+.h6-choices.is-after .h6-choice:nth-child(1) { animation-delay: 1.7s; }
+.h6-choices.is-after .h6-choice:nth-child(2) { animation-delay: 1.84s; }
+.h6-choices.is-after .h6-choice:nth-child(3) { animation-delay: 1.98s; }
+.h6-ask .k-label, .h6-ask .fm-label { animation: h6-rise .3s ease both; }
+@media (prefers-reduced-motion: reduce) {
+  .h6-in, .h6-choices .h6-choice, .h6-ask .k-label, .h6-ask .fm-label { animation: none !important; }
+  .h6-typing { display: none; }
+}
