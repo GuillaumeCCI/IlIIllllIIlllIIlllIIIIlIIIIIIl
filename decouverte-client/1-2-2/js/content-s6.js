@@ -86,15 +86,19 @@
       ],
 
       start: 5,
+      // Le chrono : les 30 minutes de Mme Rivière, essai compris. Il faut au
+      // moins `testMin` minutes à la fin pour un vrai essai.
+      minutes: 30,
+      testMin: 10,
       steps: [
         {
           scene: 'Mme Rivière arrive à l’heure, un peu essoufflée : elle a tourné dix minutes pour se garer. Elle tient les clés d’une voiture de location.',
           says: 'Bonjour. J’ai trente minutes, pas plus.',
           order: ['b', 'a', 'c'],
           choices: {
-            a: { intent: 'Cadrer le temps, puis la faire parler de ses journées', text: 'Trente minutes, c’est noté : dix minutes pour parler de vos journées, puis l’essai. Racontez-moi une journée de tournée.', points: 2, reply: 'Je pars à 7 h, une quinzaine de patients, surtout en centre-ville et dans deux villages.' },
-            b: { intent: 'Gagner du temps en précisant d’abord la motorisation', text: 'Trente minutes, c’est noté. Pour gagner du temps : vous roulez plutôt en diesel, en essence ou en hybride, en ce moment ?', points: 0, reply: 'Ce qui consomme le moins, je suppose.', note: 'La question n’est pas fausse en soi : le carburant comptera. Mais elle arrive trop tôt. Vous précisez un détail avant de savoir comment elle utilise sa voiture, et sa réponse (« ce qui consomme le moins ») ne vous apprend presque rien.' },
-            c: { intent: 'Lui proposer tout de suite un modèle à essayer', text: 'J’ai une citadine hybride qui ira parfaitement pour vos tournées : on va l’essayer tout de suite ?', points: -2, reply: 'Attendez, vous ne savez même pas ce que je fais.', note: 'Vous proposez un véhicule avant de savoir quoi que ce soit de ses journées. Elle vous le fait remarquer, et la découverte démarre sur une méfiance.' }
+            a: { intent: 'Cadrer le temps, puis la faire parler de ses journées', minutes: 4, text: 'Trente minutes, c’est noté : dix minutes pour parler de vos journées, puis l’essai. Racontez-moi une journée de tournée.', points: 2, reply: 'Je pars à 7 h, une quinzaine de patients, surtout en centre-ville et dans deux villages.' },
+            b: { intent: 'Gagner du temps en précisant d’abord la motorisation', minutes: 1, text: 'Trente minutes, c’est noté. Pour gagner du temps : vous roulez plutôt en diesel, en essence ou en hybride, en ce moment ?', points: 0, reply: 'Ce qui consomme le moins, je suppose.', note: 'La question n’est pas fausse en soi : le carburant comptera. Mais elle arrive trop tôt. Vous précisez un détail avant de savoir comment elle utilise sa voiture, et sa réponse (« ce qui consomme le moins ») ne vous apprend presque rien.' },
+            c: { intent: 'Lui proposer tout de suite un modèle à essayer', minutes: 4, text: 'J’ai une citadine hybride qui ira parfaitement pour vos tournées : on va l’essayer tout de suite ?', points: -2, reply: 'Attendez, vous ne savez même pas ce que je fais.', note: 'Vous proposez un véhicule avant de savoir quoi que ce soit de ses journées. Elle vous le fait remarquer, et la découverte démarre sur une méfiance.' }
           },
           best: 'a', why: 'Vous respectez son temps en annonçant le déroulé, puis vous ouvrez largement sur ses journées. C’est le premier étage de l’entonnoir : la situation, avec ses mots.'
         },
@@ -102,9 +106,9 @@
           scene: 'Elle pose ses clés sur le bureau et jette un œil aux voitures exposées.',
           order: ['a', 'c', 'b'],
           choices: {
-            a: { intent: 'Lui demander ce qui la gêne avec sa voiture', text: 'Qu’est-ce qui vous complique le plus la vie avec une voiture, pendant vos tournées ?', points: 2, reply: 'Me garer, surtout. En centre-ville, je tourne parfois dix minutes devant chez un patient.' },
-            b: { intent: 'Vérifier si elle roule souvent sur autoroute', text: 'Pour vos tournées, vous prenez souvent l’autoroute, en dehors de vos trajets en ville ?', points: 0, reply: 'Un peu, pour aller dans les villages.', note: 'La question est fermée : elle appelle un oui ou un non. Vous obtenez un détail utile (« les villages »), mais rien sur ce qui la gêne vraiment.' },
-            c: { intent: 'Lui faire valider l’intérêt d’une petite voiture', text: 'Pour des tournées, une petite voiture reste ce qu’il y a de plus pratique, vous êtes d’accord ?', points: -2, reply: 'Si vous le dites…', note: 'La question est orientée : elle contient déjà votre réponse et lui demande seulement d’acquiescer. « Si vous le dites… » : elle se range à votre avis sans rien vous apprendre.' }
+            a: { intent: 'Lui demander ce qui la gêne avec sa voiture', minutes: 3, text: 'Qu’est-ce qui vous complique le plus la vie avec une voiture, pendant vos tournées ?', points: 2, reply: 'Me garer, surtout. En centre-ville, je tourne parfois dix minutes devant chez un patient.' },
+            b: { intent: 'Vérifier si elle roule souvent sur autoroute', minutes: 1, text: 'Pour vos tournées, vous prenez souvent l’autoroute, en dehors de vos trajets en ville ?', points: 0, reply: 'Un peu, pour aller dans les villages.', note: 'La question est fermée : elle appelle un oui ou un non. Vous obtenez un détail utile (« les villages »), mais rien sur ce qui la gêne vraiment.' },
+            c: { intent: 'Lui faire valider l’intérêt d’une petite voiture', minutes: 1, text: 'Pour des tournées, une petite voiture reste ce qu’il y a de plus pratique, vous êtes d’accord ?', points: -2, reply: 'Si vous le dites…', note: 'La question est orientée : elle contient déjà votre réponse et lui demande seulement d’acquiescer. « Si vous le dites… » : elle se range à votre avis sans rien vous apprendre.' }
           },
           best: 'a', why: 'Une question ouverte, ciblée sur ses difficultés. Elle vous parle de ce qui la gêne vraiment, sans que vous ayez rien supposé : c’est le deuxième étage.'
         },
@@ -114,9 +118,9 @@
           after: 'En le disant, elle se touche l’épaule droite.',
           order: ['b', 'c', 'a'],
           choices: {
-            a: { intent: 'Rebondir sur son geste vers l’épaule', text: 'Vous vous êtes touché l’épaule en parlant du coffre : qu’est-ce qui se passe, au juste ?', points: 2, reply: 'Une tendinite. Mon ancien coffre était haut, je soulevais le sac à bout de bras.' },
-            b: { intent: 'Reformuler son besoin : un coffre plus grand', text: 'Si je comprends bien, il vous faudrait surtout un grand coffre, pour ranger votre sac sans difficulté ?', points: 0, reply: 'Pas forcément grand. Facile d’accès, surtout.', note: 'L’intention est bonne, mais vous interprétez à sa place. Ce n’est pas la taille du coffre qui compte pour elle : elle doit vous corriger, et la raison de son geste reste cachée.' },
-            c: { intent: 'Lui présenter l’option du hayon électrique', text: 'Nos modèles existent avec un hayon électrique en option : vous n’auriez plus rien à soulever vous-même.', points: -2, reply: 'Et ça coûte combien, l’option ?', note: 'Vous proposez une solution avant d’avoir compris le problème. La discussion part aussitôt sur le prix de l’option, et vous ne saurez pas pourquoi elle s’est touché l’épaule.' }
+            a: { intent: 'Rebondir sur son geste vers l’épaule', minutes: 2, text: 'Vous vous êtes touché l’épaule en parlant du coffre : qu’est-ce qui se passe, au juste ?', points: 2, reply: 'Une tendinite. Mon ancien coffre était haut, je soulevais le sac à bout de bras.' },
+            b: { intent: 'Reformuler son besoin : un coffre plus grand', minutes: 1, text: 'Si je comprends bien, il vous faudrait surtout un grand coffre, pour ranger votre sac sans difficulté ?', points: 0, reply: 'Pas forcément grand. Facile d’accès, surtout.', note: 'L’intention est bonne, mais vous interprétez à sa place. Ce n’est pas la taille du coffre qui compte pour elle : elle doit vous corriger, et la raison de son geste reste cachée.' },
+            c: { intent: 'Lui présenter l’option du hayon électrique', minutes: 4, text: 'Nos modèles existent avec un hayon électrique en option : vous n’auriez plus rien à soulever vous-même.', points: -2, reply: 'Et ça coûte combien, l’option ?', note: 'Vous proposez une solution avant d’avoir compris le problème. La discussion part aussitôt sur le prix de l’option, et vous ne saurez pas pourquoi elle s’est touché l’épaule.' }
           },
           best: 'a', why: 'Vous partez d’un signal, son geste vers l’épaule, et vous la laissez expliquer sans rien supposer. Le vrai besoin apparaît : un coffre accessible, à cause de sa tendinite.'
         },
@@ -124,9 +128,9 @@
           says: 'Ma voiture m’a lâchée la semaine dernière, en pleine tournée. Je ne veux plus revivre ça.',
           order: ['a', 'b', 'c'],
           choices: {
-            a: { intent: 'Lui faire imaginer une nouvelle panne', text: 'Que se passerait-il si votre voiture vous lâchait de nouveau ?', points: 2, reply: 'Je devrais louer, 60 € par jour, et annuler des patients. La dernière fois, j’ai perdu 1 500 €.' },
-            b: { intent: 'Vérifier ce que couvre son assurance actuelle', text: 'Votre assurance actuelle vous prévoit-elle un véhicule de prêt en cas de panne ?', points: 0, reply: 'Non, je ne crois pas.', note: 'La question est utile, mais fermée et trop précise à ce stade. Vous apprenez qu’elle n’a pas de véhicule de prêt, sans savoir ce qu’une panne lui coûte vraiment.' },
-            c: { intent: 'La rassurer sur vos modèles', text: 'Avec nous, plus de souci : nos modèles sont fiables.', points: -2, reply: 'On m’a déjà dit ça.', note: 'Vous voulez la rassurer, mais une promesse générale ne rassure personne, surtout après une panne. Elle l’a déjà entendue : la confiance baisse.' }
+            a: { intent: 'Lui faire imaginer une nouvelle panne', minutes: 2, text: 'Que se passerait-il si votre voiture vous lâchait de nouveau ?', points: 2, reply: 'Je devrais louer, 60 € par jour, et annuler des patients. La dernière fois, j’ai perdu 1 500 €.' },
+            b: { intent: 'Vérifier ce que couvre son assurance actuelle', minutes: 2, text: 'Votre assurance actuelle vous prévoit-elle un véhicule de prêt en cas de panne ?', points: 0, reply: 'Non, je ne crois pas.', note: 'La question est utile, mais fermée et trop précise à ce stade. Vous apprenez qu’elle n’a pas de véhicule de prêt, sans savoir ce qu’une panne lui coûte vraiment.' },
+            c: { intent: 'La rassurer sur vos modèles', minutes: 1, text: 'Avec nous, plus de souci : nos modèles sont fiables.', points: -2, reply: 'On m’a déjà dit ça.', note: 'Vous voulez la rassurer, mais une promesse générale ne rassure personne, surtout après une panne. Elle l’a déjà entendue : la confiance baisse.' }
           },
           best: 'a', why: 'Vous lui faites dire elle-même ce que coûte le problème. Elle mesure l’enjeu (60 € par jour, 1 500 € perdus) : c’est ce qui donnera du poids à votre future proposition.'
         },
@@ -134,19 +138,19 @@
           scene: 'Elle regarde l’heure, mais reste assise.',
           order: ['c', 'b', 'a'],
           choices: {
-            a: { intent: 'Lui demander ce qui la rendrait sereine', text: 'Qu’est-ce qui ferait que vous vous sentiez vraiment sereine avec votre prochaine voiture ?', points: 2, reply: 'Savoir qu’on me dépanne vite et qu’on me prête une voiture. Et ne pas me ruiner : je suis à mon compte.' },
-            b: { intent: 'Connaître ses goûts de couleur', text: 'Pour la voiture, vous avez une préférence de couleur ou de finition ?', points: 0, reply: 'Peu importe.', note: 'La question est hors sujet : la couleur ne pèse pas dans sa décision. Vous perdez une minute précieuse alors qu’elle regarde l’heure.' },
-            c: { intent: 'Lui suggérer le modèle le plus fiable de la gamme', text: 'Vous préférez sûrement le modèle le plus fiable de la gamme, même s’il coûte un peu plus cher ?', points: -2, reply: 'Tout dépend du prix.', note: 'La question est orientée : vous lui soufflez la réponse (« le plus fiable, même plus cher »). Elle se défend sur le prix, et sa vraie motivation n’apparaît pas.' }
+            a: { intent: 'Lui demander ce qui la rendrait sereine', minutes: 2, text: 'Qu’est-ce qui ferait que vous vous sentiez vraiment sereine avec votre prochaine voiture ?', points: 2, reply: 'Savoir qu’on me dépanne vite et qu’on me prête une voiture. Et ne pas me ruiner : je suis à mon compte.' },
+            b: { intent: 'Connaître ses goûts de couleur', minutes: 1, text: 'Pour la voiture, vous avez une préférence de couleur ou de finition ?', points: 0, reply: 'Peu importe.', note: 'La question est hors sujet : la couleur ne pèse pas dans sa décision. Vous perdez une minute précieuse alors qu’elle regarde l’heure.' },
+            c: { intent: 'Lui suggérer le modèle le plus fiable de la gamme', minutes: 2, text: 'Vous préférez sûrement le modèle le plus fiable de la gamme, même s’il coûte un peu plus cher ?', points: -2, reply: 'Tout dépend du prix.', note: 'La question est orientée : vous lui soufflez la réponse (« le plus fiable, même plus cher »). Elle se défend sur le prix, et sa vraie motivation n’apparaît pas.' }
           },
           best: 'a', why: 'Une question ouverte sur ce qui la rendrait sereine : elle exprime ses motivations avec ses mots (le dépannage, une voiture de prêt, ne pas se ruiner).'
         },
         {
-          says: 'Il me reste un quart d’heure.',
+          says: 'Il me reste {reste}.', // le temps réellement restant au chrono
           order: ['c', 'a', 'b'],
           choices: {
-            a: { intent: 'Lui faire classer elle-même ses critères', text: 'Si vous deviez classer : vous garer, un coffre accessible, une voiture de prêt en cas de panne, le budget… qu’est-ce qui passe en premier ?', points: 2, reply: 'La voiture de prêt. Sans voiture, je ne travaille pas. Ensuite le coffre, pour mon épaule. Puis le budget.' },
-            b: { intent: 'Vérifier que tous ses critères comptent', text: 'Le stationnement, le coffre, la voiture de prêt, le budget : j’imagine que tout compte pour vous ?', points: 0, reply: 'Oui…', note: 'La question ne l’aide pas à choisir : « tout compte » est toujours vrai. Elle acquiesce, et vous ne savez toujours pas ce qui passe en premier.' },
-            c: { intent: 'Lui faire confirmer que le budget passe avant tout', text: 'Entre le stationnement, le coffre et la voiture de prêt en cas de panne, c’est quand même le budget, au fond, qui passe en premier pour vous, non ?', points: -2, reply: 'Non, pas forcément.', note: 'Vous lui imposez votre hiérarchie : pour vous, c’est le budget. Elle vous contredit, sans vous dire ce qui compte vraiment pour elle.' }
+            a: { intent: 'Lui faire classer elle-même ses critères', minutes: 2, text: 'Si vous deviez classer : vous garer, un coffre accessible, une voiture de prêt en cas de panne, le budget… qu’est-ce qui passe en premier ?', points: 2, reply: 'La voiture de prêt. Sans voiture, je ne travaille pas. Ensuite le coffre, pour mon épaule. Puis le budget.' },
+            b: { intent: 'Vérifier que tous ses critères comptent', minutes: 1, text: 'Le stationnement, le coffre, la voiture de prêt, le budget : j’imagine que tout compte pour vous ?', points: 0, reply: 'Oui…', note: 'La question ne l’aide pas à choisir : « tout compte » est toujours vrai. Elle acquiesce, et vous ne savez toujours pas ce qui passe en premier.' },
+            c: { intent: 'Lui faire confirmer que le budget passe avant tout', minutes: 2, text: 'Entre le stationnement, le coffre et la voiture de prêt en cas de panne, c’est quand même le budget, au fond, qui passe en premier pour vous, non ?', points: -2, reply: 'Non, pas forcément.', note: 'Vous lui imposez votre hiérarchie : pour vous, c’est le budget. Elle vous contredit, sans vous dire ce qui compte vraiment pour elle.' }
           },
           best: 'a', why: 'Une question qui l’oblige à choisir. C’est elle qui classe ses besoins : votre hiérarchie reposera sur ses mots, pas sur vos idées.'
         },
@@ -154,9 +158,9 @@
           prompt: 'Avant l’essai, quelle validation faites-vous ?',
           order: ['a', 'c', 'b'],
           choices: {
-            a: { intent: 'Résumer ses besoins dans l’ordre et les faire valider', text: 'Si je résume : d’abord une voiture de prêt en cas de panne, car une panne vous empêche de travailler ; puis un coffre facile d’accès pour votre épaule ; une voiture simple à garer ; un budget maîtrisé. Dans cet ordre ?', points: 2, reply: '' },
-            b: { intent: 'Résumer en une phrase, simplement', text: 'Si je résume : une petite voiture, facile à garer en ville et pas trop chère, avec un coffre assez grand pour votre sac de soins et vos allers-retours entre deux patients, toute la journée. C’est bien ça ?', points: 0, reply: 'C’est un peu court.', note: 'Le résumé n’est pas faux, mais il est trop court : il oublie la voiture de prêt, son vrai premier besoin, et ne donne aucun ordre. Elle ne peut pas le valider.' },
-            c: { intent: 'Résumer ses besoins en lui proposant votre citadine hybride', text: 'Si je résume : une voiture fiable, un coffre pratique pour votre épaule, facile à garer en ville… notre citadine hybride avec hayon électrique coche toutes les cases. On l’essaie dès maintenant ?', points: -2, reply: 'Vous allez vite…', note: 'Vous glissez un produit dans le résumé : ce n’est plus une validation, c’est une proposition. Elle sent la vente arriver trop vite.' }
+            a: { intent: 'Résumer ses besoins dans l’ordre et les faire valider', minutes: 2, text: 'Si je résume : d’abord une voiture de prêt en cas de panne, car une panne vous empêche de travailler ; puis un coffre facile d’accès pour votre épaule ; une voiture simple à garer ; un budget maîtrisé. Dans cet ordre ?', points: 2, reply: '' },
+            b: { intent: 'Résumer en une phrase, simplement', minutes: 1, text: 'Si je résume : une petite voiture, facile à garer en ville et pas trop chère, avec un coffre assez grand pour votre sac de soins et vos allers-retours entre deux patients, toute la journée. C’est bien ça ?', points: 0, reply: 'C’est un peu court.', note: 'Le résumé n’est pas faux, mais il est trop court : il oublie la voiture de prêt, son vrai premier besoin, et ne donne aucun ordre. Elle ne peut pas le valider.' },
+            c: { intent: 'Résumer ses besoins en lui proposant votre citadine hybride', minutes: 4, text: 'Si je résume : une voiture fiable, un coffre pratique pour votre épaule, facile à garer en ville… notre citadine hybride avec hayon électrique coche toutes les cases. On l’essaie dès maintenant ?', points: -2, reply: 'Vous allez vite…', note: 'Vous glissez un produit dans le résumé : ce n’est plus une validation, c’est une proposition. Elle sent la vente arriver trop vite.' }
           },
           best: 'a', why: 'Une synthèse dans l’ordre, avec ses raisons, et une question qui lui permet de valider ou de corriger. Elle se sent comprise avant l’essai.'
         }
@@ -169,6 +173,9 @@
         { min: 4, title: 'Un essai, mais des doutes', says: 'Je ne suis pas sûre que ce soit le bon modèle.', text: 'L’essai a lieu, mais Mme Rivière hésite.', tone: 'mid' },
         { min: 0, title: 'Pas d’essai', says: 'Écoutez, je n’ai plus le temps. Je reviendrai peut-être.', text: 'L’essai n’a pas lieu.', tone: 'ko' }
       ],
+
+      // Plus assez de temps pour un vrai essai (moins de `testMin` minutes).
+      shortEnding: { title: 'Un essai écourté', says: 'Je dois filer. On fait juste le tour du pâté de maisons ?', text: 'Il ne reste que {reste} : l’essai est bâclé, et elle repart sans avoir pu juger le véhicule.', tone: 'mid' },
 
       // La carte des besoins : six rubriques (gabarit de la fiche).
       map: [

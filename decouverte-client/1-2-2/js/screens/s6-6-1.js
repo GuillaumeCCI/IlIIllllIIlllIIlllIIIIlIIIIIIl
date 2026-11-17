@@ -40,11 +40,20 @@
     return c ? Math.max(0, Math.min(10, g + c.points)) : g;
   }, content.start);
   const gauge = () => gaugeAfter(played());
+  // Le chrono : les minutes prises par les choix faits jusqu'à l'étape `upto`.
+  const usedAfter = upto => steps.slice(0, upto).reduce((m, st, k) => m + ((st.choices[choiceAt(k)] || {}).minutes || 0), 0);
+  const left = (upto = played()) => Math.max(0, content.minutes - usedAfter(upto));
+  const minutesText = n => (n === 15 ? 'un quart d’heure' : `${n} minute${n > 1 ? 's' : ''}`);
+  // Sa phrase, avec le temps qui lui reste vraiment (« Il me reste {reste}. »).
+  const sayOf = (st, k) => (st.says || '').replace('{reste}', minutesText(left(k)));
   const ending = () => {
     const found = endings.find(e => gauge() >= e.min) || endings[endings.length - 1];
     const last = steps.length - 1;
     // Sans la bonne validation, pas de « Exactement, et dans cet ordre ».
-    return found === endings[0] && choiceAt(last) !== steps[last].best ? endings[1] : found;
+    const sure = found === endings[0] && choiceAt(last) !== steps[last].best ? endings[1] : found;
+    // Plus assez de temps pour un vrai essai : l'essai est écourté.
+    if (sure !== endings[endings.length - 1] && left(steps.length) < content.testMin) return Object.assign({}, content.shortEnding, { text: content.shortEnding.text.replace('{reste}', minutesText(left(steps.length))) });
+    return sure;
   };
   const scenarioDone = () => steps.every((_, k) => yes(`ack${k}`));
 
@@ -105,13 +114,15 @@
       <strong>${value} / 10</strong>
     </div>`;
 
+  const clockBadge = n => `<div class="h6-clock ${n < content.testMin ? 'is-short' : ''}" role="img" aria-label="Temps restant : ${n} minutes">${icon('clock', { size: 18 })}<span>Reste</span><strong>${n} min</strong></div>`;
+
   /* La conversation (relue en scène, et à gauche de la carte). */
   function thread() {
     const items = [];
     steps.forEach((s, k) => {
       if (!yes(`seen${k}`) && !choiceAt(k)) return;
       if (s.scene) items.push(`<li class="h6-scene">${esc(s.scene)}</li>`);
-      if (s.says) items.push(`<li class="d5-msg is-client"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(s.says)}</p></li>`);
+      if (sayOf(s, k)) items.push(`<li class="d5-msg is-client"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(sayOf(s, k))}</p></li>`);
       if (s.after) items.push(`<li class="h6-scene">${esc(s.after)}</li>`);
       const c = s.choices[choiceAt(k)];
       if (!c) return;
@@ -170,7 +181,7 @@
       : `<div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${img(client.seller)}" alt="" aria-hidden="true"><p class="h6-who-name">Vous, Antoine</p><p class="h6-who-ask">${esc(ask)}</p></div>`;
     return `<div class="h6-choose">
         ${left}
-        <div class="h6-options" role="group" aria-label="${esc(title)}">${order.map((id, n) => `<button type="button" class="h6-option h6-in" ${delay(0.2 + n * 0.15)} data-act="${act}" data-id="${id}" ${data} ${n === 0 && field ? `data-field="${field}"` : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(choices[id].intent || choices[id].text)}</span></button>`).join('')}</div>
+        <div class="h6-options" role="group" aria-label="${esc(title)}">${order.map((id, n) => `<button type="button" class="h6-option h6-in" ${delay(0.2 + n * 0.15)} data-act="${act}" data-id="${id}" ${data} ${n === 0 && field ? `data-field="${field}"` : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(choices[id].intent || choices[id].text)}</span>${choices[id].minutes ? `<span class="h6-cost">−${choices[id].minutes} min</span>` : ''}</button>`).join('')}</div>
       </div>`;
   }
 
@@ -194,7 +205,7 @@
           ${picture}
           <div class="h6-situation-text">
             <p class="k-label">Étape ${k + 1} sur ${steps.length}</p>
-            ${s.says ? `<p class="h6-big-quote h6-in" ${delay(0.35)}><span>${esc(client.name)}</span>${q(s.says)}</p>` : ''}
+            ${sayOf(s, k) ? `<p class="h6-big-quote h6-in" ${delay(0.35)}><span>${esc(client.name)}</span>${q(sayOf(s, k))}</p>` : ''}
             ${s.after ? `<p class="h6-scene-text h6-in" ${delay(0.8)}>${esc(s.after)}</p>` : ''}
           </div>
         </div>
@@ -202,16 +213,16 @@
       else body = `<div class="h6-card h6-situation h6-in">
           <p class="k-label">Étape ${k + 1} sur ${steps.length}</p>
           ${s.scene ? `<p class="h6-scene-text">${esc(s.scene)}</p>` : ''}
-          ${s.says ? said(s.says, 0.35) : ''}
+          ${sayOf(s, k) ? said(sayOf(s, k), 0.35) : ''}
           ${s.after ? `<p class="h6-scene-text h6-in" ${delay(0.8)}>${esc(s.after)}</p>` : ''}
           ${s.prompt ? `<p class="h6-scene-text">${esc(s.prompt)}</p>` : ''}
         </div>
-        <div class="h6-stage-foot">${next('Continuer', 'h6-flag', s.says ? 1.1 : 0.5, `data-name="seen${k}"`)}</div>`;
+        <div class="h6-stage-foot">${next('Continuer', 'h6-flag', sayOf(s, k) ? 1.1 : 0.5, `data-name="seen${k}"`)}</div>`;
     } else if (b.kind === 'choose') {
       // Le rappel, dans la carte de gauche : sa phrase de l'étape, ou à défaut
       // sa dernière réponse ; son geste s'il compte (l'épaule).
-      const last = !s.says && k > 0 ? steps[k - 1].choices[choiceAt(k - 1)] : null;
-      const recall = s.says || (last && last.reply) || '';
+      const last = !sayOf(s, k) && k > 0 ? steps[k - 1].choices[choiceAt(k - 1)] : null;
+      const recall = sayOf(s, k) || (last && last.reply) || '';
       body = choiceBlock({ title: 'Les questions possibles', ask: s.prompt || 'Que lui demandez-vous ?', order: s.order, choices: s.choices, act: 'h6-pick', data: `data-step="${k}"`, field: `c${k}`, recall, gesture: s.after || '' });
     } else if (b.kind === 'fb') {
       const id = choiceAt(k);
@@ -226,7 +237,7 @@
       body = `<div class="h6-choose">
           <div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${img(client.seller)}" alt="" aria-hidden="true"><p class="h6-who-name">Vous, Antoine</p><p class="h6-who-ask">Vous décidez de ${esc(lower(c.intent || ''))}</p></div>
           <div class="h6-card h6-answer h6-in" ${delay(0.15)}>
-            <p class="h6-answer-label">Votre réponse :</p>
+            <p class="h6-answer-label">Votre réponse :${c.minutes ? `<span class="h6-cost">−${c.minutes} min</span>` : ''}</p>
             <p class="h6-answer-q">${q(c.text)}</p>
             ${c.reply ? `<div class="h6-answer-reply"><img src="${portrait}" alt="" aria-hidden="true"><div><span>${esc(client.name)}</span><div class="h6-typing h6-typing-inline" aria-hidden="true"><span></span><span></span><span></span></div><p class="h6-in" ${delay(1.1)}>${q(c.reply)}</p></div></div>` : ''}
           </div>
@@ -246,7 +257,7 @@
     const isFb = ['fb', 'warm-fb'].includes(b.kind);
     return `<section class="h6-stage ${isFb ? 'is-fb' : ''}" style="--h6-decor:url('${decor}')">
         <div class="h6-stage-top">
-          ${inGame ? gaugeBar(gauge()) : '<span></span>'}
+          ${inGame ? `<div class="h6-meters">${gaugeBar(gauge())}${clockBadge(left())}</div>` : '<span></span>'}
           ${inGame && played() ? `<details class="h6-replay"><summary>${icon('chat', { size: 16 })}<span>Relire l’échange</span></summary><ol class="d5-thread">${thread()}</ol></details>` : ''}
         </div>
         <div class="h6-stage-body is-${b.kind}">${body}</div>
@@ -342,7 +353,7 @@
     }).join('');
     return `<section class="k-panel h6-review">
         <p class="a4-review-head"><span class="k-label">Votre partie</span><span class="a4-review-count"><b>${best}</b> / ${steps.length} meilleurs choix · vos acquis : <b>${quizScore()}</b> / ${quiz.length}</span></p>
-        <div class="h6-review-end tone-${end.tone}">${gaugeBar(gauge(), 'Votre jauge finale')}<p><strong>${esc(end.title)}.</strong> ${esc(end.text)}</p></div>
+        <div class="h6-review-end tone-${end.tone}">${gaugeBar(gauge(), 'Votre jauge finale')}<p><strong>${esc(end.title)}.</strong> ${esc(end.text)}</p><p class="h6-time-line">${icon('clock', { size: 16 })} Découverte : ${usedAfter(steps.length)} minutes · reste ${left(steps.length)} minutes pour l’essai (il en faut ${content.testMin}).</p></div>
         <div class="h6-path-head" aria-hidden="true"><span></span><span>Votre choix, et ce qu’il a produit</span><span>Ce qu’il fallait demander</span></div>
         ${pathRows}
       </section>
