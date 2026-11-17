@@ -3,10 +3,12 @@
  * formatrice après chaque choix.
  *
  * Six étapes :
- *   0. L'entretien : le choix du dossier (A Camille / B Karim), la règle d'or
- *      du coach (accroche), le message du collègue, puis les dix moments
- *      M1-M10, chacun en trois temps : le moment (sa question, la réponse du
- *      client), votre diagnostic, le retour. Le premier diagnostic compte ;
+ *   0. L'entretien : le choix du dossier (A Camille / B Karim) ; le message
+ *      du collègue et la mission en quatre points (annoncée AVANT toute
+ *      question) ; la règle d'or du coach (accroche) ; l'entretien lu EN
+ *      ENTIER ; puis les dix moments M1-M10, chacun en deux temps : votre
+ *      diagnostic (l'entretien à gauche, le moment surligné, l'aide-mémoire
+ *      des types de questions à ouvrir), puis le retour. Le premier diagnostic compte ;
  *      après un diagnostic moins juste, on revient aux propositions. Un
  *      indice pour les cinq premiers moments, plus rien ensuite.
  *   1. Les moments décisifs : trois moments à choisir parmi dix.
@@ -53,13 +55,15 @@
   const interviewDone = () => Boolean(D()) && moments().every((_, k) => yes(`ack${k}`));
 
   function beat() {
+    // D'abord la mission en clair, puis la règle d'or, puis l'entretien lu
+    // en entier ; ensuite seulement l'analyse, moment par moment.
     if (!D()) return { kind: 'pick' };
+    if (!yes('intro')) return { kind: 'intro' };
     if (!v('warm')) return { kind: 'warm' };
     if (!yes('wok')) return { kind: 'warm-fb' };
-    if (!yes('intro')) return { kind: 'intro' };
+    if (!yes('read')) return { kind: 'read' };
     const k = moments().findIndex((_, i) => !yes(`ack${i}`));
     if (k === -1) return { kind: 'end' };
-    if (!yes(`seen${k}`)) return { kind: 'ctx', k };
     if (!choiceAt(k)) return { kind: 'choose', k };
     if (yes(`retry${k}`)) return { kind: 'choose', k, retry: true };
     return { kind: 'fb', k };
@@ -147,14 +151,27 @@
   /* Les répliques d'un moment : la question du vendeur, le geste, le client. */
   const sellerMsg = m => `<li class="d5-msg is-you"><p><span>${esc(D().seller.name)} · ${esc(m.n)}</span>${q(m.q)}</p></li>`;
   const clientMsgs = m => (m.scene ? [`<li class="h6-scene">${esc(m.scene)}</li>`] : []).concat(m.replies.map(r => `<li class="d5-msg is-client"><img src="${img(person(r.who).face)}" alt="" aria-hidden="true"><p><span>${esc(person(r.who).name)}</span>${q(r.text)}</p></li>`)).join('');
-  function thread(upto = moments().length) {
-    const items = [];
-    moments().slice(0, upto).forEach((m, k) => {
-      if (!yes(`seen${k}`)) return;
-      items.push(`<li class="h6-step-sep"><span>${esc(m.n)}</span></li>`, sellerMsg(m), clientMsgs(m));
-    });
-    return items.join('') || '<li class="d5-thread-empty">L’entretien s’affichera ici.</li>';
+  /* L'entretien entier. Avec `current`, le moment analysé est surligné et
+   * les suivants sont estompés. */
+  function thread(current = -1) {
+    return moments().map((m, k) => {
+      const cls = current < 0 ? '' : k === current ? 'is-current' : k > current ? 'is-later' : 'is-before';
+      return `<li class="h7-tr-moment ${cls}"><ol class="d5-thread"><li class="h6-step-sep"><span>${esc(m.n)}${k === current ? ' · le moment à analyser' : ''}</span></li>${sellerMsg(m)}${clientMsgs(m)}</ol></li>`;
+    }).join('');
   }
+  // Fait défiler l'entretien jusqu'au moment analysé, après l'affichage.
+  const scrollTranscript = () => setTimeout(() => {
+    document.querySelectorAll('.h7-tr').forEach(box => {
+      const cur = box.querySelector('.is-current');
+      if (cur) box.scrollTop = Math.max(0, cur.offsetTop - 12);
+    });
+  }, 0);
+
+  /* L'aide-mémoire : les types de questions et l'entonnoir. */
+  const memoBox = () => `<details class="h7-memo"><summary>${icon('document', { size: 16 })}<span>Aide-mémoire : les types de questions</span></summary>
+      <dl>${content.memo.map(x => `<div><dt>${esc(x.term)}</dt><dd>${esc(x.text)} <i>${q(x.ex)}</i></dd></div>`).join('')}</dl>
+      <p class="h7-memo-funnel"><b>L’entonnoir :</b> ${content.funnel.map((f, i) => `<span>${i + 1}. ${esc(f)}</span>`).join('')}</p>
+    </details>`;
 
   /* Le retour de la formatrice (comme 6.1). */
   const VERDICT = {
@@ -203,49 +220,54 @@
     if (b.kind === 'pick') {
       body = `<div class="h6-card h6-banner is-text h6-in"><div><p class="k-label">Avant de commencer</p><p>Un collègue vous confie la transcription de son deuxième rendez-vous et vous demande de l’aide. Choisissez un dossier : vous pourrez faire l’autre ensuite.</p></div></div>
         <div class="h7-dossiers">${Object.values(content.dossiers).map(dossierCard).join('')}</div>`;
-    } else if (b.kind === 'warm') {
-      body = `<div class="h6-choose">
-          <div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${sellerFace()}" alt="" aria-hidden="true"><p class="h6-who-name">${esc(D().seller.name)} vous demande votre avis</p><p class="h6-who-ask">${esc(warmup.question)}</p></div>
-          ${options({ title: 'Question d’accroche', order: warmup.order, choices: warmup.choices, act: 'h7-warm' })}
-        </div>`;
-    } else if (b.kind === 'warm-fb') {
-      const id = v('warm');
-      const ok = id === warmup.best;
-      body = feedbackCard(ok ? 'ok' : 'mid', warmup.choices[id].fb, { better: ok ? '' : warmup.choices[warmup.best].text, betterLabel: 'La réponse attendue', button: next('Lire le message', 'h6-flag', 0.4, 'data-name="wok"') });
     } else if (b.kind === 'intro') {
+      // Le message du collègue, puis ce que vous allez faire, en clair.
       body = `<div class="h6-choose">
           <div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${sellerFace()}" alt="" aria-hidden="true"><p class="h6-who-name">${esc(D().seller.name)}</p><p class="h6-who-role">${esc(D().seller.role)}</p></div>
           <div class="h6-card h6-answer h7-message h6-in" ${delay(0.15)}>
             <p class="h6-answer-label">Son message :</p>
             <p class="h6-answer-q">${q(D().ask)}</p>
             <p class="h7-context">${esc(D().context)}</p>
-            <p class="h7-rule">${icon('check', { size: 16 })}<span>${esc(content.rule)}</span></p>
+            <p class="h7-mission-h">Ce que vous allez faire</p>
+            <ol class="h7-mission">${content.mission.map(t => `<li>${esc(t)}</li>`).join('')}</ol>
           </div>
         </div>
-        <div class="h6-stage-foot">${next('Lire l’entretien', 'h6-flag', 0.6, 'data-name="intro"')}</div>`;
-    } else if (b.kind === 'ctx') {
-      // Le moment : la question du vendeur à gauche, ce qui suit à droite.
+        <div class="h6-stage-foot">${next('C’est parti', 'h6-flag', 0.6, 'data-name="intro"')}</div>`;
+    } else if (b.kind === 'warm') {
       body = `<div class="h6-choose">
-          <div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${sellerFace()}" alt="" aria-hidden="true"><p class="h6-who-name">${esc(D().seller.name)} · ${esc(m.n)}</p><p class="h6-who-ask">${q(m.q)}</p></div>
-          <div class="h6-card h6-answer h7-moment h6-in" ${delay(0.15)}>
-            <p class="h6-answer-label">Moment ${k + 1} sur ${moments().length}</p>
-            ${m.scene ? `<p class="h6-scene-text h6-in" ${delay(0.5)}>${esc(m.scene)}</p>` : ''}
-            ${m.replies.map((r, i) => `<div class="h6-answer-reply h6-in" ${delay(0.7 + i * 0.4)}><img src="${img(person(r.who).face)}" alt="" aria-hidden="true"><div><span>${esc(person(r.who).name)}</span><p>${q(r.text)}</p></div></div>`).join('')}
-          </div>
+          <div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${sellerFace()}" alt="" aria-hidden="true"><p class="h6-who-name">Avant de lire son entretien</p><p class="h6-who-ask">${esc(warmup.question)}</p></div>
+          ${options({ title: 'Question d’accroche', order: warmup.order, choices: warmup.choices, act: 'h7-warm' })}
+        </div>`;
+    } else if (b.kind === 'warm-fb') {
+      const id = v('warm');
+      const ok = id === warmup.best;
+      body = feedbackCard(ok ? 'ok' : 'mid', warmup.choices[id].fb, { better: ok ? '' : warmup.choices[warmup.best].text, betterLabel: 'La réponse attendue', button: next('Lire son entretien', 'h6-flag', 0.4, 'data-name="wok"') });
+    } else if (b.kind === 'read') {
+      // L'entretien en entier, à lire avant toute analyse.
+      const names = Object.values(D().people).map(p => p.name).join(' et ');
+      body = `<div class="h6-card h7-read h6-in">
+          <p class="k-label">Étape 1 · Lisez l’entretien en entier</p>
+          <p class="h7-read-title">${esc(D().seller.name)} avec ${esc(names)}</p>
+          <p class="h7-context">${esc(D().context)} Les questions de ${esc(D().seller.name)} sont numérotées de M1 à M10.</p>
+          <ol class="h7-tr is-read">${thread()}</ol>
+          <p class="h7-read-note">Vous l’aurez sous les yeux pendant toute l’analyse.</p>
         </div>
-        <div class="h6-stage-foot">${next('Poser mon diagnostic', 'h6-flag', 1.1, `data-name="seen${k}"`)}</div>`;
+        <div class="h6-stage-foot">${next('J’ai lu, je commence l’analyse', 'h6-flag', 0.4, 'data-name="read"')}</div>`;
     } else if (b.kind === 'choose') {
-      // Un indice pour les cinq premiers moments ; ensuite, plus d'aide.
-      const reply = m.replies[0];
-      body = `<div class="h6-choose">
-          <div class="h6-card h6-who has-recall h7-recap h6-in">
-            <p class="h6-who-mini"><img src="${sellerFace()}" alt="" aria-hidden="true"><span><b>${esc(D().seller.name)} · ${esc(m.n)}</b>${q(m.q)}</span></p>
-            ${m.scene ? `<p class="h6-recall-gesture">${esc(m.scene)}</p>` : ''}
-            ${reply ? `<p class="h6-who-mini"><img src="${img(person(reply.who).face)}" alt="" aria-hidden="true"><span><b>${esc(person(reply.who).name)}</b>${q(reply.text)}</span></p>` : ''}
-            <p class="h7-ask">Votre diagnostic ?</p>
-            ${m.hint ? `<p class="h7-hint">${icon('thought', { size: 16 })}<span>${esc(m.hint)}</span></p>` : ''}
+      // L'entretien à gauche (le moment surligné), la question et les
+      // diagnostics à droite. Un indice pour M1 à M5, plus rien ensuite.
+      scrollTranscript();
+      body = `<div class="h7-analyse">
+          <div class="h6-card h7-tr-card h6-in"><p class="k-label">L’entretien de ${esc(D().seller.name)}</p><ol class="h7-tr">${thread(k)}</ol></div>
+          <div class="h7-analyse-main">
+            <div class="h6-card h7-question h6-in" ${delay(0.1)}>
+              <p class="k-label">Étape 2 · Analysez · moment ${k + 1} sur ${moments().length}</p>
+              <p class="h7-ask">${esc(m.n)} : avec cette question, qu’a fait ${esc(D().seller.name)} ? Et qu’est-ce que ça a produit ?</p>
+              ${m.hint ? `<p class="h7-hint">${icon('thought', { size: 16 })}<span>${esc(m.hint)}</span></p>` : ''}
+              ${memoBox()}
+            </div>
+            ${options({ title: 'Les diagnostics possibles', order: m.order, choices: m.choices, act: 'h7-pick', data: `data-step="${k}"`, tried: b.retry ? tries(k) : [] })}
           </div>
-          ${options({ title: 'Les diagnostics possibles', order: m.order, choices: m.choices, act: 'h7-pick', data: `data-step="${k}"`, tried: b.retry ? tries(k) : [] })}
         </div>`;
     } else if (b.kind === 'fb') {
       const id = currentAt(k);
@@ -267,15 +289,14 @@
         </div>
         <div class="h6-stage-foot">${kit.submit('Choisir les moments décisifs')}</div>`;
     }
-    const inGame = !['pick', 'warm', 'warm-fb', 'intro'].includes(b.kind);
+    const inGame = ['choose', 'fb', 'end'].includes(b.kind);
     const isFb = ['fb', 'warm-fb'].includes(b.kind);
-    const seenCount = moments().filter((_, i) => yes(`seen${i}`)).length;
     return `<section class="h6-stage ${isFb ? 'is-fb' : ''}" style="--h6-decor:url('${decorOf()}')">
         <div class="h6-stage-top">
           ${inGame ? `<div class="h6-meters">${gaugeBar(rightFirst())}</div>` : '<span></span>'}
-          ${inGame && seenCount ? `<details class="h6-replay"><summary>${icon('chat', { size: 16 })}<span>Relire l’entretien</span></summary>
-            <div class="h6-replay-panel" role="region" aria-label="L’entretien jusqu’ici">
-              <div class="h6-replay-head"><img src="${sellerFace()}" alt="" aria-hidden="true"><p><b>L’entretien de ${esc(D().seller.name)}</b><span>${seenCount} moment${seenCount > 1 ? 's' : ''} lu${seenCount > 1 ? 's' : ''} sur ${moments().length}</span></p>
+          ${['fb', 'end'].includes(b.kind) ? `<details class="h6-replay"><summary>${icon('chat', { size: 16 })}<span>Relire l’entretien</span></summary>
+            <div class="h6-replay-panel" role="region" aria-label="L’entretien">
+              <div class="h6-replay-head"><img src="${sellerFace()}" alt="" aria-hidden="true"><p><b>L’entretien de ${esc(D().seller.name)}</b><span>${esc(Object.values(D().people).map(p => p.name).join(' et '))}</span></p>
                 <button type="button" class="h6-replay-close" data-act="h7-replay-close" aria-label="Fermer">${icon('close', { size: 16 })}</button></div>
               <ol class="d5-thread h6-replay-list">${thread()}</ol>
             </div></details>` : ''}
@@ -344,7 +365,7 @@
           <div class="h7-rw-main">
             <div class="fm-field"><p class="fm-label">Ce qui s’est passé, et pourquoi c’est décisif</p>${ex.field(`rw${j}_why`, 'Ce qui s’est passé', { placeholder: 'Il/elle… ; du coup, le client…', max: 400, rows: 3, hideLabel: true })}</div>
             <div class="fm-field"><p class="fm-label">La question que vous auriez posée</p>${ex.field(`rw${j}_q`, 'Votre question', { placeholder: 'Qu’est-ce que… ?', max: 300, type: 'input', hideLabel: true })}</div>
-            <div class="fm-field"><p class="fm-label">Son type</p><div class="h7-chips" role="group" aria-label="Le type de votre question">${typeChips}</div></div>
+            <div class="fm-field"><p class="fm-label">Son type</p><div class="h7-chips" role="group" aria-label="Le type de votre question">${typeChips}</div>${memoBox()}</div>
             ${result}
           </div>
         </div>
@@ -550,7 +571,7 @@
     'h7-pick': control => {
       const k = Number(control.dataset.step);
       const id = control.dataset.id;
-      if (!choiceAt(k)) { ex.setValue(`x${k}`, [id]); advance(`c${k}`, id); return; }
+      if (!choiceAt(k)) { ex.setValue(`seen${k}`, true); ex.setValue(`x${k}`, [id]); advance(`c${k}`, id); return; }
       if (!yes(`retry${k}`) || tries(k).includes(id)) return;
       ex.setValue(`x${k}`, [...tries(k), id]);
       advance(`retry${k}`, false);

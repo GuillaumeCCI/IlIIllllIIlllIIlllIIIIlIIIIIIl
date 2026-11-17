@@ -1762,3 +1762,48 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
   .h7-dossiers, .h7-dms, .h7-rw { grid-template-columns: 1fr; }
   .h7-sort-row { grid-template-columns: 1fr; }
 }
+
+/* 6.2 · La mission annoncée, la lecture, l’analyse avec l’entretien à côté. */
+.h7-mission-h { margin: 14px 0 6px; color: var(--navy); font-weight: 800; }
+.h7-mission { margin: 0; padding: 0; list-style: none; counter-reset: mission; display: grid; gap: 6px; }
+.h7-mission li { counter-increment: mission; display: flex; align-items: flex-start; gap: 10px; color: #24305a; line-height: 1.45; }
+.h7-mission li::before { content: counter(mission); flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-size: .8rem; font-weight: 800; }
+
+.h7-read { width: min(100%, 860px); display: grid; gap: 8px; }
+.h7-read-title { margin: 0; color: var(--navy); font-size: 1.3rem; font-weight: 800; }
+.h7-read-note { margin: 4px 0 0; color: var(--muted); font-style: italic; }
+.h7-tr { list-style: none; margin: 0; padding: 4px 6px 4px 0; display: grid; gap: 4px; max-height: min(52vh, 520px); overflow-y: auto; overscroll-behavior: contain; position: relative; scrollbar-width: thin; scrollbar-color: #c6cfe2 transparent; }
+.h7-tr::-webkit-scrollbar { width: 8px; }
+.h7-tr::-webkit-scrollbar-thumb { border-radius: 8px; background: #c6cfe2; }
+.h7-tr-moment { padding: 4px 10px 8px; border-radius: 12px; transition: opacity .2s; }
+.h7-tr-moment > .d5-thread { gap: 6px; }
+#main .h7-tr .d5-msg p { font-weight: 400; font-size: .95rem; line-height: 1.5; }
+#main .h7-tr .d5-msg img { width: 32px; height: 32px; }
+#main .h7-tr .h6-scene { font-size: .88rem; }
+.h7-tr-moment.is-current { background: #fff7e8; box-shadow: inset 0 0 0 2px #f0b860; }
+.h7-tr-moment.is-current .h6-step-sep { color: #9a6a12; }
+.h7-tr-moment.is-later { opacity: .45; }
+
+.h7-analyse { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 22px; align-items: start; width: min(100%, 1240px); }
+.h7-tr-card { width: 100%; padding: 16px 14px 14px 18px; display: grid; gap: 8px; }
+.h7-tr-card .h7-tr { max-height: min(58vh, 560px); }
+.h7-analyse-main { display: grid; gap: 14px; }
+.h7-question { width: 100%; padding: 18px 22px; display: grid; gap: 4px; }
+.h7-question .h7-ask { margin: 2px 0 0; }
+
+.h7-memo { margin-top: 8px; }
+.h7-memo > summary { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 700; cursor: var(--cursor-hand, pointer); list-style: none; }
+.h7-memo > summary::-webkit-details-marker { display: none; }
+.h7-memo > summary:hover { text-decoration: underline; }
+.h7-memo dl { margin: 10px 0 0; display: grid; gap: 6px; }
+.h7-memo dl > div { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 10px; padding: 6px 10px; border-radius: 8px; background: #f6f8fc; }
+.h7-memo dt { color: var(--navy); font-weight: 800; }
+.h7-memo dd { margin: 0; color: #3a4a7a; font-size: .92rem; line-height: 1.45; }
+.h7-memo dd i { color: var(--muted); }
+.h7-memo-funnel { margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 6px 12px; color: #3a4a7a; font-size: .92rem; }
+
+@media (max-width: 960px) {
+  .h7-analyse { grid-template-columns: 1fr; }
+  .h7-tr-card .h7-tr { max-height: 40vh; }
+  .h7-memo dl > div { grid-template-columns: 1fr; gap: 2px; }
+}

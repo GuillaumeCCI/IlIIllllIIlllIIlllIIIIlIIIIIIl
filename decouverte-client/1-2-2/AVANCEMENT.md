@@ -68,7 +68,9 @@ Six étapes : 1. L’entretien : choix du dossier (A Camille / Leroy, magasin de
 
 Sans biais (vérifié par script) : diagnostics A et B, au moins une mauvaise aussi longue 5 et 6 fois, bonne la plus courte 4 et 3 fois, un peu plus longue 1 fois, jamais nettement plus longue ; positions 4/3/3.
 
-Images PROVISOIRES (à remplacer par celles de l’utilisateur) : Camille = visages/laura, Karim = visages/antoine, M. Leroy = visages/m-benali, Mme Leroy = clients/client-cheveux-gris, M. Vidal = clients/client-tasse, décors = dialogues/magasin (A) et dialogues/entreprise (B).
+Images fournies par l’utilisateur (17/11), converties par `tools/import-images-6-2.mjs` : visages/camille, mme-leroy, m-leroy, karim, m-vidal ; dialogues/magasin-cuisines (A), hotel-bureau (B).
+
+Reprise après le retour de l’utilisateur (17/11 : « je ne comprends rien, les pages s’enchaînent sans sens, ça va vite et loin, on n’est pas aidé ») : la mission en quatre points s’affiche d’abord, sous le message du collègue ; puis la règle d’or ; puis l’entretien EN ENTIER à lire ; puis l’analyse : l’entretien à gauche (le moment surligné, les suivants estompés, défilement automatique), à droite « M4 : avec cette question, qu’a fait Camille ? Et qu’est-ce que ça a produit ? », l’indice et un aide-mémoire (types de questions avec exemple, entonnoir) ; deux écrans par moment au lieu de trois. Aide-mémoire aussi dans les réécritures. À faire vérifier par l’utilisateur.
 
 ## Reprise prévue (17/11/2026)
 

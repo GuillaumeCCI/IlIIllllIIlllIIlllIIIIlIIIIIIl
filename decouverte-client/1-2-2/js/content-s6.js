@@ -230,6 +230,27 @@
         }
       },
 
+      // Ce que vous allez faire, annoncé avant tout (sous le message du collègue).
+      mission: [
+        'Lire son entretien en entier.',
+        'L’analyser question par question : qu’a fait votre collègue, et qu’est-ce que ça a produit chez le client ?',
+        'Repérer les 3 moments qui ont tout changé, et proposer de meilleures questions.',
+        'Lui rédiger une fiche de coaching.'
+      ],
+
+      // L'aide-mémoire, ouvrable pendant l'analyse et les réécritures.
+      memo: [
+        { term: 'Cadrage', text: 'Annonce le déroulé ou le temps de l’entretien.', ex: 'On prend vingt minutes ?' },
+        { term: 'Ouverte large', text: 'Fait raconter la situation, sans rien supposer (étage 1).', ex: 'Racontez-moi une journée type.' },
+        { term: 'Ouverte ciblée', text: 'Fait parler d’une difficulté ou d’un enjeu (étage 2).', ex: 'Qu’est-ce qui vous gêne le plus ?' },
+        { term: 'Écho', text: 'Reprend les mots du client pour qu’il développe.', ex: 'Vos réceptionnistes dépannent ?' },
+        { term: 'Fermée', text: 'Appelle un oui, un non ou un chiffre. Utile pour préciser, plutôt vers la fin.', ex: 'Vous avez un budget ?' },
+        { term: 'Alternative', text: 'Propose un choix. Utile pour préciser, pas trop tôt.', ex: 'Bois ou laqué ?' },
+        { term: 'Orientée', text: 'Contient déjà la réponse, ou glisse un produit : elle ferme l’échange.', ex: 'Vous voulez un îlot, c’est ça ?' },
+        { term: 'Validation', text: 'Résume et fait confirmer, ou fait classer les priorités (étage 5).', ex: 'Qu’est-ce qui passe en premier ?' }
+      ],
+      funnel: ['La situation', 'Les difficultés et les enjeux', 'Les précisions', 'Les motivations', 'La validation'],
+
       rule: 'La règle d’or du coach : un retour factuel (vous citez les questions), qui commence par ce qui a fonctionné et ne juge pas la personne.',
 
       // Les types proposés pour vos réécritures.
@@ -246,11 +267,11 @@
       dossiers: {
         A: {
           id: 'A', tab: 'Dossier A · Commerce', title: 'Camille et les Leroy', place: 'Un magasin de cuisines, deuxième rendez-vous',
-          decor: 'dialogues/magasin.webp',
-          seller: { name: 'Camille', role: 'Conseillère cuisine', face: 'visages/laura.webp' },
+          decor: 'dialogues/magasin-cuisines.webp',
+          seller: { name: 'Camille', role: 'Conseillère cuisine', face: 'visages/camille.webp' },
           people: {
-            mme: { name: 'Mme Leroy', face: 'clients/client-cheveux-gris.webp' },
-            mr: { name: 'M. Leroy', face: 'visages/m-benali.webp' }
+            mme: { name: 'Mme Leroy', face: 'visages/mme-leroy.webp' },
+            mr: { name: 'M. Leroy', face: 'visages/m-leroy.webp' }
           },
           context: 'Camille, conseillère dans un magasin de cuisines, revoit M. et Mme Leroy. Au premier rendez-vous, elle était allée trop vite.',
           ask: 'J’ai revu les Leroy ce matin. Je pensais avoir bien questionné, mais je repars sans savoir quoi leur proposer. Vous pouvez relire mon entretien et m’aider ?',
@@ -403,10 +424,10 @@
 
         B: {
           id: 'B', tab: 'Dossier B · Entre entreprises', title: 'Karim et M. Vidal', place: 'Un hôtel, deuxième visioconférence',
-          decor: 'dialogues/entreprise.webp',
-          seller: { name: 'Karim', role: 'Attaché commercial', face: 'visages/antoine.webp' },
+          decor: 'dialogues/hotel-bureau.webp',
+          seller: { name: 'Karim', role: 'Attaché commercial', face: 'visages/karim.webp' },
           people: {
-            vidal: { name: 'M. Vidal', face: 'clients/client-tasse.webp' }
+            vidal: { name: 'M. Vidal', face: 'visages/m-vidal.webp' }
           },
           context: 'Karim, attaché commercial d’une entreprise de propreté, retrouve en visioconférence M. Vidal, directeur d’un hôtel quatre étoiles de 120 chambres. Le premier échange avait fait apparaître un besoin de continuité de service.',
           ask: 'J’ai eu M. Vidal en visio. Je pensais avoir bien questionné, mais je ne sais pas trop quoi lui proposer, à part notre formule premium. Vous pouvez relire l’échange et m’aider ?',

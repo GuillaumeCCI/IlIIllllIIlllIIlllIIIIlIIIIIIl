@@ -96,7 +96,7 @@ const CUSTOM = {
   // les réécritures du corrigé, le bon classement, la fiche modèle, la grille.
   's6-6-2': (e, c) => {
     const d = c.dossiers.A;
-    e.setValue('dos', 'A'); e.setValue('warm', c.warmup.best); e.setValue('wok', true); e.setValue('intro', true);
+    e.setValue('dos', 'A'); e.setValue('intro', true); e.setValue('warm', c.warmup.best); e.setValue('wok', true); e.setValue('read', true);
     d.moments.forEach((m, k) => { e.setValue(`seen${k}`, true); e.setValue(`c${k}`, m.best); e.setValue(`ack${k}`, true); });
     e.setValue('dm', d.decisive.expected.slice()); e.setValue('dmok', true);
     d.rewrites.forEach((r, j) => { e.setValue(`rw${j}_why`, r.what); e.setValue(`rw${j}_q`, r.model); e.setValue(`rw${j}_t`, r.type[0]); e.setValue(`rw${j}_ok`, true); });
