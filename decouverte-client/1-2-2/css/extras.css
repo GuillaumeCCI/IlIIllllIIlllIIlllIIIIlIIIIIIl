@@ -1928,3 +1928,12 @@ p.h7-question { padding: 16px 22px; border-radius: 16px; background: #1b2370; co
 .h7-helps.is-corner .h7-help .icon { width: 16px; height: 16px; color: var(--accent); }
 .h7-helps.is-corner .h7-help:hover { background: #fff; color: var(--navy); box-shadow: 0 8px 22px rgb(15 35 78 / 12%); }
 p.h7-question { margin-bottom: 12px; }
+
+/* 6.2 · La carte du moment, en plus grand : on lit mieux l’échange. */
+.h7-tr-card { padding: 26px 30px; gap: 18px; }
+.h7-tr-card .h7-tr-one { gap: 18px; }
+.h7-tr-card .h7-line { gap: 14px; }
+.h7-tr-card .h7-line > img { width: 52px; height: 52px; margin-top: 0; }
+.h7-tr-card .h7-who { font-size: .92rem; margin-bottom: 3px; }
+.h7-tr-card .h7-said { font-size: 1.22rem; line-height: 1.55; }
+.h7-tr-card .h7-gesture { margin-left: 66px; font-size: 1.02rem; }
