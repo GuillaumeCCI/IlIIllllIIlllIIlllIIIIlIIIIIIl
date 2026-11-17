@@ -34,6 +34,8 @@
 
   /* ── Le scénario : choix, jauge, fin ─────────────────────────────────── */
   const choiceAt = k => v(`c${k}`) || null;
+  const tries = k => { const x = v(`x${k}`); return Array.isArray(x) && x.length ? x : (choiceAt(k) ? [choiceAt(k)] : []); };
+  const currentAt = k => { const t = tries(k); return t[t.length - 1] || null; };
   const played = () => steps.filter((_, k) => choiceAt(k)).length;
   const gaugeAfter = upto => steps.slice(0, upto).reduce((g, s, k) => {
     const c = s.choices[choiceAt(k)];
@@ -50,7 +52,7 @@
     const found = endings.find(e => gauge() >= e.min) || endings[endings.length - 1];
     const last = steps.length - 1;
     // Sans la bonne validation, pas de « Exactement, et dans cet ordre ».
-    const sure = found === endings[0] && choiceAt(last) !== steps[last].best ? endings[1] : found;
+    const sure = found === endings[0] && currentAt(last) !== steps[last].best ? endings[1] : found;
     // Plus assez de temps pour un vrai essai : l'essai est écourté.
     if (sure !== endings[endings.length - 1] && left(steps.length) < content.testMin) return Object.assign({}, content.shortEnding, { text: content.shortEnding.text.replace('{reste}', minutesText(left(steps.length))) });
     return sure;
@@ -64,6 +66,8 @@
     const k = steps.findIndex((_, i) => !yes(`ack${i}`));
     if (k === -1) return { kind: 'end' };
     if (!choiceAt(k)) return { kind: yes(`seen${k}`) ? 'choose' : 'ctx', k };
+    // Après un choix moins bon : retour aux propositions, les essais grisés.
+    if (yes(`retry${k}`)) return { kind: 'choose', k, retry: true };
     return { kind: yes(`rs${k}`) ? 'fb' : 'reply', k };
   }
 
@@ -137,7 +141,7 @@
       if (s.scene) items.push(`<li class="h6-scene">${esc(s.scene)}</li>`);
       if (sayOf(s, k)) items.push(`<li class="d5-msg is-client"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(sayOf(s, k))}</p></li>`);
       if (s.after) items.push(`<li class="h6-scene">${esc(s.after)}</li>`);
-      const c = s.choices[choiceAt(k)];
+      const c = s.choices[currentAt(k)];
       if (!c) return;
       items.push(`<li class="d5-msg is-you"><p><span>Vous · étape ${k + 1}</span>${q(c.text)}</p></li>`);
       if (c.reply) items.push(`<li class="d5-msg is-client"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(c.reply)}</p></li>`);
@@ -182,7 +186,7 @@
   /* À gauche, une seule carte : sans rappel, Antoine et la question ; avec
    * un rappel, la cliente qui parle (son visage, sa phrase, son geste), et
    * Antoine en petit dessous. À droite, les questions numérotées. */
-  function choiceBlock({ title, ask, order, choices, act, data = '', field = '', recall = '', gesture = '' }) {
+  function choiceBlock({ title, ask, order, choices, act, data = '', field = '', recall = '', gesture = '', tried = [] }) {
     const left = recall
       ? `<div class="h6-card h6-who has-recall h6-in">
           <img class="h6-who-face" src="${portrait}" alt="" aria-hidden="true">
@@ -194,7 +198,7 @@
       : `<div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${img(client.seller)}" alt="" aria-hidden="true"><p class="h6-who-name">Vous, Antoine</p><p class="h6-who-ask">${esc(ask)}</p></div>`;
     return `<div class="h6-choose">
         ${left}
-        <div class="h6-options" role="group" aria-label="${esc(title)}">${order.map((id, n) => `<button type="button" class="h6-option h6-in" ${delay(0.2 + n * 0.15)} data-act="${act}" data-id="${id}" ${data} ${n === 0 && field ? `data-field="${field}"` : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(choices[id].intent || choices[id].text)}</span>${choices[id].minutes ? `<span class="h6-cost">−${choices[id].minutes} min</span>` : ''}</button>`).join('')}</div>
+        <div class="h6-options" role="group" aria-label="${esc(title)}">${order.map((id, n) => `<button type="button" class="h6-option h6-in ${tried.includes(id) ? 'is-tried' : ''}" ${delay(0.2 + n * 0.15)} data-act="${act}" data-id="${id}" ${data} ${n === 0 && field ? `data-field="${field}"` : ''} ${tried.includes(id) ? 'disabled aria-disabled="true"' : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(choices[id].intent || choices[id].text)}</span>${tried.includes(id) ? '<span class="h6-cost is-tried">Déjà essayé</span>' : choices[id].minutes ? `<span class="h6-cost">−${choices[id].minutes} min</span>` : ''}</button>`).join('')}</div>
       </div>`;
   }
 
@@ -234,19 +238,25 @@
     } else if (b.kind === 'choose') {
       // Le rappel, dans la carte de gauche : sa phrase de l'étape, ou à défaut
       // sa dernière réponse ; son geste s'il compte (l'épaule).
-      const last = !sayOf(s, k) && k > 0 ? steps[k - 1].choices[choiceAt(k - 1)] : null;
+      const last = !sayOf(s, k) && k > 0 ? steps[k - 1].choices[currentAt(k - 1)] : null;
       const recall = sayOf(s, k) || (last && last.reply) || '';
-      body = choiceBlock({ title: 'Les questions possibles', ask: s.prompt || 'Que lui demandez-vous ?', order: s.order, choices: s.choices, act: 'h6-pick', data: `data-step="${k}"`, field: `c${k}`, recall, gesture: s.after || '' });
+      body = choiceBlock({ title: 'Les questions possibles', ask: s.prompt || 'Que lui demandez-vous ?', order: s.order, choices: s.choices, act: 'h6-pick', data: `data-step="${k}"`, field: `c${k}`, recall, gesture: s.after || '', tried: b.retry ? tries(k) : [] });
     } else if (b.kind === 'fb') {
-      const id = choiceAt(k);
+      const id = currentAt(k);
       const c = s.choices[id];
       const ok = id === s.best;
       const tone = ok ? 'ok' : c.points < 0 ? 'ko' : 'mid';
-      body = feedbackCard(tone, ok ? s.why : c.note, { better: ok ? '' : `${s.choices[s.best].intent}, en lui demandant : « ${s.choices[s.best].text} »`, betterLabel: 'Il valait mieux', quoted: false, points: c.points, button: next(k === steps.length - 1 ? 'Voir la fin de l’entretien' : 'Continuer', 'h6-flag', 0.5, `data-name="ack${k}"`) });
+      const first = tries(k).length === 1;
+      body = feedbackCard(tone, ok ? s.why : c.note, {
+        better: ok ? '' : 'Revenez aux propositions et essayez une autre intention.', betterLabel: 'À vous de rejouer', quoted: false,
+        points: first ? c.points : null,
+        button: ok ? next(k === steps.length - 1 ? 'Voir la fin de l’entretien' : 'Continuer', 'h6-flag', 0.5, `data-name="ack${k}"`)
+          : `<button type="button" class="button primary h6-next h6-in" ${delay(0.5)} data-act="h6-retry" data-step="${k}">${icon('arrowLeft', { size: 18 })}<span>Revenir aux propositions</span></button>`
+      });
     } else if (b.kind === 'reply') {
       // Comme l'exemple (« Votre réponse : ») : vous à gauche, votre question
       // à droite, et dessous la réaction de la cliente.
-      const c = s.choices[choiceAt(k)];
+      const c = s.choices[currentAt(k)];
       body = `<div class="h6-choose">
           <div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${img(client.seller)}" alt="" aria-hidden="true"><p class="h6-who-name">Vous, Antoine</p><p class="h6-who-ask">Vous décidez de ${esc(lower(c.intent || ''))}</p></div>
           <div class="h6-card h6-answer h6-in" ${delay(0.15)}>
@@ -352,7 +362,7 @@
           <p class="h6-path-n">Étape ${k + 1}</p>
           <div class="h6-path-you"><p class="h6-pick ${tone}"><span aria-hidden="true">${ok ? '✓' : c.points < 0 ? '✗' : '–'}</span><span><b>${esc(c.intent || '')}</b><span class="h6-pick-q">${q(c.text || '')}</span></span></p>
             <p class="h6-verdict ${tone}">${verdict}<span>${c.points > 0 ? '+2' : c.points < 0 ? '−2' : '0'} sur la jauge</span></p>
-            <p class="h6-explain">${esc(ok ? s.why : c.note || '')}</p></div>
+            <p class="h6-explain">${esc(ok ? s.why : c.note || '')}</p>${tries(k).length > 1 ? `<p class="h6-retried">Puis vous avez essayé : ${tries(k).slice(1).map(t => esc(s.choices[t].intent)).join(' ; ')}.</p>` : ''}</div>
           <div class="h6-path-best">${ok ? '' : `<p class="h6-best-label">La meilleure question</p><p class="h6-best-q"><b>${esc(s.choices[s.best].intent)}</b><span class="h6-pick-q">${q(s.choices[s.best].text)}</span></p><p class="h6-explain">${esc(s.why)}</p>`}</div>
         </div>`;
     }).join('');
@@ -423,9 +433,15 @@
     'h6-warm': control => { if (!v('warm')) advance('warm', control.dataset.id); },
     'h6-pick': control => {
       const k = Number(control.dataset.step);
-      if (choiceAt(k)) return; // un choix fait reste fait : la jauge compte le premier
-      advance(`c${k}`, control.dataset.id);
+      const id = control.dataset.id;
+      // Le premier choix compte pour la jauge et le chrono ; les suivants servent à comprendre.
+      if (!choiceAt(k)) { ex.setValue(`x${k}`, [id]); advance(`c${k}`, id); return; }
+      if (!yes(`retry${k}`) || tries(k).includes(id)) return;
+      ex.setValue(`x${k}`, [...tries(k), id]);
+      ex.setValue(`rs${k}`, false);
+      advance(`retry${k}`, false);
     },
+    'h6-retry': control => { const k = Number(control.dataset.step); ex.setValue(`rs${k}`, false); advance(`retry${k}`, true); },
     'h6-quiz': control => { const i = Number(control.dataset.i); if (!v(`q${i}`)) advance(`q${i}`, control.dataset.id); },
     'h6-map': control => { mapPick = Number(control.dataset.i); ex.rebuild(); },
     'h6-copy': () => {

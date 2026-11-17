@@ -54,6 +54,8 @@ Déroulé (quatre étapes) :
 
 Règles tenues : choix sans biais (longueurs et positions vérifiées par script : 4 mêlées / 2 bonne plus courte / 1 un peu plus longue ; positions 3/2/2), scénario cohérent sur tous les chemins, tout au « vous ». Couleurs : vert sarcelle #2a8f8f (bonne), indigo #5a67b8 (pas tout à fait), framboise #a83d74 (à éviter).
 
+Rejouer une étape (17/11/2026) : après un choix moins bon, le retour propose « Revenir aux propositions » (« À vous de rejouer ») ; les intentions déjà essayées sont grisées (« Déjà essayé »). On avance seulement après la bonne intention. Le premier choix compte seul pour la jauge, le chrono et la fin ; les points ne s'affichent qu'au premier retour. Le corrigé ajoute « Puis vous avez essayé : … ». Champs : `x{k}` (liste des essais), `retry{k}`. Chemin vérifié par simulation.
+
 Idées en attente (validées en principe, pas faites) : rendre l'entretien rejouable (banque d'options, réactions variées), « Voilà ce que ça donne… », conséquences qui reviennent plus loin.
 
 ## Reprise prévue (17/11/2026)

@@ -1602,3 +1602,9 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h6-stage .h6-end.tone-ko { --tone: #a83d74; }
 .h6-stage .h6-end-title { justify-self: start; padding: 6px 16px; border-radius: 999px; background: var(--tone); color: #fff; font-size: 1.1rem; }
 .h6-stage .h6-end .h6-said p { background: #f3f5fb; }
+/* 6.1 · Revenir aux propositions : les intentions déjà essayées sont grisées. */
+.h6-option.is-tried { background: #eef0f5; color: #8a93ad; box-shadow: none; cursor: not-allowed; transform: none; }
+.h6-option.is-tried .h6-option-n { background: #b5bccf; }
+.h6-option.is-tried:hover { background: #eef0f5; transform: none; box-shadow: none; }
+.h6-cost.is-tried { background: transparent; color: #8a93ad; font-style: italic; }
+.h6-retried { margin: 6px 0 0; color: var(--muted); font-size: .88rem; }
