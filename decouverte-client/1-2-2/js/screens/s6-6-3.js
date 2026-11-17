@@ -73,7 +73,7 @@
     else say = `${f.label} : question ${name}. On attend ici une question ${f.expect.map(e => TYPE_LABEL[e].toLowerCase()).join(' ou ')}.`;
     return { ok, type, label: TYPE_LABEL[type] || '', text: say };
   }
-  const ficheChecks = j => ALLFIELDS.map(f => ({ f, ...fieldCheck(f, v(`f${j}_${f.id}`)) }));
+  const ficheChecks = j => ALLFIELDS.map(f => ({ f, text0: v(`f${j}_${f.id}`), ...fieldCheck(f, v(`f${j}_${f.id}`)) }));
   const qScore = () => chosen().reduce((n, _, j) => n + QFIELDS.filter(f => fieldCheck(f, v(`f${j}_${f.id}`)).ok).length, 0);
   const covered = () => { const all = [0, 1, 2, 3, 4].map(i => window.ATELIER_COACH.plain(v(`r${i}`) || '')).join(' '); return themes.filter(t => t.words.some(w => window.ATELIER_COACH.hasWord(` ${all} `, w))); };
 
@@ -273,22 +273,23 @@
     const why = f.prio && f.expect.includes(c.type) ? 'elle doit faire choisir' : `on attend : ${want}`;
     return `<span class="h8-chip is-ko">${esc(label)}<small>${esc(why)}</small></span>`;
   };
-  // Le bilan de la fiche : un nom court par rubrique, et un conseil en une phrase.
+  // Le bilan de la fiche : un nom court par rubrique.
   const SHORT = { sit: 'Le cas vécu', disc: 'Ce que Lucas doit découvrir', o1: 'Lancer la conversation, question 1', o2: 'Lancer la conversation, question 2', c1: 'Aller plus loin, question 1', c2: 'Aller plus loin, question 2', p1: 'Vérifier un détail, question 1', p2: 'Vérifier un détail, question 2', h: 'Faire choisir', ind: 'Les mots à guetter', piege: 'La question à ne pas poser' };
-  const advice = c => {
+  // Au bilan : pourquoi une rubrique est à reprendre, en quelques mots.
+  const clip = t => { const x = String(t).replace(/\s+/g, ' ').trim(); return x.length > 80 ? `${x.slice(0, 78).trim()}…` : x; };
+  const reason = c => {
     const f = c.f;
-    if (c.empty) return f.kind === 'q' ? 'Pas encore écrite.' : 'Pas encore rempli.';
-    if (f.kind === 'text') return 'Un peu court : ajoutez un détail concret de votre métier.';
-    if (f.trap) return 'Écrivez la question à ne pas poser : celle qui souffle la réponse ou pousse un produit.';
+    if (c.empty) return f.kind === 'q' ? 'pas encore écrite' : 'pas encore rempli';
+    if (f.kind === 'text') return 'trop court : ajoutez un détail concret';
+    if (f.trap) return 'ce n’est pas un piège : il faut une question qui souffle la réponse ou pousse un produit';
     const want = f.expect.map(e => TYPE_LABEL[e].toLowerCase()).join(' ou ');
-    if (f.prio && f.expect.includes(c.type)) return 'Elle doit faire choisir le client : « Entre A et B, qu’est-ce qui compte le plus ? »';
-    if (c.type === 'pas-question') return 'Ce n’est pas encore une question : terminez-la par un point d’interrogation.';
-    if (c.type === 'produit') return `Elle pousse un produit ; il faut une question ${want}.`;
-    if (c.type === 'orientee') return `Elle souffle la réponse ; il faut une question ${want}.`;
-    if (!c.label) return `On ne reconnaît pas une question ${want}. Reformulez-la.`;
-    return `Elle est ${c.label.toLowerCase()} ; il faut une question ${want}.`;
+    if (f.prio && f.expect.includes(c.type)) return 'elle ne fait pas choisir le client entre deux critères';
+    if (c.type === 'pas-question') return 'ce n’est pas une question : il manque le point d’interrogation';
+    if (c.type === 'produit') return `elle pousse un produit : il faut une question ${want}`;
+    if (c.type === 'orientee') return `elle souffle la réponse : il faut une question ${want}`;
+    if (!c.label) return `type non reconnu : il faut une question ${want}`;
+    return `question ${c.label.toLowerCase()} : il faut une question ${want}`;
   };
-  const PAGE_TIP = { sit: 'Racontez un vrai cas, avec des détails concrets de votre métier.', open: 'Il faut des questions ouvertes, qui font raconter le client.', precise: 'Deux questions fermées ou à deux options, puis une qui fait choisir le client.', traps: 'Des mots de vos clients, puis la question piège : orientée, ou qui pousse un produit.' };
   // La liste pour Lucas : une puce devant chaque ligne écrite (pas devant les lignes vides,
   // ni devant la suite d'une ligne trop longue). Un double du texte, invisible, porte les puces.
   const mirrorHtml = text => String(text || '').split('\n').map(line => `<div class="${line.trim() ? 'is-item' : ''}">${esc(line) || '&nbsp;'}</div>`).join('');
@@ -422,8 +423,11 @@
         const mine = cs.filter(c => p.fields.includes(c.f));
         const bad = mine.filter(c => !c.ok);
         if (!bad.length) return `<li class="h8-brow is-ok"><span class="h8-brow-n">${icon('check', { size: 13, strokeWidth: 3.5 })}</span><span class="h8-brow-t">${esc(p.tab)}</span><span class="h8-brow-s">Au point</span></li>`;
-        const tip = bad.length === 1 ? `${SHORT[bad[0].f.id] || bad[0].f.label} : ${advice(bad[0]).charAt(0).toLowerCase()}${advice(bad[0]).slice(1)}` : PAGE_TIP[p.id];
-        return `<li><button type="button" class="h8-brow is-ko" data-act="h8-page" data-p="${n}"><span class="h8-brow-n">${n + 1}</span><span class="h8-brow-t">${esc(p.tab)}</span><span class="h8-brow-s">${bad.length} sur ${mine.length} à reprendre</span><span class="h8-brow-tip">${esc(tip)}</span><span class="h8-brow-go">Corriger${icon('arrowRight', { size: 14 })}</span></button></li>`;
+        const why = bad.map(c => {
+          const said = kit.filled(c.text0) ? `<q>« ${esc(clip(c.text0))} »</q>` : '';
+          return `<li><strong>${esc(SHORT[c.f.id] || c.f.label)}</strong>${said}<span class="h8-why-r">${esc(reason(c))}</span></li>`;
+        }).join('');
+        return `<li class="h8-brow is-ko"><span class="h8-brow-n">${n + 1}</span><span class="h8-brow-t">${esc(p.tab)}</span><span class="h8-brow-s">${bad.length} sur ${mine.length} à reprendre</span><ul class="h8-brow-why">${why}</ul><button type="button" class="text-button h8-brow-go" data-act="h8-page" data-p="${n}">Corriger${icon('arrowRight', { size: 14 })}</button></li>`;
       }).join('');
       const lead = todo.length ? `${good} rubrique${good > 1 ? 's' : ''} sur ${cs.length} ${good > 1 ? 'sont' : 'est'} au point.` : 'Toutes les rubriques sont au point : Lucas peut s’en servir telle quelle.';
       bilan = msgBox(tone, `<p>${lead}</p><ul class="h8-brows">${rows}</ul>`, `Votre fiche « ${s.title} »`)
