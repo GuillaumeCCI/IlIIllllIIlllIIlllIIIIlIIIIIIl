@@ -1454,3 +1454,27 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h6-big-quote span { display: block; margin-bottom: 6px; color: var(--muted); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; }
 @media (min-width: 1600px) { .h6-situation.has-picture { width: min(100%, 1240px); } .h6-big-quote { font-size: 1.55rem; } .h6-situation.has-picture .h6-picture { min-height: 380px; } }
 @media (max-width: 800px) { .h6-situation.has-picture { grid-template-columns: minmax(0, 1fr); } }
+/* 6.1 · Après le choix : une seule carte. Sa réaction en bandeau clair,
+ * puis la formatrice et son commentaire. Hauteur naturelle, rien d'étiré. */
+.h6-result { --tone: #5a67b8; --tone-soft: #eceefb; --tone-ink: #3d4890; width: min(100%, 940px); overflow: hidden; border-radius: 20px; background: #fff; box-shadow: 0 14px 34px rgb(15 35 78 / 16%); }
+.h6-result.tone-ok { --tone: #2a8f6a; --tone-soft: #e5f4ec; --tone-ink: #1d6a4c; }
+.h6-result.tone-ko { --tone: #c0485b; --tone-soft: #fbe9ec; --tone-ink: #93283a; }
+.h6-result-reply { display: flex; align-items: center; gap: 16px; padding: 18px 28px; background: #f3f5fb; border-bottom: 1px solid #e3e8f4; }
+.h6-result-reply img { width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%; object-fit: cover; object-position: 50% 30%; box-shadow: 0 0 0 3px #fff; }
+.h6-result-reply span { display: block; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h6-result-reply p { margin: 2px 0 0; color: var(--navy); font-size: 1.15rem; font-weight: 700; line-height: 1.45; }
+.h6-typing-inline { margin: 4px 0 0; padding: 6px 0; background: none; animation: h6-typing 1s ease .3s both; }
+.h6-result-fb { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 26px; align-items: start; padding: 26px 30px 28px; }
+.h6-result-face { width: 124px; height: 124px; border-radius: 50%; object-fit: cover; object-position: 50% 18%; background: #fbf4e6; box-shadow: 0 0 0 4px var(--tone); }
+.h6-result-body { display: grid; gap: 12px; }
+.h6-result .h6-fb-chip { background: var(--tone); }
+.h6-result .h6-fb-points { color: var(--tone-ink); }
+@media (min-width: 1600px) {
+  .h6-result { width: min(100%, 1100px); }
+  .h6-result-reply p { font-size: 1.28rem; }
+  .h6-result-fb { grid-template-columns: 150px minmax(0, 1fr); }
+  .h6-result-face { width: 150px; height: 150px; }
+}
+@media (max-width: 700px) { .h6-result-fb { grid-template-columns: minmax(0, 1fr); justify-items: center; } }
+.h6-stage-body.is-fb .h6-stage-foot { width: min(100%, 940px); }
+@media (min-width: 1600px) { .h6-stage-body.is-fb .h6-stage-foot { width: min(100%, 1100px); } }

@@ -215,20 +215,24 @@
       const id = choiceAt(k);
       const c = s.choices[id];
       const ok = id === s.best;
-      // La même mise en page que le choix : à gauche, la cliente réagit (elle
-      // « écrit », puis répond) ; à droite, le retour de la formatrice.
-      const wait = c.reply ? 1.6 : 0.2;
-      const reaction = c.reply
-        ? `<div class="h6-card h6-who has-recall h6-in">
-            <img class="h6-who-face" src="${portrait}" alt="" aria-hidden="true">
-            <p class="h6-who-name">${esc(client.name)}</p>
-            <div class="h6-typing h6-typing-center" aria-hidden="true"><span></span><span></span><span></span></div>
-            <p class="h6-recall-quote h6-in" ${delay(1.05)}>${q(c.reply)}</p>
-            <p class="h6-who-mini"><img src="${img(client.seller)}" alt="" aria-hidden="true"><span><b>Vous lui avez demandé</b>${q(c.text)}</span></p>
-          </div>`
-        : `<div class="h6-card h6-who has-recall h6-in"><img class="h6-who-face" src="${portrait}" alt="" aria-hidden="true"><p class="h6-who-name">${esc(client.name)}</p><p class="h6-who-mini"><img src="${img(client.seller)}" alt="" aria-hidden="true"><span><b>Vous lui avez dit</b>${q(c.text)}</span></p></div>`;
-      body = `<div class="h6-choose h6-after">${reaction}
-          ${feedbackCard(ok ? 'ok' : c.points < 0 ? 'ko' : 'mid', ok ? s.why : c.note, { better: ok ? '' : s.choices[s.best].text, points: c.points, wait, compact: true })}
+      // Une seule carte, à hauteur naturelle : en haut, sa réaction (bandeau
+      // clair) ; dessous, la formatrice en grand et son commentaire.
+      const tone = ok ? 'ok' : c.points < 0 ? 'ko' : 'mid';
+      const verdict = VERDICT[tone];
+      const wait = c.reply ? 1.5 : 0.15;
+      body = `<div class="h6-result tone-${tone}">
+          ${c.reply ? `<div class="h6-result-reply h6-in">
+            <img src="${portrait}" alt="" aria-hidden="true">
+            <div><span>${esc(client.name)}</span><div class="h6-typing h6-typing-inline" aria-hidden="true"><span></span><span></span><span></span></div><p class="h6-in" ${delay(1.05)}>${q(c.reply)}</p></div>
+          </div>` : ''}
+          <div class="h6-result-fb h6-in" ${delay(wait)}>
+            <img class="h6-result-face" src="${esc(core.asset(`../../moteur/assets/illustrations/retours/${verdict.face}.webp`))}" alt="" aria-hidden="true">
+            <div class="h6-result-body">
+              <p class="h6-fb-head"><span class="h6-fb-chip">${esc(verdict.title)}</span><span class="sr-only">${esc(verdict.label)}.</span><span class="h6-fb-points">${c.points > 0 ? '+2' : c.points < 0 ? '−2' : '0'} sur la jauge</span></p>
+              <p class="h6-fb-say">${esc(ok ? s.why : c.note)}</p>
+              ${ok ? '' : `<div class="h6-fb-better"><span>Il valait mieux demander</span><p>${q(s.choices[s.best].text)}</p></div>`}
+            </div>
+          </div>
         </div>
         <div class="h6-stage-foot">${next(k === steps.length - 1 ? 'Voir la fin de l’entretien' : 'Continuer', 'h6-flag', wait + 0.5, `data-name="ack${k}"`)}</div>`;
     } else {
