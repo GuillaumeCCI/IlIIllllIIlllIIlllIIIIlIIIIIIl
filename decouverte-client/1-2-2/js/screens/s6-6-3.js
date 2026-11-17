@@ -531,9 +531,17 @@
     }).join('');
     return `<div class="h8-bankwin"><section><p class="h8-bankwin-h">Mes 5 règles d’or</p>${rulesList()}</section>${sits}</div>`;
   };
+  // L'exemple : un à la fois (onglets sans script), une ligne par rubrique, une question par ligne.
   const exampleHtml = () => {
-    const blocks = content.model.map(m => `<section><p class="h8-bankwin-h">${esc(m.title)}</p><p class="h8-bankwin-p">${esc(m.text)}</p></section>`).join('');
-    return `<div class="h8-bankwin"><p class="h8-bankwin-note">Il n’existe pas de réponse unique : comparez la forme des questions, pas le métier.</p>${blocks}</div>`;
+    const rows = text => String(text).split(' · ').map(seg => {
+      const k = seg.indexOf(' : ');
+      const label = k > 0 ? seg.slice(0, k) : '';
+      const value = (k > 0 ? seg.slice(k + 3) : seg).replace(/» «/g, '»\n«');
+      return `<div class="h8-ex-row"><p class="h8-ex-k">${esc(label)}</p><p class="h8-ex-v">${esc(value)}</p></div>`;
+    }).join('');
+    const tabs = content.model.map((m, i) => `<input type="radio" name="h8-ex" id="h8-ex-${i}" class="h8-ex-radio" ${i === 0 ? 'checked' : ''}><label for="h8-ex-${i}" class="h8-ex-tab">${esc(m.title)}</label>`).join('');
+    const panels = content.model.map((m, i) => `<div class="h8-ex-panel" data-i="${i}">${rows(m.text)}</div>`).join('');
+    return `<div class="h8-ex"><p class="h8-bankwin-note">Il n’existe pas de réponse unique : comparez la forme des questions, pas le métier.</p><div class="h8-ex-tabs">${tabs}</div>${panels}</div>`;
   };
   function review() {
     const list = chosen();

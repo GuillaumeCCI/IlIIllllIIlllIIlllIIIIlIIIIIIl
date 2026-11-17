@@ -2480,3 +2480,18 @@ button.h8-brow:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; 
 .h8-bankwin ol { margin: 0; padding-left: 20px; }
 .h8-bankwin-note, .h8-bankwin-p { margin: 0; color: #4c5a80; line-height: 1.5; }
 @media (max-width: 860px) { .h8-rtiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .h8-rbank { grid-template-columns: 1fr; } .h8-bankwin-g { grid-template-columns: 1fr; } }
+
+/* 6.3 · Fenêtre « Un exemple » : un exemple à la fois, une ligne par rubrique. */
+.h8-ex { display: grid; gap: 14px; overflow-wrap: anywhere; }
+.h8-ex-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.h8-ex-radio { position: absolute; opacity: 0; pointer-events: none; }
+.h8-ex-tab { padding: 7px 16px; border-radius: 999px; background: #f1f4fa; color: #4c5a80; font-size: .9rem; font-weight: 700; cursor: var(--cursor-hand, pointer); }
+.h8-ex-radio:checked + .h8-ex-tab { background: #1b2370; color: #fff; }
+.h8-ex-radio:focus-visible + .h8-ex-tab { outline: 3px solid #ff936b; outline-offset: 2px; }
+.h8-ex-panel { display: none; }
+.h8-ex:has(#h8-ex-0:checked) .h8-ex-panel[data-i="0"], .h8-ex:has(#h8-ex-1:checked) .h8-ex-panel[data-i="1"] { display: grid; }
+.h8-ex-row { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 14px; padding: 9px 0; }
+.h8-ex-row + .h8-ex-row { border-top: 1px solid #f0f2f7; }
+.h8-ex-k { margin: 0; padding-top: 2px; color: #8a93ad; font-size: .76rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.h8-ex-v { margin: 0; color: #24305a; line-height: 1.5; white-space: pre-line; }
+@media (max-width: 600px) { .h8-ex-row { grid-template-columns: 1fr; gap: 2px; } }
