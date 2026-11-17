@@ -50,8 +50,34 @@
   const tries = k => { const x = v(`x${k}`); return Array.isArray(x) && x.length ? x : (choiceAt(k) ? [choiceAt(k)] : []); };
   const currentAt = k => { const t = tries(k); return t[t.length - 1] || null; };
   const played = () => moments().filter((_, k) => choiceAt(k)).length;
-  const rightFirst = () => moments().filter((m, k) => choiceAt(k) === m.best).length;
   const toneOf = (m, id) => (id === m.best ? 'ok' : (m.choices[id] || {}).tone || 'mid');
+  // Un diagnostic écrit (les derniers moments) : ton du premier essai.
+  const firstTone = k => (moments()[k].write ? v(`wt${k}`) || 'ko' : toneOf(moments()[k], choiceAt(k)));
+  const rightFirst = () => moments().filter((m, k) => choiceAt(k) && firstTone(k) === 'ok').length;
+
+  /* Juger une réponse écrite : les idées clés présentes ou absentes. Les
+   * mots sont comparés sans accents ni majuscules ; une faute de frappe est
+   * tolérée sur les mots longs. */
+  const plain = text => ` ${String(text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ')} `;
+  const lev = (a, b) => {
+    const d = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+    for (let j = 1; j <= b.length; j++) d[0][j] = j;
+    for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[a.length][b.length];
+  };
+  const hasWord = (t, w) => {
+    const word = plain(w).trim();
+    if (t.includes(` ${word}`)) return true;
+    if (word.length < 6 || word.includes(' ')) return false;
+    return t.trim().split(' ').some(x => x.length >= word.length - 1 && lev(x.slice(0, word.length), word) <= 1);
+  };
+  function judge(m, text) {
+    const t = plain(text);
+    const found = m.write.ideas.filter(idea => idea.words.some(w => hasWord(t, w)));
+    const missing = m.write.ideas.filter(idea => !found.includes(idea));
+    const tone = !missing.length ? 'ok' : found.length ? 'mid' : 'ko';
+    return { found, missing, tone };
+  }
   const interviewDone = () => Boolean(D()) && moments().every((_, k) => yes(`ack${k}`));
 
   function beat() {
@@ -64,8 +90,9 @@
     if (!yes('read')) return { kind: 'read' };
     const k = moments().findIndex((_, i) => !yes(`ack${i}`));
     if (k === -1) return { kind: 'end' };
-    if (!choiceAt(k)) return { kind: 'choose', k };
-    if (yes(`retry${k}`)) return { kind: 'choose', k, retry: true };
+    const kind = moments()[k].write ? 'write' : 'choose';
+    if (!choiceAt(k)) return { kind, k };
+    if (yes(`retry${k}`)) return { kind, k, retry: true };
     return { kind: 'fb', k };
   }
 
@@ -200,9 +227,10 @@
 
   /* Le retour de la formatrice (comme 6.1). */
   const VERDICT = {
-    ok: { face: 'formatrice-oui', label: 'Ceci est une réponse appropriée', title: 'Absolument !' },
-    mid: { face: 'formatrice-presque', label: 'Ce n’est pas tout à fait la réponse attendue', title: 'Pas tout à fait…' },
-    ko: { face: 'formatrice-attention', label: 'Ceci n’est pas une réponse appropriée', title: 'À éviter…' }
+    // Ici, on juge un DIAGNOSTIC, pas une action : pas de « À éviter… ».
+    ok: { face: 'formatrice-oui', label: 'Votre diagnostic est juste', title: 'Bien vu !' },
+    mid: { face: 'formatrice-presque', label: 'Votre diagnostic est en partie juste', title: 'Pas tout à fait…' },
+    ko: { face: 'formatrice-attention', label: 'Votre diagnostic n’est pas le bon', title: 'Fausse piste' }
   };
   function feedbackCard(tone, text, { better = '', betterLabel = '', button, wait = 0, tag = '' }) {
     const verdict = VERDICT[tone];
@@ -243,7 +271,7 @@
     const m = k !== undefined ? moments()[k] : null;
     let body = '';
     if (b.kind === 'pick') {
-      body = `<div class="h6-card h6-banner is-text h6-in"><div><p class="k-label">Avant de commencer</p><p>Un collègue vous confie la transcription de son deuxième rendez-vous et vous demande de l’aide. Choisissez un dossier : vous pourrez faire l’autre ensuite.</p></div></div>
+      body = `<div class="h6-card h6-banner is-text h6-in"><div><p class="k-label">Avant de commencer</p><p>Deux collègues vous confient la transcription de leur deuxième rendez-vous et vous demandent de l’aide. Choisissez un entretien : vous pourrez faire l’autre ensuite.</p></div></div>
         <div class="h7-dossiers">${Object.values(content.dossiers).map(dossierCard).join('')}</div>`;
     } else if (b.kind === 'intro') {
       // Le message du collègue, puis ce que vous allez faire, en clair.
@@ -292,6 +320,32 @@
             ${options({ title: 'Les diagnostics possibles', order: m.order, choices: m.choices, act: 'h7-pick', data: `data-step="${k}"`, tried: b.retry ? tries(k) : [] })}
           </div>
         </div>`;
+    } else if (b.kind === 'write') {
+      // Les derniers moments : on écrit soi-même. Le guide, dans le champ,
+      // s'efface au fil des moments (complet, puis court, puis rien).
+      body = `<div class="h7-analyse">
+          <div class="h6-card h7-tr-card h6-in"><p class="k-label">Moment ${k + 1} sur ${moments().length}</p><div class="h7-tr-one">${lines(m)}</div></div>
+          <div class="h7-analyse-main">
+            <p class="h7-question h6-in" ${delay(0.1)}>Qu’a fait ${esc(D().seller.name)} ici, et qu’est-ce que ça a produit ?</p>
+            <div class="h7-write h6-in" ${delay(0.2)}>
+              <p class="h7-write-note">À vous de l’écrire, avec vos mots.</p>
+              ${ex.field(`w${k}`, 'Votre diagnostic', { placeholder: m.write.guide || 'Votre diagnostic…', max: 500, rows: 4, hideLabel: true })}
+              <div class="h7-actions">${kit.act('h7-write', `${icon('check', { size: 18 })}<span>Valider mon diagnostic</span>`, 'primary', `data-step="${k}"`)}</div>
+            </div>
+          </div>
+        </div>`;
+    } else if (b.kind === 'fb' && m.write) {
+      const r = judge(m, v(`w${k}`));
+      const ok = r.tone === 'ok';
+      // « que elle » → « qu’elle » ; une idée ou plusieurs.
+      const que = list => `que ${list.map(i => i.text).join(', et que ')}`.replace(/\bque (?=[aeiouyéèêh])/gi, 'qu’');
+      const say = ok ? m.why : `${r.found.length ? `Vous avez bien vu ${que(r.found)}. ` : ''}Il vous manque ${r.missing.length > 1 ? 'les idées' : 'l’idée'} ${que(r.missing)}.`;
+      const last = k === moments().length - 1;
+      body = feedbackCard(r.tone, say, {
+        better: ok ? "" : m.why, betterLabel: 'Le diagnostic attendu',
+        tag: !yes(`wr${k}`) && ok ? 'Juste du premier coup' : '',
+        button: `${ok ? '' : `<button type="button" class="button secondary h6-next h6-in" ${delay(0.5)} data-act="h7-retry" data-step="${k}">${icon('arrowLeft', { size: 18 })}<span>Compléter ma réponse</span></button>`}${next(last ? 'Voir mon bilan' : 'Moment suivant', 'h6-flag', 0.6, `data-name="ack${k}"`)}`
+      });
     } else if (b.kind === 'fb') {
       const id = currentAt(k);
       const tone = toneOf(m, id);
@@ -312,12 +366,12 @@
         </div>
         <div class="h6-stage-foot">${kit.submit('Choisir les moments décisifs')}</div>`;
     }
-    const inGame = ['choose', 'fb', 'end'].includes(b.kind);
+    const inGame = ['choose', 'write', 'fb', 'end'].includes(b.kind);
     const isFb = ['fb', 'warm-fb'].includes(b.kind);
     return `<section class="h6-stage ${isFb ? 'is-fb' : ''}" style="--h6-decor:url('${decorOf()}')">
         <div class="h6-stage-top">
           ${inGame ? `<div class="h6-meters">${gaugeBar(rightFirst())}</div>` : '<span></span>'}
-          ${b.kind === 'choose' ? `<div class="h7-helps is-corner">${m.hint ? `<button type="button" class="h7-help" data-act="h7-hint" data-step="${k}">${icon('thought', { size: 16 })}<span>Un indice</span></button>` : ''}${memoBox()}</div>` : ''}
+          ${['choose', 'write'].includes(b.kind) ? `<div class="h7-helps is-corner">${m.hint ? `<button type="button" class="h7-help" data-act="h7-hint" data-step="${k}">${icon('thought', { size: 16 })}<span>Un indice</span></button>` : ''}${memoBox()}</div>` : ''}
         </div>
         <div class="h6-stage-body is-${b.kind}">${body}</div>
       </section>
@@ -411,7 +465,7 @@
         <p class="fm-label">Puis la hiérarchie : de la priorité au secondaire</p>
         <p class="fm-sub">Cliquez les trois besoins dans l’ordre de ce qui compte le plus pour le client.</p>
         <div class="h7-rank-pool">${d.rank.show.map(id => { const it = d.rank.items.find(x => x.id === id); const pos = order.indexOf(id); return `<button type="button" class="h7-rank-item ${pos !== -1 ? 'is-on' : ''}" data-act="h7-rank" data-id="${id}" ${ranked || pos !== -1 ? 'disabled' : ''}><span class="h7-rank-n">${pos !== -1 ? pos + 1 : ''}</span><span>${esc(it.text)}</span></button>`; }).join('')}</div>
-        ${ranked ? `<div class="h7-verdict tone-${rankRight() ? 'ok' : 'mid'}"><p><b>${rankRight() ? 'Absolument !' : 'Pas tout à fait…'}</b> ${esc(d.rank.why)}</p>${rankRight() ? '' : `<p class="h7-rank-model">L’ordre attendu : ${d.rank.items.map((it, i) => `${i + 1}. ${esc(it.text)}`).join(' · ')}</p>`}</div>`
+        ${ranked ? `<div class="h7-verdict tone-${rankRight() ? 'ok' : 'mid'}"><p><b>${rankRight() ? 'Bien vu !' : 'Pas tout à fait…'}</b> ${esc(d.rank.why)}</p>${rankRight() ? '' : `<p class="h7-rank-model">L’ordre attendu : ${d.rank.items.map((it, i) => `${i + 1}. ${esc(it.text)}`).join(' · ')}</p>`}</div>`
           : `<div class="h7-actions">${order.length ? kit.act('h7-rank-reset', `${icon('arrowLeft', { size: 16 })}<span>Recommencer</span>`, 'secondary small') : ''}${kit.act('h7-rank-check', `${icon('check', { size: 18 })}<span>Vérifier l’ordre</span>`, 'primary', order.length === d.rank.items.length ? '' : 'disabled')}</div>`}
       </div>` : '';
     return `<section class="k-panel d5-panel h7-panel">
@@ -495,7 +549,16 @@
     const yesCount = content.selfCheck.filter((_, i) => v(`self${i}`) === 'oui').length;
     const diagRows = d.moments.map((m, k) => {
       const id = choiceAt(k);
-      const tone = toneOf(m, id);
+      const tone = firstTone(k);
+      if (m.write) {
+        const r = judge(m, v(`w${k}`));
+        return `<div class="h6-path-row">
+          <p class="h6-path-n">${esc(m.label)}</p>
+          <div class="h6-path-you"><p class="h6-pick is-${r.tone}"><span aria-hidden="true">${r.tone === 'mid' ? '–' : icon(r.tone === 'ok' ? 'check' : 'close', { size: 14, strokeWidth: 3 })}</span><span><b>${esc(v(`w${k}`) || '')}</b><span class="h6-pick-q">${q(m.q)}</span></span></p>
+            <p class="h6-retried">Idées repérées : ${r.found.length ? esc(r.found.map(i => i.text).join(' ; ')) : 'aucune'}.</p></div>
+          <div class="h6-path-best"><p class="h6-best-label">Le diagnostic attendu</p><p class="h6-best-q"><b>${esc(m.choices[m.best].text)}</b></p><p class="h6-explain">${esc(m.why)}</p></div>
+        </div>`;
+      }
       return `<div class="h6-path-row">
           <p class="h6-path-n">${esc(m.label)}</p>
           <div class="h6-path-you"><p class="h6-pick is-${tone}"><span aria-hidden="true">${tone === 'mid' ? '–' : icon(tone === 'ok' ? 'check' : 'close', { size: 14, strokeWidth: 3 })}</span><span><b>${esc((m.choices[id] || {}).text || '')}</b><span class="h6-pick-q">${q(m.q)}</span></span></p>
@@ -551,7 +614,7 @@
     const k = at();
     const body = reviewing ? review() : [scenario, decisiveStep, rewriteStep, knowStep, ficheStep, grid][k]();
     return `<div class="k-page a4-page a5-page d5-page h6-page h7-page">
-      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : progress(k) + kit.tourButton() })}
+      ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: D() ? `Analysez l’entretien de ${D().seller.name}, repérez ce qui a ouvert ou fermé la découverte, et aidez-${D().seller.fem ? 'la' : 'le'} à progresser.` : content.subtitle, aside: reviewing ? '' : progress(k) + kit.tourButton() })}
       <form novalidate>${body}</form>
     </div>`;
   }
@@ -593,7 +656,14 @@
       ex.setValue(`x${k}`, [...tries(k), id]);
       advance(`retry${k}`, false);
     },
-    'h7-retry': control => advance(`retry${Number(control.dataset.step)}`, true),
+    'h7-retry': control => { const k = Number(control.dataset.step); if (moments()[k].write) ex.setValue(`wr${k}`, true); advance(`retry${k}`, true); },
+    'h7-write': control => {
+      const k = Number(control.dataset.step);
+      const m = moments()[k];
+      if (!kit.filled(v(`w${k}`))) { core.toast('Écrivez d’abord votre diagnostic.'); return; }
+      if (!choiceAt(k)) { ex.setValue(`seen${k}`, true); ex.setValue(`wt${k}`, judge(m, v(`w${k}`)).tone); advance(`c${k}`, 'write'); return; }
+      advance(`retry${k}`, false);
+    },
     'h7-memo': () => core.openDialog('Aide-mémoire : les types de questions', memoHtml()),
     'h7-hint': control => { const m = moments()[Number(control.dataset.step)]; if (m && m.hint) core.openDialog('Un indice', `<p class="h7-hint-win">${esc(m.hint)}</p>`); },
     'h7-replay-close': control => { const box = control.closest('details'); if (box) { box.open = false; box.querySelector('summary').focus(); } },
@@ -631,7 +701,7 @@
   });
 
   kit.tour(KEY, [
-    { target: '.h6-stage, .k-panel', title: 'Le coach', text: 'Un collègue vous confie son entretien. Moment par moment, posez votre diagnostic, puis aidez-le à progresser.' },
+    { target: '.h6-stage, .k-panel', title: 'Le coach', text: 'Votre collègue vous confie son entretien. Moment par moment, posez votre diagnostic, puis aidez votre collègue à progresser.' },
     { target: '.k-count.is-progress', title: 'Les étapes', text: 'L’entretien, les moments décisifs, vos réécritures, ce qu’il fallait savoir, la fiche de coaching, puis la grille.' }
   ]);
 

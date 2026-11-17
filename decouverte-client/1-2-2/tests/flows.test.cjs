@@ -97,7 +97,11 @@ const CUSTOM = {
   's6-6-2': (e, c) => {
     const d = c.dossiers.A;
     e.setValue('dos', 'A'); e.setValue('intro', true); e.setValue('warm', c.warmup.best); e.setValue('wok', true); e.setValue('read', true);
-    d.moments.forEach((m, k) => { e.setValue(`seen${k}`, true); e.setValue(`c${k}`, m.best); e.setValue(`ack${k}`, true); });
+    // Les derniers moments s'écrivent : le diagnostic attendu, tel quel.
+    d.moments.forEach((m, k) => {
+      e.setValue(`seen${k}`, true); e.setValue(`ack${k}`, true);
+      if (m.write) { e.setValue(`w${k}`, `${m.choices[m.best].text} ${m.why}`); e.setValue(`wt${k}`, 'ok'); e.setValue(`c${k}`, 'write'); } else e.setValue(`c${k}`, m.best);
+    });
     e.setValue('dm', d.decisive.expected.slice()); e.setValue('dmok', true);
     d.rewrites.forEach((r, j) => { e.setValue(`rw${j}_why`, r.what); e.setValue(`rw${j}_q`, r.model); e.setValue(`rw${j}_t`, r.type[0]); e.setValue(`rw${j}_ok`, true); });
     d.sort.forEach(s => e.setValue(`sk_${s.id}`, s.kind)); e.setValue('sok', true);

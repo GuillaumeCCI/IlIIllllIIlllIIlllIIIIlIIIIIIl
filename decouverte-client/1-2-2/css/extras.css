@@ -1937,3 +1937,11 @@ p.h7-question { margin-bottom: 12px; }
 .h7-tr-card .h7-who { font-size: .92rem; margin-bottom: 3px; }
 .h7-tr-card .h7-said { font-size: 1.22rem; line-height: 1.55; }
 .h7-tr-card .h7-gesture { margin-left: 66px; font-size: 1.02rem; }
+
+/* 6.2 · Les derniers moments : le diagnostic s’écrit, dans une carte blanche. */
+.h7-write { display: grid; gap: 10px; padding: 18px 20px; border-radius: 16px; background: #fff; box-shadow: 0 6px 16px rgb(15 35 78 / 10%); }
+.h7-write-note { margin: 0; color: var(--muted); font-size: .92rem; }
+.h7-write .field { margin: 0; }
+.h7-write textarea { font-size: 1.05rem; line-height: 1.5; }
+.h7-write .h7-actions { margin-top: 0; }
+.h6-gfb-foot:has(.button.secondary) { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }

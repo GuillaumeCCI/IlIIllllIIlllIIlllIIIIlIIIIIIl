@@ -217,15 +217,15 @@
     '6.2': {
       eyebrow: 'Pour aller plus loin · Synthèse facultative',
       title: 'Le coach',
-      subtitle: 'Analysez l’entretien d’un collègue, repérez ce qui a ouvert ou fermé la découverte, et aidez-le à progresser.',
+      subtitle: 'Un entretien de découverte à analyser : repérez ce qui l’a ouvert ou fermé, et aidez votre collègue à progresser.',
 
       // L'accroche : la règle d'or du coach.
       warmup: {
         question: 'Votre collègue vous demande votre avis sur son entretien. Par quoi commencez-vous votre retour ?',
         order: ['b', 'a', 'c'], best: 'a',
         choices: {
-          a: { text: 'Par ce qui a fonctionné, en citant ses questions.', fb: 'C’est la règle d’or du coach : partir du positif, avec des faits. Votre collègue sait ce qu’il doit garder, et il écoutera mieux la suite.' },
-          b: { text: 'Par l’erreur qui lui a coûté le plus cher, pour qu’il la retienne bien.', fb: 'Commencer par l’erreur met votre collègue sur la défensive. Il retiendra le reproche, pas le conseil. Le positif d’abord, avec ses questions à l’appui.' },
+          a: { text: 'Par ce qui a fonctionné, en citant ses questions.', fb: 'C’est la règle d’or du coach : partir du positif, avec des faits. Votre collègue sait ce qu’il faut garder, et écoutera mieux la suite.' },
+          b: { text: 'Par l’erreur qui lui a coûté le plus cher, pour qu’il la retienne bien.', fb: 'Commencer par l’erreur met votre collègue sur la défensive : c’est le reproche qui restera, pas le conseil. Le positif d’abord, avec ses questions à l’appui.' },
           c: { text: 'Par votre impression générale sur sa façon de vendre.', fb: 'Une impression générale juge la personne, pas l’entretien. Un bon retour est factuel : il cite les questions et ce qu’elles ont produit.' }
         }
       },
@@ -268,7 +268,7 @@
         A: {
           id: 'A', tab: 'Dossier A · Commerce', title: 'Camille et les Leroy', place: 'Un magasin de cuisines, deuxième rendez-vous',
           decor: 'dialogues/magasin-cuisines.webp',
-          seller: { name: 'Camille', role: 'Conseillère cuisine', face: 'visages/camille.webp' },
+          seller: { name: 'Camille', fem: true, role: 'Conseillère cuisine', face: 'visages/camille.webp' },
           people: {
             mme: { name: 'Mme Leroy', face: 'visages/mme-leroy.webp' },
             mr: { name: 'M. Leroy', face: 'visages/m-leroy.webp' }
@@ -345,7 +345,11 @@
                 c: { text: 'Une question fermée de validation : elle fait préciser « prix ferme ».' }
               },
               why: 'Utile. Une fermée de validation, bien placée après les ouvertes : M. Leroy précise sa condition (« un prix ferme, pas de surprise »).' },
-            { n: 'M8', label: 'Bois ou laqué', q: 'Vous préférez du bois ou du laqué ?',
+            { n: 'M8', label: 'Bois ou laqué', write: { guide: 'Le type de question, puis ce qu’elle a produit chez le couple…', ideas: [
+                { text: 'c’est une question alternative (« ceci ou cela ? »)', words: ['alternati', 'choix entre', 'deux options', 'deux choix', 'ou laque', 'fermee'] },
+                { text: 'elle arrive trop tôt', words: ['trop tot', 'premature', 'precipit', 'avant d avoir', 'trop vite', 'saute', 'pas encore', 'pas le moment', 'trop rapide'] },
+                { text: 'elle porte sur un détail (les finitions, l’esthétique), pas sur leurs attentes', words: ['esthetique', 'finition', 'detail', 'couleur', 'materiau', 'apparence', 'deco', 'gout', 'attentes', 'besoin'] }
+              ] }, q: 'Vous préférez du bois ou du laqué ?',
               replies: [{ who: 'mme', text: 'Euh… on n’y a pas encore pensé, à vrai dire. Le bois, c’est chaleureux, mais le laqué, ça se nettoie mieux, non ? Je ne sais pas… Qu’est-ce que tu en penses, toi ?' }],
               order: ['c', 'a', 'b'], best: 'c',
               choices: {
@@ -354,7 +358,10 @@
                 c: { text: 'Une alternative trop tôt : elle saute aux finitions avant d’avoir fini d’explorer.' }
               },
               why: 'Décisif. Une alternative prématurée, sur l’esthétique : Camille saute à la précision avant d’avoir fini d’explorer. Le couple n’y a « pas encore pensé ».' },
-            { n: 'M9', label: 'Le budget', q: 'Vous avez un budget ?',
+            { n: 'M9', label: 'Le budget', write: { guide: 'Le type, puis l’effet…', ideas: [
+                { text: 'c’est une question fermée, posée sèchement', words: ['fermee', 'seche', 'sec', 'directe', 'brutale', 'abrupte', 'sans transition', 'mal amene', 'oui ou non'] },
+                { text: 'l’information est quand même obtenue', words: ['obtenu', 'obtient', 'information', 'chiffre', '15 000', '15000', 'montant', 'limite', 'repond', 'donne', 'fonctionne', 'quand meme'] }
+              ] }, q: 'Vous avez un budget ?',
               replies: [{ who: 'mr', text: 'On a mis de côté 15 000 €. Pas un euro de plus : c’est l’argent de notre retraite, et on ne va pas emprunter maintenant.' }],
               order: ['b', 'c', 'a'], best: 'b',
               choices: {
@@ -363,7 +370,10 @@
                 c: { text: 'Une question indiscrète : on ne parle pas du budget aussi tôt dans un projet de cuisine.', tone: 'mid', note: 'Le budget se demande, et ce n’est pas trop tôt ici. Le défaut est la forme : une fermée sèche, sans transition. Mieux : « Quel budget avez-vous prévu pour ce projet ? »' }
               },
               why: 'Mal amenée, mais l’information est obtenue : 15 000 €, « pas un euro de plus ». Une question ouverte (« Quel budget avez-vous prévu ? ») aurait été plus naturelle.' },
-            { n: 'M10', label: 'Le devis', q: 'Très bien, je vous prépare un devis.',
+            { n: 'M10', label: 'Le devis', write: { ideas: [
+                { text: 'elle ne résume rien et ne fait rien valider', words: ['valid', 'resum', 'reformul', 'synthese', 'recapitul', 'confirm', 'verifi'] },
+                { text: 'elle ne sait pas ce qui compte le plus pour eux (aucune priorité)', words: ['priorit', 'classer', 'hierarch', 'ce qui compte', 'plus important', 'en premier', 'ordre', 'quoi proposer'] }
+              ] }, q: 'Très bien, je vous prépare un devis.',
               scene: 'M. et Mme Leroy échangent un regard. Mme Leroy range ses lunettes dans son sac.',
               replies: [{ who: 'mme', text: 'D’accord… Vous nous l’envoyez par mail ?' }],
               order: ['a', 'c', 'b'], best: 'b',
@@ -501,7 +511,11 @@
                 c: { text: 'Une fermée de vérification : elle confirme seulement la date.', tone: 'mid', note: 'Elle pourrait appeler un simple oui. Mais en reprenant ses mots, Karim l’invite à développer, et M. Vidal livre son enjeu personnel.' }
               },
               why: 'Point fort. Un écho : M. Vidal livre son enjeu personnel (« c’est mon poste qui est en jeu »).' },
-            { n: 'M8', label: 'La formule premium', q: 'Vous ne voulez sûrement pas prendre de risque : vous préférerez notre formule premium ?',
+            { n: 'M8', label: 'La formule premium', write: { guide: 'Le type de question, puis ce qu’elle a produit chez M. Vidal…', ideas: [
+                { text: 'c’est une question orientée (elle contient la réponse)', words: ['orient', 'induit', 'suggest', 'souffl', 'pousse', 'force', 'manipul', 'tendanc', 'impose', 'oriente'] },
+                { text: 'il glisse un produit, sa formule', words: ['produit', 'formule', 'premium', 'offre', 'vend', 'solution', 'propose', 'commercial'] },
+                { text: 'M. Vidal se replie', words: ['replie', 'repli', 'ferme', 'recul', 'mefian', 'hesit', 'groupe', 'convaincu', 'bloque', 'braque', 'refroid', 'esquive'] }
+              ] }, q: 'Vous ne voulez sûrement pas prendre de risque : vous préférerez notre formule premium ?',
               replies: [{ who: 'vidal', text: 'Je ne sais pas. Je ne vais pas signer une formule les yeux fermés. Je dois voir avec le groupe.' }],
               order: ['b', 'c', 'a'], best: 'c',
               choices: {
@@ -510,7 +524,10 @@
                 c: { text: 'Une question orientée : il pousse une formule, et M. Vidal se replie.' }
               },
               why: 'Décisif. Une question orientée : Karim pousse sa formule premium en jouant sur la peur. M. Vidal se replie (« je dois voir avec le groupe »).' },
-            { n: 'M9', label: 'La décision', q: 'Qui d’autre intervient dans la décision ?',
+            { n: 'M9', label: 'La décision', write: { guide: 'Le type, puis l’effet…', ideas: [
+                { text: 'c’est une bonne question, ouverte', words: ['ouverte', 'bonne question', 'pertinent', 'bien', 'point fort', 'utile', 'efficace', 'judicieu', 'reussi'] },
+                { text: 'elle fait apparaître qui décide (le siège, son seuil, la gouvernante générale)', words: ['decision', 'decide', 'decideur', 'valide', 'qui d autre', 'processus', 'siege', 'gouvernante', '50 000', '50000', 'seuil', 'montant', 'groupe'] }
+              ] }, q: 'Qui d’autre intervient dans la décision ?',
               replies: [{ who: 'vidal', text: 'Le siège du groupe valide tout ce qui dépasse 50 000 € par an. Et ma gouvernante générale doit être d’accord : c’est elle qui travaillera avec votre équipe tous les jours. Si elle n’y croit pas, ça ne marchera pas.' }],
               order: ['a', 'c', 'b'], best: 'a',
               choices: {
@@ -519,7 +536,10 @@
                 c: { text: 'Une question gênante : elle met en doute l’autorité de M. Vidal devant son prestataire.', tone: 'ko', note: 'Elle ne met rien en doute : il vient de parler du groupe. Il répond sans gêne, et Karim apprend tout du processus de décision.' }
               },
               why: 'Point fort. Une question ouverte sur le processus de décision : le siège au-delà de 50 000 € par an, et la gouvernante générale.' },
-            { n: 'M10', label: 'La conclusion', q: 'Parfait, je vous envoie la proposition premium demain.',
+            { n: 'M10', label: 'La conclusion', write: { ideas: [
+                { text: 'il ne résume rien et ne fait rien valider', words: ['valid', 'resum', 'reformul', 'synthese', 'recapitul', 'confirm', 'verifi'] },
+                { text: 'il propose « premium » sans savoir ce qui passe en premier', words: ['priorit', 'classer', 'hierarch', 'ce qui compte', 'plus important', 'en premier', 'ordre', 'premium', 'sans savoir'] }
+              ] }, q: 'Parfait, je vous envoie la proposition premium demain.',
               scene: 'M. Vidal hoche la tête, sans conviction.',
               replies: [{ who: 'vidal', text: 'Envoyez toujours. Je regarderai.' }],
               order: ['c', 'a', 'b'], best: 'b',
@@ -587,9 +607,9 @@
       selfCheck: [
         { text: 'Mes 3 moments sont ceux où la découverte s’est ouverte ou fermée, et je l’explique.' },
         { text: 'Je nomme le type de chaque question citée (ouverte, fermée, alternative, orientée).' },
-        { text: 'Je relève au moins un besoin implicite et une motivation que le vendeur n’a pas exploités.' },
+        { text: 'Je relève au moins un besoin implicite et une motivation que mon ou ma collègue n’a pas exploités.' },
         { text: 'Mes questions de remplacement sont ouvertes ou bien placées dans l’entonnoir, sans produit.' },
-        { text: 'Ce que le vendeur aurait dû savoir est hiérarchisé, avec les mots du client.' },
+        { text: 'Ce que mon ou ma collègue aurait dû savoir est hiérarchisé, avec les mots du client.' },
         { text: 'Mon retour est factuel, commence par le positif et ne juge pas la personne.' },
         { text: 'Pertinence du choix : j’ai choisi les questions qui ont le plus pesé sur la découverte, pas les plus visibles.' }
       ],
