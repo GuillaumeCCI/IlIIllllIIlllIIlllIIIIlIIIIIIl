@@ -177,20 +177,23 @@
   function situationsStep() {
     const done = yes('sitok');
     const ids = chosenIds();
-    const cards = situations.map(s => {
+    const cards = situations.map((s, i) => {
       const on = ids.includes(s.id);
-      return `<button type="button" class="h7-dm ${on ? 'is-on' : ''} ${done ? 'is-done' : ''}" data-act="h8-sit" data-id="${s.id}" aria-pressed="${on}" ${done ? 'disabled' : ''}>
-          <span class="h7-dm-tick" aria-hidden="true">${on ? icon('check', { size: 14, strokeWidth: 3 }) : ''}</span>
+      return `<button type="button" class="h8-sit h6-in ${on ? 'is-on' : ''}" data-act="h8-sit" data-id="${s.id}" aria-pressed="${on}" ${done ? 'disabled' : ''} ${delay(0.05 * i)}>
+          <span class="h8-sit-tick" aria-hidden="true">${icon('check', { size: 14, strokeWidth: 3 })}</span>
+          <img class="h8-sit-face" src="${img(s.face)}" alt="" aria-hidden="true">
           <span class="h8-sit-title">${esc(s.title)}</span>
-          <span class="h7-dm-q">${esc(s.line)}</span>
+          <span class="h8-sit-line">${esc(s.line)}</span>
         </button>`;
     }).join('');
+    const dots = [0, 1, 2].map(i => `<span class="${i < ids.length ? 'is-on' : ''}"></span>`).join('');
     const bilan = done ? msgBox('ok', `<p>Vos 3 situations, et ce que Lucas doit savoir de chacune :</p><ul class="h7-bilan-list">${chosen().map(s => `<li><span class="h7-bilan-q">${esc(s.title)}</span><span class="h7-bilan-a">Le piège : ${esc(s.trap.charAt(0).toLowerCase() + s.trap.slice(1))} La question clé : ${q(s.key)}</span></li>`).join('')}</ul>`, 'Bon choix') : '';
     return `<section class="k-panel d5-panel h7-panel">
-        <p class="k-label">Les situations · ${esc(v('metier') || 'votre métier')}</p>
-        <p class="a4-role">Choisissez les 3 situations de découverte que vous rencontrez le plus souvent dans votre métier.</p>
-        ${done ? '' : `<p class="h7-count" aria-live="polite"><b>${ids.length}</b> / 3 choisies</p>`}
-        <div class="h7-dms">${cards}</div>
+        <div class="h8-sit-head">
+          <p class="h7-question">Quelles sont les 3 situations de découverte que vous rencontrez le plus souvent ?</p>
+          ${done ? '' : `<p class="h8-sit-count" aria-live="polite"><span class="h8-sit-dots" aria-hidden="true">${dots}</span><span><b>${ids.length}</b> / 3 choisies</span></p>`}
+        </div>
+        <div class="h8-sits ${ids.length >= 3 ? 'is-full' : ''}">${cards}</div>
         ${done ? bilan : `<div class="h7-actions">${kit.act('h8-sit-check', `${icon('check', { size: 18 })}<span>Valider mes 3 situations</span>`, 'primary', ids.length === 3 ? '' : 'disabled')}</div>`}
       </section>
       ${core.errorsBox()}
@@ -429,9 +432,11 @@
       ex.setValue('sit', nextIds); ex.changed();
       control.classList.toggle('is-on', on);
       control.setAttribute('aria-pressed', String(on));
-      control.querySelector('.h7-dm-tick').innerHTML = on ? icon('check', { size: 14, strokeWidth: 3 }) : '';
-      const count = document.querySelector('.h7-count b');
+      const count = document.querySelector('.h8-sit-count b');
       if (count) count.textContent = String(nextIds.length);
+      document.querySelectorAll('.h8-sit-dots span').forEach((d, i) => d.classList.toggle('is-on', i < nextIds.length));
+      const grid = document.querySelector('.h8-sits');
+      if (grid) grid.classList.toggle('is-full', nextIds.length >= 3);
       const check = document.querySelector('[data-act="h8-sit-check"]');
       if (check) check.disabled = nextIds.length !== 3;
     },

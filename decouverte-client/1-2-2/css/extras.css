@@ -2159,7 +2159,31 @@ p.h7-question { margin-bottom: 12px; }
 .h7-write:focus-within { box-shadow: 0 0 0 2px var(--accent), 0 6px 16px rgb(15 35 78 / 8%) !important; }
 /* ══ 6.3 · Ma banque de questions terrain (reprend les styles h6/h7 de 6.2) ══ */
 .h8-metier { margin-top: 14px; box-shadow: inset 0 0 0 1px #e7ebf4; }
+/* 6.3 · Le choix des situations : bandeau bleu nuit, compteur en pastilles,
+   cartes à portrait ; sélection = fond pâle + coche, sans contour. */
+.h8-sit-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 20px; margin-bottom: 20px; }
+.h8-sit-head .h7-question { flex: 1 1 420px; margin: 0; }
+.h8-sit-count { display: flex; align-items: center; gap: 10px; margin: 0; color: #4c5a80; font-size: .92rem; }
+.h8-sit-count b { color: var(--navy); }
+.h8-sit-dots { display: flex; gap: 6px; }
+.h8-sit-dots span { width: 14px; height: 14px; border-radius: 50%; background: #e3e8f2; transition: background .2s, transform .2s; }
+.h8-sit-dots span.is-on { background: #2a8f8f; transform: scale(1.1); }
+.h8-sits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.h8-sit { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 22px 16px 18px; border: 0; border-radius: 18px; background: #fff; box-shadow: 0 4px 14px rgb(15 35 78 / 8%), inset 0 0 0 1px #e7ebf4; font: inherit; text-align: center; cursor: var(--cursor-hand, pointer); transition: background .2s, box-shadow .2s, transform .2s, opacity .2s; }
+.h8-sit:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 22px rgb(15 35 78 / 12%), inset 0 0 0 1px #e7ebf4; }
+.h8-sit:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; }
+.h8-sit:disabled { cursor: default; }
+.h8-sit-face { width: 76px; height: 76px; margin-bottom: 6px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 4px #fbf3e4; }
 .h8-sit-title { color: var(--navy); font-weight: 700; line-height: 1.35; }
+.h8-sit-line { color: #4c5a80; font-size: .9rem; line-height: 1.45; }
+.h8-sit-tick { position: absolute; right: 12px; top: 12px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #fff; color: transparent; box-shadow: inset 0 0 0 2px #d5ddef; transition: background .2s, color .2s, box-shadow .2s; }
+.h8-sit.is-on { background: #eaf5f5; box-shadow: 0 4px 14px rgb(42 143 143 / 14%); }
+.h8-sit.is-on .h8-sit-tick { background: #2a8f8f; color: #fff; box-shadow: none; }
+.h8-sit.is-on .h8-sit-face { box-shadow: 0 0 0 4px #fff; }
+.h8-sits.is-full .h8-sit:not(.is-on) { opacity: .55; }
+.h8-sits.is-full .h8-sit:not(.is-on):hover { opacity: .8; }
+@media (max-width: 1100px) { .h8-sits { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .h8-sits { grid-template-columns: 1fr; } }
 
 /* Les fiches : pages en pastilles, champs en cartes blanches, type en direct. */
 .h8-pages { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 16px; }
