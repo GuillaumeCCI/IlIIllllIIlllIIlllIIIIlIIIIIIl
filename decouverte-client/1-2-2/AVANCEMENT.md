@@ -97,7 +97,7 @@ Revue avec l’utilisateur (17/11, soir) : DEUX situations au lieu de trois (con
 ## Reste à faire
 
 - 6.1 : idées en attente ci-dessus, si l'utilisateur les veut.
-- Synthèse optionnelle 1-2-2 : options 1 (Le coach ; dossier B : changer le cadre « maison de retraite ») et 3 (Ma banque de questions terrain).
+- 6.3 : suite de la revue avec l'utilisateur (dernier point traité le 17/11 : puces de la page 1 de la fiche). Options 1 (6.2) et 3 (6.3) faites.
 - Synthèse optionnelle de 1-2-1 : non commencée.
 - Puis M1.2.3 (situation intégratrice) et M1.2.4 (approfondissement), sans fiche fournie.
 - Avant toute conception : relire la référence de conception (mémoire « conseils-conception-sources », textes dans Documents/Sources-conception).
