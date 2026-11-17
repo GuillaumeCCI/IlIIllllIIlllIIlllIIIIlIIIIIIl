@@ -2395,3 +2395,24 @@ p.h7-question { margin-bottom: 12px; }
 .h8-bfix-why { grid-area: why; color: #4c5a80; font-size: .92rem; line-height: 1.45; }
 .h8-bfix-go { grid-area: go; display: inline-flex; align-items: center; gap: 4px; color: var(--accent); font-size: .86rem; font-weight: 700; }
 @media (max-width: 760px) { .h8-btiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* 6.3 · Bilan de la fiche : une ligne par page, au plus quatre. */
+.h8-brows { display: grid; gap: 8px; margin: 12px 0 0; padding: 0; list-style: none; }
+.h8-brow { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "n t s" "n tip go"; gap: 2px 14px; align-items: center; width: 100%; box-sizing: border-box; padding: 12px 16px; border: 0; border-radius: 14px; background: #f6f8fc; font: inherit; text-align: left; }
+.h8-brow.is-ok { grid-template-areas: "n t s"; background: #e9f5f5; }
+button.h8-brow { cursor: var(--cursor-hand, pointer); transition: background .15s; }
+button.h8-brow:hover { background: #eef1f9; }
+button.h8-brow:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; }
+.h8-brow-n { grid-area: n; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #fdf0e6; color: #a5521b; font-size: .82rem; font-weight: 800; }
+.h8-brow.is-ok .h8-brow-n { background: #2a8f8f; color: #fff; }
+.h8-brow-t { grid-area: t; color: var(--navy); font-weight: 700; }
+.h8-brow-s { grid-area: s; justify-self: end; color: #a5521b; font-size: .85rem; font-weight: 700; }
+.h8-brow.is-ok .h8-brow-s { color: #1d6f6f; }
+.h8-brow-tip { grid-area: tip; color: #4c5a80; font-size: .92rem; line-height: 1.45; }
+.h8-brow-go { grid-area: go; justify-self: end; display: inline-flex; align-items: center; gap: 4px; color: var(--accent); font-size: .86rem; font-weight: 700; }
+
+/* 6.3 · Retours (17/11) : page 1 sans traits ni pointillés (les puces restent) ; page 4 sans beige. */
+#main .h8-scenecard textarea { background-image: none; }
+#main .h8-listcard textarea { background-image: radial-gradient(circle at 6px 16px, #2a8f8f 0 3px, transparent 3.5px); background-size: 100% 32px; background-repeat: repeat-y; }
+.h8-words { background: #fff !important; box-shadow: 0 6px 18px rgb(15 35 78 / 7%), inset 0 0 0 1px #edf0f6 !important; }
+.h8-wordbox { background: #f6f8fc; box-shadow: none; }

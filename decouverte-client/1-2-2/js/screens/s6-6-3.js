@@ -288,6 +288,7 @@
     if (!c.label) return `On ne reconnaît pas une question ${want}. Reformulez-la.`;
     return `Elle est ${c.label.toLowerCase()} ; il faut une question ${want}.`;
   };
+  const PAGE_TIP = { sit: 'Racontez un vrai cas, avec des détails concrets de votre métier.', open: 'Il faut des questions ouvertes, qui font raconter le client.', precise: 'Deux questions fermées ou à deux options, puis une qui fait choisir le client.', traps: 'Des mots de vos clients, puis la question piège : orientée, ou qui pousse un produit.' };
   // Les mots à guetter, en étiquettes (séparés par des virgules).
   const wordChips = text => String(text || '').split(/[,;\n]+/).map(w => w.replace(/[«»"]/g, '').trim()).filter(Boolean).slice(0, 12).map(w => `<span class="h8-word">${esc(w)}</span>`).join('');
   function fichesStep() {
@@ -413,17 +414,16 @@
       const good = cs.filter(c => c.ok).length;
       const tone = good === cs.length ? 'ok' : good >= cs.length - 3 ? 'mid' : 'ko';
       const todo = cs.filter(c => !c.ok);
-      const tiles = pages.map((p, n) => {
+      // Une ligne par page : au point, ou combien de rubriques reprendre, avec un seul conseil.
+      const rows = pages.map((p, n) => {
         const mine = cs.filter(c => p.fields.includes(c.f));
-        const ok = mine.filter(c => c.ok).length;
-        return `<div class="h8-btile ${ok === mine.length ? 'is-ok' : 'is-ko'}"><span class="h8-btile-n">${ok === mine.length ? icon('check', { size: 12, strokeWidth: 3.5 }) : n + 1}</span><span class="h8-btile-t">${esc(p.tab)}</span><span class="h8-btile-s">${ok} sur ${mine.length}</span></div>`;
+        const bad = mine.filter(c => !c.ok);
+        if (!bad.length) return `<li class="h8-brow is-ok"><span class="h8-brow-n">${icon('check', { size: 13, strokeWidth: 3.5 })}</span><span class="h8-brow-t">${esc(p.tab)}</span><span class="h8-brow-s">Au point</span></li>`;
+        const tip = bad.length === 1 ? `${SHORT[bad[0].f.id] || bad[0].f.label} : ${advice(bad[0]).charAt(0).toLowerCase()}${advice(bad[0]).slice(1)}` : PAGE_TIP[p.id];
+        return `<li><button type="button" class="h8-brow is-ko" data-act="h8-page" data-p="${n}"><span class="h8-brow-n">${n + 1}</span><span class="h8-brow-t">${esc(p.tab)}</span><span class="h8-brow-s">${bad.length} sur ${mine.length} à reprendre</span><span class="h8-brow-tip">${esc(tip)}</span><span class="h8-brow-go">Corriger${icon('arrowRight', { size: 14 })}</span></button></li>`;
       }).join('');
-      const fix = todo.length ? `<p class="h8-bfix-h">À reprendre</p><ul class="h8-bfix">${todo.map(c => {
-        const p = pages.findIndex(pg => pg.fields.includes(c.f));
-        return `<li><button type="button" class="h8-bfix-item" data-act="h8-page" data-p="${p}"><span class="h8-bfix-name">${esc(SHORT[c.f.id] || c.f.label)}</span><span class="h8-bfix-why">${esc(advice(c))}</span><span class="h8-bfix-go">Corriger${icon('arrowRight', { size: 14 })}</span></button></li>`;
-      }).join('')}</ul>` : '';
-      const lead = todo.length ? `${good} rubrique${good > 1 ? 's' : ''} sur ${cs.length} ${good > 1 ? 'sont' : 'est'} au point. Reprenez les autres : chaque ligne vous ramène à la bonne page.` : 'Toutes les rubriques sont au point : Lucas peut s’en servir telle quelle.';
-      bilan = msgBox(tone, `<p>${lead}</p><div class="h8-btiles">${tiles}</div>${fix}`, `Votre fiche « ${s.title} »`)
+      const lead = todo.length ? `${good} rubrique${good > 1 ? 's' : ''} sur ${cs.length} ${good > 1 ? 'sont' : 'est'} au point.` : 'Toutes les rubriques sont au point : Lucas peut s’en servir telle quelle.';
+      bilan = msgBox(tone, `<p>${lead}</p><ul class="h8-brows">${rows}</ul>`, `Votre fiche « ${s.title} »`)
         + (j < N - 1 ? `<div class="h7-actions"><button type="button" class="button primary" data-act="h8-fiche" data-j="${j + 1}"><span>Fiche suivante</span>${icon('arrowRight', { size: 16 })}</button></div>` : '');
     }
     return `<section class="k-panel d5-panel h7-panel">
