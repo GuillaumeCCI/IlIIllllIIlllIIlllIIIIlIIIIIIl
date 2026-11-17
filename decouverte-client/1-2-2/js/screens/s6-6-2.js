@@ -134,6 +134,7 @@
 
   /* ── Petits éléments ─────────────────────────────────────────────────── */
   const img = path => esc(core.asset(`assets/illustrations/${path}`));
+  const lower = text => text.charAt(0).toLowerCase() + text.slice(1);
   const q = text => `«&nbsp;${esc(text)}&nbsp;»`;
   const delay = t => `style="animation-delay:${t.toFixed(2)}s"`;
   const next = (label, act, t = 0, extra = '') => `<button type="button" class="button primary h6-next h6-in" ${delay(t)} data-act="${act}" ${extra}><span>${esc(label)}</span>${icon('arrowRight', { size: 18 })}</button>`;
@@ -331,11 +332,15 @@
           : `<button type="button" class="button primary h6-next h6-in" ${delay(0.5)} data-act="h7-retry" data-step="${k}">${icon('arrowLeft', { size: 18 })}<span>Revenir aux propositions</span></button>`
       });
     } else {
+      // Le bilan de l'étape, avant la transition : en phrases, ce qu'il faut retenir.
       const n = rightFirst();
-      body = `<div class="h6-card h6-end tone-${n >= 8 ? 'ok' : n >= 5 ? 'mid' : 'ko'} h6-in">
-          <p class="k-label">L’entretien est analysé</p>
-          <p class="h6-end-title">${n} diagnostic${n > 1 ? 's' : ''} juste${n > 1 ? 's' : ''} du premier coup, sur ${moments().length}</p>
-          <p class="h6-end-text">Vous avez relu tout l’entretien de ${esc(D().seller.name)}. Place aux moments qui ont tout changé.</p>
+      const tone = n >= 8 ? 'ok' : n >= 5 ? 'mid' : 'ko';
+      const missed = moments().filter((m, i) => firstTone(i) !== 'ok');
+      body = `<div class="h6-card h7-bilan h6-in">
+          <p class="k-label">Bilan de l’étape 1 · L’entretien</p>
+          ${msgBox(tone, `<p>Vous avez bien analysé du premier coup <b>${n} moment${n > 1 ? 's' : ''} sur ${moments().length}</b>.</p>`, n >= 8 ? 'Bien vu !' : n >= 5 ? 'Un bon début' : 'À retravailler')}
+          ${missed.length ? `<p class="h7-bilan-h">Les moments à retenir</p>
+          <ul class="h7-bilan-list">${missed.map(m => `<li><span class="h7-bilan-q">${q(m.q)}</span><span>C’était ${esc(lower(m.choices[m.best].text.split(' : ')[0]))} : ${esc(lower(m.choices[m.best].text.split(' : ').slice(1).join(' : ')))}</span></li>`).join('')}</ul>` : ''}
         </div>
         <div class="h6-stage-foot">${kit.submit('Choisir les moments décisifs')}</div>`;
     }
@@ -539,29 +544,24 @@
   function review() {
     const d = D();
     const yesCount = content.selfCheck.filter((_, i) => v(`self${i}`) === 'oui').length;
-    const pill = tone => `<span class="h7-rv-pill tone-${tone}">${esc(VERDICT[tone].title)}</span>`;
-    const diagRows = d.moments.map((m, k) => {
-      const tone = firstTone(k) || 'ko';
-      return `<li><span class="h7-rv-name">${esc(m.label)}</span>${pill(tone)}${tone === 'ok' ? '' : `<span class="h7-rv-fix">C’était : ${esc(m.choices[m.best].text.split(' : ')[0].toLowerCase())}</span>`}</li>`;
-    }).join('');
-    const rwRows = d.rewrites.map((r, j) => `<li><span class="h7-rv-name">${esc(labelOf(r.n))}</span><span class="h7-rv-q">Vous : ${q(v(`rw${j}_q`) || '')}</span><span class="h7-rv-q is-model">Une question juste : ${q(r.model)}</span></li>`).join('');
+    const rwOk = d.rewrites.filter((_, j) => checks(j).tone === 'ok').length;
     const ficheRows = fiche.map(r => `<div class="fm-rv-row">
         <p class="fm-rv-label">${esc(r.tab)}</p>
         <div class="fm-rv-you">${kit.filled(v(`f_${r.id}`)) ? `<p class="result-answer-text">${esc(v(`f_${r.id}`))}</p>` : '<p class="result-answer-text is-empty"><em>Non renseigné.</em></p>'}</div>
         <div class="fm-rv-model"><p>${esc(d.model[r.id])}</p></div>
       </div>`).join('');
     return `<section class="k-panel h6-review h7-review">
-        <p class="a4-review-head"><span class="k-label">Votre analyse de l’entretien de ${esc(d.seller.name)}</span><span class="a4-review-count"><b>${rightFirst()}</b> / ${d.moments.length} justes du premier coup</span></p>
-        <ul class="h7-rv-list">${diagRows}</ul>
-        <p class="h7-review-line">Moments décisifs : vous en avez trouvé <b>${dmScore()}</b> sur 3 (${esc(d.decisive.expected.map(labelOf).join(', '))}).</p>
-        <p class="h7-review-line">Ce qu’il fallait savoir : <b>${sortScore()}</b> / ${d.sort.length} bien classées ; priorités ${rankRight() ? 'dans le bon ordre' : 'à revoir'}.</p>
-      </section>
-      <section class="k-panel h6-review h7-review">
-        <p class="k-label">Vos questions de remplacement</p>
-        <ul class="h7-rv-list is-rw">${rwRows}</ul>
+        <p class="k-label">Votre parcours de coach</p>
+        <ul class="h7-path">
+          <li><span>L’entretien</span>${rightFirst()} moment${rightFirst() > 1 ? 's' : ''} sur ${d.moments.length} bien analysé${rightFirst() > 1 ? 's' : ''} du premier coup</li>
+          <li><span>Les moments décisifs</span>${dmScore()} trouvé${dmScore() > 1 ? 's' : ''} sur 3</li>
+          <li><span>Vos réécritures</span>${rwOk} question${rwOk > 1 ? 's' : ''} juste${rwOk > 1 ? 's' : ''} sur 3</li>
+          <li><span>Ce qu’il fallait savoir</span>${sortScore()} information${sortScore() > 1 ? 's' : ''} sur ${d.sort.length} bien classée${sortScore() > 1 ? 's' : ''}, priorités ${rankRight() ? 'dans le bon ordre' : 'à revoir'}</li>
+        </ul>
       </section>
       <section class="k-panel fm-review is-rows h6-review">
-        <p class="k-label">Votre fiche de coaching</p>
+        <p class="k-label">Bilan de votre fiche de coaching</p>
+        <p class="h7-review-line">Comparez votre fiche avec un exemple : d’autres formulations sont justes, si elles citent des faits et commencent par le positif.</p>
         <div class="fm-rv-head" aria-hidden="true"><span></span><span>Votre fiche</span><span>Un exemple</span></div>
         ${ficheRows}
         <div class="h6-copy">${kit.act('h7-copy', `${icon('document', { size: 18 })}<span>Copier ma fiche</span>`, 'secondary small')}<span>Pour l’envoyer à ${esc(d.seller.name)}, ou à votre tuteur.</span></div>

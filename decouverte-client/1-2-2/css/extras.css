@@ -2075,3 +2075,15 @@ p.h7-question { margin-bottom: 12px; }
 .h7-trans-why { margin: 0; color: #3a4a7a; font-size: 1.05rem; line-height: 1.6; }
 .h7-trans-todo { display: grid; gap: 2px; margin: 6px 0 0; padding: 14px 18px; border-radius: 14px; background: #1b2370; color: #fff; font-size: 1.08rem; font-weight: 600; line-height: 1.45; }
 .h7-trans-todo span { color: #b9c4ff; font-size: .74rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+
+/* 6.2 · Le bilan de l’entretien (avant la transition) et le parcours final. */
+.h7-bilan { width: min(100%, 860px); display: grid; gap: 10px; padding: 26px 30px; text-align: left; }
+.h7-bilan .h7-msg { margin-top: 4px; box-shadow: inset 0 0 0 1px #e7ebf4; }
+.h7-bilan-h { margin: 8px 0 0; color: var(--navy); font-weight: 800; }
+.h7-bilan-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; max-height: 42vh; overflow-y: auto; scrollbar-width: thin; }
+.h7-bilan-list li { display: grid; gap: 2px; padding: 10px 14px; border-radius: 12px; background: #f7f9fc; color: #3a4a7a; line-height: 1.5; }
+.h7-bilan-q { color: var(--navy); font-weight: 600; }
+.h7-path { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.h7-path li { display: grid; gap: 2px; padding: 12px 16px; border-radius: 12px; background: #f7f9fc; color: var(--navy); font-weight: 600; }
+.h7-path li span { color: var(--muted); font-size: .76rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+@media (max-width: 700px) { .h7-path { grid-template-columns: 1fr; } }
