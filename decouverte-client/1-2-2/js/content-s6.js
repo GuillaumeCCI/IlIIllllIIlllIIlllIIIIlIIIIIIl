@@ -31,7 +31,7 @@
       start: 5,
       steps: [
         {
-          scene: 'Mme Rivière arrive à l’heure, les clés de sa voiture de location à la main.',
+          scene: 'Mme Rivière arrive à l’heure, un peu essoufflée : elle a tourné dix minutes pour se garer. Elle tient les clés d’une voiture de location.',
           says: 'Bonjour. J’ai trente minutes, pas plus.',
           order: ['b', 'a', 'c'],
           choices: {
@@ -42,27 +42,28 @@
           best: 'a', why: 'Elle cadre le temps et ouvre large : c’est le premier étage de l’entonnoir.'
         },
         {
-          says: 'Voilà, c’est à peu près ça.',
+          scene: 'Elle pose ses clés sur le bureau et jette un œil aux voitures exposées.',
           order: ['a', 'c', 'b'],
           choices: {
-            a: { text: 'Qu’est-ce qui vous complique le plus la vie avec une voiture, pendant vos tournées ?', points: 2, reply: 'Me garer. Et sortir mon sac de soins du coffre vingt fois par jour, avec mon épaule…' },
-            b: { text: 'Sur une journée comme celle-là, vous faites beaucoup d’autoroute pour rejoindre les deux villages ?', points: 0, reply: 'Un peu, pour les villages.', note: 'Fermée, elle apprend peu.' },
-            c: { text: 'En centre-ville, une petite voiture reste ce qu’il y a de plus pratique, vous êtes d’accord ?', points: -2, reply: 'Si vous le dites…', note: 'Orientée, elle impose votre avis.' }
+            a: { text: 'Qu’est-ce qui vous complique le plus la vie avec une voiture, pendant vos tournées ?', points: 2, reply: 'Me garer, surtout. En centre-ville, je tourne parfois dix minutes devant chez un patient.' },
+            b: { text: 'Pour vos tournées, vous prenez souvent l’autoroute, en dehors de vos trajets en ville ?', points: 0, reply: 'Un peu, pour aller dans les villages.', note: 'Fermée, elle apprend peu.' },
+            c: { text: 'Pour des tournées, une petite voiture reste ce qu’il y a de plus pratique, vous êtes d’accord ?', points: -2, reply: 'Si vous le dites…', note: 'Orientée, elle impose votre avis.' }
           },
           best: 'a', why: 'Une question ouverte, ciblée sur ses difficultés : le deuxième étage.'
         },
         {
-          scene: 'Elle se touche l’épaule droite en parlant du coffre.',
+          says: 'Et puis il y a le coffre. Mon sac de soins, je le sors vingt fois par jour…',
+          after: 'En le disant, elle se touche l’épaule droite.',
           order: ['b', 'c', 'a'],
           choices: {
-            a: { text: 'Votre épaule ?', points: 2, reply: 'Une tendinite. Mon ancien coffre était haut, je soulevais le sac à bout de bras.' },
-            b: { text: 'Il vous faut un grand coffre, alors.', points: 0, reply: 'Pas forcément grand. Facile d’accès, surtout.', note: 'Vous interprétez à sa place.' },
-            c: { text: 'On a des modèles avec hayon électrique.', points: -2, reply: 'Et ça coûte combien, l’option ?', note: 'Une solution, et la discussion part sur le prix.' }
+            a: { text: 'Vous vous êtes touché l’épaule en parlant du coffre : qu’est-ce qui se passe, au juste ?', points: 2, reply: 'Une tendinite. Mon ancien coffre était haut, je soulevais le sac à bout de bras.' },
+            b: { text: 'Si je comprends bien, il vous faudrait surtout un grand coffre, pour ranger votre sac sans difficulté ?', points: 0, reply: 'Pas forcément grand. Facile d’accès, surtout.', note: 'Vous interprétez à sa place : c’est votre idée, pas la sienne.' },
+            c: { text: 'Nos modèles existent avec un hayon électrique en option : vous n’auriez plus rien à soulever vous-même.', points: -2, reply: 'Et ça coûte combien, l’option ?', note: 'Une solution, et la discussion part sur le prix.' }
           },
-          best: 'a', why: 'Un écho sur un signal : son geste vers l’épaule. Elle explique elle-même.'
+          best: 'a', why: 'Elle part d’un signal, son geste vers l’épaule, et la laisse expliquer sans rien supposer.'
         },
         {
-          says: 'Bref, je ne veux plus revivre la semaine dernière.',
+          says: 'Ma voiture m’a lâchée la semaine dernière, en pleine tournée. Je ne veux plus revivre ça.',
           order: ['a', 'b', 'c'],
           choices: {
             a: { text: 'Que se passerait-il si votre voiture vous lâchait de nouveau ?', points: 2, reply: 'Je devrais louer, 60 € par jour, et annuler des patients. La dernière fois, j’ai perdu 1 500 €.' },
@@ -95,15 +96,16 @@
           prompt: 'Avant l’essai, quelle validation faites-vous ?',
           order: ['a', 'c', 'b'],
           choices: {
-            a: { text: 'Si je résume : d’abord une voiture de prêt en cas de panne, sans quoi vous ne travaillez pas ; puis un coffre facile d’accès pour votre épaule ; une voiture simple à garer ; un budget maîtrisé. Dans cet ordre ?', points: 2, reply: '' },
-            b: { text: 'Si je résume : une petite voiture, facile à garer en centre-ville et pas trop chère, puisque vous êtes à votre compte et que vous roulez beaucoup dans la journée, entre vos patients. C’est bien ça ?', points: 0, reply: 'C’est un peu court.', note: 'Incomplète.' },
-            c: { text: 'Si je résume : une voiture fiable, un coffre pratique pour votre épaule, facile à garer en ville… notre citadine hybride avec hayon électrique coche toutes les cases. On l’essaie ?', points: -2, reply: 'Vous allez vite…', note: 'Un produit glissé dans la synthèse.' }
+            a: { text: 'Si je résume : d’abord une voiture de prêt en cas de panne, car une panne vous empêche de travailler ; puis un coffre facile d’accès pour votre épaule ; une voiture simple à garer ; un budget maîtrisé. Dans cet ordre ?', points: 2, reply: '' },
+            b: { text: 'Si je résume : une petite voiture, facile à garer en ville et pas trop chère, avec un coffre assez grand pour votre sac de soins et vos allers-retours entre deux patients, toute la journée. C’est bien ça ?', points: 0, reply: 'C’est un peu court.', note: 'Incomplète.' },
+            c: { text: 'Si je résume : une voiture fiable, un coffre pratique pour votre épaule, facile à garer en ville… notre citadine hybride avec hayon électrique coche toutes les cases. On l’essaie dès maintenant ?', points: -2, reply: 'Vous allez vite…', note: 'Un produit glissé dans la synthèse.' }
           },
           best: 'a', why: 'Une synthèse ordonnée, avec ses raisons, qu’elle peut valider.'
         }
       ],
 
-      // Les fins, selon la jauge à la fin du scénario.
+      // Les fins, selon la jauge à la fin du scénario. La première suppose aussi
+      // la bonne validation à l'étape 7 : sinon, c'est la deuxième.
       endings: [
         { min: 8, title: 'Un essai sur le bon véhicule', says: 'Exactement, et dans cet ordre. Vous êtes le premier à me poser ces questions. On l’essaie ?', text: 'L’essai se fait sur le bon véhicule.', tone: 'ok' },
         { min: 4, title: 'Un essai, mais des doutes', says: 'Je ne suis pas sûre que ce soit le bon modèle.', text: 'L’essai a lieu, mais Mme Rivière hésite.', tone: 'mid' },
@@ -115,7 +117,7 @@
         { id: 'explicites', tab: 'Explicites', label: '1 · Les besoins explicites', sub: 'Ce qu’elle a demandé, avec ses mots.', placeholder: 'Elle a demandé…', required: true,
           model: 'Une voiture pour ses tournées (« une quinzaine de patients, centre-ville et deux villages ») ; se garer facilement.' },
         { id: 'implicites', tab: 'Implicites', label: '2 · Les besoins implicites', sub: 'Ce qui est apparu, et la question qui l’a fait émerger.', placeholder: 'Un besoin… révélé par la question « … »', required: true,
-          model: 'Un coffre accessible sans soulever (sa tendinite, révélée par l’écho « Votre épaule ? ») ; une voiture de prêt en cas de panne (révélée par « Que se passerait-il si… ? »).' },
+          model: 'Un coffre accessible sans soulever (sa tendinite, révélée par la question sur son geste vers l’épaule) ; une voiture de prêt en cas de panne (révélée par « Que se passerait-il si… ? »).' },
         { id: 'motivations', tab: 'Motivations', label: '3 · Ses motivations d’achat', sub: 'La motivation dominante et les secondaires (SONCASE), avec les mots indices.', placeholder: 'Dominante : … (« … ») ; secondaires : …', required: true,
           model: 'Sécurité, dominante (« sans voiture, je ne travaille pas », « je ne veux plus revivre… ») ; argent (« je suis à mon compte ») ; confort (son épaule, le stationnement).' },
         { id: 'hierarchie', tab: 'Hiérarchie', label: '4 · La hiérarchie', sub: 'Prioritaire, important, secondaire, et comment elle a été validée (ou pas).', placeholder: '① … ② … ③ … Validée par…', required: true,
@@ -123,7 +125,7 @@
         { id: 'manque', tab: 'Ce qui manque', label: '5 · Ce qui manque encore', sub: 'Ce que vous n’avez pas découvert, et que vous demanderiez au prochain échange.', placeholder: 'Il me manque…', required: true,
           model: 'Le budget précis ; le kilométrage annuel ; le mode de financement envisagé.' },
         { id: 'critique', tab: 'Auto-critique', label: '6 · Mon auto-critique', sub: 'Deux questions de votre partie que vous reformuleriez : votre question, la nouvelle version, son type.', placeholder: 'À l’étape …, j’ai choisi « … ». Je dirais plutôt « … » (type : …).', required: true,
-          model: 'À l’étape 3, j’ai choisi « Il vous faut un grand coffre, alors » : une interprétation. Je dirais maintenant « Votre épaule ? » (un écho), qui l’aurait laissée expliquer.' }
+          model: 'À l’étape 3, j’ai choisi « Il vous faudrait surtout un grand coffre… » : une interprétation. Je demanderais maintenant « Vous vous êtes touché l’épaule en parlant du coffre : qu’est-ce qui se passe, au juste ? », une question ouverte qui part de son geste et l’aurait laissée expliquer.' }
       ],
 
       // La grille Oui / Non de la fiche, avec le critère « Traçabilité ».

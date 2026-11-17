@@ -33,7 +33,12 @@
     return c ? Math.max(0, Math.min(10, g + c.points)) : g;
   }, content.start);
   const gauge = () => gaugeAfter(played());
-  const ending = () => endings.find(e => gauge() >= e.min) || endings[endings.length - 1];
+  const ending = () => {
+    const found = endings.find(e => gauge() >= e.min) || endings[endings.length - 1];
+    const last = steps.length - 1;
+    // Sans la bonne validation, pas de « Exactement, et dans cet ordre ».
+    return found === endings[0] && choiceAt(last) !== steps[last].best ? endings[1] : found;
+  };
 
   const stepDone = k => {
     if (k === 0) return scenarioDone();
@@ -81,6 +86,7 @@
       const next = fresh >= 0 && k === fresh + 1 ? 'h6-in is-next-in' : '';
       if (s.scene) items.push(`<li class="h6-scene ${next}">${esc(s.scene)}</li>`);
       if (s.says) items.push(`<li class="d5-msg is-client ${next}"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(s.says)}</p></li>`);
+      if (s.after) items.push(`<li class="h6-scene ${next}">${esc(s.after)}</li>`);
       const c = s.choices[choiceAt(k)];
       if (!c) return;
       const anim = k === fresh;
