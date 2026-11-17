@@ -1486,3 +1486,31 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h6-result-you + .h6-result-reply { padding-top: 12px; }
 .h6-result-you:not(:has(+ .h6-result-reply)) { padding-bottom: 16px; border-bottom: 1px solid #e3e8f4; }
 @media (min-width: 1600px) { .h6-result-you p { font-size: 1.1rem; } }
+/* 6.1 · Carte de retour, version finale : un vrai fil de discussion en haut
+ * (vous à droite en bleu, elle à gauche en blanc, mêmes portraits, même
+ * corps), puis le retour, le verdict et les points côte à côte. */
+.h6-result-you, .h6-result-reply { display: flex; align-items: flex-end; gap: 12px; margin: 0; padding: 8px 28px; background: #eef2fa; border: 0; }
+.h6-result-you { flex-direction: row-reverse; padding-top: 22px; }
+.h6-result-reply { padding-bottom: 22px; border-bottom: 1px solid #e1e7f3; }
+.h6-result-you:not(:has(+ .h6-result-reply)) { padding-bottom: 22px; }
+.h6-result-you img, .h6-result-reply img { width: 44px; height: 44px; margin: 0; flex-shrink: 0; border-radius: 50%; object-fit: cover; object-position: 50% 25%; box-shadow: 0 0 0 3px #fff; }
+.h6-result-you > div, .h6-result-reply > div { max-width: 78%; padding: 10px 16px; }
+.h6-result-you > div { border-radius: 16px 16px 4px 16px; background: var(--accent); }
+.h6-result-reply > div { border-radius: 16px 16px 16px 4px; background: #fff; box-shadow: 0 4px 12px rgb(15 35 78 / 8%); }
+.h6-result-you span, .h6-result-reply span { display: block; margin-bottom: 2px; font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h6-result-you span { color: rgb(255 255 255 / 75%); }
+.h6-result-reply span { color: var(--muted); }
+.h6-result-you p, .h6-result-reply p { margin: 0; font-size: 1.04rem; font-weight: 600; line-height: 1.45; }
+.h6-result-you p { color: #fff; }
+.h6-result-reply p { color: var(--navy); }
+.h6-result-fb { grid-template-columns: 104px minmax(0, 1fr); gap: 24px; align-items: start; padding: 24px 30px 26px; }
+.h6-result-face { width: 104px; height: 104px; box-shadow: 0 0 0 4px var(--tone); }
+.h6-result .h6-fb-head { justify-content: flex-start; gap: 10px; }
+.h6-result .h6-fb-points { padding: 4px 10px; border-radius: 999px; background: var(--tone-soft); font-size: .82rem; }
+.h6-result .h6-fb-say { font-size: 1.04rem; }
+@media (min-width: 1600px) {
+  .h6-result-you p, .h6-result-reply p, .h6-result .h6-fb-say { font-size: 1.16rem; }
+  .h6-result-you img, .h6-result-reply img { width: 52px; height: 52px; }
+  .h6-result-fb { grid-template-columns: 124px minmax(0, 1fr); }
+  .h6-result-face { width: 124px; height: 124px; }
+}
