@@ -96,6 +96,17 @@ window.ATELIER_BRIEFINGS = {
     criteria: ['Un guide en entonnoir', 'Une découverte réelle', 'Une hiérarchie appuyée sur les mots du client']
   },
 
+  /* ══ SÉRIE 6 · POUR ALLER PLUS LOIN (facultatif) ═══════════════════ */
+
+  's6-6.1': {
+    lede: { key: 'Vos questions,', rest: 'son histoire.' },
+    mission: 'Vous êtes Antoine, conseiller dans une concession automobile. Mme Rivière, infirmière libérale, vient pour un essai et n’a que trente minutes. À chaque étape, choisissez votre question et voyez son effet. Puis construisez la carte de ses besoins. Cette activité est facultative.',
+    method: 'Le scénario (sept étapes, une jauge de découverte), la carte des besoins (six rubriques), puis la grille.',
+    situation: 'La jauge part de 5 sur 10. Elle monte quand votre question fait émerger une information utile, elle baisse quand elle ferme l’échange. La fin de l’entretien dépend de la jauge.',
+    task: 'Une partie jouée jusqu’au bout ; une carte des besoins : besoins explicites et implicites, motivations, hiérarchie, ce qui manque, votre auto-critique.',
+    criteria: ['Des questions qui font parler', 'Chaque information reliée à sa question', 'Une hiérarchie qui vient de la cliente']
+  },
+
   /* @@SERIES@@ */
 
   /* ══ SÉRIE 9 · FAIRE LE POINT ════════════════════════════════════════ */

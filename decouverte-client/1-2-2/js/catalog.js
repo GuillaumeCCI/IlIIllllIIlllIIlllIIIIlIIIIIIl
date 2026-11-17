@@ -73,6 +73,15 @@ window.ATELIER_CATALOG = {
       ]
     },
     {
+      id: 's6',
+      label: 'Pour aller plus loin',
+      // Synthèse optionnelle de la fiche M1.2.2 (option 2).
+      sourced: true,
+      exercises: [
+        { id: '6.1', file: 's6-6-1', label: 'L’entretien dont vous êtes le héros', theme: 'blue' }
+      ]
+    },
+    {
       id: 's9',
       label: 'Faire le point',
       // Grille d'auto-positionnement, colonne « Fin », et « Ma progression ».

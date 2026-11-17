@@ -84,6 +84,12 @@ const CUSTOM = {
     [1, 2, 3].forEach(k => e.setValue(`r${k}`, 'Une réponse.'));
     c.selfCheck.forEach((_, i) => e.setValue(`self${i}`, 'oui'));
   },
+  // Synthèse (option 2) : la meilleure question à chaque étape, la carte, la grille.
+  's6-6-1': (e, c) => {
+    c.steps.forEach((s, k) => e.setValue(`c${k}`, s.best));
+    c.map.forEach(r => e.setValue(`m_${r.id}`, r.model));
+    c.selfCheck.forEach((_, i) => e.setValue(`self${i}`, 'oui'));
+  },
   's9-9-1': (e, c, w) => {
     w.ATELIER_S1.grid.criteria.forEach((_, i) => e.setValue(`fin${i}`, '2'));
     w.ATELIER_S1.grid.questions.forEach(q => e.setValue(q.id, 'Une réponse.'));

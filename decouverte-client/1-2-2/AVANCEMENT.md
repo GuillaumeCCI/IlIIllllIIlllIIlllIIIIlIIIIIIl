@@ -18,7 +18,7 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 | s4 · Les motivations d'achat | A3 | 4.1 Les mots qui trahissent (8 phrases) · 4.2 Retour chez les Benali | ✅ fait |
 | s5 · Préparer et mener la découverte | A4, A5 | 5.1 Le guide qui fait parler (Yanis / Clara) · 5.2 Votre guide, votre découverte (client virtuel) | ✅ fait (rendu vérifié en capture) |
 | s9 · Faire le point | grille « Fin » + « Ma progression » | 9.1 Mon point d'arrivée | ✅ fait |
-| — | synthèse optionnelle (3 options) | non prévue dans cette passe (comme en 1-2-1) | — |
+| s6 · Pour aller plus loin | synthèse optionnelle, option 2 | 6.1 L’entretien dont vous êtes le héros (scénario à jauge, carte des besoins, grille) | ✅ fait (17/11) · options 1 et 3 non faites |
 
 ## Journal
 
@@ -40,6 +40,8 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
   - Partout : plus d'âge des personnages (1-1-1, 1-2-1, 1-2-2), plus de renvoi à M1.2.1.
   - Moteur : content.banner, body data-exercise, visage dans les échanges (line.face), cadre de visite sous la barre du haut, marque juste/faux en pastille, relecture des cartes sur deux colonnes, espaces insécables dans les cartes.
 
+- Étape 8 (17/11/2026) : synthèse optionnelle, option 2 (s6-6-1, écran propre). Scénario de Mme Rivière en conversation (7 étapes, choix mélangés, jauge 5/10 bornée, réaction aussitôt, fin selon la jauge), carte des besoins en six rubriques une à la fois (la partie jouée à gauche), grille Oui / Non (7 critères dont Traçabilité), corrigé : votre parcours face au meilleur choix (note sous un choix moins bon), votre carte face à l’exemple, bouton « Copier ma carte » (pas de bloc de dépôt). Décisions de l’utilisateur : dépôt « ça dépend » ; l’âge des enfants se garde si le client en parle ; le cadre « maison de retraite » (option 1, dossier B) est à changer.
+
 ## Reprise prévue (17/11/2026)
 
 - Synthèse optionnelle M1.2.2 (fiche Fiche_M1-2-2_Activite_synthese_optionnelle.docx, zip Downloads/Téléchargements/OneDrive_1_02-11-2026.zip) : 3 options, Le coach (dossiers A cuisiniste / B entre entreprises), L'entretien dont tu es le héros (concession automobile), Ma banque de questions terrain. Proposition : commencer par l'option 2.
@@ -50,4 +52,5 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 
 ## Reste à faire
 
-- Synthèse optionnelle de 1-2-1 et 1-2-2 : non commencée.
+- Synthèse optionnelle 1-2-2 : options 1 (Le coach, dossier B à changer de cadre) et 3 (Ma banque de questions terrain), si l’utilisateur les veut.
+- Synthèse optionnelle de 1-2-1 : non commencée.
