@@ -342,7 +342,7 @@
       body = `<div class="h6-card h7-bilan h6-in">
           <p class="k-label">Bilan de l’étape 1 · Votre analyse de l’entretien de ${esc(who)}</p>
           ${msgBox(tone, `<p>Vous avez bien lu du premier coup <b>${n} des ${moments().length} questions</b> de ${esc(who)}.${missed.length ? ` Voici celles à relire : pour chacune, ce qu’${D().seller.fem ? 'elle' : 'il'} a vraiment fait.` : ''}</p>`, n >= 8 ? 'Bien vu !' : n >= 5 ? 'Un bon début' : 'À retravailler')}
-          ${missed.length ? `<ul class="h7-bilan-list">${missed.map(m => { const p = parts(m); return `<li><span class="h7-bilan-q">${esc(who)} demande : ${q(m.q)}</span><span class="h7-bilan-a"><b>${esc(p.type)}.</b> ${esc(p.why.charAt(0).toUpperCase() + p.why.slice(1))}${/[.!?»]$/.test(p.why) ? '' : '.'}</span></li>`; }).join('')}</ul>` : ''}
+          ${missed.length ? `<ul class="h7-bilan-list">${missed.map(m => { const p = parts(m); return `<li><span class="h7-bilan-q">${esc(who)} demande : ${q(m.q)}</span><span class="h7-bilan-a">Il fallait y voir <b>${esc(lower(p.type))}</b> : ${esc(p.why)}${/[.!?»]$/.test(p.why) ? '' : '.'}</span></li>`; }).join('')}</ul>` : ''}
         </div>
         <div class="h6-stage-foot">${kit.submit('Choisir les moments décisifs')}</div>`;
     }
