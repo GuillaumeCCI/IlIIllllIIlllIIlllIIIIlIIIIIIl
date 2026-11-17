@@ -752,7 +752,7 @@
             },
             why: 'Vous expliquez pourquoi vous posez la question, et vous la laissez décrire sa situation : le prix viendra, et il sera juste.' } },
         { id: 'accompagne', title: 'Le client accompagné', line: 'Un couple, des associés, une famille : plusieurs décideurs.', trap: 'Ne parler qu’à un seul.', key: 'Et pour vous, qu’est-ce qui compte ?', face: 'visages/mme-leroy.webp',
-          reflex: { who: 'Elle', context: 'Un couple entre ensemble pour un projet commun. Elle parle tout de suite ; lui reste un pas en retrait, les bras croisés, et regarde les étiquettes de prix.', says: 'Alors nous, enfin moi surtout, je veux que ce soit joli. On va vivre avec tous les jours, je ne veux pas d’un truc triste.', order: ['b', 'a', 'c'], best: 'a',
+          reflex: { who: 'Madame', context: 'Un couple entre ensemble pour un projet commun. Elle parle tout de suite ; lui reste un pas en retrait, les bras croisés, et regarde les étiquettes de prix.', says: 'Alors nous, enfin moi surtout, je veux que ce soit joli. On va vivre avec tous les jours, je ne veux pas d’un truc triste.', order: ['b', 'a', 'c'], best: 'a',
             choices: {
               a: { text: 'C’est noté. Et pour vous, Monsieur, qu’est-ce qui compte ?' },
               b: { text: 'Très bien, je vous montre tout de suite nos plus beaux modèles, Madame.', tone: 'ko', note: 'Vous ne parlez qu’à elle et vous passez au produit : lui, qui décide aussi, reste dehors.' },

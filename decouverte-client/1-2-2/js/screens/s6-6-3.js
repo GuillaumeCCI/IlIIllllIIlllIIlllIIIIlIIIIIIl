@@ -226,7 +226,14 @@
       const tried = yes(`retry${j}`) ? tries(j) : [];
       const opts = `<div class="h6-options" role="group" aria-label="Vos réponses possibles">${r.order.map((id, n) => `<button type="button" class="h6-option h6-in ${tried.includes(id) ? 'is-tried' : ''}" ${delay(0.2 + n * 0.15)} data-act="h8-pick" data-j="${j}" data-id="${id}" ${tried.includes(id) ? 'disabled aria-disabled="true"' : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(r.choices[id].text)}</span>${tried.includes(id) ? '<span class="h6-cost is-tried">Déjà essayé</span>' : ''}</button>`).join('')}</div>`;
       return stage(`<div class="h7-analyse">
-            <div class="h6-card h7-tr-card h6-in"><p class="k-label">Situation ${j + 1} sur 3 · ${esc(s.title)}</p>
+            <div class="h6-card h7-tr-card h6-in" data-sit="${j}">
+              <div class="h8-newc">
+                <img class="h8-newc-face" src="${img(s.face)}" alt="" aria-hidden="true">
+                <div class="h8-newc-text">
+                  <p class="h8-newc-tag">${j === 0 ? 'Premier client' : 'Nouveau client'}<span class="h8-newc-dots" aria-label="Situation ${j + 1} sur 3">${[0, 1, 2].map(i => `<i class="${i < j ? 'is-done' : i === j ? 'is-now' : ''}"></i>`).join('')}</span></p>
+                  <p class="h8-newc-title">${esc(s.title)}</p>
+                </div>
+              </div>
               ${r.context ? `<p class="h8-scene">${esc(r.context)}</p>` : ''}
               <p class="h8-lucas"><img src="${img(newcomer.face)}" alt="" aria-hidden="true"><span>${esc(newcomer.name)} est à côté de vous. Il observe comment vous démarrez.</span></p>
               <div class="h7-tr-one"><div class="h7-line is-client"><img src="${img(s.face)}" alt="" aria-hidden="true"><div class="h7-line-body"><p class="h7-who">${esc(r.who)}</p><p class="h7-said">${q(r.says)}</p></div></div></div></div>
@@ -241,7 +248,7 @@
     const ok = tone === 'ok';
     return stage(feedbackCard(tone, ok ? r.why : r.choices[id].note, {
       better: ok ? '' : 'Revenez aux réponses et essayez-en une autre.', betterLabel: 'À vous de rejouer',
-      button: ok ? next(j === 2 ? 'Voir le bilan' : 'Situation suivante', 'h8-ack', 0.5, `data-j="${j}"`)
+      button: ok ? next(j === 2 ? 'Voir le bilan' : `Client suivant : ${list[j + 1].title.charAt(0).toLowerCase()}${list[j + 1].title.slice(1)}`, 'h8-ack', 0.5, `data-j="${j}"`)
         : `<button type="button" class="button primary h6-next h6-in" ${delay(0.5)} data-act="h8-retry" data-j="${j}">${icon('arrowLeft', { size: 18 })}<span>Revenir aux réponses</span></button>`
     }), 'is-fb');
   }

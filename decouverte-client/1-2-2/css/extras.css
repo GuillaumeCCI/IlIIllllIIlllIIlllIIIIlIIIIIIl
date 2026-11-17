@@ -2183,7 +2183,16 @@ p.h7-question { margin-bottom: 12px; }
 .h8-sits.is-full .h8-sit:not(.is-on) { opacity: .55; }
 .h8-sits.is-full .h8-sit:not(.is-on):hover { opacity: .8; }
 /* 6.3 · Le bon réflexe : la scène racontée, puis Lucas qui observe. */
-.h8-scene { margin: 10px 0 12px; color: #24305a; line-height: 1.55; }
+.h8-newc { display: flex; align-items: center; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid #e7ebf4; }
+.h8-newc-face { flex: none; width: 68px; height: 68px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 4px #fbf3e4; animation: h7-pop .45s ease-out .15s both; }
+.h8-newc-text { display: grid; gap: 4px; }
+.h8-newc-tag { display: flex; align-items: center; gap: 10px; margin: 0; color: #2a8f8f; font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h8-newc-dots { display: inline-flex; gap: 5px; }
+.h8-newc-dots i { width: 9px; height: 9px; border-radius: 50%; background: #e3e8f2; }
+.h8-newc-dots i.is-done { background: #9fcfcf; }
+.h8-newc-dots i.is-now { background: #2a8f8f; }
+.h8-newc-title { margin: 0; color: var(--navy); font-size: 1.25rem; font-weight: 800; line-height: 1.3; }
+.h8-scene { margin: 14px 0 12px; color: #24305a; line-height: 1.55; }
 .h8-lucas { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; padding: 8px 14px 8px 8px; border-radius: 999px; background: #f1f4fa; color: #4c5a80; font-size: .9rem; }
 .h8-lucas img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
 
