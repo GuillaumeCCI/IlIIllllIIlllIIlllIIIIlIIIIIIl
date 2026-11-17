@@ -508,35 +508,77 @@
     'Mes 5 règles d’or :', ...[0, 1, 2, 3, 4].map(i => `  ${i + 1}. ${v(`r${i}`) || ''}`), '',
     ...chosen().flatMap((s, j) => [s.title.toUpperCase(), ...ALLFIELDS.map(f => `  ${f.label} : ${v(`f${j}_${f.id}`) || ''}`), ''])
   ].join('\n');
+  // La banque complète, mise en forme (fenêtre « Voir la banque complète »).
+  const BANK_GROUPS = () => [
+    { title: 'La situation', ids: ['sit', 'disc'] },
+    ...pages.filter(p => p.groups).flatMap(p => p.groups),
+    { title: 'À guetter', ids: ['ind'] },
+    { title: 'À ne pas dire', ids: ['piege'] }
+  ];
+  const bankValue = (j, id) => {
+    const fd = ALLFIELDS.find(x => x.id === id);
+    const val = v(`f${j}_${id}`) || '';
+    return fd && fd.kind === 'q' ? q(val) : esc(val);
+  };
+  const rulesList = () => `<ol>${[0, 1, 2, 3, 4].map(i => `<li>${esc(v(`r${i}`) || '')}</li>`).join('')}</ol>`;
+  const bankHtml = () => {
+    const sits = chosen().map((sit, j) => {
+      const groups = BANK_GROUPS().map(g => {
+        const items = g.ids.map(id => `<li class="${id === 'piege' ? 'is-trap' : ''}">${bankValue(j, id)}</li>`).join('');
+        return `<div class="h8-bankwin-g"><p>${esc(g.title)}</p><ul>${items}</ul></div>`;
+      }).join('');
+      return `<section><p class="h8-bankwin-h"><img src="${img(sit.face)}" alt="" aria-hidden="true">${esc(sit.title)}</p>${groups}</section>`;
+    }).join('');
+    return `<div class="h8-bankwin"><section><p class="h8-bankwin-h">Mes 5 règles d’or</p>${rulesList()}</section>${sits}</div>`;
+  };
+  const exampleHtml = () => {
+    const blocks = content.model.map(m => `<section><p class="h8-bankwin-h">${esc(m.title)}</p><p class="h8-bankwin-p">${esc(m.text)}</p></section>`).join('');
+    return `<div class="h8-bankwin"><p class="h8-bankwin-note">Il n’existe pas de réponse unique : comparez la forme des questions, pas le métier.</p>${blocks}</div>`;
+  };
   function review() {
     const list = chosen();
     const yesCount = content.selfCheck.filter((_, i) => v(`self${i}`) === 'oui').length;
+    const noRows = content.selfCheck.filter((_, i) => v(`self${i}`) !== 'oui');
     const c = covered();
+    const tile = (n, total, label) => `<div class="h8-rtile"><p class="h8-rtile-n"><b>${n}</b>${total ? ` / ${total}` : ''}</p><p class="h8-rtile-t">${label}</p></div>`;
+    const cards = list.map((sit, j) => `<article class="h8-rcard">
+        <div class="h8-rcard-head"><img src="${img(sit.face)}" alt="" aria-hidden="true"><p>${esc(sit.title)}</p></div>
+        <p class="h8-rcard-k">Pour ouvrir</p><p class="h8-rcard-q">${bankValue(j, 'o1')}</p>
+        <p class="h8-rcard-k is-trap">À ne pas dire</p><p class="h8-rcard-q is-trap">${bankValue(j, 'piege')}</p>
+      </article>`).join('');
+    const firstQ = v('f0_o1');
     return `<section class="k-panel h6-review h7-review">
         <p class="k-label">Votre parcours</p>
-        <ul class="h7-path">
-          <li><span>Le bon réflexe</span>${reflexRight()} sur ${N} trouvés du premier coup</li>
-          <li><span>Vos fiches</span>${qScore()} questions sur ${QFIELDS.length * N} au point</li>
-          <li><span>Vos règles d’or</span>${c.length} thèmes sur ${themes.length} couverts</li>
-          <li><span>Le test terrain</span>${yes('tok') ? 'prévu' : 'passé'}</li>
-        </ul>
-      </section>
-      <section class="k-panel h6-review h7-review">
-        <p class="k-label">La banque de Lucas · ${esc(v('metier') || '')}</p>
-        <div class="h8-bank">
-          <div class="h8-bank-block"><p class="h8-bank-h">Mes 5 règles d’or</p><ol>${[0, 1, 2, 3, 4].map(i => `<li>${esc(v(`r${i}`) || '')}</li>`).join('')}</ol></div>
-          ${list.map((s, j) => `<div class="h8-bank-block"><p class="h8-bank-h">${esc(s.title)}</p><dl>${ALLFIELDS.map(f => `<div><dt>${esc(f.label)}</dt><dd>${f.kind === 'q' ? q(v(`f${j}_${f.id}`) || '') : esc(v(`f${j}_${f.id}`) || '')}</dd></div>`).join('')}</dl></div>`).join('')}
+        <div class="h8-rtiles">
+          ${tile(reflexRight(), N, 'bons réflexes du premier coup')}
+          ${tile(qScore(), QFIELDS.length * N, 'questions au point dans vos fiches')}
+          ${tile(c.length, themes.length, 'thèmes couverts par vos règles d’or')}
+          <div class="h8-rtile"><p class="h8-rtile-n"><b>${yes('tok') ? 'Prévu' : 'Passé'}</b></p><p class="h8-rtile-t">le test terrain</p></div>
         </div>
-        <div class="h6-copy">${kit.act('h8-copy', `${icon('document', { size: 18 })}<span>Copier ma banque</span>`, 'secondary small')}<span>Pour la remettre à Lucas, ou à votre tuteur.</span></div>
       </section>
       <section class="k-panel h6-review h7-review">
-        <p class="k-label">Un exemple · magasin d’électroménager</p>
-        <p class="h7-review-line">Il n’existe pas de réponse unique : comparez la forme, pas le métier.</p>
-        ${content.model.map(m => `<div class="h8-bank-block"><p class="h8-bank-h">${esc(m.title)}</p><p class="h7-review-line">${esc(m.text)}</p></div>`).join('')}
+        <div class="h8-lucas-end">
+          <img src="${img(newcomer.face)}" alt="" aria-hidden="true">
+          <div class="h8-lucas-bubble">
+            <p class="h8-lucas-who">${esc(newcomer.name)}, ${esc(newcomer.role.charAt(0).toLowerCase() + newcomer.role.slice(1))}</p>
+            <p>« Merci ! Je garde vos fiches sur moi pour mes premiers clients.${kit.filled(firstQ) ? ` Lundi, je commence par : ${esc(String(firstQ).trim())}` : ''} »</p>
+          </div>
+        </div>
+        <p class="k-label">La banque que vous remettez à ${esc(newcomer.name)}</p>
+        <div class="h8-rbank">
+          ${cards}
+          <article class="h8-rcard is-rules"><div class="h8-rcard-head"><span class="h8-rcard-5">5</span><p>Règles d’or</p></div>${rulesList()}</article>
+        </div>
+        <div class="h8-ractions">
+          ${kit.act('h8-bankwin', '<span>Voir la banque complète</span>', 'primary small')}
+          ${kit.act('h8-copy', `${icon('document', { size: 16 })}<span>Copier ma banque</span>`, 'secondary small')}
+          ${kit.act('h8-example', '<span>Voir un exemple (électroménager)</span>', 'secondary small')}
+        </div>
       </section>
       <section class="k-panel h6-review">
-        <p class="a4-review-head"><span class="k-label">Mon auto-évaluation</span><span class="a4-review-count"><b>${yesCount}</b> / ${content.selfCheck.length} critères cochés « Oui »</span></p>
-        <ul class="a5-self-recap">${content.selfCheck.map((row, i) => `<li><span class="pos-level level-${v(`self${i}`) === 'oui' ? '2' : '0'}">${v(`self${i}`) === 'oui' ? 'Oui' : 'Non'}</span><span>${esc(row.text)}</span></li>`).join('')}</ul>
+        <p class="k-label">Mon auto-évaluation</p>
+        <p class="h8-rself"><b>${yesCount} critères sur ${content.selfCheck.length}</b> cochés « Oui ».${noRows.length ? ' À travailler :' : ' Tout est coché.'}</p>
+        ${noRows.length ? `<ul class="h8-rself-list">${noRows.map(row => `<li>${esc(row.text)}</li>`).join('')}</ul>` : ''}
       </section>
       ${kit.keyPoint ? kit.keyPoint(content.keyPoint) : ''}
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
@@ -636,6 +678,8 @@
       advance('tok'); showMsg();
     },
     'h8-tskip': () => { advance('tskip'); showMsg(); },
+    'h8-bankwin': () => core.openDialog('La banque de Lucas', bankHtml()),
+    'h8-example': () => core.openDialog('Un exemple : magasin d’électroménager', exampleHtml()),
     'h8-copy': () => {
       const done = () => core.toast('Votre banque est copiée.');
       const fail = () => core.toast('Copie impossible : sélectionnez le texte de votre banque.');
