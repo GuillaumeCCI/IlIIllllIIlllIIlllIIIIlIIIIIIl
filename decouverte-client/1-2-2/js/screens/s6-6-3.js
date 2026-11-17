@@ -562,6 +562,15 @@
         <p class="h8-rcard-k">Pour ouvrir</p><p class="h8-rcard-q">${bankValue(j, 'o1')}</p>
         <p class="h8-rcard-k is-trap">À ne pas dire</p><p class="h8-rcard-q is-trap">${bankValue(j, 'piege')}</p>
       </article>`).join('');
+    // Exemples possibles, pour les mêmes situations : la question clé, et la mauvaise réponse du bon réflexe.
+    const exampleCards = list.map(sit => {
+      const ko = Object.values(sit.reflex.choices).find(x => x.tone === 'ko');
+      return `<article class="h8-rcard is-example">
+          <div class="h8-rcard-head"><img src="${img(sit.face)}" alt="" aria-hidden="true"><p>${esc(sit.title)}</p></div>
+          <p class="h8-rcard-k">Pour ouvrir</p><p class="h8-rcard-q">${q(sit.key)}</p>
+          <p class="h8-rcard-k is-trap">À ne pas dire</p><p class="h8-rcard-q is-trap">${ko ? q(ko.text) : ''}</p>
+        </article>`;
+    }).join('');
     const firstQ = v('f0_o1');
     const score = (reflexRight() / N + qScore() / (QFIELDS.length * N) + c.length / themes.length) / 3;
     const verdict = score >= 0.8 ? 'Une banque solide : Lucas peut s’en servir dès lundi.' : score >= 0.5 ? 'Une bonne base : quelques questions à reprendre avant de la remettre.' : 'Une première ébauche : reprenez vos fiches avant de la remettre à Lucas.';
@@ -583,9 +592,19 @@
           </div>
         </div>
         <p class="k-label">La banque que vous remettez à ${esc(newcomer.name)}</p>
-        <div class="h8-rbank">
-          ${cards}
-          <article class="h8-rcard is-rules"><div class="h8-rcard-head"><span class="h8-rcard-5">5</span><p>Règles d’or</p></div>${rulesList()}</article>
+        <div class="h8-btabs">
+          <div class="h8-ex-tabs"><input type="radio" name="h8-bt" id="h8-bt-0" class="h8-ex-radio" checked><label for="h8-bt-0" class="h8-ex-tab">Votre banque</label><input type="radio" name="h8-bt" id="h8-bt-1" class="h8-ex-radio"><label for="h8-bt-1" class="h8-ex-tab">Exemples possibles</label></div>
+          <div class="h8-rbank h8-bt-panel" data-i="0">
+            ${cards}
+            <article class="h8-rcard is-rules"><div class="h8-rcard-head"><span class="h8-rcard-5">5</span><p>Règles d’or</p></div>${rulesList()}</article>
+          </div>
+          <div class="h8-bt-panel" data-i="1">
+            <p class="h8-bt-note">Pour comparer avec vos propres questions : des formulations possibles pour les mêmes situations.</p>
+            <div class="h8-rbank">
+              ${exampleCards}
+              <article class="h8-rcard is-rules"><div class="h8-rcard-head"><span class="h8-rcard-5">5</span><p>Règles d’or</p></div><ol>${content.rulesExample.map(x => `<li>${esc(x)}</li>`).join('')}</ol></article>
+            </div>
+          </div>
         </div>
         <div class="h8-ractions">
           ${kit.act('h8-bankwin', '<span>Voir la banque complète</span>', 'primary small')}

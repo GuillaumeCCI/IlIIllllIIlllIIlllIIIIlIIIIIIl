@@ -2518,3 +2518,12 @@ button.h8-brow:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; 
 .h8-ring-w { margin: 2px 0 0; padding: 3px 12px; border-radius: 999px; background: var(--tone-bg); color: var(--tone); font-size: .78rem; font-weight: 800; }
 .h8-ring.tone-off .h8-ring-w { color: #6a7392; }
 @media (max-width: 860px) { .h8-rings { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* 6.3 · Banque finale : onglets « Votre banque » / « Exemples possibles » (sans script). */
+.h8-btabs { display: grid; gap: 12px; margin-top: 8px; }
+.h8-bt-panel { display: none; }
+.h8-btabs:has(#h8-bt-0:checked) .h8-bt-panel[data-i="0"] { display: grid; }
+.h8-btabs:has(#h8-bt-1:checked) .h8-bt-panel[data-i="1"] { display: grid; gap: 10px; }
+.h8-btabs .h8-rbank { margin-top: 0; }
+.h8-bt-note { margin: 0; color: #4c5a80; font-size: .92rem; }
+.h8-rcard.is-example { background: #fbfcfe; }
