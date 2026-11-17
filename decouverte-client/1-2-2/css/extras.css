@@ -1514,3 +1514,41 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
   .h6-result-fb { grid-template-columns: 124px minmax(0, 1fr); }
   .h6-result-face { width: 124px; height: 124px; }
 }
+/* 6.1 · Comme l'exemple Genially.
+ * « Votre réponse » : vous à gauche (carte en pointillés), votre question à droite. */
+.h6-answer { display: grid; gap: 12px; width: auto; text-align: left; }
+.h6-answer-label { margin: 0; color: var(--accent); font-size: 1.15rem; font-weight: 800; }
+.h6-answer-q { margin: 0; color: var(--navy); font-size: 1.15rem; font-weight: 700; line-height: 1.45; }
+.h6-answer-reply { display: flex; align-items: flex-start; gap: 12px; margin-top: 4px; padding-top: 14px; border-top: 1px solid #e6ebf5; }
+.h6-answer-reply img { width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; object-fit: cover; object-position: 50% 25%; }
+.h6-answer-reply span { display: block; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h6-answer-reply p { margin: 2px 0 0; color: #2b3866; font-size: 1.08rem; font-weight: 600; line-height: 1.45; }
+/* Le retour : panneau blanc à gauche sur toute la hauteur, carte à droite. */
+.h6-stage.is-fb .h6-stage-top > .h6-gauge { visibility: hidden; }
+.h6-gfb { --tone: #5a67b8; display: contents; }
+.h6-gfb.tone-ok { --tone: #2a8f8f; }
+.h6-gfb.tone-ko { --tone: #a83d74; }
+.h6-gfb-side { position: absolute; z-index: 1; inset: 0 auto 0 0; width: min(27%, 340px); display: grid; align-content: center; justify-items: center; gap: 16px; padding: 24px; background: #fff; text-align: center; box-shadow: 6px 0 24px rgb(15 35 78 / 10%); }
+.h6-gfb-side img { width: min(150px, 70%); aspect-ratio: 1; border-radius: 50%; object-fit: cover; object-position: 50% 18%; background: #fbf4e6; box-shadow: 0 0 0 5px var(--tone); }
+.h6-gfb-side p { margin: 0; color: var(--tone); font-size: 1.2rem; font-weight: 600; line-height: 1.35; }
+.h6-gfb-main { display: grid; gap: 16px; justify-items: end; width: 100%; padding-left: calc(min(27%, 340px) + 24px); }
+.h6-gfb-card { width: min(100%, 760px); justify-self: center; display: grid; gap: 14px; text-align: left; box-shadow: 0 10px 26px rgb(15 35 78 / 12%), 0 3px 0 rgb(18 73 216 / 85%); }
+.h6-gfb-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin: 0; color: var(--tone); font-size: 1.25rem; font-weight: 800; }
+.h6-gfb-title .h6-fb-points { color: var(--muted); font-size: .85rem; font-weight: 700; }
+.h6-gfb-card .h6-fb-say { margin: 0; color: #24305a; font-size: 1.08rem; line-height: 1.6; }
+.h6-gfb-main .h6-stage-foot { width: min(100%, 760px); justify-self: center; }
+@media (min-width: 1600px) {
+  .h6-gfb-card { width: min(100%, 900px); } .h6-gfb-main .h6-stage-foot { width: min(100%, 900px); }
+  .h6-gfb-side img { width: min(190px, 70%); } .h6-gfb-side p { font-size: 1.35rem; }
+  .h6-gfb-card .h6-fb-say { font-size: 1.2rem; } .h6-gfb-title { font-size: 1.4rem; }
+  .h6-answer-q { font-size: 1.28rem; } .h6-answer-reply p { font-size: 1.18rem; }
+}
+@media (max-width: 800px) {
+  .h6-gfb-side { position: static; width: 100%; box-shadow: none; border-radius: 16px; }
+  .h6-gfb-main { padding-left: 0; }
+}
+.h6-gfb-main { justify-items: center; }
+.h6-gfb-col { display: grid; gap: 16px; width: min(100%, 760px); }
+.h6-gfb-col .h6-gfb-card { width: 100%; }
+.h6-gfb-foot { display: flex; justify-content: flex-end; }
+@media (min-width: 1600px) { .h6-gfb-col { width: min(100%, 900px); } }
