@@ -2130,3 +2130,21 @@ p.h7-question { margin-bottom: 12px; }
 .h7-aside li { padding: 9px 0; border-bottom: 1px solid #edf0f6; color: #3a4a7a; line-height: 1.45; }
 .h7-aside li:last-child { border-bottom: 0; }
 .h7-aside .h7-built-name { margin-bottom: 2px; color: var(--muted); font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+
+/* 6.2 · Nouvelle carte du chemin (deux rangées, fond plus clair). */
+.h7-map { background: #fcf7f1; }
+.h7-map-veil { width: 31%; height: 46%; background: rgb(252 247 241 / 78%); }
+.h7-map-done { box-shadow: 0 0 0 3px #fcf7f1; }
+
+/* 6.2 · La fiche, habillée comme les écrans validés. */
+.h7-rule-chip { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 2px 0 14px; padding: 6px 14px; border-radius: 999px; background: #eef7f7; color: #1d5c5c; font-size: .88rem; }
+.h7-rule-chip b { color: #2a8f8f; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h7-fiche { gap: 26px; }
+.h7-fiche-main { gap: 14px; }
+.h7-fiche-main .h7-write { box-shadow: 0 6px 16px rgb(15 35 78 / 8%), inset 0 0 0 1px #e7ebf4; }
+.h7-fiche-main .h7-write-note { color: #3a4a7a; font-size: .95rem; line-height: 1.5; }
+.h7-fiche-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.h7-aside { padding: 20px 22px; border-radius: 16px; background: #fff; box-shadow: 0 6px 16px rgb(15 35 78 / 8%); font-size: .92rem; }
+.h7-aside ul { gap: 2px; }
+.h7-aside li { position: relative; padding: 8px 0 8px 18px; border-bottom: 0; color: #3a4a7a; }
+.h7-aside li::before { content: ''; position: absolute; left: 2px; top: 16px; width: 7px; height: 7px; border-radius: 50%; background: #2a8f8f; }

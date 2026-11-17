@@ -482,18 +482,20 @@
   let fichePick = 0;
   const fill = text => text.split('{name}').join(D().seller.name).split('{il}').join(D().seller.fem ? 'elle' : 'il');
   /* L'aide de chaque rubrique : les matériaux utiles, rien de plus. */
+  // Une citation trop longue est raccourcie (le panneau reste léger).
+  const short = text => { const t = String(text || ''); if (t.length <= 90) return t; const cut = t.slice(0, 90); return `${cut.slice(0, cut.lastIndexOf(' '))}…`; };
   function ficheHelp(id) {
     const d = D();
     if (id === 'good') {
       const strong = d.moments.filter(m => /^(Point fort|Utile)/.test(m.why));
-      return `<p class="h7-aside-h"><span>Pour vous aider</span>Les questions qui ont marché</p><ul>${strong.map(m => `<li><span class="h7-built-name">${esc(m.label)}</span>${q(m.q)}</li>`).join('')}</ul>`;
+      return `<p class="h7-aside-h"><span>Pour vous aider</span>Les questions qui ont marché</p><ul>${strong.map(m => `<li>${q(short(m.q))}</li>`).join('')}</ul>`;
     }
     if (id === 'diag') {
       const left = d.sort.filter(x => x.kind !== 'explicite').map(x => x.text);
-      return `<p class="h7-aside-h"><span>Pour vous aider</span>Les moments qui ont fermé la découverte</p><ul>${d.rewrites.map(r => `<li><span class="h7-built-name">${esc(labelOf(r.n))}</span>${esc(r.what)}</li>`).join('')}</ul>
+      return `<p class="h7-aside-h"><span>Pour vous aider</span>Les moments qui ont fermé la découverte</p><ul>${d.rewrites.map(r => `<li>${esc(r.what)}</li>`).join('')}</ul>
         <p class="h7-aside-h">Ce qui n’a pas été exploité</p><ul>${left.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`;
     }
-    return `<p class="h7-aside-h"><span>Pour vous aider</span>Vos questions de remplacement</p><ul>${d.rewrites.map((r, j) => `<li><span class="h7-built-name">${esc(labelOf(r.n))}</span>${q(v(`rw${j}_q`) || '')}</li>`).join('')}</ul>`;
+    return `<p class="h7-aside-h"><span>Pour vous aider</span>Vos questions de remplacement</p><ul>${d.rewrites.map((r, j) => `<li>${q(short(v(`rw${j}_q`) || ''))}</li>`).join('')}</ul>`;
   }
   function ficheStep() {
     const filled = fiche.map(r => kit.filled(v(`f_${r.id}`)));
@@ -501,14 +503,16 @@
     const i = fichePick;
     return `<section class="k-panel d5-panel h7-panel">
         <p class="k-label">Ma fiche de coaching pour ${esc(D().seller.name)}</p>
-        <p class="h7-rule-line">Règle d’or : des faits, le positif d’abord, jamais de jugement sur la personne.</p>
+        <p class="h7-rule-chip"><b>Règle d’or</b> des faits · le positif d’abord · jamais de jugement sur la personne</p>
         <div class="d5-floor-tabs" role="tablist" aria-label="Les rubriques de la fiche">${fiche.map((x, n) => `<button type="button" class="d5-floor-tab ${n === i ? 'is-current' : ''} ${filled[n] ? 'is-filled' : ''}" role="tab" aria-selected="${n === i}" data-act="h7-fiche" data-i="${n}"><span class="d5-floor-n">${filled[n] ? icon('check', { size: 13, strokeWidth: 3 }) : n + 1}</span><span>${esc(x.tab)}</span></button>`).join('')}</div>
         <div class="h7-fiche">
           <div class="h7-fiche-main">
             <p class="h7-question">${esc(fill(r.label))}</p>
-            <p class="h7-fiche-sub">${esc(fill(r.sub))}</p>
-            ${ex.field(`f_${r.id}`, fill(r.label), { placeholder: fill(r.placeholder), max: 900, rows: 6, hideLabel: true })}
-            <div class="d5-floor-nav">${i > 0 ? `<button type="button" class="text-button with-icon" data-act="h7-fiche" data-i="${i - 1}">${icon('arrowLeft', { size: 16 })}<span>Rubrique précédente</span></button>` : '<span></span>'}${i < fiche.length - 1 ? `<button type="button" class="button secondary" data-act="h7-fiche" data-i="${i + 1}"><span>Rubrique suivante</span>${icon('arrowRight', { size: 16 })}</button>` : ''}</div>
+            <div class="h7-write">
+              <p class="h7-write-note">${esc(fill(r.sub))}</p>
+              ${ex.field(`f_${r.id}`, fill(r.label), { placeholder: fill(r.placeholder), max: 900, rows: 6, hideLabel: true })}
+              <div class="h7-fiche-nav">${i > 0 ? `<button type="button" class="text-button with-icon" data-act="h7-fiche" data-i="${i - 1}">${icon('arrowLeft', { size: 16 })}<span>Rubrique précédente</span></button>` : '<span></span>'}${i < fiche.length - 1 ? `<button type="button" class="button primary small" data-act="h7-fiche" data-i="${i + 1}"><span>Rubrique suivante</span>${icon('arrowRight', { size: 16 })}</button>` : ''}</div>
+            </div>
           </div>
           <aside class="h7-aside">${ficheHelp(r.id)}</aside>
         </div>
@@ -584,8 +588,11 @@
    * glisse de l'étape terminée jusqu'à la suivante. À côté : ce que vous
    * venez de faire, pourquoi la suite, ce qu'on vous demande. */
   // Les positions sur l'image (en %) : le centre de chaque étape et son numéro.
-  const SPOTS = [[19, 27], [49, 27], [80, 27], [80, 69], [49, 69], [19, 69]];
-  const BADGES = [[10, 14], [40.2, 14], [70.6, 14], [70.6, 58], [40.2, 58], [10, 58]];
+  // Carte en deux rangées : 1-2-3 en haut, 4-5-6 en bas. SPOTS : le pion (sur l'icône) ;
+  // BADGES : la coche (sur le numéro) ; VEILS : le voile d'une étape à venir.
+  const SPOTS = [[15.4, 23], [46, 25], [78.6, 24], [15.4, 72], [46.8, 70], [78, 71]];
+  const BADGES = [[7.7, 10], [39, 10], [71, 10], [7.7, 58], [39, 58], [71, 58]];
+  const VEILS = [[20, 26], [47, 27], [80, 27], [20, 75], [47, 75], [80, 75]];
   function transition(k) {
     const t = content.transitions[k];
     const fillT = text => text.split('{name}').join(D().seller.name).split('{il}').join(D().seller.fem ? 'elle' : 'il').split('{e}').join(D().seller.fem ? 'e' : '');
@@ -593,7 +600,7 @@
     const to = SPOTS[k];
     const map = `<div class="h7-map h6-in" role="img" aria-label="Le chemin de l’exercice : étape ${k + 1} sur ${STEPS.length}, ${esc(STEPS[k])}.">
         <img src="${img('parcours/coach-chemin.webp')}" alt="">
-        ${SPOTS.map(([x, y], i) => (i > k ? `<span class="h7-map-veil" style="left:${x}%;top:${y}%"></span>` : '')).join('')}
+        ${VEILS.map(([x, y], i) => (i > k ? `<span class="h7-map-veil" style="left:${x}%;top:${y}%"></span>` : '')).join('')}
         ${BADGES.map(([x, y], i) => (i < k ? `<span class="h7-map-done" style="left:${x}%;top:${y}%">${icon('check', { size: 18, strokeWidth: 3.5 })}</span>` : '')).join('')}
         <span class="h7-map-pawn ${k > 0 ? 'is-moving' : 'is-landing'}" style="--fx:${from[0]}%;--fy:${from[1]}%;--tx:${to[0]}%;--ty:${to[1]}%"><b>Vous</b></span>
       </div>`;
