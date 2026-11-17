@@ -268,12 +268,13 @@
     const s = list[j];
     const okJ = yes(`f${j}_ok`);
     const help = j === 0 ? 'example' : j === 1 ? 'hint' : '';
-    const tabs = list.map((x, i) => `<button type="button" class="d5-floor-tab ${i === j ? 'is-current' : ''} ${yes(`f${i}_ok`) ? 'is-filled' : ''}" role="tab" aria-selected="${i === j}" data-act="h8-fiche" data-j="${i}" ${i > 0 && !yes(`f${i - 1}_ok`) ? 'disabled' : ''}><span class="d5-floor-n">${yes(`f${i}_ok`) ? icon('check', { size: 13, strokeWidth: 3 }) : i + 1}</span><span>${esc(x.title)}</span></button>`).join('');
+    const tabs = list.map((x, i) => `<button type="button" class="h8-fmini ${i === j ? 'is-current' : ''} ${yes(`f${i}_ok`) ? 'is-filled' : ''}" role="tab" aria-selected="${i === j}" aria-label="Fiche ${i + 1} : ${esc(x.title)}" title="${esc(x.title)}" data-act="h8-fiche" data-j="${i}" ${i > 0 && !yes(`f${i - 1}_ok`) ? 'disabled' : ''}><img src="${img(x.face)}" alt=""><span class="h8-fmini-n">${yes(`f${i}_ok`) ? icon('check', { size: 11, strokeWidth: 3.5 }) : i + 1}</span></button>`).join('');
     const page = pages[pageP];
-    const pageTabs = pages.map((p, n) => `<button type="button" class="h8-page ${n === pageP ? 'is-current' : ''}" data-act="h8-page" data-p="${n}"><span>${n + 1}</span>${esc(p.tab)}</button>`).join('');
+    const pageTabs = pages.map((p, n) => `<button type="button" class="h8-step ${n === pageP ? 'is-current' : ''} ${n < pageP ? 'is-past' : ''}" data-act="h8-page" data-p="${n}" ${n === pageP ? 'aria-current="step"' : ''}><span class="h8-step-n">${n + 1}</span><span class="h8-step-t">${esc(p.tab)}</span></button>`).join('');
+    const helpLabel = help === 'example' ? 'Aide : un exemple par rubrique' : help === 'hint' ? 'Aide : un indice par rubrique' : 'Sans aide, cette fois';
     const fieldHtml = f => {
       const name = `f${j}_${f.id}`;
-      const aid = help === 'example' ? `<p class="h8-aid">Exemple : ${f.kind === 'q' ? q(f.example) : esc(f.example)}</p>` : help === 'hint' ? `<p class="h8-aid">Indice : ${esc(f.hint)}</p>` : '';
+      const aid = help === 'example' ? `<p class="h8-aid"><span>Exemple</span>${f.kind === 'q' ? q(f.example) : esc(f.example)}</p>` : help === 'hint' ? `<p class="h8-aid"><span>Indice</span>${esc(f.hint)}</p>` : '';
       return `<div class="h7-write h8-field">
           <p class="h8-field-label">${esc(f.label)}</p>
           <p class="h7-write-note">${esc(f.sub)}</p>
@@ -293,10 +294,16 @@
         + (j < 2 ? `<div class="h7-actions"><button type="button" class="button primary" data-act="h8-fiche" data-j="${j + 1}"><span>Fiche suivante</span>${icon('arrowRight', { size: 16 })}</button></div>` : '');
     }
     return `<section class="k-panel d5-panel h7-panel">
-        <p class="k-label">Vos fiches · ${esc(v('metier') || 'votre métier')}</p>
-        <p class="a4-role">Une fiche par situation, à partir d’un cas réel de votre métier. ${help === 'example' ? 'Pour cette première fiche, un exemple accompagne chaque rubrique.' : help === 'hint' ? 'Pour cette fiche, un simple indice.' : 'Cette fois, sans aide.'}</p>
-        <div class="d5-floor-tabs" role="tablist" aria-label="Vos fiches">${tabs}</div>
-        <div class="h8-pages" role="group" aria-label="Les pages de la fiche">${pageTabs}</div>
+        <div class="h8-fhead">
+          <img class="h8-fhead-face" src="${img(s.face)}" alt="" aria-hidden="true">
+          <div class="h8-fhead-text">
+            <p class="h8-fhead-tag">Fiche ${j + 1} sur 3 · pour ${esc(newcomer.name)}</p>
+            <p class="h8-fhead-title">${esc(s.title)}</p>
+            <p class="h8-fhead-sub">À partir d’un cas réel de votre métier. <span class="h8-fhead-help">${helpLabel}</span></p>
+          </div>
+          <div class="h8-fminis" role="tablist" aria-label="Vos 3 fiches">${tabs}</div>
+        </div>
+        <div class="h8-steps" role="group" aria-label="Les pages de la fiche">${pageTabs}</div>
         <p class="h7-question">${esc(page.ask)}</p>
         <div class="h8-fields">${page.fields.map(fieldHtml).join('')}</div>
         ${nav}

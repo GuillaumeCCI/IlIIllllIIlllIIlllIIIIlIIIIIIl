@@ -2223,7 +2223,52 @@ p.h7-question { margin-bottom: 12px; }
 .h8-field { box-shadow: 0 6px 16px rgb(15 35 78 / 8%), inset 0 0 0 1px #e7ebf4; align-content: start; }
 .h8-field-label { margin: 0; color: var(--navy); font-weight: 800; }
 .h8-badge { display: flex; align-items: center; gap: 8px; min-height: 1.4em; margin: 0; color: #4c5a80; font-size: .88rem; font-weight: 600; }
-.h8-aid { margin: 0; padding-top: 8px; border-top: 1px dashed #d5ddef; color: #5a6584; font-size: .9rem; font-style: italic; }
+.h8-aid { display: grid; gap: 2px; margin: 2px 0 0; padding: 10px 0 0; border-top: 1px solid #eef1f7; color: #4d6f45; font-size: .9rem; line-height: 1.45; }
+.h8-aid span { justify-self: start; margin-bottom: 4px; padding: 1px 9px; border-radius: 999px; background: #eef5ea; color: #4d6f45; font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+
+/* 6.3 · Cartes d'écriture de la fiche : on écrit sur des lignes, sans cadre
+   dans le cadre ; à l'écriture, un halo doux plutôt qu'un contour bleu. */
+.h8-field { gap: 8px; padding: 20px 22px 18px; border-radius: 18px; box-shadow: 0 6px 18px rgb(15 35 78 / 7%), inset 0 0 0 1px #edf0f6 !important; transition: box-shadow .2s, transform .2s; }
+.h8-field:focus-within { box-shadow: 0 0 0 4px #e3e9fb, 0 12px 28px rgb(27 35 112 / 12%) !important; }
+.h8-field-label { font-size: 1.05rem; }
+.h8-field .h7-write-note { color: #5a6584; font-size: .9rem; }
+#main .h8-field textarea, #main .h8-field textarea:focus, #main .h8-field input[type="text"], #main .h8-field input[type="text"]:focus { box-shadow: none; background-color: transparent; }
+#main .h8-field textarea { margin-top: 2px; padding: 0 0 26px; line-height: 32px; min-height: 104px; background-image: repeating-linear-gradient(to bottom, transparent 0 31px, #e6eaf3 31px 32px); background-attachment: local; }
+#main .h8-field .counter { color: #a3abc2; font-size: .75rem; }
+
+/* 6.3 · En-tête de la fiche : le client, « Fiche 1 sur 3 · pour Lucas », les 3 fiches en visages. */
+.h8-fhead { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; }
+.h8-fhead-face { flex: none; width: 72px; height: 72px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 4px #fbf3e4; }
+.h8-fhead-text { flex: 1; display: grid; gap: 3px; min-width: 0; }
+.h8-fhead-tag { margin: 0; color: #2a8f8f; font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h8-fhead-title { margin: 0; color: var(--navy); font-size: 1.35rem; font-weight: 800; line-height: 1.25; }
+.h8-fhead-sub { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 2px 0 0; color: #4c5a80; font-size: .92rem; }
+.h8-fhead-help { padding: 2px 10px; border-radius: 999px; background: #f1f6ee; color: #4d6f45; font-size: .82rem; font-weight: 600; }
+.h8-fminis { display: flex; gap: 10px; }
+.h8-fmini { position: relative; padding: 0; border: 0; border-radius: 50%; background: none; cursor: var(--cursor-hand, pointer); transition: transform .15s, opacity .15s; }
+.h8-fmini img { display: block; width: 46px; height: 46px; border-radius: 50%; object-fit: cover; opacity: .55; box-shadow: 0 0 0 3px #fff; transition: opacity .15s, box-shadow .15s; }
+.h8-fmini.is-current img, .h8-fmini.is-filled img { opacity: 1; }
+.h8-fmini.is-current img { box-shadow: 0 0 0 3px #fff, 0 0 0 5px #1b2370; }
+.h8-fmini:hover:not(:disabled) { transform: translateY(-2px); }
+.h8-fmini:disabled { cursor: default; }
+.h8-fmini:focus-visible { outline: 3px solid #ff936b; outline-offset: 3px; }
+.h8-fmini-n { position: absolute; right: -4px; bottom: -4px; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #dfe6f6; color: #1b2370; font-size: .7rem; font-weight: 800; box-shadow: 0 0 0 2px #fff; }
+.h8-fmini.is-current .h8-fmini-n { background: #1b2370; color: #fff; }
+.h8-fmini.is-filled .h8-fmini-n { background: #2a8f8f; color: #fff; }
+
+/* 6.3 · Les 4 pages de la fiche, en frise reliée. */
+.h8-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 4px 0 18px; }
+.h8-step { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0 6px; border: 0; background: none; color: #8a93ad; font: inherit; font-size: .88rem; font-weight: 600; cursor: var(--cursor-hand, pointer); }
+.h8-step::before { content: ''; position: absolute; top: 15px; left: -50%; width: 100%; height: 2px; background: #e3e8f2; z-index: 0; }
+.h8-step:first-child::before { display: none; }
+.h8-step.is-past::before, .h8-step.is-current::before { background: #2a8f8f; }
+.h8-step-n { position: relative; z-index: 1; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #fff; color: #8a93ad; font-size: .85rem; font-weight: 800; box-shadow: inset 0 0 0 2px #e3e8f2; transition: background .2s, color .2s; }
+.h8-step.is-past { color: #2a6f6f; }
+.h8-step.is-past .h8-step-n { background: #2a8f8f; color: #fff; box-shadow: none; }
+.h8-step.is-current { color: var(--navy); font-weight: 800; }
+.h8-step.is-current .h8-step-n { background: #1b2370; color: #fff; box-shadow: 0 0 0 4px #e3e7f6; }
+.h8-step:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; border-radius: 8px; }
+@media (max-width: 760px) { .h8-fhead { flex-wrap: wrap; } .h8-step-t { font-size: .78rem; text-align: center; } }
 
 /* Les règles d'or : cinq champs numérotés, les thèmes couverts en direct. */
 .h8-rules-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 24px; margin-top: 14px; align-items: start; }
