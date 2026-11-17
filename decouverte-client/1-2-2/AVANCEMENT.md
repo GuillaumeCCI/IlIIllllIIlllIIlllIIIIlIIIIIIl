@@ -18,7 +18,7 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 | s4 · Les motivations d'achat | A3 | 4.1 Les mots qui trahissent (8 phrases) · 4.2 Retour chez les Benali | ✅ fait |
 | s5 · Préparer et mener la découverte | A4, A5 | 5.1 Le guide qui fait parler (Yanis / Clara) · 5.2 Votre guide, votre découverte (client virtuel) | ✅ fait (rendu vérifié en capture) |
 | s9 · Faire le point | grille « Fin » + « Ma progression » | 9.1 Mon point d'arrivée | ✅ fait |
-| s6 · Pour aller plus loin | synthèse optionnelle, options 2, 1 et 3 | 6.1 L’entretien dont vous êtes le héros · 6.2 Le coach (dossiers A / B) · 6.3 Ma banque de questions terrain | 6.1 ✅ · 6.2 ✅ (revue complète avec l’utilisateur) · 6.3 ✅ construit (17/11), images provisoires, à revoir avec l’utilisateur |
+| s6 · Pour aller plus loin | synthèse optionnelle, options 2, 1 et 3 | 6.1 L’entretien dont vous êtes le héros · 6.2 Le coach (dossiers A / B) · 6.3 Ma banque de questions terrain | 6.1 ✅ · 6.2 ✅ (revue complète avec l’utilisateur) · 6.3 ✅ (revue validée avec l’utilisateur, 17/11) |
 
 ## Journal
 
@@ -86,6 +86,8 @@ Images : `tools/import-images-6-3.mjs` importe celles des Téléchargements (ign
 
 Revue avec l’utilisateur (17/11, soir) : DEUX situations au lieu de trois (constante N dans l’écran ; aide : fiche 1 exemple, fiche 2 indice). Choix des situations en cartes à portrait ; bilan en cartes illustrées (piège / question clé). Le bon réflexe se raconte (Lucas vous accompagne ; scène, « Nouveau client », Lucas visible). Fiche : en-tête (visage, « Fiche 1 sur 2 · pour Lucas »), frise des 4 pages, « Ce qu’on attend de vous » sous le bandeau, exemples propres à la situation en page 1 ; UNE FORME PAR PAGE (il refuse que les pages se ressemblent) : 1 scène crème + liste à puces en pointillés ; 2 et 3 petit entonnoir dessiné à gauche + questions sur lignes pointillées, type en pastille ; 4 mots en étiquettes + panneau framboise « À ne pas dire » (question barrée). Bilan de fiche : 4 tuiles + « À reprendre » (une ligne par rubrique, lien « Corriger » vers la page). Juge : « notre » / « nos » seuls ne font plus une vente déguisée.
 
+Revue avec l'utilisateur (17/11, suite, validée : « ça me semble ok ») : consigne de chaque page de fiche en bandeau bleu nuit + fond bleuté, une idée par ligne, contexte d'abord (rappel de la situation avec le visage en pages 2 et 3, plus de « À gauche / À droite ») ; BILAN DE FICHE = 5e page « Le bilan » de la frise (ouverte par « Vérifier ma fiche », « Revoir le bilan » ensuite), chaque rubrique à reprendre montre ce qui a été écrit et pourquoi (« question fermée : il faut une question ouverte »…) ; test terrain : question choisie bien visible, choix par position (doublons) ; corrigé : les 2 fiches de la banque côte à côte avec visages, exemple électroménager en rubriques une par ligne, côte à côte, REPLIÉ au départ (« Déplier ») ; briefing : 2 situations.
+
 ## Reprise prévue (17/11/2026)
 
 - Synthèse optionnelle M1.2.2 (fiche Fiche_M1-2-2_Activite_synthese_optionnelle.docx, zip Downloads/Téléchargements/OneDrive_1_02-11-2026.zip) : 3 options, Le coach (dossiers A cuisiniste / B entre entreprises), L'entretien dont tu es le héros (concession automobile), Ma banque de questions terrain. Proposition : commencer par l'option 2.
@@ -97,7 +99,7 @@ Revue avec l’utilisateur (17/11, soir) : DEUX situations au lieu de trois (con
 ## Reste à faire
 
 - 6.1 : idées en attente ci-dessus, si l'utilisateur les veut.
-- 6.3 : suite de la revue avec l'utilisateur (dernier point traité le 17/11 : puces de la page 1 de la fiche). Options 1 (6.2) et 3 (6.3) faites.
+- 6.3 : revue validée par l'utilisateur le 17/11. Options 1 (6.2) et 3 (6.3) faites.
 - Synthèse optionnelle de 1-2-1 : non commencée.
 - Puis M1.2.3 (situation intégratrice) et M1.2.4 (approfondissement), sans fiche fournie.
 - Avant toute conception : relire la référence de conception (mémoire « conseils-conception-sources », textes dans Documents/Sources-conception).
