@@ -59,7 +59,7 @@
     if (!list) return;
     list.style.scrollBehavior = 'auto'; list.scrollTop = list.scrollHeight; list.style.scrollBehavior = '';
     // Les bulles animées grandissent la liste : on la suit jusqu'au bout.
-    [500, 1300, 1900].forEach(ms => setTimeout(() => { list.scrollTop = list.scrollHeight; }, ms));
+    [500, 1100, 1700, 2300, 2900].forEach(ms => setTimeout(() => { list.scrollTop = list.scrollHeight; }, ms));
     // Les trois points disparaissent quand la réponse arrive.
     setTimeout(() => list.querySelectorAll('.h6-typing').forEach(dot => dot.remove()), 1350);
   });
@@ -79,14 +79,22 @@
 
   /* La conversation jusqu'ici : pour chaque étape jouée, ce qui se passe,
    * ce que dit la cliente, votre question, sa réaction. `upto` : jusqu'où. */
+  let askAt = 0; // l'instant (en s) où la colonne de droite peut apparaître
+  const at$ = t => `style="animation-delay:${t.toFixed(2)}s"`;
   function thread(upto, { withCurrent = true } = {}) {
     const items = [];
+    // L'étape jouée : votre question, les trois points, sa réponse.
+    const played$ = fresh >= 0 ? steps[fresh].choices[choiceAt(fresh)] : null;
+    let clock = played$ ? (played$.reply ? 1.55 : 0.55) : 0;
     steps.forEach((s, k) => {
       if (k > upto || (k === upto && !withCurrent)) return;
-      const next = fresh >= 0 && k === fresh + 1 ? 'h6-in is-next-in' : '';
-      if (s.scene) items.push(`<li class="h6-scene ${next}">${esc(s.scene)}</li>`);
-      if (s.says) items.push(`<li class="d5-msg is-client ${next}"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(s.says)}</p></li>`);
-      if (s.after) items.push(`<li class="h6-scene ${next}">${esc(s.after)}</li>`);
+      // L'étape suivante arrive ensuite, une bulle après l'autre.
+      const next = fresh >= 0 && k === fresh + 1;
+      // Une bulle de l'étape suivante : son instant, puis l'horloge avance.
+      const later = gap => { if (!next) return ''; const style = at$(clock); clock += gap; return style; };
+      if (s.scene) items.push(`<li class="h6-scene ${next ? 'h6-in' : ''}" ${later(0.55)}>${esc(s.scene)}</li>`);
+      if (s.says) items.push(`<li class="d5-msg is-client ${next ? 'h6-in' : ''}" ${later(0.65)}><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(s.says)}</p></li>`);
+      if (s.after) items.push(`<li class="h6-scene ${next ? 'h6-in' : ''}" ${later(0.55)}>${esc(s.after)}</li>`);
       const c = s.choices[choiceAt(k)];
       if (!c) return;
       const anim = k === fresh;
@@ -94,6 +102,7 @@
       if (c.reply && anim) items.push('<li class="h6-typing" aria-hidden="true"><span></span><span></span><span></span></li>');
       if (c.reply) items.push(`<li class="d5-msg is-client ${anim ? 'h6-in is-reply-in' : ''}"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(c.reply)}</p></li>`);
     });
+    askAt = fresh >= 0 ? clock + 0.2 : 0;
     return items.join('');
   }
 
@@ -120,16 +129,16 @@
             <ol class="d5-thread">${thread(done ? steps.length - 1 : k)}</ol>
           </div>
           <div class="d5-chat-ask h6-ask">${done ? `
-            <div class="h6-end tone-${end.tone} h6-in is-end-in">
+            <div class="h6-end tone-${end.tone} h6-in" ${at$(askAt)}>
               <p class="k-label">La fin de votre partie</p>
               <p class="h6-end-title">${esc(end.title)}</p>
               <div class="d5-msg is-client"><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(end.says)}</p></div>
               <p class="h6-end-text">${esc(end.text)}</p>
             </div>
-            <p class="fm-sub">Votre partie est jouée : c’est elle qui compte pour votre carte. L’analyse de vos choix arrive au corrigé.</p>` : `
-            <p class="k-label">Étape ${k + 1} sur ${steps.length}</p>
-            <p class="fm-label">${esc(s.prompt || 'Quelle question posez-vous ?')}</p>
-            <div class="h6-choices ${fresh >= 0 ? 'is-after' : ''}" role="group" aria-label="Les questions possibles">${s.order.map(id => `<button type="button" class="h6-choice" data-act="h6-pick" data-step="${k}" data-id="${id}" ${id === s.order[0] ? 'data-field="c' + k + '"' : ''}>${q(s.choices[id].text)}</button>`).join('')}</div>`}
+            <p class="fm-sub h6-in" ${at$(askAt + 0.3)}>Votre partie est jouée : c’est elle qui compte pour votre carte. L’analyse de vos choix arrive au corrigé.</p>` : `
+            <p class="k-label h6-in" ${at$(askAt)}>Étape ${k + 1} sur ${steps.length}</p>
+            <p class="fm-label h6-in" ${at$(askAt + 0.1)}>${esc(s.prompt || 'Quelle question posez-vous ?')}</p>
+            <div class="h6-choices" role="group" aria-label="Les questions possibles">${s.order.map((id, n) => `<button type="button" class="h6-choice h6-in" ${at$(askAt + 0.3 + n * 0.18)} data-act="h6-pick" data-step="${k}" data-id="${id}" ${id === s.order[0] ? 'data-field="c' + k + '"' : ''}>${q(s.choices[id].text)}</button>`).join('')}</div>`}
           </div>
         </div>
       </section>
