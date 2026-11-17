@@ -195,11 +195,16 @@
       const id = choiceAt(k);
       const c = s.choices[id] || {};
       const ok = id === s.best;
+      // Le verdict en mots, puis l'explication de VOTRE choix ; à droite, la
+      // meilleure question et pourquoi, seulement si ce n'était pas la vôtre.
+      const tone = ok ? 'is-ok' : c.points < 0 ? 'is-ko' : 'is-mid';
+      const verdict = ok ? 'Absolument : c’est la meilleure question.' : c.points < 0 ? 'Réponse à éviter.' : 'Pas tout à fait…';
       return `<div class="h6-path-row">
           <p class="h6-path-n">Étape ${k + 1}</p>
-          <div class="h6-path-you"><p class="h6-pick ${ok ? 'is-ok' : c.points < 0 ? 'is-ko' : 'is-mid'}"><span aria-hidden="true">${ok ? '✓' : c.points < 0 ? '✗' : '–'}</span>${q(c.text || '')}<span class="sr-only">${ok ? ' : le meilleur choix' : ''}</span></p>
-            <p class="h6-points">${c.points > 0 ? '+2' : c.points < 0 ? '−2' : '0'} sur la jauge${!ok && c.note ? ` · ${esc(c.note)}` : ''}</p></div>
-          <div class="h6-path-best">${ok ? '' : `<p class="h6-best-q">${q(s.choices[s.best].text)}</p>`}<p>${esc(s.why)}</p></div>
+          <div class="h6-path-you"><p class="h6-pick ${tone}"><span aria-hidden="true">${ok ? '✓' : c.points < 0 ? '✗' : '–'}</span>${q(c.text || '')}</p>
+            <p class="h6-verdict ${tone}">${verdict}<span>${c.points > 0 ? '+2' : c.points < 0 ? '−2' : '0'} sur la jauge</span></p>
+            <p class="h6-explain">${esc(ok ? s.why : c.note || '')}</p></div>
+          <div class="h6-path-best">${ok ? '' : `<p class="h6-best-label">La meilleure question</p><p class="h6-best-q">${q(s.choices[s.best].text)}</p><p class="h6-explain">${esc(s.why)}</p>`}</div>
         </div>`;
     }).join('');
     const mapRows = map.map(r => {
@@ -213,7 +218,7 @@
     return `<section class="k-panel h6-review">
         <p class="a4-review-head"><span class="k-label">Votre partie</span><span class="a4-review-count"><b>${best}</b> / ${steps.length} meilleurs choix</span></p>
         <div class="h6-review-end tone-${end.tone}">${gaugeBar(gauge(), 'Votre jauge finale')}<p><strong>${esc(end.title)}.</strong> ${esc(end.text)}</p></div>
-        <div class="h6-path-head" aria-hidden="true"><span></span><span>Votre choix</span><span>Le meilleur choix, et pourquoi</span></div>
+        <div class="h6-path-head" aria-hidden="true"><span></span><span>Votre choix, et ce qu’il a produit</span><span>Ce qu’il fallait demander</span></div>
         ${pathRows}
       </section>
       <section class="k-panel fm-review is-rows h6-review">

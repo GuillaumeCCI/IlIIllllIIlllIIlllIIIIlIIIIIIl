@@ -1284,3 +1284,12 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
   .h6-in { animation: none !important; }
   .h6-typing { display: none; }
 }
+/* 6.1, corrigé : le verdict en mots et l'explication, comme un retour de formateur. */
+.h6-verdict { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 8px 0 2px; font-weight: 800; }
+.h6-verdict.is-ok { color: #1f6b43; }
+.h6-verdict.is-mid { color: #8a5a12; }
+.h6-verdict.is-ko { color: #a33a26; }
+.h6-verdict span { color: var(--muted); font-size: .82rem; font-weight: 600; }
+.h6-explain { margin: 0; color: #2b3866; line-height: 1.5; }
+.h6-best-label { margin: 0 0 4px; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h6-path-best .h6-best-q { margin-bottom: 6px; }
