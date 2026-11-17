@@ -416,7 +416,7 @@
       return `<div class="h8-fields">${page.fields.map(fieldHtml).join('')}</div>`;
     };
     const lastPage = pageP === pages.length - 1;
-    const nav = `<div class="h7-fiche-nav">${pageP > 0 ? `<button type="button" class="text-button with-icon" data-act="h8-page" data-p="${pageP - 1}">${icon('arrowLeft', { size: 16 })}<span>Page précédente</span></button>` : '<span></span>'}${onBilan ? '<span></span>' : lastPage ? (okJ ? `<button type="button" class="button primary small" data-act="h8-page" data-p="${BILAN}"><span>Revoir le bilan</span>${icon('arrowRight', { size: 16 })}</button>` : kit.act('h8-fiche-check', `${icon('check', { size: 18 })}<span>Vérifier ma fiche</span>`, 'primary', `data-j="${j}"`)) : `<button type="button" class="button primary small" data-act="h8-page" data-p="${pageP + 1}"><span>Page suivante</span>${icon('arrowRight', { size: 16 })}</button>`}</div>`;
+    const nav = `<div class="h7-fiche-nav">${pageP > 0 ? `<button type="button" class="text-button with-icon" data-act="h8-page" data-p="${pageP - 1}">${icon('arrowLeft', { size: 16 })}<span>Page précédente</span></button>` : '<span></span>'}${onBilan ? (j < N - 1 ? `<button type="button" class="button primary small" data-act="h8-fiche" data-j="${j + 1}"><span>Fiche suivante</span>${icon('arrowRight', { size: 16 })}</button>` : '<span></span>') : lastPage ? (okJ ? `<button type="button" class="button primary small" data-act="h8-page" data-p="${BILAN}"><span>Revoir le bilan</span>${icon('arrowRight', { size: 16 })}</button>` : kit.act('h8-fiche-check', `${icon('check', { size: 18 })}<span>Vérifier ma fiche</span>`, 'primary', `data-j="${j}"`)) : `<button type="button" class="button primary small" data-act="h8-page" data-p="${pageP + 1}"><span>Page suivante</span>${icon('arrowRight', { size: 16 })}</button>`}</div>`;
     let bilan = '';
     if (onBilan) {
       const cs = ficheChecks(j);
@@ -435,8 +435,7 @@
         return `<li class="h8-brow is-ko"><span class="h8-brow-n">${n + 1}</span><span class="h8-brow-t">${esc(p.tab)}</span><span class="h8-brow-s">${bad.length} sur ${mine.length} à reprendre</span><ul class="h8-brow-why">${why}</ul><button type="button" class="text-button h8-brow-go" data-act="h8-page" data-p="${n}">Corriger${icon('arrowRight', { size: 14 })}</button></li>`;
       }).join('');
       const lead = todo.length ? `${good} rubrique${good > 1 ? 's' : ''} sur ${cs.length} ${good > 1 ? 'sont' : 'est'} au point.` : 'Toutes les rubriques sont au point : Lucas peut s’en servir telle quelle.';
-      bilan = msgBox(tone, `<p>${lead}</p><ul class="h8-brows">${rows}</ul>`, `Votre fiche « ${s.title} »`)
-        + (j < N - 1 ? `<div class="h7-actions"><button type="button" class="button primary" data-act="h8-fiche" data-j="${j + 1}"><span>Fiche suivante</span>${icon('arrowRight', { size: 16 })}</button></div>` : '');
+      bilan = msgBox(tone, `<p>${lead}</p><ul class="h8-brows">${rows}</ul>`, `Votre fiche « ${s.title} »`);
     }
     return `<section class="k-panel d5-panel h7-panel">
         <div class="h8-fhead">
