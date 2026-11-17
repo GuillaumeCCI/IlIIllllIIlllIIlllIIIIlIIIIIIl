@@ -545,7 +545,8 @@
       </section>
       <section class="k-panel h6-review h7-review">
         <p class="k-label">Un exemple · magasin d’électroménager</p>
-        <p class="h7-review-line">Il n’existe pas de réponse unique : comparez la forme, pas le métier.</p>
+        <p class="h7-review-line">Voici la banque d’un vendeur en électroménager. Votre métier est sans doute différent, et il n’y a pas une seule bonne banque.</p>
+        <p class="h7-review-line">Ne comparez donc pas les produits : comparez la façon de poser les questions (ouvertes pour faire parler, précises pour vérifier, une pour faire choisir).</p>
         ${content.model.map(m => `<div class="h8-bank-block"><p class="h8-bank-h">${esc(m.title)}</p><p class="h7-review-line">${esc(m.text)}</p></div>`).join('')}
       </section>
       <section class="k-panel h6-review">
