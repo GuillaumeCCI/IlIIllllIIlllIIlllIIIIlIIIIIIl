@@ -2427,3 +2427,11 @@ button.h8-brow:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; 
 
 /* 6.3 · La scène : sans fond de couleur. */
 .h8-scenecard { background: #fff !important; box-shadow: 0 6px 18px rgb(15 35 78 / 7%), inset 0 0 0 1px #edf0f6 !important; }
+
+/* 6.3 · Le bilan de la fiche, en écran à part. */
+.h8-bilan-screen { display: grid; gap: 14px; }
+.h8-bilan-screen .h7-actions { margin: 0; justify-content: flex-end; }
+
+/* 6.3 · Pages 2 et 3 : plus de pointillés sous les questions (le numéro et la pastille suffisent). */
+.h8-fsec .h8-qrow, .h8-fsec .h8-qrow:focus-within { background-image: none; }
+.h8-fsec .h8-qrow { padding: 8px 0; }

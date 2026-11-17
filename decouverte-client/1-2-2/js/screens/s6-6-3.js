@@ -258,6 +258,8 @@
   /* ── 2 · Vos fiches ──────────────────────────────────────────────────── */
   let ficheJ = null;
   let pageP = 0;
+  // Après « Vérifier ma fiche », le bilan est un écran à part (la suite de la fiche), pas un bloc sous la page.
+  let showBilan = false;
   const badgeHtml = (f, text) => {
     if (f.kind !== 'q' || !kit.filled(text)) return '';
     const c = fieldCheck(f, text);
@@ -279,7 +281,7 @@
     const f = c.f;
     if (c.empty) return f.kind === 'q' ? 'Pas encore écrite.' : 'Pas encore rempli.';
     if (f.kind === 'text') return 'Un peu court : ajoutez un détail concret de votre métier.';
-    if (f.trap) return 'Écrivez la question à ne pas poser : celle qui souffle la réponse ou pousse un produit.';
+    if (f.trap) return 'Il faut une question qui souffle la réponse ou qui pousse un produit.';
     const want = f.expect.map(e => TYPE_LABEL[e].toLowerCase()).join(' ou ');
     if (f.prio && f.expect.includes(c.type)) return 'Elle doit faire choisir le client : « Entre A et B, qu’est-ce qui compte le plus ? »';
     if (c.type === 'pas-question') return 'Ce n’est pas encore une question : terminez-la par un point d’interrogation.';
@@ -410,7 +412,7 @@
       return `<div class="h8-fields">${page.fields.map(fieldHtml).join('')}</div>`;
     };
     const lastPage = pageP === pages.length - 1;
-    const nav = `<div class="h7-fiche-nav">${pageP > 0 ? `<button type="button" class="text-button with-icon" data-act="h8-page" data-p="${pageP - 1}">${icon('arrowLeft', { size: 16 })}<span>Page précédente</span></button>` : '<span></span>'}${lastPage ? (okJ ? '' : kit.act('h8-fiche-check', `${icon('check', { size: 18 })}<span>Vérifier ma fiche</span>`, 'primary', `data-j="${j}"`)) : `<button type="button" class="button primary small" data-act="h8-page" data-p="${pageP + 1}"><span>Page suivante</span>${icon('arrowRight', { size: 16 })}</button>`}</div>`;
+    const nav = `<div class="h7-fiche-nav">${pageP > 0 ? `<button type="button" class="text-button with-icon" data-act="h8-page" data-p="${pageP - 1}">${icon('arrowLeft', { size: 16 })}<span>Page précédente</span></button>` : '<span></span>'}${lastPage ? (okJ ? `<button type="button" class="button primary small" data-act="h8-bilan"><span>Revoir le bilan</span>${icon('arrowRight', { size: 16 })}</button>` : kit.act('h8-fiche-check', `${icon('check', { size: 18 })}<span>Vérifier ma fiche</span>`, 'primary', `data-j="${j}"`)) : `<button type="button" class="button primary small" data-act="h8-page" data-p="${pageP + 1}"><span>Page suivante</span>${icon('arrowRight', { size: 16 })}</button>`}</div>`;
     let bilan = '';
     if (okJ) {
       const cs = ficheChecks(j);
@@ -427,7 +429,7 @@
       }).join('');
       const lead = todo.length ? `${good} rubrique${good > 1 ? 's' : ''} sur ${cs.length} ${good > 1 ? 'sont' : 'est'} au point.` : 'Toutes les rubriques sont au point : Lucas peut s’en servir telle quelle.';
       bilan = msgBox(tone, `<p>${lead}</p><ul class="h8-brows">${rows}</ul>`, `Votre fiche « ${s.title} »`)
-        + (j < N - 1 ? `<div class="h7-actions"><button type="button" class="button primary" data-act="h8-fiche" data-j="${j + 1}"><span>Fiche suivante</span>${icon('arrowRight', { size: 16 })}</button></div>` : '');
+;
     }
     return `<section class="k-panel d5-panel h7-panel">
         <div class="h8-fhead">
@@ -439,12 +441,12 @@
           </div>
           <div class="h8-fminis" role="tablist" aria-label="Vos 2 fiches">${tabs}</div>
         </div>
+        ${okJ && showBilan ? `<div class="h8-bilan-screen h6-in">${bilan}<div class="h7-fiche-nav"><button type="button" class="text-button with-icon" data-act="h8-page" data-p="0">${icon('arrowLeft', { size: 16 })}<span>Revoir ma fiche</span></button>${j < N - 1 ? `<button type="button" class="button primary" data-act="h8-fiche" data-j="${j + 1}"><span>Fiche suivante</span>${icon('arrowRight', { size: 16 })}</button>` : '<span></span>'}</div></div>` : `
         <div class="h8-steps" role="group" aria-label="Les pages de la fiche">${pageTabs}</div>
         <p class="h7-question">${esc(page.ask)}</p>
         ${page.intro ? `<p class="h8-expect"><span>Ce qu’on attend de vous</span>${esc(page.intro.replace('{situation}', s.title.charAt(0).toLowerCase() + s.title.slice(1)))}</p>` : ''}
         ${pageBody()}
-        ${nav}
-        ${bilan}
+        ${nav}`}
       </section>
       ${core.errorsBox()}
       ${kit.bar({ right: stepDone(2) ? kit.submit('Écrire mes règles d’or') : '' })}`;
@@ -610,13 +612,14 @@
     },
     'h8-retry': control => advance(`retry${Number(control.dataset.j)}`, true),
     'h8-ack': control => { advance(`ack${Number(control.dataset.j)}`); window.scrollTo({ top: 0, behavior: 'instant' }); },
-    'h8-fiche': control => { ficheJ = Number(control.dataset.j); pageP = 0; ex.rebuild(); window.scrollTo({ top: 0, behavior: 'instant' }); },
-    'h8-page': control => { pageP = Number(control.dataset.p); ex.rebuild(); },
+    'h8-fiche': control => { ficheJ = Number(control.dataset.j); pageP = 0; showBilan = yes(`f${ficheJ}_ok`); ex.rebuild(); window.scrollTo({ top: 0, behavior: 'instant' }); },
+    'h8-page': control => { pageP = Number(control.dataset.p); showBilan = false; ex.rebuild(); window.scrollTo({ top: 0, behavior: 'instant' }); },
+    'h8-bilan': () => { showBilan = true; ex.rebuild(); window.scrollTo({ top: 0, behavior: 'instant' }); },
     'h8-fiche-check': control => {
       const j = Number(control.dataset.j);
       const empty = ALLFIELDS.find(f => !filled(`f${j}_${f.id}`));
       if (empty) { pageP = pages.findIndex(p => p.fields.includes(empty)); ex.rebuild(); core.toast(`Remplissez « ${empty.label} ».`); return; }
-      ficheJ = j; advance(`f${j}_ok`); showMsg();
+      ficheJ = j; showBilan = true; advance(`f${j}_ok`); window.scrollTo({ top: 0, behavior: 'instant' });
     },
     'h8-rules-check': () => {
       if ([0, 1, 2, 3, 4].some(i => !filled(`r${i}`))) { core.toast('Écrivez vos 5 règles d’or.'); return; }
