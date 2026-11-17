@@ -691,6 +691,203 @@
       ],
 
       keyPoint: 'À retenir : un entretien se juge à ce que chaque question fait dire au client. Les moments décisifs sont ceux où la découverte s’ouvre ou se ferme, souvent quand le vendeur propose trop tôt, ou ne fait pas classer les priorités.'
+    },
+
+    /* OPTION 3 « MA BANQUE DE QUESTIONS TERRAIN » (Bloom 6, ≈ 60 min). La
+     * responsable demande de préparer une banque de questions pour un
+     * nouveau collègue. Trois situations parmi huit ; pour chacune, « Le bon
+     * réflexe » (une scène, trois réponses), puis une fiche ; puis cinq règles
+     * d'or, le test terrain (facultatif), la grille. Les questions écrites sont
+     * jugées sur leur FORME (ATELIER_QTYPE) : le métier de l'apprenant n'est
+     * pas connu d'avance. Banque de tests : tests/banque.test.cjs. */
+    '6.3': {
+      eyebrow: 'Pour aller plus loin · Synthèse facultative',
+      title: 'Ma banque de questions terrain',
+      subtitle: 'Préparez, pour un nouveau collègue, les questions qui réussissent les découvertes dans votre métier.',
+      decor: 'dialogues/entreprise.webp',
+      manager: { name: 'Nadia', role: 'Votre responsable', face: 'visages/mme-riviere.webp' },
+      newcomer: { name: 'Lucas', role: 'Nouveau collègue, en alternance', face: 'visages/antoine.webp' },
+      ask: 'Lucas arrive lundi en alternance. Je voudrais que vous lui prépariez une banque de questions pour réussir ses découvertes client. Vous connaissez nos clients mieux que personne : appuyez-vous sur ce que vous vivez au comptoir.',
+      mission: [
+        'Dire en une ligne quel est votre métier.',
+        'Choisir 3 situations de découverte que vous rencontrez souvent.',
+        'Pour chacune, trouver le bon réflexe, puis remplir une fiche de questions.',
+        'Écrire vos 5 règles d’or, puis vérifier votre banque avec la grille.'
+      ],
+      rule: 'Une bonne banque parle de VOS clients et de VOS produits : elle ne pourrait pas être copiée telle quelle dans une autre entreprise.',
+
+      // Les huit situations (fiche), leur piège et leur question clé (repères du tuteur).
+      // « reflex » : la scène du bon réflexe, trois réponses (best, mid, ko).
+      situations: [
+        { id: 'sait', title: 'Le client qui sait ce qu’il veut', line: 'Il arrive avec une demande précise : un modèle, une référence.', trap: 'Le servir sans comprendre, ou le contredire.', key: 'Qu’est-ce qui vous a fait choisir ce modèle ?', face: 'clients/client-pull-clair.webp',
+          reflex: { who: 'Le client', says: 'Bonjour, je viens pour le lave-linge X, 9 kg, celui que j’ai vu sur votre site. Vous l’avez en stock ?', order: ['b', 'c', 'a'], best: 'a',
+            choices: {
+              a: { text: 'Il est bien en stock. Qu’est-ce qui vous a fait choisir celui-là ?' },
+              b: { text: 'Oui, je vous le prépare tout de suite. Vous réglez par carte ?', tone: 'mid', note: 'Vous le servez vite, mais vous ne saurez jamais si ce modèle lui convient vraiment. Au moindre souci, il reviendra déçu.' },
+              c: { text: 'Celui-là est bien, mais on a beaucoup mieux pour le même prix, vous savez.', tone: 'ko', note: 'Vous contredisez son choix avant de le comprendre : il se sent jugé et se ferme.' }
+            },
+            why: 'Vous confirmez, puis vous cherchez la raison de son choix. C’est elle qui dira si ce modèle lui convient.' } },
+        { id: 'regarde', title: 'Le client qui « regarde juste »', line: 'Il n’exprime aucun besoin.', trap: 'Insister, ou le laisser partir.', key: 'Qu’est-ce qui vous amène aujourd’hui ?', face: 'clients/client-veste-verte.webp',
+          reflex: { who: 'La cliente', says: 'Non merci, je regarde juste.', order: ['b', 'a', 'c'], best: 'b',
+            choices: {
+              a: { text: 'Pas de souci, je vous laisse regarder tranquillement. Je suis là si besoin.', tone: 'mid', note: 'C’est poli, mais vous la laissez partir sans rien savoir. Une question légère, sans pression, ouvre la porte.' },
+              b: { text: 'Avec plaisir. Qu’est-ce qui vous amène, aujourd’hui ?' },
+              c: { text: 'Vous êtes sûre ? On a justement une belle promotion sur toute cette allée.', tone: 'ko', note: 'Vous insistez et vous parlez produit : elle se sent poussée et s’éloigne.' }
+            },
+            why: 'Une question ouverte, légère, sans pression : elle peut répondre, ou non, mais la porte est ouverte.' } },
+        { id: 'entreprise', title: 'Le premier rendez-vous avec une entreprise', line: 'Un prospect que vous ne connaissez pas encore.', trap: 'Présenter son entreprise d’abord.', key: 'Comment fonctionne votre activité aujourd’hui ?', face: 'clients/client-tasse.webp',
+          reflex: { who: 'Le dirigeant', says: 'Bon, je vous écoute. Vous avez vingt minutes.', order: ['c', 'a', 'b'], best: 'b',
+            choices: {
+              a: { text: 'Merci. Je vous présente d’abord notre société et nos trois offres phares.', tone: 'ko', note: 'Vous parlez de vous avant de parler de lui : il écoute poliment, et vous ne savez toujours rien de ses besoins.' },
+              b: { text: 'Merci. Pour commencer, comment fonctionne votre activité aujourd’hui ?' },
+              c: { text: 'Merci. Combien de salariés avez-vous, et sur combien de sites ?', tone: 'mid', note: 'Ces chiffres serviront, mais deux questions fermées pour commencer, c’est un interrogatoire. Faites-le d’abord raconter.' }
+            },
+            why: 'Une question ouverte et large : il raconte son activité, et ses enjeux apparaissent d’eux-mêmes.' } },
+        { id: 'appel', title: 'L’appel entrant', line: 'Un client téléphone pour se renseigner.', trap: 'Donner un prix tout de suite.', key: 'Pour vous répondre au mieux, quelle est votre situation ?', face: 'clients/client-cheveux-gris.webp',
+          reflex: { who: 'Au téléphone', says: 'Bonjour, c’est combien, votre formule d’entretien ?', order: ['a', 'c', 'b'], best: 'c',
+            choices: {
+              a: { text: 'Elle est à 89 € par an, pièces et main-d’œuvre comprises, sans engagement.', tone: 'ko', note: 'Un prix sec, sans contexte : il compare, et raccroche pour appeler le concurrent.' },
+              b: { text: 'Ça dépend. Vous avez quel modèle, exactement ?', tone: 'mid', note: 'L’idée est bonne, mais la question est fermée et sans explication : il a l’impression qu’on esquive son prix.' },
+              c: { text: 'Pour vous donner le bon prix, pouvez-vous me décrire votre situation ?' }
+            },
+            why: 'Vous expliquez pourquoi vous posez la question, et vous le laissez décrire sa situation : le prix viendra, et il sera juste.' } },
+        { id: 'accompagne', title: 'Le client accompagné', line: 'Un couple, des associés, une famille : plusieurs décideurs.', trap: 'Ne parler qu’à un seul.', key: 'Et pour vous, qu’est-ce qui compte ?', face: 'visages/mme-leroy.webp',
+          reflex: { who: 'Elle', scene: 'Elle parle ; lui reste en retrait, les bras croisés.', says: 'Moi, je veux surtout que ce soit joli.', order: ['b', 'a', 'c'], best: 'a',
+            choices: {
+              a: { text: 'C’est noté. Et pour vous, Monsieur, qu’est-ce qui compte ?' },
+              b: { text: 'Très bien, je vous montre tout de suite nos plus beaux modèles, Madame.', tone: 'ko', note: 'Vous ne parlez qu’à elle et vous passez au produit : lui, qui décide aussi, reste dehors.' },
+              c: { text: 'Et côté budget, vous avez prévu combien ?', tone: 'mid', note: 'Vous restez avec elle, et sur une question fermée : celui qui se tait ne dira rien.' }
+            },
+            why: 'Vous donnez la parole à celui qui se tait : c’est souvent lui qui pose les conditions.' } },
+        { id: 'presse', title: 'Le client pressé', line: 'Il vous donne cinq minutes.', trap: 'L’interrogatoire, ou le silence.', key: 'En deux mots, qu’est-ce qui est le plus important ?', face: 'visages/m-vidal.webp',
+          reflex: { who: 'Le client', says: 'J’ai cinq minutes, pas plus.', order: ['b', 'c', 'a'], best: 'b',
+            choices: {
+              a: { text: 'D’accord, je vous laisse regarder, et je reviens vers vous dans un moment.', tone: 'mid', note: 'Vous respectez son temps, mais vous ne découvrez rien : il repartira sans avoir trouvé.' },
+              b: { text: 'Entendu. En deux mots, qu’est-ce qui est le plus important ?' },
+              c: { text: 'Pas de souci. Taille, budget, couleur, délai : on fait vite ?', tone: 'ko', note: 'Quatre questions fermées d’affilée : un interrogatoire. Il répond vite, sans dire l’essentiel.' }
+            },
+            why: 'Une seule question ouverte, qui va droit à l’essentiel : en cinq minutes, c’est elle qui compte.' } },
+        { id: 'renouvellement', title: 'Le renouvellement', line: 'Un client qui doit remplacer un équipement ou renouveler un contrat.', trap: 'Reconduire à l’identique.', key: 'Qu’est-ce qui a changé depuis la dernière fois ?', face: 'visages/m-leroy.webp',
+          reflex: { who: 'Le client', says: 'Mon contrat se termine le mois prochain. On repart sur la même chose ?', order: ['b', 'a', 'c'], best: 'b',
+            choices: {
+              a: { text: 'Bien sûr, je vous renouvelle tout à l’identique, c’est plus simple.', tone: 'ko', note: 'Vous reconduisez sans rien demander : si ses besoins ont changé, le contrat ne lui conviendra plus.' },
+              b: { text: 'Avant de renouveler : qu’est-ce qui a changé pour vous depuis trois ans ?' },
+              c: { text: 'Vous êtes satisfait du contrat actuel ?', tone: 'mid', note: 'Une question fermée : il dira « oui », et vous ne saurez pas ce qui a changé.' }
+            },
+            why: 'Trois ans ont passé : vous faites dire ce qui a changé, avant de reconduire quoi que ce soit.' } },
+        { id: 'retour', title: 'Le client qui revient après un problème', line: 'Il a eu une mauvaise expérience et vous redonne une chance.', trap: 'Se justifier.', key: 'Qu’est-ce qui s’était mal passé, de votre point de vue ?', face: 'visages/mme-benali.webp',
+          reflex: { who: 'La cliente', says: 'La dernière fois, la livraison avait trois semaines de retard. J’espère que ça ne se reproduira pas.', order: ['b', 'a', 'c'], best: 'c',
+            choices: {
+              a: { text: 'C’était la faute du transporteur, vous savez : chez nous, ça n’arrive jamais.', tone: 'ko', note: 'Vous vous justifiez : elle entend une excuse, pas une écoute.' },
+              b: { text: 'Je comprends. Ça ne se reproduira pas, je vous le promets.', tone: 'mid', note: 'La promesse rassure un instant, mais vous ne savez pas ce qui l’a gênée le plus.' },
+              c: { text: 'Je comprends. Qu’est-ce qui s’était mal passé, de votre point de vue ?' }
+            },
+            why: 'Vous la laissez dire ce qui l’a gênée, avec ses mots : c’est la première étape pour regagner sa confiance.' } }
+      ],
+
+      /* La fiche d'une situation, en quatre pages. Chaque champ « question »
+       * est jugé sur sa forme (expect : les types acceptés). L'aide se retire :
+       * fiche 1, un exemple (fiche, électroménager) ; fiche 2, un indice ;
+       * fiche 3, rien. */
+      pages: [
+        { id: 'sit', tab: 'La situation', ask: 'Quelle situation réelle avez-vous en tête ?',
+          fields: [
+            { id: 'sit', kind: 'text', label: 'La situation réelle', sub: 'Un cas vécu ou observé dans votre entreprise, en deux ou trois lignes.', min: 60, example: 'Un client arrive avec la référence d’un lave-linge vu sur Internet : le modèle X, 9 kg.', hint: 'Qui, où, et ce que le client a dit en arrivant.' },
+            { id: 'disc', kind: 'text', label: 'Ce que vous devez découvrir', sub: 'Les informations indispensables avant de proposer quoi que ce soit.', min: 30, example: 'Pourquoi ce modèle, l’usage réel, les contraintes d’installation.', hint: 'Ce qu’il faut savoir avant de proposer.' }
+          ] },
+        { id: 'open', tab: 'Ouvrir et creuser', ask: 'Quelles questions posez-vous pour faire parler le client ?',
+          fields: [
+            { id: 'o1', kind: 'q', expect: ['ouverte'], label: 'Question d’ouverture 1', sub: 'Large, adaptée à la situation : elle fait raconter.', example: 'Qu’est-ce qui vous a fait choisir ce modèle ?', hint: 'Une question qui fait raconter.' },
+            { id: 'o2', kind: 'q', expect: ['ouverte'], label: 'Question d’ouverture 2', sub: 'Une autre façon d’ouvrir.', example: 'Comment l’utiliserez-vous, au quotidien ?', hint: 'Sur l’usage, le quotidien.' },
+            { id: 'c1', kind: 'q', expect: ['ouverte'], label: 'Question pour creuser 1', sub: 'Elle fait parler d’un problème, d’un enjeu, de ce que ça coûte.', example: 'Qu’est-ce qui ne vous convenait plus, avec l’ancien ?', hint: 'Sur un problème ou une gêne.' },
+            { id: 'c2', kind: 'q', expect: ['ouverte'], label: 'Question pour creuser 2', sub: 'Elle va plus loin sur ce qui a été dit.', example: 'Que se passerait-il s’il tombait en panne pendant une semaine ?', hint: 'Sur ce que le problème coûte.' }
+          ] },
+        { id: 'precise', tab: 'Préciser et classer', ask: 'Comment précisez-vous, puis faites-vous classer ?',
+          fields: [
+            { id: 'p1', kind: 'q', expect: ['fermee', 'alternative'], label: 'Question de précision 1', sub: 'Fermée ou alternative : elle précise un détail.', example: 'L’emplacement fait-il 60 cm de large ?', hint: 'Une mesure, un délai, une contrainte.' },
+            { id: 'p2', kind: 'q', expect: ['fermee', 'alternative'], label: 'Question de précision 2', sub: 'Une autre précision.', example: 'Livraison seule, ou avec installation ?', hint: 'Un choix entre deux options.' },
+            { id: 'h', kind: 'q', expect: ['ouverte', 'alternative'], prio: true, label: 'Votre question pour hiérarchiser', sub: 'Elle aide le client à classer ses priorités.', example: 'Entre la capacité et le niveau sonore, qu’est-ce qui compte le plus pour vous ?', hint: 'Faites choisir entre deux critères.' }
+          ] },
+        { id: 'traps', tab: 'Indices et piège', ask: 'Que faut-il guetter, et que faut-il éviter ?',
+          fields: [
+            { id: 'ind', kind: 'text', label: 'Les mots indices de motivation', sub: 'Les mots qui trahissent la motivation dominante, dans votre secteur.', min: 20, example: '« avis », « le meilleur » (orgueil, sécurité) ; « consommation » (argent, environnement).', hint: 'Les mots qu’ils emploient, et la motivation derrière.' },
+            { id: 'piege', kind: 'q', expect: ['orientee', 'produit'], trap: true, label: 'Le piège à éviter', sub: 'La question orientée, ou la vente déguisée, typique de cette situation.', example: 'Vous savez qu’on a mieux pour le même prix ?', hint: 'La phrase qui pousse un produit trop tôt.' }
+          ] }
+      ],
+
+      // Les cinq règles d'or : jugées sur les thèmes qu'elles couvrent ensemble.
+      themes: [
+        { id: 'entonnoir', text: 'l’entonnoir (du large au précis)', words: ['large', 'precis', 'entonnoir', 'commenc', 'ouvert', 'general', 'puis', 'ensuite', 'finir', 'fin '] },
+        { id: 'relance', text: 'les relances (faire préciser, creuser)', words: ['relanc', 'c est a dire', 'echo', 'creus', 'approfond', 'reformul', 'preciser', 'rebond', 'reprendre ses mots', 'ses mots'] },
+        { id: 'implicite', text: 'les besoins non dits (vérifier ses hypothèses)', words: ['hypothes', 'implicite', 'verifi', 'cache', 'non dit', 'suppos', 'devin', 'derriere', 'vrai besoin', 'pourquoi'] },
+        { id: 'motivation', text: 'les motivations (guetter les mots indices)', words: ['motivation', 'mots', 'indice', 'ce qui compte', 'ce qui le pousse', 'pourquoi', 'raison', 'envie', 'peur', 'securite'] },
+        { id: 'priorite', text: 'les priorités (les faire classer par le client)', words: ['classer', 'priorit', 'hierarch', 'choisir', 'premier', 'plus important', 'ordre', 'decider pour lui'] },
+        { id: 'ecoute', text: 'l’écoute (une question à la fois, laisser parler)', words: ['ecout', 'une question a la fois', 'laisser parler', 'silence', 'interromp', 'couper', 'reponse', 'attendre'] }
+      ],
+      rulesExample: ['Je commence large, je finis précis.', 'Une question à la fois, et j’écoute la réponse.', 'Quand c’est vague, je relance : « C’est-à-dire ? »', 'Une hypothèse sur le besoin, je la vérifie.', 'Je fais classer les priorités au client, je ne les décide pas pour lui.'],
+
+      // L'exemple de la fiche (magasin d'électroménager, deux situations), pour le corrigé.
+      model: [
+        { title: 'Le client qui sait ce qu’il veut', text: 'Situation : « Je veux le lave-linge X, 9 kg, référence vue sur Internet. » · À découvrir : pourquoi ce modèle, l’usage réel, les contraintes d’installation. · Ouverture : « Qu’est-ce qui vous a fait choisir ce modèle ? » « Comment l’utiliserez-vous au quotidien ? » · Creuser : « Qu’est-ce qui ne vous convenait plus avec l’ancien ? » · Précision : « L’emplacement fait 60 cm de large ? » « Livraison seule ou avec installation ? » · Indices : « avis », « le meilleur » (orgueil, sécurité), « consommation » (argent, environnement). · Hiérarchiser : « Entre la capacité et le niveau sonore, qu’est-ce qui compte le plus pour vous ? » · Piège : « Vous savez qu’on a mieux pour le même prix ? » avant d’avoir compris.' },
+        { title: 'Le client accompagné', text: 'Situation : un couple choisit un réfrigérateur ; l’un regarde le prix, l’autre les finitions. · À découvrir : les attentes de chacun, qui décide. · Ouverture : « Parlez-moi de votre cuisine et de la façon dont vous l’utilisez. » · Creuser : « Et pour vous, Madame / Monsieur, qu’est-ce qui serait le plus gênant avec un mauvais choix ? » · Précision : « Pose libre ou encastrable ? » · Indices : « joli », « assorti » (orgueil, confort) ; « durer » (sécurité) ; « pas plus de » (argent). · Hiérarchiser : « Si vous deviez garder un seul critère chacun, lequel ? » · Piège : s’adresser à un seul des deux.' }
+      ],
+
+      selfCheck: [
+        { text: 'Chaque fiche part d’un cas réel de mon entreprise ou de mon secteur.' },
+        { text: 'Mes questions d’ouverture sont réellement ouvertes et adaptées à la situation.' },
+        { text: 'Mes questions pour creuser font exprimer un problème ou un coût.' },
+        { text: 'Mes questions fermées et alternatives sont réservées aux précisions.' },
+        { text: 'Aucune question n’est orientée ; aucune ne parle d’un produit (sauf le piège à éviter).' },
+        { text: 'Ma question de hiérarchisation aide vraiment le client à choisir.' },
+        { text: 'Un nouvel arrivant peut utiliser ma banque sans explication.' },
+        { text: 'Mes 5 règles d’or couvrent l’entonnoir, les relances, les besoins non dits et les motivations.' },
+        { text: 'Ancrage terrain : ma banque parle de mes clients et de mes produits ; elle ne pourrait pas être copiée telle quelle ailleurs.' }
+      ],
+
+      // Les pages de transition (avant chaque étape), comme en 6.2.
+      transitions: [
+        { done: 'Vous savez ce que Nadia attend de vous.', why: 'Voici votre chemin : six étapes, des situations de votre métier jusqu’à la banque que vous remettrez à Lucas.', todo: 'Choisissez les 3 situations de découverte que vous rencontrez le plus souvent.' },
+        { done: 'Vous avez choisi vos 3 situations.', why: 'Avant d’écrire, un réflexe à prendre : chaque situation a son piège, et sa bonne question pour ouvrir.', todo: 'Pour chaque situation, un client vous parle : choisissez votre réponse.' },
+        { done: 'Vous avez trouvé le bon réflexe pour chaque situation.', why: 'Maintenant, c’est votre métier qui parle : Lucas a besoin de questions prêtes à l’emploi, avec vos clients et vos produits.', todo: 'Remplissez une fiche par situation. Chaque question est vérifiée au fur et à mesure.' },
+        { done: 'Vos trois fiches sont prêtes.', why: 'Lucas ne retiendra pas tout. Ce qu’il gardera en tête, ce sont quelques règles simples.', todo: 'Écrivez vos 5 règles d’or du questionnement.' },
+        { done: 'Votre banque est complète.', why: 'Une question ne vaut que si elle marche au comptoir. Le mieux est d’en tester une cette semaine.', todo: 'Choisissez la question que vous testerez, et quand. Cette étape est facultative.' },
+        { done: 'Vous avez prévu votre test terrain.', why: 'Avant de remettre la banque à Lucas, relisez-la avec les critères de votre tuteur.', todo: 'Répondez Oui ou Non à chaque critère de la grille.' }
+      ],
+
+      keyPoint: 'À retenir : une bonne banque de questions part des situations réelles de votre métier, ouvre large, creuse les problèmes, garde les questions fermées pour les précisions, fait classer les priorités, et nomme le piège à éviter.'
     }
   };
+
+  /* LE JUGE DE LA FORME D'UNE QUESTION (6.3), valable dans tous les métiers :
+   * ouverte, fermée, alternative, orientée, produit (vente déguisée), ou pas
+   * une question. Banque de tests : tests/banque.test.cjs. */
+  (function () {
+    const plain = text => ` ${String(text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ?]+/g, ' ').replace(/\?/g, ' ? ').replace(/\s+/g, ' ').trim()} `;
+    const ORIENTED = [' n est ce pas', ' non ? ', ' pas vrai', ' surement', ' j imagine', ' je suppose', ' vous ne pensez pas', ' vous ne trouvez pas', ' vous ne voulez pas', ' vous etes d accord', ' d accord ? ', ' on est d accord', ' forcement', ' il vous faut donc', ' vous voulez donc', ' c est bien ca', ' au fond', ' quand meme ', ' tout compte ', ' j image'];
+    const PRODUCT = [' je vous propose', ' je vous conseille', ' je vous recommande', ' on a ', ' nous avons', ' notre ', ' nos ', ' promotion', ' promo ', ' on a mieux', ' je vous montre', ' j ai ce qu il vous faut', ' offre ', ' formule '];
+    const OPEN = ['qu', 'que', 'quel', 'quelle', 'quels', 'quelles', 'comment', 'pourquoi', 'racontez', 'raconte', 'parlez', 'decrivez', 'expliquez', 'dites', 'quoi', 'qui', 'lequel', 'laquelle', 'lesquels'];
+    const CLOSED_START = ['est ce que', 'est ce qu', 'vous ', 'avez', 'etes', 'y a t il', 'c est', 'il y a', 'combien', 'quand', 'ou ', 'a quelle date', 'pouvez', 'souhaitez', 'voulez', 'preferez', 'aimez', 'connaissez', 'utilisez'];
+    const PRIO = [' premier', ' priorit', ' plus important', ' compte le plus', ' compte plus', ' classer', ' ordre', ' avant tout', ' d abord', ' passe avant', ' essentiel', ' primordial', ' le plus ', ' garder un seul', ' une seule', ' choisir'];
+    const words = t => t.trim().split(' ').filter(w => w && w !== '?');
+    function classify(text) {
+      const t = plain(text);
+      const w = words(t);
+      if (w.length < 3) return 'vide';
+      if (ORIENTED.some(m => t.includes(m))) return 'orientee';
+      if (PRODUCT.some(m => t.includes(m))) return 'produit';
+      // Les premiers mots, sans « est-ce que » (qui introduit une question fermée).
+      const head = ` ${t.trim().replace(/^(est ce qu e? ?|est ce que )/, '').split(' ').slice(0, 9).join(' ')} `;
+      const startsClosed = CLOSED_START.some(s => t.trim().startsWith(s.trim()));
+      const open = OPEN.some(o => head.includes(` ${o} `)) && !t.trim().startsWith('est ce');
+      const imperative = /^ ?(racontez|parlez|decrivez|expliquez|dites)/.test(t);
+      const alt = / ou (?!pas)/.test(t.slice(4)) && t.includes('?');
+      // « Entre A et B, … ? » : une alternative, même sans « ou ».
+      if ((alt && (!open || /plutot|ou bien/.test(t) || / entre /.test(t))) || (t.trim().startsWith('entre ') && t.includes('?'))) return 'alternative';
+      if (open || imperative) return 'ouverte';
+      if (!t.includes('?')) return startsClosed ? 'fermee' : 'pas-question';
+      return 'fermee';
+    }
+    const prioritizes = text => PRIO.some(m => plain(text).includes(m));
+    root.ATELIER_QTYPE = Object.freeze({ classify, prioritizes, plain });
+  })();
 })(globalThis);

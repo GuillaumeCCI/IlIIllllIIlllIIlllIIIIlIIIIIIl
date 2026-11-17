@@ -236,6 +236,7 @@
     's5-5.2': () => writePreview(4),
     's6-6.1': () => choicePreview(3),
     's6-6.2': () => choicePreview(3),
+    's6-6.3': () => writePreview(3),
     // @@MAP@@
   };
 

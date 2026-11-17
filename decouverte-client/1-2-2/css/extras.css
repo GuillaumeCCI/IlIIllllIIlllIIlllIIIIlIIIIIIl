@@ -2157,3 +2157,46 @@ p.h7-question { margin-bottom: 12px; }
 #main .h7-write .counter { right: 0; }
 .h7-write { transition: box-shadow .15s; }
 .h7-write:focus-within { box-shadow: 0 0 0 2px var(--accent), 0 6px 16px rgb(15 35 78 / 8%) !important; }
+/* ══ 6.3 · Ma banque de questions terrain (reprend les styles h6/h7 de 6.2) ══ */
+.h8-metier { margin-top: 14px; box-shadow: inset 0 0 0 1px #e7ebf4; }
+.h8-sit-title { color: var(--navy); font-weight: 700; line-height: 1.35; }
+
+/* Les fiches : pages en pastilles, champs en cartes blanches, type en direct. */
+.h8-pages { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 16px; }
+.h8-page { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; border: 0; border-radius: 999px; background: #f1f4fa; color: #4c5a80; font: inherit; font-size: .9rem; font-weight: 600; cursor: var(--cursor-hand, pointer); }
+.h8-page span { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #fff; color: var(--accent); font-size: .8rem; font-weight: 800; }
+.h8-page.is-current { background: var(--accent); color: #fff; }
+.h8-page.is-current span { color: var(--accent); }
+.h8-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 16px 0; }
+.h8-field { box-shadow: 0 6px 16px rgb(15 35 78 / 8%), inset 0 0 0 1px #e7ebf4; align-content: start; }
+.h8-field-label { margin: 0; color: var(--navy); font-weight: 800; }
+.h8-badge { display: flex; align-items: center; gap: 8px; min-height: 1.4em; margin: 0; color: #4c5a80; font-size: .88rem; font-weight: 600; }
+.h8-aid { margin: 0; padding-top: 8px; border-top: 1px dashed #d5ddef; color: #5a6584; font-size: .9rem; font-style: italic; }
+
+/* Les règles d'or : cinq champs numérotés, les thèmes couverts en direct. */
+.h8-rules-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 24px; margin-top: 14px; align-items: start; }
+.h8-rules { display: grid; gap: 10px; }
+.h8-rule { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; padding: 10px 16px; box-shadow: 0 4px 12px rgb(15 35 78 / 7%), inset 0 0 0 1px #e7ebf4; }
+.h8-rule-n { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #1b2370; color: #fff; font-weight: 800; font-size: .9rem; }
+#main .h8-rule textarea, #main .h8-rule input[type="text"] { min-height: 0; padding: 6px 0; }
+#main .h8-rule .counter { display: none; }
+.h8-themes { display: grid; gap: 8px; margin-top: 6px; }
+.h8-theme { display: flex; align-items: center; gap: 10px; color: #8a93ad; line-height: 1.4; }
+.h8-theme .h7-dot { background: #d5ddef; }
+.h8-theme.is-on { color: var(--navy); font-weight: 600; }
+
+/* Le test terrain : choisir une de ses questions. */
+.h8-qpick { display: grid; gap: 8px; margin: 14px 0 16px; }
+.h8-qitem { position: relative; padding-right: 48px; }
+.h8-qitem .h7-dm-tick { right: 14px; top: 50%; transform: translateY(-50%); }
+
+/* La banque complète. */
+.h8-bank { display: grid; gap: 16px; margin-top: 10px; }
+.h8-bank-block { padding: 16px 20px; border-radius: 14px; background: #f7f9fc; }
+.h8-bank-h { margin: 0 0 8px; color: var(--navy); font-weight: 800; }
+.h8-bank ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; color: #24305a; }
+.h8-bank dl { margin: 0; display: grid; gap: 6px; }
+.h8-bank dl > div { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 12px; }
+.h8-bank dt { color: var(--muted); font-size: .86rem; font-weight: 700; }
+.h8-bank dd { margin: 0; color: #24305a; }
+@media (max-width: 860px) { .h8-fields, .h8-rules-grid { grid-template-columns: 1fr; } .h8-bank dl > div { grid-template-columns: 1fr; gap: 2px; } }

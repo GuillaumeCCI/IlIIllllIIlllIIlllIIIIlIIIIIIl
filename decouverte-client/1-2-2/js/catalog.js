@@ -79,7 +79,8 @@ window.ATELIER_CATALOG = {
       sourced: true,
       exercises: [
         { id: '6.1', file: 's6-6-1', label: 'L’entretien dont vous êtes le héros', theme: 'blue' },
-        { id: '6.2', file: 's6-6-2', label: 'Le coach', theme: 'blue' }
+        { id: '6.2', file: 's6-6-2', label: 'Le coach', theme: 'blue' },
+        { id: '6.3', file: 's6-6-3', label: 'Ma banque de questions terrain', theme: 'blue' }
       ]
     },
     {
