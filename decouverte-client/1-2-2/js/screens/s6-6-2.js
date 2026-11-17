@@ -151,9 +151,11 @@
   /* Les répliques d'un moment : la question du vendeur, le geste, le client. */
   /* L'entretien entier. Avec `current`, le moment analysé est surligné et
    * les suivants sont estompés. */
-  // Une réplique façon dialogue : le visage, le nom (et le repère M1…), la phrase.
+  // Une réplique façon dialogue : le visage, le nom, la phrase.
+  // Un moment se nomme par son sujet (« L’îlot central »), jamais par « M4 ».
+  const labelOf = n => (moments().find(m => m.n === n) || {}).label || '';
   const line = (cls, face, name, text, tag = '') => `<div class="h7-line ${cls}"><img src="${face}" alt="" aria-hidden="true"><div class="h7-line-body"><p class="h7-who">${esc(name)}${tag}</p><p class="h7-said">${q(text)}</p></div></div>`;
-  const lines = (m, now = false) => line('is-seller', sellerFace(), D().seller.name, m.q, `<span class="h7-mn">${esc(m.n)}</span>${now ? '<span class="h7-now">Le moment à analyser</span>' : ''}`)
+  const lines = (m, now = false) => line('is-seller', sellerFace(), D().seller.name, m.q, now ? '<span class="h7-now">Le moment à analyser</span>' : '')
     + (m.scene ? `<p class="h7-gesture">${esc(m.scene)}</p>` : '')
     + m.replies.map(r => line('is-client', img(person(r.who).face), person(r.who).name, r.text)).join('');
   function thread(current = -1) {
@@ -189,10 +191,12 @@
   }, 0);
 
   /* L'aide-mémoire : les types de questions et l'entonnoir. */
-  const memoBox = () => `<details class="h7-memo"><summary>${icon('document', { size: 16 })}<span>Aide-mémoire : les types de questions</span></summary>
-      <dl>${content.memo.map(x => `<div><dt>${esc(x.term)}</dt><dd>${esc(x.text)} <i>${q(x.ex)}</i></dd></div>`).join('')}</dl>
-      <p class="h7-memo-funnel"><b>L’entonnoir :</b> ${content.funnel.map((f, i) => `<span>${i + 1}. ${esc(f)}</span>`).join('')}</p>
-    </details>`;
+  // Un simple lien : l'aide-mémoire s'ouvre dans une fenêtre, sans rien décaler.
+  const memoBox = () => `<button type="button" class="h7-memo-btn" data-act="h7-memo">${icon('document', { size: 16 })}<span>Aide-mémoire : les types de questions</span></button>`;
+  const memoHtml = () => `<div class="h7-memo-win">
+      <dl>${content.memo.map(x => `<div><dt>${esc(x.term)}</dt><dd>${esc(x.text)}<i>${q(x.ex)}</i></dd></div>`).join('')}</dl>
+      <p class="h7-memo-funnel"><b>L’entonnoir de la découverte</b>${content.funnel.map((f, i) => `<span>${i + 1}. ${esc(f)}</span>`).join('')}</p>
+    </div>`;
 
   /* Le retour de la formatrice (comme 6.1). */
   const VERDICT = {
@@ -270,7 +274,7 @@
       body = `<div class="h6-card h7-read h6-in">
           <p class="k-label">Étape 1 · Lisez l’entretien en entier</p>
           <p class="h7-read-title">${esc(D().seller.name)} avec ${esc(names)}</p>
-          <p class="h7-context">${esc(D().context)} Les questions de ${esc(D().seller.name)} sont numérotées de M1 à M10.</p>
+          <p class="h7-context">${esc(D().context)}</p>
           <ol class="h7-tr is-read h7-reveal">${thread()}</ol>
           <p class="h7-read-note">Faites défiler pour lire la suite. Vous l’aurez sous les yeux pendant toute l’analyse.</p>
         </div>
@@ -316,12 +320,6 @@
     return `<section class="h6-stage ${isFb ? 'is-fb' : ''}" style="--h6-decor:url('${decorOf()}')">
         <div class="h6-stage-top">
           ${inGame ? `<div class="h6-meters">${gaugeBar(rightFirst())}</div>` : '<span></span>'}
-          ${['choose', 'fb', 'end'].includes(b.kind) ? `<details class="h6-replay"><summary>${icon('chat', { size: 16 })}<span>Relire l’entretien</span></summary>
-            <div class="h6-replay-panel" role="region" aria-label="L’entretien">
-              <div class="h6-replay-head"><img src="${sellerFace()}" alt="" aria-hidden="true"><p><b>L’entretien de ${esc(D().seller.name)}</b><span>${esc(Object.values(D().people).map(p => p.name).join(' et '))}</span></p>
-                <button type="button" class="h6-replay-close" data-act="h7-replay-close" aria-label="Fermer">${icon('close', { size: 16 })}</button></div>
-              <ol class="d5-thread h6-replay-list">${thread()}</ol>
-            </div></details>` : ''}
         </div>
         <div class="h6-stage-body is-${b.kind}">${body}</div>
       </section>
@@ -337,7 +335,6 @@
       const tone = done ? dmTone(m.n) : '';
       const mark = done && (on || tone === 'ok') ? `<span class="h7-dm-mark tone-${on ? tone : 'miss'}">${on ? (tone === 'ok' ? `${icon('check', { size: 14, strokeWidth: 3 })}Décisif` : tone === 'mid' ? 'Se défend' : `${icon('close', { size: 14, strokeWidth: 3 })}Pas décisif`) : 'À choisir'}</span>` : '';
       return `<button type="button" class="h7-dm ${on ? 'is-on' : ''} ${done ? 'is-done' : ''}" data-act="h7-dm" data-n="${m.n}" aria-pressed="${on}" ${done ? 'disabled' : ''}>
-          <span class="h7-dm-n">${esc(m.n)}</span>
           <span class="h7-dm-q">${q(m.q)}</span>
           <span class="h7-dm-diag">${esc(m.choices[m.best].text.split(' : ')[0])}</span>
           ${mark}
@@ -369,7 +366,7 @@
     const ok = yes(`rw${j}_ok`);
     // L'aide se retire : un indice, puis un indice plus court, puis aucun (contenu).
     const hint = r.hint || '';
-    const tabs = rws.map((x, i) => `<button type="button" class="d5-floor-tab ${i === j ? 'is-current' : ''} ${yes(`rw${i}_ok`) ? 'is-filled' : ''}" role="tab" aria-selected="${i === j}" data-act="h7-rw" data-i="${i}" ${i > 0 && !yes(`rw${i - 1}_ok`) ? 'disabled' : ''}><span class="d5-floor-n">${yes(`rw${i}_ok`) ? icon('check', { size: 13, strokeWidth: 3 }) : i + 1}</span><span>${esc(x.n)}</span></button>`).join('');
+    const tabs = rws.map((x, i) => `<button type="button" class="d5-floor-tab ${i === j ? 'is-current' : ''} ${yes(`rw${i}_ok`) ? 'is-filled' : ''}" role="tab" aria-selected="${i === j}" data-act="h7-rw" data-i="${i}" ${i > 0 && !yes(`rw${i - 1}_ok`) ? 'disabled' : ''}><span class="d5-floor-n">${yes(`rw${i}_ok`) ? icon('check', { size: 13, strokeWidth: 3 }) : i + 1}</span><span>${esc(labelOf(x.n))}</span></button>`).join('');
     const typeChips = types.map(t => `<button type="button" class="h7-chip ${v(`rw${j}_t`) === t.id ? 'is-on' : ''}" data-act="h7-type" data-j="${j}" data-id="${t.id}" aria-pressed="${v(`rw${j}_t`) === t.id}" ${ok ? 'disabled' : ''}>${esc(t.label)}</button>`).join('');
     const result = ok ? `<div class="h7-checks"><p class="k-label">Les repères</p><ul>${checks(j).map(c => `<li class="${c.ok ? 'is-ok' : 'is-ko'}"><span aria-hidden="true">${icon(c.ok ? 'check' : 'thought', { size: 15, strokeWidth: 2.5 })}</span>${esc(c.text)}</li>`).join('')}</ul></div>
         <div class="h7-model"><p class="k-label">Le corrigé</p><p class="h7-model-what">${esc(r.what)}</p><p class="h7-model-q">${q(r.model)}</p><p class="h7-model-type">Type : ${esc(r.type.map(t => types.find(x => x.id === t).label.toLowerCase()).join(' ou '))}</p></div>
@@ -446,7 +443,7 @@
     const built = `<div class="h7-built">
         <p class="k-label">Déjà dans votre fiche</p>
         <p class="h7-built-h">3 · Mes 3 moments décisifs</p>
-        <ul>${D().rewrites.map((r, j) => `<li><b>${esc(r.n)}</b> · ${esc(v(`rw${j}_why`) || '')} <span class="h7-built-q">→ ${q(v(`rw${j}_q`) || '')} (${esc(typeLabel(v(`rw${j}_t`)))})</span></li>`).join('')}</ul>
+        <ul>${D().rewrites.map((r, j) => `<li><b>${esc(labelOf(r.n))}</b> · ${esc(v(`rw${j}_why`) || '')} <span class="h7-built-q">→ ${q(v(`rw${j}_q`) || '')} (${esc(typeLabel(v(`rw${j}_t`)))})</span></li>`).join('')}</ul>
         <p class="h7-built-h">4 · Ce qu’il aurait dû repartir en sachant</p>
         <ul><li><b>Explicites</b> : ${esc(kindList('explicite').join(' ; ') || 'aucun')}</li><li><b>Implicites</b> : ${esc(kindList('implicite').join(' ; ') || 'aucun')}</li><li><b>Motivations</b> : ${esc(kindList('motivation').join(' ; ') || 'aucune')}</li><li><b>Hiérarchie</b> : ${esc(rankText())}</li></ul>
         <details class="h7-transcript"><summary>${icon('chat', { size: 16 })}<span>Relire l’entretien</span></summary><ol class="h7-tr">${thread()}</ol></details>
@@ -485,7 +482,7 @@
       `1. Ce qui a bien fonctionné : ${v('f_good') || ''}`,
       `2. Mon diagnostic : ${v('f_diag') || ''}`,
       '3. Mes 3 moments décisifs :',
-      ...d.rewrites.map((r, j) => `   ${r.n} · ${v(`rw${j}_why`) || ''} → « ${v(`rw${j}_q`) || ''} » (${typeLabel(v(`rw${j}_t`))})`),
+      ...d.rewrites.map((r, j) => `   ${labelOf(r.n)} · ${v(`rw${j}_why`) || ''} → « ${v(`rw${j}_q`) || ''} » (${typeLabel(v(`rw${j}_t`))})`),
       '4. Ce qu’il aurait dû repartir en sachant :',
       `   Explicites : ${kindList('explicite').join(' ; ')}`,
       `   Implicites : ${kindList('implicite').join(' ; ')}`,
@@ -502,14 +499,14 @@
       const id = choiceAt(k);
       const tone = toneOf(m, id);
       return `<div class="h6-path-row">
-          <p class="h6-path-n">${esc(m.n)}</p>
+          <p class="h6-path-n">${esc(m.label)}</p>
           <div class="h6-path-you"><p class="h6-pick is-${tone}"><span aria-hidden="true">${tone === 'mid' ? '–' : icon(tone === 'ok' ? 'check' : 'close', { size: 14, strokeWidth: 3 })}</span><span><b>${esc((m.choices[id] || {}).text || '')}</b><span class="h6-pick-q">${q(m.q)}</span></span></p>
             ${tries(k).length > 1 ? `<p class="h6-retried">Puis vous avez essayé : ${tries(k).slice(1).map(t => esc(m.choices[t].text.split(' : ')[0])).join(' ; ')}.</p>` : ''}</div>
           <div class="h6-path-best">${tone === 'ok' ? `<p class="h6-explain">${esc(m.why)}</p>` : `<p class="h6-best-label">Le bon diagnostic</p><p class="h6-best-q"><b>${esc(m.choices[m.best].text)}</b></p><p class="h6-explain">${esc(m.why)}</p>`}</div>
         </div>`;
     }).join('');
     const rwRows = d.rewrites.map((r, j) => `<div class="fm-rv-row">
-        <p class="fm-rv-label">${esc(r.n)}</p>
+        <p class="fm-rv-label">${esc(labelOf(r.n))}</p>
         <div class="fm-rv-you"><p class="result-answer-text">${esc(v(`rw${j}_why`) || '')}</p><p class="result-answer-text">${q(v(`rw${j}_q`) || '')} <em>(${esc(typeLabel(v(`rw${j}_t`)))})</em></p></div>
         <div class="fm-rv-model"><p>${esc(r.what)}</p><p>${q(r.model)}</p></div>
       </div>`).join('');
@@ -525,7 +522,7 @@
       </section>
       <section class="k-panel h6-review">
         <p class="k-label">Les moments décisifs</p>
-        <p class="h7-review-line">Vous avez choisi : <b>${picked().join(', ')}</b>. ${esc(d.decisive.text)}</p>
+        <p class="h7-review-line">Vous avez choisi : <b>${esc(picked().map(labelOf).join(', '))}</b>. ${esc(d.decisive.text)}</p>
       </section>
       <section class="k-panel fm-review is-rows h6-review">
         <p class="k-label">Vos réécritures</p>
@@ -599,6 +596,7 @@
       advance(`retry${k}`, false);
     },
     'h7-retry': control => advance(`retry${Number(control.dataset.step)}`, true),
+    'h7-memo': () => core.openDialog('Aide-mémoire : les types de questions', memoHtml()),
     'h7-replay-close': control => { const box = control.closest('details'); if (box) { box.open = false; box.querySelector('summary').focus(); } },
     'h7-dm': control => {
       if (yes('dmok')) return;

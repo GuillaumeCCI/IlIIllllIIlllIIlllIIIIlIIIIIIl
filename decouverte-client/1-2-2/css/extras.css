@@ -1871,3 +1871,21 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h7-question .h7-memo { margin-top: 4px; }
 .h7-page .h7-analyse .h6-option { font-weight: 500; color: var(--navy); }
 .h7-page .h7-analyse .h6-option:hover { color: var(--accent); }
+
+/* 6.2 · L’aide-mémoire : un lien, puis une fenêtre par-dessus l’écran. */
+.h7-memo-btn { justify-self: start; display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; padding: 0; border: 0; background: none; color: var(--accent); font: inherit; font-weight: 700; cursor: var(--cursor-hand, pointer); }
+.h7-memo-btn:hover { text-decoration: underline; }
+.h7-memo-btn:focus-visible { outline: 3px solid #ff936b; outline-offset: 3px; border-radius: 4px; }
+.h7-memo-win dl { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.h7-memo-win dl > div { padding: 10px 14px; border-radius: 12px; background: #f6f8fc; }
+.h7-memo-win dt { margin-bottom: 2px; color: var(--navy); font-weight: 800; }
+.h7-memo-win dd { margin: 0; display: grid; gap: 2px; color: #3a4a7a; font-size: .92rem; line-height: 1.45; }
+.h7-memo-win dd i { color: #6a7594; }
+.h7-memo-funnel { margin: 14px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; color: #3a4a7a; font-size: .92rem; }
+.h7-memo-funnel b { width: 100%; color: var(--navy); }
+.h7-memo-funnel span { padding: 3px 10px; border-radius: 999px; background: #eef2fc; }
+@media (max-width: 700px) { .h7-memo-win dl { grid-template-columns: 1fr; } }
+
+/* 6.2 · La fenêtre de l’aide-mémoire : assez large pour deux colonnes. */
+#info-dialog:has(.h7-memo-win) { width: min(880px, 94vw); max-height: 90vh; }
+#info-dialog:has(.h7-memo-win) #dialog-body { max-height: calc(90vh - 150px); overflow-y: auto; }
