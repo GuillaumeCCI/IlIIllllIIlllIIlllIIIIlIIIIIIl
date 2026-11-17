@@ -189,13 +189,15 @@
         </button>`;
     }).join('');
     const dots = Array.from({ length: N }, (_, i) => i).map(i => `<span class="${i < ids.length ? 'is-on' : ''}"></span>`).join('');
-    const bilan = done ? msgBox('ok', `<p>Vos 2 situations, et ce que Lucas doit savoir de chacune :</p>
+    const bilan = done ? msgBox('ok', `<p>Chaque situation de découverte a son piège : la réaction qui vient naturellement, et qui ferme la conversation. Avant d’écrire vos fiches, voici ce qui se joue dans les vôtres : ce que le client attend vraiment, et la question qui ouvre la porte. C’est ce que Lucas devra retenir.</p>
         <div class="h8-sum">${chosen().map((s, i) => `<article class="h8-sum-card h6-in" ${delay(0.12 * i)}>
             <img class="h8-sum-face" src="${img(s.face)}" alt="" aria-hidden="true">
             <p class="h8-sum-title">${esc(s.title)}</p>
-            <div class="h8-sum-part is-trap"><span>Le piège</span><p>${esc(s.trap)}</p></div>
-            <div class="h8-sum-part is-key"><span>La question clé</span><p>${q(s.key)}</p></div>
-          </article>`).join('')}</div>`, 'Bon choix') : '';
+            <div class="h8-sum-part is-trap"><span>Le piège</span><p>${esc(s.trap)}</p>${s.deep ? `<p class="h8-sum-why">${esc(s.deep.trapWhy)}</p>` : ''}</div>
+            ${s.deep ? `<div class="h8-sum-part is-need"><span>Ce que le client attend vraiment</span><p>${esc(s.deep.need)}</p></div>` : ''}
+            <div class="h8-sum-part is-key"><span>La question clé, et pourquoi celle-ci</span><p>${q(s.key)}</p>${s.reflex && s.reflex.why ? `<p class="h8-sum-why">${esc(s.reflex.why)}</p>` : ''}</div>
+            ${s.deep ? `<div class="h8-sum-part is-more"><span>D’autres questions possibles</span><ul>${s.deep.more.map(x => `<li>${q(x)}</li>`).join('')}</ul></div>` : ''}
+          </article>`).join('')}</div>`, 'Ce qui se joue dans vos 2 situations') : '';
     return `<section class="k-panel d5-panel h7-panel">
         <div class="h8-sit-head">
           <p class="h7-question">Quelles sont les 2 situations de découverte que vous rencontrez le plus souvent ?</p>
