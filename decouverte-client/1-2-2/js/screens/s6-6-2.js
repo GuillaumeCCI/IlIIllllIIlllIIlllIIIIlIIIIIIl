@@ -162,6 +162,19 @@
       return `<li class="h7-tr-moment ${cls}">${lines(m, k === current)}</li>`;
     }).join('');
   }
+  /* À la lecture, chaque moment apparaît quand on descend jusqu'à lui
+   * (fondu et léger glissement) ; sans cette possibilité, tout s'affiche. */
+  const revealOnScroll = () => setTimeout(() => {
+    const box = document.querySelector('.h7-tr.h7-reveal');
+    if (!box) return;
+    const items = box.querySelectorAll('.h7-tr-moment');
+    const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (still || typeof IntersectionObserver !== 'function') { items.forEach(el => el.classList.add('is-shown')); return; }
+    const watch = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('is-shown'); watch.unobserve(entry.target); }
+    }), { root: box, threshold: 0.2 });
+    items.forEach(el => watch.observe(el));
+  }, 0);
   // Fait défiler l'entretien jusqu'au moment analysé, après l'affichage.
   const scrollTranscript = () => setTimeout(() => {
     document.querySelectorAll('.h7-tr').forEach(box => {
@@ -248,12 +261,13 @@
     } else if (b.kind === 'read') {
       // L'entretien en entier, à lire avant toute analyse.
       const names = Object.values(D().people).map(p => p.name).join(' et ');
+      revealOnScroll();
       body = `<div class="h6-card h7-read h6-in">
           <p class="k-label">Étape 1 · Lisez l’entretien en entier</p>
           <p class="h7-read-title">${esc(D().seller.name)} avec ${esc(names)}</p>
           <p class="h7-context">${esc(D().context)} Les questions de ${esc(D().seller.name)} sont numérotées de M1 à M10.</p>
-          <ol class="h7-tr is-read">${thread()}</ol>
-          <p class="h7-read-note">Vous l’aurez sous les yeux pendant toute l’analyse.</p>
+          <ol class="h7-tr is-read h7-reveal">${thread()}</ol>
+          <p class="h7-read-note">Faites défiler pour lire la suite. Vous l’aurez sous les yeux pendant toute l’analyse.</p>
         </div>
         <div class="h6-stage-foot">${next('J’ai lu, je commence l’analyse', 'h6-flag', 0.4, 'data-name="read"')}</div>`;
     } else if (b.kind === 'choose') {

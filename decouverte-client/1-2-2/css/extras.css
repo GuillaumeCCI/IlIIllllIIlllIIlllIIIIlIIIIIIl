@@ -1828,3 +1828,27 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h7-read { gap: 6px; }
 .h7-read .h7-context { margin: 0 0 8px; }
 .h6-replay-list .h7-tr-moment + .h7-tr-moment { margin-top: 10px; }
+
+/* 6.2 · Transcription allégée : plus de cadres, un trait fin pour le vendeur,
+ * de l’air entre les moments ; à la lecture, apparition au défilement. */
+.h7-tr { gap: 26px; }
+.h7-tr-one { gap: 10px; }
+.h7-tr-moment { gap: 10px; }
+.h7-line { gap: 10px; }
+.h7-line > img { width: 30px; height: 30px; margin-top: 2px; box-shadow: 0 0 0 2px #fff; }
+.h7-line-body { padding: 0; border-radius: 0; }
+.h7-line.is-seller .h7-line-body { padding: 0 0 0 12px; background: none; border-left: 3px solid #c9d4f3; }
+.h7-line.is-client .h7-line-body { background: none; box-shadow: none; }
+.h7-who { margin-bottom: 1px; font-size: .74rem; }
+.h7-said { font-size: .97rem; line-height: 1.6; }
+.h7-line.is-client .h7-said { color: #3a4566; }
+.h7-gesture { margin-left: 40px; }
+.h7-tr-moment.is-current { padding: 12px 14px; }
+
+.h7-reveal .h7-tr-moment > * { opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; }
+.h7-reveal .h7-tr-moment.is-shown > * { opacity: 1; transform: none; }
+.h7-reveal .h7-tr-moment.is-shown > :nth-child(2) { transition-delay: .35s; }
+.h7-reveal .h7-tr-moment.is-shown > :nth-child(3) { transition-delay: .7s; }
+@media (prefers-reduced-motion: reduce) {
+  .h7-reveal .h7-tr-moment > * { opacity: 1; transform: none; transition: none; }
+}
