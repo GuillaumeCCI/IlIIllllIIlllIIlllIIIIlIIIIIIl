@@ -192,7 +192,7 @@
 
   /* L'aide-mémoire : les types de questions et l'entonnoir. */
   // Un simple lien : l'aide-mémoire s'ouvre dans une fenêtre, sans rien décaler.
-  const memoBox = () => `<button type="button" class="h7-memo-btn" data-act="h7-memo">${icon('document', { size: 16 })}<span>Aide-mémoire : les types de questions</span></button>`;
+  const memoBox = () => `<button type="button" class="h7-help" data-act="h7-memo">${icon('document', { size: 16 })}<span>Aide-mémoire</span></button>`;
   const memoHtml = () => `<div class="h7-memo-win">
       <dl>${content.memo.map(x => `<div><dt>${esc(x.term)}</dt><dd>${esc(x.text)}<i>${q(x.ex)}</i></dd></div>`).join('')}</dl>
       <p class="h7-memo-funnel"><b>L’entonnoir de la découverte</b>${content.funnel.map((f, i) => `<span>${i + 1}. ${esc(f)}</span>`).join('')}</p>
@@ -283,15 +283,15 @@
       // L'entretien à gauche (le moment surligné), la question et les
       // diagnostics à droite. Un indice pour M1 à M5, plus rien ensuite.
       // L'entretien a été lu en entier : ici, seul le moment à analyser
-      // (« Relire l'entretien », en haut, pour revoir le tout).
+      // La carte ne porte que la question ; l'indice et l'aide-mémoire sont
+      // deux petits boutons qui ouvrent une fenêtre.
       body = `<div class="h7-analyse">
           <div class="h6-card h7-tr-card h6-in"><p class="k-label">Moment ${k + 1} sur ${moments().length}</p><div class="h7-tr-one">${lines(m)}</div></div>
           <div class="h7-analyse-main">
             <div class="h6-card h7-question h6-in" ${delay(0.1)}>
               <p class="h7-ask">Qu’a fait ${esc(D().seller.name)} ici, et qu’est-ce que ça a produit ?</p>
-              ${m.hint ? `<p class="h7-hint-line">Indice : ${esc(m.hint)}</p>` : ''}
-              ${memoBox()}
             </div>
+            <div class="h7-helps h6-in" ${delay(0.15)}>${m.hint ? `<button type="button" class="h7-help" data-act="h7-hint" data-step="${k}">${icon('thought', { size: 16 })}<span>Un indice</span></button>` : ''}${memoBox()}</div>
             ${options({ title: 'Les diagnostics possibles', order: m.order, choices: m.choices, act: 'h7-pick', data: `data-step="${k}"`, tried: b.retry ? tries(k) : [] })}
           </div>
         </div>`;
@@ -384,7 +384,7 @@
           <div class="h7-rw-main">
             <div class="fm-field"><p class="fm-label">Ce qui s’est passé, et pourquoi c’est décisif</p>${ex.field(`rw${j}_why`, 'Ce qui s’est passé', { placeholder: 'Il/elle… ; du coup, le client…', max: 400, rows: 3, hideLabel: true })}</div>
             <div class="fm-field"><p class="fm-label">La question que vous auriez posée</p>${ex.field(`rw${j}_q`, 'Votre question', { placeholder: 'Qu’est-ce que… ?', max: 300, type: 'input', hideLabel: true })}</div>
-            <div class="fm-field"><p class="fm-label">Son type</p><div class="h7-chips" role="group" aria-label="Le type de votre question">${typeChips}</div>${memoBox()}</div>
+            <div class="fm-field"><p class="fm-label">Son type</p><div class="h7-chips" role="group" aria-label="Le type de votre question">${typeChips}</div><div class="h7-helps">${memoBox()}</div></div>
             ${result}
           </div>
         </div>
@@ -597,6 +597,7 @@
     },
     'h7-retry': control => advance(`retry${Number(control.dataset.step)}`, true),
     'h7-memo': () => core.openDialog('Aide-mémoire : les types de questions', memoHtml()),
+    'h7-hint': control => { const m = moments()[Number(control.dataset.step)]; if (m && m.hint) core.openDialog('Un indice', `<p class="h7-hint-win">${esc(m.hint)}</p>`); },
     'h7-replay-close': control => { const box = control.closest('details'); if (box) { box.open = false; box.querySelector('summary').focus(); } },
     'h7-dm': control => {
       if (yes('dmok')) return;

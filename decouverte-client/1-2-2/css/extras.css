@@ -1889,3 +1889,16 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 /* 6.2 · La fenêtre de l’aide-mémoire : assez large pour deux colonnes. */
 #info-dialog:has(.h7-memo-win) { width: min(880px, 94vw); max-height: 90vh; }
 #info-dialog:has(.h7-memo-win) #dialog-body { max-height: calc(90vh - 150px); overflow-y: auto; }
+
+/* 6.2 · La carte ne porte que la question ; « Un indice » et « Aide-mémoire »
+ * en deux petits boutons discrets, qui ouvrent une fenêtre. */
+.h7-question { padding: 20px 24px; }
+.h7-question .h7-ask { font-size: 1.15rem; line-height: 1.4; }
+.h7-helps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: -4px; }
+.h7-rw-main .h7-helps { margin-top: 10px; }
+.h7-help { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 0; border-radius: 999px; background: rgb(255 255 255 / 85%); color: var(--navy); font: inherit; font-size: .9rem; font-weight: 600; cursor: var(--cursor-hand, pointer); box-shadow: 0 2px 8px rgb(15 35 78 / 10%); transition: background .15s, color .15s; }
+.h7-help .icon { color: var(--accent); }
+.h7-help:hover { background: #fff; color: var(--accent); }
+.h7-help:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; }
+.h7-rw-main .h7-help { background: #f1f4fa; box-shadow: none; }
+.h7-hint-win { margin: 0; color: var(--navy); font-size: 1.08rem; line-height: 1.55; }
