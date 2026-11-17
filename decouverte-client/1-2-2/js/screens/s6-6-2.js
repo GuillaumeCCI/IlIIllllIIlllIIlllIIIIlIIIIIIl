@@ -89,15 +89,16 @@
     const type = v(`rw${j}_t`);
     const res = window.ATELIER_COACH.judgeRewrite(r, v(`rw${j}_q`) || '', content.productWords);
     const label = id => ((types.find(t => t.id === id) || {}).label || '').toLowerCase();
-    const items = [];
-    res.found.forEach(i => items.push({ ok: true, text: `${cap(i.text)}.` }));
-    res.missing.forEach(i => items.push({ ok: false, text: `Il manque : ${i.text}.` }));
-    if (res.product) items.push({ ok: false, text: `Elle propose un produit ou une offre (« ${res.product} ») : une question de découverte n’en propose aucun.` });
-    if (res.forbidden) items.push({ ok: false, text: `${cap(r.forbidText)}.` });
+    // Les critères d'une bonne question, chacun rempli ou pas dans celle de l'apprenant.
+    const needs = r.ideas.map(i => ({ ok: res.found.includes(i), text: i.need || cap(i.text) }));
+    // Les autres remarques, en phrases complètes.
+    const notes = [];
+    if (res.product) notes.push(`Votre question propose un produit ou une offre (« ${res.product} ») : une question de découverte n’en propose aucun.`);
+    if (res.forbidden) notes.push(r.forbidText);
     const typeOk = r.type.includes(type);
-    if (!typeOk) items.push({ ok: false, text: `Le type attendu : ${r.type.map(label).join(' ou ')}.` });
-    if (!res.question && res.found.length) items.push({ ok: false, text: 'Terminez par un point d’interrogation.' });
-    return { tone: res.tone === 'ok' && !typeOk ? 'mid' : res.tone, items };
+    if (!typeOk) notes.push(`Vous l’avez classée « ${label(type)} » ; il fallait plutôt une question ${r.type.map(label).join(' ou ')}.`);
+    if (!res.question && res.found.length) notes.push('Pensez à la terminer par un point d’interrogation.');
+    return { tone: res.tone === 'ok' && !typeOk ? 'mid' : res.tone, needs, notes };
   }
   const rwAt = () => { const j = (D() ? D().rewrites : []).findIndex((_, i) => !yes(`rw${i}_ok`)); return j; };
 
@@ -421,7 +422,7 @@
     let after = `<div class="h7-actions">${kit.act('h7-rw-check', `${icon('check', { size: 18 })}<span>Comparer avec le corrigé</span>`, 'primary', `data-j="${j}"`)}</div>`;
     if (ok) {
       const cs = checks(j);
-      after = msgBox(cs.tone, `<ul class="h7-msg-checks">${cs.items.map(c => `<li><span class="h7-dot ${c.ok ? 'is-ok' : 'is-ko'}" aria-hidden="true"></span><span>${esc(c.text)}</span></li>`).join('')}</ul>
+      after = msgBox(cs.tone, `<p>Une bonne question, ici, devait :</p><ul class="h7-msg-checks">${cs.needs.map(c => `<li><span class="h7-dot ${c.ok ? 'is-ok' : 'is-ko'}" aria-hidden="true"></span><span>${esc(c.text)} <em class="h7-need-state ${c.ok ? 'is-ok' : 'is-ko'}">${c.ok ? 'C’est le cas dans la vôtre.' : 'Pas encore dans la vôtre.'}</em></span></li>`).join('')}</ul>${cs.notes.map(n => `<p class="h7-msg-note">${esc(n)}</p>`).join('')}
         <div class="h7-msg-model"><span>Des questions justes</span><p>${q(r.model)}</p>${(r.others || []).map(o => `<p>${q(o)}</p>`).join('')}</div>`)
         + (j < rws.length - 1 ? `<div class="h7-actions"><button type="button" class="button primary" data-act="h7-rw" data-i="${j + 1}"><span>Moment suivant</span>${icon('arrowRight', { size: 16 })}</button></div>` : '');
     }
@@ -485,14 +486,14 @@
     const d = D();
     if (id === 'good') {
       const strong = d.moments.filter(m => /^(Point fort|Utile)/.test(m.why));
-      return `<p class="h7-aside-h">Les questions qui ont marché</p><ul>${strong.map(m => `<li><span class="h7-built-name">${esc(m.label)}</span>${q(m.q)}</li>`).join('')}</ul>`;
+      return `<p class="h7-aside-h"><span>Pour vous aider</span>Les questions qui ont marché</p><ul>${strong.map(m => `<li><span class="h7-built-name">${esc(m.label)}</span>${q(m.q)}</li>`).join('')}</ul>`;
     }
     if (id === 'diag') {
       const left = d.sort.filter(x => x.kind !== 'explicite').map(x => x.text);
-      return `<p class="h7-aside-h">Les moments qui ont fermé la découverte</p><ul>${d.rewrites.map(r => `<li><span class="h7-built-name">${esc(labelOf(r.n))}</span>${esc(r.what)}</li>`).join('')}</ul>
+      return `<p class="h7-aside-h"><span>Pour vous aider</span>Les moments qui ont fermé la découverte</p><ul>${d.rewrites.map(r => `<li><span class="h7-built-name">${esc(labelOf(r.n))}</span>${esc(r.what)}</li>`).join('')}</ul>
         <p class="h7-aside-h">Ce qui n’a pas été exploité</p><ul>${left.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`;
     }
-    return `<p class="h7-aside-h">Vos questions de remplacement</p><ul>${d.rewrites.map((r, j) => `<li><span class="h7-built-name">${esc(labelOf(r.n))}</span>${q(v(`rw${j}_q`) || '')}</li>`).join('')}</ul>`;
+    return `<p class="h7-aside-h"><span>Pour vous aider</span>Vos questions de remplacement</p><ul>${d.rewrites.map((r, j) => `<li><span class="h7-built-name">${esc(labelOf(r.n))}</span>${q(v(`rw${j}_q`) || '')}</li>`).join('')}</ul>`;
   }
   function ficheStep() {
     const filled = fiche.map(r => kit.filled(v(`f_${r.id}`)));
@@ -509,7 +510,7 @@
             ${ex.field(`f_${r.id}`, fill(r.label), { placeholder: fill(r.placeholder), max: 900, rows: 6, hideLabel: true })}
             <div class="d5-floor-nav">${i > 0 ? `<button type="button" class="text-button with-icon" data-act="h7-fiche" data-i="${i - 1}">${icon('arrowLeft', { size: 16 })}<span>Rubrique précédente</span></button>` : '<span></span>'}${i < fiche.length - 1 ? `<button type="button" class="button secondary" data-act="h7-fiche" data-i="${i + 1}"><span>Rubrique suivante</span>${icon('arrowRight', { size: 16 })}</button>` : ''}</div>
           </div>
-          <aside class="h7-aside"><p class="k-label">Pour vous aider</p>${ficheHelp(r.id)}</aside>
+          <aside class="h7-aside">${ficheHelp(r.id)}</aside>
         </div>
       </section>
       ${core.errorsBox()}

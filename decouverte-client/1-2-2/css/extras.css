@@ -2113,3 +2113,20 @@ p.h7-question { margin-bottom: 12px; }
 .h7-way .h7-trans { width: 100%; }
 @media (prefers-reduced-motion: reduce) { .h7-map-pawn, .h7-map-done, .h7-map-pawn::after { animation: none; } }
 @media (max-width: 960px) { .h7-way { grid-template-columns: 1fr; } }
+
+/* 6.2 · Retour des réécritures : chaque critère, rempli ou pas. */
+.h7-need-state { display: block; font-style: normal; font-size: .88rem; font-weight: 600; }
+.h7-need-state.is-ok { color: #2a8f8f; }
+.h7-need-state.is-ko { color: #b07a1c; }
+.h7-msg-note { color: #5a6584; font-size: .95rem; }
+
+/* 6.2 · La fiche : même disposition, panneau d’aide plus léger. */
+.h7-fiche-sub { color: #5a6584; font-size: .95rem; }
+.h7-aside { padding: 18px 20px; background: #fff; box-shadow: inset 0 0 0 1px #e7ebf4; font-size: .9rem; }
+.h7-aside-h { display: grid; gap: 2px; margin: 0 0 6px; color: var(--navy); font-size: 1rem; font-weight: 800; }
+.h7-aside-h span { color: var(--accent); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h7-aside ul + .h7-aside-h { margin-top: 16px; }
+.h7-aside ul { gap: 0; }
+.h7-aside li { padding: 9px 0; border-bottom: 1px solid #edf0f6; color: #3a4a7a; line-height: 1.45; }
+.h7-aside li:last-child { border-bottom: 0; }
+.h7-aside .h7-built-name { margin-bottom: 2px; color: var(--muted); font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
