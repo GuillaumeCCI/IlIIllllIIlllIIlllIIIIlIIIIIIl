@@ -1945,3 +1945,18 @@ p.h7-question { margin-bottom: 12px; }
 .h7-write textarea { font-size: 1.05rem; line-height: 1.5; }
 .h7-write .h7-actions { margin-top: 0; }
 .h6-gfb-foot:has(.button.secondary) { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+/* 6.2 · Les moments décisifs, plus beaux : même grille, cartes blanches
+ * aérées, texte en graisse normale, étiquette en bas, pastille à cocher. */
+.h7-count { display: inline-flex; align-items: baseline; gap: 4px; margin: 6px 0 16px; padding: 4px 12px; border-radius: 999px; background: #eef2fc; color: #4c5a80; font-size: .9rem; }
+.h7-count b { color: var(--accent); font-size: 1rem; }
+.h7-dms { gap: 14px; }
+.h7-dm { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 16px 52px 16px 18px; border: 1.5px solid #e3e8f2; border-radius: 16px; background: #fff; box-shadow: 0 2px 8px rgb(15 35 78 / 5%); transition: border-color .15s, background .15s, box-shadow .15s; }
+.h7-dm:hover:not(:disabled) { background: #fff; border-color: #b9c8ee; box-shadow: 0 6px 16px rgb(15 35 78 / 9%); }
+.h7-dm.is-on { border-color: var(--accent); background: #f3f7ff; box-shadow: 0 6px 16px rgb(18 73 216 / 12%); }
+.h7-dm-tick { position: absolute; top: 14px; right: 14px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; box-shadow: inset 0 0 0 2px #c6d2ee; color: #fff; background: #fff; transition: background .15s, box-shadow .15s; }
+.h7-dm.is-on .h7-dm-tick { background: var(--accent); box-shadow: none; }
+.h7-dm-q { color: #24305a; font-weight: 400; font-size: 1rem; line-height: 1.5; }
+.h7-dm-diag { margin-top: auto; padding: 3px 10px; background: #eef2fc; color: #4c5a80; font-size: .78rem; font-weight: 600; }
+.h7-dm.is-on .h7-dm-diag { background: #dfe7fb; }
+.h7-dm-mark { margin-top: 2px; }

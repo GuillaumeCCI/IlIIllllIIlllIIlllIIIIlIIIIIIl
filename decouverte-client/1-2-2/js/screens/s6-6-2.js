@@ -387,6 +387,7 @@
       const tone = done ? dmTone(m.n) : '';
       const mark = done && (on || tone === 'ok') ? `<span class="h7-dm-mark tone-${on ? tone : 'miss'}">${on ? (tone === 'ok' ? `${icon('check', { size: 14, strokeWidth: 3 })}Décisif` : tone === 'mid' ? 'Se défend' : `${icon('close', { size: 14, strokeWidth: 3 })}Pas décisif`) : 'À choisir'}</span>` : '';
       return `<button type="button" class="h7-dm ${on ? 'is-on' : ''} ${done ? 'is-done' : ''}" data-act="h7-dm" data-n="${m.n}" aria-pressed="${on}" ${done ? 'disabled' : ''}>
+          <span class="h7-dm-tick" aria-hidden="true">${on ? icon('check', { size: 14, strokeWidth: 3 }) : ''}</span>
           <span class="h7-dm-q">${q(m.q)}</span>
           <span class="h7-dm-diag">${esc(m.choices[m.best].text.split(' : ')[0])}</span>
           ${mark}
