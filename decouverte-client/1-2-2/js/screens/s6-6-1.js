@@ -93,6 +93,8 @@
   const decor = img(client.decor);
   const picture = `<img class="h6-picture" src="${img(client.picture)}" alt="${esc(client.name)}, assise dans l’espace conseil, se tient l’épaule droite.">`;
   const q = text => `«&nbsp;${esc(text)}&nbsp;»`;
+  // « Lui demander… » → « lui demander… », pour « Vous décidez de lui demander… ».
+  const lower = text => text.charAt(0).toLowerCase() + text.slice(1);
   const delay = t => `style="animation-delay:${t.toFixed(2)}s"`;
   const said = (text, t = 0) => `<div class="h6-said h6-in" ${delay(t)}><img src="${portrait}" alt="" aria-hidden="true"><p><span>${esc(client.name)}</span>${q(text)}</p></div>`;
   const next = (label, act, t = 0, extra = '') => `<button type="button" class="button primary h6-next h6-in" ${delay(t)} data-act="${act}" ${extra}><span>${esc(label)}</span>${icon('arrowRight', { size: 18 })}</button>`;
@@ -168,7 +170,7 @@
       : `<div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${img(client.seller)}" alt="" aria-hidden="true"><p class="h6-who-name">Vous, Antoine</p><p class="h6-who-ask">${esc(ask)}</p></div>`;
     return `<div class="h6-choose">
         ${left}
-        <div class="h6-options" role="group" aria-label="${esc(title)}">${order.map((id, n) => `<button type="button" class="h6-option h6-in" ${delay(0.2 + n * 0.15)} data-act="${act}" data-id="${id}" ${data} ${n === 0 && field ? `data-field="${field}"` : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(choices[id].text)}</span></button>`).join('')}</div>
+        <div class="h6-options" role="group" aria-label="${esc(title)}">${order.map((id, n) => `<button type="button" class="h6-option h6-in" ${delay(0.2 + n * 0.15)} data-act="${act}" data-id="${id}" ${data} ${n === 0 && field ? `data-field="${field}"` : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(choices[id].intent || choices[id].text)}</span></button>`).join('')}</div>
       </div>`;
   }
 
@@ -216,13 +218,13 @@
       const c = s.choices[id];
       const ok = id === s.best;
       const tone = ok ? 'ok' : c.points < 0 ? 'ko' : 'mid';
-      body = feedbackCard(tone, ok ? s.why : c.note, { better: ok ? '' : s.choices[s.best].text, points: c.points, button: next(k === steps.length - 1 ? 'Voir la fin de l’entretien' : 'Continuer', 'h6-flag', 0.5, `data-name="ack${k}"`) });
+      body = feedbackCard(tone, ok ? s.why : c.note, { better: ok ? '' : `${s.choices[s.best].intent}, en lui demandant : « ${s.choices[s.best].text} »`, betterLabel: 'Il valait mieux', quoted: false, points: c.points, button: next(k === steps.length - 1 ? 'Voir la fin de l’entretien' : 'Continuer', 'h6-flag', 0.5, `data-name="ack${k}"`) });
     } else if (b.kind === 'reply') {
       // Comme l'exemple (« Votre réponse : ») : vous à gauche, votre question
       // à droite, et dessous la réaction de la cliente.
       const c = s.choices[choiceAt(k)];
       body = `<div class="h6-choose">
-          <div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${img(client.seller)}" alt="" aria-hidden="true"><p class="h6-who-name">Vous, Antoine</p><p class="h6-who-ask">Vous lui demandez…</p></div>
+          <div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${img(client.seller)}" alt="" aria-hidden="true"><p class="h6-who-name">Vous, Antoine</p><p class="h6-who-ask">Vous décidez de ${esc(lower(c.intent || ''))}</p></div>
           <div class="h6-card h6-answer h6-in" ${delay(0.15)}>
             <p class="h6-answer-label">Votre réponse :</p>
             <p class="h6-answer-q">${q(c.text)}</p>
@@ -324,10 +326,10 @@
       const verdict = ok ? 'Absolument : c’est la meilleure question.' : c.points < 0 ? 'Réponse à éviter.' : 'Pas tout à fait…';
       return `<div class="h6-path-row">
           <p class="h6-path-n">Étape ${k + 1}</p>
-          <div class="h6-path-you"><p class="h6-pick ${tone}"><span aria-hidden="true">${ok ? '✓' : c.points < 0 ? '✗' : '–'}</span>${q(c.text || '')}</p>
+          <div class="h6-path-you"><p class="h6-pick ${tone}"><span aria-hidden="true">${ok ? '✓' : c.points < 0 ? '✗' : '–'}</span><span><b>${esc(c.intent || '')}</b><span class="h6-pick-q">${q(c.text || '')}</span></span></p>
             <p class="h6-verdict ${tone}">${verdict}<span>${c.points > 0 ? '+2' : c.points < 0 ? '−2' : '0'} sur la jauge</span></p>
             <p class="h6-explain">${esc(ok ? s.why : c.note || '')}</p></div>
-          <div class="h6-path-best">${ok ? '' : `<p class="h6-best-label">La meilleure question</p><p class="h6-best-q">${q(s.choices[s.best].text)}</p><p class="h6-explain">${esc(s.why)}</p>`}</div>
+          <div class="h6-path-best">${ok ? '' : `<p class="h6-best-label">La meilleure question</p><p class="h6-best-q"><b>${esc(s.choices[s.best].intent)}</b><span class="h6-pick-q">${q(s.choices[s.best].text)}</span></p><p class="h6-explain">${esc(s.why)}</p>`}</div>
         </div>`;
     }).join('');
     const mapRows = map.map(r => {
