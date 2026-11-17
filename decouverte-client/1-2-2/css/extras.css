@@ -2455,3 +2455,4 @@ p.h7-question { margin-bottom: 12px; }
 .h8-qitem.is-on { background: #e6edff; border-color: #e6edff; color: #1b2370; font-weight: 700; box-shadow: 0 4px 14px rgb(18 73 216 / 12%); }
 .h8-qitem.is-on .h8-qtick { background: var(--accent); box-shadow: none; }
 .h8-qitem.is-on:hover:not(:disabled) { background: #dde6ff; }
+.h8-bank dd.h8-lines { white-space: pre-line; }

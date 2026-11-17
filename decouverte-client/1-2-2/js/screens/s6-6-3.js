@@ -547,7 +547,11 @@
         <p class="k-label">Un exemple · magasin d’électroménager</p>
         <p class="h7-review-line">Voici la banque d’un vendeur en électroménager. Votre métier est sans doute différent, et il n’y a pas une seule bonne banque.</p>
         <p class="h7-review-line">Ne comparez donc pas les produits : comparez la façon de poser les questions (ouvertes pour faire parler, précises pour vérifier, une pour faire choisir).</p>
-        ${content.model.map(m => `<div class="h8-bank-block"><p class="h8-bank-h">${esc(m.title)}</p><p class="h7-review-line">${esc(m.text)}</p></div>`).join('')}
+        <div class="h8-bank h8-bank-pair">${content.model.map(m => {
+          const who = situations.find(x => x.title === m.title);
+          const rows = m.text.split(' · ').map(part => { const k = part.indexOf(' : '); const val = t => { const x = t.replace(/» «/g, '»\n«'); return esc(x.charAt(0).toUpperCase() + x.slice(1)); }; return k > 0 ? `<div><dt>${esc(part.slice(0, k))}</dt><dd class="h8-lines">${val(part.slice(k + 3))}</dd></div>` : `<div><dd>${esc(part)}</dd></div>`; }).join('');
+          return `<div class="h8-bank-block"><p class="h8-bank-h h8-bank-who">${who ? `<img src="${img(who.face)}" alt="" aria-hidden="true">` : ''}<span>${esc(m.title)}</span></p><dl>${rows}</dl></div>`;
+        }).join('')}</div>
       </section>
       <section class="k-panel h6-review">
         <p class="a4-review-head"><span class="k-label">Mon auto-évaluation</span><span class="a4-review-count"><b>${yesCount}</b> / ${content.selfCheck.length} critères cochés « Oui »</span></p>
