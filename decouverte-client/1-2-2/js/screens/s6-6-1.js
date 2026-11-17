@@ -153,7 +153,7 @@
     const s = steps[k];
     let body = '';
     if (b.kind === 'warm') {
-      body = `<div class="h6-card h6-banner h6-in">${picture}<div><p class="k-label">Avant de commencer</p><p>${esc(client.context)}</p></div></div>
+      body = `<div class="h6-card h6-banner is-text h6-in"><div><p class="k-label">Avant de commencer</p><p>${esc(client.context)}</p></div></div>
         ${choiceBlock({ title: 'Question d’accroche', ask: warmup.question, order: warmup.order, choices: warmup.choices, act: 'h6-warm', field: 'warm' })}`;
     } else if (b.kind === 'warm-fb') {
       const id = v('warm');
