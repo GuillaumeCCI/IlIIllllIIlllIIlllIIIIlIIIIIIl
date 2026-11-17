@@ -78,6 +78,8 @@
   /* ── Les moments décisifs ────────────────────────────────────────────── */
   const picked = () => (Array.isArray(v('dm')) ? v('dm') : []);
   const dmTone = n => (D().decisive.expected.includes(n) ? 'ok' : D().decisive.acceptable.includes(n) ? 'mid' : 'ko');
+  // La phrase du résultat, à partir des 3 choix de l'apprenant.
+  const dmSentence = n => (n === 0 ? 'Aucun de vos 3 choix n’est un moment décisif.' : n === 3 ? 'Vos 3 choix sont les bons : ce sont bien les 3 moments décisifs.' : `Sur vos 3 choix, ${n} ${n > 1 ? 'sont des moments décisifs' : 'est un moment décisif'}.`);
   const dmScore = () => picked().filter(n => D().decisive.expected.includes(n)).length;
 
   /* ── Les réécritures : la correction ─────────────────────────────────── */
@@ -393,7 +395,7 @@
         <p class="a4-role">Choisissez les trois moments où le questionnement de ${esc(d.seller.name)} a ouvert ou fermé la découverte. Pas les plus visibles : ceux qui ont le plus pesé.</p>
         ${done ? '' : `<p class="h7-count" aria-live="polite"><b>${chosen.length}</b> / 3 choisis</p>`}
         <div class="h7-dms">${cards}</div>
-        ${done ? msgBox(tone, `<p>Vous avez trouvé ${score} des 3 moments décisifs.</p><ul class="h7-msg-list">${list}</ul>`)
+        ${done ? msgBox(tone, `<p>${dmSentence(score)} Les moments attendus :</p><ul class="h7-msg-list">${list}</ul>`)
           : `<div class="h7-actions">${kit.act('h7-dm-check', `${icon('check', { size: 18 })}<span>Valider mes 3 moments</span>`, 'primary', chosen.length === 3 ? '' : 'disabled')}</div>`}
       </section>
       ${core.errorsBox()}
@@ -556,7 +558,7 @@
         <p class="k-label">Votre parcours de coach</p>
         <ul class="h7-path">
           <li><span>L’entretien</span>${rightFirst()} moment${rightFirst() > 1 ? 's' : ''} sur ${d.moments.length} bien analysé${rightFirst() > 1 ? 's' : ''} du premier coup</li>
-          <li><span>Les moments décisifs</span>${dmScore()} trouvé${dmScore() > 1 ? 's' : ''} sur 3</li>
+          <li><span>Les moments décisifs</span>${dmScore()} bien choisi${dmScore() > 1 ? 's' : ''} sur 3</li>
           <li><span>Vos réécritures</span>${rwOk} question${rwOk > 1 ? 's' : ''} juste${rwOk > 1 ? 's' : ''} sur 3</li>
           <li><span>Ce qu’il fallait savoir</span>${sortScore()} information${sortScore() > 1 ? 's' : ''} sur ${d.sort.length} bien classée${sortScore() > 1 ? 's' : ''}, priorités ${rankRight() ? 'dans le bon ordre' : 'à revoir'}</li>
         </ul>
