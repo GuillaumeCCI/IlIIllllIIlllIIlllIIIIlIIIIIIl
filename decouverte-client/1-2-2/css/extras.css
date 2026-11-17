@@ -2537,3 +2537,10 @@ button.h8-brow:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; 
 .h8-sum-part.is-more { background: #f6f8fc; }
 .h8-sum-part.is-more span { color: #4c5a80; }
 .h8-sum-part ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; color: #24305a; line-height: 1.45; }
+
+/* 6.3 · Page de transition avant chaque client. */
+.h8-cintro { display: grid; justify-items: center; gap: 8px; max-width: 560px; margin: 0 auto; padding: 36px 40px 32px; border-radius: 24px; background: #fff; box-shadow: 0 14px 40px rgb(15 35 78 / 12%); text-align: center; }
+.h8-cintro-face { width: 150px; height: 150px; margin-bottom: 8px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 6px #fbf3e4, 0 10px 24px rgb(15 35 78 / 14%); }
+.h8-cintro-tag { margin: 0; color: #2a8f8f; font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.h8-cintro-title { margin: 0; color: var(--navy); font-size: 1.6rem; font-weight: 800; line-height: 1.25; }
+.h8-cintro-line { margin: 2px 0 0; color: #4c5a80; font-size: 1.05rem; line-height: 1.5; }

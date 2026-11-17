@@ -226,6 +226,16 @@
     }
     const s = list[j];
     const r = s.reflex;
+    // Une page de transition avant chaque client, juste pour le présenter.
+    if (!yes(`cl${j}`) && !choiceAt(j)) {
+      return stage(`<div class="h8-cintro">
+            <img class="h8-cintro-face h6-in" src="${img(s.face)}" alt="" aria-hidden="true">
+            <p class="h8-cintro-tag h6-in" ${delay(0.15)}>Client ${j + 1} sur ${N}</p>
+            <p class="h8-cintro-title h6-in" ${delay(0.25)}>${esc(s.title)}</p>
+            <p class="h8-cintro-line h6-in" ${delay(0.35)}>${esc(s.line)}</p>
+          </div>
+          <div class="h6-stage-foot">${next('Rencontrer ce client', 'h8-client', 0.6, `data-j="${j}"`)}</div>`);
+    }
     if (!choiceAt(j) || yes(`retry${j}`)) {
       const tried = yes(`retry${j}`) ? tries(j) : [];
       const opts = `<div class="h6-options" role="group" aria-label="Vos réponses possibles">${r.order.map((id, n) => `<button type="button" class="h6-option h6-in ${tried.includes(id) ? 'is-tried' : ''}" ${delay(0.2 + n * 0.15)} data-act="h8-pick" data-j="${j}" data-id="${id}" ${tried.includes(id) ? 'disabled aria-disabled="true"' : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(r.choices[id].text)}</span>${tried.includes(id) ? '<span class="h6-cost is-tried">Déjà essayé</span>' : ''}</button>`).join('')}</div>`;
@@ -682,6 +692,7 @@
       const check = document.querySelector('[data-act="h8-sit-check"]');
       if (check) check.disabled = nextIds.length !== N;
     },
+    'h8-client': control => { advance(`cl${control.dataset.j}`); window.scrollTo({ top: 0, behavior: 'instant' }); },
     'h8-sit-check': () => { if (chosenIds().length === N) { advance('sitok'); showMsg(); } },
     'h8-pick': control => {
       const j = Number(control.dataset.j);
