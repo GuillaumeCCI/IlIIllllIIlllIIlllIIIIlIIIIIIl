@@ -18,7 +18,7 @@ motivations d'achat » (≈ 10 min), à suivre après la grille « Début ».
 | s4 · Les motivations d'achat | A3 | 4.1 Les mots qui trahissent (8 phrases) · 4.2 Retour chez les Benali | ✅ fait |
 | s5 · Préparer et mener la découverte | A4, A5 | 5.1 Le guide qui fait parler (Yanis / Clara) · 5.2 Votre guide, votre découverte (client virtuel) | ✅ fait (rendu vérifié en capture) |
 | s9 · Faire le point | grille « Fin » + « Ma progression » | 9.1 Mon point d'arrivée | ✅ fait |
-| s6 · Pour aller plus loin | synthèse optionnelle, option 2 | 6.1 L’entretien dont vous êtes le héros (scénario à jauge, carte des besoins, grille) | ✅ fait (17/11) · options 1 et 3 non faites |
+| s6 · Pour aller plus loin | synthèse optionnelle, options 2 et 1 | 6.1 L’entretien dont vous êtes le héros (scénario à jauge, carte des besoins, grille) · 6.2 Le coach (dossiers A / B) | 6.1 ✅ fait (17/11) · 6.2 ✅ fait (17/11), images provisoires · option 3 non faite |
 
 ## Journal
 
@@ -59,6 +59,16 @@ Rejouer une étape (17/11/2026) : après un choix moins bon, le retour propose �
 Échanges plus crédibles (17/11/2026) : répliques de Mme Rivière plus longues et plus naturelles (hésitations, détails concrets : kiné, double file, location, « je suis à mon compte »), y compris après un choix moins bon ; à l'étape 6, elle dit elle-même « je ne veux plus me retrouver à pied » (la voiture de prêt reste cohérente sur tous les chemins) ; fins plus naturelles. Questions d'Antoine et intentions inchangées (équilibre des longueurs conservé). Bulle d'aide au survol / au clavier sur la jauge et le chrono.
 
 Idées en attente (validées en principe, pas faites) : rendre l'entretien rejouable (banque d'options, réactions variées), « Voilà ce que ça donne… », conséquences qui reviennent plus loin.
+
+## État de 6.2 « Le coach » (17/11/2026)
+
+Option 1 de la fiche, écran `js/screens/s6-6-2.js`, contenu `ATELIER_S6['6.2']` dans `js/content-s6.js`, style « 6.2 · Le coach » (classes h7-) dans `css/extras.css`. Même mise en scène que 6.1 (décor flouté, une carte à la fois, retours de la formatrice, nouvel essai après un choix moins juste, « Relire l’entretien »).
+
+Six étapes : 1. L’entretien : choix du dossier (A Camille / Leroy, magasin de cuisines ; B Karim / M. Vidal, HÔTEL quatre étoiles à la place de l’établissement pour personnes âgées, décision de l’utilisateur), accroche « règle d’or du coach », message du collègue, puis M1 à M10 : le moment → votre diagnostic (3 propositions) → retour ; indice pour M1-M5, plus rien ensuite ; jauge « Diagnostics justes » (premier essai). 2. Les 3 moments décisifs (attendus A : M4, M8, M10, M3 se défend ; B : M5, M6, M8, M10 se défend). 3. Vos réécritures des 3 moments attendus : ce qui s’est passé, votre question, son type ; repères automatiques (point d’interrogation, aucun mot de produit, type du corrigé, début de question fermée) puis corrigé ; indice, indice plus court, aucun. 4. Ce qu’il fallait savoir : 7 informations à classer (explicite / implicite / motivation), puis la hiérarchie en 3 clics. 5. La fiche de coaching : rubriques 1, 2 et 5 rédigées (3 et 4 reprises des étapes 3 et 4). 6. La grille (7 critères, dont « Pertinence du choix »). Corrigé : diagnostics, moments, réécritures, classement, fiche face à l’exemple, « Copier ma fiche ».
+
+Sans biais (vérifié par script) : diagnostics A et B, au moins une mauvaise aussi longue 5 et 6 fois, bonne la plus courte 4 et 3 fois, un peu plus longue 1 fois, jamais nettement plus longue ; positions 4/3/3.
+
+Images PROVISOIRES (à remplacer par celles de l’utilisateur) : Camille = visages/laura, Karim = visages/antoine, M. Leroy = visages/m-benali, Mme Leroy = clients/client-cheveux-gris, M. Vidal = clients/client-tasse, décors = dialogues/magasin (A) et dialogues/entreprise (B).
 
 ## Reprise prévue (17/11/2026)
 

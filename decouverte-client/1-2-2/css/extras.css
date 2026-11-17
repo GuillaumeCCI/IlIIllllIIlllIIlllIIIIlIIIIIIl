@@ -1641,3 +1641,124 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 #main .h6-replay-list .h6-scene { margin: 2px 0; padding: 6px 12px; border-radius: 10px; background: #eceff7; color: #5a6584; font-size: .85rem; line-height: 1.45; text-align: left; }
 .h6-step-sep { list-style: none; display: flex; align-items: center; gap: 10px; margin: 10px 0 2px; color: #7a86a6; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .h6-step-sep::before, .h6-step-sep::after { content: ''; flex: 1; height: 1px; background: #dde3ef; }
+
+/* ══ 6.2 · Le coach ═════════════════════════════════════════════════════ */
+/* Le choix du dossier : deux grandes cartes, les visages en tête. */
+.h7-dossiers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; width: min(100%, 980px); }
+.h7-dossier { display: grid; align-content: start; justify-items: start; gap: 8px; padding: 22px 24px; border: 0; border-radius: 18px; background: #fff; color: var(--navy); font: inherit; text-align: left; cursor: var(--cursor-hand, pointer); box-shadow: 0 10px 26px rgb(15 35 78 / 12%), 0 3px 0 rgb(18 73 216 / 85%); transition: transform .15s ease, box-shadow .15s ease; }
+.h7-dossier:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgb(15 35 78 / 16%), 0 3px 0 rgb(18 73 216 / 85%); }
+.h7-dossier:focus-visible { outline: 3px solid #ff936b; outline-offset: 3px; }
+.h7-dossier-faces { display: flex; margin-bottom: 4px; }
+.h7-dossier-faces img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px #fff, 0 4px 10px rgb(15 35 78 / 15%); }
+.h7-dossier-faces img + img { margin-left: -12px; }
+.h7-dossier-tab { color: var(--accent); font-size: .76rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h7-dossier-title { font-size: 1.3rem; line-height: 1.2; }
+.h7-dossier-place { color: var(--muted); font-weight: 600; }
+.h7-dossier-text { color: #3a4a7a; line-height: 1.5; }
+
+/* Le message du collègue, la règle d’or, l’indice. */
+.h6-who-role { margin: 0; color: var(--muted); font-weight: 600; }
+.h7-context { margin: 10px 0 0; color: #3a4a7a; line-height: 1.5; }
+.h7-rule { display: flex; align-items: flex-start; gap: 8px; margin: 12px 0 0; padding: 10px 14px; border-radius: 12px; background: #eef7f7; color: #1d5c5c; font-weight: 600; line-height: 1.45; }
+.h7-rule .icon { flex: none; margin-top: 3px; color: #2a8f8f; }
+.h7-ask { margin: 12px 0 0; width: 100%; color: var(--navy); font-size: 1.1rem; font-weight: 800; text-align: left; }
+.h7-hint { display: flex; align-items: flex-start; gap: 8px; margin: 6px 0 0; width: 100%; padding: 8px 12px; border-radius: 10px; background: #fff7e8; color: #7a5310; font-size: .92rem; line-height: 1.45; text-align: left; }
+.h7-hint .icon { flex: none; margin-top: 2px; }
+.h7-hint.is-none { background: #f1f4fa; color: var(--muted); font-style: italic; }
+.h7-recap .h6-who-mini:first-child { border-top: 0; padding-top: 0; margin-top: 0; }
+.h7-moment .h6-answer-reply + .h6-answer-reply { margin-top: 10px; }
+
+/* Les panneaux des étapes 2 à 5. */
+.h7-panel .a4-role { margin-bottom: 6px; }
+.h7-count { margin: 4px 0 14px; color: var(--muted); }
+.h7-count b { color: var(--navy); font-size: 1.15rem; }
+.h7-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+.h7-verdict { margin-top: 16px; padding: 14px 18px; border-left: 4px solid var(--tone, #2a8f8f); border-radius: 4px 12px 12px 4px; background: #f3f6fb; color: var(--navy); line-height: 1.55; }
+.h7-verdict p { margin: 0; }
+.h7-verdict.tone-ok { --tone: #2a8f8f; background: #eef7f7; }
+.h7-verdict.tone-mid { --tone: #5a67b8; background: #f0f2fb; }
+.h7-verdict.tone-ko { --tone: #a83d74; background: #fbf0f5; }
+.h7-verdict .h7-rank-model { margin-top: 6px; color: var(--muted); }
+
+/* Les moments décisifs : dix cartes à cocher. */
+.h7-dms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.h7-dm { position: relative; display: grid; gap: 6px; padding: 14px 16px 14px 60px; border: 2px solid transparent; border-radius: 14px; background: #f6f8fc; color: var(--navy); font: inherit; text-align: left; cursor: var(--cursor-hand, pointer); transition: background .15s, border-color .15s; }
+.h7-dm:hover:not(:disabled) { background: #ecf1fb; }
+.h7-dm.is-on { border-color: var(--accent); background: #fff; box-shadow: 0 6px 16px rgb(18 73 216 / 12%); }
+.h7-dm:disabled { cursor: default; }
+.h7-dm:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; }
+.h7-dm-n { position: absolute; left: 14px; top: 14px; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #dfe6f6; color: var(--navy); font-weight: 800; font-size: .9rem; }
+.h7-dm.is-on .h7-dm-n { background: var(--accent); color: #fff; }
+.h7-dm-q { font-weight: 600; line-height: 1.45; }
+.h7-dm-diag { justify-self: start; padding: 2px 10px; border-radius: 999px; background: #e7ebf4; color: #4c5a80; font-size: .8rem; font-weight: 700; }
+.h7-dm-mark { justify-self: start; display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; color: #fff; font-size: .8rem; font-weight: 800; }
+.h7-dm-mark.tone-ok { background: #2a8f8f; }
+.h7-dm-mark.tone-mid { background: #5a67b8; }
+.h7-dm-mark.tone-ko { background: #a83d74; }
+.h7-dm-mark.tone-miss { background: #fff; color: #2a8f8f; box-shadow: inset 0 0 0 2px #2a8f8f; }
+.h7-dm-why { color: #3a4a7a; font-size: .92rem; line-height: 1.45; }
+
+/* Les réécritures : le moment à gauche, votre version à droite. */
+.h7-rw { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 22px; margin-top: 14px; align-items: start; }
+.h7-rw-moment { display: grid; gap: 10px; padding: 16px; border-radius: 14px; background: #f6f8fc; }
+.h7-rw-main { display: grid; gap: 14px; }
+.h7-rw-main .fm-field { margin: 0; }
+.h7-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.h7-chip { padding: 8px 14px; border: 0; border-radius: 999px; background: #fff; color: var(--accent); font: inherit; font-size: .92rem; font-weight: 700; cursor: var(--cursor-hand, pointer); box-shadow: inset 0 0 0 1.5px #c6d2ee; transition: background .15s, box-shadow .15s; }
+.h7-chip:hover:not(:disabled) { background: #ecf4ff; }
+.h7-chip.is-on { background: var(--accent); color: #fff; box-shadow: none; }
+.h7-chip.is-answer:not(.is-on) { box-shadow: inset 0 0 0 2px #2a8f8f; color: #1d5c5c; }
+.h7-chip:disabled { cursor: default; }
+.h7-chip:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; }
+.h7-checks ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; }
+.h7-checks li { display: flex; align-items: flex-start; gap: 8px; line-height: 1.45; }
+.h7-checks li > span { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: #fff; }
+.h7-checks li.is-ok > span { background: #2a8f8f; }
+.h7-checks li.is-ko > span { background: #c98a1b; }
+.h7-model { padding: 14px 18px; border-left: 4px solid #2a8f8f; border-radius: 4px 12px 12px 4px; background: #eef7f7; }
+.h7-model p { margin: 4px 0 0; line-height: 1.5; }
+.h7-model-what { color: #3a4a7a; }
+.h7-model-q { color: #1d5c5c; font-weight: 700; }
+.h7-model-type { color: var(--muted); font-size: .9rem; }
+
+/* Ce qu’il fallait savoir : une ligne par information, trois choix. */
+.h7-sort { display: grid; gap: 10px; }
+.h7-sort-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; align-items: center; padding: 12px 16px; border-radius: 12px; background: #f6f8fc; border-left: 4px solid transparent; }
+.h7-sort-row.is-ok { border-left-color: #2a8f8f; }
+.h7-sort-row.is-ko { border-left-color: #a83d74; }
+.h7-sort-text { margin: 0; font-weight: 700; color: var(--navy); }
+.h7-sort-why { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 6px; margin: 0; color: #3a4a7a; font-size: .92rem; line-height: 1.45; }
+.h7-sort-why .icon { flex: none; margin-top: 3px; }
+.h7-sort-row.is-ok .h7-sort-why .icon { color: #2a8f8f; }
+.h7-sort-row.is-ko .h7-sort-why .icon { color: #a83d74; }
+.h7-rank { margin-top: 22px; padding-top: 18px; border-top: 1px solid #e3e8f2; }
+.h7-rank-pool { display: grid; gap: 10px; margin-top: 10px; }
+.h7-rank-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 0; border-radius: 12px; background: #fff; color: var(--navy); font: inherit; font-weight: 600; text-align: left; cursor: var(--cursor-hand, pointer); box-shadow: inset 0 0 0 1.5px #c6d2ee; }
+.h7-rank-item:hover:not(:disabled) { background: #ecf4ff; }
+.h7-rank-item.is-on { box-shadow: inset 0 0 0 2px var(--accent); }
+.h7-rank-item:disabled { cursor: default; }
+.h7-rank-n { display: grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 50%; background: #e7ebf4; color: var(--navy); font-weight: 800; }
+.h7-rank-item.is-on .h7-rank-n { background: var(--accent); color: #fff; }
+
+/* La fiche : ce qui est déjà construit, à gauche. */
+.h7-built { display: grid; gap: 6px; padding: 4px 2px; color: var(--navy); }
+.h7-built-h { margin: 8px 0 0; font-weight: 800; }
+.h7-built ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; line-height: 1.45; font-size: .94rem; }
+.h7-built-q { color: var(--accent); }
+.h7-transcript { margin-top: 10px; }
+.h7-transcript > summary { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 700; cursor: var(--cursor-hand, pointer); list-style: none; }
+.h7-transcript > summary::-webkit-details-marker { display: none; }
+.h7-transcript[open] > .d5-thread { margin-top: 10px; max-height: 50vh; overflow-y: auto; }
+.h7-panel > .h7-rule { margin: 0 0 14px; }
+
+/* Le corrigé. */
+.h7-review-line { margin: 6px 0 0; line-height: 1.55; color: var(--navy); }
+.h7-review-sort { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.h7-review-sort li { padding: 8px 12px; border-left: 4px solid #2a8f8f; border-radius: 4px 10px 10px 4px; background: #f6f8fc; line-height: 1.45; }
+.h7-review-sort li.is-ko { border-left-color: #a83d74; }
+.h7-review-sort li span { color: #3a4a7a; }
+
+@media (max-width: 860px) {
+  .h7-dossiers, .h7-dms, .h7-rw { grid-template-columns: 1fr; }
+  .h7-sort-row { grid-template-columns: 1fr; }
+}

@@ -78,7 +78,8 @@ window.ATELIER_CATALOG = {
       // Synthèse optionnelle de la fiche M1.2.2 (option 2).
       sourced: true,
       exercises: [
-        { id: '6.1', file: 's6-6-1', label: 'L’entretien dont vous êtes le héros', theme: 'blue' }
+        { id: '6.1', file: 's6-6-1', label: 'L’entretien dont vous êtes le héros', theme: 'blue' },
+        { id: '6.2', file: 's6-6-2', label: 'Le coach', theme: 'blue' }
       ]
     },
     {

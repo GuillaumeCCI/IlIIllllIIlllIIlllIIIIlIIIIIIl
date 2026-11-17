@@ -92,6 +92,19 @@ const CUSTOM = {
     c.map.forEach(r => e.setValue(`m_${r.id}`, r.model));
     c.selfCheck.forEach((_, i) => e.setValue(`self${i}`, 'oui'));
   },
+  // Synthèse (option 1, Le coach) : dossier A, les bons diagnostics, les moments attendus,
+  // les réécritures du corrigé, le bon classement, la fiche modèle, la grille.
+  's6-6-2': (e, c) => {
+    const d = c.dossiers.A;
+    e.setValue('dos', 'A'); e.setValue('warm', c.warmup.best); e.setValue('wok', true); e.setValue('intro', true);
+    d.moments.forEach((m, k) => { e.setValue(`seen${k}`, true); e.setValue(`c${k}`, m.best); e.setValue(`ack${k}`, true); });
+    e.setValue('dm', d.decisive.expected.slice()); e.setValue('dmok', true);
+    d.rewrites.forEach((r, j) => { e.setValue(`rw${j}_why`, r.what); e.setValue(`rw${j}_q`, r.model); e.setValue(`rw${j}_t`, r.type[0]); e.setValue(`rw${j}_ok`, true); });
+    d.sort.forEach(s => e.setValue(`sk_${s.id}`, s.kind)); e.setValue('sok', true);
+    e.setValue('rk', d.rank.items.map(it => it.id)); e.setValue('rkok', true);
+    c.fiche.forEach(r => e.setValue(`f_${r.id}`, d.model[r.id]));
+    c.selfCheck.forEach((_, i) => e.setValue(`self${i}`, 'oui'));
+  },
   's9-9-1': (e, c, w) => {
     w.ATELIER_S1.grid.criteria.forEach((_, i) => e.setValue(`fin${i}`, '2'));
     w.ATELIER_S1.grid.questions.forEach(q => e.setValue(q.id, 'Une réponse.'));

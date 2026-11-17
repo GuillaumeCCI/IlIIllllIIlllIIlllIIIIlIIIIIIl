@@ -107,6 +107,15 @@ window.ATELIER_BRIEFINGS = {
     criteria: ['Des questions qui font parler', 'Chaque information reliée à sa question', 'Une hiérarchie qui vient de la cliente']
   },
 
+  's6-6.2': {
+    lede: { key: 'Son entretien,', rest: 'votre regard de coach.' },
+    mission: 'Un collègue vous confie la transcription de son deuxième rendez-vous : « Je pensais avoir bien questionné, mais je repars sans savoir quoi proposer. » Relisez son entretien moment par moment, repérez ce qui a ouvert ou fermé la découverte, et aidez-le à progresser. Cette activité est facultative.',
+    method: 'L’entretien (dix moments à diagnostiquer), les 3 moments décisifs, vos réécritures, ce qu’il fallait savoir, la fiche de coaching, puis la grille.',
+    situation: 'Deux dossiers au choix : Camille, conseillère dans un magasin de cuisines, ou Karim, attaché commercial d’une entreprise de propreté. Vous pourrez faire l’autre ensuite.',
+    task: 'Un diagnostic pour chaque moment ; trois moments décisifs, réécrits ; ce que votre collègue aurait dû savoir, hiérarchisé ; une fiche de coaching factuelle, qui commence par le positif.',
+    criteria: ['Des moments vraiment décisifs', 'Des questions de remplacement sans produit', 'Un retour factuel, qui ne juge pas la personne']
+  },
+
   /* @@SERIES@@ */
 
   /* ══ SÉRIE 9 · FAIRE LE POINT ════════════════════════════════════════ */
