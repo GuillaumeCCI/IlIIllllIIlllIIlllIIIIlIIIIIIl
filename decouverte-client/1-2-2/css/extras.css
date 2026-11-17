@@ -1852,3 +1852,22 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 @media (prefers-reduced-motion: reduce) {
   .h7-reveal .h7-tr-moment > * { opacity: 1; transform: none; transition: none; }
 }
+
+/* 6.2 · Sans barre verticale ; sans masque de fondu (il faisait épaissir le
+ * texte au défilement) ; une fois apparu, un moment est figé, sans calque. */
+.h7-line.is-seller .h7-line-body { padding: 0; border-left: 0; }
+.h7-tr { -webkit-mask-image: none; mask-image: none; padding-bottom: 8px; }
+.h7-reveal .h7-tr-moment.is-settled > * { opacity: 1; transform: none; transition: none; will-change: auto; }
+
+/* 6.2 · Analyse épurée : le seul moment à gauche, une question courte,
+ * l’indice en simple ligne, des réponses sans gras. */
+.h7-analyse { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px; align-items: center; width: min(100%, 1180px); }
+.h7-tr-card { padding: 22px 24px; gap: 14px; }
+.h7-tr-card .h7-tr-one { gap: 14px; }
+.h7-tr-card .h7-said { font-size: 1.04rem; }
+.h7-question { padding: 18px 22px; gap: 6px; }
+.h7-question .h7-ask { margin: 0; font-size: 1.12rem; }
+.h7-hint-line { margin: 0; color: #8a6a2a; font-size: .92rem; font-style: italic; line-height: 1.45; }
+.h7-question .h7-memo { margin-top: 4px; }
+.h7-page .h7-analyse .h6-option { font-weight: 500; color: var(--navy); }
+.h7-page .h7-analyse .h6-option:hover { color: var(--accent); }

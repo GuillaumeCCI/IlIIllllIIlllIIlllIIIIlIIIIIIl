@@ -171,7 +171,12 @@
     const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (still || typeof IntersectionObserver !== 'function') { items.forEach(el => el.classList.add('is-shown')); return; }
     const watch = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.classList.add('is-shown'); watch.unobserve(entry.target); }
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      el.classList.add('is-shown');
+      watch.unobserve(el);
+      // Animation finie : on fige le moment (plus de calque, texte net).
+      setTimeout(() => el.classList.add('is-settled'), 1400);
     }), { root: box, threshold: 0.2 });
     items.forEach(el => watch.observe(el));
   }, 0);
@@ -273,14 +278,14 @@
     } else if (b.kind === 'choose') {
       // L'entretien à gauche (le moment surligné), la question et les
       // diagnostics à droite. Un indice pour M1 à M5, plus rien ensuite.
-      scrollTranscript();
+      // L'entretien a été lu en entier : ici, seul le moment à analyser
+      // (« Relire l'entretien », en haut, pour revoir le tout).
       body = `<div class="h7-analyse">
-          <div class="h6-card h7-tr-card h6-in"><p class="k-label">L’entretien de ${esc(D().seller.name)}</p><ol class="h7-tr">${thread(k)}</ol></div>
+          <div class="h6-card h7-tr-card h6-in"><p class="k-label">Moment ${k + 1} sur ${moments().length}</p><div class="h7-tr-one">${lines(m)}</div></div>
           <div class="h7-analyse-main">
             <div class="h6-card h7-question h6-in" ${delay(0.1)}>
-              <p class="k-label">Étape 2 · Analysez · moment ${k + 1} sur ${moments().length}</p>
-              <p class="h7-ask">${esc(m.n)} : avec cette question, qu’a fait ${esc(D().seller.name)} ? Et qu’est-ce que ça a produit ?</p>
-              ${m.hint ? `<p class="h7-hint">${icon('thought', { size: 16 })}<span>${esc(m.hint)}</span></p>` : ''}
+              <p class="h7-ask">Qu’a fait ${esc(D().seller.name)} ici, et qu’est-ce que ça a produit ?</p>
+              ${m.hint ? `<p class="h7-hint-line">Indice : ${esc(m.hint)}</p>` : ''}
               ${memoBox()}
             </div>
             ${options({ title: 'Les diagnostics possibles', order: m.order, choices: m.choices, act: 'h7-pick', data: `data-step="${k}"`, tried: b.retry ? tries(k) : [] })}
@@ -311,7 +316,7 @@
     return `<section class="h6-stage ${isFb ? 'is-fb' : ''}" style="--h6-decor:url('${decorOf()}')">
         <div class="h6-stage-top">
           ${inGame ? `<div class="h6-meters">${gaugeBar(rightFirst())}</div>` : '<span></span>'}
-          ${['fb', 'end'].includes(b.kind) ? `<details class="h6-replay"><summary>${icon('chat', { size: 16 })}<span>Relire l’entretien</span></summary>
+          ${['choose', 'fb', 'end'].includes(b.kind) ? `<details class="h6-replay"><summary>${icon('chat', { size: 16 })}<span>Relire l’entretien</span></summary>
             <div class="h6-replay-panel" role="region" aria-label="L’entretien">
               <div class="h6-replay-head"><img src="${sellerFace()}" alt="" aria-hidden="true"><p><b>L’entretien de ${esc(D().seller.name)}</b><span>${esc(Object.values(D().people).map(p => p.name).join(' et '))}</span></p>
                 <button type="button" class="h6-replay-close" data-act="h7-replay-close" aria-label="Fermer">${icon('close', { size: 16 })}</button></div>
