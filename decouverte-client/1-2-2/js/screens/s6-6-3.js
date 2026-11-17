@@ -492,10 +492,11 @@
     const done = yes('tok') || yes('tskip');
     const qs = myQuestions();
     const pick = v('t_q');
+    const pickI = Number.isInteger(v('t_qi')) && qs[v('t_qi')] === pick ? v('t_qi') : qs.indexOf(pick);
     return `<section class="k-panel d5-panel h7-panel">
         <p class="k-label">Le test terrain · facultatif</p>
         <p class="a4-role">Choisissez une de vos questions, et dites quand vous la poserez. Après le test, notez ce qu’elle a fait dire au client.</p>
-        <div class="h8-qpick" role="group" aria-label="Vos questions">${qs.map((x, i) => `<button type="button" class="h7-rank-item h8-qitem ${pick === x ? 'is-on' : ''}" data-act="h8-tq" data-i="${i}" ${done ? 'disabled' : ''}><span class="h7-dm-tick" aria-hidden="true">${pick === x ? icon('check', { size: 14, strokeWidth: 3 }) : ''}</span><span>${q(x)}</span></button>`).join('')}</div>
+        <div class="h8-qpick" role="group" aria-label="Vos questions">${qs.map((x, i) => `<button type="button" class="h7-rank-item h8-qitem ${pickI === i ? 'is-on' : ''}" aria-pressed="${pickI === i}" data-act="h8-tq" data-i="${i}" ${done ? 'disabled' : ''}><span>${q(x)}</span><span class="h7-dm-tick h8-qtick" aria-hidden="true">${pickI === i ? icon('check', { size: 14, strokeWidth: 3 }) : ''}</span></button>`).join('')}</div>
         <div class="h7-write h8-field"><p class="h8-field-label">Quand, et avec quel client ?</p>${ex.field('t_when', 'Quand', { placeholder: 'Jeudi, avec le prochain client qui « regarde juste »…', max: 200, type: 'input', hideLabel: true })}</div>
         ${done ? msgBox('ok', yes('tok') ? `<p>C’est noté : vous testerez ${q(pick || '')}. Après le test, ajoutez ce qu’elle a fait dire au client : c’est ce qui rendra votre banque vivante.</p>` : '<p>Vous avez passé cette étape. Vous pourrez tester une question plus tard.</p>', yes('tok') ? 'Bon test !' : 'Étape passée')
           : `<div class="h7-actions">${kit.act('h8-tskip', '<span>Passer cette étape</span>', 'secondary small')}${kit.act('h8-tok', `${icon('check', { size: 18 })}<span>Je m’engage à tester</span>`, 'primary')}</div>`}
@@ -639,8 +640,8 @@
     },
     'h8-tq': control => {
       const x = myQuestions()[Number(control.dataset.i)];
-      ex.setValue('t_q', x); ex.changed();
-      document.querySelectorAll('.h8-qitem').forEach(b => { const on = b === control; b.classList.toggle('is-on', on); b.querySelector('.h7-dm-tick').innerHTML = on ? icon('check', { size: 14, strokeWidth: 3 }) : ''; });
+      ex.setValue('t_q', x); ex.setValue('t_qi', Number(control.dataset.i)); ex.changed();
+      document.querySelectorAll('.h8-qitem').forEach(b => { const on = b === control; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); b.querySelector('.h7-dm-tick').innerHTML = on ? icon('check', { size: 14, strokeWidth: 3 }) : ''; });
     },
     'h8-tok': () => {
       if (!filled('t_q')) { core.toast('Choisissez la question que vous testerez.'); return; }

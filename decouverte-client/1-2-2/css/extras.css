@@ -2325,7 +2325,6 @@ p.h7-question { margin-bottom: 12px; }
 /* Le test terrain : choisir une de ses questions. */
 .h8-qpick { display: grid; gap: 8px; margin: 14px 0 16px; }
 .h8-qitem { position: relative; padding-right: 48px; }
-.h8-qitem .h7-dm-tick { right: 14px; top: 50%; transform: translateY(-50%); }
 
 /* La banque complète. */
 .h8-bank { display: grid; gap: 16px; margin-top: 10px; }
@@ -2445,3 +2444,10 @@ p.h7-question { margin-bottom: 12px; }
 /* 6.3 · La scène : sans fond de couleur. */
 .h8-scenecard { background: #fff !important; box-shadow: 0 6px 18px rgb(15 35 78 / 7%), inset 0 0 0 1px #edf0f6 !important; }
 .h8-step:disabled { opacity: .5; cursor: default; }
+
+/* 6.3 · Le test terrain : la question choisie se voit */
+.h8-qitem { position: relative; justify-content: space-between; }
+.h8-qitem .h8-qtick { position: static; top: auto; right: auto; flex: none; align-self: center; margin: 0; }
+.h8-qitem.is-on { background: #e6edff; border-color: #e6edff; color: #1b2370; font-weight: 700; box-shadow: 0 4px 14px rgb(18 73 216 / 12%); }
+.h8-qitem.is-on .h8-qtick { background: var(--accent); box-shadow: none; }
+.h8-qitem.is-on:hover:not(:disabled) { background: #dde6ff; }
