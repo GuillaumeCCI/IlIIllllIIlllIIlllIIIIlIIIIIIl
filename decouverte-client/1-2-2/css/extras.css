@@ -2416,3 +2416,14 @@ button.h8-brow:focus-visible { outline: 3px solid #ff936b; outline-offset: 2px; 
 #main .h8-listcard textarea { background-image: radial-gradient(circle at 6px 16px, #2a8f8f 0 3px, transparent 3.5px); background-size: 100% 32px; background-repeat: repeat-y; }
 .h8-words { background: #fff !important; box-shadow: 0 6px 18px rgb(15 35 78 / 7%), inset 0 0 0 1px #edf0f6 !important; }
 .h8-wordbox { background: #f6f8fc; box-shadow: none; }
+
+/* 6.3 · La liste pour Lucas : une puce par ligne écrite (double invisible du texte, derrière le champ). */
+.h8-bullets { position: relative; }
+.h8-bullets .field { position: relative; margin: 0; }
+.h8-bullets-mirror { position: absolute; inset: 0 0 auto 0; padding: 0 0 0 22px; color: transparent; font-size: 1.05rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: break-word; pointer-events: none; }
+.h8-bullets-mirror .is-item { position: relative; }
+.h8-bullets-mirror .is-item::before { content: ''; position: absolute; left: -16px; top: .62em; width: 6px; height: 6px; border-radius: 50%; background: #2a8f8f; }
+#main .h8-listcard textarea { position: relative; padding: 0 0 26px 22px; background: transparent none; font-size: 1.05rem; line-height: 1.5; min-height: 96px; overflow-wrap: break-word; }
+
+/* 6.3 · La scène : sans fond de couleur. */
+.h8-scenecard { background: #fff !important; box-shadow: 0 6px 18px rgb(15 35 78 / 7%), inset 0 0 0 1px #edf0f6 !important; }

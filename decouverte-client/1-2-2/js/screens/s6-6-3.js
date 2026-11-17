@@ -289,6 +289,9 @@
     return `Elle est ${c.label.toLowerCase()} ; il faut une question ${want}.`;
   };
   const PAGE_TIP = { sit: 'Racontez un vrai cas, avec des détails concrets de votre métier.', open: 'Il faut des questions ouvertes, qui font raconter le client.', precise: 'Deux questions fermées ou à deux options, puis une qui fait choisir le client.', traps: 'Des mots de vos clients, puis la question piège : orientée, ou qui pousse un produit.' };
+  // La liste pour Lucas : une puce devant chaque ligne écrite (pas devant les lignes vides,
+  // ni devant la suite d'une ligne trop longue). Un double du texte, invisible, porte les puces.
+  const mirrorHtml = text => String(text || '').split('\n').map(line => `<div class="${line.trim() ? 'is-item' : ''}">${esc(line) || '&nbsp;'}</div>`).join('');
   // Les mots à guetter, en étiquettes (séparés par des virgules).
   const wordChips = text => String(text || '').split(/[,;\n]+/).map(w => w.replace(/[«»"]/g, '').trim()).filter(Boolean).slice(0, 12).map(w => `<span class="h8-word">${esc(w)}</span>`).join('');
   function fichesStep() {
@@ -348,7 +351,7 @@
             <p class="h8-tag">Pour ${esc(newcomer.name)}</p>
             <p class="h8-field-label">${esc(fd.label)}</p>
             <p class="h7-write-note">${esc(fd.sub)} Une information par ligne.</p>
-            ${ex.field(`f${j}_disc`, fd.label, { placeholder: fd.placeholder || 'Listez…', max: 400, rows: 3, hideLabel: true })}
+            <div class="h8-bullets"><div class="h8-bullets-mirror" data-mirror="f${j}_disc" aria-hidden="true">${mirrorHtml(v(`f${j}_disc`))}</div>${ex.field(`f${j}_disc`, fd.label, { placeholder: fd.placeholder || 'Listez…', max: 400, rows: 3, hideLabel: true })}</div>
             ${aidFor(fd)}
           </div>
         </div>`;
@@ -645,6 +648,8 @@
     if (!field) return;
     const m = /^f\d_(.+)$/.exec(field);
     if (m) {
+      const mirror = document.querySelector(`[data-mirror="${field}"]`);
+      if (mirror) mirror.innerHTML = mirrorHtml(event.target.value);
       const words = document.querySelector(`[data-words="${field}"]`);
       if (words) words.innerHTML = wordChips(event.target.value);
       const f = QFIELDS.find(x => x.id === m[1]);
