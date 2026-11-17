@@ -336,11 +336,13 @@
       const n = rightFirst();
       const tone = n >= 8 ? 'ok' : n >= 5 ? 'mid' : 'ko';
       const missed = moments().filter((m, i) => firstTone(i) !== 'ok');
+      // Il s'agit de VOTRE LECTURE des questions du ou de la collègue : on le dit clairement.
+      const who = D().seller.name;
+      const parts = m => { const [type, ...rest] = m.choices[m.best].text.split(' : '); return { type, why: rest.join(' : ') }; };
       body = `<div class="h6-card h7-bilan h6-in">
-          <p class="k-label">Bilan de l’étape 1 · L’entretien</p>
-          ${msgBox(tone, `<p>Vous avez bien analysé du premier coup <b>${n} moment${n > 1 ? 's' : ''} sur ${moments().length}</b>.</p>`, n >= 8 ? 'Bien vu !' : n >= 5 ? 'Un bon début' : 'À retravailler')}
-          ${missed.length ? `<p class="h7-bilan-h">Les moments à retenir</p>
-          <ul class="h7-bilan-list">${missed.map(m => `<li><span class="h7-bilan-q">${q(m.q)}</span><span>C’était ${esc(lower(m.choices[m.best].text.split(' : ')[0]))} : ${esc(lower(m.choices[m.best].text.split(' : ').slice(1).join(' : ')))}</span></li>`).join('')}</ul>` : ''}
+          <p class="k-label">Bilan de l’étape 1 · Votre analyse de l’entretien de ${esc(who)}</p>
+          ${msgBox(tone, `<p>Vous avez bien lu du premier coup <b>${n} des ${moments().length} questions</b> de ${esc(who)}.${missed.length ? ` Voici celles à relire : pour chacune, ce qu’${D().seller.fem ? 'elle' : 'il'} a vraiment fait.` : ''}</p>`, n >= 8 ? 'Bien vu !' : n >= 5 ? 'Un bon début' : 'À retravailler')}
+          ${missed.length ? `<ul class="h7-bilan-list">${missed.map(m => { const p = parts(m); return `<li><span class="h7-bilan-q">${esc(who)} demande : ${q(m.q)}</span><span class="h7-bilan-a"><b>${esc(p.type)}.</b> ${esc(p.why.charAt(0).toUpperCase() + p.why.slice(1))}${/[.!?»]$/.test(p.why) ? '' : '.'}</span></li>`; }).join('')}</ul>` : ''}
         </div>
         <div class="h6-stage-foot">${kit.submit('Choisir les moments décisifs')}</div>`;
     }
