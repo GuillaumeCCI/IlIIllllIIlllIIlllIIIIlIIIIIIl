@@ -1914,3 +1914,9 @@ p.h7-question { padding: 16px 22px; border-radius: 16px; background: #1b2370; co
 .h7-analyse-main .h7-help { padding: 5px 12px; background: rgb(255 255 255 / 70%); color: #1b2370; font-size: .84rem; font-weight: 600; box-shadow: inset 0 0 0 1px rgb(27 35 112 / 14%); backdrop-filter: blur(4px); }
 .h7-analyse-main .h7-help:hover { background: #fff; color: var(--accent); }
 .h7-analyse-main .h7-help .icon { width: 15px; height: 15px; }
+
+/* 6.2 · Les boutons d’aide dans le coin supérieur droit de la scène. */
+.h7-helps.is-corner { margin: 0 0 0 auto; justify-content: flex-end; }
+.h7-helps.is-corner .h7-help { padding: 5px 12px; background: rgb(255 255 255 / 80%); color: #1b2370; font-size: .84rem; font-weight: 600; box-shadow: inset 0 0 0 1px rgb(27 35 112 / 14%); backdrop-filter: blur(4px); }
+.h7-helps.is-corner .h7-help:hover { background: #fff; color: var(--accent); }
+.h7-helps.is-corner .h7-help .icon { width: 15px; height: 15px; }

@@ -288,7 +288,6 @@
       body = `<div class="h7-analyse">
           <div class="h6-card h7-tr-card h6-in"><p class="k-label">Moment ${k + 1} sur ${moments().length}</p><div class="h7-tr-one">${lines(m)}</div></div>
           <div class="h7-analyse-main">
-            <div class="h7-helps h6-in" ${delay(0.05)}>${m.hint ? `<button type="button" class="h7-help" data-act="h7-hint" data-step="${k}">${icon('thought', { size: 16 })}<span>Un indice</span></button>` : ''}${memoBox()}</div>
             <p class="h7-question h6-in" ${delay(0.1)}>Qu’a fait ${esc(D().seller.name)} ici, et qu’est-ce que ça a produit ?</p>
             ${options({ title: 'Les diagnostics possibles', order: m.order, choices: m.choices, act: 'h7-pick', data: `data-step="${k}"`, tried: b.retry ? tries(k) : [] })}
           </div>
@@ -318,6 +317,7 @@
     return `<section class="h6-stage ${isFb ? 'is-fb' : ''}" style="--h6-decor:url('${decorOf()}')">
         <div class="h6-stage-top">
           ${inGame ? `<div class="h6-meters">${gaugeBar(rightFirst())}</div>` : '<span></span>'}
+          ${b.kind === 'choose' ? `<div class="h7-helps is-corner">${m.hint ? `<button type="button" class="h7-help" data-act="h7-hint" data-step="${k}">${icon('thought', { size: 16 })}<span>Un indice</span></button>` : ''}${memoBox()}</div>` : ''}
         </div>
         <div class="h6-stage-body is-${b.kind}">${body}</div>
       </section>
