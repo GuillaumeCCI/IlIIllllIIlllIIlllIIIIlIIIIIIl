@@ -104,7 +104,7 @@ const CUSTOM = {
     });
     e.setValue('dm', d.decisive.expected.slice()); e.setValue('dmok', true);
     d.rewrites.forEach((r, j) => { e.setValue(`rw${j}_why`, r.what); e.setValue(`rw${j}_q`, r.model); e.setValue(`rw${j}_t`, r.type[0]); e.setValue(`rw${j}_ok`, true); });
-    d.sort.forEach(s => e.setValue(`sk_${s.id}`, s.kind)); e.setValue('sok', true);
+    d.sort.forEach((s, i) => e.setValue(`sk${i}`, s.kind)); e.setValue('sok', true);
     e.setValue('rk', d.rank.items.map(it => it.id)); e.setValue('rkok', true);
     c.fiche.forEach(r => e.setValue(`f_${r.id}`, d.model[r.id]));
     c.selfCheck.forEach((_, i) => e.setValue(`self${i}`, 'oui'));

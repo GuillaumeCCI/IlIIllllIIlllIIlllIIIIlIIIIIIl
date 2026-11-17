@@ -24,7 +24,7 @@
  * Valeurs : `dos` (A ou B), `warm`, `wok`, `intro` ; pour le moment k :
  * `seen<k>`, `c<k>` (premier diagnostic), `x<k>` (essais), `retry<k>`,
  * `ack<k>` ; `dm` (les 3 moments), `dmok` ; `rw<j>_why`, `rw<j>_q`,
- * `rw<j>_t`, `rw<j>_ok` ; `sk_<id>`, `sok` ; `rk` (ordre), `rkok` ;
+ * `rw<j>_t`, `rw<j>_ok` ; `sk<i>` (le classement), `sok` ; `rk` (ordre), `rkok` ;
  * `f_<rubrique>` ; `self<i>` ; `at`.
  */
 (() => {
@@ -39,7 +39,7 @@
   const STEPS = ['L’entretien', 'Les moments décisifs', 'Vos réécritures', 'Ce qu’il fallait savoir', 'La fiche de coaching', 'La grille'];
   const LAST = STEPS.length - 1;
   const YES_NO = [{ id: 'oui', label: 'Oui' }, { id: 'non', label: 'Non' }];
-  const KINDS = [{ id: 'explicite', label: 'Besoin explicite' }, { id: 'implicite', label: 'Besoin implicite' }, { id: 'motivation', label: 'Motivation' }];
+  const KINDS = [{ id: 'explicite', label: 'Besoin dit', sub: 'explicite' }, { id: 'implicite', label: 'Besoin non dit', sub: 'implicite' }, { id: 'motivation', label: 'Motivation', sub: 'ce qui le pousse' }];
   const v = name => ex.value(name);
   const yes = name => v(name) === true;
   const D = () => content.dossiers[v('dos')] || null;
@@ -55,29 +55,8 @@
   const firstTone = k => (moments()[k].write ? v(`wt${k}`) || 'ko' : toneOf(moments()[k], choiceAt(k)));
   const rightFirst = () => moments().filter((m, k) => choiceAt(k) && firstTone(k) === 'ok').length;
 
-  /* Juger une réponse écrite : les idées clés présentes ou absentes. Les
-   * mots sont comparés sans accents ni majuscules ; une faute de frappe est
-   * tolérée sur les mots longs. */
-  const plain = text => ` ${String(text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ')} `;
-  const lev = (a, b) => {
-    const d = Array.from({ length: a.length + 1 }, (_, i) => [i]);
-    for (let j = 1; j <= b.length; j++) d[0][j] = j;
-    for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
-    return d[a.length][b.length];
-  };
-  const hasWord = (t, w) => {
-    const word = plain(w).trim();
-    if (t.includes(` ${word}`)) return true;
-    if (word.length < 6 || word.includes(' ')) return false;
-    return t.trim().split(' ').some(x => x.length >= word.length - 1 && lev(x.slice(0, word.length), word) <= 1);
-  };
-  function judge(m, text) {
-    const t = plain(text);
-    const found = m.write.ideas.filter(idea => idea.words.some(w => hasWord(t, w)));
-    const missing = m.write.ideas.filter(idea => !found.includes(idea));
-    const tone = !missing.length ? 'ok' : found.length ? 'mid' : 'ko';
-    return { found, missing, tone };
-  }
+  // Le juge des réponses rédigées est dans le contenu (ATELIER_COACH), avec sa banque de tests.
+  const judge = (m, text) => window.ATELIER_COACH.judgeIdeas(m.write.ideas, text);
   const interviewDone = () => Boolean(D()) && moments().every((_, k) => yes(`ack${k}`));
 
   function beat() {
@@ -101,34 +80,28 @@
   const dmTone = n => (D().decisive.expected.includes(n) ? 'ok' : D().decisive.acceptable.includes(n) ? 'mid' : 'ko');
   const dmScore = () => picked().filter(n => D().decisive.expected.includes(n)).length;
 
-  /* ── Les réécritures : des repères automatiques ──────────────────────── */
-  const norm = text => String(text || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  /* ── Les réécritures : la correction ─────────────────────────────────── */
+  const cap = text => text.charAt(0).toUpperCase() + text.slice(1);
   function checks(j) {
     const r = D().rewrites[j];
-    const text = String(v(`rw${j}_q`) || '').trim();
     const type = v(`rw${j}_t`);
-    const out = [];
-    out.push(/\?\s*»?$/.test(text)
-      ? { ok: true, text: 'C’est bien une question.' }
-      : { ok: false, text: 'Terminez par un point d’interrogation : votre collègue doit pouvoir la poser telle quelle.' });
-    const product = content.productWords.find(word => norm(` ${text} `).includes(norm(word)));
-    out.push(product
-      ? { ok: false, text: `Elle parle d’un produit ou d’une offre (« ${product.trim()} ») : une question de découverte n’en propose aucun.` }
-      : { ok: true, text: 'Elle ne propose aucun produit.' });
-    const label = id => (types.find(t => t.id === id) || {}).label || '';
-    out.push(r.type.includes(type)
-      ? { ok: true, text: `Le type choisi (${label(type).toLowerCase()}) est celui du corrigé.` }
-      : { ok: false, text: `Le corrigé propose plutôt : ${r.type.map(t => label(t).toLowerCase()).join(' ou ')}.` });
-    if (type === 'ouverte' && /^(est-ce|vous |avez|etes|voulez|aimeriez|pensez|preferez|c'est|c’est|ce n)/.test(norm(text))) {
-      out.push({ ok: false, text: 'Elle commence comme une question fermée (« Est-ce que… », « Vous… ? ») : vérifiez qu’elle laisse vraiment parler.' });
-    }
-    return out;
+    const res = window.ATELIER_COACH.judgeRewrite(r, v(`rw${j}_q`) || '', content.productWords);
+    const label = id => ((types.find(t => t.id === id) || {}).label || '').toLowerCase();
+    const items = [];
+    res.found.forEach(i => items.push({ ok: true, text: `${cap(i.text)}.` }));
+    res.missing.forEach(i => items.push({ ok: false, text: `Il manque : ${i.text}.` }));
+    if (res.product) items.push({ ok: false, text: `Elle propose un produit ou une offre (« ${res.product} ») : une question de découverte n’en propose aucun.` });
+    if (res.forbidden) items.push({ ok: false, text: `${cap(r.forbidText)}.` });
+    const typeOk = r.type.includes(type);
+    if (!typeOk) items.push({ ok: false, text: `Le type attendu : ${r.type.map(label).join(' ou ')}.` });
+    if (!res.question && res.found.length) items.push({ ok: false, text: 'Terminez par un point d’interrogation.' });
+    return { tone: res.tone === 'ok' && !typeOk ? 'mid' : res.tone, items };
   }
   const rwAt = () => { const j = (D() ? D().rewrites : []).findIndex((_, i) => !yes(`rw${i}_ok`)); return j; };
 
   /* ── Ce qu'il fallait savoir ─────────────────────────────────────────── */
   const rankNow = () => (Array.isArray(v('rk')) ? v('rk') : []);
-  const sortScore = () => D().sort.filter(c => v(`sk_${c.id}`) === c.kind).length;
+  const sortScore = () => D().sort.filter((c, i) => v(`sk${i}`) === c.kind).length;
   const rankRight = () => D().rank.items.every((it, i) => rankNow()[i] === it.id);
 
   const stepDone = k => {
@@ -378,29 +351,42 @@
       ${core.errorsBox()}`;
   }
 
+  /* Un message de retour au style de la formatrice (son visage, un titre,
+   * le texte). Après une validation, la page défile jusqu'à lui. */
+  const msgBox = (tone, html, title = VERDICT[tone].title) => {
+    const face = esc(core.asset(`../../moteur/assets/illustrations/retours/${VERDICT[tone].face}.webp`));
+    return `<div class="h7-msg tone-${tone}" id="h7-msg"><img src="${face}" alt="" aria-hidden="true"><div class="h7-msg-body"><p class="h7-msg-title">${esc(title)}</p>${html}</div></div>`;
+  };
+  const showMsg = () => setTimeout(() => {
+    const el = document.getElementById('h7-msg');
+    if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 80);
+
   /* ── 1 · Les moments décisifs ────────────────────────────────────────── */
   function decisiveStep() {
+    const d = D();
     const done = yes('dmok');
     const chosen = picked();
-    const cards = moments().map((m, k) => {
+    const cards = moments().map(m => {
       const on = chosen.includes(m.n);
       const tone = done ? dmTone(m.n) : '';
-      const mark = done && (on || tone === 'ok') ? `<span class="h7-dm-mark tone-${on ? tone : 'miss'}">${on ? (tone === 'ok' ? `${icon('check', { size: 14, strokeWidth: 3 })}Décisif` : tone === 'mid' ? 'Se défend' : `${icon('close', { size: 14, strokeWidth: 3 })}Pas décisif`) : 'À choisir'}</span>` : '';
+      // Après validation : une seule petite pastille par carte ; les raisons sont dans le message.
+      const mark = !done ? '' : on ? `<span class="h7-dm-mark tone-${tone}">${tone === 'ok' ? 'Décisif' : tone === 'mid' ? 'Se défend' : 'Pas décisif'}</span>` : tone === 'ok' ? '<span class="h7-dm-mark tone-miss">Moment attendu</span>' : '';
       return `<button type="button" class="h7-dm ${on ? 'is-on' : ''} ${done ? 'is-done' : ''}" data-act="h7-dm" data-n="${m.n}" aria-pressed="${on}" ${done ? 'disabled' : ''}>
           <span class="h7-dm-tick" aria-hidden="true">${on ? icon('check', { size: 14, strokeWidth: 3 }) : ''}</span>
           <span class="h7-dm-q">${q(m.q)}</span>
-          <span class="h7-dm-diag">${esc(m.choices[m.best].text.split(' : ')[0])}</span>
-          ${mark}
-          ${done && (on || tone === 'ok') && D().decisive.why[m.n] ? `<span class="h7-dm-why">${esc(D().decisive.why[m.n])}</span>` : ''}
+          <span class="h7-dm-foot"><span class="h7-dm-diag">${esc(m.choices[m.best].text.split(' : ')[0])}</span>${mark}</span>
         </button>`;
     }).join('');
     const score = dmScore();
+    const tone = score === 3 ? 'ok' : score === 2 ? 'mid' : 'ko';
+    const list = [...d.decisive.expected, ...d.decisive.acceptable].map(n => `<li><b>${esc(labelOf(n))}</b>${d.decisive.acceptable.includes(n) ? ' (se défend aussi)' : ''} : ${esc(d.decisive.why[n].replace(/^Acceptable : /, ''))}</li>`).join('');
     return `<section class="k-panel d5-panel h7-panel">
         <p class="k-label">Les 3 moments décisifs</p>
-        <p class="a4-role">Choisissez les trois moments où le questionnement de ${esc(D().seller.name)} a ouvert ou fermé la découverte. Pas les plus visibles : ceux qui ont le plus pesé.</p>
-        <p class="h7-count" aria-live="polite">${done ? `<b>${score}</b> / 3 moments attendus` : `<b>${chosen.length}</b> / 3 choisis`}</p>
+        <p class="a4-role">Choisissez les trois moments où le questionnement de ${esc(d.seller.name)} a ouvert ou fermé la découverte. Pas les plus visibles : ceux qui ont le plus pesé.</p>
+        ${done ? '' : `<p class="h7-count" aria-live="polite"><b>${chosen.length}</b> / 3 choisis</p>`}
         <div class="h7-dms">${cards}</div>
-        ${done ? `<div class="h7-verdict tone-${score === 3 ? 'ok' : score >= 2 ? 'mid' : 'ko'}"><p>${esc(D().decisive.text)}</p></div>`
+        ${done ? msgBox(tone, `<p>Vous avez trouvé ${score} des 3 moments décisifs.</p><ul class="h7-msg-list">${list}</ul>`)
           : `<div class="h7-actions">${kit.act('h7-dm-check', `${icon('check', { size: 18 })}<span>Valider mes 3 moments</span>`, 'primary', chosen.length === 3 ? '' : 'disabled')}</div>`}
       </section>
       ${core.errorsBox()}
@@ -408,37 +394,41 @@
   }
 
   /* ── 2 · Vos réécritures ─────────────────────────────────────────────── */
+  /* Une seule consigne : « À la place de Karim, qu'auriez-vous demandé ? ».
+   * Le moment à gauche (et ce qui a coincé), la question et le champ à
+   * droite, comme pendant l'analyse. Indice et aide-mémoire en haut à droite. */
   let rwPick = null;
   function rewriteStep() {
-    const rws = D().rewrites;
+    const d = D();
+    const rws = d.rewrites;
     const free = rwAt();
     const j = rwPick !== null ? rwPick : (free === -1 ? 0 : free);
     const r = rws[j];
-    const k = moments().findIndex(m => m.n === r.n);
-    const m = moments()[k];
+    const m = moments().find(x => x.n === r.n);
     const ok = yes(`rw${j}_ok`);
-    // L'aide se retire : un indice, puis un indice plus court, puis aucun (contenu).
-    const hint = r.hint || '';
     const tabs = rws.map((x, i) => `<button type="button" class="d5-floor-tab ${i === j ? 'is-current' : ''} ${yes(`rw${i}_ok`) ? 'is-filled' : ''}" role="tab" aria-selected="${i === j}" data-act="h7-rw" data-i="${i}" ${i > 0 && !yes(`rw${i - 1}_ok`) ? 'disabled' : ''}><span class="d5-floor-n">${yes(`rw${i}_ok`) ? icon('check', { size: 13, strokeWidth: 3 }) : i + 1}</span><span>${esc(labelOf(x.n))}</span></button>`).join('');
-    const typeChips = types.map(t => `<button type="button" class="h7-chip ${v(`rw${j}_t`) === t.id ? 'is-on' : ''}" data-act="h7-type" data-j="${j}" data-id="${t.id}" aria-pressed="${v(`rw${j}_t`) === t.id}" ${ok ? 'disabled' : ''}>${esc(t.label)}</button>`).join('');
-    const result = ok ? `<div class="h7-checks"><p class="k-label">Les repères</p><ul>${checks(j).map(c => `<li class="${c.ok ? 'is-ok' : 'is-ko'}"><span aria-hidden="true">${icon(c.ok ? 'check' : 'thought', { size: 15, strokeWidth: 2.5 })}</span>${esc(c.text)}</li>`).join('')}</ul></div>
-        <div class="h7-model"><p class="k-label">Le corrigé</p><p class="h7-model-what">${esc(r.what)}</p><p class="h7-model-q">${q(r.model)}</p><p class="h7-model-type">Type : ${esc(r.type.map(t => types.find(x => x.id === t).label.toLowerCase()).join(' ou '))}</p></div>
-        <div class="d5-floor-nav"><span></span>${j < rws.length - 1 ? `<button type="button" class="button secondary" data-act="h7-rw" data-i="${j + 1}"><span>Moment suivant</span>${icon('arrowRight', { size: 16 })}</button>` : ''}</div>`
-      : `<div class="h7-actions">${kit.act('h7-rw-check', `${icon('check', { size: 18 })}<span>Comparer avec le corrigé</span>`, 'primary', `data-j="${j}"`)}</div>`;
+    const chips = types.map(t => `<button type="button" class="h7-chip ${v(`rw${j}_t`) === t.id ? 'is-on' : ''}" data-act="h7-type" data-j="${j}" data-id="${t.id}" aria-pressed="${v(`rw${j}_t`) === t.id}" ${ok ? 'disabled' : ''}>${esc(t.label)}</button>`).join('');
+    const helps = `<div class="h7-helps is-corner">${r.hint ? `<button type="button" class="h7-help" data-act="h7-rwhint" data-j="${j}">${icon('thought', { size: 16 })}<span>Un indice</span></button>` : ''}${memoBox()}</div>`;
+    let after = `<div class="h7-actions">${kit.act('h7-rw-check', `${icon('check', { size: 18 })}<span>Comparer avec le corrigé</span>`, 'primary', `data-j="${j}"`)}</div>`;
+    if (ok) {
+      const cs = checks(j);
+      after = msgBox(cs.tone, `<ul class="h7-msg-checks">${cs.items.map(c => `<li><span class="h7-dot ${c.ok ? 'is-ok' : 'is-ko'}" aria-hidden="true"></span><span>${esc(c.text)}</span></li>`).join('')}</ul>
+        <div class="h7-msg-model"><span>Des questions justes</span><p>${q(r.model)}</p>${(r.others || []).map(o => `<p>${q(o)}</p>`).join('')}</div>`)
+        + (j < rws.length - 1 ? `<div class="h7-actions"><button type="button" class="button primary" data-act="h7-rw" data-i="${j + 1}"><span>Moment suivant</span>${icon('arrowRight', { size: 16 })}</button></div>` : '');
+    }
     return `<section class="k-panel d5-panel h7-panel">
-        <p class="k-label">Vos réécritures</p>
-        <p class="a4-role">Pour chacun des trois moments décisifs : ce qui s’est passé, puis la question que vous auriez posée à la place, et son type.</p>
+        <div class="h7-panel-top"><div><p class="k-label">Vos réécritures</p><p class="a4-role">Pour chaque moment décisif, la question que vous auriez posée à la place.</p></div>${helps}</div>
         <div class="d5-floor-tabs" role="tablist" aria-label="Les moments à réécrire">${tabs}</div>
-        <div class="h7-rw">
-          <div class="h7-rw-moment">
-            <div class="h7-tr-one">${lines(m)}</div>
-            ${hint ? `<p class="h7-hint">${icon('thought', { size: 16 })}<span>${esc(hint)}</span></p>` : '<p class="h7-hint is-none">Sans indice, cette fois.</p>'}
-          </div>
-          <div class="h7-rw-main">
-            <div class="fm-field"><p class="fm-label">Ce qui s’est passé, et pourquoi c’est décisif</p>${ex.field(`rw${j}_why`, 'Ce qui s’est passé', { placeholder: 'Il/elle… ; du coup, le client…', max: 400, rows: 3, hideLabel: true })}</div>
-            <div class="fm-field"><p class="fm-label">La question que vous auriez posée</p>${ex.field(`rw${j}_q`, 'Votre question', { placeholder: 'Qu’est-ce que… ?', max: 300, type: 'input', hideLabel: true })}</div>
-            <div class="fm-field"><p class="fm-label">Son type</p><div class="h7-chips" role="group" aria-label="Le type de votre question">${typeChips}</div><div class="h7-helps">${memoBox()}</div></div>
-            ${result}
+        <div class="h7-analyse is-panel">
+          <div class="h6-card h7-tr-card"><div class="h7-tr-one">${lines(m)}</div><p class="h7-stuck"><b>Ce qui a coincé :</b> ${esc(r.what)}</p></div>
+          <div class="h7-analyse-main">
+            <p class="h7-question">À la place de ${esc(d.seller.name)}, qu’auriez-vous demandé ?</p>
+            <div class="h7-write">
+              ${ex.field(`rw${j}_q`, 'Votre question', { placeholder: 'Votre question…', max: 300, rows: 2, hideLabel: true })}
+              <p class="h7-write-note">C’est une question…</p>
+              <div class="h7-chips" role="group" aria-label="Le type de votre question">${chips}</div>
+            </div>
+            ${after}
           </div>
         </div>
       </section>
@@ -450,31 +440,25 @@
   function knowStep() {
     const d = D();
     const sorted = yes('sok');
-    const rows = d.sort.map(c => {
-      const mine = v(`sk_${c.id}`);
-      const good = mine === c.kind;
-      return `<div class="h7-sort-row ${sorted ? (good ? 'is-ok' : 'is-ko') : ''}">
-          <p class="h7-sort-text">${esc(c.text)}</p>
-          <div class="h7-chips" role="group" aria-label="${esc(c.text)}">${KINDS.map(kd => `<button type="button" class="h7-chip ${mine === kd.id ? 'is-on' : ''} ${sorted && kd.id === c.kind ? 'is-answer' : ''}" data-act="h7-sort" data-id="${c.id}" data-kind="${kd.id}" aria-pressed="${mine === kd.id}" ${sorted ? 'disabled' : ''}>${esc(kd.label)}</button>`).join('')}</div>
-          ${sorted ? `<p class="h7-sort-why">${icon(good ? 'check' : 'close', { size: 14, strokeWidth: 3 })}<span>${esc(c.why)}</span></p>` : ''}
-        </div>`;
-    }).join('');
-    const allSorted = d.sort.every(c => v(`sk_${c.id}`));
+    // La grille à pastilles : cliquer ne redessine rien (pas de clignotement).
+    const rows = kit.matrix({ key: 'sk', rows: d.sort.map(c => ({ text: c.text, why: c.why })), columns: KINDS, head: 'Ce qu’il fallait savoir', round: true, numbered: false, answers: sorted ? d.sort.map(c => c.kind) : null });
+    const n = sortScore();
     const order = rankNow();
     const ranked = yes('rkok');
+    const rankTone = rankRight() ? 'ok' : 'mid';
     const rankBox = sorted ? `<div class="h7-rank">
-        <p class="fm-label">Puis la hiérarchie : de la priorité au secondaire</p>
-        <p class="fm-sub">Cliquez les trois besoins dans l’ordre de ce qui compte le plus pour le client.</p>
+        <p class="k-label">Puis la hiérarchie</p>
+        <p class="a4-role">Cliquez les trois besoins dans l’ordre : du plus important au moins important pour le client.</p>
         <div class="h7-rank-pool">${d.rank.show.map(id => { const it = d.rank.items.find(x => x.id === id); const pos = order.indexOf(id); return `<button type="button" class="h7-rank-item ${pos !== -1 ? 'is-on' : ''}" data-act="h7-rank" data-id="${id}" ${ranked || pos !== -1 ? 'disabled' : ''}><span class="h7-rank-n">${pos !== -1 ? pos + 1 : ''}</span><span>${esc(it.text)}</span></button>`; }).join('')}</div>
-        ${ranked ? `<div class="h7-verdict tone-${rankRight() ? 'ok' : 'mid'}"><p><b>${rankRight() ? 'Bien vu !' : 'Pas tout à fait…'}</b> ${esc(d.rank.why)}</p>${rankRight() ? '' : `<p class="h7-rank-model">L’ordre attendu : ${d.rank.items.map((it, i) => `${i + 1}. ${esc(it.text)}`).join(' · ')}</p>`}</div>`
-          : `<div class="h7-actions">${order.length ? kit.act('h7-rank-reset', `${icon('arrowLeft', { size: 16 })}<span>Recommencer</span>`, 'secondary small') : ''}${kit.act('h7-rank-check', `${icon('check', { size: 18 })}<span>Vérifier l’ordre</span>`, 'primary', order.length === d.rank.items.length ? '' : 'disabled')}</div>`}
+        ${ranked ? msgBox(rankTone, `<p>${esc(d.rank.why)}</p>${rankRight() ? '' : `<p class="h7-msg-model"><span>L’ordre attendu</span>${d.rank.items.map((it, i) => `${i + 1}. ${esc(it.text)}`).join('<br>')}</p>`}`, rankRight() ? 'C’est le bon ordre !' : 'Ce n’est pas l’ordre attendu')
+          : `<div class="h7-actions">${kit.act('h7-rank-reset', `${icon('arrowLeft', { size: 16 })}<span>Recommencer</span>`, 'secondary small')}${kit.act('h7-rank-check', `${icon('check', { size: 18 })}<span>Vérifier l’ordre</span>`, 'primary', order.length === d.rank.items.length ? '' : 'disabled')}</div>`}
       </div>` : '';
     return `<section class="k-panel d5-panel h7-panel">
         <p class="k-label">Ce que ${esc(d.seller.name)} aurait dû repartir en sachant</p>
-        <p class="a4-role">Classez chaque information : un besoin que le client a exprimé, un besoin qu’il n’a pas dit, ou une motivation.</p>
-        ${sorted ? `<p class="h7-count"><b>${sortScore()}</b> / ${d.sort.length} bien classées</p>` : ''}
+        <p class="a4-role">Pour chaque information : un besoin que le client a dit, un besoin qu’il n’a pas dit, ou une motivation ?</p>
         <div class="h7-sort">${rows}</div>
-        ${sorted ? '' : `<div class="h7-actions">${kit.act('h7-sort-check', `${icon('check', { size: 18 })}<span>Vérifier mon classement</span>`, 'primary', allSorted ? '' : 'disabled')}</div>`}
+        ${sorted ? (ranked ? '' : `<div ${ranked ? '' : 'id="h7-msg-sort"'}>${msgBox(n === d.sort.length ? 'ok' : n >= d.sort.length - 2 ? 'mid' : 'ko', `<p>${n} information${n > 1 ? 's' : ''} bien classée${n > 1 ? 's' : ''} sur ${d.sort.length}. L’explication est sous chaque information.</p>`)}</div>`)
+          : `<div class="h7-actions">${kit.act('h7-sort-check', `${icon('check', { size: 18 })}<span>Vérifier mon classement</span>`, 'primary')}</div>`}
         ${rankBox}
       </section>
       ${core.errorsBox()}
@@ -483,33 +467,40 @@
 
   /* ── 4 · La fiche de coaching ────────────────────────────────────────── */
   const typeLabel = id => ((types.find(t => t.id === id) || {}).label || '').toLowerCase();
-  const kindList = kind => D().sort.filter(c => v(`sk_${c.id}`) === kind).map(c => c.text);
+  const kindList = kind => D().sort.filter((c, i) => v(`sk${i}`) === kind).map(c => c.text);
   const rankText = () => rankNow().map((id, i) => `${i + 1}. ${D().rank.items.find(x => x.id === id).text}`).join(' · ');
   let fichePick = 0;
+  const fill = text => text.split('{name}').join(D().seller.name).split('{il}').join(D().seller.fem ? 'elle' : 'il');
+  /* L'aide de chaque rubrique : les matériaux utiles, rien de plus. */
+  function ficheHelp(id) {
+    const d = D();
+    if (id === 'good') {
+      const strong = d.moments.filter(m => /^(Point fort|Utile)/.test(m.why));
+      return `<p class="h7-aside-h">Les questions qui ont marché</p><ul>${strong.map(m => `<li><span class="h7-built-name">${esc(m.label)}</span>${q(m.q)}</li>`).join('')}</ul>`;
+    }
+    if (id === 'diag') {
+      const left = d.sort.filter(x => x.kind !== 'explicite').map(x => x.text);
+      return `<p class="h7-aside-h">Les moments qui ont fermé la découverte</p><ul>${d.rewrites.map(r => `<li><span class="h7-built-name">${esc(labelOf(r.n))}</span>${esc(r.what)}</li>`).join('')}</ul>
+        <p class="h7-aside-h">Ce qui n’a pas été exploité</p><ul>${left.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`;
+    }
+    return `<p class="h7-aside-h">Vos questions de remplacement</p><ul>${d.rewrites.map((r, j) => `<li><span class="h7-built-name">${esc(labelOf(r.n))}</span>${q(v(`rw${j}_q`) || '')}</li>`).join('')}</ul>`;
+  }
   function ficheStep() {
     const filled = fiche.map(r => kit.filled(v(`f_${r.id}`)));
-    const pane = (i, r) => `<div class="d5-ana-pane" ${i === fichePick ? '' : 'hidden'}>
-        <div class="fm-field"><p class="fm-label">${esc(r.label)}</p><p class="fm-sub">${esc(r.sub)}</p>
-          ${ex.field(`f_${r.id}`, r.label, { placeholder: r.placeholder, max: 900, rows: 6, hideLabel: true })}</div>
-        <div class="d5-floor-nav">${i > 0 ? `<button type="button" class="text-button with-icon" data-act="h7-fiche" data-i="${i - 1}">${icon('arrowLeft', { size: 16 })}<span>Rubrique précédente</span></button>` : '<span></span>'}${i < fiche.length - 1 ? `<button type="button" class="button secondary" data-act="h7-fiche" data-i="${i + 1}"><span>Rubrique suivante</span>${icon('arrowRight', { size: 16 })}</button>` : ''}</div>
-      </div>`;
-    const built = `<div class="h7-built">
-        <p class="k-label">Déjà dans votre fiche</p>
-        <p class="h7-built-h">3 · Mes 3 moments décisifs</p>
-        <ul>${D().rewrites.map((r, j) => `<li><b>${esc(labelOf(r.n))}</b> · ${esc(v(`rw${j}_why`) || '')} <span class="h7-built-q">→ ${q(v(`rw${j}_q`) || '')} (${esc(typeLabel(v(`rw${j}_t`)))})</span></li>`).join('')}</ul>
-        <p class="h7-built-h">4 · Ce qu’il aurait dû repartir en sachant</p>
-        <ul><li><b>Explicites</b> : ${esc(kindList('explicite').join(' ; ') || 'aucun')}</li><li><b>Implicites</b> : ${esc(kindList('implicite').join(' ; ') || 'aucun')}</li><li><b>Motivations</b> : ${esc(kindList('motivation').join(' ; ') || 'aucune')}</li><li><b>Hiérarchie</b> : ${esc(rankText())}</li></ul>
-        <details class="h7-transcript"><summary>${icon('chat', { size: 16 })}<span>Relire l’entretien</span></summary><ol class="h7-tr">${thread()}</ol></details>
-      </div>`;
-    return `<section class="k-panel d5-panel h6-panel h7-panel">
+    const r = fiche[fichePick];
+    const i = fichePick;
+    return `<section class="k-panel d5-panel h7-panel">
         <p class="k-label">Ma fiche de coaching pour ${esc(D().seller.name)}</p>
-        <p class="h7-rule">${icon('check', { size: 16 })}<span>${esc(content.rule)}</span></p>
-        <div class="d5-chat d5-ana">
-          <div class="d5-chat-thread d5-ana-said">${built}</div>
-          <div class="d5-ana-main">
-            <div class="d5-floor-tabs" role="tablist" aria-label="Les rubriques de la fiche">${fiche.map((r, i) => `<button type="button" class="d5-floor-tab ${i === fichePick ? 'is-current' : ''} ${filled[i] ? 'is-filled' : ''}" role="tab" aria-selected="${i === fichePick}" data-act="h7-fiche" data-i="${i}"><span class="d5-floor-n">${filled[i] ? icon('check', { size: 13, strokeWidth: 3 }) : i + 1}</span><span>${esc(r.tab)}</span></button>`).join('')}</div>
-            ${fiche.map((r, i) => pane(i, r)).join('')}
+        <p class="h7-rule-line">Règle d’or : des faits, le positif d’abord, jamais de jugement sur la personne.</p>
+        <div class="d5-floor-tabs" role="tablist" aria-label="Les rubriques de la fiche">${fiche.map((x, n) => `<button type="button" class="d5-floor-tab ${n === i ? 'is-current' : ''} ${filled[n] ? 'is-filled' : ''}" role="tab" aria-selected="${n === i}" data-act="h7-fiche" data-i="${n}"><span class="d5-floor-n">${filled[n] ? icon('check', { size: 13, strokeWidth: 3 }) : n + 1}</span><span>${esc(x.tab)}</span></button>`).join('')}</div>
+        <div class="h7-fiche">
+          <div class="h7-fiche-main">
+            <p class="h7-question">${esc(fill(r.label))}</p>
+            <p class="h7-fiche-sub">${esc(fill(r.sub))}</p>
+            ${ex.field(`f_${r.id}`, fill(r.label), { placeholder: fill(r.placeholder), max: 900, rows: 6, hideLabel: true })}
+            <div class="d5-floor-nav">${i > 0 ? `<button type="button" class="text-button with-icon" data-act="h7-fiche" data-i="${i - 1}">${icon('arrowLeft', { size: 16 })}<span>Rubrique précédente</span></button>` : '<span></span>'}${i < fiche.length - 1 ? `<button type="button" class="button secondary" data-act="h7-fiche" data-i="${i + 1}"><span>Rubrique suivante</span>${icon('arrowRight', { size: 16 })}</button>` : ''}</div>
           </div>
+          <aside class="h7-aside"><p class="k-label">Pour vous aider</p>${ficheHelp(r.id)}</aside>
         </div>
       </section>
       ${core.errorsBox()}
@@ -532,10 +523,10 @@
     const d = D();
     return [
       `Fiche de coaching pour ${d.seller.name} (${d.title})`, '',
-      `1. Ce qui a bien fonctionné : ${v('f_good') || ''}`,
-      `2. Mon diagnostic : ${v('f_diag') || ''}`,
+      `1. Ce qui a marché : ${v('f_good') || ''}`,
+      `2. Ce qui a coincé : ${v('f_diag') || ''}`,
       '3. Mes 3 moments décisifs :',
-      ...d.rewrites.map((r, j) => `   ${labelOf(r.n)} · ${v(`rw${j}_why`) || ''} → « ${v(`rw${j}_q`) || ''} » (${typeLabel(v(`rw${j}_t`))})`),
+      ...d.rewrites.map((r, j) => `   ${labelOf(r.n)} · ${r.what} → « ${v(`rw${j}_q`) || ''} » (${typeLabel(v(`rw${j}_t`))})`),
       '4. Ce qu’il aurait dû repartir en sachant :',
       `   Explicites : ${kindList('explicite').join(' ; ')}`,
       `   Implicites : ${kindList('implicite').join(' ; ')}`,
@@ -548,53 +539,26 @@
   function review() {
     const d = D();
     const yesCount = content.selfCheck.filter((_, i) => v(`self${i}`) === 'oui').length;
+    const pill = tone => `<span class="h7-rv-pill tone-${tone}">${esc(VERDICT[tone].title)}</span>`;
     const diagRows = d.moments.map((m, k) => {
-      const id = choiceAt(k);
-      const tone = firstTone(k);
-      if (m.write) {
-        const r = judge(m, v(`w${k}`));
-        return `<div class="h6-path-row">
-          <p class="h6-path-n">${esc(m.label)}</p>
-          <div class="h6-path-you"><p class="h6-pick is-${r.tone}"><span aria-hidden="true">${r.tone === 'mid' ? '–' : icon(r.tone === 'ok' ? 'check' : 'close', { size: 14, strokeWidth: 3 })}</span><span><b>${esc(v(`w${k}`) || '')}</b><span class="h6-pick-q">${q(m.q)}</span></span></p>
-            <p class="h6-retried">Idées repérées : ${r.found.length ? esc(r.found.map(i => i.text).join(' ; ')) : 'aucune'}.</p></div>
-          <div class="h6-path-best"><p class="h6-best-label">Le diagnostic attendu</p><p class="h6-best-q"><b>${esc(m.choices[m.best].text)}</b></p><p class="h6-explain">${esc(m.why)}</p></div>
-        </div>`;
-      }
-      return `<div class="h6-path-row">
-          <p class="h6-path-n">${esc(m.label)}</p>
-          <div class="h6-path-you"><p class="h6-pick is-${tone}"><span aria-hidden="true">${tone === 'mid' ? '–' : icon(tone === 'ok' ? 'check' : 'close', { size: 14, strokeWidth: 3 })}</span><span><b>${esc((m.choices[id] || {}).text || '')}</b><span class="h6-pick-q">${q(m.q)}</span></span></p>
-            ${tries(k).length > 1 ? `<p class="h6-retried">Puis vous avez essayé : ${tries(k).slice(1).map(t => esc(m.choices[t].text.split(' : ')[0])).join(' ; ')}.</p>` : ''}</div>
-          <div class="h6-path-best">${tone === 'ok' ? `<p class="h6-explain">${esc(m.why)}</p>` : `<p class="h6-best-label">Le bon diagnostic</p><p class="h6-best-q"><b>${esc(m.choices[m.best].text)}</b></p><p class="h6-explain">${esc(m.why)}</p>`}</div>
-        </div>`;
+      const tone = firstTone(k) || 'ko';
+      return `<li><span class="h7-rv-name">${esc(m.label)}</span>${pill(tone)}${tone === 'ok' ? '' : `<span class="h7-rv-fix">C’était : ${esc(m.choices[m.best].text.split(' : ')[0].toLowerCase())}</span>`}</li>`;
     }).join('');
-    const rwRows = d.rewrites.map((r, j) => `<div class="fm-rv-row">
-        <p class="fm-rv-label">${esc(labelOf(r.n))}</p>
-        <div class="fm-rv-you"><p class="result-answer-text">${esc(v(`rw${j}_why`) || '')}</p><p class="result-answer-text">${q(v(`rw${j}_q`) || '')} <em>(${esc(typeLabel(v(`rw${j}_t`)))})</em></p></div>
-        <div class="fm-rv-model"><p>${esc(r.what)}</p><p>${q(r.model)}</p></div>
-      </div>`).join('');
+    const rwRows = d.rewrites.map((r, j) => `<li><span class="h7-rv-name">${esc(labelOf(r.n))}</span><span class="h7-rv-q">Vous : ${q(v(`rw${j}_q`) || '')}</span><span class="h7-rv-q is-model">Une question juste : ${q(r.model)}</span></li>`).join('');
     const ficheRows = fiche.map(r => `<div class="fm-rv-row">
-        <p class="fm-rv-label">${esc(r.label.replace(/^\d+ · /, ''))}</p>
+        <p class="fm-rv-label">${esc(r.tab)}</p>
         <div class="fm-rv-you">${kit.filled(v(`f_${r.id}`)) ? `<p class="result-answer-text">${esc(v(`f_${r.id}`))}</p>` : '<p class="result-answer-text is-empty"><em>Non renseigné.</em></p>'}</div>
         <div class="fm-rv-model"><p>${esc(d.model[r.id])}</p></div>
       </div>`).join('');
-    return `<section class="k-panel h6-review">
-        <p class="a4-review-head"><span class="k-label">Votre analyse de l’entretien de ${esc(d.seller.name)}</span><span class="a4-review-count"><b>${rightFirst()}</b> / ${d.moments.length} diagnostics justes du premier coup · moments décisifs : <b>${dmScore()}</b> / 3</span></p>
-        <div class="h6-path-head" aria-hidden="true"><span></span><span>Votre premier diagnostic</span><span>Le corrigé</span></div>
-        ${diagRows}
+    return `<section class="k-panel h6-review h7-review">
+        <p class="a4-review-head"><span class="k-label">Votre analyse de l’entretien de ${esc(d.seller.name)}</span><span class="a4-review-count"><b>${rightFirst()}</b> / ${d.moments.length} justes du premier coup</span></p>
+        <ul class="h7-rv-list">${diagRows}</ul>
+        <p class="h7-review-line">Moments décisifs : vous en avez trouvé <b>${dmScore()}</b> sur 3 (${esc(d.decisive.expected.map(labelOf).join(', '))}).</p>
+        <p class="h7-review-line">Ce qu’il fallait savoir : <b>${sortScore()}</b> / ${d.sort.length} bien classées ; priorités ${rankRight() ? 'dans le bon ordre' : 'à revoir'}.</p>
       </section>
-      <section class="k-panel h6-review">
-        <p class="k-label">Les moments décisifs</p>
-        <p class="h7-review-line">Vous avez choisi : <b>${esc(picked().map(labelOf).join(', '))}</b>. ${esc(d.decisive.text)}</p>
-      </section>
-      <section class="k-panel fm-review is-rows h6-review">
-        <p class="k-label">Vos réécritures</p>
-        <div class="fm-rv-head" aria-hidden="true"><span></span><span>Votre version</span><span>Le corrigé</span></div>
-        ${rwRows}
-      </section>
-      <section class="k-panel h6-review">
-        <p class="a4-review-head"><span class="k-label">Ce qu’il fallait savoir</span><span class="a4-review-count"><b>${sortScore()}</b> / ${d.sort.length} bien classées · hiérarchie ${rankRight() ? 'juste' : 'à revoir'}</span></p>
-        <ul class="h7-review-sort">${d.sort.map(c => `<li class="${v(`sk_${c.id}`) === c.kind ? 'is-ok' : 'is-ko'}"><b>${esc(c.text)}</b> · ${esc(KINDS.find(k => k.id === c.kind).label.toLowerCase())}. <span>${esc(c.why)}</span></li>`).join('')}</ul>
-        <p class="h7-review-line"><b>La hiérarchie :</b> ${d.rank.items.map((it, i) => `${i + 1}. ${esc(it.text)}`).join(' · ')}. ${esc(d.rank.why)}</p>
+      <section class="k-panel h6-review h7-review">
+        <p class="k-label">Vos questions de remplacement</p>
+        <ul class="h7-rv-list is-rw">${rwRows}</ul>
       </section>
       <section class="k-panel fm-review is-rows h6-review">
         <p class="k-label">Votre fiche de coaching</p>
@@ -610,10 +574,30 @@
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }
 
+  /* La page de transition : ce que vous venez de faire, pourquoi la suite,
+   * ce qu'on vous demande. Dans la scène, comme l'entretien. */
+  function transition(k) {
+    const t = content.transitions[k];
+    const fillT = text => text.split('{name}').join(D().seller.name).split('{il}').join(D().seller.fem ? 'elle' : 'il').split('{e}').join(D().seller.fem ? 'e' : '');
+    return `<section class="h6-stage" style="--h6-decor:url('${decorOf()}')">
+        <div class="h6-stage-body">
+          <div class="h6-card h7-trans h6-in">
+            <p class="k-label">Étape ${k + 1} sur ${STEPS.length}</p>
+            <p class="h7-trans-title">${esc(STEPS[k])}</p>
+            <p class="h7-trans-done">${icon('check', { size: 16, strokeWidth: 3 })}<span>${esc(fillT(t.done))}</span></p>
+            <p class="h7-trans-why">${esc(fillT(t.why))}</p>
+            <p class="h7-trans-todo"><span>À vous</span>${esc(fillT(t.todo))}</p>
+          </div>
+          <div class="h6-stage-foot">${next('C’est parti', 'h7-tr', 0.5, `data-k="${k}"`)}</div>
+        </div>
+      </section>`;
+  }
+
   function screen() {
     const reviewing = ex.reviewing() && D();
     const k = at();
-    const body = reviewing ? review() : [scenario, decisiveStep, rewriteStep, knowStep, ficheStep, grid][k]();
+    // Avant chaque étape (à partir de la 2e) : une page de transition.
+    const body = reviewing ? review() : k > 0 && !yes(`tr${k}`) ? transition(k) : [scenario, decisiveStep, rewriteStep, knowStep, ficheStep, grid][k]();
     return `<div class="k-page a4-page a5-page d5-page h6-page h7-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: D() ? `Analysez l’entretien de ${D().seller.name}, repérez ce qui a ouvert ou fermé la découverte, et aidez-${D().seller.fem ? 'la' : 'le'} à progresser.` : content.subtitle, aside: reviewing ? '' : progress(k) + kit.tourButton() })}
       <form novalidate>${body}</form>
@@ -645,6 +629,7 @@
 
   kit.on({
     'h7-go': control => go(Number(control.dataset.index)),
+    'h7-tr': control => { advance(`tr${Number(control.dataset.k)}`); window.scrollTo({ top: 0, behavior: 'instant' }); },
     'h7-prev': () => go(Math.max(0, at() - 1)),
     'h6-flag': control => advance(control.dataset.name),
     'h7-dossier': control => { if (!D()) advance('dos', control.dataset.id); },
@@ -672,26 +657,55 @@
       if (yes('dmok')) return;
       const n = control.dataset.n;
       const now = picked();
-      if (now.includes(n)) ex.setValue('dm', now.filter(x => x !== n));
-      else if (now.length < 3) ex.setValue('dm', [...now, n]);
-      else { core.toast('Trois moments au plus : retirez-en un d’abord.'); return; }
-      ex.changed(); ex.rebuild();
+      const on = !now.includes(n);
+      if (on && now.length >= 3) { core.toast('Trois moments au plus : retirez-en un d’abord.'); return; }
+      const next = on ? [...now, n] : now.filter(x => x !== n);
+      ex.setValue('dm', next); ex.changed();
+      control.classList.toggle('is-on', on);
+      control.setAttribute('aria-pressed', String(on));
+      control.querySelector('.h7-dm-tick').innerHTML = on ? icon('check', { size: 14, strokeWidth: 3 }) : '';
+      const count = document.querySelector('.h7-count b');
+      if (count) count.textContent = String(next.length);
+      const check = document.querySelector('[data-act="h7-dm-check"]');
+      if (check) check.disabled = next.length !== 3;
     },
-    'h7-dm-check': () => { if (picked().length === 3) advance('dmok', true); },
+    'h7-dm-check': () => { if (picked().length === 3) { advance('dmok', true); showMsg(); } },
     'h7-rw': control => { rwPick = Number(control.dataset.i); ex.rebuild(); },
-    'h7-type': control => { const j = Number(control.dataset.j); if (!yes(`rw${j}_ok`)) advance(`rw${j}_t`, control.dataset.id); },
+    'h7-type': control => {
+      const j = Number(control.dataset.j);
+      if (yes(`rw${j}_ok`)) return;
+      ex.setValue(`rw${j}_t`, control.dataset.id); ex.changed();
+      control.parentElement.querySelectorAll('.h7-chip').forEach(b => { const on = b === control; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); });
+    },
     'h7-rw-check': control => {
       const j = Number(control.dataset.j);
-      if (!kit.filled(v(`rw${j}_why`))) { core.toast('Dites d’abord ce qui s’est passé à ce moment.'); return; }
       if (!kit.filled(v(`rw${j}_q`))) { core.toast('Écrivez la question que vous auriez posée.'); return; }
       if (!v(`rw${j}_t`)) { core.toast('Choisissez le type de votre question.'); return; }
-      rwPick = j; advance(`rw${j}_ok`, true);
+      rwPick = j; advance(`rw${j}_ok`, true); showMsg();
     },
-    'h7-sort': control => { if (!yes('sok')) advance(`sk_${control.dataset.id}`, control.dataset.kind); },
-    'h7-sort-check': () => { if (D().sort.every(c => v(`sk_${c.id}`))) advance('sok', true); },
-    'h7-rank': control => { const now = rankNow(); if (!yes('rkok') && !now.includes(control.dataset.id)) advance('rk', [...now, control.dataset.id]); },
-    'h7-rank-reset': () => { if (!yes('rkok')) advance('rk', []); },
-    'h7-rank-check': () => { if (rankNow().length === D().rank.items.length) advance('rkok', true); },
+    'h7-sort-check': () => {
+      if (!D().sort.every((_, i) => v(`sk${i}`))) { core.toast('Classez chaque information avant de vérifier.'); return; }
+      advance('sok', true); showMsg();
+    },
+    'h7-rank': control => {
+      const now = rankNow();
+      if (yes('rkok') || now.includes(control.dataset.id)) return;
+      const next = [...now, control.dataset.id];
+      ex.setValue('rk', next); ex.changed();
+      control.classList.add('is-on'); control.disabled = true;
+      control.querySelector('.h7-rank-n').textContent = String(next.length);
+      const check = document.querySelector('[data-act="h7-rank-check"]');
+      if (check) check.disabled = next.length !== D().rank.items.length;
+    },
+    'h7-rank-reset': () => {
+      if (yes('rkok')) return;
+      ex.setValue('rk', []); ex.changed();
+      document.querySelectorAll('.h7-rank-item').forEach(b => { b.classList.remove('is-on'); b.disabled = false; b.querySelector('.h7-rank-n').textContent = ''; });
+      const check = document.querySelector('[data-act="h7-rank-check"]');
+      if (check) check.disabled = true;
+    },
+    'h7-rank-check': () => { if (rankNow().length === D().rank.items.length) { advance('rkok', true); showMsg(); } },
+    'h7-rwhint': control => { const r = D().rewrites[Number(control.dataset.j)]; if (r && r.hint) core.openDialog('Un indice', `<p class="h7-hint-win">${esc(r.hint)}</p>`); },
     'h7-fiche': control => { fichePick = Number(control.dataset.i); ex.rebuild(); },
     'h7-copy': () => {
       const done = () => core.toast('Votre fiche est copiée.');

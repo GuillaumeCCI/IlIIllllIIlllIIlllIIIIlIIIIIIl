@@ -14,6 +14,52 @@
 (function (root) {
   'use strict';
 
+
+  /* LE JUGE DES RÉPONSES RÉDIGÉES (6.2 « Le coach ») : diagnostics écrits et
+   * questions réécrites. Une réponse est jugée sur ses IDÉES CLÉS : chaque
+   * idée a une liste de mots ou de débuts de mots ; les accents, majuscules
+   * et ponctuation ne comptent pas, une faute de frappe est tolérée sur les
+   * mots longs. Une idée { open: true } vérifie que la question est ouverte.
+   * La banque de réponses de test est dans tests/coach.test.cjs. */
+  const plain = text => ` ${String(text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim()} `;
+  const lev = (a, b) => {
+    const d = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+    for (let j = 1; j <= b.length; j++) d[0][j] = j;
+    for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[a.length][b.length];
+  };
+  const hasWord = (t, w) => {
+    const word = plain(w).trim();
+    if (!word) return false;
+    if (t.includes(` ${word}`)) return true;
+    if (word.length < 6 || word.includes(' ')) return false;
+    return t.trim().split(' ').some(x => x.length >= word.length - 1 && lev(x.slice(0, word.length), word) <= 1);
+  };
+  // Une question ouverte : un mot interrogatif ouvert dans ses premiers mots.
+  const OPEN = ['qu', 'que', 'quel', 'quelle', 'quels', 'quelles', 'comment', 'pourquoi', 'racontez', 'parlez', 'decrivez', 'expliquez', 'dites', 'quoi', 'qui', 'en quoi', 'dans quelle'];
+  const isOpen = text => { const first = ` ${plain(text).trim().split(' ').slice(0, 9).join(' ')} `; return OPEN.some(w => first.includes(` ${w} `)); };
+  const words = text => plain(text).trim().split(' ').filter(Boolean).length;
+  function judgeIdeas(ideas, text) {
+    const t = plain(text);
+    const found = words(text) < 3 ? [] : ideas.filter(idea => (idea.open ? isOpen(text) : idea.words.some(w => hasWord(t, w))));
+    const missing = ideas.filter(idea => !found.includes(idea));
+    return { found, missing, tone: !missing.length ? 'ok' : found.length ? 'mid' : 'ko' };
+  }
+  /* Une question réécrite : ses idées, sans produit ni détail interdit. Le
+   * type choisi par l'apprenant est vérifié à part, à l'écran. */
+  function judgeRewrite(r, text, productWords) {
+    const t = plain(text);
+    const res = judgeIdeas(r.ideas, text);
+    // Produits et mots interdits : le mot entier (« laquelle » n’est pas « laqué »).
+    const whole = w => { const x = plain(w).trim(); return [' ', 's ', 'x '].some(end => t.includes(` ${x}${end}`)); };
+    const product = productWords.find(whole) || '';
+    const forbidden = (r.forbid || []).find(whole) || '';
+    let tone = res.tone;
+    if ((product || forbidden) && tone === 'ok') tone = 'mid';
+    return Object.assign(res, { tone, product, forbidden, question: /\?\s*»?\s*$/.test(String(text || '').trim()) });
+  }
+  root.ATELIER_COACH = Object.freeze({ plain, hasWord, isOpen, judgeIdeas, judgeRewrite });
+
   root.ATELIER_S6 = {
 
     '6.1': {
@@ -395,13 +441,22 @@
             }
           },
           rewrites: [
-            { n: 'M4', type: ['ouverte'], hint: 'Revenez au deuxième étage de l’entonnoir : ce qui les aiderait, sans rien proposer.',
+            { n: 'M4', type: ['ouverte'], ideas: [
+                { open: true, text: 'elle est ouverte' },
+                { text: 'elle porte sur ce qui les gêne, ou ce qui les aiderait, quand ils cuisinent à plusieurs', words: ['aid', 'gen', 'difficult', 'problem', 'plusieurs', 'ensemble', 'a quatre', 'a cinq', 'a 4', 'a 5', 'week end', 'weekend', 'petits enfants', 'marche dessus', 'marchez dessus', 'marcher dessus', 'dessus', 'place', 'espace', 'facilit', 'manqu', 'compliqu', 'pratique', 'ideal', 'attend', 'besoin', 'imagin', 'souhait', 'envie', 'changer', 'amelior', 'confort', 'embet', 'agac', 'derang', 'bloqu', 'coince', 'serre', 'circul', 'bouger', 'tous', 'famille'] }
+              ], others: ['Comment ça se passe, quand vous cuisinez à cinq ?', 'Qu’est-ce qui vous gêne le plus, quand vous êtes plusieurs dans la cuisine ?', 'Racontez-moi un samedi midi avec les petits-enfants dans votre cuisine.'], hint: 'Revenez au deuxième étage de l’entonnoir : ce qui les aiderait, sans rien proposer.',
               what: 'Elle propose l’îlot avant d’avoir compris le problème : M. Leroy se braque, et la découverte se ferme.',
               model: 'Qu’est-ce qui vous aiderait, quand vous cuisinez à plusieurs ?' },
-            { n: 'M8', type: ['ouverte'], hint: 'Demandez-vous à quel étage on en est.',
+            { n: 'M8', type: ['ouverte'], forbid: ['couleur', 'finition', 'facade', 'materiau', 'style', 'teinte', 'brillant', 'mat ', 'bois', 'laque'], forbidText: 'elle porte encore sur un détail esthétique', ideas: [
+                { open: true, text: 'elle est ouverte' },
+                { text: 'elle porte sur leurs attentes, leur usage au quotidien', words: ['attend', 'quotidien', 'usage', 'utilis', 'important', 'compte', 'envie', 'souhait', 'besoin', 'ideal', 'imagin', 'priorit', 'pratique', 'servir', 'sert', 'habitude', 'reve', 'plaisir', 'futur', 'nouvelle cuisine', 'tous les jours', 'chaque jour', 'facilit', 'change', 'apporter', 'apporte', 'faire', 'cuisinez', 'cuisiner', 'vivre', 'vie'] }
+              ], others: ['Comment utiliserez-vous votre nouvelle cuisine, au quotidien ?', 'Qu’est-ce qui compte le plus pour vous dans cette nouvelle cuisine ?', 'Qu’est-ce que votre future cuisine doit vous permettre de faire ?'], hint: 'Demandez-vous à quel étage on en est.',
               what: 'Elle saute aux finitions (bois ou laqué) alors que le couple n’a pas fini de dire ce qu’il attend : « on n’y a pas encore pensé ».',
               model: 'Qu’attendez-vous de votre future cuisine, au quotidien ?' },
-            { n: 'M10', type: ['synthese'],
+            { n: 'M10', type: ['synthese'], ideas: [
+                { text: 'vous résumez ce que vous avez compris', words: ['resum', 'si je comprends', 'si j ai bien compris', 'si je reprends', 'recapitul', 'vous m avez dit', 'vous avez besoin', 'il vous faut', 'plan de travail', 'four', 'delai', 'prix ferme', '15 000', '15000', 'dos', 'place', 'travaux', 'budget', 'synthese', 'reformul'] },
+                { text: 'vous leur faites classer les priorités', words: ['premier', 'premiere', 'priorit', 'plus important', 'compte le plus', 'compte plus', 'classer', 'ordre', 'avant tout', 'd abord', 'passe avant', 'essentiel', 'primordial', 'le plus', 'choisir', 'garder un seul', 'une chose', 'laquelle', 'lequel', 'une seule'] }
+              ], others: ['Si je résume : plus de place, un four en hauteur, des délais tenus et un prix ferme. Qu’est-ce qui compte le plus pour vous ?', 'Si j’ai bien compris : de la place, pas besoin de se baisser, pas de retard, pas de surprise. Dans quel ordre ?'],
               what: 'Elle clôt sans résumer ni faire classer les priorités : elle repart sans savoir ce qui compte le plus.',
               model: 'Si je résume : un plan de travail pour cuisiner à plusieurs, un four en hauteur pour votre dos, des délais tenus et un prix ferme de 15 000 € au maximum. Qu’est-ce qui passe en premier pour vous ?' }
           ],
@@ -512,7 +567,7 @@
               },
               why: 'Point fort. Un écho : M. Vidal livre son enjeu personnel (« c’est mon poste qui est en jeu »).' },
             { n: 'M8', label: 'La formule premium', write: { guide: 'Le type de question, puis ce qu’elle a produit chez M. Vidal…', ideas: [
-                { text: 'c’est une question orientée (elle contient la réponse)', words: ['orient', 'induit', 'suggest', 'souffl', 'pousse', 'force', 'manipul', 'tendanc', 'impose', 'oriente'] },
+                { text: 'c’est une question orientée (elle contient la réponse)', words: ['orient', 'induit', 'suggest', 'sugger', 'souffl', 'pousse', 'force', 'manipul', 'tendanc', 'impose', 'oriente'] },
                 { text: 'il glisse un produit, sa formule', words: ['produit', 'formule', 'premium', 'offre', 'vend', 'solution', 'propose', 'commercial'] },
                 { text: 'M. Vidal se replie', words: ['replie', 'repli', 'ferme', 'recul', 'mefian', 'hesit', 'groupe', 'convaincu', 'bloque', 'braque', 'refroid', 'esquive'] }
               ] }, q: 'Vous ne voulez sûrement pas prendre de risque : vous préférerez notre formule premium ?',
@@ -561,13 +616,22 @@
             }
           },
           rewrites: [
-            { n: 'M5', type: ['ouverte', 'echo'], hint: 'Restez sur l’enjeu qui vient d’apparaître : ses équipes.',
+            { n: 'M5', type: ['ouverte', 'echo'], forbid: ['chambre', 'etage', 'surface', 'metre', 'm2', 'revetement', 'sol ', 'plan '], forbidText: 'elle revient aux détails techniques', ideas: [
+                { open: true, text: 'elle est ouverte' },
+                { text: 'elle reste sur l’enjeu humain : ses équipes', words: ['equipe', 'receptionn', 'agent', 'personnel', 'salarie', 'collaborat', 'epuis', 'arret', 'fatigue', 'soulag', 'perdre', 'garder', 'humain', 'elles', 'collegue', 'employe', 'charge de travail', 'moral', 'tension', 'depart', 'absence', 'absent', 'gens', 'monde'] }
+              ], others: ['Qu’est-ce qui aiderait le plus vos équipes, aujourd’hui ?', 'Elles sont épuisées, dites-vous : qu’est-ce que ça change pour l’hôtel ?', 'Que se passerait-il si vous perdiez une de vos réceptionnistes ?'], hint: 'Restez sur l’enjeu qui vient d’apparaître : ses équipes.',
               what: 'Juste après l’épuisement des équipes, il enchaîne quatre questions techniques : il quitte l’enjeu humain, et M. Vidal se ferme.',
               model: 'Et pour vos équipes, qu’est-ce qui devrait changer en priorité ?' },
-            { n: 'M6', type: ['ouverte'], hint: 'Demandez-vous s’il a tout compris avant de proposer.',
+            { n: 'M6', type: ['ouverte'], ideas: [
+                { open: true, text: 'elle est ouverte' },
+                { text: 'elle cherche ce qui compte pour lui, avant de proposer', words: ['faudrait', 'faut', 'important', 'compte', 'attend', 'ideal', 'reussi', 'evit', 'reproduis', 'plus jamais', 'serein', 'rassur', 'priorit', 'enjeu', 'consequence', 'mars', 'audit', 'chang', 'besoin', 'pour vous', 'inquiet', 'preoccup', 'risque', 'pire', 'attente', 'aider', 'solution', 'regler', 'resoudre', 'souhait', 'aimeriez'] }
+              ], others: ['Qu’est-ce qui serait le plus important pour vous dans une nouvelle organisation ?', 'Qu’est-ce qui vous inquiète le plus, dans les semaines qui viennent ?', 'Comment verriez-vous les choses idéalement ?'], hint: 'Demandez-vous s’il a tout compris avant de proposer.',
               what: 'Il propose son remplacement garanti avant d’avoir tout compris : le vrai enjeu, l’audit de mars, arrive après.',
               model: 'Que faudrait-il pour que ce problème ne se reproduise plus ?' },
-            { n: 'M8', type: ['alternative', 'ouverte'],
+            { n: 'M8', type: ['alternative', 'ouverte'], ideas: [
+                { text: 'vous lui faites classer ses priorités', words: ['premier', 'premiere', 'priorit', 'plus important', 'compte le plus', 'compte plus', 'classer', 'ordre', 'avant tout', 'd abord', 'passe avant', 'essentiel', 'primordial', 'le plus', 'choisir', 'garder un seul', 'une chose', 'laquelle', 'lequel', 'une seule'] },
+                { text: 'vous reprenez ses enjeux (la continuité, ses équipes, l’audit de mars)', words: ['continuit', 'equipe', 'audit', 'mars', 'etoile', 'menage', 'receptionn', 'remplac', 'absence', 'avis', 'client', 'poste', 'classement', 'inspect', 'personnel', 'proprete'] }
+              ], others: ['Entre l’audit de mars et vos équipes, qu’est-ce qui passe en premier ?', 'Si vous ne deviez régler qu’une chose avant mars, ce serait laquelle ?'],
               what: 'Il pousse sa formule premium en jouant sur la peur du risque : M. Vidal se replie sur le groupe.',
               model: 'Entre la continuité du service, vos équipes et l’audit de mars, qu’est-ce qui passe en premier pour vous ?' }
           ],
@@ -597,11 +661,23 @@
         }
       },
 
+      /* Les pages de transition, avant chaque étape à partir de la deuxième :
+       * ce que vous venez de faire, pourquoi la suite, ce qu'on vous demande.
+       * {name} : le prénom du collègue ; {il} : il ou elle. */
+      transitions: [
+        null,
+        { done: 'Vous avez analysé les dix moments de l’entretien de {name}.', why: 'Toutes les questions ne se valent pas : quelques-unes seulement ont fait basculer la découverte. Un bon coach se concentre sur elles.', todo: 'Choisissez les 3 moments qui ont le plus pesé.' },
+        { done: 'Vous avez repéré les moments qui ont tout changé.', why: 'Dire ce qui n’a pas marché ne suffit pas : {name} a besoin de savoir quoi dire à la place.', todo: 'Pour chaque moment décisif, écrivez la question que vous auriez posée.' },
+        { done: 'Vous avez proposé de meilleures questions.', why: 'En questionnant mieux, {name} serait reparti{e} avec des informations précises sur le client. Ce sont elles qui permettent de faire la bonne proposition.', todo: 'Classez ce que {name} aurait dû apprendre, puis mettez les priorités du client dans l’ordre.' },
+        { done: 'Vous avez tout ce qu’il faut pour faire votre retour.', why: 'Il reste à le dire à {name}, de façon utile : des faits, le positif d’abord, sans juger la personne.', todo: 'Rédigez votre fiche en trois rubriques : ce qui a marché, ce qui a coincé, deux conseils.' },
+        { done: 'Votre fiche de coaching est prête.', why: 'Avant de découvrir le corrigé, relisez-la avec les critères de votre tuteur.', todo: 'Répondez Oui ou Non à chaque critère de la grille.' }
+      ],
+
       // La fiche de coaching (rubriques 1, 2 et 5 du gabarit ; 3 et 4 viennent de vos étapes).
       fiche: [
-        { id: 'good', tab: 'Ce qui a fonctionné', label: '1 · Ce qui a bien fonctionné', sub: 'Au moins deux questions, citées, avec ce qu’elles ont fait émerger.', placeholder: '« … » a fait apparaître… ; « … »…' },
-        { id: 'diag', tab: 'Diagnostic', label: '2 · Mon diagnostic', sub: 'Les types de questions dominants, le respect de l’entonnoir, les besoins et motivations laissés de côté.', placeholder: 'Les questions… L’entonnoir… Il a laissé de côté…' },
-        { id: 'tips', tab: 'Deux conseils', label: '5 · Deux conseils', sub: 'Deux conseils concrets pour son prochain entretien.', placeholder: '1. … 2. …' }
+        { id: 'good', tab: 'Ce qui a marché', label: 'Qu’est-ce que {name} a bien fait ?', sub: 'Citez au moins deux de ses questions, et ce qu’elles ont fait dire au client. Un retour commence toujours par là.', placeholder: '« … » a fait dire au client que…' },
+        { id: 'diag', tab: 'Ce qui a coincé', label: 'Qu’est-ce qui a coincé, et pourquoi ?', sub: 'En deux ou trois phrases : les questions qui ont fermé la découverte, et ce que {name} n’a pas exploité chez le client.', placeholder: 'Quand {name} a demandé « … », le client…' },
+        { id: 'tips', tab: 'Deux conseils', label: 'Quels deux conseils lui donnez-vous ?', sub: 'Deux conseils concrets, qu’{il} pourra appliquer dès son prochain entretien.', placeholder: '1. … 2. …' }
       ],
 
       selfCheck: [

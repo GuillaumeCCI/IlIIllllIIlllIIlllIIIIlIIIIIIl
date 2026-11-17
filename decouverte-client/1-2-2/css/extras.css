@@ -1960,3 +1960,118 @@ p.h7-question { margin-bottom: 12px; }
 .h7-dm-diag { margin-top: auto; padding: 3px 10px; background: #eef2fc; color: #4c5a80; font-size: .78rem; font-weight: 600; }
 .h7-dm.is-on .h7-dm-diag { background: #dfe7fb; }
 .h7-dm-mark { margin-top: 2px; }
+
+/* 6.2 · Les écrans de fin, selon les règles de l’utilisateur : un message au
+ * style de la formatrice, pas de contours bleus ni de barres de couleur,
+ * moins de gras, les aides en petits boutons. */
+
+/* Le message de retour (après chaque validation). */
+.h7-msg { display: flex; align-items: flex-start; gap: 18px; margin-top: 20px; padding: 20px 24px; border-radius: 18px; background: #fff; box-shadow: 0 10px 28px rgb(15 35 78 / 10%), inset 0 0 0 1px #e7ebf4; scroll-margin: 120px; animation: h7-msg-in .35s ease-out; }
+@keyframes h7-msg-in { from { opacity: 0; transform: translateY(8px); } }
+.h7-msg > img { flex: none; width: 64px; height: 64px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px var(--tone, #2a8f8f); }
+.h7-msg.tone-ok { --tone: #2a8f8f; }
+.h7-msg.tone-mid { --tone: #5a67b8; }
+.h7-msg.tone-ko { --tone: #a83d74; }
+.h7-msg-body { flex: 1; min-width: 0; display: grid; gap: 8px; color: #24305a; line-height: 1.55; }
+.h7-msg-body p { margin: 0; }
+.h7-msg-title { color: var(--tone); font-size: 1.2rem; font-weight: 800; }
+.h7-msg-list { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.h7-msg-list b { font-weight: 700; color: var(--navy); }
+.h7-msg-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.h7-msg-checks li { display: flex; align-items: flex-start; gap: 8px; }
+.h7-msg-checks li .icon { flex: none; margin-top: 4px; }
+.h7-msg-checks li.is-ok .icon { color: #2a8f8f; }
+.h7-msg-checks li.is-ko .icon { color: #c98a1b; }
+.h7-msg-model { display: grid; gap: 2px; margin-top: 4px !important; padding: 10px 14px; border-radius: 12px; background: #f3f6fb; color: var(--navy); font-weight: 600; }
+.h7-msg-model span { color: var(--muted); font-size: .76rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+
+/* Les moments décisifs : la carte choisie sans contour bleu. */
+.h7-dm.is-on { border-color: #e3e8f2; }
+.h7-dm-foot { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.h7-dm-foot .h7-dm-diag { margin-top: 0; }
+.h7-dm-mark { margin: 0; padding: 3px 10px; font-size: .76rem; font-weight: 700; }
+
+/* Les pastilles de choix (types, classement) : discrètes. */
+.h7-chip { padding: 6px 12px; color: var(--navy); font-size: .86rem; font-weight: 600; box-shadow: inset 0 0 0 1px #d5ddef; }
+.h7-chip:hover:not(:disabled) { background: #f3f6fb; }
+.h7-chip.is-on { background: var(--accent); color: #fff; box-shadow: none; }
+.h7-chip:disabled:not(.is-on):not(.is-answer) { opacity: .55; }
+.h7-chip.is-answer:not(.is-on) { box-shadow: inset 0 0 0 1.5px #2a8f8f; color: #1d5c5c; }
+
+/* Les réécritures : même disposition que l’analyse. */
+.h7-panel-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.h7-panel-top .h7-helps.is-corner { flex: none; }
+.h7-panel-top .h7-help { box-shadow: 0 2px 8px rgb(15 35 78 / 8%), inset 0 0 0 1px #e3e8f2; }
+.h7-analyse.is-panel { width: 100%; margin-top: 16px; align-items: start; }
+.h7-analyse.is-panel .h7-tr-card { box-shadow: inset 0 0 0 1px #e7ebf4; background: #fbfcfe; }
+.h7-stuck { margin: 4px 0 0; padding-top: 14px; border-top: 1px dashed #d5ddef; color: #3a4a7a; font-size: .98rem; line-height: 1.5; }
+.h7-stuck b { color: var(--navy); font-weight: 700; }
+.h7-analyse.is-panel .h7-write { box-shadow: inset 0 0 0 1px #e7ebf4; }
+.h7-analyse.is-panel .h7-msg { margin-top: 4px; }
+
+/* Ce qu’il fallait savoir : des lignes simples, sans barre de couleur. */
+.h7-sort-row { border-left: 0; background: #f7f9fc; padding: 12px 16px; }
+.h7-sort-text { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.h7-sort-mark { flex: none; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; color: #fff; }
+.h7-sort-mark.is-ok { background: #2a8f8f; }
+.h7-sort-mark.is-ko { background: #a83d74; }
+.h7-sort-why { display: block; padding-left: 28px; color: #5a6584; }
+.h7-rank { margin-top: 26px; }
+.h7-rank-item { border: 1.5px solid #e3e8f2; box-shadow: none; background: #fff; font-weight: 500; }
+.h7-rank-item.is-on { border-color: #e3e8f2; box-shadow: none; background: #f3f7ff; }
+
+/* La fiche : la règle d’or en simple ligne, le récapitulatif allégé. */
+.h7-rule-line { margin: 0 0 16px; color: #5a6584; font-size: .95rem; font-style: italic; }
+.h7-built { gap: 4px; }
+.h7-built-h { margin: 12px 0 2px; color: var(--muted); font-size: .74rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.h7-built ul { gap: 8px; font-size: .93rem; color: #3a4a7a; }
+.h7-built-name { color: var(--navy); font-weight: 700; }
+.h7-built-q { display: block; color: var(--accent); }
+.h7-panel .fm-label { font-size: 1.05rem; }
+
+/* 6.2 · Pastilles de couleur à la place des pictogrammes. */
+.h7-msg-checks li { align-items: baseline; gap: 10px; }
+.h7-dot { flex: none; display: inline-block; width: 9px; height: 9px; border-radius: 50%; transform: translateY(-1px); }
+.h7-dot.is-ok { background: #2a8f8f; }
+.h7-dot.is-ko { background: #d9a03c; }
+.h7-msg-model p { margin: 0; font-weight: 600; }
+.h7-msg-model p + p { font-weight: 500; color: #3a4a7a; }
+
+/* Ce qu’il fallait savoir : la grille à pastilles rondes. */
+.h7-sort .k-matrix { width: 100%; }
+.h7-sort .k-matrix th strong { font-size: .9rem; }
+.h7-sort .k-matrix th span { color: var(--muted); font-size: .76rem; font-weight: 600; }
+
+/* La fiche : une rubrique à la fois, l’aide à côté. */
+.h7-fiche { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 24px; margin-top: 18px; align-items: start; }
+.h7-fiche-main { display: grid; gap: 10px; }
+.h7-fiche-main .field { margin: 0; }
+.h7-fiche-sub { margin: 0; color: #3a4a7a; line-height: 1.5; }
+.h7-aside { padding: 16px 18px; border-radius: 14px; background: #f7f9fc; color: #3a4a7a; font-size: .93rem; }
+.h7-aside .k-label { margin-bottom: 4px; }
+.h7-aside-h { margin: 12px 0 6px; color: var(--navy); font-weight: 700; }
+.h7-aside ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; line-height: 1.45; }
+.h7-aside .h7-built-name { display: block; color: var(--navy); font-weight: 600; font-size: .86rem; }
+
+/* Le corrigé final : court. */
+.h7-rv-list { list-style: none; margin: 10px 0 6px; padding: 0; display: grid; }
+.h7-rv-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 9px 0; border-bottom: 1px solid #edf0f6; }
+.h7-rv-name { min-width: 210px; color: var(--navy); font-weight: 600; }
+.h7-rv-pill { padding: 2px 10px; border-radius: 999px; font-size: .8rem; font-weight: 700; color: #fff; }
+.h7-rv-pill.tone-ok { background: #2a8f8f; }
+.h7-rv-pill.tone-mid { background: #5a67b8; }
+.h7-rv-pill.tone-ko { background: #a83d74; }
+.h7-rv-fix { color: #5a6584; font-size: .93rem; }
+.h7-rv-list.is-rw li { display: grid; gap: 2px; }
+.h7-rv-q { color: #3a4a7a; }
+.h7-rv-q.is-model { color: #1d5c5c; }
+@media (max-width: 860px) { .h7-fiche { grid-template-columns: 1fr; } }
+
+/* 6.2 · Les pages de transition entre les étapes. */
+.h7-trans { width: min(100%, 640px); display: grid; gap: 12px; padding: 30px 34px; text-align: left; }
+.h7-trans-title { margin: 0; color: var(--navy); font-size: 1.6rem; font-weight: 800; line-height: 1.2; }
+.h7-trans-done { display: flex; align-items: flex-start; gap: 8px; margin: 4px 0 0; color: #1d5c5c; font-weight: 600; }
+.h7-trans-done .icon { flex: none; margin-top: 3px; color: #2a8f8f; }
+.h7-trans-why { margin: 0; color: #3a4a7a; font-size: 1.05rem; line-height: 1.6; }
+.h7-trans-todo { display: grid; gap: 2px; margin: 6px 0 0; padding: 14px 18px; border-radius: 14px; background: #1b2370; color: #fff; font-size: 1.08rem; font-weight: 600; line-height: 1.45; }
+.h7-trans-todo span { color: #b9c4ff; font-size: .74rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
