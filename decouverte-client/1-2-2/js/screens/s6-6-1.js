@@ -221,6 +221,7 @@
       const verdict = VERDICT[tone];
       const wait = c.reply ? 1.5 : 0.15;
       body = `<div class="h6-result tone-${tone}">
+          <div class="h6-result-you h6-in"><img src="${img(client.seller)}" alt="" aria-hidden="true"><div><span>Vous</span><p>${q(c.text)}</p></div></div>
           ${c.reply ? `<div class="h6-result-reply h6-in">
             <img src="${portrait}" alt="" aria-hidden="true">
             <div><span>${esc(client.name)}</span><div class="h6-typing h6-typing-inline" aria-hidden="true"><span></span><span></span><span></span></div><p class="h6-in" ${delay(1.05)}>${q(c.reply)}</p></div>

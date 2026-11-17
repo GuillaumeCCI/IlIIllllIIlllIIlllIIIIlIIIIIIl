@@ -1478,3 +1478,11 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 @media (max-width: 700px) { .h6-result-fb { grid-template-columns: minmax(0, 1fr); justify-items: center; } }
 .h6-stage-body.is-fb .h6-stage-foot { width: min(100%, 940px); }
 @media (min-width: 1600px) { .h6-stage-body.is-fb .h6-stage-foot { width: min(100%, 1100px); } }
+/* 6.1 · Votre question, en tête de la carte, au-dessus de sa réponse. */
+.h6-result-you { display: flex; align-items: center; gap: 16px; padding: 16px 28px 0; background: #f3f5fb; }
+.h6-result-you img { width: 44px; height: 44px; flex-shrink: 0; margin-left: 6px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px #fff; }
+.h6-result-you span { display: block; color: var(--accent); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h6-result-you p { margin: 2px 0 0; color: #34437a; font-size: 1rem; font-weight: 600; line-height: 1.45; }
+.h6-result-you + .h6-result-reply { padding-top: 12px; }
+.h6-result-you:not(:has(+ .h6-result-reply)) { padding-bottom: 16px; border-bottom: 1px solid #e3e8f4; }
+@media (min-width: 1600px) { .h6-result-you p { font-size: 1.1rem; } }
