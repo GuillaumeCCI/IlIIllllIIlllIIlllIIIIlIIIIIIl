@@ -440,8 +440,15 @@
           <div class="h8-fminis" role="tablist" aria-label="Vos 2 fiches">${tabs}</div>
         </div>
         <div class="h8-steps" role="group" aria-label="Les pages de la fiche">${pageTabs}</div>
-        <p class="h7-question">${esc(page.ask)}</p>
-        ${page.intro ? `<p class="h8-expect"><span>Ce qu’on attend de vous</span>${esc(page.intro.replace('{situation}', s.title.charAt(0).toLowerCase() + s.title.slice(1)))}</p>` : ''}
+        <div class="h8-brief">
+          <p class="h8-brief-ask"><span class="h8-brief-n">${icon('pencil', { size: 18 })}</span>${esc(page.ask)}</p>
+          ${page.intro ? `<p class="h8-brief-label">Ce qu’on attend de vous</p><ul class="h8-brief-list">${[].concat(page.intro).map(line => {
+            const where = line.startsWith('<g>') ? 'g' : line.startsWith('<d>') ? 'd' : '';
+            const t = esc((where ? line.slice(3) : line).replace('{situation}', s.title.charAt(0).toLowerCase() + s.title.slice(1)));
+            const tag = where === 'g' ? `<span class="h8-brief-side">${icon('arrowLeft', { size: 14 })}À gauche</span>` : where === 'd' ? `<span class="h8-brief-side">À droite${icon('arrowRight', { size: 14 })}</span>` : '<span class="h8-brief-dot" aria-hidden="true"></span>';
+            return `<li class="${where ? 'has-side' : ''}">${tag}<span>${t}</span></li>`;
+          }).join('')}</ul>` : ''}
+        </div>
         ${pageBody()}
         ${nav}
         ${bilan}

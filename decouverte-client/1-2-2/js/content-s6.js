@@ -791,13 +791,13 @@
        * fiche 3, rien. */
       pages: [
         { id: 'sit', tab: 'La situation', ask: 'Quand avez-vous vécu cette situation ?',
-          intro: 'Pensez à une fois où vous avez vécu « {situation} » dans votre métier. À gauche, racontez ce cas ; à droite, notez ce que Lucas devra apprendre du client avant de proposer quoi que ce soit.',
+          intro: ['Pensez à une fois où vous avez vécu « {situation} » dans votre métier.', '<g>Racontez ce cas.', '<d>Notez ce que Lucas devra apprendre du client avant de proposer quoi que ce soit.'],
           fields: [
             { id: 'sit', kind: 'text', label: 'Le cas que vous avez vécu', sub: 'Qui était le client, où vous étiez, et ce qu’il vous a dit en arrivant. Deux ou trois lignes.', placeholder: 'Racontez…', min: 60, example: 'Un client arrive avec la référence d’un lave-linge vu sur Internet : le modèle X, 9 kg.', hint: 'Qui, où, et ce que le client a dit en arrivant.' },
             { id: 'disc', kind: 'text', label: 'Ce que Lucas doit découvrir', sub: 'Les deux ou trois informations à obtenir du client avant de lui proposer quoi que ce soit.', placeholder: 'Listez…', min: 30, example: 'Pourquoi ce modèle, l’usage réel, les contraintes d’installation.', hint: 'Ce qu’il faut savoir avant de proposer.' }
           ] },
         { id: 'open', tab: 'Ouvrir et creuser', ask: 'Quelles questions posez-vous pour faire parler le client ?',
-          intro: 'Écrivez 4 questions que Lucas pourra poser telles quelles dans « {situation} » : 2 pour lancer la conversation, 2 pour aller plus loin. Toutes doivent être ouvertes : sous chaque question, vous voyez aussitôt de quel type elle est.',
+          intro: ['Écrivez 4 questions que Lucas pourra poser telles quelles dans « {situation} ».', '2 pour lancer la conversation, 2 pour aller plus loin.', 'Toutes doivent être ouvertes.', 'Sous chaque question, vous voyez aussitôt de quel type elle est.'],
           groups: [
             { title: 'Pour lancer la conversation', sub: 'Des questions larges, qui font raconter.', ids: ['o1', 'o2'] },
             { title: 'Pour aller plus loin', sub: 'Elles font parler d’un problème, d’une gêne, de ce que ça coûte.', ids: ['c1', 'c2'] }
@@ -809,7 +809,7 @@
             { id: 'c2', kind: 'q', expect: ['ouverte'], label: 'Question pour creuser 2', sub: 'Elle va plus loin sur ce qui a été dit.', example: 'Que se passerait-il s’il tombait en panne pendant une semaine ?', hint: 'Sur ce que le problème coûte.' }
           ] },
         { id: 'precise', tab: 'Préciser et classer', ask: 'Comment précisez-vous, puis faites-vous classer ?',
-          intro: 'Écrivez 2 questions courtes qui vérifient un détail (une réponse par oui ou non, ou un choix entre deux options), puis 1 question qui fait dire au client ce qui compte le plus pour lui.',
+          intro: ['Écrivez 2 questions courtes qui vérifient un détail : une réponse par oui ou non, ou un choix entre deux options.', 'Puis écrivez 1 question qui fait dire au client ce qui compte le plus pour lui.'],
           groups: [
             { title: 'Pour vérifier un détail', sub: 'Une réponse par oui ou non, ou un choix entre deux options.', ids: ['p1', 'p2'] },
             { title: 'Pour faire choisir', sub: 'Le client dit ce qui compte le plus pour lui.', ids: ['h'] }
@@ -820,7 +820,7 @@
             { id: 'h', kind: 'q', expect: ['ouverte', 'alternative'], prio: true, label: 'Votre question pour hiérarchiser', sub: 'Elle aide le client à classer ses priorités.', example: 'Entre la capacité et le niveau sonore, qu’est-ce qui compte le plus pour vous ?', hint: 'Faites choisir entre deux critères.' }
           ] },
         { id: 'traps', tab: 'Indices et piège', ask: 'Que faut-il guetter, et que faut-il éviter ?',
-          intro: 'À gauche, notez les mots qui, dans la bouche de vos clients, trahissent ce qui les motive. À droite, écrivez la question que Lucas ne doit surtout pas poser dans « {situation} ».',
+          intro: ['<g>Notez les mots qui, dans la bouche de vos clients, trahissent ce qui les motive.', '<d>Écrivez la question que Lucas ne doit surtout pas poser dans « {situation} ».'],
           fields: [
             { id: 'ind', kind: 'text', label: 'Les mots indices de motivation', sub: 'Les mots qui trahissent la motivation dominante, dans votre secteur.', min: 20, example: '« avis », « le meilleur » (orgueil, sécurité) ; « consommation » (argent, environnement).', hint: 'Les mots qu’ils emploient, et la motivation derrière.' },
             { id: 'piege', kind: 'q', expect: ['orientee', 'produit'], trap: true, label: 'Le piège à éviter', sub: 'La question orientée, ou la vente déguisée, typique de cette situation.', example: 'Vous savez qu’on a mieux pour le même prix ?', hint: 'La phrase qui pousse un produit trop tôt.' }
