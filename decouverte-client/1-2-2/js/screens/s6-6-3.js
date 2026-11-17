@@ -187,7 +187,13 @@
         </button>`;
     }).join('');
     const dots = [0, 1, 2].map(i => `<span class="${i < ids.length ? 'is-on' : ''}"></span>`).join('');
-    const bilan = done ? msgBox('ok', `<p>Vos 3 situations, et ce que Lucas doit savoir de chacune :</p><ul class="h7-bilan-list">${chosen().map(s => `<li><span class="h7-bilan-q">${esc(s.title)}</span><span class="h7-bilan-a">Le piège : ${esc(s.trap.charAt(0).toLowerCase() + s.trap.slice(1))} La question clé : ${q(s.key)}</span></li>`).join('')}</ul>`, 'Bon choix') : '';
+    const bilan = done ? msgBox('ok', `<p>Vos 3 situations, et ce que Lucas doit savoir de chacune :</p>
+        <div class="h8-sum">${chosen().map((s, i) => `<article class="h8-sum-card h6-in" ${delay(0.12 * i)}>
+            <img class="h8-sum-face" src="${img(s.face)}" alt="" aria-hidden="true">
+            <p class="h8-sum-title">${esc(s.title)}</p>
+            <div class="h8-sum-part is-trap"><span>Le piège</span><p>${esc(s.trap)}</p></div>
+            <div class="h8-sum-part is-key"><span>La question clé</span><p>${q(s.key)}</p></div>
+          </article>`).join('')}</div>`, 'Bon choix') : '';
     return `<section class="k-panel d5-panel h7-panel">
         <div class="h8-sit-head">
           <p class="h7-question">Quelles sont les 3 situations de découverte que vous rencontrez le plus souvent ?</p>
