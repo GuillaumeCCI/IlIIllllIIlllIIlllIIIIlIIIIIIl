@@ -1425,3 +1425,32 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
 .h6-reaction .h6-said p { background: #fff; box-shadow: 0 8px 20px rgb(15 35 78 / 12%); }
 .h6-reaction .h6-typing { margin-left: 76px; }
 @media (min-width: 1600px) { .h6-reaction { width: min(100%, 1240px); } }
+/* 6.1 · La carte de gauche quand la cliente vient de parler. */
+.h6-who.has-recall { gap: 10px; border-style: solid; border-color: #dfe5f4; }
+.h6-who.has-recall .h6-who-face { width: 96px; height: 96px; box-shadow: 0 0 0 4px #f3e6d6; }
+.h6-recall-quote { margin: 0; color: var(--navy); font-size: 1.12rem; font-weight: 700; line-height: 1.45; }
+.h6-recall-gesture { margin: 0; color: #5a6890; font-size: .95rem; font-style: italic; }
+.h6-who-mini { display: flex; align-items: center; gap: 10px; margin: 6px 0 0; padding-top: 12px; border-top: 1px dashed #c9d3ee; width: 100%; text-align: left; color: var(--accent); font-weight: 700; line-height: 1.35; }
+.h6-who-mini img { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; object-fit: cover; }
+.h6-who-mini b { display: block; color: var(--muted); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; }
+@media (min-width: 1600px) { .h6-who.has-recall .h6-who-face { width: 112px; height: 112px; } .h6-recall-quote { font-size: 1.22rem; } }
+/* 6.1 · Après le choix : la cliente à gauche, la formatrice à droite. */
+.h6-after { align-items: stretch; }
+.h6-after .h6-who { align-content: center; }
+.h6-who-mini span { color: #3a4a7a; font-weight: 600; }
+.h6-typing-center { margin: 0 auto; animation: h6-typing 1s ease .3s both; }
+.h6-fb.is-compact { width: auto; }
+.h6-fb.is-compact .h6-fb-bubble { height: 100%; align-content: center; }
+.h6-fb.is-compact .h6-fb-bubble::before { display: none; }
+.h6-fb-who { display: inline-flex; align-items: center; gap: 12px; }
+.h6-fb-who img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; object-position: 50% 18%; background: #fbf4e6; box-shadow: 0 0 0 3px var(--tone); }
+@media (min-width: 1600px) { .h6-fb-who img { width: 70px; height: 70px; } }
+/* 6.1 · Situation avec image : l'image à gauche, la phrase en grand à droite. */
+.h6-situation.has-picture { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 0; padding: 0; overflow: hidden; text-align: left; width: min(100%, 1060px); }
+.h6-situation.has-picture .h6-picture { width: 100%; height: 100%; min-height: 300px; aspect-ratio: auto; border-radius: 0; object-fit: cover; object-position: 40% 40%; justify-self: stretch; }
+.h6-situation-text { display: grid; align-content: center; gap: 16px; padding: 30px 34px; }
+.h6-situation-text .k-label { margin: 0; }
+.h6-big-quote { margin: 0; color: var(--navy); font-size: 1.35rem; font-weight: 800; line-height: 1.4; }
+.h6-big-quote span { display: block; margin-bottom: 6px; color: var(--muted); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; }
+@media (min-width: 1600px) { .h6-situation.has-picture { width: min(100%, 1240px); } .h6-big-quote { font-size: 1.55rem; } .h6-situation.has-picture .h6-picture { min-height: 380px; } }
+@media (max-width: 800px) { .h6-situation.has-picture { grid-template-columns: minmax(0, 1fr); } }

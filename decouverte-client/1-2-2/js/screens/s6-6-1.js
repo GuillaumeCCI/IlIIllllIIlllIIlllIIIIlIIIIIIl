@@ -125,8 +125,18 @@
     mid: { icon: 'thought', face: 'formatrice-presque', label: 'Ce n’est pas tout à fait la réponse attendue', title: 'Pas tout à fait…' },
     ko: { icon: 'close', face: 'formatrice-attention', label: 'Ceci n’est pas une réponse appropriée', title: 'À éviter…' }
   };
-  function feedbackCard(tone, text, { better = '', betterLabel = 'Il valait mieux demander', quoted = true, points = null, button, wait = 0 }) {
+  function feedbackCard(tone, text, { better = '', betterLabel = 'Il valait mieux demander', quoted = true, points = null, button, wait = 0, compact = false }) {
     const verdict = VERDICT[tone];
+    const face = esc(core.asset(`../../moteur/assets/illustrations/retours/${verdict.face}.webp`));
+    const chip = `<span class="h6-fb-chip">${esc(verdict.title)}</span><span class="sr-only">${esc(verdict.label)}.</span>`;
+    const pts = points === null ? '' : `<span class="h6-fb-points">${points > 0 ? '+2' : points < 0 ? '−2' : '0'} sur la jauge</span>`;
+    const inner = `<p class="h6-fb-say">${esc(text)}</p>
+            ${better ? `<div class="h6-fb-better"><span>${esc(betterLabel)}</span><p>${quoted ? q(better) : esc(better)}</p></div>` : ''}`;
+    // Version compacte (à droite de la cliente) : la formatrice en petit, dans l'en-tête.
+    if (compact) return `<div class="h6-fb is-compact tone-${tone}"><div class="h6-fb-bubble h6-in" ${delay(wait)}>
+            <p class="h6-fb-head"><span class="h6-fb-who"><img src="${face}" alt="" aria-hidden="true">${chip}</span>${pts}</p>
+            ${inner}
+          </div></div>`;
     // La formatrice à gauche ; son commentaire dans une bulle qui pointe vers
     // elle. Le verdict n'est dit qu'une fois, dans une pastille de sa couleur.
     return `<div class="h6-fb tone-${tone}">
@@ -143,9 +153,21 @@
   }
 
   /* Des choix numérotés, face à la personne qui pose la question. */
-  function choiceBlock({ title, ask, order, choices, act, data = '', field = '' }) {
+  /* À gauche, une seule carte : sans rappel, Antoine et la question ; avec
+   * un rappel, la cliente qui parle (son visage, sa phrase, son geste), et
+   * Antoine en petit dessous. À droite, les questions numérotées. */
+  function choiceBlock({ title, ask, order, choices, act, data = '', field = '', recall = '', gesture = '' }) {
+    const left = recall
+      ? `<div class="h6-card h6-who has-recall h6-in">
+          <img class="h6-who-face" src="${portrait}" alt="" aria-hidden="true">
+          <p class="h6-who-name">${esc(client.name)}</p>
+          <p class="h6-recall-quote">${q(recall)}</p>
+          ${gesture ? `<p class="h6-recall-gesture">${esc(gesture)}</p>` : ''}
+          <p class="h6-who-mini"><img src="${img(client.seller)}" alt="" aria-hidden="true"><span><b>Vous, Antoine</b>${esc(ask)}</span></p>
+        </div>`
+      : `<div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${img(client.seller)}" alt="" aria-hidden="true"><p class="h6-who-name">Vous, Antoine</p><p class="h6-who-ask">${esc(ask)}</p></div>`;
     return `<div class="h6-choose">
-        <div class="h6-card h6-who h6-in"><img class="h6-who-face" src="${img(client.seller)}" alt="" aria-hidden="true"><p class="h6-who-name">Vous, Antoine</p><p class="h6-who-ask">${esc(ask)}</p></div>
+        ${left}
         <div class="h6-options" role="group" aria-label="${esc(title)}">${order.map((id, n) => `<button type="button" class="h6-option h6-in" ${delay(0.2 + n * 0.15)} data-act="${act}" data-id="${id}" ${data} ${n === 0 && field ? `data-field="${field}"` : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(choices[id].text)}</span></button>`).join('')}</div>
       </div>`;
   }
@@ -164,8 +186,18 @@
       const ok = id === warmup.best;
       body = feedbackCard(ok ? 'ok' : 'mid', warmup.choices[id].fb, { better: ok ? '' : warmup.choices[warmup.best].text, betterLabel: 'La réponse attendue', quoted: false, button: next('Commencer l’entretien', 'h6-flag', 0.4, 'data-name="wok"') });
     } else if (b.kind === 'ctx') {
-      body = `<div class="h6-card h6-situation ${s.picture ? 'has-picture' : ''} h6-in">
-          ${s.picture ? picture : ''}
+      // Avec une image : l'image à gauche sur toute la hauteur, sa phrase en
+      // grand à droite (son visage est déjà dans l'image), le geste dessous.
+      if (s.picture) body = `<div class="h6-card h6-situation has-picture h6-in">
+          ${picture}
+          <div class="h6-situation-text">
+            <p class="k-label">Étape ${k + 1} sur ${steps.length}</p>
+            ${s.says ? `<p class="h6-big-quote h6-in" ${delay(0.35)}><span>${esc(client.name)}</span>${q(s.says)}</p>` : ''}
+            ${s.after ? `<p class="h6-scene-text h6-in" ${delay(0.8)}>${esc(s.after)}</p>` : ''}
+          </div>
+        </div>
+        <div class="h6-stage-foot">${next('Continuer', 'h6-flag', 1.1, `data-name="seen${k}"`)}</div>`;
+      else body = `<div class="h6-card h6-situation h6-in">
           <p class="k-label">Étape ${k + 1} sur ${steps.length}</p>
           ${s.scene ? `<p class="h6-scene-text">${esc(s.scene)}</p>` : ''}
           ${s.says ? said(s.says, 0.35) : ''}
@@ -174,21 +206,31 @@
         </div>
         <div class="h6-stage-foot">${next('Continuer', 'h6-flag', s.says ? 1.1 : 0.5, `data-name="seen${k}"`)}</div>`;
     } else if (b.kind === 'choose') {
-      // Le rappel : ce qui vient de se passer, au-dessus des questions. Sans
-      // nouvelle phrase à cette étape, sa dernière réponse.
+      // Le rappel, dans la carte de gauche : sa phrase de l'étape, ou à défaut
+      // sa dernière réponse ; son geste s'il compte (l'épaule).
       const last = !s.says && k > 0 ? steps[k - 1].choices[choiceAt(k - 1)] : null;
-      const lastSaid = s.says || (last && last.reply) || '';
-      const scene = [s.scene, s.after].filter(Boolean).map(t => `<p class="h6-recall-scene">${esc(t)}</p>`).join('');
-      body = `${scene || lastSaid ? `<div class="h6-card h6-recall h6-in">${s.scene ? scene : ''}${lastSaid ? said(lastSaid) : ''}${!s.scene && s.after ? scene : ''}</div>` : ''}
-        ${choiceBlock({ title: 'Les questions possibles', ask: s.prompt || 'Que lui demandez-vous ?', order: s.order, choices: s.choices, act: 'h6-pick', data: `data-step="${k}"`, field: `c${k}` })}`;
+      const recall = s.says || (last && last.reply) || '';
+      body = choiceBlock({ title: 'Les questions possibles', ask: s.prompt || 'Que lui demandez-vous ?', order: s.order, choices: s.choices, act: 'h6-pick', data: `data-step="${k}"`, field: `c${k}`, recall, gesture: s.after || '' });
     } else if (b.kind === 'fb') {
       const id = choiceAt(k);
       const c = s.choices[id];
       const ok = id === s.best;
-      // Sa réaction d'abord (elle « écrit », puis répond), le retour ensuite.
+      // La même mise en page que le choix : à gauche, la cliente réagit (elle
+      // « écrit », puis répond) ; à droite, le retour de la formatrice.
       const wait = c.reply ? 1.6 : 0.2;
-      body = `${c.reply ? `<div class="h6-reaction"><div class="h6-typing" aria-hidden="true"><span></span><span></span><span></span></div>${said(c.reply, 1.05)}</div>` : ''}
-        ${feedbackCard(ok ? 'ok' : c.points < 0 ? 'ko' : 'mid', ok ? s.why : c.note, { better: ok ? '' : s.choices[s.best].text, points: c.points, wait, button: next(k === steps.length - 1 ? 'Voir la fin de l’entretien' : 'Continuer', 'h6-flag', wait + 0.5, `data-name="ack${k}"`) })}`;
+      const reaction = c.reply
+        ? `<div class="h6-card h6-who has-recall h6-in">
+            <img class="h6-who-face" src="${portrait}" alt="" aria-hidden="true">
+            <p class="h6-who-name">${esc(client.name)}</p>
+            <div class="h6-typing h6-typing-center" aria-hidden="true"><span></span><span></span><span></span></div>
+            <p class="h6-recall-quote h6-in" ${delay(1.05)}>${q(c.reply)}</p>
+            <p class="h6-who-mini"><img src="${img(client.seller)}" alt="" aria-hidden="true"><span><b>Vous lui avez demandé</b>${q(c.text)}</span></p>
+          </div>`
+        : `<div class="h6-card h6-who has-recall h6-in"><img class="h6-who-face" src="${portrait}" alt="" aria-hidden="true"><p class="h6-who-name">${esc(client.name)}</p><p class="h6-who-mini"><img src="${img(client.seller)}" alt="" aria-hidden="true"><span><b>Vous lui avez dit</b>${q(c.text)}</span></p></div>`;
+      body = `<div class="h6-choose h6-after">${reaction}
+          ${feedbackCard(ok ? 'ok' : c.points < 0 ? 'ko' : 'mid', ok ? s.why : c.note, { better: ok ? '' : s.choices[s.best].text, points: c.points, wait, compact: true })}
+        </div>
+        <div class="h6-stage-foot">${next(k === steps.length - 1 ? 'Voir la fin de l’entretien' : 'Continuer', 'h6-flag', wait + 0.5, `data-name="ack${k}"`)}</div>`;
     } else {
       const end = ending();
       body = `<div class="h6-card h6-end tone-${end.tone} h6-in">
