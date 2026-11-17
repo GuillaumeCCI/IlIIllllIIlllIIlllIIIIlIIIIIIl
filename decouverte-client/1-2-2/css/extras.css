@@ -1371,3 +1371,46 @@ body[data-exercise="s4-4-2"] #main .k-matrix:not(.is-review) .k-box-input:checke
   .h6-fb-row { grid-template-columns: minmax(0, 1fr); justify-items: center; }
   .h6-fb-bubble::before { left: calc(50% - 9px); top: -9px; }
 }
+/* 6.1 · Une scène plus grande : elle occupe la hauteur de l'écran (sous
+ * l'en-tête), et son contenu grandit avec elle. */
+.h6-stage { min-height: clamp(560px, calc(100vh - 250px), 880px); padding: 22px 28px 28px; }
+.h6-stage-body { gap: 20px; }
+.h6-stage-foot { width: min(100%, 1120px); }
+.h6-card { width: min(100%, 860px); padding: 26px 32px; }
+.h6-banner.is-text { width: min(100%, 900px); font-size: 1.08rem; }
+.h6-scene-text { font-size: 1.18rem; }
+.h6-said img { width: 64px; height: 64px; }
+.h6-said p, .h6-you { font-size: 1.12rem; }
+.h6-choose { grid-template-columns: minmax(240px, 340px) minmax(0, 760px); gap: 28px; }
+.h6-who-face { width: 124px; height: 124px; }
+.h6-who-ask { font-size: 1.18rem; }
+.h6-options { gap: 14px; }
+.h6-option { padding: 18px 22px; font-size: 1.08rem; }
+.h6-option-n { width: 28px; height: 28px; font-size: .9rem; }
+.h6-fb { width: min(100%, 1060px); }
+.h6-fb-row { grid-template-columns: 160px minmax(0, 1fr); gap: 30px; }
+.h6-fb-face { width: 160px; height: 160px; }
+.h6-fb-bubble { padding: 26px 32px; }
+.h6-fb-say { font-size: 1.1rem; }
+.h6-stage .h6-end { width: min(100%, 860px); }
+@media (max-width: 900px) { .h6-choose { grid-template-columns: minmax(0, 1fr); } .h6-fb-row { grid-template-columns: minmax(0, 1fr); } }
+/* Grand écran : le contenu de la scène grandit encore. */
+@media (min-width: 1600px) {
+  .h6-card { width: min(100%, 1000px); padding: 30px 38px; }
+  .h6-banner.is-text { width: min(100%, 1000px); font-size: 1.2rem; }
+  .h6-scene-text { font-size: 1.3rem; }
+  .h6-said img { width: 76px; height: 76px; }
+  .h6-said p, .h6-you { font-size: 1.24rem; }
+  .h6-choose { grid-template-columns: minmax(280px, 390px) minmax(0, 900px); gap: 34px; }
+  .h6-who-face { width: 150px; height: 150px; }
+  .h6-who-ask { font-size: 1.3rem; }
+  .h6-option { padding: 22px 26px; font-size: 1.2rem; }
+  .h6-option-n { width: 32px; height: 32px; font-size: 1rem; }
+  .h6-fb { width: min(100%, 1240px); }
+  .h6-fb-row { grid-template-columns: 190px minmax(0, 1fr); gap: 36px; }
+  .h6-fb-face { width: 190px; height: 190px; }
+  .h6-fb-say, .h6-fb-better p { font-size: 1.22rem; }
+  .h6-fb-chip { font-size: 1.1rem; }
+  .h6-stage-foot { width: min(100%, 1290px); }
+  .h6-stage-foot .button { font-size: 1.08rem; padding: 14px 24px; }
+}
