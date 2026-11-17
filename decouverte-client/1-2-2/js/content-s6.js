@@ -277,7 +277,7 @@
           ask: 'J’ai revu les Leroy ce matin. Je pensais avoir bien questionné, mais je repars sans savoir quoi leur proposer. Vous pouvez relire mon entretien et m’aider ?',
           moments: [
             { n: 'M1', q: 'Merci d’être revenus. La dernière fois, je suis allée un peu vite. Aujourd’hui, je vous propose qu’on parle d’abord de vous et de votre cuisine, sans catalogue. Ça vous va ?',
-              replies: [{ who: 'mme', text: 'Oui, très bien.' }],
+              replies: [{ who: 'mme', text: 'Oui, très bien, ça nous va. La dernière fois, on est repartis avec une pile de catalogues, et on n’a même pas osé les ouvrir.' }],
               hint: 'Regardez ce que Camille annonce, et comment le couple réagit.',
               order: ['b', 'a', 'c'], best: 'a',
               choices: {
@@ -287,7 +287,7 @@
               },
               why: 'Point fort. Elle répare la relation (« je suis allée un peu vite ») et annonce l’écoute (« sans catalogue »). Le couple accepte aussitôt.' },
             { n: 'M2', q: 'Racontez-moi une journée type dans votre cuisine.',
-              replies: [{ who: 'mme', text: 'Le matin, c’est rapide. Mais le week-end, avec les petits-enfants, on cuisine à quatre ou cinq, et on se marche dessus.' }],
+              replies: [{ who: 'mme', text: 'Oh, en semaine, c’est vite fait : un café le matin, un petit plat le soir, on n’est que tous les deux. Mais le week-end, c’est autre chose ! Avec les petits-enfants, on cuisine à quatre ou cinq, tout le monde veut mettre la main à la pâte… et on se marche dessus.' }],
               hint: 'Quelle information nouvelle cette question a-t-elle fait apparaître ?',
               order: ['a', 'c', 'b'], best: 'a',
               choices: {
@@ -297,7 +297,7 @@
               },
               why: 'Point fort. Une question ouverte large, premier étage de l’entonnoir : elle fait apparaître le moment clé (« le week-end, on se marche dessus »).' },
             { n: 'M3', q: 'Vous avez combien de petits-enfants ? Quel âge ? Ils viennent tous les week-ends ?',
-              replies: [{ who: 'mme', text: 'Trois… 6, 9 et 12 ans. Presque tous les week-ends.' }],
+              replies: [{ who: 'mme', text: 'Trois. 6, 9 et 12 ans. Et oui, presque tous les week-ends, depuis que leur maman travaille le samedi.' }],
               hint: 'Comptez les questions, et regardez ce que la réponse apprend vraiment.',
               order: ['c', 'b', 'a'], best: 'a',
               choices: {
@@ -308,7 +308,7 @@
               why: 'Trois fermées d’affilée : c’est un interrogatoire. Une seule question ouverte sur le moment évoqué (« Comment ça se passe, quand vous cuisinez à cinq ? ») en aurait appris davantage.' },
             { n: 'M4', q: 'Vous voulez donc un îlot central, c’est ça ?',
               scene: 'M. Leroy fronce les sourcils.',
-              replies: [{ who: 'mr', text: 'On n’a pas dit ça.' }],
+              replies: [{ who: 'mr', text: 'On n’a pas dit ça. On n’est pas venus pour qu’on nous dise ce qu’il nous faut.' }],
               hint: 'D’où vient le mot « îlot » : du couple, ou de Camille ?',
               order: ['b', 'c', 'a'], best: 'a',
               choices: {
@@ -318,7 +318,7 @@
               },
               why: 'Décisif. Elle propose une solution avant d’avoir compris le problème. M. Leroy fronce les sourcils : la découverte se ferme.' },
             { n: 'M5', q: 'Pardon. Qu’est-ce qui vous gêne le plus aujourd’hui quand vous cuisinez à plusieurs ?',
-              replies: [{ who: 'mme', text: 'Le plan de travail est trop petit. Et avec mon dos, je ne peux plus me baisser pour sortir les plats du four.' }],
+              replies: [{ who: 'mme', text: 'Ce qui me gêne ? Le plan de travail, déjà : il est trop petit, on finit par poser les plats sur la table, sur les chaises… Et puis il y a mon dos. Le four est tout en bas, et je ne peux plus me baisser pour sortir les plats. C’est mon petit-fils qui le fait, maintenant.' }],
               hint: 'Comparez avec M4 : qu’est-ce qui change dans la réponse ?',
               order: ['a', 'b', 'c'], best: 'b',
               choices: {
@@ -328,7 +328,7 @@
               },
               why: 'Point fort. Une question ouverte ciblée sur les difficultés (deuxième étage) : elle rattrape M4, et deux besoins apparaissent (un plan de travail plus grand, ne plus se baisser pour le four).' },
             { n: 'M6', q: 'Et vous, Monsieur, qu’est-ce qui compte pour vous dans ce projet ?',
-              replies: [{ who: 'mr', text: 'Que les travaux ne s’éternisent pas. La salle de bains, trois mois de retard… plus jamais.' }],
+              replies: [{ who: 'mr', text: 'Moi ? Que les travaux ne s’éternisent pas. Pour la salle de bains, on nous avait promis trois semaines. On a eu trois mois de retard, à aller se laver chez la voisine. Alors ça… plus jamais.' }],
               order: ['a', 'c', 'b'], best: 'a',
               choices: {
                 a: { text: 'Une question ouverte à l’autre décideur : elle fait apparaître sa motivation.' },
@@ -337,7 +337,7 @@
               },
               why: 'Point fort. Une question ouverte adressée à l’autre décideur : M. Leroy livre sa motivation, la sécurité (« trois mois de retard… plus jamais »).' },
             { n: 'M7', q: 'Les délais, c’est votre priorité ?',
-              replies: [{ who: 'mr', text: 'Les délais, et un prix ferme. Pas de surprise à la fin.' }],
+              replies: [{ who: 'mr', text: 'Les délais, oui. Et un prix ferme. La salle de bains a fini bien au-dessus du devis, avec un « imprévu » à chaque visite de l’artisan. Cette fois, je veux savoir ce que je paie. Pas de surprise à la fin.' }],
               order: ['b', 'c', 'a'], best: 'c',
               choices: {
                 a: { text: 'Une question fermée inutile : M. Leroy venait juste de le dire.', tone: 'mid', note: 'Elle valide ce qu’il a dit, et c’est utile : en répondant, il ajoute « un prix ferme ». Une fermée bien placée, après les ouvertes, sert à préciser.' },
@@ -346,7 +346,7 @@
               },
               why: 'Utile. Une fermée de validation, bien placée après les ouvertes : M. Leroy précise sa condition (« un prix ferme, pas de surprise »).' },
             { n: 'M8', q: 'Vous préférez du bois ou du laqué ?',
-              replies: [{ who: 'mme', text: 'Euh… on n’y a pas encore pensé.' }],
+              replies: [{ who: 'mme', text: 'Euh… on n’y a pas encore pensé, à vrai dire. Le bois, c’est chaleureux, mais le laqué, ça se nettoie mieux, non ? Je ne sais pas… Qu’est-ce que tu en penses, toi ?' }],
               order: ['c', 'a', 'b'], best: 'c',
               choices: {
                 a: { text: 'Une question alternative bien choisie : elle aide le couple à se projeter.', tone: 'mid', note: 'La forme est juste (une alternative), mais pas le moment : les Leroy « n’y ont pas encore pensé ». Il restait à explorer leurs attentes au quotidien.' },
@@ -355,7 +355,7 @@
               },
               why: 'Décisif. Une alternative prématurée, sur l’esthétique : Camille saute à la précision avant d’avoir fini d’explorer. Le couple n’y a « pas encore pensé ».' },
             { n: 'M9', q: 'Vous avez un budget ?',
-              replies: [{ who: 'mr', text: 'On a mis de côté 15 000 €. Pas un euro de plus.' }],
+              replies: [{ who: 'mr', text: 'On a mis de côté 15 000 €. Pas un euro de plus : c’est l’argent de notre retraite, et on ne va pas emprunter maintenant.' }],
               order: ['b', 'c', 'a'], best: 'b',
               choices: {
                 a: { text: 'Une question orientée : elle pousse le couple à annoncer un chiffre élevé.', tone: 'ko', note: 'Elle ne souffle aucun montant. C’est une fermée sèche, posée sans transition, mais M. Leroy donne le chiffre et sa limite (« pas un euro de plus »).' },
@@ -364,8 +364,8 @@
               },
               why: 'Mal amenée, mais l’information est obtenue : 15 000 €, « pas un euro de plus ». Une question ouverte (« Quel budget avez-vous prévu ? ») aurait été plus naturelle.' },
             { n: 'M10', q: 'Très bien, je vous prépare un devis.',
-              scene: 'M. et Mme Leroy échangent un regard.',
-              replies: [],
+              scene: 'M. et Mme Leroy échangent un regard. Mme Leroy range ses lunettes dans son sac.',
+              replies: [{ who: 'mme', text: 'D’accord… Vous nous l’envoyez par mail ?' }],
               order: ['a', 'c', 'b'], best: 'b',
               choices: {
                 a: { text: 'Une conclusion efficace : le couple a donné son budget, place au devis.', tone: 'mid', note: 'Le devis est la suite logique, mais Camille saute la validation : elle ne résume pas et ne fait pas classer les priorités. Elle ne sait pas ce qui passe en premier.' },
@@ -433,7 +433,7 @@
           ask: 'J’ai eu M. Vidal en visio. Je pensais avoir bien questionné, mais je ne sais pas trop quoi lui proposer, à part notre formule premium. Vous pouvez relire l’échange et m’aider ?',
           moments: [
             { n: 'M1', q: 'La dernière fois, vous m’avez parlé de continuité de service. Avant toute proposition, j’aimerais mieux comprendre votre organisation. On prend vingt minutes ?',
-              replies: [{ who: 'vidal', text: 'D’accord.' }],
+              replies: [{ who: 'vidal', text: 'D’accord. Vingt minutes, ça me va, j’ai un comité de direction à onze heures. Et c’est vrai que la dernière fois, on a surtout parlé de vos tarifs.' }],
               hint: 'Regardez ce que Karim rappelle, et ce qu’il annonce.',
               order: ['b', 'c', 'a'], best: 'a',
               choices: {
@@ -443,7 +443,7 @@
               },
               why: 'Point fort. Un cadrage avec rappel : il reprend le besoin du premier échange et annonce qu’il veut comprendre avant de proposer.' },
             { n: 'M2', q: 'Comment le ménage est-il organisé aujourd’hui, sur une journée ?',
-              replies: [{ who: 'vidal', text: 'Six agents du prestataire le matin pour les chambres, deux l’après-midi pour les parties communes. Et mes réceptionnistes dépannent quand il manque quelqu’un.' }],
+              replies: [{ who: 'vidal', text: 'Alors… six agents de notre prestataire le matin, pour les chambres, et deux l’après-midi pour les parties communes : le hall, les couloirs, le spa. Sur le papier, ça tient. Sauf que dès qu’il en manque un, et ça arrive presque chaque semaine, ce sont mes réceptionnistes qui dépannent.' }],
               hint: 'Quelle information inattendue arrive à la fin de la réponse ?',
               order: ['a', 'b', 'c'], best: 'a',
               choices: {
@@ -453,7 +453,7 @@
               },
               why: 'Point fort. Une question ouverte large : en décrivant la journée, M. Vidal révèle que ses réceptionnistes font le ménage quand il manque quelqu’un.' },
             { n: 'M3', q: 'Vos réceptionnistes dépannent ?',
-              replies: [{ who: 'vidal', text: 'Oui, et pendant ce temps, l’accueil est vide. Des clients attendent leur chambre jusqu’à 16 h. Ils le notent dans leurs avis.' }],
+              replies: [{ who: 'vidal', text: 'Oui, elles montent faire des chambres. Et pendant ce temps, l’accueil est vide. J’ai des clients qui attendent leur chambre jusqu’à 16 h, la valise à la main, alors que l’arrivée est à 14 h. Et ils le notent dans leurs avis : « personnel débordé », « chambre pas prête ». On a perdu quatre dixièmes de note en six mois.' }],
               hint: 'D’où viennent les mots de la question ? Et que contient la réponse ?',
               order: ['a', 'b', 'c'], best: 'c',
               choices: {
@@ -463,7 +463,7 @@
               },
               why: 'Point fort. Un écho : en reprenant ses mots, Karim fait apparaître l’impact sur les clients (l’attente, les avis).' },
             { n: 'M4', q: 'Quel impact cela a-t-il sur vos équipes ?',
-              replies: [{ who: 'vidal', text: 'Énorme. Deux arrêts maladie ce trimestre. Elles sont épuisées, et je risque d’en perdre.' }],
+              replies: [{ who: 'vidal', text: 'Énorme. Elles font deux métiers à la fois, et elles le vivent mal. Deux arrêts maladie ce trimestre, dont ma meilleure réceptionniste. Elles sont épuisées, et je sais que deux d’entre elles regardent ailleurs. Je risque d’en perdre, et on ne les remplace pas en un mois.' }],
               hint: 'À quel étage de l’entonnoir est-on : la situation, ou les enjeux ?',
               order: ['b', 'c', 'a'], best: 'b',
               choices: {
@@ -473,7 +473,8 @@
               },
               why: 'Point fort. Une question ouverte sur les enjeux : M. Vidal dit le coût humain (deux arrêts maladie, des équipes épuisées).' },
             { n: 'M5', q: 'Combien de chambres ? Combien d’étages ? Quelle surface de parties communes ? Quels revêtements de sol ?',
-              replies: [{ who: 'vidal', text: '… Je vous enverrai le plan.' }],
+              scene: 'M. Vidal soupire et jette un œil à sa montre.',
+              replies: [{ who: 'vidal', text: '… Je vous enverrai le plan. Mon assistante a tout ça.' }],
               hint: 'Que venait de dire M. Vidal ? Et comment répond-il ici ?',
               order: ['b', 'c', 'a'], best: 'c',
               choices: {
@@ -483,7 +484,7 @@
               },
               why: 'Décisif. Une rafale de fermées techniques juste après l’enjeu humain : Karim quitte le sujet qui compte, et M. Vidal se ferme.' },
             { n: 'M6', q: 'Notre remplacement garanti sous deux heures règle exactement ce problème.',
-              replies: [{ who: 'vidal', text: 'Peut-être. Mais l’audit de classement revient en mars.' }],
+              replies: [{ who: 'vidal', text: 'Peut-être. Mais ce n’est pas qu’une question de remplacement. L’audit de classement revient en mars, et la dernière fois, l’inspecteur a relevé la propreté de plusieurs chambres.' }],
               order: ['a', 'c', 'b'], best: 'a',
               choices: {
                 a: { text: 'Une solution prématurée : il propose avant d’avoir tout compris.' },
@@ -492,7 +493,7 @@
               },
               why: 'Décisif. Une solution prématurée : Karim propose avant d’avoir tout compris. Le vrai enjeu (l’audit de mars) arrive après.' },
             { n: 'M7', q: 'Il revient en mars ?',
-              replies: [{ who: 'vidal', text: 'Une contre-visite. Si l’hôtel perd sa quatrième étoile, c’est mon poste qui est en jeu.' }],
+              replies: [{ who: 'vidal', text: 'Une contre-visite, oui. Les remarques de l’automne doivent être levées d’ici là. Si l’hôtel perd sa quatrième étoile, le groupe ne me le pardonnera pas : c’est mon poste qui est en jeu.' }],
               order: ['c', 'b', 'a'], best: 'b',
               choices: {
                 a: { text: 'Une question hors sujet : l’audit ne concerne pas le ménage.', tone: 'ko', note: 'L’audit concerne directement la propreté des chambres. Et c’est le vrai enjeu de M. Vidal : son poste.' },
@@ -501,7 +502,7 @@
               },
               why: 'Point fort. Un écho : M. Vidal livre son enjeu personnel (« c’est mon poste qui est en jeu »).' },
             { n: 'M8', q: 'Vous ne voulez sûrement pas prendre de risque : vous préférerez notre formule premium ?',
-              replies: [{ who: 'vidal', text: 'Je ne sais pas. Je dois voir avec le groupe.' }],
+              replies: [{ who: 'vidal', text: 'Je ne sais pas. Je ne vais pas signer une formule les yeux fermés. Je dois voir avec le groupe.' }],
               order: ['b', 'c', 'a'], best: 'c',
               choices: {
                 a: { text: 'Une alternative : il laisse M. Vidal choisir entre deux formules.', tone: 'mid', note: 'Il n’y a pas de choix : « vous préférerez notre formule premium » contient déjà la réponse. C’est une question orientée.' },
@@ -510,7 +511,7 @@
               },
               why: 'Décisif. Une question orientée : Karim pousse sa formule premium en jouant sur la peur. M. Vidal se replie (« je dois voir avec le groupe »).' },
             { n: 'M9', q: 'Qui d’autre intervient dans la décision ?',
-              replies: [{ who: 'vidal', text: 'Le siège du groupe valide au-delà de 50 000 € par an. Et ma gouvernante générale doit être d’accord.' }],
+              replies: [{ who: 'vidal', text: 'Le siège du groupe valide tout ce qui dépasse 50 000 € par an. Et ma gouvernante générale doit être d’accord : c’est elle qui travaillera avec votre équipe tous les jours. Si elle n’y croit pas, ça ne marchera pas.' }],
               order: ['a', 'c', 'b'], best: 'a',
               choices: {
                 a: { text: 'Une ouverte sur la décision : il apprend qui valide, et à partir de quel montant.' },
@@ -520,7 +521,7 @@
               why: 'Point fort. Une question ouverte sur le processus de décision : le siège au-delà de 50 000 € par an, et la gouvernante générale.' },
             { n: 'M10', q: 'Parfait, je vous envoie la proposition premium demain.',
               scene: 'M. Vidal hoche la tête, sans conviction.',
-              replies: [],
+              replies: [{ who: 'vidal', text: 'Envoyez toujours. Je regarderai.' }],
               order: ['c', 'a', 'b'], best: 'b',
               choices: {
                 a: { text: 'Une relance efficace : il fixe une suite précise dès le lendemain.', tone: 'mid', note: 'Fixer une suite est utile, mais Karim ne résume rien et ne fait pas classer les priorités. Il propose « premium » sans savoir ce qui passe en premier.' },

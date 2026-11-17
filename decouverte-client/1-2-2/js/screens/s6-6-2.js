@@ -149,14 +149,17 @@
     </div>`;
 
   /* Les répliques d'un moment : la question du vendeur, le geste, le client. */
-  const sellerMsg = m => `<li class="d5-msg is-you"><p><span>${esc(D().seller.name)} · ${esc(m.n)}</span>${q(m.q)}</p></li>`;
-  const clientMsgs = m => (m.scene ? [`<li class="h6-scene">${esc(m.scene)}</li>`] : []).concat(m.replies.map(r => `<li class="d5-msg is-client"><img src="${img(person(r.who).face)}" alt="" aria-hidden="true"><p><span>${esc(person(r.who).name)}</span>${q(r.text)}</p></li>`)).join('');
   /* L'entretien entier. Avec `current`, le moment analysé est surligné et
    * les suivants sont estompés. */
+  // Une réplique façon dialogue : le visage, le nom (et le repère M1…), la phrase.
+  const line = (cls, face, name, text, tag = '') => `<div class="h7-line ${cls}"><img src="${face}" alt="" aria-hidden="true"><div class="h7-line-body"><p class="h7-who">${esc(name)}${tag}</p><p class="h7-said">${q(text)}</p></div></div>`;
+  const lines = (m, now = false) => line('is-seller', sellerFace(), D().seller.name, m.q, `<span class="h7-mn">${esc(m.n)}</span>${now ? '<span class="h7-now">Le moment à analyser</span>' : ''}`)
+    + (m.scene ? `<p class="h7-gesture">${esc(m.scene)}</p>` : '')
+    + m.replies.map(r => line('is-client', img(person(r.who).face), person(r.who).name, r.text)).join('');
   function thread(current = -1) {
     return moments().map((m, k) => {
       const cls = current < 0 ? '' : k === current ? 'is-current' : k > current ? 'is-later' : 'is-before';
-      return `<li class="h7-tr-moment ${cls}"><ol class="d5-thread"><li class="h6-step-sep"><span>${esc(m.n)}${k === current ? ' · le moment à analyser' : ''}</span></li>${sellerMsg(m)}${clientMsgs(m)}</ol></li>`;
+      return `<li class="h7-tr-moment ${cls}">${lines(m, k === current)}</li>`;
     }).join('');
   }
   // Fait défiler l'entretien jusqu'au moment analysé, après l'affichage.
@@ -359,7 +362,7 @@
         <div class="d5-floor-tabs" role="tablist" aria-label="Les moments à réécrire">${tabs}</div>
         <div class="h7-rw">
           <div class="h7-rw-moment">
-            <ol class="d5-thread">${sellerMsg(m)}${clientMsgs(m)}</ol>
+            <div class="h7-tr-one">${lines(m)}</div>
             ${hint ? `<p class="h7-hint">${icon('thought', { size: 16 })}<span>${esc(hint)}</span></p>` : '<p class="h7-hint is-none">Sans indice, cette fois.</p>'}
           </div>
           <div class="h7-rw-main">
@@ -427,7 +430,7 @@
         <ul>${D().rewrites.map((r, j) => `<li><b>${esc(r.n)}</b> · ${esc(v(`rw${j}_why`) || '')} <span class="h7-built-q">→ ${q(v(`rw${j}_q`) || '')} (${esc(typeLabel(v(`rw${j}_t`)))})</span></li>`).join('')}</ul>
         <p class="h7-built-h">4 · Ce qu’il aurait dû repartir en sachant</p>
         <ul><li><b>Explicites</b> : ${esc(kindList('explicite').join(' ; ') || 'aucun')}</li><li><b>Implicites</b> : ${esc(kindList('implicite').join(' ; ') || 'aucun')}</li><li><b>Motivations</b> : ${esc(kindList('motivation').join(' ; ') || 'aucune')}</li><li><b>Hiérarchie</b> : ${esc(rankText())}</li></ul>
-        <details class="h7-transcript"><summary>${icon('chat', { size: 16 })}<span>Relire l’entretien</span></summary><ol class="d5-thread">${thread()}</ol></details>
+        <details class="h7-transcript"><summary>${icon('chat', { size: 16 })}<span>Relire l’entretien</span></summary><ol class="h7-tr">${thread()}</ol></details>
       </div>`;
     return `<section class="k-panel d5-panel h6-panel h7-panel">
         <p class="k-label">Ma fiche de coaching pour ${esc(D().seller.name)}</p>
