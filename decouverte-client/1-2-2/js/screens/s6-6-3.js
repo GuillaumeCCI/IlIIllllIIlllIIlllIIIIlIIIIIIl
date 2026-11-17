@@ -227,9 +227,11 @@
       const opts = `<div class="h6-options" role="group" aria-label="Vos réponses possibles">${r.order.map((id, n) => `<button type="button" class="h6-option h6-in ${tried.includes(id) ? 'is-tried' : ''}" ${delay(0.2 + n * 0.15)} data-act="h8-pick" data-j="${j}" data-id="${id}" ${tried.includes(id) ? 'disabled aria-disabled="true"' : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(r.choices[id].text)}</span>${tried.includes(id) ? '<span class="h6-cost is-tried">Déjà essayé</span>' : ''}</button>`).join('')}</div>`;
       return stage(`<div class="h7-analyse">
             <div class="h6-card h7-tr-card h6-in"><p class="k-label">Situation ${j + 1} sur 3 · ${esc(s.title)}</p>
-              <div class="h7-tr-one">${r.scene ? `<p class="h7-gesture">${esc(r.scene)}</p>` : ''}<div class="h7-line is-client"><img src="${img(s.face)}" alt="" aria-hidden="true"><div class="h7-line-body"><p class="h7-who">${esc(r.who)}</p><p class="h7-said">${q(r.says)}</p></div></div></div></div>
+              ${r.context ? `<p class="h8-scene">${esc(r.context)}</p>` : ''}
+              <p class="h8-lucas"><img src="${img(newcomer.face)}" alt="" aria-hidden="true"><span>${esc(newcomer.name)} est à côté de vous. Il observe comment vous démarrez.</span></p>
+              <div class="h7-tr-one"><div class="h7-line is-client"><img src="${img(s.face)}" alt="" aria-hidden="true"><div class="h7-line-body"><p class="h7-who">${esc(r.who)}</p><p class="h7-said">${q(r.says)}</p></div></div></div></div>
             <div class="h7-analyse-main">
-              <p class="h7-question h6-in" ${delay(0.1)}>Que lui répondez-vous ?</p>
+              <p class="h7-question h6-in" ${delay(0.1)}>Que répondez-vous, pour montrer le bon réflexe à ${esc(newcomer.name)} ?</p>
               ${opts}
             </div>
           </div>`);

@@ -720,15 +720,15 @@
       // « reflex » : la scène du bon réflexe, trois réponses (best, mid, ko).
       situations: [
         { id: 'sait', title: 'Le client qui sait ce qu’il veut', line: 'Il arrive avec une demande précise : un modèle, une référence.', trap: 'Le servir sans comprendre, ou le contredire.', key: 'Qu’est-ce qui vous a fait choisir ce modèle ?', face: 'clients/client-pull-clair.webp',
-          reflex: { who: 'Le client', says: 'Bonjour, je viens pour le lave-linge X, 9 kg, celui que j’ai vu sur votre site. Vous l’avez en stock ?', order: ['b', 'c', 'a'], best: 'a',
+          reflex: { who: 'La cliente', context: 'Samedi matin, en magasin. Une cliente s’avance droit vers vous, son téléphone à la main : elle a noté une référence.', says: 'Bonjour ! Je viens pour le lave-linge X, le 9 kg, celui que j’ai vu sur votre site hier soir. J’ai déjà tout comparé, hein. Vous l’avez en stock ?', order: ['b', 'c', 'a'], best: 'a',
             choices: {
               a: { text: 'Il est bien en stock. Qu’est-ce qui vous a fait choisir celui-là ?' },
-              b: { text: 'Oui, je vous le prépare tout de suite. Vous réglez par carte ?', tone: 'mid', note: 'Vous le servez vite, mais vous ne saurez jamais si ce modèle lui convient vraiment. Au moindre souci, il reviendra déçu.' },
-              c: { text: 'Celui-là est bien, mais on a beaucoup mieux pour le même prix, vous savez.', tone: 'ko', note: 'Vous contredisez son choix avant de le comprendre : il se sent jugé et se ferme.' }
+              b: { text: 'Oui, je vous le prépare tout de suite. Vous réglez par carte ?', tone: 'mid', note: 'Vous la servez vite, mais vous ne saurez jamais si ce modèle lui convient vraiment. Au moindre souci, elle reviendra déçue.' },
+              c: { text: 'Celui-là est bien, mais on a beaucoup mieux pour le même prix, vous savez.', tone: 'ko', note: 'Vous contredisez son choix avant de le comprendre : elle se sent jugée et se ferme.' }
             },
             why: 'Vous confirmez, puis vous cherchez la raison de son choix. C’est elle qui dira si ce modèle lui convient.' } },
         { id: 'regarde', title: 'Le client qui « regarde juste »', line: 'Il n’exprime aucun besoin.', trap: 'Insister, ou le laisser partir.', key: 'Qu’est-ce qui vous amène aujourd’hui ?', face: 'clients/client-veste-verte.webp',
-          reflex: { who: 'La cliente', says: 'Non merci, je regarde juste.', order: ['b', 'a', 'c'], best: 'b',
+          reflex: { who: 'La cliente', context: 'En fin d’après-midi, une cliente entre et flâne entre les rayons. Elle s’arrête, touche un article, repart. Vous vous approchez en souriant.', says: 'Oh, non merci, je regarde juste… Je passais devant, alors je suis entrée. On verra bien.', order: ['b', 'a', 'c'], best: 'b',
             choices: {
               a: { text: 'Pas de souci, je vous laisse regarder tranquillement. Je suis là si besoin.', tone: 'mid', note: 'C’est poli, mais vous la laissez partir sans rien savoir. Une question légère, sans pression, ouvre la porte.' },
               b: { text: 'Avec plaisir. Qu’est-ce qui vous amène, aujourd’hui ?' },
@@ -736,7 +736,7 @@
             },
             why: 'Une question ouverte, légère, sans pression : elle peut répondre, ou non, mais la porte est ouverte.' } },
         { id: 'entreprise', title: 'Le premier rendez-vous avec une entreprise', line: 'Un prospect que vous ne connaissez pas encore.', trap: 'Présenter son entreprise d’abord.', key: 'Comment fonctionne votre activité aujourd’hui ?', face: 'clients/client-tasse.webp',
-          reflex: { who: 'Le dirigeant', says: 'Bon, je vous écoute. Vous avez vingt minutes.', order: ['c', 'a', 'b'], best: 'b',
+          reflex: { who: 'Le dirigeant', context: 'Premier rendez-vous chez un prospect. Le dirigeant d’une PME vous reçoit dans son bureau, entre deux réunions ; il pose son téléphone face cachée.', says: 'Bon. On m’a dit de vous recevoir, alors je vous écoute. Je vous préviens, j’ai une réunion juste après : vous avez vingt minutes.', order: ['c', 'a', 'b'], best: 'b',
             choices: {
               a: { text: 'Merci. Je vous présente d’abord notre société et nos trois offres phares.', tone: 'ko', note: 'Vous parlez de vous avant de parler de lui : il écoute poliment, et vous ne savez toujours rien de ses besoins.' },
               b: { text: 'Merci. Pour commencer, comment fonctionne votre activité aujourd’hui ?' },
@@ -744,15 +744,15 @@
             },
             why: 'Une question ouverte et large : il raconte son activité, et ses enjeux apparaissent d’eux-mêmes.' } },
         { id: 'appel', title: 'L’appel entrant', line: 'Un client téléphone pour se renseigner.', trap: 'Donner un prix tout de suite.', key: 'Pour vous répondre au mieux, quelle est votre situation ?', face: 'clients/client-cheveux-gris.webp',
-          reflex: { who: 'Au téléphone', says: 'Bonjour, c’est combien, votre formule d’entretien ?', order: ['a', 'c', 'b'], best: 'c',
+          reflex: { who: 'Au téléphone', context: 'Le téléphone sonne. Au bout du fil, une cliente qui ne vous connaît pas encore : on entend du bruit derrière elle, elle appelle sans doute entre deux choses.', says: 'Oui, bonjour, je voulais juste un renseignement. C’est combien, votre formule d’entretien ? J’appelle un peu partout pour comparer.', order: ['a', 'c', 'b'], best: 'c',
             choices: {
-              a: { text: 'Elle est à 89 € par an, pièces et main-d’œuvre comprises, sans engagement.', tone: 'ko', note: 'Un prix sec, sans contexte : il compare, et raccroche pour appeler le concurrent.' },
-              b: { text: 'Ça dépend. Vous avez quel modèle, exactement ?', tone: 'mid', note: 'L’idée est bonne, mais la question est fermée et sans explication : il a l’impression qu’on esquive son prix.' },
+              a: { text: 'Elle est à 89 € par an, pièces et main-d’œuvre comprises, sans engagement.', tone: 'ko', note: 'Un prix sec, sans contexte : elle compare, et raccroche pour appeler le concurrent.' },
+              b: { text: 'Ça dépend. Vous avez quel modèle, exactement ?', tone: 'mid', note: 'L’idée est bonne, mais la question est fermée et sans explication : elle a l’impression qu’on esquive son prix.' },
               c: { text: 'Pour vous donner le bon prix, pouvez-vous me décrire votre situation ?' }
             },
-            why: 'Vous expliquez pourquoi vous posez la question, et vous le laissez décrire sa situation : le prix viendra, et il sera juste.' } },
+            why: 'Vous expliquez pourquoi vous posez la question, et vous la laissez décrire sa situation : le prix viendra, et il sera juste.' } },
         { id: 'accompagne', title: 'Le client accompagné', line: 'Un couple, des associés, une famille : plusieurs décideurs.', trap: 'Ne parler qu’à un seul.', key: 'Et pour vous, qu’est-ce qui compte ?', face: 'visages/mme-leroy.webp',
-          reflex: { who: 'Elle', scene: 'Elle parle ; lui reste en retrait, les bras croisés.', says: 'Moi, je veux surtout que ce soit joli.', order: ['b', 'a', 'c'], best: 'a',
+          reflex: { who: 'Elle', context: 'Un couple entre ensemble pour un projet commun. Elle parle tout de suite ; lui reste un pas en retrait, les bras croisés, et regarde les étiquettes de prix.', says: 'Alors nous, enfin moi surtout, je veux que ce soit joli. On va vivre avec tous les jours, je ne veux pas d’un truc triste.', order: ['b', 'a', 'c'], best: 'a',
             choices: {
               a: { text: 'C’est noté. Et pour vous, Monsieur, qu’est-ce qui compte ?' },
               b: { text: 'Très bien, je vous montre tout de suite nos plus beaux modèles, Madame.', tone: 'ko', note: 'Vous ne parlez qu’à elle et vous passez au produit : lui, qui décide aussi, reste dehors.' },
@@ -760,7 +760,7 @@
             },
             why: 'Vous donnez la parole à celui qui se tait : c’est souvent lui qui pose les conditions.' } },
         { id: 'presse', title: 'Le client pressé', line: 'Il vous donne cinq minutes.', trap: 'L’interrogatoire, ou le silence.', key: 'En deux mots, qu’est-ce qui est le plus important ?', face: 'visages/m-vidal.webp',
-          reflex: { who: 'Le client', says: 'J’ai cinq minutes, pas plus.', order: ['b', 'c', 'a'], best: 'b',
+          reflex: { who: 'Le client', context: 'Midi et demi. Un client entre d’un pas rapide, les clés de voiture encore à la main ; il est garé juste devant.', says: 'Bonjour, je suis entre deux rendez-vous, alors j’ai cinq minutes, pas plus. Il me faut quelque chose rapidement.', order: ['b', 'c', 'a'], best: 'b',
             choices: {
               a: { text: 'D’accord, je vous laisse regarder, et je reviens vers vous dans un moment.', tone: 'mid', note: 'Vous respectez son temps, mais vous ne découvrez rien : il repartira sans avoir trouvé.' },
               b: { text: 'Entendu. En deux mots, qu’est-ce qui est le plus important ?' },
@@ -768,7 +768,7 @@
             },
             why: 'Une seule question ouverte, qui va droit à l’essentiel : en cinq minutes, c’est elle qui compte.' } },
         { id: 'renouvellement', title: 'Le renouvellement', line: 'Un client qui doit remplacer un équipement ou renouveler un contrat.', trap: 'Reconduire à l’identique.', key: 'Qu’est-ce qui a changé depuis la dernière fois ?', face: 'visages/m-leroy.webp',
-          reflex: { who: 'Le client', says: 'Mon contrat se termine le mois prochain. On repart sur la même chose ?', order: ['b', 'a', 'c'], best: 'b',
+          reflex: { who: 'Le client', context: 'Un client que vous connaissez passe vous voir : il a signé chez vous il y a trois ans, et son contrat arrive à échéance.', says: 'Bonjour ! Mon contrat se termine le mois prochain, j’ai reçu le courrier. Franchement, je n’ai pas trop le temps de m’en occuper : on repart sur la même chose ?', order: ['b', 'a', 'c'], best: 'b',
             choices: {
               a: { text: 'Bien sûr, je vous renouvelle tout à l’identique, c’est plus simple.', tone: 'ko', note: 'Vous reconduisez sans rien demander : si ses besoins ont changé, le contrat ne lui conviendra plus.' },
               b: { text: 'Avant de renouveler : qu’est-ce qui a changé pour vous depuis trois ans ?' },
@@ -776,7 +776,7 @@
             },
             why: 'Trois ans ont passé : vous faites dire ce qui a changé, avant de reconduire quoi que ce soit.' } },
         { id: 'retour', title: 'Le client qui revient après un problème', line: 'Il a eu une mauvaise expérience et vous redonne une chance.', trap: 'Se justifier.', key: 'Qu’est-ce qui s’était mal passé, de votre point de vue ?', face: 'visages/mme-benali.webp',
-          reflex: { who: 'La cliente', says: 'La dernière fois, la livraison avait trois semaines de retard. J’espère que ça ne se reproduira pas.', order: ['b', 'a', 'c'], best: 'c',
+          reflex: { who: 'La cliente', context: 'Une cliente revient vous voir pour un nouvel achat. La dernière fois, tout ne s’est pas bien passé : elle s’assoit, son sac sur les genoux, un peu sur la défensive.', says: 'Je vous préviens tout de suite : la dernière fois, la livraison avait trois semaines de retard, et personne ne m’avait rappelée. J’ai hésité à revenir, vous savez. J’espère que ça ne se reproduira pas.', order: ['b', 'a', 'c'], best: 'c',
             choices: {
               a: { text: 'C’était la faute du transporteur, vous savez : chez nous, ça n’arrive jamais.', tone: 'ko', note: 'Vous vous justifiez : elle entend une excuse, pas une écoute.' },
               b: { text: 'Je comprends. Ça ne se reproduira pas, je vous le promets.', tone: 'mid', note: 'La promesse rassure un instant, mais vous ne savez pas ce qui l’a gênée le plus.' },
@@ -847,7 +847,7 @@
       // Les pages de transition (avant chaque étape), comme en 6.2.
       transitions: [
         { done: 'Vous savez ce que Nadia attend de vous.', why: 'Voici votre chemin : six étapes, des situations de votre métier jusqu’à la banque que vous remettrez à Lucas.', todo: 'Choisissez les 3 situations de découverte que vous rencontrez le plus souvent.' },
-        { done: 'Vous avez choisi vos 3 situations.', why: 'Avant d’écrire, un réflexe à prendre : chaque situation a son piège, et sa bonne question pour ouvrir.', todo: 'Pour chaque situation, un client vous parle : choisissez votre réponse.' },
+        { done: 'Vous avez choisi vos 3 situations.', why: 'Lucas arrive lundi, et il vous accompagne pour sa première semaine. Avant de lui écrire des fiches, montrez-lui l’exemple : dans chacune de vos 3 situations, un client vous parle, et Lucas regarde comment vous démarrez la découverte. Ce qu’il verra, il le refera.', todo: 'Pour chaque situation, lisez la scène, puis choisissez la réponse que vous donneriez au client devant Lucas. Après chaque choix, on vous dit pourquoi c’est le bon réflexe, ou pas.' },
         { done: 'Vous avez trouvé le bon réflexe pour chaque situation.', why: 'Maintenant, c’est votre métier qui parle : Lucas a besoin de questions prêtes à l’emploi, avec vos clients et vos produits.', todo: 'Remplissez une fiche par situation. Chaque question est vérifiée au fur et à mesure.' },
         { done: 'Vos trois fiches sont prêtes.', why: 'Lucas ne retiendra pas tout. Ce qu’il gardera en tête, ce sont quelques règles simples.', todo: 'Écrivez vos 5 règles d’or du questionnement.' },
         { done: 'Votre banque est complète.', why: 'Une question ne vaut que si elle marche au comptoir. Le mieux est d’en tester une cette semaine.', todo: 'Choisissez la question que vous testerez, et quand. Cette étape est facultative.' },

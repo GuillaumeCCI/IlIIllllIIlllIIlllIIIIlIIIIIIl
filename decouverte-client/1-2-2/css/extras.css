@@ -2182,6 +2182,11 @@ p.h7-question { margin-bottom: 12px; }
 .h8-sit.is-on .h8-sit-face { box-shadow: 0 0 0 4px #fff; }
 .h8-sits.is-full .h8-sit:not(.is-on) { opacity: .55; }
 .h8-sits.is-full .h8-sit:not(.is-on):hover { opacity: .8; }
+/* 6.3 · Le bon réflexe : la scène racontée, puis Lucas qui observe. */
+.h8-scene { margin: 10px 0 12px; color: #24305a; line-height: 1.55; }
+.h8-lucas { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; padding: 8px 14px 8px 8px; border-radius: 999px; background: #f1f4fa; color: #4c5a80; font-size: .9rem; }
+.h8-lucas img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+
 /* 6.3 · Bilan des situations : trois cartes illustrées, le piège puis la question clé. */
 .h8-sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 14px; }
 .h8-sum-card { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px 18px 18px; border-radius: 18px; background: #fff; box-shadow: 0 4px 14px rgb(15 35 78 / 8%), inset 0 0 0 1px #e7ebf4; text-align: center; }
