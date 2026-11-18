@@ -12,12 +12,12 @@
 
   /* Les six attitudes d'écoute, avec ce que fait chacune, en mots simples. */
   const ATTITUDES = [
-    { id: 'evaluation', label: 'Évaluation', sub: 'Il approuve ou désapprouve ce que dit le client.' },
-    { id: 'interpretation', label: 'Interprétation', sub: 'Il explique à la place du client ce qu’il pense vraiment.' },
-    { id: 'soutien', label: 'Soutien', sub: 'Il rassure le client et minimise ce qu’il ressent.' },
+    { id: 'evaluation', label: 'Évaluation', sub: 'Il approuve ou désapprouve ce qu’on lui dit.' },
+    { id: 'interpretation', label: 'Interprétation', sub: 'Il explique à la place de la personne ce qu’elle pense vraiment.' },
+    { id: 'soutien', label: 'Soutien', sub: 'Il rassure et minimise ce que la personne ressent.' },
     { id: 'enquete', label: 'Enquête', sub: 'Il pose des questions pour obtenir des informations.' },
     { id: 'solution', label: 'Solution', sub: 'Il propose tout de suite une solution ou un conseil.' },
-    { id: 'comprehension', label: 'Compréhension', sub: 'Il redit avec ses mots ce que vit le client et vérifie.' }
+    { id: 'comprehension', label: 'Compréhension', sub: 'Il redit avec ses mots ce que vit la personne, et vérifie.' }
   ];
 
   /* L'effet probable sur le client. */
@@ -44,9 +44,9 @@
         { who: 'seller', label: 'Le vendeur', text }
       ] },
       fields: [
-        { id: 'attitude', type: 'choice', label: '1 · L’attitude du vendeur', options: ATTITUDES, answer: attitude, why: whyAttitude },
+        { id: 'attitude', type: 'choice', ask: true, label: 'Quelle attitude d’écoute le vendeur adopte-t-il ?', sub: 'Les six attitudes d’écoute de Porter : choisissez celle qui décrit sa réponse.', options: ATTITUDES, answer: attitude, why: whyAttitude },
         // Libellé et choix accordés à la personne plus bas (WHO).
-        { id: 'effet', type: 'choice', label: '2 · L’effet de cette réponse sur le client', options: EFFETS, answer: effet, why: whyEffet }
+        { id: 'effet', type: 'choice', ask: true, stack: true, label: 'Quel effet cette réponse a-t-elle sur le client ?', options: EFFETS, answer: effet, why: whyEffet }
       ]
     };
   }
@@ -228,7 +228,7 @@
       : step.target === '.fm-actions' ? Object.assign({}, step, { text: `Ensuite, vous choisirez l’effet de cette réponse sur ${who}.` }) : step));
     exercise.cases.forEach((kase, i) => {
       kase.tab = TABS[id][i];
-      kase.fields = kase.fields.map(f => (f.id === 'effet' ? Object.assign({}, f, { label: `2 · L’effet de cette réponse sur ${who}`, options: effets }) : f));
+      kase.fields = kase.fields.map(f => (f.id === 'effet' ? Object.assign({}, f, { label: `Quel effet cette réponse a-t-elle sur ${who} ?`, options: effets }) : f));
       kase.scene.dialogue[1].label = SELLERS[id];
       // Les deux répliques en bulles sur l'image ; le corrigé garde l'échange en texte.
       kase.reviewScene = [kase.scene];
