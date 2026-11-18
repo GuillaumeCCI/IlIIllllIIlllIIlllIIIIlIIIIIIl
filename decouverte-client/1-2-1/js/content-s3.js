@@ -208,10 +208,12 @@
   // qui attend derrière. Jamais « Réponse 1 », ni le même mot partout.
   const intrus = (tab, quote, reply, answer, why) => ({
     tab,
-    // Les deux répliques en bulles sur l'image (le vendeur à gauche, la cliente à droite) ;
+    // Les deux répliques en bulles sur l'image, dans l'ordre de lecture : la cliente
+    // parle d'abord (à gauche), le vendeur répond (à droite) ; l'image est retournée ;
     // le corrigé garde l'échange en texte.
     scene: [{ image: 'assets/illustrations/dialogues/reformulation.webp', alt: 'Un vendeur montre quelque chose sur sa tablette à une cliente qui l’écoute attentivement.',
-      bubbles: [{ who: 'client', side: 'right', label: 'La cliente', text: quote }, { who: 'seller', side: 'left', label: 'Le vendeur', text: reply }] }],
+      flip: true,
+      bubbles: [{ who: 'client', side: 'left', label: 'La cliente', text: quote }, { who: 'seller', side: 'right', label: 'Le vendeur', text: reply }] }],
     reviewScene: [{ dialogue: [{ who: 'client', label: 'La cliente', text: quote }, { who: 'seller', label: 'Le vendeur', text: reply }] }],
     fields: [{ id: 'type', type: 'choice', label: 'Cette réponse est…', options: REFO, answer, why, whyTitle: 'Pourquoi' }]
   });

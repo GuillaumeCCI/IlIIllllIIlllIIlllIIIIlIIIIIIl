@@ -189,7 +189,7 @@
         const keys = block.bubbles.map(b => lineKey(block.image, b));
         const typing = keys.some(k => !TYPED.has(k)) && !noTyping();
         if (typing) root.setTimeout(typeBubbles, 60);
-        return `<figure class="sc-picture has-bubbles"><img src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async">
+        return `<figure class="sc-picture has-bubbles"><img ${block.flip ? 'class="is-flipped" ' : ''}src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="async">
           <ol class="sc-talk ${typing ? 'is-typing' : ''}" ${typing ? 'data-tw="1"' : ''}>${block.bubbles.map((b, j) => `<li class="sc-talk-line is-${b.side === 'right' ? 'right' : 'left'} ${b.who === 'seller' ? 'is-seller' : ''} ${typing && TYPED.has(keys[j]) ? 'is-on is-still' : ''}" data-tw-line="${esc(keys[j])}"><small>${esc(b.label || '')}</small><span class="sc-talk-text">«&nbsp;${esc(b.text)}&nbsp;»</span></li>`).join('')}</ol></figure>`;
       }
       if (block.image && block.say) {

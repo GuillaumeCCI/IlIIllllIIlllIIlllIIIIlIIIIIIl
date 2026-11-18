@@ -20,6 +20,8 @@
 .sc-line mark { background: none; color: inherit; font-weight: 800; box-shadow: inset 0 -4px 0 #f5c25b; }
 .sc-picture { position: relative; margin: 0; border-radius: 14px; overflow: hidden; background: #f2ece0; }
 .sc-picture img { display: block; width: 100%; height: auto; max-height: 440px; object-fit: cover; }
+/* flip: true : l'image en miroir, pour que l'échange se lise de gauche à droite. */
+.sc-picture img.is-flipped { transform: scaleX(-1); }
 .sc-picture.is-wide { background: #f6efe3; }
 .sc-picture.is-wide img { width: min(100%, 820px); max-height: none; margin: 0 auto; }
 /* Un échange court posé sur l'image (scene { image, bubbles }) : les bulles en bas,
