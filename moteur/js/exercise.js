@@ -466,25 +466,39 @@
    * déplacée, ajouts de l'écran lui-même) : sinon, ces éléments arrivaient
    * d'emblée. */
   /* LE FONDU ENCHAÎNÉ (choisi par l'utilisateur, 18/11) : quand on change de
-   * cas (réponse suivante, flèches), le contenu des cartes s'efface d'abord
-   * (0,22 s), puis le nouveau apparaît (moteur/css/mounts.css). Les cartes
-   * et l'image restent en place : rien ne glisse, rien ne clignote. */
+   * cas (réponse suivante, flèches), une copie exacte de l'écran est posée
+   * par-dessus, le nouvel écran se prépare dessous (les parties identiques
+   * le sont au pixel près : rien ne saute), puis la copie s'efface (0,22 s)
+   * et le nouveau contenu des cartes apparaît (fm-in, moteur/css/mounts.css).
+   * Les cartes et l'image ne disparaissent jamais : ni flash ni saute. */
   let shownCase;
-  let leaving = null;
   const stillMotion = () => root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function ghostOf(main) {
+    const box = main.getBoundingClientRect();
+    const ghost = main.cloneNode(true);
+    ghost.removeAttribute('id');
+    ghost.setAttribute('aria-hidden', 'true');
+    ghost.inert = true;
+    ghost.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+    ghost.className = `${main.className} screen-ghost`;
+    Object.assign(ghost.style, { position: 'absolute', left: `${box.left + root.scrollX}px`, top: `${box.top + root.scrollY}px`,
+      width: `${box.width}px`, height: `${box.height}px`, margin: '0', pointerEvents: 'none', zIndex: '40' });
+    document.body.appendChild(ghost);
+    return ghost;
+  }
   function render(focus = false) {
     const at = value('case');
-    const panel = $('.fm-panel');
-    if (!focus && panel && shownCase !== undefined && at !== shownCase && !stillMotion()) {
-      shownCase = at;
-      panel.classList.add('is-leaving');
-      clearTimeout(leaving);
-      leaving = setTimeout(() => { leaving = null; render(); }, 220);
-      return;
-    }
-    if (leaving) { clearTimeout(leaving); leaving = null; }
+    const main = $('#main');
+    const ghost = !focus && main && $('.fm-panel') && shownCase !== undefined && at !== shownCase && !stillMotion() ? ghostOf(main) : null;
     shownCase = at;
     drawScreen(focus);
+    if (ghost) {
+      requestAnimationFrame(() => {
+        ghost.style.transition = 'opacity .22s ease-in';
+        ghost.style.opacity = '0';
+        setTimeout(() => ghost.remove(), 260);
+      });
+    }
     if (showingBriefing) return;
     if (focus || !revealed) { revealed = true; revealScreen(); }
     // Un écran redessiné pendant son apparition (minuterie, image chargée…)

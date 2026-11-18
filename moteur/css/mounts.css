@@ -550,13 +550,11 @@ button.crash-passage:hover { background: #fff1d6; }
 .fs-step.is-prev, .fm-one.is-prev { animation: fs-prev .6s cubic-bezier(.22, .61, .36, 1) both; }
 /* Formulaire à deux colonnes : le FONDU ENCHAÎNÉ (choisi le 18/11). Les
    cartes blanches et l'image restent en place ; seul leur contenu change :
-   l'ancien s'efface (is-leaving, posé par moteur/js/exercise.js), puis le
-   nouveau apparaît. Aucun glissement. Les nouvelles bulles s'écrivent d'elles-mêmes. */
-.fm-panel.is-leaving > :nth-child(2) > *, .fm-panel.is-leaving > .fm-scene :is(.client-card, .sc-person) > * { animation: fm-out .22s ease-in both; }
-.fm-panel:is(.is-next, .is-prev) > :nth-child(2) > *, .fm-panel:is(.is-next, .is-prev) > .fm-scene :is(.client-card, .sc-person) > * { animation: fm-in .38s ease-out both; }
+   l'ancien s'efface (copie de l'écran qui s'estompe, moteur/js/exercise.js),
+   puis le nouveau apparaît. Aucun glissement. Les nouvelles bulles s'écrivent d'elles-mêmes. */
+.fm-panel:is(.is-next, .is-prev) > :nth-child(2) > *, .fm-panel:is(.is-next, .is-prev) > .fm-scene :is(.client-card, .sc-person) > * { animation: fm-in .38s ease-out .2s both; }
 @keyframes fs-next { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
 @keyframes fs-prev { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
-@keyframes fm-out { to { opacity: 0; } }
 @keyframes fm-in { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .fs-step.is-next, .fs-step.is-prev, .fm-one.is-next, .fm-one.is-prev, .fm-panel.is-next *, .fm-panel.is-prev * { animation: none !important; } }
 @media (max-width: 900px) { .fs-layout { grid-template-columns: minmax(0, 1fr); } .fs-nav li { padding-bottom: 8px; } .fs-nav li::before { display: none; } }
