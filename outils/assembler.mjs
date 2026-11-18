@@ -139,7 +139,7 @@ const home = page(`${NAME} · Tous les modules`, `<main>
     <span class="k">Module ${esc(m.code)}</span>
     <p class="intro">${esc(m.intro)}</p>
     <ul>${m.series.map(s => `<li><strong>${esc(s.label)}</strong> · ${s.exercises.length} exercice${s.exercises.length > 1 ? 's' : ''}</li>`).join('')}</ul>
-    <a class="button" href="${esc(m.code)}/index.html">Ouvrir le module (${count(m)} exercices)</a>
+    <p class="module-actions"><a class="button" href="${esc(m.code)}/index.html">Ouvrir le module (${count(m)} exercices)</a>${existsSync(join(repo, `guide-${m.code}.html`)) ? `<a class="button secondary" href="guide-${esc(m.code)}.html">Guide formateur</a>` : ''}</p>
   </article>`).join('')}</div>
 </main>
 <style>
@@ -148,6 +148,8 @@ const home = page(`${NAME} · Tous les modules`, `<main>
   .module .intro { margin: 0; }
   .module ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: .95rem; }
   .module .button { justify-self: start; margin-top: 4px; }
+  .module-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 4px 0 0; }
+  .module-actions .button { margin-top: 0; }
 </style>`, '<script defer src="../moteur/js/sounds.js"></script>'); // sons et musique du menu
 writeFileSync(join(repo, 'index.html'), home);
 
