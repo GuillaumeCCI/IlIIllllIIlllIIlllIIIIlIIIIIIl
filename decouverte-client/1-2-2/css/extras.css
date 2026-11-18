@@ -2566,3 +2566,20 @@ p.h7-question { margin-bottom: 12px; }
 #main .h6-panel .d5-floor-nav .button.secondary { border: 0; border-radius: 999px; background: #1b2370; color: #fff; box-shadow: none; padding: 10px 20px; }
 #main .h6-panel .d5-floor-nav .button.secondary:hover { background: #2a3590; }
 @media (max-width: 640px) { #main .h6-panel .d5-floor-tab { font-size: .72rem; } #main .h6-panel .d5-floor-tab .d5-floor-n { width: 28px; height: 28px; } #main .h6-panel .d5-floor-tabs::before { top: 13px; } }
+
+/* 6.1 · Les rubriques sans cercles : des onglets en texte (petit numéro
+   au-dessus, coche verte une fois remplie), un trait bleu nuit sous la
+   rubrique en cours, une ligne fine sous l'ensemble. */
+#main .h6-panel .d5-floor-tabs::before { top: auto; bottom: 0; left: 0; right: 0; height: 1px; border-radius: 0; background: #e3e8f3; }
+#main .h6-panel .d5-floor-tab { gap: 4px; padding: 0 6px 12px; }
+#main .h6-panel .d5-floor-tab::after { content: ''; position: absolute; left: 10%; right: 10%; bottom: -1px; height: 3px; border-radius: 3px 3px 0 0; background: transparent; transition: background .2s; }
+#main .h6-panel .d5-floor-tab:hover::after { background: #d6def0; }
+#main .h6-panel .d5-floor-tab.is-current::after { background: #1b2370; }
+#main .h6-panel .d5-floor-tab .d5-floor-n,
+#main .h6-panel .d5-floor-tab.is-filled .d5-floor-n,
+#main .h6-panel .d5-floor-tab.is-current .d5-floor-n { width: auto; height: 18px; border: 0; border-radius: 0; background: none; box-shadow: none; color: #a7b1c8; font-size: .78rem; font-weight: 700; }
+#main .h6-panel .d5-floor-tab.is-filled .d5-floor-n { color: #2a8f8f; }
+#main .h6-panel .d5-floor-tab.is-current .d5-floor-n { color: #1b2370; }
+#main .h6-panel .d5-floor-tab:focus-visible .d5-floor-n { box-shadow: none; }
+#main .h6-panel .d5-floor-tab:focus-visible { box-shadow: inset 0 0 0 2px #c9d6f5; border-radius: 8px; }
+@media (max-width: 640px) { #main .h6-panel .d5-floor-tabs::before { top: auto; } }
