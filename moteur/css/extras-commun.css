@@ -924,7 +924,12 @@ html { background-color: #fbf8f2; }
 /* Une fenêtre plus haute que l'écran : son contenu défile (le titre et le
    bouton de fermeture restent en place). */
 #info-dialog:not(.is-tip) { max-height: 90vh; }
-#info-dialog:not(.is-tip) #dialog-body { max-height: calc(90vh - 160px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; padding-right: 6px; }
+#info-dialog:not(.is-tip) #dialog-body { max-height: calc(90vh - 160px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; padding-right: 6px; }
+/* Aucune barre de défilement visible dans les fenêtres (accueil, contexte,
+   aide) : le contenu défile encore à la molette ou au doigt si l'écran est
+   trop petit, mais la barre n'apparaît jamais, même pendant l'ouverture. */
+#info-dialog, #info-dialog * { scrollbar-width: none; }
+#info-dialog::-webkit-scrollbar, #info-dialog *::-webkit-scrollbar { display: none; }
 
 /* Au focus, plus d'effet « soulevé » (une grosse ombre jugée bizarre) :
    la zone garde son ombre douce et prend un fin halo bleu. */
