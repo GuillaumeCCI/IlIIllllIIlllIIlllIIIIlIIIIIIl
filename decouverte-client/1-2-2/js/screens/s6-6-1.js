@@ -492,12 +492,14 @@
     const verdict = end.tone === 'ok' ? 'Une découverte réussie : Mme Rivière essaie le bon véhicule.'
       : end.tone === 'mid' ? 'Une découverte en bonne voie : l’essai a lieu, mais il reste des doutes.'
         : 'Une découverte à reprendre : l’essai n’a pas eu lieu.';
-    const mapRows = map.map(r => {
+    const mapRows = map.map((r, i) => {
       const text = v(`m_${r.id}`);
-      return `<div class="fm-rv-row">
-          <p class="fm-rv-label">${esc(r.tab)}</p>
-          <div class="fm-rv-you">${kit.filled(text) ? `<p class="result-answer-text">${esc(text)}</p>` : '<p class="result-answer-text is-empty"><em>Non renseigné.</em></p>'}</div>
-          <div class="fm-rv-model"><p>${esc(r.model)}</p></div>
+      return `<div class="h6-cmp-row">
+          <p class="h6-cmp-h"><span class="h6-cmp-n">${i + 1}</span>${esc(r.tab)}</p>
+          <div class="h6-cmp-pair">
+            <div class="h6-cmp-you"><span class="h6-cmp-tag">Votre carte</span>${kit.filled(text) ? `<p>${esc(text)}</p>` : '<p class="is-empty">Non renseigné.</p>'}</div>
+            <div class="h6-cmp-ex"><span class="h6-cmp-tag">L’exemple</span><p>${esc(r.model)}</p></div>
+          </div>
         </div>`;
     }).join('');
     return `<section class="k-panel h6-review h7-review">
@@ -511,12 +513,11 @@
         </div>
         <div class="h6-path-cta"><span>Vos choix à chaque étape, et ce qu’il valait mieux demander.</span>${kit.act('h6-path-open', `${icon('chat', { size: 18 })}<span>Revoir l’entretien étape par étape</span>`, 'primary')}</div>
       </section>
-      <section class="k-panel fm-review is-rows h6-review">
+      <section class="k-panel h6-review">
         <p class="k-label">Votre carte des besoins, à côté d’un exemple</p>
         <p class="h7-review-line">L’exemple vient d’un parcours réussi. Il n’y a pas une seule bonne carte : vérifiez surtout que chaque besoin s’appuie sur les mots de Mme Rivière, et sur la question qui l’a fait apparaître.</p>
-        <div class="fm-rv-head" aria-hidden="true"><span></span><span>Votre carte</span><span>L’exemple</span></div>
-        ${mapRows}
-        <div class="h6-copy">${kit.act('h6-copy', `${icon('document', { size: 18 })}<span>Copier ma carte</span>`, 'secondary small')}<span>Pour la garder, ou la transmettre à votre tuteur.</span></div>
+        <div class="h6-cmp">${mapRows}</div>
+        <div class="h6-path-cta"><span>Pour la garder, ou la transmettre à votre tuteur.</span>${kit.act('h6-copy', `${icon('document', { size: 18 })}<span>Copier ma carte</span>`, 'primary')}</div>
       </section>
       <section class="k-panel h6-review">
         <p class="a4-review-head"><span class="k-label">Votre grille</span><span class="a4-review-count"><b>${yesCount}</b> / ${content.selfCheck.length} critères cochés « Oui »</span></p>

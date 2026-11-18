@@ -2648,3 +2648,19 @@ p.h7-question { margin-bottom: 12px; }
 
 /* 6.1 · La fenêtre « Votre entretien, étape par étape » : plus large, donc moins haute. */
 #info-dialog:has(.h6-path-dialog) { width: min(900px, 94vw); }
+
+/* 6.1 · Corrigé de la carte : rubrique par rubrique, le titre numéroté
+   (comme les cartes de saisie), puis votre réponse (carte blanche) et
+   l'exemple (vert très pâle) côte à côte, de même hauteur. */
+.h6-cmp { display: grid; gap: 22px; margin-top: 16px; }
+.h6-cmp-h { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; color: #1b2370; font-size: 1.02rem; font-weight: 800; }
+.h6-cmp-n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #eef1f8; color: #1b2370; font-size: .85rem; font-weight: 800; }
+.h6-cmp-pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.h6-cmp-you, .h6-cmp-ex { display: grid; align-content: start; gap: 6px; padding: 14px 18px; border-radius: 14px; }
+.h6-cmp-you { border: 1px solid #e3e8f3; background: #fff; }
+.h6-cmp-ex { background: #eef7f5; }
+.h6-cmp-tag { color: #6a7593; font-size: .74rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.h6-cmp-ex .h6-cmp-tag { color: #1d6b6b; }
+.h6-cmp-you p, .h6-cmp-ex p { margin: 0; color: #24305a; line-height: 1.6; white-space: pre-line; }
+.h6-cmp-you p.is-empty { color: #a7b1c8; font-style: italic; }
+@media (max-width: 760px) { .h6-cmp-pair { grid-template-columns: minmax(0, 1fr); } }
