@@ -2514,3 +2514,10 @@ p.h7-question { margin-bottom: 12px; }
 .h8-check-note:empty { display: none; }
 @media (max-width: 600px) { .h8-check-wrap { justify-content: stretch; } .h8-check-note { text-align: left; } }
 .h8-check-wrap .button.primary:disabled { background: #a9bff3; border-color: #a9bff3; color: #fff; box-shadow: none; cursor: not-allowed; opacity: 1; transform: none; }
+
+/* 6.1 · Quand la cliente vient de parler, sa carte s'élargit : sa phrase
+   s'étale sur moins de lignes (moins haute, plus facile à lire). */
+.h6-choose:has(> .h6-who.has-recall) { grid-template-columns: minmax(320px, 540px) minmax(0, 660px); }
+.h6-who.has-recall { padding-left: 34px; padding-right: 34px; }
+@media (min-width: 1600px) { .h6-choose:has(> .h6-who.has-recall) { grid-template-columns: minmax(380px, 620px) minmax(0, 780px); } }
+@media (max-width: 900px) { .h6-choose:has(> .h6-who.has-recall) { grid-template-columns: minmax(0, 1fr); } }
