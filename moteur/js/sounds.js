@@ -835,7 +835,7 @@
   /* Le score affiché tranche quand il existe : « 2 / 3 » est un échec, même
    * si la correction contient aussi des marques vertes ; « 3 / 3 », une
    * réussite. Sans score, ce sont les marques juste / faux qui décident. */
-  const SCORES = '.k-result strong, .cgr-score strong, .result-score, .crash-score, .drift-score';
+  const SCORES = '.k-ring-n, .k-result strong, .cgr-score strong, .result-score, .crash-score, .drift-score';
   function verdictFromScores(main) {
     const found = [...main.querySelectorAll(SCORES)]
       .map(el => /(\d+)\s*\/\s*(\d+)/.exec(el.textContent))

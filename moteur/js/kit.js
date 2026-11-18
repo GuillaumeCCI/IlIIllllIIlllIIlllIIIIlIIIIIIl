@@ -475,9 +475,38 @@
   const model = (title, text) =>
     `<div class="k-model"><p class="k-model-title">${icon('sparkle', { size: 16 })}<span>${esc(title)}</span></p><p>${esc(text)}</p></div>`;
 
-  /* Le score en grand, en tête de relecture. */
-  const result = (right, total, label = 'bonnes réponses') =>
-    `<p class="k-result"><strong>${right} / ${total}</strong><span>${esc(label)}</span></p>`;
+  /* LE BILAN DE FIN (modèle validé en 1-2-2, 6.1 et 6.2) : « Le bilan de
+   * votre activité », un verdict en une phrase, une phrase qui dit ce qu'on
+   * regarde, puis un anneau animé par résultat, avec son mot de verdict.
+   *   bilan({ rings: [{ n, total, label }], verdict, intro })
+   * Sans verdict ni phrase, ils se déduisent du résultat. */
+  const ringJudge = r => (r >= 0.8 ? ['Très bien', 'ok'] : r >= 0.5 ? ['En bonne voie', 'mid'] : ['À reprendre', 'ko']);
+  function bilan({ rings = [], verdict = '', intro = '' } = {}) {
+    if (!rings.length) return '';
+    const R = 34;
+    const C = 2 * Math.PI * R;
+    const ratio = rings.reduce((sum, x) => sum + (x.total ? x.n / x.total : 0), 0) / rings.length;
+    const say = verdict || (ratio >= 0.8 ? 'Très bien : vous maîtrisez l’essentiel.'
+      : ratio >= 0.5 ? 'En bonne voie : relisez ce qui vous a échappé, plus bas.'
+        : 'À reprendre : relisez le corrigé ci-dessous, puis refaites l’exercice.');
+    const lead = intro || (rings.length > 1 ? 'Vos résultats, puis le corrigé détaillé, réponse par réponse.' : 'Votre résultat, puis le corrigé détaillé, réponse par réponse.');
+    const tiles = rings.map((x, i) => {
+      const r = x.total ? Math.max(0, Math.min(1, x.n / x.total)) : 0;
+      const [word, tone] = ringJudge(r);
+      return `<div class="k-ring tone-${tone}" style="animation-delay:${(0.1 * i).toFixed(2)}s">
+          <div class="k-ring-g"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="${R}" class="k-ring-bg"/><circle cx="40" cy="40" r="${R}" class="k-ring-fg" style="--c:${C.toFixed(1)};--o:${(C * (1 - r)).toFixed(1)}"/></svg><p class="k-ring-n"><b>${x.n}</b><span>/ ${x.total}</span></p></div>
+          <div class="k-ring-txt"><p class="k-ring-t">${esc(x.label)}</p><p class="k-ring-w">${word}</p></div>
+        </div>`;
+    }).join('');
+    return `<section class="k-bilan" aria-label="Le bilan de votre activité">
+        <p class="k-bilan-tag">Le bilan de votre activité</p>
+        <p class="k-bilan-title">${esc(say)}</p>
+        <p class="k-bilan-lead">${esc(lead)}</p>
+        <div class="k-rings ${rings.length === 1 ? 'is-one' : ''}" style="--n:${Math.min(rings.length, 4)}">${tiles}</div>
+      </section>`;
+  }
+  /* Le score en tête de relecture : désormais le bilan, avec un anneau. */
+  const result = (right, total, label = 'bonnes réponses') => bilan({ rings: [{ n: right, total, label }] });
 
   /* ───────────────────── Commandes et fenêtres ──────────────────────── */
 
@@ -1170,7 +1199,7 @@
     matrix, answered, score, choiceButtons,
     mountChoiceGrid, mountCompare, reach, reveal,
     deckPlaced, deckCurrent, deckPlace, deckUndo, deckSkip, deckReopen, deckDots, deckRecap, deckReview,
-    mark, picked, explain, yours, model, result,
+    mark, picked, explain, yours, model, result, bilan,
     on, dialogs, live, onDrop, refreshLive, commit, openDialog
   });
 })(globalThis);
