@@ -1063,6 +1063,8 @@
      * pastille ✓ / ✗, la réplique, la bonne réponse et sa raison, et ce
      * qu'on avait répondu quand c'est faux. */
     function linesReview() {
+      // Le rôle de chaque réplique, dit par un verbe : « a dit », « a répondu ».
+      const said = line => `${esc(line.label || '')} ${line.who === 'seller' ? 'a répondu' : 'a dit'}`;
       const groups = [];
       cases.forEach((c, i) => {
         const talk = [].concat(c.reviewScene || []).flatMap(b => b.dialogue || []);
@@ -1075,13 +1077,13 @@
           const accepted = [].concat(f.answer);
           const ok = accepted.includes(val(i, f));
           g.rows.push(`<li class="fm-lrow ${ok ? 'is-ok' : 'is-ko'}"><span class="fm-lmark" aria-label="${ok ? 'Juste' : 'À revoir'}">${icon(ok ? 'check' : 'close', { size: 14, strokeWidth: 3 })}</span>
-            <div><p class="fm-lreply">${judged ? `${esc(judged.label || '')} : « ${esc(judged.text)} »` : esc(c.tab || '')}</p>
+            <div><p class="fm-lreply">${judged ? `${said(judged)} : « ${esc(judged.text)} »` : esc(c.tab || '')}</p>
               <p class="fm-lwhy"><strong>${esc(accepted.map(id => optionLabel(f, id)).join(' ou '))}.</strong> ${esc(f.why || '')}</p>
               ${ok ? '' : `<p class="fm-lyours">Vous aviez répondu : ${esc(val(i, f) ? optionLabel(f, val(i, f)) : 'rien')}.</p>`}</div></li>`);
         });
       });
       return `<div class="fm-lines">${groups.map(g => `<section class="fm-lgroup">
-          ${g.before ? `<p class="fm-lsaid"><span>${esc(g.before.label || '')}</span>« ${esc(g.before.text)} »</p>` : ''}
+          ${g.before ? `<p class="fm-lsaid"><span>${said(g.before)}</span>« ${esc(g.before.text)} »</p>` : ''}
           <ul>${g.rows.join('')}</ul></section>`).join('')}</div>`;
     }
 
