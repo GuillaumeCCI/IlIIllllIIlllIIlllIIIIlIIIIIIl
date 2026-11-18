@@ -465,7 +465,25 @@
    * L'apparition se règle une fois l'écran entièrement monté (barre du bas
    * déplacée, ajouts de l'écran lui-même) : sinon, ces éléments arrivaient
    * d'emblée. */
+  /* LE FONDU ENCHAÎNÉ (choisi par l'utilisateur, 18/11) : quand on change de
+   * cas (réponse suivante, flèches), le contenu des cartes s'efface d'abord
+   * (0,22 s), puis le nouveau apparaît (moteur/css/mounts.css). Les cartes
+   * et l'image restent en place : rien ne glisse, rien ne clignote. */
+  let shownCase;
+  let leaving = null;
+  const stillMotion = () => root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function render(focus = false) {
+    const at = value('case');
+    const panel = $('.fm-panel');
+    if (!focus && panel && shownCase !== undefined && at !== shownCase && !stillMotion()) {
+      shownCase = at;
+      panel.classList.add('is-leaving');
+      clearTimeout(leaving);
+      leaving = setTimeout(() => { leaving = null; render(); }, 220);
+      return;
+    }
+    if (leaving) { clearTimeout(leaving); leaving = null; }
+    shownCase = at;
     drawScreen(focus);
     if (showingBriefing) return;
     if (focus || !revealed) { revealed = true; revealScreen(); }
