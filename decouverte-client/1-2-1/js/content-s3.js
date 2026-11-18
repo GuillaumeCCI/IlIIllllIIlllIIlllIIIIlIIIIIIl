@@ -225,7 +225,8 @@
       bubbles: [{ who: 'client', side: 'left', label: 'La cliente', text: quote }, { who: 'seller', side: 'right', label: 'Le vendeur', text: reply }] }],
     reviewScene: [{ dialogue: [{ who: 'client', label: 'La cliente', text: quote }, { who: 'seller', label: 'Le vendeur', text: reply }] }],
     fields: [{ id: 'type', type: 'choice', ask: true, stack: true, label: 'La réponse du vendeur est-elle une vraie reformulation ?',
-      sub: 'Une reformulation redit ce que la cliente a dit, avec ses mots ou d’autres, sans rien ajouter.', options: REFO, answer, why, whyTitle: 'Pourquoi' }]
+      sub: 'Une reformulation redit ce que la cliente a dit, avec ses mots ou d’autres, sans rien ajouter.', options: REFO, answer, why, whyTitle: 'Pourquoi',
+      goodWhen: 'oui', goodLabel: 'Une vraie reformulation', badLabel: 'Un intrus', rightLabel: 'Vous aviez vu juste.' }]
   });
 
   root.ATELIER_S3['3.4'] = {

@@ -1114,10 +1114,15 @@
         fieldsOf(i).filter(f => f.type === 'choice' && [].concat(f.answer || []).length).forEach(f => {
           const accepted = [].concat(f.answer);
           const ok = accepted.includes(val(i, f));
-          g.rows.push(`<li class="fm-lrow ${ok ? 'is-ok' : 'is-ko'}"><span class="fm-lmark" aria-label="${ok ? 'Juste' : 'À revoir'}">${icon(ok ? 'check' : 'close', { size: 14, strokeWidth: 3 })}</span>
-            <div><p class="fm-lreply">${judged ? `${said(judged)} : « ${esc(judged.text)} »` : esc(c.tab || '')}</p>
-              <p class="fm-lwhy"><strong>${esc(verdictOf(f, accepted))}</strong> ${esc(f.why || '')}</p>
-              ${ok ? '' : `<p class="fm-lyours">${esc(yoursOf(f, val(i, f)))}</p>`}</div></li>`);
+          /* Deux informations à ne pas confondre : la réplique jugée est-elle
+           * bonne (étiquette à côté d'elle, `goodWhen`), et l'apprenant a-t-il
+           * vu juste (une ligne à part, qui lui parle, avec sa pastille). */
+          const good = f.goodWhen ? accepted.some(id => [].concat(f.goodWhen).includes(id)) : null;
+          const tag = good === null ? '' : `<span class="fm-ltag ${good ? 'is-good' : 'is-bad'}">${esc(good ? (f.goodLabel || 'La bonne attitude') : (f.badLabel || 'Une maladresse'))}</span>`;
+          g.rows.push(`<li class="fm-lrow">
+            <p class="fm-lreply">${judged ? `${said(judged)} : « ${esc(judged.text)} »` : esc(c.tab || '')}${tag}</p>
+            <p class="fm-lwhy"><strong>${esc(verdictOf(f, accepted))}</strong> ${esc(f.why || '')}</p>
+            <p class="fm-lyou ${ok ? 'is-ok' : 'is-ko'}"><span class="fm-lmark" aria-hidden="true">${icon(ok ? 'check' : 'close', { size: 12, strokeWidth: 3 })}</span>${esc(ok ? (f.rightLabel || 'Vous l’aviez bien repéré.') : yoursOf(f, val(i, f)))}</p></li>`);
         });
       });
       return `<div class="fm-lines">${groups.map(g => `<section class="fm-lgroup">

@@ -744,14 +744,19 @@ button.crash-passage:hover { background: #fff1d6; }
 #main .fm-lsaid { margin: 0 0 14px; color: var(--navy); font-size: 1.05rem; line-height: 1.6; }
 #main .fm-lsaid span { display: block; margin-bottom: 6px; color: #6a7898; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 #main .fm-lgroup ul { list-style: none; margin: 0; padding: 0; }
-#main .fm-lrow { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 16px; padding: 20px 0; border-top: 1px solid #edf1f8; }
-#main .fm-lmark { display: grid; place-items: center; width: 26px; height: 26px; margin-top: 1px; border-radius: 50%; color: #fff; }
-#main .fm-lrow.is-ok .fm-lmark { background: #2f9e74; }
-#main .fm-lrow.is-ko .fm-lmark { background: #e0674f; }
-#main .fm-lreply { margin: 0 0 10px; color: var(--navy); font-size: 1rem; line-height: 1.6; }
+#main .fm-lrow { padding: 20px 0; border-top: 1px solid #edf1f8; }
+#main .fm-lreply { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin: 0 0 10px; color: var(--navy); font-size: 1rem; line-height: 1.6; }
+#main .fm-ltag { padding: 2px 10px; border-radius: 999px; font-size: .78rem; font-weight: 800; white-space: nowrap; }
+#main .fm-ltag.is-bad { background: #ffe9e3; color: #b8442e; }
+#main .fm-ltag.is-good { background: #dcf1e4; color: #11734f; }
 #main .fm-lwhy { margin: 0; color: #4c5f86; font-size: .97rem; line-height: 1.65; }
 #main .fm-lwhy strong { color: var(--navy); font-weight: 700; }
-#main .fm-lyours { margin: 10px 0 0; color: #b8442e; font-size: .92rem; line-height: 1.5; }
+#main .fm-lyou { display: flex; align-items: center; gap: 10px; margin: 12px 0 0; font-size: .93rem; font-weight: 700; line-height: 1.5; }
+#main .fm-lyou.is-ok { color: #11734f; }
+#main .fm-lyou.is-ko { color: #b8442e; }
+#main .fm-lmark { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: #fff; flex-shrink: 0; }
+#main .fm-lyou.is-ok .fm-lmark { background: #2f9e74; }
+#main .fm-lyou.is-ko .fm-lmark { background: #e0674f; }
 /* Les mots repérés dans une réponse : un fond vert très pâle, jamais le jaune du navigateur. */
 .result-answer-text mark, .fm-rv-you mark { padding: 0 2px; border-radius: 4px; background: #dcf1e4; color: inherit; }
 .result-answer-text mark.is-warn, .fm-rv-you mark.is-warn { background: #ffd9d2; }
