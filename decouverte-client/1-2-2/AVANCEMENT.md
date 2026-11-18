@@ -107,5 +107,6 @@ Puis (18/11, matin) : dans la fiche, « Vérifier ma fiche » reste inactif tant
 - 6.1 : idées en attente ci-dessus, si l'utilisateur les veut.
 - 6.3 : revue validée par l'utilisateur le 17/11. Options 1 (6.2) et 3 (6.3) faites.
 - Synthèse optionnelle de 1-2-1 : l’option 2 (Mme Rivière, écoute) a été construite le 18/11 puis ANNULÉE à la demande de l’utilisateur : doublon avec le 6.1 de 1-2-2 (même cliente, même concession, mêmes écrans). Décision : ne rien faire de plus pour l’instant. Avant de relancer une synthèse 1-2-1, lui demander quelle option, et éviter de reprendre une histoire déjà jouée en 1-2-2.
+- Fait le 18/11 : pages « Guide formateur » de 1-2-1 et 1-2-2 (`decouverte-client/guide-1-2-1.html`, `guide-1-2-2.html`), bouton sur la carte de chaque module de l'accueil ; bilan de fin (kit.result / kit.bilan) généralisé dans le moteur.
 - Puis M1.2.3 (situation intégratrice) et M1.2.4 (approfondissement), sans fiche fournie.
 - Avant toute conception : relire la référence de conception (mémoire « conseils-conception-sources », textes dans Documents/Sources-conception).
