@@ -90,6 +90,8 @@ Revue avec l'utilisateur (17/11, suite, validée : « ça me semble ok ») : con
 
 Repris le 18/11 depuis la branche `sauvegarde-poste-local-2026-11-18` (travail fait sur un autre poste, jamais envoyé ; la version GitHub a été gardée comme base) : une page avant chaque client du bon réflexe (grand visage, « Client 1 sur 2 », « Rencontrer ce client ») et phrases de présentation neutres ; bilan des situations « Ce qui se joue dans vos 2 situations » (le piège et pourquoi, ce que le client attend vraiment, la question clé et pourquoi, deux autres questions ; champ `deep` des 8 situations) ; corrigé : parcours en quatre anneaux animés avec un verdict en une phrase. Le reste de la sauvegarde n'est pas repris.
 
+Puis (18/11, matin) : dans la fiche, « Vérifier ma fiche » reste inactif tant qu'une rubrique est vide ; à côté, la liste de ce qui reste à remplir et à quelle page, mise à jour pendant la saisie.
+
 ## Reprise prévue (17/11/2026)
 
 - Synthèse optionnelle M1.2.2 (fiche Fiche_M1-2-2_Activite_synthese_optionnelle.docx, zip Downloads/Téléchargements/OneDrive_1_02-11-2026.zip) : 3 options, Le coach (dossiers A cuisiniste / B entre entreprises), L'entretien dont tu es le héros (concession automobile), Ma banque de questions terrain. Proposition : commencer par l'option 2.
