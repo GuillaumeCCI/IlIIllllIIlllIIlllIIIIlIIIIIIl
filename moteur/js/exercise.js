@@ -515,6 +515,7 @@
     updateCompletion();
     markSwitch();
     if (core.isDone(current.key)) showFeedback();
+    arrangeEnd();
     // Après le feedback : un écran peut ainsi enrichir la fiche de corrigé.
     if (onMountFn) onMountFn();
     if (focus) { $('#main').focus(); window.scrollTo({ top: 0, behavior: 'instant' }); }
@@ -879,6 +880,29 @@
       else node.insertAdjacentHTML('afterbegin', analysis);
     }
     if (focus) node.focus({ preventScroll: true });
+    arrangeEnd();
+  }
+
+  /* LA BARRE DE FIN : « À retenir », « Recommencer l'exercice », la phrase
+   * de suite et « Continuer » étaient posés chacun ailleurs. Quand le message
+   * de fin est en mode compact, on les regroupe dans une seule bande : les
+   * actions secondaires à gauche, la suite à droite. */
+  function arrangeEnd() {
+    const feedback = $('#main #feedback.is-compact:not([hidden])');
+    if (!feedback || feedback.closest('.k-endbar')) return;
+    const keyRow = $('#main .k-keypoint-row');
+    const utility = $('#main .k-utility');
+    const bar = document.createElement('div');
+    bar.className = 'k-endbar';
+    const side = document.createElement('div');
+    side.className = 'k-endbar-side';
+    if (keyRow) side.append(...keyRow.childNodes);
+    if (utility) side.append(...utility.childNodes);
+    feedback.replaceWith(bar);
+    if (side.childNodes.length) bar.append(side);
+    bar.append(feedback);
+    keyRow?.remove();
+    utility?.remove();
   }
 
   function submit() {

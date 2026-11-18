@@ -139,7 +139,7 @@
     `<button type="button" class="text-button with-icon k-back" data-act="${esc(name)}">${icon('arrowLeft', { size: 17 })}<span>${esc(label)}</span></button>`;
 
   /* Le bouton « Réinitialiser » demande une confirmation par un second clic. */
-  const reset = () => `<button type="button" class="text-button k-reset" data-act="reset">Réinitialiser</button>`;
+  const reset = () => `<button type="button" class="text-button k-reset" data-act="reset">Recommencer l’exercice</button>`;
 
   /* Un bouton qui ouvre une fenêtre d'aide déclarée par `kit.dialogs`. */
   const dialogButton = (name, label = 'Voir un indice', style = 'secondary', symbol = 'lightbulb') =>

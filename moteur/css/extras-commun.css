@@ -929,3 +929,17 @@ html { background-color: #fbf8f2; }
 /* Au focus, plus d'effet « soulevé » (une grosse ombre jugée bizarre) :
    la zone garde son ombre douce et prend un fin halo bleu. */
 #main :is(textarea, input[type="text"]):focus { box-shadow: 0 4px 16px rgb(20 40 100 / 7%), 0 0 0 3px #e3eafc, inset 0 0 0 1px #b9c8ef; }
+
+/* La barre de fin d'exercice (exercise.js, arrangeEnd) : une seule bande
+   blanche ; à gauche « À retenir » et « Recommencer l'exercice », à droite
+   la phrase de suite et « Continuer ». */
+#main .k-endbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px 24px; margin: 28px 0 8px; padding: 16px 20px; border-radius: 18px; background: #fff; box-shadow: 0 6px 20px rgb(20 40 100 / 8%); }
+#main .k-endbar-side { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 18px; }
+#main .k-endbar-side .k-keypoint-open { margin: 0; }
+#main .k-endbar-side .k-reset { color: #6a7593; font-weight: 600; text-decoration: none; }
+#main .k-endbar-side .k-reset:hover { color: #1b2370; text-decoration: underline; }
+#main .k-endbar .feedback.is-compact:not([hidden]) { flex: 1 1 auto; flex-direction: row; justify-content: flex-end; align-items: center; gap: 12px 18px; margin: 0; }
+#main .k-endbar .feedback.is-compact p { padding: 0; background: none; color: #3a4a7a; text-align: right; }
+#main .k-endbar .feedback.is-compact .button { min-width: 0; min-height: 0; padding: 12px 28px; font-size: 1rem; }
+#main .k-endbar .feedback.is-compact > .ana-score { order: -1; }
+@media (max-width: 720px) { #main .k-endbar { flex-direction: column-reverse; align-items: stretch; } #main .k-endbar .feedback.is-compact:not([hidden]) { flex-direction: column; align-items: stretch; } #main .k-endbar .feedback.is-compact p { text-align: left; } #main .k-endbar-side { justify-content: space-between; } }
