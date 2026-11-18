@@ -2523,3 +2523,17 @@ p.h7-question { margin-bottom: 12px; }
 @media (max-width: 900px) { .h6-choose:has(> .h6-who.has-recall) { grid-template-columns: minmax(0, 1fr); } }
 /* 6.1 · Sa phrase (et son geste) alignés à gauche : un long texte se lit mieux. */
 .h6-who.has-recall .h6-recall-quote, .h6-who.has-recall .h6-recall-gesture { justify-self: stretch; text-align: left; }
+
+/* 6.1 · La carte du chemin, dessinée (pas d'image fournie) : quatre étapes
+   sur deux rangées, même esprit que les cartes de 6.2 et 6.3. */
+.h9-map { aspect-ratio: 1400 / 788; }
+.h9-map-grid { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; padding: 3% 5%; gap: 2% 6%; }
+.h9-tile { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto 1fr; align-items: center; column-gap: 16px; transition: opacity .3s; }
+.h9-tile-n { position: relative; grid-column: 1 / -1; color: #1d4fd0; font-weight: 800; font-size: clamp(.9rem, 1.6vw, 1.3rem); }
+.h9-tile-check { position: absolute; left: 2.4em; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: #2a8f8f; color: #fff; }
+.h9-tile-icon { display: grid; place-items: center; width: clamp(48px, 7vw, 84px); aspect-ratio: 1; border-radius: 22px; background: #dfe8d4; color: #1b2370; }
+.h9-tile:nth-child(2n) .h9-tile-icon { background: #dbe4fb; }
+.h9-tile-icon .icon { width: 56%; height: 56%; }
+.h9-tile-label { color: #1b2370; font-weight: 800; font-size: clamp(.95rem, 2vw, 1.55rem); line-height: 1.15; }
+.h9-tile.is-later { opacity: .32; }
+@media (max-width: 600px) { .h9-tile-icon { border-radius: 14px; } .h9-tile { column-gap: 10px; } }

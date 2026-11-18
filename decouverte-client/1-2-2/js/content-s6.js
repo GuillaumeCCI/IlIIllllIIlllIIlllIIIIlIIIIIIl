@@ -67,6 +67,38 @@
       title: 'L’entretien dont vous êtes le héros',
       subtitle: 'Choisissez vos questions, voyez leur effet sur la cliente, puis construisez la carte de ses besoins.',
 
+      // La carte du chemin : les quatre étapes, leur pictogramme.
+      path: [
+        { label: 'Le scénario', icon: 'chat' },
+        { label: 'Vos acquis', icon: 'lightbulb' },
+        { label: 'La carte des besoins', icon: 'target' },
+        { label: 'La grille', icon: 'list' }
+      ],
+
+      // Une page avant chaque étape : ce qui est fait, pourquoi la suite, à vous.
+      transitions: [
+        {
+          done: 'Vous savez à quoi sert la découverte : comprendre ce qui compte pour elle, avant de lui faire essayer un véhicule.',
+          why: 'Mme Rivière arrive pour son essai, entre deux tournées. Vous allez mener la découverte en sept étapes. Chaque question prend du temps, et ce que vous apprendrez décidera du véhicule qu’elle essaiera.',
+          todo: 'À chaque étape, choisissez ce que vous voulez lui demander. La jauge suit la qualité de votre découverte, le chrono son temps, et un retour vous dit ce que votre question a produit.'
+        },
+        {
+          done: 'Vous avez mené la découverte avec Mme Rivière jusqu’au bout.',
+          why: 'Avant de construire la carte de ses besoins, quatre questions courtes pour vérifier les bons réflexes : partir d’un signal, faire mesurer l’enjeu, faire classer, reformuler.',
+          todo: 'Répondez aux 4 questions. Un retour suit chaque réponse.'
+        },
+        {
+          done: 'Vos réflexes de questionnement sont vérifiés.',
+          why: 'Ce que Mme Rivière vous a dit doit maintenant servir. La carte de ses besoins, c’est ce sur quoi s’appuiera votre argumentation pendant l’essai.',
+          todo: 'Remplissez les 6 rubriques de la carte. Votre entretien reste à gauche, sous vos yeux.'
+        },
+        {
+          done: 'Votre carte des besoins est prête.',
+          why: 'Avant de voir l’exemple, relisez-la comme le fera votre tuteur, avec la même grille.',
+          todo: 'Répondez Oui ou Non aux 7 critères de la grille.'
+        }
+      ],
+
       client: {
         name: 'Mme Rivière',
         role: 'Infirmière libérale',

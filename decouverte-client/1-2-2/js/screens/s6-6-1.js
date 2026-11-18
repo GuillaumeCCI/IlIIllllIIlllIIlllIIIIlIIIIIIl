@@ -63,8 +63,9 @@
   function beat() {
     if (!v('warm')) return { kind: 'warm' };
     if (!yes('wok')) return { kind: 'warm-fb' };
+    if (!yes('tr0') && !yes('seen0')) return { kind: 'trans' };
     const k = steps.findIndex((_, i) => !yes(`ack${i}`));
-    if (k === -1) return { kind: 'end' };
+    if (k === -1) return { kind: yes('endok') ? 'bilan' : 'end' };
     if (!choiceAt(k)) return { kind: yes(`seen${k}`) ? 'choose' : 'ctx', k };
     // Après un choix moins bon : retour aux propositions, les essais grisés.
     if (yes(`retry${k}`)) return { kind: 'choose', k, retry: true };
@@ -76,7 +77,7 @@
   const quizScore = () => quiz.filter((item, n) => v(`q${n}`) === item.best).length;
 
   const stepDone = k => {
-    if (k === 0) return scenarioDone();
+    if (k === 0) return scenarioDone() && yes('endok');
     if (k === 1) return quizAt() === quiz.length;
     if (k === 2) return map.every(r => !r.required || kit.filled(v(`m_${r.id}`)));
     return content.selfCheck.every((_, i) => Boolean(v(`self${i}`)));
@@ -209,6 +210,7 @@
   /* ── 0 · Le scénario, en scène ───────────────────────────────────────── */
   function scenario() {
     const b = beat();
+    if (b.kind === 'trans') return transition(0);
     const k = b.k;
     const s = steps[k];
     let body = '';
@@ -270,7 +272,7 @@
           </div>
         </div>
         <div class="h6-stage-foot">${next('Continuer', 'h6-flag', c.reply ? 1.6 : 0.5, `data-name="rs${k}"`)}</div>`;
-    } else {
+    } else if (b.kind === 'end') {
       const end = ending();
       body = `<div class="h6-card h6-end tone-${end.tone} h6-in">
           <p class="k-label">La fin de l’entretien</p>
@@ -278,9 +280,11 @@
           ${said(end.says, 0.3)}
           <p class="h6-end-text">${esc(end.text)}</p>
         </div>
-        <div class="h6-stage-foot">${kit.submit('Vérifier mes acquis')}</div>`;
+        <div class="h6-stage-foot">${next('Voir mon bilan', 'h6-flag', 0.8, 'data-name="endok"')}</div>`;
+    } else {
+      body = scenarioBilan();
     }
-    const inGame = !['warm', 'warm-fb'].includes(b.kind);
+    const inGame = !['warm', 'warm-fb', 'bilan'].includes(b.kind);
     const isFb = ['fb', 'warm-fb'].includes(b.kind);
     return `<section class="h6-stage ${isFb ? 'is-fb' : ''}" style="--h6-decor:url('${decor}')">
         <div class="h6-stage-top">
@@ -297,13 +301,85 @@
       ${core.errorsBox()}`;
   }
 
+  /* Le bilan de l'entretien, avant la transition : une phrase de synthèse,
+   * puis seulement les questions à retenir (la vôtre, et la meilleure). */
+  function scenarioBilan() {
+    const end = ending();
+    const good = steps.filter((s, k) => choiceAt(k) === s.best).length;
+    const missed = steps.map((_, k) => k).filter(k => choiceAt(k) && choiceAt(k) !== steps[k].best);
+    const n = steps.length;
+    const how = good === n ? 'toutes vos premières questions ont' : good === 0 ? 'aucune de vos premières questions n’a' : good === 1 ? 'une seule de vos premières questions a' : `${good} de vos premières questions ont`;
+    const items = missed.map(k => {
+      const s = steps[k];
+      const c = s.choices[choiceAt(k)];
+      const b = s.choices[s.best];
+      return `<li><span class="h7-bilan-q">Étape ${k + 1} · Vous avez choisi de ${esc(lower(c.intent))} : ${q(c.text)}</span>
+          <span class="h7-bilan-a">Il valait mieux <b>${esc(lower(b.intent))}</b> : ${q(b.text)}</span></li>`;
+    }).join('');
+    return `<div class="h6-card h7-bilan h6-in">
+        <p class="k-label">Le bilan de l’étape 1</p>
+        <p class="h7-trans-title">Votre découverte avec ${esc(client.name)}</p>
+        <p class="h7-trans-why">Sur ${n} étapes, ${how} fait avancer la découverte. Votre jauge finit à ${gauge()} sur 10, et il reste ${left(steps.length)} minutes pour l’essai : ${esc(lower(end.title))}. C’est à partir de ce qu’elle vous a dit que vous construirez la carte de ses besoins.</p>
+        ${missed.length ? `<p class="h7-bilan-h">Les questions à retenir</p><ul class="h7-bilan-list">${items}</ul>` : '<p class="h7-trans-why">Vous avez choisi la meilleure question à chaque étape : la carte de ses besoins s’appuiera sur une découverte complète.</p>'}
+      </div>
+      <div class="h6-stage-foot">${kit.submit('Passer à la suite')}</div>`;
+  }
+
+  /* Le bilan des acquis : le score, puis les questions manquées et leur bonne réponse. */
+  function quizBilan() {
+    const wrong = quiz.map((_, n) => n).filter(n => v(`q${n}`) !== quiz[n].best);
+    const score = quizScore();
+    return `<div class="h6-card h7-bilan h6-in">
+        <p class="k-label">Le bilan de l’étape 2</p>
+        <p class="h7-trans-title">Vos réflexes de questionnement</p>
+        <p class="h7-trans-why">${score} bonne${score > 1 ? 's' : ''} réponse${score > 1 ? 's' : ''} sur ${quiz.length}. ${wrong.length ? 'Voici ce qu’il fallait répondre là où vous vous êtes trompé·e : gardez-le en tête pour construire la carte.' : 'Les bons réflexes sont en place : vous pouvez construire la carte de ses besoins.'}</p>
+        ${wrong.length ? `<ul class="h7-bilan-list">${wrong.map(n => `<li><span class="h7-bilan-q">${esc(quiz[n].question)}</span><span class="h7-bilan-a">La bonne réponse : <b>${esc(quiz[n].choices[quiz[n].best].text)}</b> ${esc(quiz[n].choices[quiz[n].best].fb)}</span></li>`).join('')}</ul>` : ''}
+      </div>
+      <div class="h6-stage-foot">${kit.submit('Passer à la carte des besoins')}</div>`;
+  }
+
+  /* La page de transition, sur la carte du chemin (dessinée : quatre étapes
+   * sur deux rangées) : les étapes faites cochées, les suivantes estompées,
+   * le pion « Vous » qui glisse jusqu'à l'étape où l'on entre. */
+  const SPOTS = [[8.7, 29.6], [57.4, 29.6], [8.7, 75.5], [57.4, 75.5]];
+  function pathMap(k) {
+    const from = SPOTS[Math.max(0, k - 1)];
+    const to = SPOTS[k];
+    const tiles = content.path.map((p, i) => `<div class="h9-tile ${i < k ? 'is-done' : i > k ? 'is-later' : 'is-current'}">
+        <span class="h9-tile-n">${String(i + 1).padStart(2, '0')}${i < k ? `<span class="h9-tile-check">${icon('check', { size: 14, strokeWidth: 3.5 })}</span>` : ''}</span>
+        <span class="h9-tile-icon">${icon(p.icon, { size: 46, strokeWidth: 1.6 })}</span>
+        <span class="h9-tile-label">${esc(p.label)}</span>
+      </div>`).join('');
+    return `<div class="h7-map h9-map h6-in" role="img" aria-label="Le chemin de l’exercice : étape ${k + 1} sur ${STEPS.length}, ${esc(STEPS[k])}.">
+        <div class="h9-map-grid">${tiles}</div>
+        <span class="h7-map-pawn ${k > 0 ? 'is-moving' : 'is-landing'}" style="--fx:${from[0]}%;--fy:${from[1]}%;--tx:${to[0]}%;--ty:${to[1]}%"><b>Vous</b></span>
+      </div>`;
+  }
+  function transition(k) {
+    const t = content.transitions[k];
+    return `<section class="h6-stage" style="--h6-decor:url('${decor}')">
+        <div class="h6-stage-body">
+          <div class="h7-way">
+            ${pathMap(k)}
+            <div class="h6-card h7-trans h6-in" ${delay(0.3)}>
+              <p class="k-label">Étape ${k + 1} sur ${STEPS.length}</p>
+              <p class="h7-trans-title">${esc(STEPS[k])}</p>
+              <p class="h7-trans-done">${icon('check', { size: 16, strokeWidth: 3 })}<span>${esc(t.done)}</span></p>
+              <p class="h7-trans-why">${esc(t.why)}</p>
+              <p class="h7-trans-todo"><span>À vous</span>${esc(t.todo)}</p>
+            </div>
+          </div>
+          <div class="h6-stage-foot">${next('C’est parti', 'h6-tr', 1.2, `data-k="${k}"`)}</div>
+        </div>
+      </section>`;
+  }
+
   /* ── 1 · Vos acquis ──────────────────────────────────────────────────── */
   function quizStep() {
     const i = quizAt();
     let body;
     if (i === quiz.length) {
-      body = `<div class="h6-card h6-end tone-${quizScore() >= 3 ? 'ok' : 'mid'} h6-in"><p class="k-label">Vos acquis</p><p class="h6-end-title">${quizScore()} bonne${quizScore() > 1 ? 's' : ''} réponse${quizScore() > 1 ? 's' : ''} sur ${quiz.length}</p><p class="h6-end-text">Place à la carte des besoins de ${esc(client.name)}.</p></div>
-        <div class="h6-stage-foot">${kit.submit('Construire ma carte des besoins')}</div>`;
+      body = quizBilan();
     } else if (!v(`q${i}`)) {
       body = `<p class="k-label h6-quiz-n">Question ${i + 1} sur ${quiz.length}</p>${choiceBlock({ title: `Question ${i + 1}`, ask: quiz[i].question, order: quiz[i].order, choices: quiz[i].choices, act: 'h6-quiz', data: `data-i="${i}"`, field: `q${i}` })}`;
     } else {
@@ -406,8 +482,8 @@
   function screen() {
     const reviewing = ex.reviewing();
     const k = at();
-    const body = reviewing ? review() : [scenario, quizStep, mapStep, grid][k]();
-    return `<div class="k-page a4-page a5-page d5-page h6-page">
+    const body = reviewing ? review() : k > 0 && !yes(`tr${k}`) ? transition(k) : [scenario, quizStep, mapStep, grid][k]();
+    return `<div class="k-page a4-page a5-page d5-page h6-page h7-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: reviewing ? '' : progress(k) + kit.tourButton() })}
       <form novalidate>${body}</form>
     </div>`;
@@ -415,7 +491,7 @@
 
   function validate(values) {
     const k = at();
-    if (k === 0) return scenarioDone() ? [] : [{ key: 'warm', message: 'Jouez l’entretien jusqu’au bout.' }];
+    if (k === 0) return stepDone(0) ? [] : [{ key: 'warm', message: 'Jouez l’entretien jusqu’au bout.' }];
     if (k === 1) return stepDone(1) ? [] : [{ key: `q${quizAt()}`, message: `Répondez aux ${quiz.length} questions.` }];
     if (k === 2) {
       const missing = map.findIndex(r => r.required && !kit.filled(values[`m_${r.id}`]));
@@ -437,6 +513,7 @@
   kit.on({
     'h6-go': control => go(Number(control.dataset.index)),
     'h6-prev': () => go(Math.max(0, at() - 1)),
+    'h6-tr': control => { advance(`tr${control.dataset.k}`); window.scrollTo({ top: 0, behavior: 'instant' }); },
     // « Continuer » : le temps présent est lu, on passe au suivant.
     'h6-flag': control => advance(control.dataset.name),
     'h6-warm': control => { if (!v('warm')) advance('warm', control.dataset.id); },
