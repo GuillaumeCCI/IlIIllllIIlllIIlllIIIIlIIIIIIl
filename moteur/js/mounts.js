@@ -1118,7 +1118,9 @@
            * bonne (étiquette à côté d'elle, `goodWhen`), et l'apprenant a-t-il
            * vu juste (une ligne à part, qui lui parle, avec sa pastille). */
           const good = f.goodWhen ? accepted.some(id => [].concat(f.goodWhen).includes(id)) : null;
-          const tag = good === null ? '' : `<span class="fm-ltag ${good ? 'is-good' : 'is-bad'}">${esc(good ? (f.goodLabel || 'La bonne attitude') : (f.badLabel || 'Une maladresse'))}</span>`;
+          // `tags` : une étiquette précise par bonne réponse (« À éviter : elle juge… »).
+          const tagText = (f.tags && accepted.map(id => f.tags[id]).find(Boolean)) || (good ? (f.goodLabel || 'La bonne attitude') : (f.badLabel || 'Une maladresse'));
+          const tag = good === null ? '' : `<span class="fm-ltag ${good ? 'is-good' : 'is-bad'}">${esc(tagText)}</span>`;
           g.rows.push(`<li class="fm-lrow">
             <p class="fm-lreply">${judged ? `${said(judged)} : « ${esc(judged.text)} »` : esc(c.tab || '')}${tag}</p>
             <p class="fm-lwhy"><strong>${esc(verdictOf(f, accepted))}</strong> ${esc(f.why || '')}</p>

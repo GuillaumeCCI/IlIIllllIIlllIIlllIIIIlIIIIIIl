@@ -76,7 +76,9 @@
       bubbles: [bulle(avant(ref), 'left'), bulle(ligne(ref), 'right')] }],
     reviewScene: [{ dialogue: [bulle(avant(ref), 'left'), bulle(ligne(ref), 'right')] }],
     fields: [{ id: 'attitude', type: 'choice', ask: true, label: 'Quelle attitude d’écoute Nadia adopte-t-elle ici ?',
-      sub: 'Les six attitudes d’écoute de Porter : choisissez celle qui décrit sa réplique.', options: ATTITUDES, answer, why, whyTitle: 'Pourquoi', verdictLead: 'C’est l’attitude', goodWhen: 'comprehension', rightLabel: 'Vous aviez bien repéré son attitude.' }]
+      sub: 'Les six attitudes d’écoute de Porter : choisissez celle qui décrit sa réplique.', options: ATTITUDES, answer, why, whyTitle: 'Pourquoi', verdictLead: 'C’est l’attitude', goodWhen: 'comprehension',
+      tags: { evaluation: 'À éviter : elle juge le souhait du couple', enquete: 'À éviter : elle enchaîne les questions sans écouter', interpretation: 'À éviter : elle prête une intention',
+        soutien: 'À éviter : elle minimise la tension', solution: 'À éviter : elle propose trop tôt', comprehension: 'À retenir : elle reformule et vérifie' }, rightLabel: 'Vous aviez bien repéré son attitude.' }]
   });
 
   root.ATELIER_S4 = {
