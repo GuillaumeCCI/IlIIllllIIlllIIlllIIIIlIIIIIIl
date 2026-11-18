@@ -721,6 +721,13 @@ button.crash-passage:hover { background: #fff1d6; }
    second cadre autour (jamais deux cadres autour d'un même contenu). */
 .fm-panel > .k-panel.fm-scene:has(> .client-card-box:only-child),
 .fm-panel > .k-panel.fm-scene:has(> .sc-picture:only-child) { padding: 0; border: 0; background: none; box-shadow: none; }
+/* Une question posée face à des réponses (champ de choix `ask`) : bandeau bleu nuit. */
+#main .fm-ask { margin: 0 0 10px; padding: 16px 20px; border-radius: 14px; background: #1b2370; color: #fff; font-size: 1.15rem; font-weight: 800; line-height: 1.35; }
+#main .fm-ask-sub { margin: 0 2px 14px; }
+#main .fm-choices.is-stack { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+#main .fm-choices.is-stack .fm-choice { padding: 16px 18px; gap: 16px; }
+#main .fm-choices.is-stack .fm-choice strong { font-size: 1.08rem; color: var(--navy); }
+#main .fm-choices.is-stack .fm-choice small { font-size: .95rem; }
 /* Les mots repérés dans une réponse : un fond vert très pâle, jamais le jaune du navigateur. */
 .result-answer-text mark, .fm-rv-you mark { padding: 0 2px; border-radius: 4px; background: #dcf1e4; color: inherit; }
 .result-answer-text mark.is-warn, .fm-rv-you mark.is-warn { background: #ffd9d2; }

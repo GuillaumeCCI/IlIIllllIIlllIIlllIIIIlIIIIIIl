@@ -206,8 +206,8 @@
   };
   /* ── 3.4 · Repérer l'intrus ───────────────────────────────────────── */
   const REFO = [
-    { id: 'oui', label: 'Une reformulation', sub: 'Elle redit ce que dit le client, sans rien ajouter.' },
-    { id: 'non', label: 'Pas une reformulation', sub: 'Elle ajoute un jugement, une interprétation, un argument ou une solution.' }
+    { id: 'oui', label: 'Oui, c’est une reformulation', sub: 'Il redit ce que dit la cliente, sans rien ajouter.' },
+    { id: 'non', label: 'Non, il ajoute quelque chose', sub: 'Un jugement, une interprétation, un argument ou une solution.' }
   ];
   const OFFRE = 'Votre concurrent m’a fait une offre, mais je ne la sens pas trop.';
   const DOS = 'Je dors mal depuis des mois, je me réveille avec le dos en compote.';
@@ -224,7 +224,8 @@
       flip: true,
       bubbles: [{ who: 'client', side: 'left', label: 'La cliente', text: quote }, { who: 'seller', side: 'right', label: 'Le vendeur', text: reply }] }],
     reviewScene: [{ dialogue: [{ who: 'client', label: 'La cliente', text: quote }, { who: 'seller', label: 'Le vendeur', text: reply }] }],
-    fields: [{ id: 'type', type: 'choice', label: 'Cette réponse est…', options: REFO, answer, why, whyTitle: 'Pourquoi' }]
+    fields: [{ id: 'type', type: 'choice', ask: true, stack: true, label: 'La réponse du vendeur est-elle une vraie reformulation ?',
+      sub: 'Une reformulation redit ce que la cliente a dit, avec ses mots ou d’autres, sans rien ajouter.', options: REFO, answer, why, whyTitle: 'Pourquoi' }]
   });
 
   root.ATELIER_S3['3.4'] = {

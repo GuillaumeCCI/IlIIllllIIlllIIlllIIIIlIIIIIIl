@@ -759,7 +759,9 @@
       const key = k(i, f);
       const label = f.label ? `<p class="fm-label">${f.symbol ? icon(f.symbol, { size: 20 }) : ''}<span>${esc(f.label)}</span></p>${f.sub ? `<p class="fm-sub">${esc(f.sub)}</p>` : ''}` : '';
       if (f.type === 'choice') {
-        return `<div class="fm-field">${label}<div class="fm-choices count-${f.options.length}" role="radiogroup">${f.options.map(o => `
+        // `ask` : la question en bandeau bleu nuit, face aux réponses ; `stack` : les choix l'un sous l'autre.
+        const head = f.ask ? `<p class="fm-ask">${esc(f.label)}</p>${f.sub ? `<p class="fm-sub fm-ask-sub">${esc(f.sub)}</p>` : ''}` : label;
+        return `<div class="fm-field">${head}<div class="fm-choices count-${f.options.length} ${f.stack ? 'is-stack' : ''}" role="radiogroup">${f.options.map(o => `
           <button type="button" class="fm-choice ${val(i, f) === o.id ? 'is-chosen' : ''}" role="radio" aria-checked="${val(i, f) === o.id}" data-act="fm-choice" data-key="${esc(key)}" data-id="${esc(o.id)}" data-field="${esc(key)}">
             ${o.symbol ? `<span class="fm-choice-symbol tone-${esc(o.tone || 'blue')}">${icon(o.symbol, { size: 26 })}</span>` : '<span class="fm-radio"></span>'}
             <span><strong>${esc(o.label)}</strong>${o.sub ? `<small>${esc(o.sub)}</small>` : ''}</span>
