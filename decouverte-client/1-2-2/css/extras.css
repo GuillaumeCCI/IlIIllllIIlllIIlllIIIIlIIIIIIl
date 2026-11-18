@@ -2638,3 +2638,10 @@ p.h7-question { margin-bottom: 12px; }
 @media (max-width: 900px) { .h6-path-row.is-one { grid-template-columns: minmax(0, 1fr); } }
 .h6-path-dialog .h6-path-row.is-one { grid-template-columns: 70px minmax(0, 1fr); }
 .h7-review-line + .h8-rings { margin-top: 14px; }
+
+/* 6.1 · Page finale : « Revoir l'entretien étape par étape » mis en avant,
+   centré sous les anneaux, avec sa phrase. */
+.h6-path-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 18px; margin: 22px 0 4px; padding: 18px; border-radius: 16px; background: #f3f5fb; }
+.h6-path-cta > span { color: #3a4a7a; font-weight: 600; }
+#main .h6-path-cta .button.primary { border: 0; border-radius: 999px; background: #1b2370; color: #fff; padding: 12px 22px; box-shadow: 0 8px 20px rgb(27 35 112 / 22%); }
+#main .h6-path-cta .button.primary:hover { background: #2a3590; }

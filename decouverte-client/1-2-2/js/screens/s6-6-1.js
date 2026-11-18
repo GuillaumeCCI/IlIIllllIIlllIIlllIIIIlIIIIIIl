@@ -509,7 +509,7 @@
           ${tile(quizScore(), quiz.length, 'bonnes réponses à vos acquis', 2)}
           ${tile(yesCount, content.selfCheck.length, 'critères cochés « Oui » dans votre grille', 3)}
         </div>
-        <div class="h6-copy">${kit.act('h6-path-open', `${icon('chat', { size: 18 })}<span>Revoir l’entretien étape par étape</span>`, 'secondary small')}</div>
+        <div class="h6-path-cta"><span>Vos choix à chaque étape, et ce qu’il valait mieux demander.</span>${kit.act('h6-path-open', `${icon('chat', { size: 18 })}<span>Revoir l’entretien étape par étape</span>`, 'primary')}</div>
       </section>
       <section class="k-panel fm-review is-rows h6-review">
         <p class="k-label">Votre carte des besoins, à côté d’un exemple</p>
