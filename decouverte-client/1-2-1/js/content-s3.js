@@ -151,8 +151,8 @@
         ['lightbulb', 'Bon à savoir', 'La synthèse sert aussi de passage : une fois qu’elle est validée, vous pouvez présenter votre proposition.']
       ] },
       tour: [
-        { target: '.fm-scene', title: 'Ce que le client a dit', text: 'Lisez les quatre éléments donnés par le client.' },
-        { target: '.fm-main .fm-field', title: 'Votre synthèse', text: 'Reprenez les quatre éléments, puis terminez par une question de validation.' },
+        { target: '.fm-scene', title: 'Ce que le client vous a dit', text: 'Lisez ses quatre remarques, numérotées de 1 à 4 : votre synthèse doit les reprendre toutes.' },
+        { target: '.fm-main .fm-field', title: 'Votre synthèse', text: 'Résumez ses quatre remarques avec vos mots, sans rien ajouter, puis demandez-lui si c’est bien ça.' },
         { target: '.fm-actions', title: 'Client suivant', text: 'Deux clients : le corrigé arrive après le second.' }
       ],
       caseNoun: 'Client',
@@ -162,24 +162,26 @@
       submitLabel: 'Client suivant',
       cases: [
         { tab: 'La gérante', scene: [
-          { info: 'Vous rencontrez la gérante de deux salons de coiffure. Voici ce qu’elle vous a dit en cinq minutes d’entretien.', symbol: 'users' },
-          { facts: [
-            { symbol: 'phone', text: 'Elle perd du temps à répondre au téléphone pendant qu’elle coiffe.' },
-            { symbol: 'calendar', text: 'Environ trois clientes par semaine ne viennent pas à leur rendez-vous.' },
-            { symbol: 'users', text: 'Ses cinq coiffeuses doivent pouvoir consulter le planning sur leur téléphone.' },
-            { symbol: 'info', text: 'Elle a déjà essayé une application de rendez-vous, qu’elle a trouvée trop compliquée.' }
-          ] }
-        ], fields: [{ id: 'text', label: 'Votre synthèse', sub: 'Les quatre éléments, sans rien ajouter, puis une question de validation.', placeholder: 'Votre synthèse…', rows: 6,
+          { person: { portrait: 'client-cheveux-gris', name: 'Nathalie Roux', role: 'Gérante de deux salons de coiffure' },
+            intro: 'Vous la rencontrez pour la première fois. En cinq minutes d’entretien, elle vous a dit quatre choses.',
+            said: [
+              'Le téléphone, c’est mon cauchemar. Je décroche en pleine coupe, la cliente attend, et le soir je me dis que j’ai perdu un temps fou.',
+              'Et puis il y a les rendez-vous manqués… À peu près trois clientes par semaine qui ne viennent pas, sans prévenir. Ça fait des trous dans la journée.',
+              'Mes cinq coiffeuses doivent pouvoir regarder le planning sur leur téléphone, même quand elles ne sont pas au salon.',
+              'Pour être honnête, j’ai déjà essayé une application de rendez-vous l’an dernier. Beaucoup trop compliquée : on a laissé tomber au bout d’un mois.'
+            ] }
+        ], fields: [{ id: 'text', label: 'Comment lui résumez-vous ce qu’elle vous a dit ?', sub: 'C’est une synthèse : reprenez ses quatre remarques avec vos mots, sans rien ajouter (ni produit, ni solution, ni prix). Terminez par une question pour qu’elle confirme, par exemple « C’est bien ça ? ».', placeholder: 'Si je résume bien, …', rows: 6,
           model: 'Si je résume : vous voulez arrêter d’être interrompue par le téléphone pendant que vous coiffez, et réduire les rendez-vous manqués, environ trois par semaine. Vos coiffeuses doivent pouvoir consulter le planning sur leur téléphone. Et après votre première expérience, il vous faut un outil vraiment simple. C’est bien ça ? Il y a autre chose d’important pour vous ?' }] },
         { tab: 'Le restaurateur', scene: [
-          { info: 'Vous rencontrez le patron d’un café-restaurant, qui veut changer sa machine à café. Voici ce qu’il vous a dit.', symbol: 'users' },
-          { facts: [
-            { symbol: 'gear', text: 'Sa machine actuelle tombe en panne presque chaque week-end, au moment où il y a le plus de monde.' },
-            { symbol: 'chart', text: 'Il sert environ trois cents cafés par jour.' },
-            { symbol: 'users', text: 'Ses serveurs changent souvent : la machine doit être facile à prendre en main.' },
-            { symbol: 'target', text: 'La place derrière le comptoir est très réduite.' }
-          ] }
-        ], fields: [{ id: 'text', label: 'Votre synthèse', sub: 'Les quatre éléments, sans rien ajouter, puis une question de validation.', placeholder: 'Votre synthèse…', rows: 6,
+          { person: { portrait: 'client-tasse', name: 'Marc Delattre', role: 'Patron d’un café-restaurant' },
+            intro: 'Il veut changer sa machine à café. En cinq minutes d’entretien, il vous a dit quatre choses.',
+            said: [
+              'Ma machine, elle me lâche presque tous les week-ends. Et évidemment, c’est toujours pile au moment du coup de feu.',
+              'On sert à peu près trois cents cafés par jour, alors une panne, ça se sent tout de suite.',
+              'Mes serveurs changent souvent, ce sont surtout des saisonniers. Il me faut une machine qu’on comprend en cinq minutes.',
+              'Et derrière le comptoir, je n’ai vraiment pas de place. On se marche déjà dessus.'
+            ] }
+        ], fields: [{ id: 'text', label: 'Comment lui résumez-vous ce qu’il vous a dit ?', sub: 'C’est une synthèse : reprenez ses quatre remarques avec vos mots, sans rien ajouter (ni produit, ni solution, ni prix). Terminez par une question pour qu’il confirme, par exemple « C’est bien ça ? ».', placeholder: 'Si je résume bien, …', rows: 6,
           model: 'Si je résume : votre machine actuelle tombe en panne presque chaque week-end, justement quand vous avez le plus de clients, et vous servez environ trois cents cafés par jour. Comme vos serveurs changent souvent, elle doit être simple à utiliser. Et la place derrière le comptoir est réduite. C’est bien ça ? Y a-t-il un autre point important pour vous ?' }] }
       ],
       selfCheck: {

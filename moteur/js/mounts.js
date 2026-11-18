@@ -49,7 +49,9 @@
    *   { image, alt, bubble, caption } une illustration (chemin du projet) ;
    *   { email: { to, subject, lines } }            un e-mail ;
    *   { info, symbol, strong }        une phrase de contexte (strong : début en gras) ;
-   *   { facts: [{ symbol, text }], title }         une liste de repères. */
+   *   { facts: [{ symbol, text }], title }         une liste de repères ;
+   *   { person: { portrait, name, role }, intro, said: [texte] }
+   *                                   une personne, puis ses paroles numérotées. */
   const MEDIA = [];
   // La transcription reprend l'affichage des dialogues de scene().
   // Chaque réplique porte son rang (--i) : elles arrivent en cascade, chacune de son côté.
@@ -212,6 +214,16 @@
       }
       if (block.info) {
         return `<p class="sc-info">${icon(block.symbol || 'info', { size: 22 })}<span>${block.strong ? `<strong>${esc(block.strong)}</strong> ` : ''}${esc(block.info)}</span></p>`;
+      }
+      if (block.person) {
+        // Une personne qui se présente (portrait, nom, rôle, une phrase de
+        // contexte), puis ce qu'elle a dit, avec ses mots, numéroté.
+        const p = block.person;
+        return `<div class="sc-person">
+          <div class="sc-person-head">${p.portrait ? `<img src="${esc(core().asset(core().portraitFor(p.portrait)))}" alt="" decoding="async">` : ''}<p><strong>${esc(p.name || '')}</strong>${p.role ? `<span>${esc(p.role)}</span>` : ''}</p></div>
+          ${block.intro ? `<p class="sc-person-intro">${esc(block.intro)}</p>` : ''}
+          ${block.said ? `<ol class="sc-said">${block.said.map((text, i) => `<li><span class="sc-said-n">${i + 1}</span><span>«&nbsp;${esc(text)}&nbsp;»</span></li>`).join('')}</ol>` : ''}
+        </div>`;
       }
       if (block.facts) {
         return `<div class="sc-facts">${block.title ? `<h3>${esc(block.title)}</h3>` : ''}<ul>${block.facts.map(f =>
@@ -1035,7 +1047,7 @@
         if (!fields.length && !c.model && !c.lesson) return '';
         // `reviewDialogue: 'seller'` : au corrigé, seule la réponse du vendeur est redite
         // (la réplique du client, commune à tous les cas, est en tête : `reviewIntro`).
-        const shownScene = [].concat(Array.isArray(c.reviewScene) ? c.reviewScene : (c.scene || content.scene || [])).filter(b => b.quote || b.info || b.dialogue || b.facts)
+        const shownScene = [].concat(Array.isArray(c.reviewScene) ? c.reviewScene : (c.scene || content.scene || [])).filter(b => b.quote || b.info || b.dialogue || b.facts || b.person)
           .map(b => (b.dialogue && content.reviewDialogue ? Object.assign({}, b, { dialogue: b.dialogue.filter(line => line.who === content.reviewDialogue) }) : b));
         const sceneHtml = c.reviewScene !== false && shownScene.length ? scene(shownScene) : '';
         // Un onglet qui se contente de répéter « Situation 2 » n'est pas redit.

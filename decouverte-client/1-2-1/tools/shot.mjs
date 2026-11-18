@@ -1,6 +1,7 @@
 /* Capture d'écran d'une page, pour contrôle visuel.
  * Usage : node tools/shot.mjs s1-a [etape] [largeur] [hauteur]
- *   etape : 0 = page de contexte, 1 = menu des cas, 2 = exercice
+ *   etape : 0 = page de contexte, 1 = menu des cas, 2 = exercice,
+ *           3 = exercice sans la fenêtre d'accueil ni la visite guidée
  */
 import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync } from 'node:fs';
@@ -30,10 +31,18 @@ const openCase = Number(step) >= 2
      }, 250);`
   : '';
 
+// Étape 3 : l'exercice, fenêtre d'accueil et visite guidée fermées.
+const closeDialogs = Number(step) >= 3
+  ? `let n = 0; const t = setInterval(() => {
+       document.querySelectorAll('button').forEach(b => { if (/C.est parti|Passer|Fermer la visite|Terminer/.test(b.textContent)) b.click(); });
+       if (++n > 12) clearInterval(t);
+     }, 400);`
+  : '';
+
 const page = resolve(root, 'exercices', '_shot.html');
 writeFileSync(page, readFileSync(resolve(root, 'exercices', `${file}.html`), 'utf8')
   .replace('</body>', `<script>
-    addEventListener('load', () => setTimeout(() => { ${advance} ${openCase} }, 350));
+    addEventListener('load', () => setTimeout(() => { ${advance} ${openCase} ${closeDialogs} }, 350));
   </script></body>`), 'utf8');
 
 try {

@@ -57,7 +57,17 @@
 .sc-facts ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .sc-facts li { display: flex; align-items: center; gap: 12px; color: var(--navy); }
 .sc-fact-symbol { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--tint); color: var(--accent); flex-shrink: 0; }
-.sc-quote + *, .sc-info + *, .sc-facts + *, .sc-dialogue + *, .sc-picture + * { margin-top: 14px; }
+.sc-quote + *, .sc-info + *, .sc-facts + *, .sc-dialogue + *, .sc-picture + *, .sc-person + * { margin-top: 14px; }
+/* Une personne qui se présente, puis ses paroles numérotées (bloc « person »). */
+.sc-person-head { display: flex; align-items: center; gap: 16px; padding: 10px 14px 0 0; border-radius: 16px; background: #fff7ea; overflow: hidden; }
+.sc-person-head img { width: 150px; height: auto; align-self: flex-end; box-shadow: none !important; }
+.sc-person-head p { margin: 0; display: grid; gap: 2px; color: var(--navy); }
+.sc-person-head strong { font-size: 1.2rem; font-weight: 800; }
+.sc-person-head span { color: #4c5f86; font-size: .98rem; }
+.sc-person-intro { margin: 16px 2px 12px; color: var(--navy); font-size: 1rem; line-height: 1.55; }
+.sc-said { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.sc-said li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: start; color: var(--navy); font-size: 1rem; line-height: 1.5; }
+.sc-said-n { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #e6eeff; color: var(--navy); font-weight: 800; font-size: .92rem; }
 
 /* ── mountDeck : une carte, des zones ─────────────────────────────────── */
 .dk-legend { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 26px; color: #46577d; }
