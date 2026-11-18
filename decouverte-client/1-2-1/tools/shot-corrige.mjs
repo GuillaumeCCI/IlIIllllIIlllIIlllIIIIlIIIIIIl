@@ -24,6 +24,11 @@ addEventListener('load', () => {
     document.querySelectorAll('button').forEach(b => { if (/C.est parti|Passer|Terminer|Commencer|J.ai compris/.test(b.textContent)) b.click(); });
     const ta = document.querySelector('textarea'); const go = document.querySelector('.k-submit');
     if (ta && go && step < T.length && !ta.value) { ta.value = T[step]; ta.dispatchEvent(new Event('input', { bubbles: true })); setTimeout(() => go.click(), 150); step++; return; }
+    // Un exercice à choix : une réponse cochée (en alternant), puis la suite.
+    const choices = [...document.querySelectorAll('.fm-choice')];
+    if (!ta && go && choices.length && !document.querySelector('.fm-choice.is-chosen') && !document.querySelector('.fm-line, .fm-review')) {
+      choices[(step++) % 2].click(); setTimeout(() => { const g = document.querySelector('.k-submit'); if (g) g.click(); }, 200); return;
+    }
     if (step >= T.length && !self && document.querySelector('.fm-self-question')) {
       document.querySelectorAll('tbody tr, [role="radiogroup"], .k-matrix-row').forEach(r => { const b = r.querySelector('button, input'); if (b) b.click(); });
       setTimeout(() => { const g = document.querySelector('.k-submit'); if (g) g.click(); }, 300); self = true;
@@ -36,7 +41,7 @@ writeFileSync(page, readFileSync(resolve(root, 'exercices', `${file}.html`), 'ut
 try {
   const target = join(out, `${file}-corrige.png`);
   execFileSync(browser, ['--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars', `--window-size=1440,${height}`,
-    '--virtual-time-budget=25000', `--screenshot=${target}`, 'http://127.0.0.1:4173/exercices/_shot.html'], { stdio: 'ignore', timeout: 60000 });
+    '--virtual-time-budget=40000', `--screenshot=${target}`, 'http://127.0.0.1:4173/exercices/_shot.html'], { stdio: 'ignore', timeout: 60000 });
   console.log(target);
 } finally {
   rmSync(page, { force: true });

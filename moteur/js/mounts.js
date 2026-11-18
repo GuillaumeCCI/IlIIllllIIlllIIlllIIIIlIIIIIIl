@@ -748,6 +748,11 @@
     function reviewHead() {
       const scored = ouvert() ? ouvert().result(key) : null;
       const rings = [];
+      // Des choix seulement (sans réponse rédigée) : l'anneau des bonnes réponses.
+      if (!scored && content.reviewLayout === 'lines') {
+        const all = cases.flatMap((c, i) => fieldsOf(i).filter(f => f.type === 'choice' && [].concat(f.answer || []).length).map(f => [].concat(f.answer).includes(val(i, f))));
+        if (all.length) rings.push({ n: all.filter(Boolean).length, total: all.length, label: 'bonnes réponses' });
+      }
       if (scored) rings.push({ n: scored.points, total: scored.total, label: content.scoreLabel || 'le score estimé de vos réponses' });
       if (selfOn) rings.push({ n: selfScore(), total: content.selfCheck.rows.length * 2, label: 'votre auto-évaluation' });
       if (!rings.length) return '';
@@ -1053,6 +1058,33 @@
       return `<div class="fm-chips-review"><p class="review-line">${esc(f.label)} : <strong>${found} sur ${expected.length}</strong></p><ul>${rows.join('')}</ul></div>`;
     }
 
+    /* Le corrigé en lignes (reviewLayout: 'lines') : regroupé par ce que la
+     * personne a dit (dit une seule fois), puis une ligne par réplique jugée :
+     * pastille ✓ / ✗, la réplique, la bonne réponse et sa raison, et ce
+     * qu'on avait répondu quand c'est faux. */
+    function linesReview() {
+      const groups = [];
+      cases.forEach((c, i) => {
+        const talk = [].concat(c.reviewScene || []).flatMap(b => b.dialogue || []);
+        const before = talk.length > 1 ? talk[talk.length - 2] : null;
+        const judged = talk[talk.length - 1];
+        const key = before ? before.text : `cas${i}`;
+        let g = groups.find(x => x.key === key);
+        if (!g) groups.push(g = { key, before, rows: [] });
+        fieldsOf(i).filter(f => f.type === 'choice' && [].concat(f.answer || []).length).forEach(f => {
+          const accepted = [].concat(f.answer);
+          const ok = accepted.includes(val(i, f));
+          g.rows.push(`<li class="fm-lrow ${ok ? 'is-ok' : 'is-ko'}"><span class="fm-lmark" aria-label="${ok ? 'Juste' : 'À revoir'}">${icon(ok ? 'check' : 'close', { size: 14, strokeWidth: 3 })}</span>
+            <div><p class="fm-lreply">${judged ? `${esc(judged.label || '')} : « ${esc(judged.text)} »` : esc(c.tab || '')}</p>
+              <p class="fm-lwhy"><strong>${esc(accepted.map(id => optionLabel(f, id)).join(' ou '))}.</strong> ${esc(f.why || '')}</p>
+              ${ok ? '' : `<p class="fm-lyours">Vous aviez répondu : ${esc(val(i, f) ? optionLabel(f, val(i, f)) : 'rien')}.</p>`}</div></li>`);
+        });
+      });
+      return `<div class="fm-lines">${groups.map(g => `<section class="fm-lgroup">
+          ${g.before ? `<p class="fm-lsaid"><span>${esc(g.before.label || '')}</span>« ${esc(g.before.text)} »</p>` : ''}
+          <ul>${g.rows.join('')}</ul></section>`).join('')}</div>`;
+    }
+
     function reviewScreen() {
       if (content.review) return accordionReview();
       return reviewHead() + (content.reviewIntro && content.reviewLayout === 'rows' ? `<details class="fm-review-intro is-folded"><summary class="fm-review-intro-label">${icon('users', { size: 18 })}<span>Relire ${esc((content.reviewIntroTitle || 'la situation').toLowerCase().replace(/^l’/, 'l’'))}</span></summary>${scene(content.reviewIntro)}</details>` : '') + (content.reviewIntro && content.reviewLayout !== 'rows' ? `<section class="fm-review-intro">${content.reviewIntroTitle ? `<p class="fm-review-intro-label">${icon('users', { size: 18 })}<span>${esc(content.reviewIntroTitle)}</span></p>` : ''}${scene(content.reviewIntro)}</section>${content.reviewListTitle ? `<h2 class="fm-review-list-title">${esc(content.reviewListTitle)}</h2>` : ''}` : '') + cases.map((c, i) => {
@@ -1069,6 +1101,8 @@
         /* `reviewLayout: 'rows'` : un corrigé léger. Le client en une ligne,
          * puis une ligne par champ : votre réponse (mots repérés, petites
          * coches, note) à gauche, la réponse possible à droite. */
+        // `reviewLayout: 'lines'` : le corrigé est dressé à part (linesReview), regroupé.
+        if (content.reviewLayout === 'lines') return '';
         if (content.reviewLayout === 'rows') {
           // La réplique du client : une citation, ou la phrase posée sur une image.
           const said = [].concat(c.scene || []).map(b => (b.quote ? b : b.say ? { quote: b.say, speaker: b.sayLabel } : null)).find(Boolean);
@@ -1154,7 +1188,7 @@
           ${c.model && !caseModel ? kit().model(content.modelLabel || 'Une réponse possible', c.model) : ''}
           ${c.lesson ? ex().inlineNote(c.lesson, 'neutral') : ''}
         </section>`;
-      }).join('') + `${kit().keyPoint(content.keyPoint)}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
+      }).join('') + (content.reviewLayout === 'lines' ? linesReview() : '') + `${kit().keyPoint(content.keyPoint)}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
     }
 
     function screen() {

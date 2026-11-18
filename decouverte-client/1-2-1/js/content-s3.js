@@ -246,16 +246,17 @@
     // Pleine largeur : l'illustration au-dessus du dialogue reste grande ; onglets en pastilles.
     pills: true,
     countLabel: 'réponses jugées',
+    reviewLayout: 'lines',
     submitLabel: 'Réponse suivante',
     cases: [
-      intrus('« Des doutes sur leur offre »', OFFRE, 'Vous avez des doutes sur leur offre.', 'oui', 'C’est un reflet : le vendeur redit le doute du client, sans rien ajouter.'),
-      intrus('« Un matelas ferme »', DOS, 'Il vous faut un matelas ferme, c’est ce qu’il y a de mieux pour le dos.', 'non', 'C’est une solution, et même un conseil discutable : le vendeur ne sait encore rien des besoins du client.'),
-      intrus('« Difficiles à lire »', CONTRAT, 'Les contrats vous paraissent difficiles à lire, et vous craignez de ne pas être bien protégé.', 'oui', 'Le vendeur redit la difficulté et la crainte du client, avec d’autres mots, sans rien ajouter.'),
-      intrus('« Leurs frais cachés »', OFFRE, 'Vous avez raison de vous méfier, ils sont connus pour leurs frais cachés.', 'non', 'C’est une évaluation (« vous avez raison »), et elle dénigre le concurrent. Le client n’a jamais parlé de frais cachés.'),
-      intrus('« Des heures perdues »', SAISIE, 'Des heures perdues chaque semaine, à tout ressaisir à la main ?', 'oui', 'C’est un écho : le vendeur reprend les mots du client sur un ton de question, pour l’inviter à préciser.'),
-      intrus('« Les plus simples du marché »', CONTRAT, 'Pas de panique, nos contrats sont les plus simples du marché.', 'non', 'C’est du soutien (« pas de panique ») suivi d’un argument sur le produit. La crainte du client n’est pas reprise.'),
-      intrus('« Quelque chose vous retient ? »', OFFRE, 'Quelque chose vous retient dans leur proposition ?', 'oui', 'C’est un écho reformulé en question : le client est invité à dire ce qui le retient.'),
-      intrus('« Manque d’organisation »', SAISIE, 'Donc en fait, votre équipe manque surtout d’organisation.', 'non', 'C’est une interprétation, presque un jugement : le client a parlé de temps perdu, pas d’une équipe mal organisée.')
+      intrus('« Des doutes sur leur offre »', OFFRE, 'Vous avez des doutes sur leur offre.', 'oui', 'C’est un reflet : le vendeur redit le doute de la cliente, sans rien ajouter.'),
+      intrus('« Un matelas ferme »', DOS, 'Il vous faut un matelas ferme, c’est ce qu’il y a de mieux pour le dos.', 'non', 'C’est une solution, et même un conseil discutable : le vendeur ne sait encore rien des besoins de la cliente.'),
+      intrus('« Difficiles à lire »', CONTRAT, 'Les contrats vous paraissent difficiles à lire, et vous craignez de ne pas être bien protégée.', 'oui', 'Le vendeur redit la difficulté et la crainte de la cliente, avec d’autres mots, sans rien ajouter.'),
+      intrus('« Leurs frais cachés »', OFFRE, 'Vous avez raison de vous méfier, ils sont connus pour leurs frais cachés.', 'non', 'C’est une évaluation (« vous avez raison »), et elle dénigre le concurrent. La cliente n’a jamais parlé de frais cachés.'),
+      intrus('« Des heures perdues »', SAISIE, 'Des heures perdues chaque semaine, à tout ressaisir à la main ?', 'oui', 'C’est un écho : le vendeur reprend les mots de la cliente sur un ton de question, pour l’inviter à préciser.'),
+      intrus('« Les plus simples du marché »', CONTRAT, 'Pas de panique, nos contrats sont les plus simples du marché.', 'non', 'C’est du soutien (« pas de panique ») suivi d’un argument sur le produit. La crainte de la cliente n’est pas reprise.'),
+      intrus('« Quelque chose vous retient ? »', OFFRE, 'Quelque chose vous retient dans leur proposition ?', 'oui', 'C’est un écho reformulé en question : la cliente est invitée à dire ce qui la retient.'),
+      intrus('« Manque d’organisation »', SAISIE, 'Donc en fait, votre équipe manque surtout d’organisation.', 'non', 'C’est une interprétation, presque un jugement : la cliente a parlé de temps perdu, pas d’une équipe mal organisée.')
     ],
     keyPoint: 'À retenir : une reformulation n’ajoute rien. Dès qu’apparaissent un jugement (« vous avez raison »), une interprétation (« en fait »), un argument (« nos contrats ») ou une solution (« il vous faut »), on n’écoute plus : on parle de soi ou du produit.'
   };

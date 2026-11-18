@@ -737,6 +737,21 @@ button.crash-passage:hover { background: #fff1d6; }
 #main .fm-choices.is-stack .fm-choice { padding: 16px 18px; gap: 16px; }
 #main .fm-choices.is-stack .fm-choice strong { font-size: 1.08rem; color: var(--navy); }
 #main .fm-choices.is-stack .fm-choice small { font-size: .95rem; }
+/* Corrigé en lignes (reviewLayout: 'lines') : une carte par personne (ce
+   qu'elle a dit, une fois), puis une ligne par réplique jugée. */
+#main .fm-lines { display: grid; gap: 16px; }
+#main .fm-lgroup { padding: 20px 24px 8px; border-radius: 18px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 6%); }
+#main .fm-lsaid { margin: 0 0 6px; color: var(--navy); font-size: 1.05rem; line-height: 1.45; }
+#main .fm-lsaid span { display: block; margin-bottom: 2px; color: #6a7898; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+#main .fm-lgroup ul { list-style: none; margin: 0; padding: 0; }
+#main .fm-lrow { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 14px; padding: 14px 0; border-top: 1px solid #edf1f8; }
+#main .fm-lmark { display: grid; place-items: center; width: 26px; height: 26px; margin-top: 1px; border-radius: 50%; color: #fff; }
+#main .fm-lrow.is-ok .fm-lmark { background: #2f9e74; }
+#main .fm-lrow.is-ko .fm-lmark { background: #e0674f; }
+#main .fm-lreply { margin: 0 0 4px; color: var(--navy); font-size: 1rem; line-height: 1.45; }
+#main .fm-lwhy { margin: 0; color: #4c5f86; font-size: .95rem; line-height: 1.5; }
+#main .fm-lwhy strong { color: var(--navy); font-weight: 700; }
+#main .fm-lyours { margin: 4px 0 0; color: #b8442e; font-size: .9rem; }
 /* Les mots repérés dans une réponse : un fond vert très pâle, jamais le jaune du navigateur. */
 .result-answer-text mark, .fm-rv-you mark { padding: 0 2px; border-radius: 4px; background: #dcf1e4; color: inherit; }
 .result-answer-text mark.is-warn, .fm-rv-you mark.is-warn { background: #ffd9d2; }

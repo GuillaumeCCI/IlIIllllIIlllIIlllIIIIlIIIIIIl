@@ -473,17 +473,19 @@
    * Les cartes et l'image ne disparaissent jamais : ni flash ni saute. */
   let shownCase;
   const stillMotion = () => root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* La copie se pose juste après l'original, dans le même parent et avec le
+   * même identifiant : elle reçoit exactement les mêmes styles. Les requêtes
+   * par identifiant trouvent toujours l'original, placé avant elle. */
   function ghostOf(main) {
-    const box = main.getBoundingClientRect();
     const ghost = main.cloneNode(true);
-    ghost.removeAttribute('id');
     ghost.setAttribute('aria-hidden', 'true');
     ghost.inert = true;
-    ghost.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
-    ghost.className = `${main.className} screen-ghost`;
-    Object.assign(ghost.style, { position: 'absolute', left: `${box.left + root.scrollX}px`, top: `${box.top + root.scrollY}px`,
-      width: `${box.width}px`, height: `${box.height}px`, margin: '0', pointerEvents: 'none', zIndex: '40' });
-    document.body.appendChild(ghost);
+    ghost.classList.add('screen-ghost');
+    Object.assign(ghost.style, { position: 'absolute', left: `${main.offsetLeft}px`, top: `${main.offsetTop}px`,
+      width: `${main.offsetWidth}px`, height: `${main.offsetHeight}px`, margin: '0', boxSizing: 'border-box', pointerEvents: 'none', zIndex: '40' });
+    main.after(ghost);
+    // Retirée à coup sûr, même si le navigateur ne joue pas la transition.
+    setTimeout(() => ghost.remove(), 320);
     return ghost;
   }
   function render(focus = false) {
@@ -496,7 +498,6 @@
       requestAnimationFrame(() => {
         ghost.style.transition = 'opacity .22s ease-in';
         ghost.style.opacity = '0';
-        setTimeout(() => ghost.remove(), 260);
       });
     }
     if (showingBriefing) return;
