@@ -724,7 +724,7 @@ html { background-color: #fbf8f2; }
 .ana-symbol.is-miss, .ana-line.is-miss .ana-symbol { background: #eef1f7; color: var(--muted); }
 .ana-symbol.is-warn, .ana-line.is-warn .ana-symbol { background: #ffe4df; color: #c2433d; }
 .feedback .ana-text, .ana-text { margin: 0; padding: 12px 14px; border-radius: 10px; background: #f6f8fc; color: var(--navy); font-size: .92rem; line-height: 1.6; white-space: pre-line; }
-.ana-text mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
+.ana-text mark { padding: 0 2px; border-radius: 4px; background: #dcf1e4; color: inherit; }
 .ana-text mark.is-warn { background: #ffd9d2; }
 .feedback.is-compact > .ana-score { flex: 0 0 100%; width: 100%; max-width: none; margin: 0; }
 
@@ -769,7 +769,7 @@ html { background-color: #fbf8f2; }
 .open-answer-title { margin: 0; color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
 .open-answer .result-answer-text, .crash-fault-yours .result-answer-text, .open-errors .result-answer-text { margin: 0; color: var(--navy); font-size: 1rem; font-weight: 600; line-height: 1.5; white-space: pre-line; }
 .open-answer .result-answer-text.is-empty { color: var(--muted); font-weight: 400; }
-.open-answer .result-answer-text mark, .crash-fault-yours mark, .open-errors mark, .spot-own mark, .repair-diag-list mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
+.open-answer .result-answer-text mark, .crash-fault-yours mark, .open-errors mark, .spot-own mark, .repair-diag-list mark { padding: 0 2px; border-radius: 4px; background: #dcf1e4; color: inherit; }
 .open-answer .result-answer-text mark.is-warn, .crash-fault-yours mark.is-warn, .spot-own mark.is-warn, .repair-diag-list mark.is-warn { background: #ffd9d2; }
 .open-answer .ana-lines { gap: 6px; }
 .open-answer .ana-line { font-size: .9rem; }

@@ -743,6 +743,17 @@
       </div></section>`;
     }
     const selfScore = () => content.selfCheck.rows.reduce((sum, _, i) => sum + (Number(ex().value(`self${i}`)) || 0), 0);
+    /* En tête du corrigé, UN seul bilan : le score estimé des réponses
+     * rédigées et l'auto-évaluation, chacun dans son anneau. */
+    function reviewHead() {
+      const scored = ouvert() ? ouvert().result(key) : null;
+      const rings = [];
+      if (scored) rings.push({ n: scored.points, total: scored.total, label: content.scoreLabel || 'le score estimé de vos réponses' });
+      if (selfOn) rings.push({ n: selfScore(), total: content.selfCheck.rows.length * 2, label: 'votre auto-évaluation' });
+      if (!rings.length) return '';
+      const intro = scored ? 'Le score est estimé d’après les mots repérés dans vos réponses : une réponse juste, dite autrement, peut être sous-estimée. Comparez aussi avec la réponse possible.' : '';
+      return (scored && content.scoreScope ? `<p class="open-scope">${esc(content.scoreScope)}</p>` : '') + kit().bilan({ rings, intro });
+    }
 
     function fieldBlock(i, f) {
       const key = k(i, f);
@@ -1042,7 +1053,7 @@
 
     function reviewScreen() {
       if (content.review) return accordionReview();
-      return scoreHead(key, content.scoreScope) + (content.reviewIntro && content.reviewLayout === 'rows' ? `<details class="fm-review-intro is-folded"><summary class="fm-review-intro-label">${icon('users', { size: 18 })}<span>Relire ${esc((content.reviewIntroTitle || 'la situation').toLowerCase().replace(/^l’/, 'l’'))}</span></summary>${scene(content.reviewIntro)}</details>` : '') + (content.reviewIntro && content.reviewLayout !== 'rows' ? `<section class="fm-review-intro">${content.reviewIntroTitle ? `<p class="fm-review-intro-label">${icon('users', { size: 18 })}<span>${esc(content.reviewIntroTitle)}</span></p>` : ''}${scene(content.reviewIntro)}</section>${content.reviewListTitle ? `<h2 class="fm-review-list-title">${esc(content.reviewListTitle)}</h2>` : ''}` : '') + (selfOn ? kit().result(selfScore(), content.selfCheck.rows.length * 2, 'votre auto-évaluation') : '') + cases.map((c, i) => {
+      return reviewHead() + (content.reviewIntro && content.reviewLayout === 'rows' ? `<details class="fm-review-intro is-folded"><summary class="fm-review-intro-label">${icon('users', { size: 18 })}<span>Relire ${esc((content.reviewIntroTitle || 'la situation').toLowerCase().replace(/^l’/, 'l’'))}</span></summary>${scene(content.reviewIntro)}</details>` : '') + (content.reviewIntro && content.reviewLayout !== 'rows' ? `<section class="fm-review-intro">${content.reviewIntroTitle ? `<p class="fm-review-intro-label">${icon('users', { size: 18 })}<span>${esc(content.reviewIntroTitle)}</span></p>` : ''}${scene(content.reviewIntro)}</section>${content.reviewListTitle ? `<h2 class="fm-review-list-title">${esc(content.reviewListTitle)}</h2>` : ''}` : '') + cases.map((c, i) => {
         const fields = fieldsOf(i);
         if (!fields.length && !c.model && !c.lesson) return '';
         // `reviewDialogue: 'seller'` : au corrigé, seule la réponse du vendeur est redite
@@ -1058,6 +1069,7 @@
          * coches, note) à gauche, la réponse possible à droite. */
         if (content.reviewLayout === 'rows') {
           const said = [].concat(c.scene || []).find(b => b.quote);
+          const person = [].concat(c.scene || []).find(b => b.person);
           const MARK = { ok: '✓', part: '◐', miss: '○', warn: '!' };
           const row = f => {
             if (f.type === 'choice') {
@@ -1088,7 +1100,7 @@
           };
           return `<section class="k-panel fm-review is-rows">
             <p class="k-label">${esc(heading)}</p>
-            ${said ? `<p class="fm-rv-said"><span>${esc(said.speaker || 'Le client')}</span> « ${esc(said.quote)} »</p>` : ''}
+            ${said ? `<p class="fm-rv-said"><span>${esc(said.speaker || 'Le client')}</span> « ${esc(said.quote)} »</p>` : person ? `<p class="fm-rv-said is-person">${esc(person.person.name || '')}${person.person.role ? `, ${esc(person.person.role.charAt(0).toLowerCase() + person.person.role.slice(1))}` : ''}</p>` : ''}
             <div class="fm-rv-head" aria-hidden="true"><span></span><span>Votre réponse</span><span>Une réponse possible</span></div>
             ${fields.map(row).join('')}
           </section>`;

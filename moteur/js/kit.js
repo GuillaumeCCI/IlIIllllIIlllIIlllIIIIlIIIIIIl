@@ -494,7 +494,7 @@
       const r = x.total ? Math.max(0, Math.min(1, x.n / x.total)) : 0;
       const [word, tone] = ringJudge(r);
       return `<div class="k-ring tone-${tone}" style="animation-delay:${(0.1 * i).toFixed(2)}s">
-          <div class="k-ring-g"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="${R}" class="k-ring-bg"/><circle cx="40" cy="40" r="${R}" class="k-ring-fg" style="--c:${C.toFixed(1)};--o:${(C * (1 - r)).toFixed(1)}"/></svg><p class="k-ring-n"><b>${x.n}</b><span>/ ${x.total}</span></p></div>
+          <div class="k-ring-g"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="${R}" class="k-ring-bg"/><circle cx="40" cy="40" r="${R}" class="k-ring-fg" style="--c:${C.toFixed(1)};--o:${(C * (1 - r)).toFixed(1)}"/></svg><p class="k-ring-n"><b>${String(x.n).replace('.', ',')}</b><span>/ ${x.total}</span></p></div>
           <div class="k-ring-txt"><p class="k-ring-t">${esc(x.label)}</p><p class="k-ring-w">${word}</p></div>
         </div>`;
     }).join('');

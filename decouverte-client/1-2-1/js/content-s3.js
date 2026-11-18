@@ -159,6 +159,7 @@
       pills: true,
       className: 'fm-airy',
       countLabel: 'synthèses écrites',
+      reviewLayout: 'rows',
       submitLabel: 'Client suivant',
       cases: [
         { tab: 'La gérante', scene: [

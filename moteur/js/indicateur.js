@@ -286,7 +286,8 @@
       max += sentencePoints;
       const share = Math.min(1, phrases.complete / expected);
       formEarned += sentencePoints * share;
-      lines.push({ kind: noSubstance ? 'miss' : share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: expected > 1 ? `${expected} phrases complètes` : 'Une phrase complète', sentences: phrases.complete, expected, listOnly, wait: noSubstance, conseil: bloc.phrases && bloc.phrases.conseil });
+      // `phrases.cache` : compté (une liste de mots perd des points), mais pas affiché.
+      if (!bloc.phrases?.cache) lines.push({ kind: noSubstance ? 'miss' : share >= 1 ? 'ok' : share > 0 ? 'part' : 'miss', nom: expected > 1 ? `${expected} phrases complètes` : 'Une phrase complète', sentences: phrases.complete, expected, listOnly, wait: noSubstance, conseil: bloc.phrases && bloc.phrases.conseil });
     }
 
     for (const spec of bloc.regles || []) {

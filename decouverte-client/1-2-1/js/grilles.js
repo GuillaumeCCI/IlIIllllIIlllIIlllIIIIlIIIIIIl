@@ -77,10 +77,10 @@
   /* ── La synthèse : tous les éléments, puis une validation ──────────── */
   const synthese = (titre, champ, elements) => ({
     titre, champs: [champ],
-    criteres: elements.map(([nom, mots]) => ({ nom, mots, points: 2, conseil: `Reprenez aussi cet élément : ${nom.toLowerCase()}.` }))
-      .concat([{ nom: 'Une validation', mots: VALIDATION, points: 2, conseil: 'Terminez par une question : « C’est bien ça ? ».' }]),
-    phrases: { attendues: 1, points: 1 },
-    regles: [{ regle: 'avecQuestion', nom: 'Une question pour finir', points: 1 }],
+    // Une ligne par remarque du client, puis la validation : rien d'autre à lire.
+    criteres: elements.map(([nom, mots]) => ({ nom, mots, points: 2 }))
+      .concat([{ nom: 'Une question pour valider', mots: VALIDATION, points: 3, conseil: 'Terminez par une question : « C’est bien ça ? ».' }]),
+    phrases: { points: 1, cache: true },
     pieges: [PIEGE_AJOUT, PIEGE_JUGEMENT]
   });
 

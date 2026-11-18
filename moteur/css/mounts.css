@@ -717,6 +717,9 @@ button.crash-passage:hover { background: #fff1d6; }
    Le client en une ligne, puis une ligne par champ : votre réponse à
    gauche (mots repérés, petites coches, note), la réponse possible à droite. */
 .fm-review.is-rows { display: grid; gap: 0; }
+/* Les mots repérés dans une réponse : un fond vert très pâle, jamais le jaune du navigateur. */
+.result-answer-text mark, .fm-rv-you mark { padding: 0 2px; border-radius: 4px; background: #dcf1e4; color: inherit; }
+.result-answer-text mark.is-warn, .fm-rv-you mark.is-warn { background: #ffd9d2; }
 .fm-rv-said { margin: 6px 0 14px; color: var(--navy); font-size: 1.05rem; font-weight: 700; }
 .fm-rv-said span { display: block; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .fm-rv-head, .fm-rv-row { display: grid; grid-template-columns: 220px minmax(0, 1fr) minmax(0, 1fr); gap: 4px 24px; }
