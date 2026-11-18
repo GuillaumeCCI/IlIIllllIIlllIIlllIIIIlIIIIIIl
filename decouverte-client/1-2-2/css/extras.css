@@ -2521,3 +2521,5 @@ p.h7-question { margin-bottom: 12px; }
 .h6-who.has-recall { padding-left: 34px; padding-right: 34px; }
 @media (min-width: 1600px) { .h6-choose:has(> .h6-who.has-recall) { grid-template-columns: minmax(380px, 620px) minmax(0, 780px); } }
 @media (max-width: 900px) { .h6-choose:has(> .h6-who.has-recall) { grid-template-columns: minmax(0, 1fr); } }
+/* 6.1 · Sa phrase (et son geste) alignés à gauche : un long texte se lit mieux. */
+.h6-who.has-recall .h6-recall-quote, .h6-who.has-recall .h6-recall-gesture { justify-self: stretch; text-align: left; }
