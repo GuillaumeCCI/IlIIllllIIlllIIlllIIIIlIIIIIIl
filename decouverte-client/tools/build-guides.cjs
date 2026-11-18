@@ -53,7 +53,35 @@ const STYLE = `${BASE}
   .guide ul.plain { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
   .guide .tag { display: inline-block; margin-bottom: 6px; color: var(--muted); font-size: .8rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
   .guide .top-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 8px; }
-  @media print { .top, footer, .top-links { display: none; } body { background: #fff; } .card { box-shadow: none; } }
+  .guide .print-only { display: none; }
+  /* Impression : deux pages A4 au plus (recto : parties 1 à 3 ; verso : 4 à 7), comme la fiche Word. */
+  @page { size: A4; margin: 10mm 13mm; }
+  @media print {
+    .top, footer, .guide .top-links, .guide .ex-links, .guide .screen-only { display: none; }
+    .guide td.label { width: 21%; }
+    .guide .certs td:first-child { width: 33%; }
+    .guide .steps td:first-child { width: 37%; }
+    .guide .steps td:nth-child(2), .guide .steps td:nth-child(3) { white-space: nowrap; }
+    .guide .diff td.label { width: 25%; }
+    .guide .print-only { display: inline; }
+    html { font-size: 8.1pt; }
+    body { background: #fff; line-height: 1.28; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    main { max-width: none; padding: 0; }
+    .guide .tag { font-size: 7pt; margin: 0; }
+    h1 { font-size: 13.5pt; margin: 0 0 2px; padding-bottom: 3px; border-bottom: 1.5px solid var(--navy); }
+    .lede { font-size: 8pt; font-style: italic; color: var(--accent); margin: 0 0 4px; max-width: none; }
+    .guide h2 { font-size: 10.5pt; margin: 7px 0 3px; padding-bottom: 1px; border-bottom: 1px solid var(--navy); break-after: avoid; }
+    .guide h2.verso { break-before: page; margin-top: 0; }
+    .card, .guide .table-card { border: 0; border-radius: 0; padding: 0; box-shadow: none; overflow: visible; }
+    .guide .card + .card, .guide .note + .card { margin-top: 5px; }
+    .guide table { font-size: 7.8pt; }
+    .guide th { padding: 2px 5px; background: var(--navy); color: #fff; font-size: 7.3pt; letter-spacing: 0; text-transform: none; border: 0; }
+    .guide td { padding: 1px 5px; border-bottom: .6px solid #c9d2e6; }
+    .guide tr { break-inside: avoid; }
+    .guide .note, .guide .prereq { margin: 3px 0 0; font-size: 7.8pt; }
+    .guide ul.plain { gap: 1px; padding-left: 14px; }
+    .guide .marks .dot { font-size: 8pt; }
+  }
 `;
 
 function render(g) {
@@ -76,17 +104,17 @@ function render(g) {
   <div class="card table-card"><table><tbody>${g.brief.map(([k, v]) => `<tr><td class="label">${esc(k)}</td><td>${esc(v)}</td></tr>`).join('')}</tbody></table></div>
 
   <h2><span>2.</span>À qui s’adresse ce module</h2>
-  <div class="card table-card"><table><thead><tr><th>Certification</th><th>RNCP</th><th>Lien avec le module · supports qui lui parleront le plus</th></tr></thead><tbody>${certRows.join('')}</tbody></table></div>
+  <div class="card table-card"><table class="certs"><thead><tr><th>Certification</th><th>RNCP</th><th>Lien avec le module · supports qui lui parleront le plus</th></tr></thead><tbody>${certRows.join('')}</tbody></table></div>
   <p class="note">${esc(g.align)}</p>
   <p class="prereq">${esc(g.prereq)}</p>
 
   <h2><span>3.</span>Comment le module est construit</h2>
-  <div class="card table-card"><table><thead><tr><th>Étape</th><th>Niveau de Bloom</th><th>Durée</th><th>Correction</th><th>Dépôt</th></tr></thead><tbody>${g.steps.map(([name, bloom, time, corr, dep, files]) => `<tr><td><strong>${esc(stepName(name))}</strong>${linksOf(g.code, files, cat)}${/sur document/.test(name) ? '<span class="note">Sur document (pas d’exercice en ligne)</span>' : ''}</td><td>${esc(bloom)}</td><td>${esc(time)}</td><td>${esc(corr)}</td><td>${esc(dep)}</td></tr>`).join('')}</tbody></table></div>
+  <div class="card table-card"><table class="steps"><thead><tr><th>Étape</th><th>Niveau de Bloom</th><th>Durée</th><th>Correction</th><th>Dépôt</th></tr></thead><tbody>${g.steps.map(([name, bloom, time, corr, dep, files]) => `<tr><td><strong>${esc(stepName(name))}</strong><span class="print-only">${esc(name.slice(stepName(name).length))}</span>${linksOf(g.code, files, cat)}${/sur document/.test(name) ? '<span class="note screen-only">Sur document (pas d’exercice en ligne)</span>' : ''}</td><td>${esc(bloom)}</td><td>${esc(time)}</td><td>${esc(corr)}</td><td>${esc(dep)}</td></tr>`).join('')}</tbody></table></div>
   <div class="card table-card"><table class="marks"><thead><tr><th>Objectif pédagogique</th>${g.objectives.cols.map(c => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>${g.objectives.rows.map(r => `<tr><td>${esc(r[0])}</td>${r.slice(1).map(m => `<td>${mark(m)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
   <p class="note">● objectif travaillé principalement · ○ objectif mobilisé en appui</p>
   <div class="card"><strong>Quelques choix de conception</strong><ul class="plain" style="margin-top:8px">${g.choices.map(c => `<li>${esc(c)}</li>`).join('')}</ul></div>
 
-  <h2><span>4.</span>Prise en main dans votre plateforme de formation</h2>
+  <h2 class="verso"><span>4.</span>Prise en main dans votre plateforme de formation</h2>
   <div class="card table-card"><table><thead><tr><th>Élément</th><th>Ce que nous suggérons, et pourquoi</th></tr></thead><tbody>${g.platform.map(([k, v]) => `<tr><td class="label">${esc(k)}</td><td>${esc(v)}</td></tr>`).join('')}</tbody></table></div>
   <p class="prereq">${esc(g.followUp)}</p>
   <p class="prereq">${esc(g.yourChoices)}</p>
@@ -96,7 +124,7 @@ function render(g) {
 
   <h2><span>6.</span>Points à reprendre en cours</h2>
   <p class="prereq" style="margin-top:0">${esc(g.classIntro)}</p>
-  <div class="card table-card"><table><thead><tr><th>Difficulté · où la repérer</th><th>Ce qui la signale</th><th>Idée d’animation</th></tr></thead><tbody>${g.difficulties.map(([a, b, c]) => `<tr><td class="label">${esc(a)}</td><td>${esc(b)}</td><td>${esc(c)}</td></tr>`).join('')}</tbody></table></div>
+  <div class="card table-card"><table class="diff"><thead><tr><th>Difficulté · où la repérer</th><th>Ce qui la signale</th><th>Idée d’animation</th></tr></thead><tbody>${g.difficulties.map(([a, b, c]) => `<tr><td class="label">${esc(a)}</td><td>${esc(b)}</td><td>${esc(c)}</td></tr>`).join('')}</tbody></table></div>
 
   <h2><span>7.</span>Différencier</h2>
   <div class="card"><ul class="plain">${g.differentiate.map(d => `<li>${esc(d)}</li>`).join('')}</ul></div>

@@ -119,9 +119,9 @@ module.exports = {
     brief: [
       ['Pour qui', 'Certifications commerciales (niveaux 5 et 6), souvent en alternance ; contextualisable pour l’immobilier et la PME.'],
       ['Ce que l’apprenant saura faire', 'Préparer un guide de questionnement, questionner selon l’entonnoir, relancer, distinguer besoin explicite et implicite, repérer les motivations d’achat dans les mots du client et hiérarchiser ses besoins.'],
-      ['Durée et modalité', '2 h 30, 100 % asynchrone : SCORM (≈ 10 min) + 5 activités en ligne (2 h 20), soit 7 exercices interactifs. En ligne, la découverte simulée de A5 se fait face à un client virtuel (une réponse par thème choisi). Synthèse optionnelle, en ligne elle aussi : 45 à 60 min, hors enveloppe.'],
-      ['Ce que vous recevez', 'Les exercices interactifs en ligne (L’Atelier Vente · Découverte client, module 1-2-2 : grilles Début et Fin, activités A1 à A5, les 3 options de la synthèse, corrigés intégrés) · la fiche d’activités (grille d’auto-positionnement, A1 à A5, corrigés) · l’activité de synthèse optionnelle (3 options) · cette fiche. SCORM « Détecter les besoins et motivations d’achat » à récupérer dans le catalogue CCI France.'],
-      ['Place dans le parcours', 'Après M1.2.1 (écoute active), avant M1.2.3 (entretien complet) ; en parcours intégré, prépare l’argumentation (M1.1.2).']
+      ['Durée et modalité', '2 h 30, 100 % asynchrone : SCORM (≈ 10 min) + 5 activités en ligne (2 h 20), soit 7 exercices interactifs ; en A5, la découverte se fait face à un client virtuel. Synthèse optionnelle, en ligne : 45 à 60 min, hors enveloppe.'],
+      ['Ce que vous recevez', 'Les exercices en ligne (module 1-2-2 : grilles Début et Fin, A1 à A5, les 3 options de la synthèse, corrigés intégrés) · la fiche d’activités · l’activité de synthèse optionnelle · cette fiche. SCORM « Détecter les besoins et motivations d’achat » : catalogue CCI France.'],
+      ['Place dans le parcours', 'Après M1.2.1 (écoute active), avant M1.2.3 (entretien complet) ; prépare l’argumentation (M1.1.2).']
     ],
     certLinks: [
       [0, 3, 'Direct. A1 (2.1, M. Garnier, literie) · A2 (3.1, vélos électriques, opticien) · A5 fiche 1 (5.2) · synthèse option 1 dossier A (6.2, cuisiniste), option 2 (6.1, concession automobile), option 3 (6.3).'],
@@ -131,9 +131,9 @@ module.exports = {
     ],
     align: ALIGN,
     certs: CERTS,
-    prereq: 'Prérequis et profil des apprenants : l’écoute active (M1.2.1). Aisance à l’écrit ; pour A5, le client virtuel en ligne, ou un camarade en différé. L’option 3 de la synthèse sert surtout les apprenants en entreprise.',
+    prereq: 'Prérequis et profil des apprenants : l’écoute active (M1.2.1) et une aisance à l’écrit. L’option 3 de la synthèse sert surtout les apprenants en entreprise.',
     steps: [
-      ['Grille d’auto-positionnement (Début) · en ligne 1.1', '—', '5 min', 'Aucune', 'Dans le navigateur', ['s1-1-1']],
+      ['Auto-positionnement (Début) · en ligne 1.1', '—', '5 min', 'Aucune', 'Dans le navigateur', ['s1-1-1']],
       ['SCORM « Détecter les besoins et motivations d’achat »', 'Se souvenir / Comprendre', '≈ 10 min', 'Automatique', 'Non', []],
       ['A1 — La bonne question au bon moment · en ligne 2.1 et 2.2', 'Se souvenir / Comprendre', '20 min', 'Automatique + corrigé', 'Non', ['s2-2-1', 's2-2-2']],
       ['A2 — Du besoin exprimé au besoin réel · en ligne 3.1', 'Appliquer', '25 min', 'Score estimatif + réponse possible', 'Non', ['s3-3-1']],
@@ -155,7 +155,7 @@ module.exports = {
     },
     choices: [
       'Le SCORM est un point de départ : il porte sur les questions à poser ; tout le reste est porté par les activités.',
-      'L’activité socle en asynchrone (A5) : un guide, une découverte simulée face à un client virtuel (en ligne, une réponse par thème choisi), l’analyse de ses questions.',
+      'L’activité socle (A5) : un guide, une découverte face à un client virtuel, puis l’analyse de ses questions.',
       'Des clients déjà écoutés en M1.2.1, une hiérarchie qui reste « provisoire » (M1.2.3) et des corrigés donnés comme exemples.'
     ],
     platform: [
@@ -166,28 +166,28 @@ module.exports = {
       ...ONLINE_ROWS
     ],
     followUp: 'Temps de suivi par apprenant : retour sur A5 ≈ 10 à 15 min · retour sur une synthèse ≈ 15 min · lecture des grilles Début et Fin ≈ 3 min.',
-    yourChoices: 'Ce qui relève de vos choix : la découverte de A5 (client virtuel en ligne, binôme en différé, ou trio en classe virtuelle : point 6), le retour sur les productions (formateur, pair ou les deux), l’usage de la synthèse (pour tous, pour les plus à l’aise ou en évaluation formative, l’option 2 s’y prête bien) et le rythme (une ou deux semaines).',
+    yourChoices: 'Ce qui relève de vos choix : la découverte de A5 (client virtuel, binôme en différé ou trio : point 6), le retour sur les productions (formateur, pair ou les deux), l’usage de la synthèse (pour tous, pour les plus à l’aise, en évaluation formative) et le rythme.',
     watch: [
       ['Ce que couvre le SCORM', 'Son objectif porte sur les questions à poser, pas sur les types de questions ni les motivations. → Vérifier votre version ; les rappels de A1 et de A3 peuvent suffire.'],
-      ['Motivations d’achat', 'Confusions sécurité / argent ou orgueil / nouveauté ; étiquettes posées sans indice. La méthode SONCASE (7 motivations) diffère du SONCAS de M1.1.2. → Exiger le mot indice (A3, en ligne 4.1) ; en parcours intégré, signaler le lien et l’écart.'],
+      ['Motivations d’achat', 'Confusions sécurité / argent ou orgueil / nouveauté ; étiquettes posées sans indice ; SONCASE (7 motivations) diffère du SONCAS de M1.1.2. → Exiger le mot indice (A3, en ligne 4.1) ; en parcours intégré, signaler l’écart.'],
       ['Besoin implicite deviné', 'Une hypothèse présentée comme une certitude, ou soufflée par une question orientée. → Le critère « Hypothèse vérifiée, pas supposée » de A2 peut servir de fil rouge.'],
-      ['Vente déguisée et lecture d’avance', 'Des questions sur le produit dans les guides (« Notre service vous intéresserait ? ») ; une fiche-réponses lue en entier. → A4 (5.1) le montre avec le guide de Yanis ; en ligne, le client virtuel de A5 évite la lecture d’avance ; critère « Découverte réelle » de A5.'],
+      ['Vente déguisée et lecture d’avance', 'Des questions sur le produit dans les guides (« Notre service vous intéresserait ? ») ; une fiche-réponses lue en entier. → A4 (5.1) le montre avec le guide de Yanis ; le client virtuel de A5 évite la lecture d’avance.'],
       ['Frontière avec M1.2.3', 'La hiérarchie produite en A5 et dans la synthèse reste provisoire. → Sa validation dans un entretien complet est travaillée en M1.2.3.']
     ],
     classIntro: S6_INTRO,
     difficulties: [
       ['1. L’interrogatoire de questions fermées · A1, A4, A5 (tableau d’analyse)', 'Des guides faits de questions « oui / non » ; une découverte rapide qui n’apprend presque rien.', '« Ouvre-la ! » Par binômes, transformer dix questions fermées en questions ouvertes, puis tester les deux versions à voix haute et comparer les réponses.'],
       ['2. La question orientée · A1 (2.1), A4 (5.1), synthèse (option 2, en ligne 6.1)', '« Vous voulez sûrement… », « … n’est-ce pas ? » : la réponse est soufflée au client.', 'La chasse aux réponses soufflées. Sur un extrait de découverte, repérer chaque question orientée et la réécrire sans hypothèse.'],
-      ['3. L’entonnoir à l’envers · A1 (exercice 2, en ligne 2.2), A4, synthèse (option 1, dossier A, en ligne 6.2)', 'Des questions de précision (couleur, taille, budget) posées avant d’avoir exploré la situation.', 'L’entonnoir en cartes. Ranger une douzaine de questions par étage ; débattre des cas limites (le budget, la décision).'],
+      ['3. L’entonnoir à l’envers · A1 (2.2), A4 (5.1), synthèse (6.2)', 'Des questions de précision (couleur, taille, budget) posées avant d’avoir exploré la situation.', 'L’entonnoir en cartes. Ranger une douzaine de questions par étage ; débattre des cas limites (le budget, la décision).'],
       ['4. Le besoin implicite affirmé sans vérification · A2 (3.1), A5 (5.2)', '« Il a peur de tomber en panne » écrit comme une certitude, ou demandé par une question orientée.', 'Hypothèse, question, réponse. Pour trois verbatims, formuler une hypothèse puis la question ouverte qui la vérifie ; le « client » peut démentir.'],
       ['5. La motivation étiquetée sans indice · A3 (exercice 1, en ligne 4.1), A5, synthèse', 'Une motivation attribuée « au feeling », sans mot du client pour l’appuyer.', 'Les mots qui trahissent. Sur des phrases de clients recueillies en entreprise, entourer le mot indice avant de nommer la motivation.'],
       ['6. Un questionnement figé · A5 (5.2)', 'Un guide bien construit, mais ni relance ni adaptation aux réponses du client.', 'Découverte en trio (45 min), version synchrone de l’activité socle : 5 min de consignes, 3 rotations de 10 min avec les fiches-réponses de A5 (observateur avec la grille A5), 10 min de débriefing.']
     ],
     differentiate: [
-      'Apprenants en difficulté : refaire A1 puis A2 (séries 2 et 3 en ligne) avant A5, et partir de l’exemple de guide du corrigé de A5 pour construire le sien ; chaque exercice se recommence à volonté.',
+      'Apprenants en difficulté : refaire A1 puis A2 avant A5, en partant de l’exemple de guide du corrigé de A5 ; chaque exercice se recommence à volonté.',
       'Apprenants à l’aise : A5 avec une deuxième fiche client ; synthèse, en particulier l’option 1 dossier B (6.2), la plus subtile.',
       'Situation de handicap : fiche-réponses en document accessible, durée majorée, en lien avec votre référent handicap. En ligne : taille du texte réglable, aide au clavier, plein écran.'
     ],
-    feedback: 'Vos retours. Une activité trop longue, un contexte peu adapté, une difficulté que nous n’avions pas anticipée : vos observations nous aideront à faire évoluer le module pour tout le réseau. Contact : [à compléter].'
+    feedback: 'Vos retours. Une activité trop longue, un contexte peu adapté, une difficulté que nous n’avions pas anticipée : vos observations nous aideront à faire évoluer le module pour tout le réseau. Contact : [1001parcours@ccifrance.fr].'
   }
 };
