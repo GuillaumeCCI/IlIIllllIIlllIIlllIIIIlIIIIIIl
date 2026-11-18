@@ -51,17 +51,26 @@
    * avant que `all` soit calculé : accueil, onglets, « Continuer », bilan et
    * progression ne voient plus que les exercices de ce thème. */
   const theme = mode === 'module' ? params.get('theme') : null;
+  /* &ex=5.2 (ou 5.1,5.2) : le thème réduit à certains exercices, pour qu'une
+   * activité de la trame ait son propre code d'intégration. Les clés de
+   * sauvegarde ne changent pas (la série reste la même). */
+  const only = theme && /^\d+\.\d+(,\d+\.\d+)*$/.test(params.get('ex') || '') ? params.get('ex').split(',') : null;
   if (theme) {
     let catalog;
     Object.defineProperty(root, 'ATELIER_CATALOG', {
       configurable: true,
       get: () => catalog,
       set(value) {
-        const serie = value && Array.isArray(value.series) && value.series.find(s => s.id === theme);
+        let serie = value && Array.isArray(value.series) && value.series.find(s => s.id === theme);
+        if (serie && only) {
+          const kept = serie.exercises.filter(ex => only.includes(ex.id));
+          if (kept.length) serie = { ...serie, exercises: kept };
+        }
         if (serie) {
           value.series = [serie];
           value.theme = serie.id;
-          value.intro = `${serie.exercises.length} exercices · ${serie.label}.`;
+          const n = serie.exercises.length;
+          value.intro = `${n} exercice${n > 1 ? 's' : ''} · ${serie.label}.`;
           document.documentElement.dataset.embedTheme = serie.id;
           /* L'en-tête de l'accueil annonce tout le module (« Série 1-1-1 ·
            * 4 séries, … ») : il ne nomme plus que le thème, en gras. */
@@ -84,6 +93,7 @@
     if (url.origin !== root.location.origin || url.searchParams.has('embed')) return;
     url.searchParams.set('embed', mode);
     if (theme) url.searchParams.set('theme', theme);
+    if (only) url.searchParams.set('ex', only.join(','));
     link.href = url.pathname + url.search + url.hash;
   }, true);
 

@@ -19,7 +19,7 @@ const os = require('os');
 const MODELE = path.join(__dirname, 'modele-fiche-word');
 const fiches = require('./fiches-word-contenu.cjs');
 const outDir = process.argv[2] || path.join(os.homedir(), 'Downloads');
-const S = Number(process.argv[3] || 0.8);
+let S = Number((require.main === module && process.argv[3]) || 0.8);
 
 const C = { navy: '1B2370', blue: '1F4FD8', coral: 'E8664A', text: '222B3A', muted: '5B6577', head: 'EEF3FD', line: 'DCE3F0', box: 'F6F8FC' };
 const W = 9906; // largeur utile (twips)
@@ -29,9 +29,9 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(
 
 /* ---------- briques ---------- */
 const FONT = '<w:rFonts w:ascii="Fira Sans" w:cs="Fira Sans" w:eastAsia="Fira Sans" w:hAnsi="Fira Sans"/>';
-function run(text, { size = 19, color = C.text, bold = false, italic = false } = {}) {
+function run(text, { size = 19, color = C.text, bold = false, italic = false, font } = {}) {
   const s = sz(size);
-  return `<w:r><w:rPr>${FONT}${bold ? '<w:b/><w:bCs/>' : ''}${italic ? '<w:i/><w:iCs/>' : ''}<w:color w:val="${color}"/><w:sz w:val="${s}"/><w:szCs w:val="${s}"/></w:rPr><w:t xml:space="preserve">${esc(text)}</w:t></w:r>`;
+  return `<w:r><w:rPr>${font ? `<w:rFonts w:ascii="${font}" w:cs="${font}" w:eastAsia="${font}" w:hAnsi="${font}"/>` : FONT}${bold ? '<w:b/><w:bCs/>' : ''}${italic ? '<w:i/><w:iCs/>' : ''}<w:color w:val="${color}"/><w:sz w:val="${s}"/><w:szCs w:val="${s}"/></w:rPr><w:t xml:space="preserve">${esc(text)}</w:t></w:r>`;
 }
 function para(runs, { before = 0, after = 0, line = 276, jc, keepNext, extra = '' } = {}) {
   return `<w:p><w:pPr>${keepNext ? '<w:keepNext/>' : ''}${extra}<w:spacing w:after="${sp(after)}" w:before="${sp(before)}" w:line="${line}"/>${jc ? `<w:jc w:val="${jc}"/>` : ''}</w:pPr>${[].concat(runs).join('')}</w:p>`;
@@ -104,7 +104,7 @@ function render(f) {
 
   const m = sp(850);
   out.push(`<w:sectPr><w:footerReference w:type="default" r:id="rId6"/><w:pgSz w:w="11906" w:h="16838" w:orient="portrait"/><w:pgMar w:top="${m}" w:right="1000" w:bottom="${m}" w:left="1000" w:header="${sp(708)}" w:footer="${sp(500)}" w:gutter="0"/><w:pgNumType/><w:docGrid w:linePitch="360"/></w:sectPr>`);
-  return fs.readFileSync(path.join(MODELE, 'document-entete.xml'), 'utf8') + out.join('') + '</w:body></w:document>';
+  return out.join('');
 }
 
 /* ---------- archive .docx (zip) ---------- */
@@ -129,15 +129,23 @@ function walk(dir, base = '') {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap(d => d.isDirectory() ? walk(path.join(dir, d.name), base + d.name + '/') : [base + d.name]);
 }
 
-for (const [key, f] of Object.entries(fiches)) {
+/* Écrit un .docx : le paquet du modèle, ce corps, ce pied de page. */
+function writeDocx(file, body, footer) {
   const files = walk(MODELE).filter(n => n !== 'document-entete.xml').map(n => {
     let data = fs.readFileSync(path.join(MODELE, n));
-    if (n === 'word/footer1.xml') data = Buffer.from(data.toString('utf8').replace('M1.1.2 · Fiche', `${f.code} · Fiche`));
+    if (n === 'word/footer1.xml') data = Buffer.from(data.toString('utf8').replace('M1.1.2 · Fiche d’accompagnement', footer));
     if (n === 'docProps/core.xml') data = Buffer.from(data.toString('utf8').replace(/Un-named/g, 'CCI France').replace(/\d{4}-\d\d-\d\dT[\d:.]+Z/g, new Date().toISOString()));
     return [n, data];
   });
-  files.splice(files.findIndex(([n]) => n === '[Content_Types].xml') + 1, 0, ['word/document.xml', Buffer.from(render(f), 'utf8')]);
-  const file = path.join(outDir, `Fiche_M${key}_Accompagnement_pedagogique_v2.docx`);
+  files.splice(files.findIndex(([n]) => n === '[Content_Types].xml') + 1, 0, ['word/document.xml', Buffer.from(fs.readFileSync(path.join(MODELE, 'document-entete.xml'), 'utf8') + body + '</w:body></w:document>', 'utf8')]);
   fs.writeFileSync(file, zip(files));
   console.log(file);
+}
+
+module.exports = { C, W, run, para, cell, table, P, writeDocx, setScale: v => { S = v; } };
+
+if (require.main === module) {
+  for (const [key, f] of Object.entries(fiches)) {
+    writeDocx(path.join(outDir, `Fiche_M${key}_Accompagnement_pedagogique_v2.docx`), render(f), `${f.code} · Fiche d’accompagnement`);
+  }
 }

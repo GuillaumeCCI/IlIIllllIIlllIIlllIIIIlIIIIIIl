@@ -44,8 +44,9 @@
       }
       var module = params.get('module') || '';
       var theme = params.get('theme') || '';
-      if (!/^\d+-\d+-\d+$/.test(module) || (theme && !/^s\d+$/.test(theme))) return null;
-      return module + '/index.html?embed=module' + (theme ? '&theme=' + theme : '');
+      var ex = params.get('ex') || '';
+      if (!/^\d+-\d+-\d+$/.test(module) || (theme && !/^s\d+$/.test(theme)) || (ex && !/^\d+\.\d+(,\d+\.\d+)*$/.test(ex))) return null;
+      return module + '/index.html?embed=module' + (theme ? '&theme=' + theme : '') + (theme && ex ? '&ex=' + ex : '');
     }
 
     var src = target();
