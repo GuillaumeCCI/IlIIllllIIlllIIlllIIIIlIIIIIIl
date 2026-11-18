@@ -1068,7 +1068,8 @@
          * puis une ligne par champ : votre réponse (mots repérés, petites
          * coches, note) à gauche, la réponse possible à droite. */
         if (content.reviewLayout === 'rows') {
-          const said = [].concat(c.scene || []).find(b => b.quote);
+          // La réplique du client : une citation, ou la phrase posée sur une image.
+          const said = [].concat(c.scene || []).map(b => (b.quote ? b : b.say ? { quote: b.say, speaker: b.sayLabel } : null)).find(Boolean);
           const person = [].concat(c.scene || []).find(b => b.person);
           const MARK = { ok: '✓', part: '◐', miss: '○', warn: '!' };
           const row = f => {

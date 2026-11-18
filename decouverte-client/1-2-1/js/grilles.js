@@ -55,7 +55,7 @@
   /* ── L'écho : un mot du client, sur un ton de question ──────────────── */
   const echo = (titre, champ, mots) => ({
     titre, champs: [champ],
-    criteres: [{ nom: 'Un mot du client', mots, points: 4, conseil: 'Reprenez un mot important du client, tel qu’il l’a dit.' }],
+    criteres: [{ nom: 'Un de ses mots', mots, points: 4, conseil: 'Reprenez un mot important, tel qu’il a été dit.' }],
     phrases: { points: 0 },
     // La question est le cœur de l'écho : elle invite le client à préciser.
     regles: [{ regle: 'avecQuestion', nom: 'Une question', points: 4 }, { regle: 'maxMots:12', nom: 'Court', points: 1 }],
@@ -66,11 +66,12 @@
   const reflet = (titre, champ, situation) => ({
     titre, champs: [champ],
     criteres: [
-      { nom: 'Ce qu’il ressent', mots: EMOTION, points: 4, conseil: 'Nommez ce que ressent le client : lassitude, déception, découragement…' },
-      { nom: 'Ses mots', mots: situation, points: 3, conseil: 'Reprenez la situation qu’il décrit, avec ses mots.' },
-      { nom: 'Tourné vers lui', mots: ['vous', 'votre', 'vos'], points: 1, conseil: 'Parlez de lui : « Vous avez l’impression que… ».' }
+      // Des noms neutres : la même grille vaut pour une cliente et pour un client.
+      { nom: 'L’émotion nommée', mots: EMOTION, points: 4, conseil: 'Nommez ce que la personne ressent : lassitude, déception, découragement…' },
+      { nom: 'Sa situation, avec ses mots', mots: situation, points: 3, conseil: 'Reprenez la situation décrite, avec ses mots.' },
+      { nom: '« Vous », pas « je »', mots: ['vous', 'votre', 'vos'], points: 1, conseil: 'Parlez de la personne : « Vous avez l’impression que… ».' }
     ],
-    phrases: { attendues: 1, points: 1 },
+    phrases: { attendues: 1, points: 1, cache: true },
     pieges: [PIEGE_SOLUTION, PIEGE_JUGEMENT]
   });
 

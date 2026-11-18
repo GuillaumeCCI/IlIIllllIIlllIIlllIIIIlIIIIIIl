@@ -717,6 +717,10 @@ button.crash-passage:hover { background: #fff1d6; }
    Le client en une ligne, puis une ligne par champ : votre réponse à
    gauche (mots repérés, petites coches, note), la réponse possible à droite. */
 .fm-review.is-rows { display: grid; gap: 0; }
+/* Une scène faite d'une seule carte (citation du client, image) : pas de
+   second cadre autour (jamais deux cadres autour d'un même contenu). */
+.fm-panel > .k-panel.fm-scene:has(> .client-card-box:only-child),
+.fm-panel > .k-panel.fm-scene:has(> .sc-picture:only-child) { padding: 0; border: 0; background: none; box-shadow: none; }
 /* Les mots repérés dans une réponse : un fond vert très pâle, jamais le jaune du navigateur. */
 .result-answer-text mark, .fm-rv-you mark { padding: 0 2px; border-radius: 4px; background: #dcf1e4; color: inherit; }
 .result-answer-text mark.is-warn, .fm-rv-you mark.is-warn { background: #ffd9d2; }

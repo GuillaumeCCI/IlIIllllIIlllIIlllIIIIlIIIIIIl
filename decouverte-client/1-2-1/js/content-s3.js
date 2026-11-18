@@ -27,11 +27,14 @@
 
   /* L'écho (3.1) : le champ dit exactement quoi écrire, avec un exemple pris
    * hors de l'exercice (il ne donne pas la réponse). */
+  // Le texte du champ s'accorde à la personne : « La cliente… », « Une gérante… ».
+  const elle = speaker => /^(la|une) /i.test(String(speaker || "").trim());
   const echo = (...args) => {
     const kase = client(...args);
+    const f1 = elle(args[1]);
     kase.fields = kase.fields.map(f => Object.assign({}, f, {
-      label: 'Votre écho : son mot clé, en question',
-      sub: 'Reprenez un ou quelques mots du client, tels quels, avec un point d’interrogation. Vous pouvez ajouter une courte relance (« C’est-à-dire ? »).',
+      label: 'Que lui répondez-vous, en écho ?',
+      sub: `C’est un écho : vous reprenez un ou deux mots ${f1 ? 'de la cliente' : 'du client'}, tels quels, sur un ton de question. ${f1 ? 'Elle' : 'Il'} va alors préciser. Vous pouvez ajouter une courte relance (« C’est-à-dire ? »).`,
       placeholder: 'Ex. : « Trop cher ? C’est-à-dire ? »',
       rows: 2
     }));
@@ -42,10 +45,11 @@
    * ses mots), avec un exemple pris hors de l'exercice. */
   const reflet = (...args) => {
     const kase = client(...args);
+    const f1 = elle(args[1]);
     kase.fields = kase.fields.map(f => Object.assign({}, f, {
-      label: 'Votre reflet : ce qu’il ressent',
-      sub: 'Nommez ce que le client ressent (déception, lassitude, inquiétude…), en reprenant sa situation avec ses mots. Sans juger ni conseiller.',
-      placeholder: 'Ex. : « Vous êtes inquiet de ne pas être livré à temps. »'
+      label: `Que lui répondez-vous pour montrer que vous comprenez ce qu’${f1 ? 'elle' : 'il'} ressent ?`,
+      sub: `C’est un reflet : nommez ce qu’${f1 ? 'elle' : 'il'} ressent (déception, lassitude, inquiétude…), en reprenant sa situation avec ses mots. Sans juger ni conseiller.`,
+      placeholder: f1 ? 'Ex. : « Vous êtes inquiète de ne pas être livrée à temps. »' : 'Ex. : « Vous êtes inquiet de ne pas être livré à temps. »'
     }));
     return kase;
   };
@@ -74,6 +78,7 @@
       pills: true,
       className: 'fm-airy',
       countLabel: 'échos écrits',
+      reviewLayout: 'rows',
       submitLabel: 'Client suivant',
       cases: [
         echo('Le cycliste', 'Le client, dans un magasin de vélos électriques', 'Je fais 25 kilomètres par jour pour aller au travail, avec une côte terrible à la fin.',
@@ -107,14 +112,15 @@
         ['lightbulb', 'Bon à savoir', 'Si vous vous trompez d’émotion, ce n’est pas grave : le client vous corrige, et vous en apprenez encore plus.']
       ] },
       tour: [
-        { target: '.fm-scene', title: 'Le client', text: 'Lisez ce que le client vous dit, et ce qu’il ressent.' },
-        { target: '.fm-main .fm-field', title: 'Votre reflet', text: 'Nommez ce que le client ressent, en reprenant sa situation avec ses mots. Exemple : « Vous êtes inquiet de ne pas être livré à temps. »' },
+        { target: '.fm-scene', title: 'La personne en face de vous', text: 'Lisez ce qu’elle vous dit, et repérez ce qu’elle ressent.' },
+        { target: '.fm-main .fm-field', title: 'Votre reflet', text: 'Nommez ce qu’elle ressent, en reprenant sa situation avec ses mots. Exemple : « Vous êtes inquiet de ne pas être livré à temps. »' },
         { target: '.fm-actions', title: 'Client suivant', text: 'Trois clients : le corrigé arrive après le dernier.' }
       ],
       caseNoun: 'Client',
       pills: true,
       className: 'fm-airy',
       countLabel: 'reflets écrits',
+      reviewLayout: 'rows',
       submitLabel: 'Client suivant',
       cases: [
         reflet('La rénovation', 'Une cliente, dans un showroom de carrelage, pour rénover sa maison', 'Ça fait trois fois qu’on a un coup de cœur pour un carrelage. À chaque fois, le temps de se décider, il n’est plus disponible.',
@@ -171,7 +177,7 @@
               'Mes cinq coiffeuses doivent pouvoir regarder le planning sur leur téléphone, même quand elles ne sont pas au salon.',
               'Pour être honnête, j’ai déjà essayé une application de rendez-vous l’an dernier. Beaucoup trop compliquée : on a laissé tomber au bout d’un mois.'
             ] }
-        ], fields: [{ id: 'text', label: 'Comment lui résumez-vous ce qu’elle vous a dit ?', sub: 'C’est une synthèse : reprenez ses quatre remarques avec vos mots, sans rien ajouter (ni produit, ni solution, ni prix). Terminez par une question pour qu’elle confirme, par exemple « C’est bien ça ? ».', placeholder: 'Si je résume bien, …', rows: 6,
+        ], fields: [{ id: 'text', label: 'Comment lui résumez-vous ce qu’elle vous a dit ?', sub: 'C’est une synthèse : reprenez ses quatre remarques avec vos mots, sans rien ajouter (ni produit, ni solution, ni prix). Terminez par une question pour qu’elle confirme, par exemple « C’est bien ça ? ».', placeholder: 'Si je résume bien, …', rows: 6,
           model: 'Si je résume : vous voulez arrêter d’être interrompue par le téléphone pendant que vous coiffez, et réduire les rendez-vous manqués, environ trois par semaine. Vos coiffeuses doivent pouvoir consulter le planning sur leur téléphone. Et après votre première expérience, il vous faut un outil vraiment simple. C’est bien ça ? Il y a autre chose d’important pour vous ?' }] },
         { tab: 'Le restaurateur', scene: [
           { person: { portrait: 'client-tasse', name: 'Marc Delattre', role: 'Patron d’un café-restaurant' },
@@ -182,7 +188,7 @@
               'Mes serveurs changent souvent, ce sont surtout des saisonniers. Il me faut une machine qu’on comprend en cinq minutes.',
               'Et derrière le comptoir, je n’ai vraiment pas de place. On se marche déjà dessus.'
             ] }
-        ], fields: [{ id: 'text', label: 'Comment lui résumez-vous ce qu’il vous a dit ?', sub: 'C’est une synthèse : reprenez ses quatre remarques avec vos mots, sans rien ajouter (ni produit, ni solution, ni prix). Terminez par une question pour qu’il confirme, par exemple « C’est bien ça ? ».', placeholder: 'Si je résume bien, …', rows: 6,
+        ], fields: [{ id: 'text', label: 'Comment lui résumez-vous ce qu’il vous a dit ?', sub: 'C’est une synthèse : reprenez ses quatre remarques avec vos mots, sans rien ajouter (ni produit, ni solution, ni prix). Terminez par une question pour qu’il confirme, par exemple « C’est bien ça ? ».', placeholder: 'Si je résume bien, …', rows: 6,
           model: 'Si je résume : votre machine actuelle tombe en panne presque chaque week-end, justement quand vous avez le plus de clients, et vous servez environ trois cents cafés par jour. Comme vos serveurs changent souvent, elle doit être simple à utiliser. Et la place derrière le comptoir est réduite. C’est bien ça ? Y a-t-il un autre point important pour vous ?' }] }
       ],
       selfCheck: {
