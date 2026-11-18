@@ -1,6 +1,6 @@
 # Trame du module M1.2 · Découverte client
 
-Ordre à suivre, sous-module par sous-module : le SCORM, puis les activités dans l’ordre.
+Ordre à suivre, sous-module par sous-module, en cinq blocs : pour commencer, les activités complémentaires (au choix), l’activité socle (pour tous), la synthèse (facultative), pour finir.
 Une activité = un lien et un code d’intégration (iframe), à coller dans un bloc HTML de la plateforme.
 Fichier produit par `decouverte-client/tools/build-trame.cjs` : modifier la trame là, puis relancer.
 
@@ -14,6 +14,8 @@ Hauteur automatique : collez une seule fois, dans la même page, cette ligne (si
 
 ## M1.2.1 · Pratiquer l’écoute active et s’adapter au client (≈ 2 h)
 
+### Pour commencer · la grille de départ, puis le SCORM
+
 1. **Grille d’auto-positionnement · Début** (5 min)  
    Mon point de départ
 
@@ -25,6 +27,8 @@ Hauteur automatique : collez une seule fois, dans la même page, cette ligne (si
 
 2. **SCORM « Comprendre et s’adapter au client »** (15 min)  
    Catalogue CCI France, sur votre plateforme
+
+### Activités complémentaires · au choix ; dans l’ordre conseillé : repérer, appliquer, analyser, évaluer
 
 3. **A1 · Qui parle comme ça ?** (15 min)  
    Les attitudes d’écoute : Au magasin · En entreprise · À l’agence immobilière
@@ -62,6 +66,8 @@ Hauteur automatique : collez une seule fois, dans la même page, cette ligne (si
    <iframe src="https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/decouverte-client/cadre.html?module=1-2-1&theme=s5&ex=5.1" title="L’Atelier Vente · Découverte client 1-2-1 · A4 · Trois commerciaux, une cliente pressée" data-atelier-vente style="width:100%;height:900px;border:0;" loading="lazy" allow="autoplay; fullscreen; microphone; camera"></iframe>
    ```
 
+### Activité socle · à faire par tous ; dépôt pour un retour du formateur ou d’un pair
+
 7. **A5 · Votre réponse, votre voix** (30 min)  
    Un exercice · dépôt de l’audio et du texte
 
@@ -71,8 +77,12 @@ Hauteur automatique : collez une seule fois, dans la même page, cette ligne (si
    <iframe src="https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/decouverte-client/cadre.html?module=1-2-1&theme=s5&ex=5.2" title="L’Atelier Vente · Découverte client 1-2-1 · A5 · Votre réponse, votre voix" data-atelier-vente style="width:100%;height:900px;border:0;" loading="lazy" allow="autoplay; fullscreen; microphone; camera"></iframe>
    ```
 
+### Synthèse · facultative, hors enveloppe
+
 8. **Synthèse facultative (3 options)** (45 à 60 min)  
    Sur document, hors enveloppe : pas d’exercice en ligne
+
+### Pour finir · la grille d’arrivée et « Ma progression »
 
 9. **Grille d’auto-positionnement · Fin et « Ma progression »** (10 min)  
    Mon point d’arrivée
@@ -87,6 +97,8 @@ Hauteur automatique : collez une seule fois, dans la même page, cette ligne (si
 
 ## M1.2.2 · Questionner pour identifier les besoins et les motivations d’achat (≈ 2 h 30)
 
+### Pour commencer · la grille de départ, puis le SCORM
+
 1. **Grille d’auto-positionnement · Début** (5 min)  
    Mon point de départ
 
@@ -98,6 +110,8 @@ Hauteur automatique : collez une seule fois, dans la même page, cette ligne (si
 
 2. **SCORM « Détecter les besoins et motivations d’achat »** (≈ 10 min)  
    Catalogue CCI France, sur votre plateforme
+
+### Activités complémentaires · au choix ; dans l’ordre conseillé : repérer, appliquer, analyser, évaluer
 
 3. **A1 · La bonne question au bon moment** (20 min)  
    Quel type de question ? · Les étages de l’entonnoir
@@ -135,6 +149,8 @@ Hauteur automatique : collez une seule fois, dans la même page, cette ligne (si
    <iframe src="https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/decouverte-client/cadre.html?module=1-2-2&theme=s5&ex=5.1" title="L’Atelier Vente · Découverte client 1-2-2 · A4 · Le guide qui fait parler" data-atelier-vente style="width:100%;height:900px;border:0;" loading="lazy" allow="autoplay; fullscreen; microphone; camera"></iframe>
    ```
 
+### Activité socle · à faire par tous ; dépôt pour un retour du formateur ou d’un pair
+
 7. **A5 · Votre guide, votre découverte** (45 min)  
    Un exercice, l’activité principale · dépôt sur demande
 
@@ -144,6 +160,8 @@ Hauteur automatique : collez une seule fois, dans la même page, cette ligne (si
    <iframe src="https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/decouverte-client/cadre.html?module=1-2-2&theme=s5&ex=5.2" title="L’Atelier Vente · Découverte client 1-2-2 · A5 · Votre guide, votre découverte" data-atelier-vente style="width:100%;height:900px;border:0;" loading="lazy" allow="autoplay; fullscreen; microphone; camera"></iframe>
    ```
 
+### Synthèse · facultative, hors enveloppe
+
 8. **Synthèse facultative (3 options)** (45 à 60 min)  
    L’entretien dont vous êtes le héros · Le coach · Ma banque de questions terrain
 
@@ -152,6 +170,8 @@ Hauteur automatique : collez une seule fois, dans la même page, cette ligne (si
    ```html
    <iframe src="https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/decouverte-client/cadre.html?module=1-2-2&theme=s6" title="L’Atelier Vente · Découverte client 1-2-2 · Synthèse facultative (3 options)" data-atelier-vente style="width:100%;height:900px;border:0;" loading="lazy" allow="autoplay; fullscreen; microphone; camera"></iframe>
    ```
+
+### Pour finir · la grille d’arrivée et « Ma progression »
 
 9. **Grille d’auto-positionnement · Fin et « Ma progression »** (10 min)  
    Mon point d’arrivée

@@ -50,6 +50,17 @@ const TRAME = [
     ]
   }
 ];
+/* Les blocs de la trame (fiche consolidée M1.2) : l'index de la première
+ * étape du bloc, son nom, sa précision. Mêmes blocs pour les deux modules. */
+const GROUPS = [
+  [0, 'Pour commencer', 'la grille de départ, puis le SCORM'],
+  [2, 'Activités complémentaires', 'au choix ; dans l’ordre conseillé : repérer, appliquer, analyser, évaluer'],
+  [6, 'Activité socle', 'à faire par tous ; dépôt pour un retour du formateur ou d’un pair'],
+  [7, 'Synthèse', 'facultative, hors enveloppe'],
+  [8, 'Pour finir', 'la grille d’arrivée et « Ma progression »']
+];
+const groupAt = i => GROUPS.find(g => g[0] === i);
+
 const LATER = [
   ['M1.2.3 · Situation intégratrice (≈ 2 h, sans SCORM)', 'Un entretien de découverte simulé (10 à 15 min) et une fiche de synthèse du besoin, évalués avec une grille commune. Pas encore en ligne : à concevoir.'],
   ['M1.2.4 · Approfondissement (≈ 2 h)', 'Préparation de la découverte, entonnoir et SPIN, motivations, passage à l’argumentation, vente à plusieurs décideurs, découverte à distance, immobilier. Ni SCORM ni fiche : à produire.']
@@ -66,13 +77,15 @@ function linkOf(m, step) {
 /* ---------- Markdown (dépôt) ---------- */
 function markdown() {
   const out = ['# Trame du module M1.2 · Découverte client', '',
-    'Ordre à suivre, sous-module par sous-module : le SCORM, puis les activités dans l’ordre.',
+    'Ordre à suivre, sous-module par sous-module, en cinq blocs : pour commencer, les activités complémentaires (au choix), l’activité socle (pour tous), la synthèse (facultative), pour finir.',
     'Une activité = un lien et un code d’intégration (iframe), à coller dans un bloc HTML de la plateforme.',
     'Fichier produit par `decouverte-client/tools/build-trame.cjs` : modifier la trame là, puis relancer.', '',
     'Hauteur automatique : collez une seule fois, dans la même page, cette ligne (sinon le cadre mesure 900 pixels) :', '', '```html', RESIZE, '```', ''];
   for (const m of TRAME) {
     out.push('---', '', `## ${m.title} (${m.total})`, '');
     m.steps.forEach((s, i) => {
+      const g = groupAt(i);
+      if (g) out.push(`### ${g[1]} · ${g[2]}`, '');
       const l = linkOf(m, s);
       out.push(`${i + 1}. **${s[0]}** (${s[1]})  `, `   ${s[2]}`);
       if (l) out.push('', `   Lien : ${l.url}`, '', '   ```html', `   ${l.code}`, '   ```');
@@ -94,21 +107,24 @@ function word() {
   out.push(para(run('MODULE M1.2 · DÉCOUVERTE CLIENT', { size: 16, color: C.blue, bold: true }), { after: 40 }));
   out.push(para(run('La trame, avec les codes d’intégration', { size: 40, color: C.navy, bold: true }), { after: 40, line: 240 }));
   out.push(para(run('M1.2 · Les SCORM et les activités, dans l’ordre de la plateforme', { size: 22, color: C.muted }), { after: 160 }));
-  out.push(para(run('Une activité = un lien et un code d’intégration. Collez chaque code dans un bloc HTML de votre plateforme (« intégrer », « iframe », « code source »), dans l’ordre ci-dessous. Les SCORM viennent du catalogue CCI France.', { italic: true, color: C.muted }), { after: 60 }));
+  out.push(para(run('Chaque module suit cinq blocs : pour commencer, les activités complémentaires (au choix), l’activité socle (pour tous), la synthèse (facultative), pour finir. Une activité = un lien et un code d’intégration, à coller dans un bloc HTML de votre plateforme (« intégrer », « iframe », « code source »), dans l’ordre ci-dessous. Les SCORM viennent du catalogue CCI France.', { italic: true, color: C.muted }), { after: 60 }));
   out.push(para([run('Hauteur automatique. ', { bold: true, color: C.navy }), run('Collez une seule fois, dans la même page que les codes, la ligne ci-dessous ; sans elle, chaque cadre mesure 900 pixels de haut, avec une barre de défilement.')], { before: 80, after: 40 }));
   out.push(code(RESIZE));
   TRAME.forEach((m, k) => {
     out.push(P.heading(k + 1, `${m.title} (${m.total})`));
     m.steps.forEach((s, i) => {
+      const g = groupAt(i);
+      if (g) out.push(para([run(g[1], { size: 20, color: C.navy, bold: true }), run(`  ·  ${g[2]}`, { size: 17, color: C.muted })], { before: 160, after: 40, keepNext: true }));
       const l = linkOf(m, s);
       const kind = l ? null : /SCORM/.test(s[0]) ? 'Sur la plateforme' : 'Pas de code';
-      out.push(table([600, 7406, 1900], [[
+      const keep = x => (l ? x.replace(/<w:pPr>/g, '<w:pPr><w:keepNext/>') : x);
+      out.push(keep(table([600, 7406, 1900], [[
         para(run(String(i + 1), { size: 22, color: C.coral, bold: true })),
         P.strong(s[0]) + P.sub(s[2]),
         para(run(s[1])) + (kind ? para(run(kind, { size: 16, color: C.muted }), { before: 30 }) : '')
-      ]]));
+      ]])));
       if (l) {
-        out.push(para([run('Lien : ', { size: 16, color: C.muted }), run(l.url, { size: 16, color: C.blue })], { before: 40, after: 30, extra: '<w:ind w:left="710"/>' }));
+        out.push(para([run('Lien : ', { size: 16, color: C.muted }), run(l.url, { size: 16, color: C.blue })], { before: 40, after: 30, keepNext: true, extra: '<w:ind w:left="710"/>' }));
         out.push(code(l.code).replace('<w:ind w:left="120" w:right="120"/>', '<w:ind w:left="710" w:right="120"/>'));
       }
     });
