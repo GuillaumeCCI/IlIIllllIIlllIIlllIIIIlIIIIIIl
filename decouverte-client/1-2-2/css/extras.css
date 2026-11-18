@@ -2507,3 +2507,10 @@ p.h7-question { margin-bottom: 12px; }
 .h8-cintro-tag { margin: 0; color: #2a8f8f; font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .h8-cintro-title { margin: 0; color: var(--navy); font-size: 1.6rem; font-weight: 800; line-height: 1.25; }
 .h8-cintro-line { margin: 2px 0 0; color: #4c5a80; font-size: 1.05rem; line-height: 1.5; }
+
+/* 6.3 · « Vérifier ma fiche » inactif tant qu'une rubrique est vide, avec ce qui manque à côté. */
+.h8-check-wrap { display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
+.h8-check-note { color: #4c5a80; font-size: .9rem; text-align: right; }
+.h8-check-note:empty { display: none; }
+@media (max-width: 600px) { .h8-check-wrap { justify-content: stretch; } .h8-check-note { text-align: left; } }
+.h8-check-wrap .button.primary:disabled { background: #a9bff3; border-color: #a9bff3; color: #fff; box-shadow: none; cursor: not-allowed; opacity: 1; transform: none; }

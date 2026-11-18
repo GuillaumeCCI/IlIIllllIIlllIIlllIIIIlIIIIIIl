@@ -74,6 +74,14 @@
     return { ok, type, label: TYPE_LABEL[type] || '', text: say };
   }
   const ficheChecks = j => ALLFIELDS.map(f => ({ f, text0: v(`f${j}_${f.id}`), ...fieldCheck(f, v(`f${j}_${f.id}`)) }));
+  // « Vérifier ma fiche » reste inactif tant qu'une rubrique est vide ; une ligne dit ce qui manque.
+  const missingIn = j => ALLFIELDS.filter(f => !filled(`f${j}_${f.id}`));
+  const missingNote = j => {
+    const m = missingIn(j);
+    if (!m.length) return '';
+    const where = f => `« ${esc(f.label)} » (page ${pages.findIndex(p => p.fields.includes(f)) + 1})`;
+    return m.length === 1 ? `Il reste à remplir ${where(m[0])}.` : `Il reste ${m.length} rubriques à remplir, dont ${where(m[0])}.`;
+  };
   const qScore = () => chosen().reduce((n, _, j) => n + QFIELDS.filter(f => fieldCheck(f, v(`f${j}_${f.id}`)).ok).length, 0);
   const covered = () => { const all = [0, 1, 2, 3, 4].map(i => window.ATELIER_COACH.plain(v(`r${i}`) || '')).join(' '); return themes.filter(t => t.words.some(w => window.ATELIER_COACH.hasWord(` ${all} `, w))); };
 
@@ -428,7 +436,7 @@
       return `<div class="h8-fields">${page.fields.map(fieldHtml).join('')}</div>`;
     };
     const lastPage = pageP === pages.length - 1;
-    const nav = `<div class="h7-fiche-nav">${pageP > 0 ? `<button type="button" class="text-button with-icon" data-act="h8-page" data-p="${pageP - 1}">${icon('arrowLeft', { size: 16 })}<span>Page précédente</span></button>` : '<span></span>'}${onBilan ? (j < N - 1 ? `<button type="button" class="button primary small" data-act="h8-fiche" data-j="${j + 1}"><span>Fiche suivante</span>${icon('arrowRight', { size: 16 })}</button>` : '<span></span>') : lastPage ? (okJ ? `<button type="button" class="button primary small" data-act="h8-page" data-p="${BILAN}"><span>Revoir le bilan</span>${icon('arrowRight', { size: 16 })}</button>` : kit.act('h8-fiche-check', `${icon('check', { size: 18 })}<span>Vérifier ma fiche</span>`, 'primary', `data-j="${j}"`)) : `<button type="button" class="button primary small" data-act="h8-page" data-p="${pageP + 1}"><span>Page suivante</span>${icon('arrowRight', { size: 16 })}</button>`}</div>`;
+    const nav = `<div class="h7-fiche-nav">${pageP > 0 ? `<button type="button" class="text-button with-icon" data-act="h8-page" data-p="${pageP - 1}">${icon('arrowLeft', { size: 16 })}<span>Page précédente</span></button>` : '<span></span>'}${onBilan ? (j < N - 1 ? `<button type="button" class="button primary small" data-act="h8-fiche" data-j="${j + 1}"><span>Fiche suivante</span>${icon('arrowRight', { size: 16 })}</button>` : '<span></span>') : lastPage ? (okJ ? `<button type="button" class="button primary small" data-act="h8-page" data-p="${BILAN}"><span>Revoir le bilan</span>${icon('arrowRight', { size: 16 })}</button>` : `<span class="h8-check-wrap"><span class="h8-check-note" data-check-note aria-live="polite">${missingNote(j)}</span>${kit.act('h8-fiche-check', `${icon('check', { size: 18 })}<span>Vérifier ma fiche</span>`, 'primary', `data-j="${j}" ${missingIn(j).length ? 'disabled' : ''}`)}</span>`) : `<button type="button" class="button primary small" data-act="h8-page" data-p="${pageP + 1}"><span>Page suivante</span>${icon('arrowRight', { size: 16 })}</button>`}</div>`;
     let bilan = '';
     if (onBilan) {
       const cs = ficheChecks(j);
@@ -703,6 +711,15 @@
       // La ligne s'agrandit avec la question (si le navigateur ne le fait pas seul).
       const t = event.target;
       if (t.tagName === 'TEXTAREA' && t.closest('.h8-line') && !CSS.supports('field-sizing', 'content')) { t.style.height = 'auto'; t.style.height = `${t.scrollHeight}px`; }
+      // Le bouton « Vérifier ma fiche » s'active dès que tout est rempli.
+      setTimeout(() => {
+        const btn = document.querySelector('[data-act="h8-fiche-check"]');
+        if (!btn) return;
+        const jj = Number(btn.dataset.j);
+        btn.disabled = missingIn(jj).length > 0;
+        const note = document.querySelector('[data-check-note]');
+        if (note) note.innerHTML = missingNote(jj);
+      }, 0);
       return;
     }
     if (/^r\d$/.test(field)) {
