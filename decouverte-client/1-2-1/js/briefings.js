@@ -74,9 +74,9 @@ window.ATELIER_BRIEFINGS = {
   },
   's3-3.3': {
     lede: { key: 'Tout l’essentiel,', rest: 'puis « C’est bien ça ? »' },
-    mission: 'Deux clients vous ont donné quatre informations chacun. Pour chacun, écrivez une synthèse : reprenez les quatre éléments sans rien ajouter, puis demandez-lui de valider.',
-    method: 'Un client à la fois : lisez ses quatre éléments, écrivez votre synthèse.',
-    situation: 'La gérante de deux salons de coiffure, puis le patron d’un café-restaurant. Tous deux viennent de vous expliquer ce qui compte pour eux.',
+    mission: 'Deux clients viennent de vous dire, chacun, quatre choses importantes pour eux. Pour chacun, écrivez la synthèse que vous lui diriez : ses quatre remarques avec vos mots, sans rien ajouter, puis une question pour qu’il confirme.',
+    method: 'Un client à la fois : lisez ses quatre remarques, puis écrivez votre synthèse.',
+    situation: 'Nathalie Roux, gérante de deux salons de coiffure, puis Marc Delattre, patron d’un café-restaurant. Tous deux viennent de vous expliquer ce qui compte pour eux.',
     task: 'Deux synthèses à écrire, comme vous les diriez à voix haute.',
     criteria: ['Tous les éléments', 'Une validation', 'Fidélité aux mots du client']
   },
