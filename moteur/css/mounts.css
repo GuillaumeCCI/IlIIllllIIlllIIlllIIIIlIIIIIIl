@@ -546,12 +546,22 @@ button.crash-passage:hover { background: #fff1d6; }
 /* Le passage d'un cas, d'une étape à l'autre : un fondu doux, avec un léger
    glissement (de droite pour la suite, de gauche pour revenir). Dans un
    formulaire à deux colonnes, la carte de droite suit la scène de peu. */
-.fs-step.is-next, .fm-one.is-next, .fm-panel.is-next > * { animation: fs-next .6s cubic-bezier(.22, .61, .36, 1) both; }
-.fs-step.is-prev, .fm-one.is-prev, .fm-panel.is-prev > * { animation: fs-prev .6s cubic-bezier(.22, .61, .36, 1) both; }
-.fm-panel.is-next > :nth-child(2), .fm-panel.is-prev > :nth-child(2) { animation-delay: .09s; }
+.fs-step.is-next, .fm-one.is-next { animation: fs-next .6s cubic-bezier(.22, .61, .36, 1) both; }
+.fs-step.is-prev, .fm-one.is-prev { animation: fs-prev .6s cubic-bezier(.22, .61, .36, 1) both; }
+/* Formulaire à deux colonnes : seule la partie qui change s'anime.
+   - la carte de droite glisse franchement mais en douceur ;
+   - à gauche, une image à bulles reste en place (ses nouvelles bulles
+     s'écrivent d'elles-mêmes) ; une autre scène (citation, personne)
+     apparaît en fondu. */
+.fm-panel.is-next > :nth-child(2) { animation: fm-card-next .65s cubic-bezier(.22, .61, .36, 1) both; }
+.fm-panel.is-prev > :nth-child(2) { animation: fm-card-prev .65s cubic-bezier(.22, .61, .36, 1) both; }
+.fm-panel.is-next > .fm-scene > :not(.has-bubbles), .fm-panel.is-prev > .fm-scene > :not(.has-bubbles) { animation: fm-fade .55s ease-out both; }
 @keyframes fs-next { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
 @keyframes fs-prev { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .fs-step.is-next, .fs-step.is-prev, .fm-one.is-next, .fm-one.is-prev, .fm-panel.is-next > *, .fm-panel.is-prev > * { animation: none; } }
+@keyframes fm-card-next { from { opacity: 0; transform: translateX(48px); } to { opacity: 1; transform: none; } }
+@keyframes fm-card-prev { from { opacity: 0; transform: translateX(-48px); } to { opacity: 1; transform: none; } }
+@keyframes fm-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .fs-step.is-next, .fs-step.is-prev, .fm-one.is-next, .fm-one.is-prev, .fm-panel.is-next > *, .fm-panel.is-prev > *, .fm-panel.is-next > .fm-scene > *, .fm-panel.is-prev > .fm-scene > * { animation: none !important; } }
 @media (max-width: 900px) { .fs-layout { grid-template-columns: minmax(0, 1fr); } .fs-nav li { padding-bottom: 8px; } .fs-nav li::before { display: none; } }
 
 /* ── Mise en page aérée (className: 'fm-airy') ────────────────────────
