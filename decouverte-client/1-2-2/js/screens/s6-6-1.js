@@ -393,6 +393,29 @@
       ${kit.bar({ left: kit.back('h6-prev', 'Revoir l’entretien') })}`;
   }
 
+  /* Changer d'onglet sans redessiner l'écran (le dialogue à gauche ne bouge
+   * pas) : on montre le bon panneau, avec un glissement en fondu, et on met
+   * à jour les onglets (onglet courant, coche des rubriques remplies). */
+  function showMapPane(control, i) {
+    const box = control.closest('.d5-ana-main');
+    const panes = box ? Array.from(box.querySelectorAll('.d5-ana-pane')) : [];
+    if (!panes[i]) { ex.rebuild(); return; }
+    const before = panes.findIndex(p => !p.hidden);
+    panes.forEach((p, n) => { p.hidden = n !== i; p.classList.remove('is-entering', 'from-left'); });
+    box.querySelectorAll('.d5-floor-tab').forEach((t, n) => {
+      t.classList.toggle('is-current', n === i);
+      t.setAttribute('aria-selected', String(n === i));
+      const full = kit.filled(v(`m_${map[n].id}`));
+      t.classList.toggle('is-filled', full);
+      const num = t.querySelector('.d5-floor-n');
+      if (num) num.innerHTML = full ? icon('check', { size: 13, strokeWidth: 3 }) : String(n + 1);
+    });
+    const pane = panes[i];
+    void pane.offsetWidth;
+    pane.classList.add('is-entering');
+    if (before > i) pane.classList.add('from-left');
+  }
+
   /* ── 2 · La carte des besoins ────────────────────────────────────────── */
   let mapPick = 0;
   function mapStep() {
@@ -531,7 +554,7 @@
     'h6-replay-close': control => { const box = control.closest('details'); if (box) { box.open = false; box.querySelector('summary').focus(); } },
     'h6-retry': control => { const k = Number(control.dataset.step); ex.setValue(`rs${k}`, false); advance(`retry${k}`, true); },
     'h6-quiz': control => { const i = Number(control.dataset.i); if (!v(`q${i}`)) advance(`q${i}`, control.dataset.id); },
-    'h6-map': control => { mapPick = Number(control.dataset.i); ex.rebuild(); },
+    'h6-map': control => { mapPick = Number(control.dataset.i); showMapPane(control, mapPick); },
     'h6-copy': () => {
       const done = () => core.toast('Votre carte est copiée.');
       const fail = () => core.toast('Copie impossible : sélectionnez le texte de votre carte.');

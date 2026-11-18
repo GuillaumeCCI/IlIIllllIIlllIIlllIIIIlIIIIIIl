@@ -2527,3 +2527,11 @@ p.h7-question { margin-bottom: 12px; }
 /* 6.1 · La carte du chemin (image fournie, deux rangées de deux) : le voile
    d'une étape à venir couvre un bloc, plus large que sur les cartes à six étapes. */
 .h9-map .h7-map-veil { width: 36%; height: 44%; }
+
+/* Onglets des rubriques (5.2, 6.1) : le panneau de droite change sur place,
+   en glissant (de la droite si l'on avance, de la gauche si l'on recule). */
+.d5-ana-pane.is-entering { animation: d5-pane-in .32s cubic-bezier(.2, .7, .2, 1) both; }
+.d5-ana-pane.is-entering.from-left { animation-name: d5-pane-in-left; }
+@keyframes d5-pane-in { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: none; } }
+@keyframes d5-pane-in-left { from { opacity: 0; transform: translateX(-22px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .d5-ana-pane.is-entering { animation: none; } }

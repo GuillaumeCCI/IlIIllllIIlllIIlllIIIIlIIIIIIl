@@ -138,6 +138,30 @@
    * question à la fois, avec ses onglets. Tous les champs restent dans la
    * page (les autres sont masqués) : rien ne se perd en changeant d'onglet. */
   let anaPick = 0;
+
+  /* Changer d'onglet sans redessiner l'écran (le dialogue à gauche ne bouge
+   * pas) : on montre le bon panneau, avec un glissement en fondu, et on met
+   * à jour les onglets (onglet courant, coche des rubriques remplies). */
+  function showAnaPane(control, i) {
+    const box = control.closest('.d5-ana-main');
+    const panes = box ? Array.from(box.querySelectorAll('.d5-ana-pane')) : [];
+    if (!panes[i]) { ex.rebuild(); return; }
+    const before = panes.findIndex(p => !p.hidden);
+    panes.forEach((p, n) => { p.hidden = n !== i; p.classList.remove('is-entering', 'from-left'); });
+    box.querySelectorAll('.d5-floor-tab').forEach((t, n) => {
+      t.classList.toggle('is-current', n === i);
+      t.setAttribute('aria-selected', String(n === i));
+      const full = [kit.filled(val('implicite')), Boolean(val('motivation')), kit.filled(val('prio')), kit.filled(val('ameliorer'))][n];
+      t.classList.toggle('is-filled', full);
+      const num = t.querySelector('.d5-floor-n');
+      if (num) num.innerHTML = full ? icon('check', { size: 13, strokeWidth: 3 }) : String(n + 1);
+    });
+    const pane = panes[i];
+    void pane.offsetWidth;
+    pane.classList.add('is-entering');
+    if (before > i) pane.classList.add('from-left');
+  }
+
   const ANA = ['Le besoin implicite', 'La motivation', 'La hiérarchie', 'À reformuler'];
   function analysis() {
     const f = fiche();
@@ -294,7 +318,7 @@
       });
     },
     'd5-topic': control => { topicPick = Number(control.dataset.i); ex.rebuild(); },
-    'd5-ana': control => { anaPick = Number(control.dataset.i); ex.rebuild(); },
+    'd5-ana': control => { anaPick = Number(control.dataset.i); showAnaPane(control, anaPick); },
     'd5-ask': control => {
       const i = Number(control.dataset.i);
       if (!kit.filled(val(`q${i}`))) { core.toast('Écrivez d’abord votre question.'); document.querySelector(`[data-field="${K(`q${i}`)}"]`)?.focus(); return; }
