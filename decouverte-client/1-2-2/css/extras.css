@@ -2628,3 +2628,11 @@ p.h7-question { margin-bottom: 12px; }
 #main .h6-panel .d5-floor-tabs .d5-floor-tab .d5-floor-n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #eef1f8; color: #1b2370; font-size: .85rem; font-weight: 800; line-height: 1; }
 #main .h6-panel .d5-floor-tabs .d5-floor-tab.is-current .d5-floor-n { background: #fff; color: #1b2370; }
 #main .h6-panel .d5-floor-tabs .d5-floor-tab .d5-floor-n { justify-content: center; align-content: center; text-align: center; }
+
+/* 6.1 · Corrigé, le parcours sur une seule colonne : votre choix, son
+   verdict, et « Il valait mieux… » seulement après une erreur. */
+.h6-path-row.is-one { grid-template-columns: 90px minmax(0, 860px); }
+.h6-path-row.is-one .h6-verdict { margin-bottom: 0; }
+.h6-better-line { margin: 6px 0 0; color: #3a4a7a; line-height: 1.5; }
+.h6-better-line b { color: #1b2370; }
+@media (max-width: 900px) { .h6-path-row.is-one { grid-template-columns: minmax(0, 1fr); } }

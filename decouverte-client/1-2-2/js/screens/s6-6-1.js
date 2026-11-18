@@ -465,12 +465,11 @@
       const ok = id === s.best;
       const tone = ok ? 'is-ok' : c.points < 0 ? 'is-ko' : 'is-mid';
       const verdict = ok ? 'Absolument : c’est la meilleure question.' : c.points < 0 ? 'Réponse à éviter.' : 'Pas tout à fait…';
-      return `<div class="h6-path-row">
+      return `<div class="h6-path-row is-one">
           <p class="h6-path-n">Étape ${k + 1}</p>
           <div class="h6-path-you"><p class="h6-pick ${tone}"><span aria-hidden="true">${ok ? '✓' : c.points < 0 ? '✗' : '–'}</span><span><b>${esc(c.intent || '')}</b><span class="h6-pick-q">${q(c.text || '')}</span></span></p>
             <p class="h6-verdict ${tone}">${verdict}<span>${c.points > 0 ? '+2' : c.points < 0 ? '−2' : '0'} sur la jauge</span></p>
-            <p class="h6-explain">${esc(ok ? s.why : c.note || '')}</p>${tries(k).length > 1 ? `<p class="h6-retried">Puis vous avez essayé : ${tries(k).slice(1).map(t => esc(s.choices[t].intent)).join(' ; ')}.</p>` : ''}</div>
-          <div class="h6-path-best">${ok ? '' : `<p class="h6-best-label">La meilleure question</p><p class="h6-best-q"><b>${esc(s.choices[s.best].intent)}</b><span class="h6-pick-q">${q(s.choices[s.best].text)}</span></p><p class="h6-explain">${esc(s.why)}</p>`}</div>
+            ${ok ? '' : `<p class="h6-better-line">Il valait mieux <b>${esc(lower(s.choices[s.best].intent))}</b> : ${q(s.choices[s.best].text)}</p>`}</div>
         </div>`;
     }).join('');
     const mapRows = map.map(r => {
@@ -484,8 +483,7 @@
     return `<section class="k-panel h6-review">
         <p class="a4-review-head"><span class="k-label">Votre partie</span><span class="a4-review-count"><b>${best}</b> / ${steps.length} meilleurs choix · vos acquis : <b>${quizScore()}</b> / ${quiz.length}</span></p>
         <div class="h6-review-end tone-${end.tone}">${gaugeBar(gauge(), 'Votre jauge finale')}<p><strong>${esc(end.title)}.</strong> ${esc(end.text)}</p><p class="h6-time-line">${icon('clock', { size: 16 })} Découverte : ${usedAfter(steps.length)} minutes · reste ${left(steps.length)} minutes pour l’essai (il en faut ${content.testMin}).</p></div>
-        <div class="h6-path-head" aria-hidden="true"><span></span><span>Votre choix, et ce qu’il a produit</span><span>Ce qu’il fallait demander</span></div>
-        ${pathRows}
+                ${pathRows}
       </section>
       <section class="k-panel fm-review is-rows h6-review">
         <p class="k-label">Votre carte des besoins</p>
