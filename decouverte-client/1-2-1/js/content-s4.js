@@ -135,7 +135,7 @@
     '4.2': {
       eyebrow: 'Analyser un entretien · Les signaux',
       title: 'Les signaux que Nadia n’a pas vus',
-      subtitle: 'Repérez les signaux du couple que Nadia n’a pas exploités avant de revenir sur « pas trop loin », puis écrivez la question qui en vérifie un.',
+      subtitle: 'Huit moments de l’entretien : dites à chaque fois si c’est un signal que Nadia a laissé passer, puis écrivez la question qui en vérifie un.',
       welcome: accueil('Repérez les signaux que Nadia laisse passer avant de revenir sur « pas trop loin », puis écrivez la question qui en vérifie un.'),
       tour: [
         scene,
@@ -150,14 +150,14 @@
       countLabel: 'éléments jugés',
       reviewLayout: 'lines',
       cases: [
-        signal('telephone', [[4, 'left'], ['tout-le-monde', 'right']], 'M. Benali consulte son téléphone, les bras croisés.', 'manque', 'Il ne se sent pas concerné, ou pas écouté : Nadia aurait pu s’adresser à lui.'),
-        signal('chambres', [[3, 'left']], 'Mme Benali veut trois chambres.', 'non', 'Nadia l’a demandé elle-même, dans ses premières questions : elle en tient compte.'),
-        signal('loin', [[4, 'left'], ['tout-le-monde', 'right']], '« Et pas trop loin » : un critère dit en trois mots, en fin de phrase.', 'manque', 'Un critère aussi court est à creuser : c’est un besoin qui ne se dit pas encore.'),
-        signal('bonjour', [[0, 'right']], 'Le couple s’installe après le bonjour de Nadia.', 'non', 'C’est l’accueil, pas un signal.'),
-        signal('nuit', [[6, 'left'], ['habitudes', 'right']], 'M. Benali travaille de nuit et finit parfois à 23 heures.', 'manque', 'C’est l’information qui explique « pas trop loin » : Nadia la transforme en simple habitude.'),
-        signal('budget', [[3, 'left'], ['tout-le-monde', 'right']], 'Le budget d’environ 280 000 €.', 'non', 'Nadia l’a repris aussitôt (« avec 280 000 € ») : elle en tient compte.'),
-        signal('sec', [[8, 'left'], ['rassurer', 'right']], 'La réponse sèche de M. Benali, le silence, le regard de sa femme vers lui.', 'manque', 'La tension monte : la relation se dégrade, et Nadia passe dessus en rassurant.'),
-        signal('soupir', [[11, 'left']], 'M. Benali soupire, juste après la maison que Nadia propose.', 'manque', 'La proposition est rejetée avant même d’être regardée : Nadia ne s’en aperçoit pas.'),
+        signal('Le téléphone', [[4, 'left'], ['tout-le-monde', 'right']], 'M. Benali consulte son téléphone, les bras croisés.', 'manque', 'Il ne se sent pas concerné, ou pas écouté : Nadia aurait pu s’adresser à lui.'),
+        signal('Trois chambres', [[3, 'left']], 'Mme Benali veut trois chambres.', 'non', 'Nadia l’a demandé elle-même, dans ses premières questions : elle en tient compte.'),
+        signal('« Pas trop loin »', [[4, 'left'], ['tout-le-monde', 'right']], '« Et pas trop loin » : un critère dit en trois mots, en fin de phrase.', 'manque', 'Un critère aussi court est à creuser : c’est un besoin qui ne se dit pas encore.'),
+        signal('L’accueil', [[0, 'right']], 'Le couple s’installe après le bonjour de Nadia.', 'non', 'C’est l’accueil, pas un signal.'),
+        signal('Le travail de nuit', [[6, 'left'], ['habitudes', 'right']], 'M. Benali travaille de nuit et finit parfois à 23 heures.', 'manque', 'C’est l’information qui explique « pas trop loin » : Nadia la transforme en simple habitude.'),
+        signal('Le budget', [[3, 'left'], ['tout-le-monde', 'right']], 'Le budget d’environ 280 000 €.', 'non', 'Nadia l’a repris aussitôt (« avec 280 000 € ») : elle en tient compte.'),
+        signal('La réponse sèche', [[8, 'left'], ['rassurer', 'right']], 'La réponse sèche de M. Benali, le silence, le regard de sa femme vers lui.', 'manque', 'La tension monte : la relation se dégrade, et Nadia passe dessus en rassurant.'),
+        signal('Le soupir', [[11, 'left']], 'M. Benali soupire, juste après la maison que Nadia propose.', 'manque', 'La proposition est rejetée avant même d’être regardée : Nadia ne s’en aperçoit pas.'),
         { tab: 'Vérifier un signal', reviewRows: true, scene: [{ info: 'Reprenez l’un des signaux que vous venez de repérer : un geste, un mot glissé, un silence, un ton.', symbol: 'eye' }, IMAGE], reviewScene: false, fields: [
           { id: 'verifier', label: 'Quelle question auriez-vous posée pour vérifier l’un de ces signaux ?', sub: 'Choisissez un signal, puis écrivez la question que vous poseriez au couple pour savoir ce qu’il veut dire, au lieu de le supposer.', placeholder: 'Votre question au client…', rows: 3,
             model: 'Pour « pas trop loin » : « Quand vous dites pas trop loin, Monsieur, c’est par rapport à quoi, surtout ? ». Pour les bras croisés : « Monsieur, qu’est-ce qui compte le plus pour vous dans ce projet ? »' }

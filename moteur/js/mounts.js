@@ -1153,8 +1153,8 @@
          * puis une ligne par champ : votre réponse (mots repérés, petites
          * coches, note) à gauche, la réponse possible à droite. */
         // `reviewLayout: 'lines'` : le corrigé est dressé à part (linesReview), regroupé.
-        if (content.reviewLayout === 'lines') return '';
-        if (content.reviewLayout === 'rows') {
+        if (content.reviewLayout === 'lines' && !c.reviewRows) return '';
+        if (content.reviewLayout === 'rows' || c.reviewRows) {
           // La réplique du client : une citation, ou la phrase posée sur une image.
           const said = [].concat(c.scene || []).map(b => (b.quote ? b : b.say ? { quote: b.say, speaker: b.sayLabel } : null)).find(Boolean);
           const person = [].concat(c.scene || []).find(b => b.person);
