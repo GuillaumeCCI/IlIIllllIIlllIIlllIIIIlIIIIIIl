@@ -407,8 +407,6 @@
       t.setAttribute('aria-selected', String(n === i));
       const full = kit.filled(v(`m_${map[n].id}`));
       t.classList.toggle('is-filled', full);
-      const num = t.querySelector('.d5-floor-n');
-      if (num) num.innerHTML = full ? icon('check', { size: 13, strokeWidth: 3 }) : String(n + 1);
     });
     const pane = panes[i];
     void pane.offsetWidth;
@@ -431,7 +429,7 @@
         <div class="d5-chat d5-ana">
           <div class="d5-chat-thread d5-ana-said"><div class="h6-gauge-row">${gaugeBar(gauge(), 'Votre jauge finale')}</div><ol class="d5-thread">${thread()}</ol></div>
           <div class="d5-ana-main">
-            <div class="d5-floor-tabs" role="tablist" aria-label="Les rubriques de la carte">${map.map((r, i) => `<button type="button" class="d5-floor-tab ${i === mapPick ? 'is-current' : ''} ${filled[i] ? 'is-filled' : ''}" role="tab" aria-selected="${i === mapPick}" data-act="h6-map" data-i="${i}"><span class="d5-floor-n">${filled[i] ? icon('check', { size: 13, strokeWidth: 3 }) : i + 1}</span><span>${esc(r.tab)}</span></button>`).join('')}</div>
+            <div class="d5-floor-tabs" role="tablist" aria-label="Les rubriques de la carte">${map.map((r, i) => `<button type="button" class="d5-floor-tab ${i === mapPick ? 'is-current' : ''} ${filled[i] ? 'is-filled' : ''}" role="tab" aria-selected="${i === mapPick}" data-act="h6-map" data-i="${i}"><span class="d5-floor-n">${i + 1}</span><span>${esc(r.tab)}</span><span class="h6-tab-ok">${icon('check', { size: 14, strokeWidth: 3 })}</span></button>`).join('')}</div>
             ${map.map((r, i) => pane(i, r)).join('')}
           </div>
         </div>

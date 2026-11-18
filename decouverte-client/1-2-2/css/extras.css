@@ -2600,3 +2600,31 @@ p.h7-question { margin-bottom: 12px; }
 #main .h6-panel .d5-floor-tab:focus-visible { box-shadow: 0 0 0 3px #c9d6f5; border-radius: 12px; }
 @media (max-width: 640px) { #main .h6-panel .d5-floor-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); } #main .h6-panel .d5-floor-tab { font-size: .84rem; } }
 #main .h6-panel .d5-floor-tabs { grid-auto-rows: 1fr; }
+
+/* 6.1 · Les petites cartes numérotées (« 1. Ce qu'elle demande »), en
+   simple texte, sans cercle ; une fois la rubrique remplie, la coche verte
+   prend la place du numéro. */
+#main .h6-panel .d5-floor-tab .d5-floor-n,
+#main .h6-panel .d5-floor-tab.is-filled .d5-floor-n,
+#main .h6-panel .d5-floor-tab.is-current .d5-floor-n { display: inline-flex; align-items: center; justify-content: flex-start; flex: none; width: auto; min-width: 1.2em; height: auto; border: 0; border-radius: 0; background: none; box-shadow: none; color: #8d98b8; font-size: .9rem; font-weight: 800; }
+#main .h6-panel .d5-floor-tab .d5-floor-n:not(:has(svg))::after { content: '.'; }
+#main .h6-panel .d5-floor-tab.is-filled .d5-floor-n { color: #2a8f8f; }
+#main .h6-panel .d5-floor-tab.is-current .d5-floor-n { color: rgb(255 255 255 / 70%); }
+#main .h6-panel .d5-floor-tab { gap: 6px; }
+/* Le numéro reste toujours (même rubrique remplie), à la taille du texte ;
+   la coche verte se place à droite de la carte une fois la rubrique remplie. */
+#main .h6-panel .d5-floor-tab .d5-floor-n, #main .h6-panel .d5-floor-tab.is-filled .d5-floor-n { color: #8d98b8; font-size: 1rem; }
+#main .h6-panel .d5-floor-tab.is-current .d5-floor-n { color: rgb(255 255 255 / 70%); font-size: 1rem; }
+#main .h6-panel .d5-floor-tab .d5-floor-n::after { content: '.'; }
+#main .h6-panel .h6-tab-ok { display: none; margin-left: auto; flex: none; color: #2a8f8f; }
+#main .h6-panel .d5-floor-tab.is-filled .h6-tab-ok { display: inline-flex; }
+#main .h6-panel .d5-floor-tab.is-current .h6-tab-ok { color: #9fe0d4; }
+/* Le numéro dans un petit cercle, dans la carte (demande de l'utilisateur). */
+#main .h6-panel .d5-floor-tab .d5-floor-n, #main .h6-panel .d5-floor-tab.is-filled .d5-floor-n { display: inline-grid; place-items: center; width: 26px; height: 26px; min-width: 0; border-radius: 50%; background: #eef1f8; color: #1b2370; font-size: .85rem; font-weight: 800; }
+#main .h6-panel .d5-floor-tab .d5-floor-n::after { content: none; }
+#main .h6-panel .d5-floor-tab.is-current .d5-floor-n { background: #fff; color: #1b2370; font-size: .85rem; }
+#main .h6-panel .d5-floor-tab { gap: 10px; }
+#main .h6-panel .d5-floor-tabs .d5-floor-tab .d5-floor-n::after, #main .h6-panel .d5-floor-tabs .d5-floor-tab .d5-floor-n:not(:has(svg))::after { content: none; display: none; }
+#main .h6-panel .d5-floor-tabs .d5-floor-tab .d5-floor-n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #eef1f8; color: #1b2370; font-size: .85rem; font-weight: 800; line-height: 1; }
+#main .h6-panel .d5-floor-tabs .d5-floor-tab.is-current .d5-floor-n { background: #fff; color: #1b2370; }
+#main .h6-panel .d5-floor-tabs .d5-floor-tab .d5-floor-n { justify-content: center; align-content: center; text-align: center; }
