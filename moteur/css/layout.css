@@ -428,24 +428,25 @@ body { position: relative; }
  * le premier s'éclaire d'un halo discret et le repère courant pulse
  * (exercise.js, markSwitch). Sobre : l'ancien envol de 260 px avec rotation
  * et rebond était jugé brutal. */
+/* Plus aucun déplacement entre deux cas (choix de l'utilisateur, 18/11) : un fondu. */
 @keyframes k-switch-next {
-  0% { opacity: 0; transform: translateX(28px); }
-  100% { opacity: 1; transform: none; }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 @keyframes k-switch-prev {
-  0% { opacity: 0; transform: translateX(-28px); }
-  100% { opacity: 1; transform: none; }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 @keyframes k-switch-glow { 0%, 30% { box-shadow: 0 0 0 0 rgb(19 75 215 / 0%); } 55% { box-shadow: 0 0 0 3px rgb(19 75 215 / 16%), 0 14px 32px rgb(19 75 215 / 10%); } 100% { box-shadow: 0 0 0 10px rgb(19 75 215 / 0%); } }
-@keyframes k-switch-pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgb(19 75 215 / 60%); } 40% { transform: scale(2); box-shadow: 0 0 0 10px rgb(19 75 215 / 20%); } 70% { transform: scale(.9); } 100% { transform: scale(1); box-shadow: 0 0 0 16px rgb(19 75 215 / 0%); } }
+@keyframes k-switch-pulse { 0% { box-shadow: 0 0 0 0 rgb(19 75 215 / 45%); } 100% { box-shadow: 0 0 0 10px rgb(19 75 215 / 0%); } }
 .k-switch-next { animation: k-switch-next .42s cubic-bezier(.2, .8, .3, 1) both; }
 .k-switch-prev { animation: k-switch-prev .42s cubic-bezier(.2, .8, .3, 1) both; }
 :is(.k-switch-next, .k-switch-prev) ~ :is(.k-switch-next, .k-switch-prev) { animation-delay: .06s; }
 :is(.k-switch-next, .k-switch-prev) ~ :is(.k-switch-next, .k-switch-prev) ~ :is(.k-switch-next, .k-switch-prev) { animation-delay: .12s; }
-.k-switch-pulse { animation: k-switch-pulse .9s cubic-bezier(.3, 1.4, .5, 1); }
-/* La pastille d'un onglet : un rebond léger, sans déborder sur son texte. */
-@keyframes k-switch-pop { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgb(19 75 215 / 50%); } 40% { transform: scale(1.25); box-shadow: 0 0 0 8px rgb(19 75 215 / 18%); } 70% { transform: scale(.95); } 100% { transform: scale(1); box-shadow: 0 0 0 14px rgb(19 75 215 / 0%); } }
-.k-switch-pop { animation: k-switch-pop .9s cubic-bezier(.3, 1.4, .5, 1); }
+.k-switch-pulse { animation: k-switch-pulse .8s ease-out; }
+/* La pastille d'un onglet s'éclaire, sans grossir ni rebondir. */
+@keyframes k-switch-pop { 0% { box-shadow: 0 0 0 0 rgb(19 75 215 / 40%); } 100% { box-shadow: 0 0 0 8px rgb(19 75 215 / 0%); } }
+.k-switch-pop { animation: k-switch-pop .8s ease-out; }
 .k-switch-halo { animation: k-switch-glow 1.2s ease-out; }
 /* Le bloc qui glisse est aussi la carte au halo : les deux jouent ensemble
  * (sinon le halo remplace le glissement, qui ne part qu'à sa fin). */

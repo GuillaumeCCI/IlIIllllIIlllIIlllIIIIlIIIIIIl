@@ -35,7 +35,7 @@
 .sc-talk-line.is-on { animation: sc-talk-in .25s ease-out; }
 /* Bulle déjà écrite, reprise telle quelle quand la réponse change. */
 .sc-talk-line.is-on.is-still { animation: none; }
-@keyframes sc-talk-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes sc-talk-in { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .sc-talk-line.is-on { animation: none; } }
 .sc-tw-rest { color: transparent; }
 .sc-talk-line.is-left { grid-column: 1; }

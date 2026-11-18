@@ -265,14 +265,7 @@
 .vf-fact-icon { width: 30px; height: 30px; }
 .vf-fact-icon .icon { width: 16px; height: 16px; }
 .vf-facts small { font-size: .7rem; margin-bottom: 1px; }
-/* Passage d'une étape ou d'un cas à l'autre dans les écrans à plusieurs cas. */
-#main .fm-panel.is-next { animation: card-next .4s cubic-bezier(.2, .8, .3, 1) both; }
-#main .fm-panel.is-prev { animation: card-prev .4s cubic-bezier(.2, .8, .3, 1) both; }
-/* L'entretien affiché à gauche ne bouge pas : seule la question glisse. */
-#main .fm-panel:has(.sc-script):is(.is-next, .is-prev) { animation: none; }
-#main .fm-panel.is-next:has(.sc-script) > .k-panel:not(.fm-scene) { animation: card-next .4s cubic-bezier(.2, .8, .3, 1) both; }
-#main .fm-panel.is-prev:has(.sc-script) > .k-panel:not(.fm-scene) { animation: card-prev .4s cubic-bezier(.2, .8, .3, 1) both; }
-@media (prefers-reduced-motion: reduce) { #main .fm-panel.is-next, #main .fm-panel.is-prev { animation: none; } }
+/* Passage d'un cas à l'autre : le fondu enchaîné du moteur (moteur/css/mounts.css). */
 
 /* S4 4.6 : la réponse relue dans sa case, puis ses coches, l’une sous l’autre. */
 .rva-open { display: grid; gap: 8px; width: 100%; }

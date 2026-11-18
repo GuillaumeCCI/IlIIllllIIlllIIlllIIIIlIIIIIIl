@@ -583,6 +583,8 @@
     const previous = lastSpots;
     lastSpots = { key: current.key, spots };
     if (!previous || previous.key !== current.key) return;
+    // Un formulaire à cas a son propre fondu enchaîné (render, ghostOf) : rien ne bouge ici.
+    if ($('#main .fm-panel')) return;
     // Venir du menu n'est pas passer d'un cas à l'autre : l'apparition de l'écran suffit.
     if (previous.spots.case && previous.spots.case.index === -1) return;
     const moved = Object.keys(spots).find(name => previous.spots[name] && previous.spots[name].index !== spots[name].index);
