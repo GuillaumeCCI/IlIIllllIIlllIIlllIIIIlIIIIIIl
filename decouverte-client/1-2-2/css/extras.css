@@ -2685,3 +2685,5 @@ p.h7-question { margin-bottom: 12px; }
 #main .h7-type-card.is-answer:not(.is-on) { background: #e6f4f1; box-shadow: none; color: #24305a; }
 #main .h7-type-card.is-answer .h7-type-dot { background: #2a8f8f; box-shadow: none; color: #fff; }
 #main .h7-type-card:disabled:not(.is-on):not(.is-answer) { opacity: .5; }
+.h6-path-dialog .h6-path-row.is-one { grid-template-columns: 130px minmax(0, 1fr); }
+@media (max-width: 700px) { .h6-path-dialog .h6-path-row.is-one { grid-template-columns: minmax(0, 1fr); } }

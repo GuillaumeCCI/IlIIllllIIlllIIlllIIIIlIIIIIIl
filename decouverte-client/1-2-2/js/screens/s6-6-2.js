@@ -550,38 +550,78 @@
     ].join('\n');
   };
 
+  /* Le détail de l'analyse, moment par moment (dans une fenêtre) : la
+   * question du ou de la collègue, et ce qu'il fallait y voir quand votre
+   * premier diagnostic n'était pas le bon. */
+  function analysisHtml() {
+    const who = D().seller.name;
+    const parts = m => { const [type, ...rest] = m.choices[m.best].text.split(' : '); return { type, why: rest.join(' : ') }; };
+    const rows = moments().map((m, k) => {
+      const ok = firstTone(k) === 'ok';
+      const p = parts(m);
+      return `<div class="h6-path-row is-one">
+          <p class="h6-path-n">${esc(m.label)}</p>
+          <div class="h6-path-you"><p class="h6-pick ${ok ? 'is-ok' : 'is-mid'}"><span aria-hidden="true">${ok ? '✓' : '–'}</span><span><b>${esc(who)} demande :</b><span class="h6-pick-q">${q(m.q)}</span></span></p>
+            <p class="h6-verdict ${ok ? 'is-ok' : 'is-mid'}">${ok ? 'Bien vu du premier coup.' : 'Pas du premier coup.'}</p>
+            ${ok ? '' : `<p class="h6-better-line">Il fallait y voir <b>${esc(lower(p.type))}</b> : ${esc(p.why)}</p>`}</div>
+        </div>`;
+    }).join('');
+    return `<div class="h6-path-dialog"><p class="h7-review-line">Chaque question de ${esc(who)}, et ce qu’il fallait y voir quand votre premier diagnostic n’était pas le bon.</p>${rows}</div>`;
+  }
+
+  /* La page finale, comme celle de 6.1 : ce qu'on regarde et pourquoi, le
+   * parcours en quatre anneaux avec un verdict, le détail dans une fenêtre,
+   * puis la fiche face à l'exemple, puis la grille. */
   function review() {
     const d = D();
+    const who = d.seller.name;
     const yesCount = content.selfCheck.filter((_, i) => v(`self${i}`) === 'oui').length;
     const rwOk = d.rewrites.filter((_, j) => checks(j).tone === 'ok').length;
-    const ficheRows = fiche.map(r => `<div class="fm-rv-row">
-        <p class="fm-rv-label">${esc(r.tab)}</p>
-        <div class="fm-rv-you">${kit.filled(v(`f_${r.id}`)) ? `<p class="result-answer-text">${esc(v(`f_${r.id}`))}</p>` : '<p class="result-answer-text is-empty"><em>Non renseigné.</em></p>'}</div>
-        <div class="fm-rv-model"><p>${esc(d.model[r.id])}</p></div>
-      </div>`).join('');
+    const R = 34;
+    const C = 2 * Math.PI * R;
+    const ring = (ratio, inner, label, word, tone, i) => `<div class="h8-ring tone-${tone} h6-in" ${delay(0.1 * i)}>
+        <div class="h8-ring-g"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="${R}" class="h8-ring-bg"/><circle cx="40" cy="40" r="${R}" class="h8-ring-fg" style="--c:${C.toFixed(1)};--o:${(C * (1 - Math.max(0, Math.min(1, ratio)))).toFixed(1)}"/></svg><p class="h8-ring-n">${inner}</p></div>
+        <p class="h8-ring-t">${label}</p><p class="h8-ring-w">${word}</p>
+      </div>`;
+    const judge = r => (r >= 0.8 ? ['Très bien', 'ok'] : r >= 0.5 ? ['En bonne voie', 'mid'] : ['À reprendre', 'ko']);
+    const tile = (n, total, label, i) => { const r = total ? n / total : 0; const [w, t] = judge(r); return ring(r, `<b>${n}</b><span>/ ${total}</span>`, label, w, t, i); };
+    const score = (rightFirst() / d.moments.length + dmScore() / 3 + rwOk / 3 + sortScore() / d.sort.length) / 4;
+    const verdict = score >= 0.8 ? `Un regard de coach sûr : ${who} a de quoi progresser.`
+      : score >= 0.5 ? `Un bon regard de coach : quelques points à affiner avant d’envoyer votre fiche à ${who}.`
+        : `Un premier regard de coach : reprenez l’analyse avant d’envoyer votre fiche à ${who}.`;
+    const ficheRows = fiche.map((r, i) => `<div class="h6-cmp-row">
+          <p class="h6-cmp-h"><span class="h6-cmp-n">${i + 1}</span>${esc(r.tab)}</p>
+          <div class="h6-cmp-pair">
+            <div class="h6-cmp-you"><span class="h6-cmp-tag">Votre fiche</span>${kit.filled(v(`f_${r.id}`)) ? `<p>${esc(v(`f_${r.id}`))}</p>` : '<p class="is-empty">Non renseigné.</p>'}</div>
+            <div class="h6-cmp-ex"><span class="h6-cmp-tag">L’exemple</span><p>${esc(d.model[r.id])}</p></div>
+          </div>
+        </div>`).join('');
     return `<section class="k-panel h6-review h7-review">
-        <p class="k-label">Votre parcours de coach</p>
-        <ul class="h7-path">
-          <li><span>L’entretien</span>${rightFirst()} moment${rightFirst() > 1 ? 's' : ''} sur ${d.moments.length} bien analysé${rightFirst() > 1 ? 's' : ''} du premier coup</li>
-          <li><span>Les moments décisifs</span>${dmScore()} bien choisi${dmScore() > 1 ? 's' : ''} sur 3</li>
-          <li><span>Vos réécritures</span>${rwOk} question${rwOk > 1 ? 's' : ''} juste${rwOk > 1 ? 's' : ''} sur 3</li>
-          <li><span>Ce qu’il fallait savoir</span>${sortScore()} information${sortScore() > 1 ? 's' : ''} sur ${d.sort.length} bien classée${sortScore() > 1 ? 's' : ''}, priorités ${rankRight() ? 'dans le bon ordre' : 'à revoir'}</li>
-        </ul>
-      </section>
-      <section class="k-panel fm-review is-rows h6-review">
-        <p class="k-label">Bilan de votre fiche de coaching</p>
-        <p class="h7-review-line">Comparez votre fiche avec un exemple : d’autres formulations sont justes, si elles citent des faits et commencent par le positif.</p>
-        <div class="fm-rv-head" aria-hidden="true"><span></span><span>Votre fiche</span><span>Un exemple</span></div>
-        ${ficheRows}
-        <div class="h6-copy">${kit.act('h7-copy', `${icon('document', { size: 18 })}<span>Copier ma fiche</span>`, 'secondary small')}<span>Pour l’envoyer à ${esc(d.seller.name)}, ou à votre tuteur.</span></div>
+        <div class="h8-rhead"><p class="h8-rhead-tag">Le bilan de votre activité</p><p class="h8-rhead-title">${esc(verdict)}</p></div>
+        <p class="h7-review-line">Voici, en quatre chiffres, ce que vous avez fait avec l’entretien de ${esc(who)} : votre analyse, les moments décisifs, vos réécritures, et ce qu’il fallait savoir. Plus bas, votre fiche de coaching à côté d’un exemple.</p>
+        <div class="h8-rings">
+          ${tile(rightFirst(), d.moments.length, 'questions bien analysées du premier coup', 0)}
+          ${tile(dmScore(), 3, 'moments décisifs bien choisis', 1)}
+          ${tile(rwOk, 3, 'réécritures au point', 2)}
+          ${tile(sortScore(), d.sort.length, `informations bien classées${rankRight() ? ', priorités dans le bon ordre' : ''}`, 3)}
+        </div>
+        <div class="h6-path-cta"><span>Chaque question de ${esc(who)}, et ce qu’il fallait y voir.</span>${kit.act('h7-analysis-open', `${icon('chat', { size: 18 })}<span>Revoir l’analyse moment par moment</span>`, 'primary')}</div>
       </section>
       <section class="k-panel h6-review">
-        <p class="a4-review-head"><span class="k-label">Mon auto-évaluation</span><span class="a4-review-count"><b>${yesCount}</b> / ${content.selfCheck.length} critères cochés « Oui »</span></p>
+        <p class="k-label">Votre fiche de coaching, à côté d’un exemple</p>
+        <p class="h7-review-line">D’autres formulations sont justes : vérifiez surtout que votre fiche cite des faits, commence par ce qui a marché, et ne juge pas ${esc(who)}.</p>
+        <div class="h6-cmp">${ficheRows}</div>
+        <div class="h6-path-cta"><span>Pour l’envoyer à ${esc(who)}, ou à votre tuteur.</span>${kit.act('h7-copy', `${icon('document', { size: 18 })}<span>Copier ma fiche</span>`, 'primary')}</div>
+      </section>
+      <section class="k-panel h6-review">
+        <p class="a4-review-head"><span class="k-label">Votre grille</span><span class="a4-review-count"><b>${yesCount}</b> / ${content.selfCheck.length} critères cochés « Oui »</span></p>
+        <p class="h7-review-line">Ce que vous avez répondu en relisant votre fiche. Votre tuteur utilisera la même grille.</p>
         <ul class="a5-self-recap">${content.selfCheck.map((row, i) => `<li><span class="pos-level level-${v(`self${i}`) === 'oui' ? '2' : '0'}">${v(`self${i}`) === 'oui' ? 'Oui' : 'Non'}</span><span>${esc(row.text)}</span></li>`).join('')}</ul>
       </section>
       ${kit.keyPoint ? kit.keyPoint(content.keyPoint) : ''}
       ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }
+
 
   /* La page de transition, sur la carte du chemin (image fournie) : les
    * étapes faites cochées, les suivantes estompées, le pion « Vous » qui
@@ -738,6 +778,7 @@
     'h7-rank-check': () => { if (rankNow().length === D().rank.items.length) { advance('rkok', true); showMsg(); } },
     'h7-rwhint': control => { const r = D().rewrites[Number(control.dataset.j)]; if (r && r.hint) core.openDialog('Un indice', `<p class="h7-hint-win">${esc(r.hint)}</p>`); },
     'h7-fiche': control => { fichePick = Number(control.dataset.i); ex.rebuild(); },
+    'h7-analysis-open': () => core.openDialog('Votre analyse, moment par moment', analysisHtml()),
     'h7-copy': () => {
       const done = () => core.toast('Votre fiche est copiée.');
       const fail = () => core.toast('Copie impossible : sélectionnez le texte de votre fiche.');
