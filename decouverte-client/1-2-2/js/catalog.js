@@ -30,7 +30,7 @@ window.ATELIER_CATALOG = {
       // Grille d'auto-positionnement, colonne « Début » : fiche M1.2.2.
       sourced: true,
       exercises: [
-        { id: '1.1', file: 's1-1-1', label: 'Mon point de départ', theme: 'blue' }
+        { id: '1.1', file: 's1-1-1', thumb: 'assets/illustrations/accueil/point-de-depart.webp', label: 'Mon point de départ', theme: 'blue' }
       ]
     },
     {
@@ -39,8 +39,8 @@ window.ATELIER_CATALOG = {
       // Les types de questions et l'entonnoir, corrigés : fiche M1.2.2, activité A1.
       sourced: true,
       exercises: [
-        { id: '2.1', file: 's2-2-1', label: 'Quel type de question ?', theme: 'blue', mount: 'deck' },
-        { id: '2.2', file: 's2-2-2', label: 'Les étages de l’entonnoir', theme: 'blue', mount: 'deck' }
+        { id: '2.1', file: 's2-2-1', thumb: 'assets/illustrations/accueil/cartes-1-2-3.webp', label: 'Quel type de question ?', theme: 'blue', mount: 'deck' },
+        { id: '2.2', file: 's2-2-2', thumb: 'assets/illustrations/accueil/etapes.webp', label: 'Les étages de l’entonnoir', theme: 'blue', mount: 'deck' }
       ]
     },
     {
@@ -49,7 +49,7 @@ window.ATELIER_CATALOG = {
       // Cinq clients, explicite / implicite / question, corrigé : fiche M1.2.2, activité A2.
       sourced: true,
       exercises: [
-        { id: '3.1', file: 's3-3-1', label: 'Du besoin exprimé au besoin réel', theme: 'blue', mount: 'form' }
+        { id: '3.1', file: 's3-3-1', thumb: 'assets/illustrations/accueil/iceberg.webp', label: 'Du besoin exprimé au besoin réel', theme: 'blue', mount: 'form' }
       ]
     },
     {
@@ -58,8 +58,8 @@ window.ATELIER_CATALOG = {
       // SONCASE et les Benali, corrigés : fiche M1.2.2, activité A3.
       sourced: true,
       exercises: [
-        { id: '4.1', file: 's4-4-1', label: 'Les mots qui trahissent les motivations', theme: 'blue', mount: 'form' },
-        { id: '4.2', file: 's4-4-2', label: 'Retour chez les Benali', theme: 'blue', mount: 'form' }
+        { id: '4.1', file: 's4-4-1', thumb: 'assets/illustrations/accueil/loupe.webp', label: 'Les mots qui trahissent les motivations', theme: 'blue', mount: 'form' },
+        { id: '4.2', file: 's4-4-2', thumb: 'assets/illustrations/accueil/trois-personnes.webp', label: 'Retour chez les Benali', theme: 'blue', mount: 'form' }
       ]
     },
     {
@@ -68,8 +68,8 @@ window.ATELIER_CATALOG = {
       // Fiche M1.2.2 : A4 (les guides de Yanis et Clara) et A5 (votre guide, votre découverte).
       sourced: true,
       exercises: [
-        { id: '5.1', file: 's5-5-1', label: 'Le guide qui fait parler', theme: 'blue' },
-        { id: '5.2', file: 's5-5-2', label: 'Votre guide, votre découverte', theme: 'blue' }
+        { id: '5.1', file: 's5-5-1', thumb: 'assets/illustrations/accueil/panneau.webp', label: 'Le guide qui fait parler', theme: 'blue' },
+        { id: '5.2', file: 's5-5-2', thumb: 'assets/illustrations/accueil/bulles.webp', label: 'Votre guide, votre découverte', theme: 'blue' }
       ]
     },
     {
@@ -78,9 +78,9 @@ window.ATELIER_CATALOG = {
       // Synthèse optionnelle de la fiche M1.2.2 (option 2).
       sourced: true,
       exercises: [
-        { id: '6.1', file: 's6-6-1', label: 'L’entretien dont vous êtes le héros', theme: 'blue' },
-        { id: '6.2', file: 's6-6-2', label: 'Le coach', theme: 'blue' },
-        { id: '6.3', file: 's6-6-3', label: 'Ma banque de questions terrain', theme: 'blue' }
+        { id: '6.1', file: 's6-6-1', thumb: 'assets/illustrations/accueil/avion.webp', label: 'L’entretien dont vous êtes le héros', theme: 'blue' },
+        { id: '6.2', file: 's6-6-2', thumb: 'assets/illustrations/accueil/liste-loupe.webp', label: 'Le coach', theme: 'blue' },
+        { id: '6.3', file: 's6-6-3', thumb: 'assets/illustrations/accueil/livres.webp', label: 'Ma banque de questions terrain', theme: 'blue' }
       ]
     },
     {
@@ -90,7 +90,7 @@ window.ATELIER_CATALOG = {
       // Toujours la dernière série.
       sourced: true,
       exercises: [
-        { id: '9.1', file: 's9-9-1', label: 'Mon point d’arrivée', theme: 'blue' }
+        { id: '9.1', file: 's9-9-1', thumb: 'assets/illustrations/accueil/point-d-arrivee.webp', label: 'Mon point d’arrivée', theme: 'blue' }
       ]
     }
   ]
