@@ -417,7 +417,7 @@
     const m = moments().find(x => x.n === r.n);
     const ok = yes(`rw${j}_ok`);
     const tabs = rws.map((x, i) => `<button type="button" class="d5-floor-tab ${i === j ? 'is-current' : ''} ${yes(`rw${i}_ok`) ? 'is-filled' : ''}" role="tab" aria-selected="${i === j}" data-act="h7-rw" data-i="${i}" ${i > 0 && !yes(`rw${i - 1}_ok`) ? 'disabled' : ''}><span class="d5-floor-n">${yes(`rw${i}_ok`) ? icon('check', { size: 13, strokeWidth: 3 }) : i + 1}</span><span>${esc(labelOf(x.n))}</span></button>`).join('');
-    const chips = types.map(t => `<button type="button" class="h7-chip ${v(`rw${j}_t`) === t.id ? 'is-on' : ''}" data-act="h7-type" data-j="${j}" data-id="${t.id}" aria-pressed="${v(`rw${j}_t`) === t.id}" ${ok ? 'disabled' : ''}>${esc(t.label)}</button>`).join('');
+    const chips = types.map(t => `<button type="button" class="h7-chip h7-type-card ${v(`rw${j}_t`) === t.id ? 'is-on' : ''}" data-act="h7-type" data-j="${j}" data-id="${t.id}" aria-pressed="${v(`rw${j}_t`) === t.id}" ${ok ? 'disabled' : ''}><span class="h7-type-dot" aria-hidden="true">${icon('check', { size: 12, strokeWidth: 3.5 })}</span><span class="h7-type-txt"><b>${esc(t.label)}</b>${t.hint ? `<span>${esc(t.hint)}</span>` : ''}</span></button>`).join('');
     const helps = `<div class="h7-helps is-corner">${r.hint ? `<button type="button" class="h7-help" data-act="h7-rwhint" data-j="${j}">${icon('thought', { size: 16 })}<span>Un indice</span></button>` : ''}${memoBox()}</div>`;
     let after = `<div class="h7-actions">${kit.act('h7-rw-check', `${icon('check', { size: 18 })}<span>Comparer avec le corrigé</span>`, 'primary', `data-j="${j}"`)}</div>`;
     if (ok) {
@@ -435,8 +435,8 @@
             <p class="h7-question">À la place de ${esc(d.seller.name)}, qu’auriez-vous demandé ?</p>
             <div class="h7-write">
               ${ex.field(`rw${j}_q`, 'Votre question', { placeholder: 'Votre question…', max: 300, rows: 2, hideLabel: true })}
-              <p class="h7-write-note">C’est une question…</p>
-              <div class="h7-chips" role="group" aria-label="Le type de votre question">${chips}</div>
+              <p class="h7-type-ask">Quel type de question avez-vous écrite ?</p>
+              <div class="h7-chips h7-type-grid" role="group" aria-label="Le type de votre question">${chips}</div>
             </div>
             ${after}
           </div>

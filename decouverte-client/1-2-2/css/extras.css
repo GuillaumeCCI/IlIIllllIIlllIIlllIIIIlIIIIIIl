@@ -2668,3 +2668,20 @@ p.h7-question { margin-bottom: 12px; }
 /* 6.2 · Écrire son diagnostic : la carte EST le champ ; le champ n'a ni
    ombre ni fond, au repos comme quand on écrit (la carte s'entoure de bleu). */
 #main .h7-write textarea, #main .h7-write textarea:focus, #main .h7-write input[type="text"], #main .h7-write input[type="text"]:focus { box-shadow: none; background: transparent; }
+
+/* 6.2 · Le type de la question réécrite : de petites cartes de choix (nom,
+   rappel avec un exemple), la carte choisie en bleu pâle avec sa pastille
+   cochée, sans contour ; après correction, le bon type en vert pâle. */
+.h7-type-ask { margin: 16px 0 10px; color: #1b2370; font-weight: 800; }
+#main .h7-type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+#main .h7-type-card { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 12px; background: #fff; box-shadow: inset 0 0 0 1px #e3e8f3; color: #24305a; font-size: .92rem; font-weight: 400; text-align: left; transition: background .2s, box-shadow .2s; }
+#main .h7-type-card:hover:not(:disabled) { background: #f5f7fc; box-shadow: inset 0 0 0 1px #cfd8ee; }
+.h7-type-dot { flex: none; display: grid; place-items: center; width: 20px; height: 20px; margin-top: 1px; border-radius: 50%; box-shadow: inset 0 0 0 2px #c9d3ea; color: transparent; }
+.h7-type-txt { display: grid; gap: 3px; }
+.h7-type-txt b { color: #1b2370; font-weight: 700; }
+.h7-type-txt span { color: #6a7593; font-size: .84rem; line-height: 1.4; }
+#main .h7-type-card.is-on { background: #e8eefc; box-shadow: none; color: #24305a; }
+#main .h7-type-card.is-on .h7-type-dot { background: #1b2370; box-shadow: none; color: #fff; }
+#main .h7-type-card.is-answer:not(.is-on) { background: #e6f4f1; box-shadow: none; color: #24305a; }
+#main .h7-type-card.is-answer .h7-type-dot { background: #2a8f8f; box-shadow: none; color: #fff; }
+#main .h7-type-card:disabled:not(.is-on):not(.is-answer) { opacity: .5; }

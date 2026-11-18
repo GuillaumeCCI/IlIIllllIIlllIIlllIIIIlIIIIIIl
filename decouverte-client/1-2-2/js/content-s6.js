@@ -332,12 +332,13 @@
       rule: 'La règle d’or du coach : un retour factuel (vous citez les questions), qui commence par ce qui a fonctionné et ne juge pas la personne.',
 
       // Les types proposés pour vos réécritures.
+      // Chaque type avec un rappel court : ce qu'il fait, et un exemple.
       types: [
-        { id: 'ouverte', label: 'Ouverte' },
-        { id: 'echo', label: 'Écho (relance)' },
-        { id: 'alternative', label: 'Alternative' },
-        { id: 'fermee', label: 'Fermée' },
-        { id: 'synthese', label: 'Synthèse à faire valider' }
+        { id: 'ouverte', label: 'Ouverte', hint: 'Fait parler librement : « Comment… ? »' },
+        { id: 'echo', label: 'Écho (relance)', hint: 'Reprend ses mots : « Pas le temps ? »' },
+        { id: 'alternative', label: 'Alternative', hint: 'Propose un choix : « Plutôt A ou B ? »' },
+        { id: 'fermee', label: 'Fermée', hint: 'Appelle un oui ou un non : « Vous avez un budget ? »' },
+        { id: 'synthese', label: 'Synthèse à faire valider', hint: 'Résume et fait confirmer : « C’est bien ça ? »' }
       ],
       // Des mots de produit : une réécriture qui en contient propose une solution.
       productWords: ['îlot', 'ilot', 'laqué', 'laque', 'bois', 'devis', 'catalogue', 'modèle', 'premium', 'formule', 'offre', 'contrat', 'remplacement garanti', 'notre', 'nos '],
