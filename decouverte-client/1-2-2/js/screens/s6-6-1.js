@@ -338,20 +338,21 @@
       <div class="h6-stage-foot">${kit.submit('Passer à la carte des besoins')}</div>`;
   }
 
-  /* La page de transition, sur la carte du chemin (dessinée : quatre étapes
-   * sur deux rangées) : les étapes faites cochées, les suivantes estompées,
-   * le pion « Vous » qui glisse jusqu'à l'étape où l'on entre. */
-  const SPOTS = [[8.7, 29.6], [57.4, 29.6], [8.7, 75.5], [57.4, 75.5]];
+  /* La page de transition, sur la carte du chemin (image fournie par
+   * l'utilisateur, deux rangées de deux) : les étapes faites cochées, les
+   * suivantes estompées, le pion « Vous » qui glisse jusqu'à l'étape où l'on
+   * entre. Positions sur l'image, en % : SPOTS le pion (sur le pictogramme),
+   * BADGES la coche (sur le numéro), VEILS le voile d'une étape à venir. */
+  const SPOTS = [[26.8, 21], [72.1, 21], [26.8, 70.4], [73.9, 70.4]];
+  const BADGES = [[10.9, 8.9], [56.6, 8.9], [11.1, 57.5], [56.6, 57.5]];
+  const VEILS = [[23.7, 24], [69.4, 24], [23.7, 74.9], [69.4, 74.9]];
   function pathMap(k) {
     const from = SPOTS[Math.max(0, k - 1)];
     const to = SPOTS[k];
-    const tiles = content.path.map((p, i) => `<div class="h9-tile ${i < k ? 'is-done' : i > k ? 'is-later' : 'is-current'}">
-        <span class="h9-tile-n">${String(i + 1).padStart(2, '0')}${i < k ? `<span class="h9-tile-check">${icon('check', { size: 14, strokeWidth: 3.5 })}</span>` : ''}</span>
-        <span class="h9-tile-icon">${icon(p.icon, { size: 46, strokeWidth: 1.6 })}</span>
-        <span class="h9-tile-label">${esc(p.label)}</span>
-      </div>`).join('');
     return `<div class="h7-map h9-map h6-in" role="img" aria-label="Le chemin de l’exercice : étape ${k + 1} sur ${STEPS.length}, ${esc(STEPS[k])}.">
-        <div class="h9-map-grid">${tiles}</div>
+        <img src="${img('parcours/heros-chemin.webp')}" alt="">
+        ${VEILS.map(([x, y], i) => (i > k ? `<span class="h7-map-veil" style="left:${x}%;top:${y}%"></span>` : '')).join('')}
+        ${BADGES.map(([x, y], i) => (i < k ? `<span class="h7-map-done" style="left:${x}%;top:${y}%">${icon('check', { size: 18, strokeWidth: 3.5 })}</span>` : '')).join('')}
         <span class="h7-map-pawn ${k > 0 ? 'is-moving' : 'is-landing'}" style="--fx:${from[0]}%;--fy:${from[1]}%;--tx:${to[0]}%;--ty:${to[1]}%"><b>Vous</b></span>
       </div>`;
   }

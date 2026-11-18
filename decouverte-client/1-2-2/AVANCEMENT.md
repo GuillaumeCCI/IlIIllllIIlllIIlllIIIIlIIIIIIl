@@ -58,6 +58,8 @@ Rejouer une étape (17/11/2026) : après un choix moins bon, le retour propose �
 
 Échanges plus crédibles (17/11/2026) : répliques de Mme Rivière plus longues et plus naturelles (hésitations, détails concrets : kiné, double file, location, « je suis à mon compte »), y compris après un choix moins bon ; à l'étape 6, elle dit elle-même « je ne veux plus me retrouver à pied » (la voiture de prêt reste cohérente sur tous les chemins) ; fins plus naturelles. Questions d'Antoine et intentions inchangées (équilibre des longueurs conservé). Bulle d'aide au survol / au clavier sur la jauge et le chrono.
 
+Reprise du 18/11 : répliques de Mme Rivière en langage parlé (validé : « c’est bien en termes de formulation ») ; carte de la cliente plus large, texte aligné à gauche ; comme 6.2 et 6.3 : page de transition avant chaque étape sur la carte du chemin fournie (parcours/heros-chemin.webp, importée par tools/import-chemin-6-1.mjs, barre du milieu masquée), bilan de l’entretien (synthèse + questions à retenir) et bilan des acquis.
+
 Idées en attente (validées en principe, pas faites) : rendre l'entretien rejouable (banque d'options, réactions variées), « Voilà ce que ça donne… », conséquences qui reviennent plus loin.
 
 ## État de 6.2 « Le coach » (17/11/2026)
