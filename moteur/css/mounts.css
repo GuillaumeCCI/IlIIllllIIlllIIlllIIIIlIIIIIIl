@@ -757,6 +757,23 @@ button.crash-passage:hover { background: #fff1d6; }
 #main .fm-lmark { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: #fff; flex-shrink: 0; }
 #main .fm-lyou.is-ok .fm-lmark { background: #2f9e74; }
 #main .fm-lyou.is-ko .fm-lmark { background: #e0674f; }
+/* Un passage d'entretien à lire à côté d'un formulaire : sans cadre ni
+   pictogramme autour des répliques (style validé en 6.2) ; le nom en petites
+   capitales à gauche, le texte en graisse normale, de l'air entre les lignes. */
+#main .fm-scene .sc-dialogue { gap: 0; }
+#main .fm-scene .sc-line { grid-template-columns: 116px minmax(0, 1fr); align-items: baseline; gap: 18px; padding: 14px 6px; border-top: 1px solid #eef2f8; }
+#main .fm-scene .sc-line:first-child { border-top: 0; }
+#main .fm-scene .sc-avatar { display: block; text-align: right; }
+#main .fm-scene .sc-avatar .icon { display: none; }
+#main .fm-scene .sc-avatar small { display: block; max-width: none; text-align: right; color: #6a7898; }
+#main .fm-scene .sc-avatar.is-seller small { color: var(--accent); }
+#main .fm-scene .sc-line p { padding: 0; border-radius: 0; background: none; font-size: 1.04rem; line-height: 1.6; }
+#main .fm-scene .sc-line.is-seller p { background: none; }
+/* Les éléments à cocher se lisent en graisse normale (réponses jamais en gras). */
+#main .fm-chip { font-weight: 500; }
+/* Formulaire à côté d'un long passage : la carte de réponse reste à l'écran au défilement. */
+#main .fm-panel.is-side { align-items: start; }
+#main .fm-panel.is-side:has(> .fm-scene .sc-dialogue) > .k-panel:not(.fm-scene) { position: sticky; top: 84px; }
 /* Les mots repérés dans une réponse : un fond vert très pâle, jamais le jaune du navigateur. */
 .result-answer-text mark, .fm-rv-you mark { padding: 0 2px; border-radius: 4px; background: #dcf1e4; color: inherit; }
 .result-answer-text mark.is-warn, .fm-rv-you mark.is-warn { background: #ffd9d2; }

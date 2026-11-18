@@ -43,6 +43,9 @@
 
   /* ───────────────────────────── Scènes ───────────────────────────────── */
 
+  // Espaces insécables avant « ? ! : ; » et dans les guillemets : un signe ne reste jamais seul en fin de ligne.
+  const nb = html => String(html).replace(/ ([?!:;»])/g, ' $1').replace(/« /g, '« ');
+
   /* Tous les textes d'une scène (paroles, bulles, entretien, repères) : la
    * correction s'en sert pour repérer une réponse recopiée (indicateur.js). */
   function sceneTexts(blocks) {
@@ -209,7 +212,8 @@
           const text = line.mark && line.text.includes(line.mark)
             ? `${esc(line.text.slice(0, line.text.indexOf(line.mark)))}<mark>${esc(line.mark)}</mark>${esc(line.text.slice(line.text.indexOf(line.mark) + line.mark.length))}`
             : esc(line.text);
-          return `<li class="sc-line ${seller ? 'is-seller' : ''}"><span class="sc-avatar ${seller ? 'is-seller' : ''} ${line.face ? 'has-face' : ''}">${line.face ? `<img class="sc-avatar-face" src="../assets/illustrations/visages/${esc(line.face)}.webp" alt="" decoding="async">` : icon(seller ? 'headset' : 'users', { size: 24 })}<small>${esc(line.label || (seller ? 'Commercial' : 'Client'))}</small></span><p>« ${text} »</p></li>`;
+          // (le texte de la réplique reçoit ses espaces insécables ci-dessous)
+          return `<li class="sc-line ${seller ? 'is-seller' : ''}"><span class="sc-avatar ${seller ? 'is-seller' : ''} ${line.face ? 'has-face' : ''}">${line.face ? `<img class="sc-avatar-face" src="../assets/illustrations/visages/${esc(line.face)}.webp" alt="" decoding="async">` : icon(seller ? 'headset' : 'users', { size: 24 })}<small>${esc(line.label || (seller ? 'Commercial' : 'Client'))}</small></span><p>« ${nb(text)} »</p></li>`;
         }).join('')}</ol>`;
       }
       if (block.image && block.bubbles) {
@@ -222,7 +226,7 @@
         const typing = keys.some(k => !TYPED.has(k)) && !noTyping();
         if (typing) root.setTimeout(typeBubbles, 60);
         return `<figure class="sc-picture has-bubbles"><img ${block.flip ? 'class="is-flipped" ' : ''}src="${esc(core().webAsset(block.image))}" alt="${esc(block.alt || '')}" decoding="sync">
-          <ol class="sc-talk ${typing ? 'is-typing' : ''}" ${typing ? 'data-tw="1"' : ''}>${block.bubbles.map((b, j) => `<li class="sc-talk-line is-${b.side === 'right' ? 'right' : 'left'} ${b.who === 'seller' ? 'is-seller' : ''} ${typing && TYPED.has(keys[j]) ? 'is-on is-still' : ''}" data-tw-line="${esc(keys[j])}"><small>${esc(b.label || '')}</small><span class="sc-talk-text">«&nbsp;${esc(b.text)}&nbsp;»</span></li>`).join('')}</ol></figure>`;
+          <ol class="sc-talk ${typing ? 'is-typing' : ''}" ${typing ? 'data-tw="1"' : ''}>${block.bubbles.map((b, j) => `<li class="sc-talk-line is-${b.side === 'right' ? 'right' : 'left'} ${b.who === 'seller' ? 'is-seller' : ''} ${typing && TYPED.has(keys[j]) ? 'is-on is-still' : ''}" data-tw-line="${esc(keys[j])}"><small>${esc(b.label || '')}</small><span class="sc-talk-text">«&nbsp;${nb(esc(b.text))}&nbsp;»</span></li>`).join('')}</ol></figure>`;
       }
       if (block.image && block.say) {
         // La réplique du client posée en bas de l'image, sur un dégradé

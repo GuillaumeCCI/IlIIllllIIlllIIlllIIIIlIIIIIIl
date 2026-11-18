@@ -70,6 +70,11 @@
   const geste = text => text.replace(/\[([^\]]*)\]/g, '($1)');
   const avant = ref => LIGNES.slice(0, rang(ref)).reverse().find(line => line.who !== 'seller');
   const bulle = (line, side) => ({ who: line.who, side, label: line.label, text: geste(line.text) });
+  /* Un passage de l'entretien, en échange lisible (pas de zone qui défile,
+   * pas de surlignage) : de la réplique `from` à la réplique `to` comprises. */
+  const passage = (from, to) => [{ dialogue: LIGNES.slice(rang(from), rang(to) + 1).map(line => ({ who: line.who, label: line.label, text: geste(line.text) })) }];
+  const REREAD = { label: 'Relire tout l’entretien', title: 'Le rendez-vous des Benali', scene: SCENE_OF() };
+  const IMAGE = { image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.' };
   const replique = (ref, tab, answer, why) => ({
     tab,
     scene: [{ image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.',
@@ -123,13 +128,13 @@
       ],
       caseNoun: 'Étape',
       pills: true,
-      // Pleine largeur : la scène illustrée reste grande.
+      reread: REREAD,
       submitLabel: 'Voir le corrigé',
       scoreScope: 'Le score estimatif porte sur votre question (partie 2). Les signaux repérés sont corrigés juste en dessous.',
       cases: [
         // Le passage étudié : tout ce qui précède « pas trop loin » (la suite s'estompe).
-        { tab: 'Repérer', scene: SCENE_OF([], rang('pas-trop-loin') - 1), reviewScene: false, fields: [
-          { id: 'signaux', type: 'chips', columns: 2, label: '1 · Les signaux que Nadia n’a pas exploités', sub: 'Choisissez-en au moins trois. Certains ne sont pas des signaux manqués.', chipNoun: 'signal', min: 3,
+        { tab: 'Repérer', scene: passage(0, rang('pas-trop-loin') - 1), reviewScene: false, fields: [
+          { id: 'signaux', type: 'chips', columns: 2, label: 'Quels signaux du couple Nadia a-t-elle laissés passer ?', sub: 'Un signal, c’est ce que le couple montre sans le dire clairement : un mot glissé, un geste, un silence, un ton. Choisissez-en au moins trois ; certains n’en sont pas.', chipNoun: 'signal', min: 3,
             extraNote: 'Nadia en a déjà tenu compte',
             options: [
               { id: 'telephone', label: 'M. Benali consulte son téléphone, les bras croisés', why: 'Il ne se sent pas concerné, ou pas écouté.' },
@@ -143,8 +148,8 @@
             ],
             answer: ['telephone', 'loin', 'nuit', 'sec', 'soupir'] }
         ] },
-        { tab: 'Vérifier', scene: SCENE_OF([], rang('pas-trop-loin') - 1), reviewScene: false, fields: [
-          { id: 'verifier', label: '2 · Vérifier un signal', sub: 'Choisissez l’un de ces signaux. Quelle question auriez-vous posée pour le vérifier, au lieu de le supposer ?', placeholder: 'Votre question au client…', rows: 3,
+        { tab: 'Vérifier', scene: passage(0, rang('pas-trop-loin') - 1), reviewScene: false, fields: [
+          { id: 'verifier', label: 'Quelle question auriez-vous posée pour vérifier l’un de ces signaux ?', sub: 'Choisissez un signal, puis écrivez la question que vous poseriez au couple pour savoir ce qu’il veut dire, au lieu de le supposer.', placeholder: 'Votre question au client…', rows: 3,
             model: 'Pour « pas trop loin » : « Quand vous dites pas trop loin, Monsieur, c’est par rapport à quoi, surtout ? ». Pour les bras croisés : « Monsieur, qu’est-ce qui compte le plus pour vous dans ce projet ? »' }
         ] }
       ],
@@ -163,10 +168,11 @@
         { target: '.fm-actions', title: 'Valider', text: 'Vous comparez ensuite avec une réponse possible.' }
       ],
       caseNoun: 'Analyse',
+      reread: REREAD,
       submitLabel: 'Voir le corrigé',
       cases: [
-        { tab: 'Votre analyse', scene: SCENE_OF(['pas-trop-loin', 'resume']), reviewScene: false, fields: [
-          { id: 'pourquoi', label: 'Pourquoi les deux dernières répliques de Nadia retournent la situation', sub: 'Relisez les deux répliques surlignées : ce que fait Nadia quand elle revient sur « pas trop loin », puis quand elle résume, et l’effet sur M. et Mme Benali.', placeholder: 'Votre analyse…', rows: 7,
+        { tab: 'Votre analyse', scene: passage('pas-trop-loin', LIGNES.length - 1), reviewScene: false, fields: [
+          { id: 'pourquoi', label: 'Pourquoi ces deux répliques de Nadia retournent-elles la situation ?', sub: 'Expliquez ce que fait Nadia quand elle revient sur « pas trop loin », puis quand elle résume, et l’effet que cela produit sur M. et Mme Benali.', placeholder: 'Votre analyse…', rows: 7,
             model: 'D’abord, Nadia reprend les mots exacts de M. Benali (« pas trop loin ») et s’adresse enfin à lui, alors qu’elle l’avait écarté jusque-là. M. Benali se sent entendu : il décroise les bras et livre son vrai besoin, la sécurité du trajet de nuit, pas le confort ni l’habitude. Ensuite, dans son résumé, Nadia fait de ce besoin le premier critère de recherche (moins de vingt minutes de l’hôpital) et fait valider sa synthèse par les deux. Sans elle, toutes les maisons proposées auraient été à côté.' }
         ] }
       ],
@@ -185,10 +191,11 @@
         { target: '.fm-actions', title: 'Valider', text: 'Vous comparez ensuite avec une réponse possible.' }
       ],
       caseNoun: 'Réécriture',
+      reread: REREAD,
       submitLabel: 'Voir le corrigé',
       cases: [
-        { tab: 'Votre réplique', scene: SCENE_OF([4, 'tout-le-monde']), reviewScene: [{ dialogue: [LIGNES[4], ligne('tout-le-monde')] }], fields: [
-          { id: 'l3', label: 'Votre réplique, à la place de celle de Nadia', sub: `M. Benali vient de dire « Et pas trop loin ». Nadia répond : « ${ligne('tout-le-monde').text} » Reprenez le mot de M. Benali, sans juger, et invitez-le à préciser.`, placeholder: 'Ce que Nadia aurait pu dire…', rows: 4,
+        { tab: 'Votre réplique', scene: [Object.assign({}, IMAGE, { bubbles: [bulle(LIGNES[4], 'left'), bulle(ligne('tout-le-monde'), 'right')] })], reviewScene: [{ dialogue: [LIGNES[4], ligne('tout-le-monde')] }], fields: [
+          { id: 'l3', label: 'Qu’auriez-vous répondu à la place de Nadia ?', sub: 'Avec une attitude de compréhension : reprenez le mot de M. Benali (« pas trop loin »), sans juger, et invitez-le à préciser ce qu’il veut dire.', placeholder: 'Ce que Nadia aurait pu dire…', rows: 4,
             model: '« Pas trop loin… La distance compte beaucoup pour vous, Monsieur. Pas trop loin de quoi, surtout ? » D’autres formulations conviennent si elles reprennent le mot du client, ne jugent pas et l’invitent à préciser.' }
         ] }
       ],
