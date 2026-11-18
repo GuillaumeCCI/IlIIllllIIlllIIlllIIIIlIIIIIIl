@@ -2583,3 +2583,20 @@ p.h7-question { margin-bottom: 12px; }
 #main .h6-panel .d5-floor-tab:focus-visible .d5-floor-n { box-shadow: none; }
 #main .h6-panel .d5-floor-tab:focus-visible { box-shadow: inset 0 0 0 2px #c9d6f5; border-radius: 8px; }
 @media (max-width: 640px) { #main .h6-panel .d5-floor-tabs::before { top: auto; } }
+
+/* 6.1 · Les rubriques en petites cartes (choix de l'utilisateur) : deux
+   rangées de trois, le nom en entier, la carte en cours bleu nuit, une coche
+   verte devant une rubrique remplie. Remplace les essais précédents. */
+#main .h6-panel .d5-floor-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 2px 0 24px; }
+#main .h6-panel .d5-floor-tabs::before { display: none; }
+#main .h6-panel .d5-floor-tab::after { display: none; }
+#main .h6-panel .d5-floor-tab { display: flex; align-items: center; justify-content: flex-start; gap: 8px; min-height: 54px; padding: 10px 14px; border: 1px solid #e3e8f3; border-radius: 12px; background: #fff; color: #3a4a7a; font-size: .9rem; font-weight: 700; line-height: 1.3; text-align: left; transition: background .2s, border-color .2s, color .2s; }
+#main .h6-panel .d5-floor-tab:hover { background: #f5f7fc; border-color: #cfd8ee; color: #1b2370; }
+#main .h6-panel .d5-floor-tab .d5-floor-n { display: none; }
+#main .h6-panel .d5-floor-tab.is-filled .d5-floor-n { display: inline-grid; flex: none; width: 20px; height: 20px; border-radius: 50%; background: #e3f4f1; color: #2a8f8f; }
+#main .h6-panel .d5-floor-tab.is-filled { color: #3a4a7a; }
+#main .h6-panel .d5-floor-tab.is-current { border-color: #1b2370; background: #1b2370; color: #fff; font-weight: 700; }
+#main .h6-panel .d5-floor-tab.is-current .d5-floor-n { background: rgb(255 255 255 / 18%); color: #fff; }
+#main .h6-panel .d5-floor-tab:focus-visible { box-shadow: 0 0 0 3px #c9d6f5; border-radius: 12px; }
+@media (max-width: 640px) { #main .h6-panel .d5-floor-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); } #main .h6-panel .d5-floor-tab { font-size: .84rem; } }
+#main .h6-panel .d5-floor-tabs { grid-auto-rows: 1fr; }
