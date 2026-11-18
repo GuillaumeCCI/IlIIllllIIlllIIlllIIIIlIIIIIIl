@@ -110,3 +110,23 @@ Puis (18/11, matin) : dans la fiche, « Vérifier ma fiche » reste inactif tant
 - Fait le 18/11 : pages « Guide formateur » de 1-2-1 et 1-2-2 (`decouverte-client/guide-1-2-1.html`, `guide-1-2-2.html`), bouton sur la carte de chaque module de l'accueil ; bilan de fin (kit.result / kit.bilan) généralisé dans le moteur.
 - Puis M1.2.3 (situation intégratrice) et M1.2.4 (approfondissement), sans fiche fournie.
 - Avant toute conception : relire la référence de conception (mémoire « conseils-conception-sources », textes dans Documents/Sources-conception).
+
+## Reprise des ANCIENS exercices avec nos règles (demande du 18/11, en cours)
+
+Demande : « il faut appliquer nos règles sur nos anciens exercices aussi » (règles : mémoire « ce-que-l-utilisateur-n-aime-pas »). Ordre : tout 1-2-1, puis 1-2-2 séries 2 à 5. Chaque écran repris est montré en local (serveur 1-2-1 : http://127.0.0.1:4173, `npm start` dans decouverte-client/1-2-1) avant de passer au suivant.
+
+Fait et validé (18/11) :
+- 3.3 La synthèse : la cliente se présente (bloc de scène `person` : portrait, nom, rôle, phrase, paroles numérotées) ; question claire ; corrigé `reviewLayout: 'rows'`. (Marc Delattre réutilise le portrait client-tasse : proposer un portrait d'homme à l'utilisateur.)
+- 3.1 / 3.2 : questions claires accordées à la personne ; corrigé en lignes ; critères neutres.
+- 3.4 : image retournée (`flip`), question en bandeau (`ask`), choix empilés (`stack`), corrigé `reviewLayout: 'lines'` (regroupé par personne, « La cliente a dit / Le vendeur a répondu », étiquette « À éviter / À retenir » séparée de la ligne « ✓ Vous aviez vu juste »).
+- Série 2 : questions en bandeau, effets empilés, définitions des attitudes neutres (`of` pour « l'attitude de… »).
+- 4.1 : image du rendez-vous + 2 bulles (ce que le couple vient de dire, la réplique de Nadia), bouton « Relire tout l'entretien » (`reread`), corrigé en lignes avec `verdictLead`, `goodWhen`, `tags`.
+- 4.3 / 4.4 : passage en échange lisible (sans cadre, `passage()`), 4.4 image + bulles, vraies questions. Montrés, pas encore commentés.
+- Moteur : fondu enchaîné lent par copie de l'écran (exercise.js ghostOf) — VALIDÉ ; plus aucun glissement ni rebond (anciennes règles supprimées dans les extras.css des modules et k-switch neutralisé) ; détection du copier-coller (indicateur.js copyShare, plafond 2/10, `copie: false` pour le mot indice) ; un seul bilan en tête du corrigé (score + auto-évaluation) ; pas de barre de défilement dans les fenêtres ; mots repérés en vert pâle ; espaces insécables dans les répliques ; outils `tools/shot.mjs` (étape 3) et `tools/shot-corrige.mjs`.
+
+EN COURS (au moment de l'arrêt) : 4.2 « Les signaux » refait en « une carte par élément » (option B, recommandée par moi, l'utilisateur hésitait entre A cliquer dans l'entretien / B une carte à la fois / C échange illustré). Fichier js/content-s4.js : `signal()` + 8 éléments + étape « Vérifier un signal » (case 9, champ c8_verifier). RESTE À FAIRE pour 4.2 :
+  1. remplacer le 1er argument de `signal()` (onglet) par un libellé lisible (ex. « Le téléphone ») ;
+  2. grilles.js : la grille s4-4.2 lit encore `c1_verifier` → passer à `c8_verifier` ;
+  3. moteur (mounts.js reviewScreen) : en `reviewLayout: 'lines'`, le cas « Vérifier » (champ écrit, `reviewRows: true`) doit s'afficher en lignes « rows » : condition à ajouter (`content.reviewLayout === 'rows' || c.reviewRows`) et ne retourner '' que si tous les champs sont des choix ;
+  4. tests, capture (tools/shot.mjs s4-4-2 3), commit, push, ouvrir en local, attendre son avis. Si refus : faire l'option A.
+Ensuite : 1-2-1 série 5 (5.1, 5.2), grilles s1/s9, puis 1-2-2 séries 2 à 5.
