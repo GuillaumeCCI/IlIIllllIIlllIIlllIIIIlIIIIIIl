@@ -431,7 +431,7 @@
   /* ── Le corrigé ──────────────────────────────────────────────────────── */
   const mapText = () => [
     `La carte des besoins de ${client.name}`, '',
-    ...map.map(r => `${r.label.replace(/^\d+ · /, '')} : ${v(`m_${r.id}`) || ''}`)
+    ...map.map(r => `${r.tab} : ${v(`m_${r.id}`) || ''}`)
   ].join('\n');
 
   function review() {
@@ -455,7 +455,7 @@
     const mapRows = map.map(r => {
       const text = v(`m_${r.id}`);
       return `<div class="fm-rv-row">
-          <p class="fm-rv-label">${esc(r.label.replace(/^\d+ · /, ''))}</p>
+          <p class="fm-rv-label">${esc(r.tab)}</p>
           <div class="fm-rv-you">${kit.filled(text) ? `<p class="result-answer-text">${esc(text)}</p>` : '<p class="result-answer-text is-empty"><em>Non renseigné.</em></p>'}</div>
           <div class="fm-rv-model"><p>${esc(r.model)}</p></div>
         </div>`;
