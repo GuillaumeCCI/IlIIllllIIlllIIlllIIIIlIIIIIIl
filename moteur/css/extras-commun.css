@@ -612,6 +612,10 @@ body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; 
 #main .k-head-aside:has(.k-context-open) > * { grid-column: 1 / -1; }
 #main .k-head-aside:has(.k-context-open) > .k-context-open { grid-row: 1; grid-column: 1; }
 #main .k-head-aside:has(.k-context-open) > .tour-replay:not(.k-context-open) { grid-row: 1; grid-column: 2; }
+/* Avec « Relire tout l'entretien » (k-reread) : trois boutons sur la première ligne. */
+#main .k-head-aside:has(.k-reread) { grid-template-columns: auto auto auto; }
+#main .k-head-aside:has(.k-reread) > .k-reread { grid-row: 1; grid-column: 2; }
+#main .k-head-aside:has(.k-reread) > .tour-replay:not(.k-context-open):not(.k-reread) { grid-row: 1; grid-column: 3; }
 /* Ailleurs, les deux boutons groupés restent sur une même ligne. */
 .tour-pair { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
 @media (prefers-reduced-motion: reduce) { .tour-hole, .tour-card { transition: none; } }

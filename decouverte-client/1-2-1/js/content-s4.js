@@ -62,11 +62,21 @@
   const ATTITUDES = root.ATELIER_ATTITUDES;
 
   /* ── 4.1 · L'attitude de chaque réplique ──────────────────────────── */
+  /* Une réplique de Nadia, dans son moment : l'image du rendez-vous (le
+   * couple à gauche, Nadia à droite) et deux bulles, ce que le couple vient
+   * de dire, puis la réplique à analyser. L'entretien entier se relit dans
+   * une fenêtre (« Relire tout l'entretien »). Les gestes entre crochets
+   * passent entre parenthèses. */
+  const geste = text => text.replace(/\[([^\]]*)\]/g, '($1)');
+  const avant = ref => LIGNES.slice(0, rang(ref)).reverse().find(line => line.who !== 'seller');
+  const bulle = (line, side) => ({ who: line.who, side, label: line.label, text: geste(line.text) });
   const replique = (ref, tab, answer, why) => ({
     tab,
-    scene: SCENE_OF([ref]),
-    reviewScene: [{ dialogue: [ligne(ref)] }],
-    fields: [{ id: 'attitude', type: 'choice', label: 'L’attitude de Nadia dans cette réplique', sub: `« ${ligne(ref).text} »`, options: ATTITUDES, answer, why, whyTitle: 'Pourquoi' }]
+    scene: [{ image: 'assets/illustrations/dialogues/rendez-vous-benali.webp', alt: 'Dans une agence, un couple écoute, attentif, une conseillère qui montre des plans et des annonces.',
+      bubbles: [bulle(avant(ref), 'left'), bulle(ligne(ref), 'right')] }],
+    reviewScene: [{ dialogue: [bulle(avant(ref), 'left'), bulle(ligne(ref), 'right')] }],
+    fields: [{ id: 'attitude', type: 'choice', ask: true, label: 'Quelle attitude d’écoute Nadia adopte-t-elle ici ?',
+      sub: 'Les six attitudes d’écoute de Porter : choisissez celle qui décrit sa réplique.', options: ATTITUDES, answer, why, whyTitle: 'Pourquoi' }]
   });
 
   root.ATELIER_S4 = {
@@ -75,8 +85,10 @@
       title: 'Les attitudes de Nadia',
       subtitle: 'Pour chacune de ses répliques, de ses premières questions à son résumé final, trouvez l’attitude d’écoute de Nadia.',
       welcome: accueil('Pour chaque réplique de Nadia surlignée, trouvez son attitude d’écoute.'),
+      reread: { label: 'Relire tout l’entretien', title: 'Le rendez-vous des Benali', scene: SCENE_OF() },
+      reviewLayout: 'lines',
       tour: [
-        scene,
+        { target: '.fm-scene', title: 'Le moment de l’entretien', text: 'Ce que le couple vient de dire, puis la réplique de Nadia à analyser. Pour tout relire, un bouton en haut ouvre l’entretien entier.' },
         { target: '.fm-main .fm-field', title: 'La réplique', text: 'Cliquez sur l’attitude de Nadia dans cette réplique.' },
         { target: '.fm-actions', title: 'Réplique suivante', text: 'Sept répliques : le corrigé arrive après la dernière.' }
       ],

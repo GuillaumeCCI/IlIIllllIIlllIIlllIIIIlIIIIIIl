@@ -1200,7 +1200,7 @@
       if (!reviewing && at < n && !seenList().includes(at)) ex().setValue('seen', [...seenList(), at]);
       return `<div class="k-page fm-page ${content.className || ''}">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count is-progress" data-live="fm-progress">${progressLine()}</p>` : ''}${content.tour && !reviewing ? (introButton(content) || (at === SELF ? kit().contextButton() : '')) + kit().tourButton() : ''}` })}
+          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count is-progress" data-live="fm-progress">${progressLine()}</p>` : ''}${content.reread && !reviewing ? `<button type="button" class="text-button with-icon tour-replay k-reread" data-act="dialog" data-dialog="reread">${icon('document', { size: 18 })}<span>${esc(content.reread.label || 'Relire le document')}</span></button>` : ''}${content.tour && !reviewing ? (introButton(content) || (at === SELF ? kit().contextButton() : '')) + kit().tourButton() : ''}` })}
         ${content.side && !reviewing && !content.stepper ? `<div class="k-panel fm-side">${scene(content.side)}</div>` : ''}
         ${reviewing ? reviewScreen() : `${tabs(at)}<form novalidate class="fm-form">${casePanel(at)}</form>`}
         ${reviewing ? '' : kit().utility(content.lock || 'Corrigé disponible après validation')}
@@ -1315,6 +1315,8 @@
       return parts;
     });
     const dialogTable = {};
+    // `reread` : le document entier (un entretien…), relu dans une fenêtre.
+    if (content.reread) dialogTable.reread = { title: content.reread.title, html: scene(content.reread.scene) };
     if (content.hint) dialogTable.hint = { title: content.hintLabel || 'Un repère', html: `<p>${esc(content.hint)}</p>` };
     cases.forEach((c, i) => { if (c.hint) dialogTable[`hint${i}`] = { title: content.hintLabel || 'Un repère', html: `<p>${esc(c.hint)}</p>` }; });
     if (content.resources) dialogTable.resources = { title: content.resourcesTitle || 'Vos ressources', html: `<ul class="dialog-list">${content.resources.map(r => `<li>${esc(r)}</li>`).join('')}</ul>` };
