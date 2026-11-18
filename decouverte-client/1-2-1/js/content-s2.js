@@ -12,12 +12,12 @@
 
   /* Les six attitudes d'écoute, avec ce que fait chacune, en mots simples. */
   const ATTITUDES = [
-    { id: 'evaluation', label: 'Évaluation', sub: 'Il approuve ou désapprouve ce qu’on lui dit.' },
-    { id: 'interpretation', label: 'Interprétation', sub: 'Il explique à la place de la personne ce qu’elle pense vraiment.' },
-    { id: 'soutien', label: 'Soutien', sub: 'Il rassure et minimise ce que la personne ressent.' },
-    { id: 'enquete', label: 'Enquête', sub: 'Il pose des questions pour obtenir des informations.' },
-    { id: 'solution', label: 'Solution', sub: 'Il propose tout de suite une solution ou un conseil.' },
-    { id: 'comprehension', label: 'Compréhension', sub: 'Il redit avec ses mots ce que vit la personne, et vérifie.' }
+    { id: 'evaluation', of: 'd’évaluation', label: 'Évaluation', sub: 'Il approuve ou désapprouve ce qu’on lui dit.' },
+    { id: 'interpretation', of: 'd’interprétation', label: 'Interprétation', sub: 'Il explique à la place de la personne ce qu’elle pense vraiment.' },
+    { id: 'soutien', of: 'de soutien', label: 'Soutien', sub: 'Il rassure et minimise ce que la personne ressent.' },
+    { id: 'enquete', of: 'd’enquête', label: 'Enquête', sub: 'Il pose des questions pour obtenir des informations.' },
+    { id: 'solution', of: 'de solution', label: 'Solution', sub: 'Il propose tout de suite une solution ou un conseil.' },
+    { id: 'comprehension', of: 'de compréhension', label: 'Compréhension', sub: 'Il redit avec ses mots ce que vit la personne, et vérifie.' }
   ];
 
   /* L'effet probable sur le client. */

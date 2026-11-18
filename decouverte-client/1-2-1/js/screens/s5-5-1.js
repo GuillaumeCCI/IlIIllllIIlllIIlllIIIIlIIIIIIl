@@ -14,6 +14,8 @@
   const ouvert = window.AtelierOuvert;
   const { esc, icon } = kit;
   const content = window.ATELIER_S5['5.1'];
+  // Une réponse qui recopie les paroles de la situation est plafonnée (moteur/js/indicateur.js).
+  window.AtelierSourceText = () => (window.AtelierSourceFrom ? window.AtelierSourceFrom(content) : []);
   const { sellers, criteria, levels } = content;
   const RANK = sellers.length;            // l'étape du classement
   const nC = criteria.length;

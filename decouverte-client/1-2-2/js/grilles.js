@@ -126,14 +126,14 @@
   const CONFORT = ['confort', 'récupérer', 'repos', 'reposer', 'tranquille', 'tranquillité', 'bien-être', 'pas de travaux', 'sans travaux', 'travaux', 'week-ends', 'week-end', 'fatigue', 'chambre d’amis', 'famille', 'sœur', 'soeur', 'recevoir', 'accueillir'];
   const ARGENT = ['argent', 'budget', 'prix', 'crédit', 'étrangler', 's’étrangler', 'économ*', 'coût', '280 000', 'finances', 'financier', 'moyens'];
   const A3_BENALI = [
-    { titre: 'Mme Benali · ses motivations', champs: ['c0_madame'],
+    { titre: 'Mme Benali · ses motivations', copie: false, champs: ['c0_madame'],
       criteres: [
         { nom: 'Sécurité', mots: SECURITE.concat(['enfants', 'route passante', 'route', 'jardin']), points: 3, conseil: 'Sa peur pour les enfants : « avec les enfants, j’ai eu peur ».' },
         { nom: 'Confort ou famille', mots: ['chambre d’amis', 'chambre', 'sœur', 'soeur', 'famille', 'recevoir', 'accueillir', 'confort'], points: 2, conseil: 'La chambre d’amis pour sa sœur.' },
         { nom: 'Argent', mots: ARGENT, points: 2, conseil: 'Le budget : « on ne veut pas s’étrangler avec le crédit ».' }
       ],
       phrases: { points: 0 } },
-    { titre: 'M. Benali · ses motivations', champs: ['c0_monsieur'],
+    { titre: 'M. Benali · ses motivations', copie: false, champs: ['c0_monsieur'],
       criteres: [
         { nom: 'Confort', mots: CONFORT, points: 4, conseil: 'Ses week-ends pour récupérer, sans travaux.' },
         { nom: 'Sécurité', mots: SECURITE.concat(['trajet', 'gardes', 'nuit', 'route', 'hôpital', 'conduire', 'volant']), points: 3, conseil: 'Le trajet après ses gardes de nuit.' }

@@ -17,6 +17,8 @@
   const KEY = 's5-5.2';
   const { esc, icon } = kit;
   const content = window.ATELIER_S5['5.2'];
+  // Une réponse qui recopie les paroles de la situation est plafonnée (moteur/js/indicateur.js).
+  window.AtelierSourceText = () => (window.AtelierSourceFrom ? window.AtelierSourceFrom(content) : []);
   const { fiches, tasks } = content;
   const ORAL = 4;
   const YES_NO = [{ id: 'oui', label: 'Oui' }, { id: 'non', label: 'Non' }];

@@ -20,6 +20,8 @@
   const { esc, icon } = kit;
   const KEY = 's5-5.2';
   const content = window.ATELIER_S5['5.2'];
+  // Une réponse qui recopie les paroles de la situation est plafonnée (moteur/js/indicateur.js).
+  window.AtelierSourceText = () => (window.AtelierSourceFrom ? window.AtelierSourceFrom(content) : []);
   const { fiches, floors } = content;
   const STEPS = ['Le client', 'Votre guide', 'La découverte', 'L’analyse', 'La grille'];
   const LAST = STEPS.length - 1;

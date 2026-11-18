@@ -485,7 +485,7 @@
       width: `${main.offsetWidth}px`, height: `${main.offsetHeight}px`, margin: '0', boxSizing: 'border-box', pointerEvents: 'none', zIndex: '40' });
     main.after(ghost);
     // Retirée à coup sûr, même si le navigateur ne joue pas la transition.
-    setTimeout(() => ghost.remove(), 320);
+    setTimeout(() => ghost.remove(), 600);
     return ghost;
   }
   function render(focus = false) {
@@ -496,7 +496,7 @@
     drawScreen(focus);
     if (ghost) {
       requestAnimationFrame(() => {
-        ghost.style.transition = 'opacity .22s ease-in';
+        ghost.style.transition = 'opacity .45s ease-in-out';
         ghost.style.opacity = '0';
       });
     }

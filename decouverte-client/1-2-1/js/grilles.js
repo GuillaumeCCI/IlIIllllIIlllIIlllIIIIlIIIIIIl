@@ -76,8 +76,10 @@
   });
 
   /* ── La synthèse : tous les éléments, puis une validation ──────────── */
-  const synthese = (titre, champ, elements) => ({
-    titre, champs: [champ],
+  // `n` : le rang du client en 3.3 ; ses paroles servent à repérer une copie.
+  const paroles = n => () => ((root.ATELIER_S3 && root.ATELIER_S3['3.3'].cases[n].scene.find(b => b.said)) || {}).said;
+  const synthese = (titre, champ, elements, source) => ({
+    titre, champs: [champ], source,
     // Une ligne par remarque du client, puis la validation : rien d'autre à lire.
     criteres: elements.map(([nom, mots]) => ({ nom, mots, points: 2 }))
       .concat([{ nom: 'Une question pour valider', mots: VALIDATION, points: 3, conseil: 'Terminez par une question : « C’est bien ça ? ».' }]),
@@ -249,7 +251,7 @@
           'sur leur téléphone', 'leur téléphone', 'portable', 'consulter', 'voir le planning', 'équipe', 'employées', 'salariées', 'collaboratrices']],
         ['Un outil simple', ['simple', 'simples', 'simplicité', 'facile', 'facilement', 'trop compliquée', 'compliqué', 'compliquée', 'pas compliqué',
           'première expérience', 'déjà essayé', 'déjà testé', 'mauvaise expérience', 'application', 'appli', 'prise en main', 'intuitif', 'intuitive']]
-      ]),
+      ], paroles(0)),
       synthese('Le restaurateur', 'c1_text', [
         ['Les pannes du week-end', ['panne', 'pannes', 'tombe en panne', 'en panne', 'week-end', 'week-ends', 'weekend', 'fin de semaine', 'le plus de monde',
           'plus de clients', 'affluence', 'coup de feu', 'rush', 'lâche', 'fiable', 'fiabilité', 'casse', 'plante']],
@@ -258,7 +260,7 @@
           'prendre en main', 'facile', 'facilement', 'simple', 'simple à utiliser', 'intuitive', 'formation', 'apprendre']],
         ['Peu de place au comptoir', ['place', 'peu de place', 'comptoir', 'derrière le comptoir', 'espace', 'encombrement', 'encombrante', 'compact',
           'compacte', 'petite', 'réduite', 'étroit', 'exigu', 'taille']]
-      ])
+      ], paroles(1))
     ] },
 
     // S4 4.2 · Vérifier un signal par une question, au lieu de le supposer.

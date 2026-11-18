@@ -43,6 +43,36 @@
 
   /* ───────────────────────────── Scènes ───────────────────────────────── */
 
+  /* Tous les textes d'une scène (paroles, bulles, entretien, repères) : la
+   * correction s'en sert pour repérer une réponse recopiée (indicateur.js). */
+  function sceneTexts(blocks) {
+    return [].concat(blocks || []).flatMap(b => {
+      if (!b || typeof b !== 'object') return [];
+      const out = [b.quote, b.say, b.info, b.intro].filter(t => typeof t === 'string');
+      [].concat(b.said || []).forEach(t => out.push(t));
+      [].concat(b.bubbles || [], b.dialogue || [], (b.script && b.script.lines) || [], b.facts || []).forEach(x => x && x.text && out.push(x.text));
+      if (b.email) [].concat(b.email.lines || []).forEach(t => out.push(t));
+      return out;
+    });
+  }
+  root.AtelierSceneTexts = sceneTexts;
+  /* Pour un écran sur mesure : les paroles de la situation dans son contenu
+   * (citations, répliques, questions d'un guide, réponses d'un client…), sans
+   * les modèles, critères ni consignes. */
+  const KEEP = new Set(['quote', 'text', 'lines', 'questions', 'from', 'answer', 'context', 'profile', 'signal', 'said']);
+  const SKIP = new Set(['criteria', 'selfCheck', 'tasks', 'oral', 'models', 'model', 'modelValues', 'emerge', 'why', 'keyPoint', 'welcome', 'tour', 'briefing']);
+  function sourceFrom(content) {
+    const out = [];
+    const walk = (value, keep) => {
+      if (typeof value === 'string') { if (keep) out.push(value); return; }
+      if (Array.isArray(value)) { value.forEach(v => walk(v, keep)); return; }
+      if (value && typeof value === 'object') Object.entries(value).forEach(([k, v]) => { if (!SKIP.has(k)) walk(v, keep || KEEP.has(k)); });
+    };
+    walk(content, false);
+    return out;
+  }
+  root.AtelierSourceFrom = sourceFrom;
+
   /* Une scène est un bloc, ou une liste de blocs :
    *   { quote, speaker }              une réplique du client ;
    *   { dialogue: [{ who, label, text, mark }] }   un échange ;
@@ -1062,6 +1092,14 @@
      * personne a dit (dit une seule fois), puis une ligne par réplique jugée :
      * pastille ✓ / ✗, la réplique, la bonne réponse et sa raison, et ce
      * qu'on avait répondu quand c'est faux. */
+    /* La bonne réponse dite en phrase : `f.verdictLead` + `option.of`
+     * (« Nadia adopte ici l'attitude » + « de soutien »), sinon le libellé. */
+    const optionOf = (f, id) => f.options.find(o => o.id === id) || {};
+    const verdictOf = (f, accepted) => (f.verdictLead && accepted.every(id => optionOf(f, id).of)
+      ? `${f.verdictLead} ${accepted.map(id => optionOf(f, id).of).join(' ou ')} :`
+      : `${accepted.map(id => optionLabel(f, id)).join(' ou ')}.`);
+    const yoursOf = (f, id) => (!id ? 'Vous n’aviez pas répondu.'
+      : f.verdictLead && optionOf(f, id).of ? `Vous aviez choisi l’attitude ${optionOf(f, id).of}.` : `Vous aviez répondu : ${optionLabel(f, id)}.`);
     function linesReview() {
       // Le rôle de chaque réplique, dit par un verbe : « a dit », « a répondu ».
       const said = line => `${esc(line.label || '')} ${line.who === 'seller' ? 'a répondu' : 'a dit'}`;
@@ -1078,8 +1116,8 @@
           const ok = accepted.includes(val(i, f));
           g.rows.push(`<li class="fm-lrow ${ok ? 'is-ok' : 'is-ko'}"><span class="fm-lmark" aria-label="${ok ? 'Juste' : 'À revoir'}">${icon(ok ? 'check' : 'close', { size: 14, strokeWidth: 3 })}</span>
             <div><p class="fm-lreply">${judged ? `${said(judged)} : « ${esc(judged.text)} »` : esc(c.tab || '')}</p>
-              <p class="fm-lwhy"><strong>${esc(accepted.map(id => optionLabel(f, id)).join(' ou '))}.</strong> ${esc(f.why || '')}</p>
-              ${ok ? '' : `<p class="fm-lyours">Vous aviez répondu : ${esc(val(i, f) ? optionLabel(f, val(i, f)) : 'rien')}.</p>`}</div></li>`);
+              <p class="fm-lwhy"><strong>${esc(verdictOf(f, accepted))}</strong> ${esc(f.why || '')}</p>
+              ${ok ? '' : `<p class="fm-lyours">${esc(yoursOf(f, val(i, f)))}</p>`}</div></li>`);
         });
       });
       return `<div class="fm-lines">${groups.map(g => `<section class="fm-lgroup">
@@ -1314,6 +1352,9 @@
       fieldsOf(at).filter(f => f.type === 'chips').forEach(f => { parts[`chips-${k(at, f)}`] = chipsLine(at, f); });
       return parts;
     });
+    // Les textes de la situation (tous les cas) : une réponse qui les recopie est plafonnée.
+    root.AtelierSourceText = () => cases.flatMap(c => sceneTexts(c.scene))
+      .concat(sceneTexts(content.scene), sceneTexts(content.side), sceneTexts(content.reviewIntro), content.reread ? sceneTexts(content.reread.scene) : []);
     const dialogTable = {};
     // `reread` : le document entier (un entretien…), relu dans une fenêtre.
     if (content.reread) dialogTable.reread = { title: content.reread.title, html: scene(content.reread.scene) };

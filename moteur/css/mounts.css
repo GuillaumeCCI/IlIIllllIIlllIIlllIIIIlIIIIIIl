@@ -552,7 +552,7 @@ button.crash-passage:hover { background: #fff1d6; }
    cartes blanches et l'image restent en place ; seul leur contenu change :
    l'ancien s'efface (copie de l'écran qui s'estompe, moteur/js/exercise.js),
    puis le nouveau apparaît. Aucun glissement. Les nouvelles bulles s'écrivent d'elles-mêmes. */
-.fm-panel:is(.is-next, .is-prev) > :nth-child(2) > *, .fm-panel:is(.is-next, .is-prev) > .fm-scene :is(.client-card, .sc-person) > * { animation: fm-in .38s ease-out .2s both; }
+.fm-panel:is(.is-next, .is-prev) > :nth-child(2) > *, .fm-panel:is(.is-next, .is-prev) > .fm-scene :is(.client-card, .sc-person) > * { animation: fm-in .6s ease-in-out .4s both; }
 @keyframes fs-next { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
 @keyframes fs-prev { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
 @keyframes fm-in { from { opacity: 0; } to { opacity: 1; } }

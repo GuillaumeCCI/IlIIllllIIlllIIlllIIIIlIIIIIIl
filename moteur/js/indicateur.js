@@ -66,6 +66,19 @@
     return list;
   }
 
+  /* La part des suites de quatre mots de la réponse qu'on retrouve telles
+   * quelles dans les paroles d'origine (0 à 1). */
+  function copyShare(list, source) {
+    let texts = source;
+    try { if (typeof texts === 'function') texts = texts(); } catch (e) { texts = null; }
+    texts = [].concat(texts || []).filter(Boolean);
+    if (!texts.length || list.length < 6) return 0;
+    const grams = words => words.slice(0, Math.max(0, words.length - 3)).map((_, i) => words.slice(i, i + 4).join(' '));
+    const known = new Set(texts.flatMap(t => grams(tokens(t).map(w => w.word))));
+    const mine = grams(list.map(w => w.word));
+    return mine.length ? mine.filter(g => known.has(g)).length / mine.length : 0;
+  }
+
   // Une expression compilée : une suite de racines (ou de débuts de mots).
   const cache = new Map();
   function compile(expression) {
@@ -320,6 +333,18 @@
       lines.push({ kind: 'warn', nom: piege.nom, found: [...new Set(hits.map(h => h.toLowerCase()))].slice(0, 3), conseil: piege.conseil });
     }
     earned = Math.max(0, earned - malus);
+
+    /* `source` : les paroles d'origine (texte, liste, ou fonction qui les
+     * donne). Une réponse qui les recopie (plus d'un tiers de ses suites de
+     * quatre mots s'y retrouvent telles quelles) n'est pas une reformulation :
+     * le score est plafonné au cinquième, et la ligne le dit. */
+    // Sans source propre au bloc : les textes de la situation, relevés par l'écran (root.AtelierSourceText).
+    // `copie: false` : une rubrique où citer les mots du client est demandé (le mot indice).
+    const copied = bloc.copie === false ? 0 : copyShare(list, bloc.source || root.AtelierSourceText);
+    if (copied >= 0.34) {
+      earned = Math.min(earned, max * 0.2);
+      lines.unshift({ kind: 'warn', nom: 'Ses phrases recopiées', found: [], conseil: bloc.copieConseil || 'Votre réponse recopie le texte de la situation : écrivez-la avec vos propres mots.' });
+    }
 
     return { titre: bloc.titre || '', text, marks, lines, earned, max };
   }
