@@ -2664,3 +2664,7 @@ p.h7-question { margin-bottom: 12px; }
 .h6-cmp-you p, .h6-cmp-ex p { margin: 0; color: #24305a; line-height: 1.6; white-space: pre-line; }
 .h6-cmp-you p.is-empty { color: #a7b1c8; font-style: italic; }
 @media (max-width: 760px) { .h6-cmp-pair { grid-template-columns: minmax(0, 1fr); } }
+
+/* 6.2 · Écrire son diagnostic : la carte EST le champ ; le champ n'a ni
+   ombre ni fond, au repos comme quand on écrit (la carte s'entoure de bleu). */
+#main .h7-write textarea, #main .h7-write textarea:focus, #main .h7-write input[type="text"], #main .h7-write input[type="text"]:focus { box-shadow: none; background: transparent; }

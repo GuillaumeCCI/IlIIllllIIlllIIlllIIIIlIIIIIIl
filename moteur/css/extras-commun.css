@@ -925,3 +925,7 @@ html { background-color: #fbf8f2; }
    bouton de fermeture restent en place). */
 #info-dialog:not(.is-tip) { max-height: 90vh; }
 #info-dialog:not(.is-tip) #dialog-body { max-height: calc(90vh - 160px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; padding-right: 6px; }
+
+/* Au focus, plus d'effet « soulevé » (une grosse ombre jugée bizarre) :
+   la zone garde son ombre douce et prend un fin halo bleu. */
+#main :is(textarea, input[type="text"]):focus { box-shadow: 0 4px 16px rgb(20 40 100 / 7%), 0 0 0 3px #e3eafc, inset 0 0 0 1px #b9c8ef; }
