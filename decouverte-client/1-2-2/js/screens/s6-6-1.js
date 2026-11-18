@@ -455,11 +455,10 @@
     ...map.map(r => `${r.tab} : ${v(`m_${r.id}`) || ''}`)
   ].join('\n');
 
-  function review() {
-    const end = ending();
-    const best = steps.filter((s, k) => choiceAt(k) === s.best).length;
-    const yesCount = content.selfCheck.filter((_, i) => v(`self${i}`) === 'oui').length;
-    const pathRows = steps.map((s, k) => {
+  /* Le détail de l'entretien, étape par étape (dans une fenêtre) : votre
+   * premier choix, son verdict, et « Il valait mieux… » après une erreur. */
+  function pathHtml() {
+    const rows = steps.map((s, k) => {
       const id = choiceAt(k);
       const c = s.choices[id] || {};
       const ok = id === s.best;
@@ -472,6 +471,27 @@
             ${ok ? '' : `<p class="h6-better-line">Il valait mieux <b>${esc(lower(s.choices[s.best].intent))}</b> : ${q(s.choices[s.best].text)}</p>`}</div>
         </div>`;
     }).join('');
+    return `<div class="h6-path-dialog"><p class="h7-review-line">Votre premier choix à chaque étape, et ce qu’il valait mieux demander quand ce n’était pas le meilleur. Découverte : ${usedAfter(steps.length)} minutes ; il restait ${left(steps.length)} minutes pour l’essai.</p>${rows}</div>`;
+  }
+
+  /* La page finale, comme celle de 6.3 : ce qu'on regarde et pourquoi, le
+   * parcours en quatre anneaux avec un verdict, puis la carte face à
+   * l'exemple, puis la grille. */
+  function review() {
+    const end = ending();
+    const best = steps.filter((s, k) => choiceAt(k) === s.best).length;
+    const yesCount = content.selfCheck.filter((_, i) => v(`self${i}`) === 'oui').length;
+    const R = 34;
+    const C = 2 * Math.PI * R;
+    const ring = (ratio, inner, label, word, tone, i) => `<div class="h8-ring tone-${tone} h6-in" ${delay(0.1 * i)}>
+        <div class="h8-ring-g"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="${R}" class="h8-ring-bg"/><circle cx="40" cy="40" r="${R}" class="h8-ring-fg" style="--c:${C.toFixed(1)};--o:${(C * (1 - Math.max(0, Math.min(1, ratio)))).toFixed(1)}"/></svg><p class="h8-ring-n">${inner}</p></div>
+        <p class="h8-ring-t">${label}</p><p class="h8-ring-w">${word}</p>
+      </div>`;
+    const judge = r => (r >= 0.8 ? ['Très bien', 'ok'] : r >= 0.5 ? ['En bonne voie', 'mid'] : ['À reprendre', 'ko']);
+    const tile = (n, total, label, i) => { const r = total ? n / total : 0; const [w, t] = judge(r); return ring(r, `<b>${n}</b><span>/ ${total}</span>`, label, w, t, i); };
+    const verdict = end.tone === 'ok' ? 'Une découverte réussie : Mme Rivière essaie le bon véhicule.'
+      : end.tone === 'mid' ? 'Une découverte en bonne voie : l’essai a lieu, mais il reste des doutes.'
+        : 'Une découverte à reprendre : l’essai n’a pas eu lieu.';
     const mapRows = map.map(r => {
       const text = v(`m_${r.id}`);
       return `<div class="fm-rv-row">
@@ -480,19 +500,27 @@
           <div class="fm-rv-model"><p>${esc(r.model)}</p></div>
         </div>`;
     }).join('');
-    return `<section class="k-panel h6-review">
-        <p class="a4-review-head"><span class="k-label">Votre partie</span><span class="a4-review-count"><b>${best}</b> / ${steps.length} meilleurs choix · vos acquis : <b>${quizScore()}</b> / ${quiz.length}</span></p>
-        <div class="h6-review-end tone-${end.tone}">${gaugeBar(gauge(), 'Votre jauge finale')}<p><strong>${esc(end.title)}.</strong> ${esc(end.text)}</p><p class="h6-time-line">${icon('clock', { size: 16 })} Découverte : ${usedAfter(steps.length)} minutes · reste ${left(steps.length)} minutes pour l’essai (il en faut ${content.testMin}).</p></div>
-                ${pathRows}
+    return `<section class="k-panel h6-review h7-review">
+        <div class="h8-rhead"><p class="h8-rhead-tag">Le bilan de votre activité</p><p class="h8-rhead-title">${esc(verdict)}</p></div>
+        <p class="h7-review-line">Voici, en quatre chiffres, ce que vous avez fait avec Mme Rivière : l’entretien, la jauge à la fin, vos acquis, et votre grille. Plus bas, votre carte des besoins à côté d’un exemple.</p>
+        <div class="h8-rings">
+          ${tile(best, steps.length, 'meilleures questions dès le premier choix', 0)}
+          ${tile(gauge(), 10, 'jauge de découverte à la fin', 1)}
+          ${tile(quizScore(), quiz.length, 'bonnes réponses à vos acquis', 2)}
+          ${tile(yesCount, content.selfCheck.length, 'critères cochés « Oui » dans votre grille', 3)}
+        </div>
+        <div class="h6-copy">${kit.act('h6-path-open', `${icon('chat', { size: 18 })}<span>Revoir l’entretien étape par étape</span>`, 'secondary small')}</div>
       </section>
       <section class="k-panel fm-review is-rows h6-review">
-        <p class="k-label">Votre carte des besoins</p>
-        <div class="fm-rv-head" aria-hidden="true"><span></span><span>Votre carte</span><span>Un exemple (parcours réussi)</span></div>
+        <p class="k-label">Votre carte des besoins, à côté d’un exemple</p>
+        <p class="h7-review-line">L’exemple vient d’un parcours réussi. Il n’y a pas une seule bonne carte : vérifiez surtout que chaque besoin s’appuie sur les mots de Mme Rivière, et sur la question qui l’a fait apparaître.</p>
+        <div class="fm-rv-head" aria-hidden="true"><span></span><span>Votre carte</span><span>L’exemple</span></div>
         ${mapRows}
         <div class="h6-copy">${kit.act('h6-copy', `${icon('document', { size: 18 })}<span>Copier ma carte</span>`, 'secondary small')}<span>Pour la garder, ou la transmettre à votre tuteur.</span></div>
       </section>
       <section class="k-panel h6-review">
-        <p class="a4-review-head"><span class="k-label">Mon auto-évaluation</span><span class="a4-review-count"><b>${yesCount}</b> / ${content.selfCheck.length} critères cochés « Oui »</span></p>
+        <p class="a4-review-head"><span class="k-label">Votre grille</span><span class="a4-review-count"><b>${yesCount}</b> / ${content.selfCheck.length} critères cochés « Oui »</span></p>
+        <p class="h7-review-line">Ce que vous avez répondu en relisant votre carte. Votre tuteur utilisera la même grille.</p>
         <ul class="a5-self-recap">${content.selfCheck.map((row, i) => `<li><span class="pos-level level-${v(`self${i}`) === 'oui' ? '2' : '0'}">${v(`self${i}`) === 'oui' ? 'Oui' : 'Non'}</span><span>${esc(row.text)}</span></li>`).join('')}</ul>
       </section>
       ${kit.keyPoint ? kit.keyPoint(content.keyPoint) : ''}
@@ -533,6 +561,7 @@
   kit.on({
     'h6-go': control => go(Number(control.dataset.index)),
     'h6-prev': () => go(Math.max(0, at() - 1)),
+    'h6-path-open': () => core.openDialog('Votre entretien, étape par étape', pathHtml()),
     'h6-tr': control => { advance(`tr${control.dataset.k}`); window.scrollTo({ top: 0, behavior: 'instant' }); },
     // « Continuer » : le temps présent est lu, on passe au suivant.
     'h6-flag': control => advance(control.dataset.name),

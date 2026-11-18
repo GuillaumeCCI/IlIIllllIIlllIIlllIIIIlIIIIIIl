@@ -2636,3 +2636,5 @@ p.h7-question { margin-bottom: 12px; }
 .h6-better-line { margin: 6px 0 0; color: #3a4a7a; line-height: 1.5; }
 .h6-better-line b { color: #1b2370; }
 @media (max-width: 900px) { .h6-path-row.is-one { grid-template-columns: minmax(0, 1fr); } }
+.h6-path-dialog .h6-path-row.is-one { grid-template-columns: 70px minmax(0, 1fr); }
+.h7-review-line + .h8-rings { margin-top: 14px; }
