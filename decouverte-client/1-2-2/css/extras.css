@@ -2467,3 +2467,43 @@ p.h7-question { margin-bottom: 12px; }
 .h8-fold[open] .h8-fold-closed, .h8-fold:not([open]) .h8-fold-open { display: none; }
 .h8-fold[open] > .h8-fold-sum { margin-bottom: 8px; }
 .h8-fold-sum:focus-visible { outline: 3px solid #ff936b; outline-offset: 4px; border-radius: 8px; }
+
+/* 6.3 · Le parcours mis en avant : verdict en tête, quatre anneaux animés. */
+.h8-rhead { display: grid; gap: 4px; margin-bottom: 18px; }
+.h8-rhead-tag { margin: 0; color: #2a8f8f; font-size: .76rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.h8-rhead-title { margin: 0; color: var(--navy); font-size: 1.45rem; font-weight: 800; line-height: 1.3; }
+.h8-rings { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.h8-ring { display: grid; justify-items: center; gap: 6px; padding: 20px 14px 18px; border-radius: 18px; background: #f6f8fc; text-align: center; --tone: #2a8f8f; --tone-bg: #e6f4f4; }
+.h8-ring.tone-mid { --tone: #5a67b8; --tone-bg: #eceefa; }
+.h8-ring.tone-ko { --tone: #c9692f; --tone-bg: #fdf0e6; }
+.h8-ring.tone-off { --tone: #b4bccf; --tone-bg: #eef1f6; }
+.h8-ring-g { position: relative; width: 104px; height: 104px; }
+.h8-ring-g svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.h8-ring-bg { fill: none; stroke: #e3e8f2; stroke-width: 8; }
+.h8-ring-fg { fill: none; stroke: var(--tone); stroke-width: 8; stroke-linecap: round; stroke-dasharray: var(--c); stroke-dashoffset: var(--o); animation: h8-ring 1.1s cubic-bezier(.3, .7, .3, 1) .2s both; }
+@keyframes h8-ring { from { stroke-dashoffset: var(--c); } }
+.h8-ring-n { position: absolute; inset: 0; display: grid; place-content: center; margin: 0; color: var(--navy); line-height: 1; }
+.h8-ring-n b { font-size: 1.9rem; font-weight: 800; }
+.h8-ring-n b.is-word { font-size: 1.05rem; }
+.h8-ring-n span { margin-top: 2px; color: #8a93ad; font-size: .82rem; font-weight: 700; }
+.h8-ring-t { margin: 4px 0 0; color: #24305a; font-size: .92rem; font-weight: 600; line-height: 1.35; }
+.h8-ring-w { margin: 2px 0 0; padding: 3px 12px; border-radius: 999px; background: var(--tone-bg); color: var(--tone); font-size: .78rem; font-weight: 800; }
+.h8-ring.tone-off .h8-ring-w { color: #6a7392; }
+@media (max-width: 860px) { .h8-rings { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* 6.3 · Bilan des situations, plus complet : pourquoi le piège, ce que le client attend, pourquoi la question marche, d'autres questions. */
+.h8-sum-card { gap: 10px; }
+.h8-sum-why { margin-top: 4px !important; color: #4c5a80 !important; font-size: .9rem; font-weight: 400 !important; line-height: 1.45; }
+.h8-sum-part.is-key { margin-top: 0; }
+.h8-sum-part.is-need { background: #f1f4fb; }
+.h8-sum-part.is-need span { color: #1b2370; }
+.h8-sum-part.is-more { background: #f6f8fc; }
+.h8-sum-part.is-more span { color: #4c5a80; }
+.h8-sum-part ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; color: #24305a; line-height: 1.45; }
+
+/* 6.3 · Page de transition avant chaque client. */
+.h8-cintro { display: grid; justify-items: center; gap: 8px; max-width: 560px; margin: 0 auto; padding: 36px 40px 32px; border-radius: 24px; background: #fff; box-shadow: 0 14px 40px rgb(15 35 78 / 12%); text-align: center; }
+.h8-cintro-face { width: 150px; height: 150px; margin-bottom: 8px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 6px #fbf3e4, 0 10px 24px rgb(15 35 78 / 14%); }
+.h8-cintro-tag { margin: 0; color: #2a8f8f; font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.h8-cintro-title { margin: 0; color: var(--navy); font-size: 1.6rem; font-weight: 800; line-height: 1.25; }
+.h8-cintro-line { margin: 2px 0 0; color: #4c5a80; font-size: 1.05rem; line-height: 1.5; }

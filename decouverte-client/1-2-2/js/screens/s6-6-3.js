@@ -189,13 +189,15 @@
         </button>`;
     }).join('');
     const dots = Array.from({ length: N }, (_, i) => i).map(i => `<span class="${i < ids.length ? 'is-on' : ''}"></span>`).join('');
-    const bilan = done ? msgBox('ok', `<p>Vos 2 situations, et ce que Lucas doit savoir de chacune :</p>
+    const bilan = done ? msgBox('ok', `<p>Chaque situation de découverte a son piège : la réaction qui vient naturellement, et qui ferme la conversation. Avant d’écrire vos fiches, voici ce qui se joue dans les vôtres : ce que le client attend vraiment, et la question qui ouvre la porte. C’est ce que Lucas devra retenir.</p>
         <div class="h8-sum">${chosen().map((s, i) => `<article class="h8-sum-card h6-in" ${delay(0.12 * i)}>
             <img class="h8-sum-face" src="${img(s.face)}" alt="" aria-hidden="true">
             <p class="h8-sum-title">${esc(s.title)}</p>
-            <div class="h8-sum-part is-trap"><span>Le piège</span><p>${esc(s.trap)}</p></div>
-            <div class="h8-sum-part is-key"><span>La question clé</span><p>${q(s.key)}</p></div>
-          </article>`).join('')}</div>`, 'Bon choix') : '';
+            <div class="h8-sum-part is-trap"><span>Le piège</span><p>${esc(s.trap)}</p>${s.deep ? `<p class="h8-sum-why">${esc(s.deep.trapWhy)}</p>` : ''}</div>
+            ${s.deep ? `<div class="h8-sum-part is-need"><span>Ce que le client attend vraiment</span><p>${esc(s.deep.need)}</p></div>` : ''}
+            <div class="h8-sum-part is-key"><span>La question clé, et pourquoi celle-ci</span><p>${q(s.key)}</p>${s.reflex && s.reflex.why ? `<p class="h8-sum-why">${esc(s.reflex.why)}</p>` : ''}</div>
+            ${s.deep ? `<div class="h8-sum-part is-more"><span>D’autres questions possibles</span><ul>${s.deep.more.map(x => `<li>${q(x)}</li>`).join('')}</ul></div>` : ''}
+          </article>`).join('')}</div>`, 'Ce qui se joue dans vos 2 situations') : '';
     return `<section class="k-panel d5-panel h7-panel">
         <div class="h8-sit-head">
           <p class="h7-question">Quelles sont les 2 situations de découverte que vous rencontrez le plus souvent ?</p>
@@ -224,6 +226,16 @@
     }
     const s = list[j];
     const r = s.reflex;
+    // Une page de transition avant chaque client, juste pour le présenter.
+    if (!yes(`cl${j}`) && !choiceAt(j)) {
+      return stage(`<div class="h8-cintro">
+            <img class="h8-cintro-face h6-in" src="${img(s.face)}" alt="" aria-hidden="true">
+            <p class="h8-cintro-tag h6-in" ${delay(0.15)}>Client ${j + 1} sur ${N}</p>
+            <p class="h8-cintro-title h6-in" ${delay(0.25)}>${esc(s.title)}</p>
+            <p class="h8-cintro-line h6-in" ${delay(0.35)}>${esc(s.line)}</p>
+          </div>
+          <div class="h6-stage-foot">${next('Rencontrer ce client', 'h8-client', 0.6, `data-j="${j}"`)}</div>`);
+    }
     if (!choiceAt(j) || yes(`retry${j}`)) {
       const tried = yes(`retry${j}`) ? tries(j) : [];
       const opts = `<div class="h6-options" role="group" aria-label="Vos réponses possibles">${r.order.map((id, n) => `<button type="button" class="h6-option h6-in ${tried.includes(id) ? 'is-tried' : ''}" ${delay(0.2 + n * 0.15)} data-act="h8-pick" data-j="${j}" data-id="${id}" ${tried.includes(id) ? 'disabled aria-disabled="true"' : ''}><span class="h6-option-n">${n + 1}</span><span>${esc(r.choices[id].text)}</span>${tried.includes(id) ? '<span class="h6-cost is-tried">Déjà essayé</span>' : ''}</button>`).join('')}</div>`;
@@ -526,14 +538,25 @@
     const list = chosen();
     const yesCount = content.selfCheck.filter((_, i) => v(`self${i}`) === 'oui').length;
     const c = covered();
+    // Le parcours, mis en avant : un anneau par étape, le chiffre au centre, un mot de verdict.
+    const R = 34;
+    const C = 2 * Math.PI * R;
+    const ring = (ratio, inner, label, word, tone, i) => `<div class="h8-ring tone-${tone} h6-in" ${delay(0.1 * i)}>
+        <div class="h8-ring-g"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="${R}" class="h8-ring-bg"/><circle cx="40" cy="40" r="${R}" class="h8-ring-fg" style="--c:${C.toFixed(1)};--o:${(C * (1 - Math.max(0, Math.min(1, ratio)))).toFixed(1)}"/></svg><p class="h8-ring-n">${inner}</p></div>
+        <p class="h8-ring-t">${label}</p><p class="h8-ring-w">${word}</p>
+      </div>`;
+    const judge = r => (r >= 0.8 ? ['Très bien', 'ok'] : r >= 0.5 ? ['En bonne voie', 'mid'] : ['À reprendre', 'ko']);
+    const tile = (n, total, label, i) => { const r = total ? n / total : 0; const [w, t] = judge(r); return ring(r, `<b>${n}</b><span>/ ${total}</span>`, label, w, t, i); };
+    const score = (reflexRight() / N + qScore() / (QFIELDS.length * N) + c.length / themes.length) / 3;
+    const verdict = score >= 0.8 ? 'Une banque solide : Lucas peut s’en servir dès lundi.' : score >= 0.5 ? 'Une bonne base : quelques questions à reprendre avant de la remettre.' : 'Une première ébauche : reprenez vos fiches avant de la remettre à Lucas.';
     return `<section class="k-panel h6-review h7-review">
-        <p class="k-label">Votre parcours</p>
-        <ul class="h7-path">
-          <li><span>Le bon réflexe</span>${reflexRight()} sur ${N} trouvés du premier coup</li>
-          <li><span>Vos fiches</span>${qScore()} questions sur ${QFIELDS.length * N} au point</li>
-          <li><span>Vos règles d’or</span>${c.length} thèmes sur ${themes.length} couverts</li>
-          <li><span>Le test terrain</span>${yes('tok') ? 'prévu' : 'passé'}</li>
-        </ul>
+        <div class="h8-rhead"><p class="h8-rhead-tag">Votre parcours</p><p class="h8-rhead-title">${esc(verdict)}</p></div>
+        <div class="h8-rings">
+          ${tile(reflexRight(), N, 'bons réflexes du premier coup', 0)}
+          ${tile(qScore(), QFIELDS.length * N, 'questions au point dans vos fiches', 1)}
+          ${tile(c.length, themes.length, 'thèmes couverts par vos règles d’or', 2)}
+          ${ring(yes('tok') ? 1 : 0, `<b class="is-word">${yes('tok') ? 'Prévu' : 'Passé'}</b>`, 'le test terrain, facultatif', yes('tok') ? 'À faire cette semaine' : 'Quand vous voudrez', yes('tok') ? 'ok' : 'off', 3)}
+        </div>
       </section>
       <section class="k-panel h6-review h7-review">
         <p class="k-label">La banque de Lucas · ${esc(v('metier') || '')}</p>
@@ -620,6 +643,7 @@
       const check = document.querySelector('[data-act="h8-sit-check"]');
       if (check) check.disabled = nextIds.length !== N;
     },
+    'h8-client': control => { advance(`cl${control.dataset.j}`); window.scrollTo({ top: 0, behavior: 'instant' }); },
     'h8-sit-check': () => { if (chosenIds().length === N) { advance('sitok'); showMsg(); } },
     'h8-pick': control => {
       const j = Number(control.dataset.j);
