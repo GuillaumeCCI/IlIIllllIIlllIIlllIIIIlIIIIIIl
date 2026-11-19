@@ -668,3 +668,14 @@
 
 /* S1 E2 : l’image de la scène, entière, coins arrondis. */
 #main .e2-art img { display: block; width: 100%; border-radius: 22px; }
+
+/* S1 F repris (19/11) : l'ouverture de départ en carte à côté de l'image,
+ * puis deux cartes blanches, une par canal (même habillage que S1 E1). */
+#main .f-base { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 20px; align-items: center; margin: 8px 0 22px; }
+#main .f-art img { display: block; width: 100%; max-height: 220px; object-fit: cover; border-radius: 18px; }
+@media (max-width: 860px) { #main .f-base { grid-template-columns: minmax(0, 1fr); } }
+#main .f-card { margin-top: 0; }
+#main .f-card .e1-ask h2 { font-size: 1.3rem; }
+#main .f-check-title { margin: 6px 0 0; color: var(--navy); font-size: .92rem; font-weight: 700; }
+#main .e1-answer .field input { box-shadow: none; border-color: transparent; background: #f6f8fc; border-radius: 12px; }
+#main .e1-answer .field input:focus { background: #fff; box-shadow: 0 0 0 2px #c9d6f5; }

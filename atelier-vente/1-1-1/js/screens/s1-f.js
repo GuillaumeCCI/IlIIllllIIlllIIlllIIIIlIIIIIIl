@@ -42,33 +42,31 @@
   function screen() {
     if (ex.reviewing()) return reviewScreen();
     const current = core.findExercise('s1-F');
-    return `${corner()}<div class="stacked-screen">${core.pageTitle('', 'Adaptez votre ouverture à chaque canal', 'Gardez l’intention, changez la forme.')}
-    <div class="mission channel-mission">
-      <span class="mission-symbol">${icon('target', { size: 30 })}</span>
-      <div><h2>Votre mission</h2><p>Transformez l’ouverture face-à-face en deux versions : téléphone et e-mail.</p></div>
-      ${core.illustration(current)}
+    /* Repris le 19/11 : la situation en une phrase ; l'ouverture de départ
+     * montrée en carte, à côté de l'image ; puis deux cartes blanches, une
+     * par canal, chacune avec sa question, une phrase d'aide, le champ et
+     * ce qu'il faut cocher, annoncé. */
+    return `${corner()}<div class="stacked-screen f-screen">
+    ${core.pageTitle('Mise en situation', 'Adaptez votre ouverture à chaque canal', 'Vous aviez préparé cette ouverture pour un rendez-vous en face à face. Le client préfère finalement un appel, puis un e-mail : gardez la même intention, changez la forme.')}
+    <div class="f-base">
+      <figure class="recall-card is-focus"><figcaption><span class="recall-tag">L’ouverture de départ</span><strong>En face à face</strong></figcaption><blockquote>« ${esc(content.faceToFace)} »</blockquote></figure>
+      <div class="f-art">${core.illustration(current)}</div>
     </div>
-    <section class="panel base-opening">
-      <span class="base-symbol">${icon('quote', { size: 24 })}</span>
-      <div><h2>Base en face-à-face</h2><p>« ${esc(content.faceToFace)} »</p></div>
-    </section>
     <form class="stacked-form" novalidate>
       <div class="two-columns channel-columns">
-        <section class="panel">
-          <div class="channel-title">
-            <span class="channel-icon">${icon('phone', { size: 23 })}</span>
-            <div><h2>Téléphone</h2><p class="muted">30–45 secondes · Ton naturel</p></div>
-          </div>
-          ${ex.field('phone', 'Votre ouverture téléphonique', { placeholder: 'Écrivez ici votre ouverture téléphonique…', max: 1500, rows: 8, hideLabel: true })}
+        <section class="e1-answer f-card">
+          <div class="e1-ask"><h2>Au téléphone, que lui dites-vous&nbsp;?</h2></div>
+          <p class="e1-help">En 30 à 45 secondes, sur un ton naturel : présentez-vous, donnez le motif de votre appel, puis posez une question.</p>
+          ${ex.field('phone', 'Votre ouverture au téléphone', { placeholder: 'Bonjour, …', max: 1500, rows: 7, hideLabel: true })}
+          <p class="f-check-title">Cochez ce que contient votre version&nbsp;:</p>
           ${ex.checkList('phoneCheck', PHONE_CHECKS)}
         </section>
-        <section class="panel">
-          <div class="channel-title">
-            <span class="channel-icon">${icon('mail', { size: 23 })}</span>
-            <div><h2>E-mail</h2><p class="muted">80–120 mots · Lecture rapide</p></div>
-          </div>
+        <section class="e1-answer f-card">
+          <div class="e1-ask"><h2>Par e-mail, qu’écrivez-vous&nbsp;?</h2></div>
+          <p class="e1-help">Un objet clair, puis un message de 80 à 120 mots, en paragraphes courts, qui se termine par une proposition concrète.</p>
           ${ex.field('subject', 'Objet', { type: 'input', max: 120, placeholder: 'Objet de l’e-mail' })}
-          ${ex.field('email', 'Message', { placeholder: 'Écrivez ici votre ouverture par e-mail…', wordLimit: '80–120', max: 3000, rows: 5 })}
+          ${ex.field('email', 'Message', { placeholder: 'Bonjour, …', wordLimit: '80–120', max: 3000, rows: 6 })}
+          <p class="f-check-title">Cochez ce que contient votre version&nbsp;:</p>
           ${ex.checkList('emailCheck', EMAIL_CHECKS)}
         </section>
       </div>
@@ -90,10 +88,10 @@
   }
 
   /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
-  const feedback = () => [];
+  const feedback = () => ['À retenir : au téléphone, faites court et posez vite une question ; par e-mail, un objet clair et une proposition concrète à la fin.'];
 
   if (kit) kit.tour('s1-F', [
-    { target: '.base-opening', title: 'L’ouverture de départ', text: 'Elle est prévue pour un face-à-face. Gardez son intention, changez sa forme.' },
+    { target: '.f-base .recall-card', title: 'L’ouverture de départ', text: 'Elle est prévue pour un face-à-face. Gardez son intention, changez sa forme.' },
     { target: '.channel-columns', title: 'Deux versions', wide: true,
       items: [
         { symbol: 'phone', tone: 'blue', text: 'Téléphone : 30 à 45 secondes, sur un ton naturel.' },
