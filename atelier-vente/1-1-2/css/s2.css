@@ -218,22 +218,8 @@
 .k-panel:has(.proof-intro) .k-matrix tbody th { font-size: 1.15rem; }
 .k-panel:has(.proof-intro) .k-matrix thead th { font-size: .86rem; }
 /* 2.5 · RelaCosy sur un téléphone, dessiné à gauche du pitch. */
-.audit-intro { display: grid; grid-template-columns: 158px minmax(0, 1fr); gap: 32px; align-items: center; }
+.audit-intro { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 32px; align-items: center; }
 .audit-intro > div > p:last-child { font-size: clamp(1.1rem, 1.4vw, 1.3rem); line-height: 1.5; }
-.audit-phone { margin: 0; padding: 9px 8px 11px; border-radius: 22px; background: #1d2a5a; box-shadow: 0 10px 26px rgba(22, 36, 82, .2); font-size: .64rem; color: #1d2a5a; }
-.audit-phone > * { background: #fff; margin: 0; }
-.audit-phone-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 14px 14px 0 0; background: #eef3fb; font-weight: 800; }
-.audit-phone-head i { width: 13px; height: 2px; background: #1d2a5a; box-shadow: 0 4px 0 #1d2a5a, 0 -4px 0 #1d2a5a; }
-.audit-phone-card { display: grid; grid-template-columns: 26px 1fr; column-gap: 8px; align-items: center; padding: 9px 10px 6px; }
-.audit-phone-ini { grid-row: span 2; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #eef3fb; font-weight: 700; font-size: .6rem; }
-.audit-phone-card strong { font-size: .72rem; line-height: 1.1; }
-.audit-phone-card small { color: #7a86a8; }
-.audit-phone-list { list-style: none; padding: 0 10px; }
-.audit-phone-list li { display: flex; justify-content: space-between; gap: 6px; padding: 5px 0; border-top: 1px solid #eef1f7; color: #5a6890; }
-.audit-phone-list b { color: #1d2a5a; }
-.audit-phone-safe { display: flex; align-items: center; gap: 5px; padding: 6px 10px 10px; border-radius: 0 0 14px 14px; color: #2a8f8f; font-weight: 700; }
-.audit-phone-safe::before { content: ''; width: 7px; height: 6px; border-radius: 1px; background: currentColor; box-shadow: 0 -4px 0 -1px #fff, 0 -4px 0 1px currentColor; margin-top: 3px; }
-@media (max-width: 860px) { .audit-intro { grid-template-columns: 1fr; } .audit-phone { width: 158px; } }
 
 /* 2.5 · La notation : une ligne par critère, trois boutons de note. */
 .audit-dots { display: flex; gap: 6px; margin: -4px 0 14px; }
@@ -262,4 +248,33 @@
 .audit-note-btn.is-ok:has(input:checked) b { background: #2a8f8f; color: #fff; }
 .audit-note-btn:has(input:checked) { font-weight: 700; box-shadow: none; }
 @media (max-width: 1100px) { .audit-crit { grid-template-columns: 30px minmax(0, 1fr); } .audit-notes { grid-column: 1 / -1; } .audit-note-btn { flex: 1; min-width: 0; } }
-.audit-pitch .audit-phone p.audit-phone-safe { font-size: .64rem; margin: 0; color: #2a8f8f; }
+/* 2.5 · Le téléphone : cadre fin, encoche, barre d'état, boutons sur la tranche, barre d'accueil. */
+.audit-phone { position: relative; width: 150px; aspect-ratio: 9 / 18.5; margin: 0; padding: 5px; border-radius: 28px; background: linear-gradient(145deg, #3a4150, #15181f); box-shadow: inset 0 0 0 1.5px #5b6372, 0 14px 30px rgba(22, 36, 82, .25); font-size: .6rem; color: #1d2a5a; }
+.audit-phone::before, .audit-phone::after { content: ''; position: absolute; width: 3px; border-radius: 2px; background: #2b303b; }
+.audit-phone::before { left: -3px; top: 62px; height: 34px; box-shadow: 0 44px 0 #2b303b; }
+.audit-phone::after { right: -3px; top: 80px; height: 48px; }
+.audit-pitch .audit-phone-screen { display: flex; flex-direction: column; height: 100%; border-radius: 23px; background: #fff; overflow: hidden; }
+.audit-phone-status { position: relative; display: flex; justify-content: space-between; align-items: center; padding: 7px 14px 4px; font-weight: 700; font-size: .55rem; background: #eef3fb; }
+.audit-phone-island { position: absolute; left: 50%; top: 5px; width: 44px; height: 12px; margin-left: -22px; border-radius: 99px; background: #111; }
+.audit-phone-icons { display: flex; align-items: center; gap: 3px; }
+.audit-phone-icons i:first-child { width: 10px; height: 6px; background: linear-gradient(90deg, #1d2a5a 2px, transparent 2px 3px, #1d2a5a 3px 5px, transparent 5px 6px, #1d2a5a 6px 8px, transparent 8px 9px, #1d2a5a 9px); clip-path: polygon(0 100%, 100% 0, 100% 100%); }
+.audit-phone-icons i:last-child { width: 13px; height: 6px; border-radius: 2px; box-shadow: inset 0 0 0 1px #1d2a5a, inset 0 0 0 2px #eef3fb; background: linear-gradient(90deg, #1d2a5a 75%, transparent 75%); }
+.audit-phone-head { display: flex; justify-content: space-between; align-items: center; padding: 5px 12px 8px; background: #eef3fb; font-weight: 800; font-size: .68rem; }
+.audit-phone-head i { width: 12px; height: 2px; background: #1d2a5a; box-shadow: 0 4px 0 #1d2a5a, 0 -4px 0 #1d2a5a; }
+.audit-phone-card { display: grid; grid-template-columns: 24px 1fr; column-gap: 7px; align-items: center; padding: 10px 12px 6px; }
+.audit-phone-ini { grid-row: span 2; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #eef3fb; font-weight: 700; font-size: .55rem; }
+.audit-phone-card strong { font-size: .68rem; line-height: 1.1; }
+.audit-phone-card small { color: #7a86a8; }
+.audit-pitch .audit-phone-list { list-style: none; margin: 0; padding: 0 12px; }
+.audit-phone-list li { display: flex; justify-content: space-between; gap: 6px; padding: 5px 0; border-top: 1px solid #eef1f7; color: #5a6890; }
+.audit-phone-list b { color: #1d2a5a; }
+.audit-pitch .audit-phone p.audit-phone-safe { display: flex; align-items: center; gap: 5px; margin: 6px 12px 0; padding: 5px 8px; border-radius: 8px; background: #edf6f6; color: #2a8f8f; font-weight: 700; font-size: .58rem; line-height: 1.2; }
+.audit-phone-safe::before { content: ''; flex: none; width: 7px; height: 6px; border-radius: 1px; background: currentColor; box-shadow: 0 -4px 0 -1px #edf6f6, 0 -4px 0 1px currentColor; margin-top: 3px; }
+.audit-phone-tabs { display: flex; justify-content: space-around; margin-top: auto; padding: 7px 12px 4px; border-top: 1px solid #eef1f7; }
+.audit-phone-tabs i { width: 12px; height: 12px; border-radius: 4px; background: #dfe5f2; }
+.audit-phone-tabs i.is-on { background: #2a8f8f; }
+.audit-phone-home { align-self: center; width: 48px; height: 4px; margin: 3px 0 6px; border-radius: 99px; background: #1d2a5a; }
+@media (max-width: 860px) { .audit-intro { grid-template-columns: 1fr; } }
+.audit-pitch .audit-phone p.audit-phone-note { margin: 4px 12px 0; padding: 6px 8px; border-radius: 8px; background: #f6f8fd; color: #1d2a5a; font-size: .58rem; line-height: 1.3; }
+.audit-phone-note b { display: block; color: #5a67b8; font-size: .52rem; text-transform: uppercase; letter-spacing: .05em; }
+.audit-pitch .audit-phone p.audit-phone-safe { white-space: nowrap; font-size: .55rem; }

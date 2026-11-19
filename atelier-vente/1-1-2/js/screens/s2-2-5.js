@@ -24,7 +24,8 @@
   const filled = v => v !== '' && v != null;
 
   // RelaCosy sur un téléphone, dessiné (le pitch parle des dossiers sur mobile).
-  const phone = () => `<figure class="audit-phone" aria-hidden="true">
+  const phone = () => `<figure class="audit-phone" aria-hidden="true"><div class="audit-phone-screen">
+      <div class="audit-phone-status"><span>9:41</span><i class="audit-phone-island"></i><span class="audit-phone-icons"><i></i><i></i></span></div>
       <div class="audit-phone-head"><span>RelaCosy</span><i></i></div>
       <div class="audit-phone-card">
         <span class="audit-phone-ini">GP</span>
@@ -35,8 +36,11 @@
         <li><span>Devis en cours</span><b>2 400 €</b></li>
         <li><span>Rendez-vous</span><b>jeudi</b></li>
       </ul>
+      <p class="audit-phone-note"><b>À faire</b>Rappeler M. Petit pour valider le devis</p>
       <p class="audit-phone-safe">Sauvegardé et chiffré</p>
-    </figure>`;
+      <div class="audit-phone-tabs"><i class="is-on"></i><i></i><i></i><i></i></div>
+      <span class="audit-phone-home"></span>
+    </div></figure>`;
 
   /* La notation : une ligne par critère, trois boutons de note. Les critères
    * apparaissent un à un (fondu) ; tout se met à jour sur place. */
