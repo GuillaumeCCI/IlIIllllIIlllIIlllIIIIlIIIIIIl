@@ -21,6 +21,51 @@
   const total = () => notes().every(v => v !== '' && v != null) ? notes().reduce((sum, v) => sum + Number(v), 0) : null;
   const totalText = () => `Total : ${total() === null ? '-' : total()} / ${max}`;
   const reference = criteria.reduce((sum, c) => sum + c.reference, 0);
+  const filled = v => v !== '' && v != null;
+
+  // RelaCosy sur un téléphone, dessiné (le pitch parle des dossiers sur mobile).
+  const phone = () => `<figure class="audit-phone" aria-hidden="true">
+      <div class="audit-phone-head"><span>RelaCosy</span><i></i></div>
+      <div class="audit-phone-card">
+        <span class="audit-phone-ini">GP</span>
+        <strong>Garage Petit</strong><small>Nantes</small>
+      </div>
+      <ul class="audit-phone-list">
+        <li><span>Dernier échange</span><b>hier</b></li>
+        <li><span>Devis en cours</span><b>2 400 €</b></li>
+        <li><span>Rendez-vous</span><b>jeudi</b></li>
+      </ul>
+      <p class="audit-phone-safe">Sauvegardé et chiffré</p>
+    </figure>`;
+
+  /* La notation : une ligne par critère, trois boutons de note. Les critères
+   * apparaissent un à un (fondu) ; tout se met à jour sur place. */
+  const TONES = ['ko', 'mid', 'ok'];
+  function scale() {
+    const open = notes().findIndex(v => !filled(v));
+    return `<div class="audit-dots" aria-hidden="true">${criteria.map((_, i) => `<i class="${filled(ex.value(`note${i}`)) ? 'is-done' : ''}"></i>`).join('')}</div>
+      <ol class="audit-scale">${criteria.map((c, i) => {
+        const chosen = ex.value(`note${i}`);
+        return `<li class="audit-crit ${open !== -1 && i > open ? 'is-waiting' : ''}">
+          <span class="audit-crit-num">${i + 1}</span>
+          <span class="audit-crit-text"><strong>${esc(c.title)}</strong><small>${esc(c.text)}</small></span>
+          <span class="audit-notes" role="radiogroup" aria-label="${esc(c.title)}">${content.levels.map((level, k) => `<label class="audit-note-btn is-${TONES[k]}">
+            <input type="radio" name="note${i}" data-field="note${i}" value="${esc(level.id)}" ${chosen === level.id ? 'checked' : ''}>
+            <b>${esc(level.id)}</b><span>${esc(level.label)}</span>
+          </label>`).join('')}</span>
+        </li>`;
+      }).join('')}</ol>`;
+  }
+  // Une note dévoile le critère suivant et coche sa pastille, sans rien redessiner.
+  document.addEventListener('change', event => {
+    const crit = event.target.closest && event.target.closest('.audit-crit');
+    if (!crit) return;
+    const items = [...document.querySelectorAll('.audit-crit')];
+    const dots = document.querySelectorAll('.audit-dots i');
+    items.forEach((item, i) => { if (dots[i]) dots[i].classList.toggle('is-done', !!item.querySelector('input:checked')); });
+    const next = crit.nextElementSibling;
+    if (next && next.classList.contains('is-waiting')) { next.classList.remove('is-waiting'); next.classList.add('is-arriving'); }
+  });
 
   function reviewTable() {
     return `<table class="k-matrix is-review audit-review">
@@ -43,12 +88,12 @@
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, note: content.note,
         aside: `<p class="k-count">Score : <strong data-live="score">${esc(totalText().replace('Total : ', ''))}</strong></p>${reviewing ? '' : kit.tourButton()}` })}
       ${reviewing ? ouvert.head('s2-2.5') : ''}
-      <section class="k-panel audit-pitch"><p class="k-label">Le pitch à analyser</p><p>${esc(content.pitch)}</p></section>
+      <section class="k-panel audit-pitch audit-intro">${phone()}<div><p class="k-label">Le pitch à analyser</p><p>${esc(content.pitch)}</p></div></section>
       <form class="audit-layout" novalidate>
         <section class="k-panel">
           <h2>1. Notez le pitch ci-dessus</h2>
           ${reviewing ? `${kit.result(total() ?? 0, max, `votre total, pour ${reference} / ${max} au repère`)}${reviewTable()}`
-            : kit.matrix({ key: 'note', rows: criteria, columns: content.levels.map(level => ({ id: level.id, label: level.id, sub: level.label })), head: 'Critère', round: true, progressive: true })}
+            : scale()}
           ${reviewing ? '' : `<p class="audit-total" data-live="total">${esc(totalText())}</p>`}
         </section>
         <section class="k-panel audit-priority">
@@ -89,15 +134,15 @@
     panel.classList.toggle('is-locked', !rated);
     field.disabled = !rated;
   }
-  document.addEventListener('change', event => { if (event.target.closest && event.target.closest('.k-matrix')) lockPriority(); });
+  document.addEventListener('change', event => { if (event.target.closest && event.target.closest('.audit-scale')) lockPriority(); });
 
   kit.live(() => ({ total: esc(totalText()), score: esc(totalText().replace('Total : ', '')) }));
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   kit.tour('s2-2.5', [
     { target: '.audit-pitch', title: 'Le pitch à analyser', text: 'Lisez attentivement ce discours : c’est lui que vous allez évaluer.' },
-    { target: '.audit-layout .k-matrix .k-matrix-label', title: 'Les critères', text: 'Ici s’affiche le critère à juger. Il y en a six.' },
-    { target: '.audit-layout .k-matrix th:not(.k-matrix-label), .audit-layout .k-matrix td', title: 'Notez le pitch', text: 'Pour chaque critère, choisissez une note :',
+    { target: '.audit-crit-text', title: 'Les critères', text: 'Ici s’affiche le critère à juger. Il y en a six.' },
+    { target: '.audit-notes', title: 'Notez le pitch', text: 'Pour chaque critère, choisissez une note :',
       items: [
         { key: '0', tone: 'coral', text: 'à retravailler ;' },
         { key: '1', tone: 'gold', text: 'en bonne voie ;' },

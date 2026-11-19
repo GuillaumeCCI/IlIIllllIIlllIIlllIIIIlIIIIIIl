@@ -10,6 +10,10 @@ import { fileURLToPath } from 'node:url';
 
 const root = resolve(fileURLToPath(new URL('.', import.meta.url)), '..');
 const [file = 's1-a', step = '0', width = 1920, height = 1080] = process.argv.slice(2);
+// SHOT_URL : adresse du serveur (défaut : celui du module, port 4173).
+// SHOT_JS : fichier de script joué une fois les fenêtres fermées (ex. cocher des réponses).
+const base = process.env.SHOT_URL || 'http://127.0.0.1:4173';
+const extra = process.env.SHOT_JS ? readFileSync(process.env.SHOT_JS, 'utf8') : '';
 
 const browser = [
   'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
@@ -36,6 +40,7 @@ const closeDialogs = Number(step) >= 3
   ? `let n = 0; const t = setInterval(() => {
        document.querySelectorAll('button').forEach(b => { if (/C.est parti|Passer|Fermer la visite|Terminer/.test(b.textContent)) b.click(); });
        if (++n > 12) clearInterval(t);
+       if (n === 8) { ${extra} }
      }, 400);`
   : '';
 
@@ -50,7 +55,7 @@ try {
   execFileSync(browser, [
     '--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
     `--window-size=${width},${height}`, '--virtual-time-budget=8000',
-    `--screenshot=${target}`, 'http://127.0.0.1:4173/exercices/_shot.html'
+    `--screenshot=${target}`, `${base}/exercices/_shot.html`
   ], { stdio: ['ignore', 'ignore', 'ignore'], timeout: 40000 });
   console.log(target);
 } finally {

@@ -217,3 +217,49 @@
 /* Les affirmations, un peu plus grandes pour aller avec le pitch. */
 .k-panel:has(.proof-intro) .k-matrix tbody th { font-size: 1.15rem; }
 .k-panel:has(.proof-intro) .k-matrix thead th { font-size: .86rem; }
+/* 2.5 · RelaCosy sur un téléphone, dessiné à gauche du pitch. */
+.audit-intro { display: grid; grid-template-columns: 158px minmax(0, 1fr); gap: 32px; align-items: center; }
+.audit-intro > div > p:last-child { font-size: clamp(1.1rem, 1.4vw, 1.3rem); line-height: 1.5; }
+.audit-phone { margin: 0; padding: 9px 8px 11px; border-radius: 22px; background: #1d2a5a; box-shadow: 0 10px 26px rgba(22, 36, 82, .2); font-size: .64rem; color: #1d2a5a; }
+.audit-phone > * { background: #fff; margin: 0; }
+.audit-phone-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 14px 14px 0 0; background: #eef3fb; font-weight: 800; }
+.audit-phone-head i { width: 13px; height: 2px; background: #1d2a5a; box-shadow: 0 4px 0 #1d2a5a, 0 -4px 0 #1d2a5a; }
+.audit-phone-card { display: grid; grid-template-columns: 26px 1fr; column-gap: 8px; align-items: center; padding: 9px 10px 6px; }
+.audit-phone-ini { grid-row: span 2; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #eef3fb; font-weight: 700; font-size: .6rem; }
+.audit-phone-card strong { font-size: .72rem; line-height: 1.1; }
+.audit-phone-card small { color: #7a86a8; }
+.audit-phone-list { list-style: none; padding: 0 10px; }
+.audit-phone-list li { display: flex; justify-content: space-between; gap: 6px; padding: 5px 0; border-top: 1px solid #eef1f7; color: #5a6890; }
+.audit-phone-list b { color: #1d2a5a; }
+.audit-phone-safe { display: flex; align-items: center; gap: 5px; padding: 6px 10px 10px; border-radius: 0 0 14px 14px; color: #2a8f8f; font-weight: 700; }
+.audit-phone-safe::before { content: ''; width: 7px; height: 6px; border-radius: 1px; background: currentColor; box-shadow: 0 -4px 0 -1px #fff, 0 -4px 0 1px currentColor; margin-top: 3px; }
+@media (max-width: 860px) { .audit-intro { grid-template-columns: 1fr; } .audit-phone { width: 158px; } }
+
+/* 2.5 · La notation : une ligne par critère, trois boutons de note. */
+.audit-dots { display: flex; gap: 6px; margin: -4px 0 14px; }
+.audit-dots i { width: 22px; height: 6px; border-radius: 99px; background: #dfe5f2; transition: background .3s; }
+.audit-dots i.is-done { background: #2a8f8f; }
+.audit-scale { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.audit-crit { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 12px; background: #f6f8fd; }
+.audit-crit.is-waiting { display: none; }
+.audit-crit.is-arriving { animation: audit-fade .6s ease both; }
+@keyframes audit-fade { from { opacity: 0; } to { opacity: 1; } }
+.audit-crit-num { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #fff; color: var(--navy); font-weight: 800; }
+.audit-crit:has(input:checked) .audit-crit-num { background: #2a8f8f; color: #fff; }
+.audit-crit-text strong { display: block; color: var(--navy); font-size: 1.05rem; }
+.audit-crit-text small { display: block; color: #5a6890; font-size: .92rem; margin-top: 2px; }
+.audit-notes { display: flex; gap: 8px; }
+.audit-note-btn { position: relative; display: grid; justify-items: center; gap: 2px; min-width: 104px; padding: 8px 10px; border-radius: 10px; background: #fff; box-shadow: 0 3px 10px rgb(20 40 100 / 7%); cursor: var(--cursor-hand, pointer); color: #5a6890; font-size: .82rem; transition: background .15s, box-shadow .15s; }
+.audit-note-btn input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: inherit; }
+.audit-note-btn b { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #eef3fb; color: var(--navy); font-size: .95rem; }
+.audit-note-btn:hover { box-shadow: 0 6px 16px rgb(20 40 100 / 13%); }
+.audit-note-btn:has(input:focus-visible) { outline: 3px solid var(--accent); outline-offset: 2px; }
+.audit-note-btn.is-ko:has(input:checked) { background: #f8edf3; color: #a83d74; }
+.audit-note-btn.is-ko:has(input:checked) b { background: #a83d74; color: #fff; }
+.audit-note-btn.is-mid:has(input:checked) { background: #eef0fa; color: #5a67b8; }
+.audit-note-btn.is-mid:has(input:checked) b { background: #5a67b8; color: #fff; }
+.audit-note-btn.is-ok:has(input:checked) { background: #edf6f6; color: #2a8f8f; }
+.audit-note-btn.is-ok:has(input:checked) b { background: #2a8f8f; color: #fff; }
+.audit-note-btn:has(input:checked) { font-weight: 700; box-shadow: none; }
+@media (max-width: 1100px) { .audit-crit { grid-template-columns: 30px minmax(0, 1fr); } .audit-notes { grid-column: 1 / -1; } .audit-note-btn { flex: 1; min-width: 0; } }
+.audit-pitch .audit-phone p.audit-phone-safe { font-size: .64rem; margin: 0; color: #2a8f8f; }
