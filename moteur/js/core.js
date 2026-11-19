@@ -493,7 +493,7 @@
     document.body.style.backgroundImage = layers.join(', ');
   }
 
-  /* Page bien plus haute que l'écran : le décor s'arrêterait en cours de
+  /* Page plus haute que l’écran, même de peu (19/11 : le décor s’arrêtait net en bas de 2.5) : le décor s’arrêterait en cours de
    * défilement (au-delà de 1,6 écran : 1,3 faisait perdre le décor à des
    * pages à peine plus longues, 19/11). On passe alors à un fond beige uni (body.is-tall-page, styles :
    * extras-commun.css). La hauteur de l'écran, pas celle de la fenêtre :
@@ -501,7 +501,7 @@
   function watchLength() {
     const check = () => {
       const screenHeight = Math.min(window.innerHeight, window.screen?.availHeight || window.innerHeight);
-      document.body.classList.toggle('is-tall-page', document.documentElement.scrollHeight > screenHeight * 1.6);
+      document.body.classList.toggle('is-tall-page', document.documentElement.scrollHeight > screenHeight + 2);
     };
     check();
     if (window.ResizeObserver) new ResizeObserver(check).observe(document.body);
