@@ -1203,8 +1203,37 @@
           <ul>${g.rows.join('')}</ul></section>`).join('')}</div>`;
     }
 
+    /* Corrigé d'un e-mail écrit partie par partie (content.mailSteps) : votre
+     * e-mail et un modèle possible côte à côte, puis une ligne par partie
+     * (« Au point », ou un seul conseil). Rien d'autre. */
+    function mailReview() {
+      const fields = fieldsOf(0);
+      const subj = fields.find(f => f.id === 'subject');
+      const body = fields.filter(f => f.id !== 'subject');
+      const box = (subject, lines) => `<div class="mr-mail"><p class="fs-mail-bar"><i></i><i></i><i></i><span>${esc(content.mailSteps.title || 'Message')}</span></p>
+          <p class="fs-mail-line"><b>Objet</b><span>${esc(subject)}</span></p>
+          <div class="mr-body">${lines.filter(Boolean).map(l => `<p>${esc(l)}</p>`).join('')}</div></div>`;
+      const rows = fields.map(f => {
+        const i = blocOf(key, k(0, f));
+        const b = i >= 0 ? ouvert().blocOf(key, i) : null;
+        const miss = b ? (b.lines || []).filter(l => l.kind !== 'ok') : [];
+        const ok = b ? miss.length === 0 : kit().filled(val(0, f));
+        const tip = miss[0] ? (miss[0].conseil || miss[0].nom) : (ok ? '' : 'À écrire.');
+        return `<li class="mr-row ${ok ? 'is-ok' : 'is-ko'}"><span class="mr-mark">${icon(ok ? 'check' : 'close', { size: 12, strokeWidth: 3 })}</span><strong>${esc(f.label)}</strong><span class="mr-tip">${ok ? 'Au point' : esc(tip)}</span></li>`;
+      }).join('');
+      return `${reviewHead()}<section class="k-panel mr">
+          <div class="mr-pair">
+            <div><p class="mr-label">Votre modèle</p>${box(subj ? val(0, subj) : '', body.map(f => val(0, f)))}</div>
+            <div class="is-model"><p class="mr-label">Un modèle possible</p>${box(subj ? subj.model : '', body.map(f => f.model))}</div>
+          </div>
+          <h3 class="mr-h">Partie par partie</h3>
+          <ul class="mr-rows">${rows}</ul>
+        </section>${kit().keyPoint(content.keyPoint)}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
+    }
+
     function reviewScreen() {
       if (content.review) return accordionReview();
+      if (content.mailSteps) return mailReview();
       return reviewHead() + (content.reviewIntro && content.reviewLayout === 'rows' ? `<details class="fm-review-intro is-folded"><summary class="fm-review-intro-label">${icon('users', { size: 18 })}<span>Relire ${esc((content.reviewIntroTitle || 'la situation').toLowerCase().replace(/^l’/, 'l’'))}</span></summary>${scene(content.reviewIntro)}</details>` : '') + (content.reviewIntro && content.reviewLayout !== 'rows' ? `<section class="fm-review-intro">${content.reviewIntroTitle ? `<p class="fm-review-intro-label">${icon('users', { size: 18 })}<span>${esc(content.reviewIntroTitle)}</span></p>` : ''}${scene(content.reviewIntro)}</section>${content.reviewListTitle ? `<h2 class="fm-review-list-title">${esc(content.reviewListTitle)}</h2>` : ''}` : '') + cases.map((c, i) => {
         const fields = fieldsOf(i);
         if (!fields.length && !c.model && !c.lesson) return '';

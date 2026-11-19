@@ -879,3 +879,19 @@ button.crash-passage:hover { background: #fff1d6; }
 #main .fs-mail textarea:focus-visible { outline: none; }
 /* Partie suivante d'un cas rempli partie par partie : le fondu enchaîné validé, plus aucun glissement. */
 .fs-step.is-next, .fs-step.is-prev, .fm-one.is-next, .fm-one.is-prev { animation: fm-in .6s ease-in-out .4s both; }
+/* Corrigé d'un e-mail écrit partie par partie (mailSteps). */
+.mr { display: grid; gap: 14px; }
+.mr-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.mr-label { margin: 0 0 8px; color: #5a6890; font-weight: 800; font-size: .78rem; letter-spacing: .05em; text-transform: uppercase; }
+.mr-mail { border-radius: 12px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 9%), 0 0 0 1px rgb(20 40 100 / 5%); overflow: hidden; }
+.mr-pair .is-model .mr-mail { background: #f3faf6; }
+.mr-body { display: grid; gap: 8px; padding: 12px 16px 16px; color: var(--navy); line-height: 1.55; }
+.mr-body p { margin: 0; white-space: pre-wrap; }
+.mr-h { margin: 8px 0 0; }
+.mr-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.mr-row { display: grid; grid-template-columns: 22px 130px minmax(0, 1fr); gap: 10px; align-items: center; padding: 8px 12px; border-radius: 10px; background: #f6f8fd; color: var(--navy); }
+.mr-mark { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; color: #fff; }
+.mr-row.is-ok .mr-mark { background: #2a8f8f; } .mr-row.is-ko .mr-mark { background: #a83d74; }
+.mr-row.is-ok .mr-tip { color: #2a8f8f; font-weight: 700; }
+.mr-tip { color: #46577d; }
+@media (max-width: 900px) { .mr-pair { grid-template-columns: 1fr; } .mr-row { grid-template-columns: 22px 1fr; } .mr-tip { grid-column: 2; } }
