@@ -52,8 +52,7 @@
       <header class="sorter-head">
         <h1>Votre classement</h1>
         <p class="subtitle">${esc(content.feedback)}</p>
-        <p class="result-score">${right} / ${cards.length} ${right > 1 ? 'correctes' : 'correcte'}</p>
-      </header>
+      </header>${window.AtelierKit ? window.AtelierKit.result(right, cards.length, 'bonnes réponses') : `<p class="result-score">${right} / ${cards.length}</p>`}
       <ol class="result-list">${cards.map((card, i) => {
         const ok = list[i] === card.answer;
         return `<li class="result-row ${ok ? 'is-ok' : 'is-ko'}">

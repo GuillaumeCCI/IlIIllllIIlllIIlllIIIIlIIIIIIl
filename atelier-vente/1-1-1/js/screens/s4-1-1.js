@@ -74,8 +74,7 @@
       <header class="sorter-head">
         <h1>Une ouverture fluide</h1>
         <p class="subtitle">Voici un enchaînement possible pour passer de l’accueil à l’écoute.</p>
-        <p class="result-score">${right} / ${cards.length} à la place attendue</p>
-      </header>
+      </header>${window.AtelierKit ? window.AtelierKit.result(right, cards.length, 'phrases à la place attendue') : `<p class="result-score">${right} / ${cards.length}</p>`}
 
       <ol class="result-list">${expected.map(({ card, index }) => {
         const yours = list[index];

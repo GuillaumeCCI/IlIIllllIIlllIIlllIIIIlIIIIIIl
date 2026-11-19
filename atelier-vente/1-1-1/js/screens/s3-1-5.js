@@ -131,8 +131,8 @@
     const [bloc] = result ? result.blocs : [];
     return `<section class="an-review">
       ${core.pageTitle('Corrigé', content.title, `Le client vous dit : « ${content.objection} » ${content.objectionContext}`)}
-      <section class="panel">${core.panelTitle('Votre choix')}${ex.reviewOptions(options, ex.value('choice'), content.answer)}</section>
       ${corrige.head(result)}
+      <section class="panel">${core.panelTitle('Votre choix')}${ex.reviewOptions(options, ex.value('choice'), content.answer)}</section>
       ${corrige.rows([
         corrige.row({ n: 1, title: 'Votre raisonnement', bloc, text: ex.value('why'), model: content.feedback })
       ])}

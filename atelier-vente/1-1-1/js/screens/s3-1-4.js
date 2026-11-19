@@ -39,22 +39,20 @@
         ${core.step(n, title, `<p class="result-answer-text">«\u00a0${result ? analyse.answer(result.blocs[i]) : esc(ex.value(key))}\u00a0»</p>
           ${result ? analyse.lines(result.blocs[i], { withText: false }) : ''}
           <div class="result-model is-shown">
-            <p class="result-model-title">Voir une réponse possible</p>
+            <p class="result-model-title">Une réponse possible</p>
             <div class="result-model-body"><p>${esc(model)}</p>${extra}</div>
           </div>`)}
       </article>`;
     return `<div class="review-layout">
-      <div class="two-columns">
-        <section class="panel scenario">${exchange()}</section>
-        <section class="panel review-score">${core.panelTitle('Votre score estimatif')}${result ? `<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section>` : ''}</section>
-      </div>
+      ${result ? analyse.head(result) : ''}
+      <section class="panel scenario">${exchange()}</section>
       <form class="panel answer-panel review-analysis" novalidate>
         ${core.panelTitle('Votre analyse')}
         <div class="review-cards">
           ${card(0, 1, 'Vraie objection probable', 'hypothesis', content.hypothesisModel)}
           ${card(1, 2, 'Question pour la révéler', 'question', content.questionModel, `<p class="result-avoid">${esc(content.avoid)}</p>`)}
         </div>
-        ${rest()}
+        ${core.feedbackBox()}
       </form>
     </div>`;
   }

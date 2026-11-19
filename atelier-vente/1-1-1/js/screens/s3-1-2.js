@@ -109,8 +109,7 @@
       <header class="sorter-head">
         <h1>Vos associations, en un coup d’œil</h1>
         <p class="subtitle">La méthode, étape par étape.</p>
-        <p class="result-score">${right} / ${cards.length} ${right > 1 ? 'correctes' : 'correcte'}</p>
-      </header>
+      </header>${window.AtelierKit ? window.AtelierKit.result(right, cards.length, 'étapes bien associées') : `<p class="result-score">${right} / ${cards.length}</p>`}
 
       <ol class="result-list">${method.map((item, stepIndex) => {
         const cardIndex = cards.findIndex(card => card.answer === String(stepIndex));

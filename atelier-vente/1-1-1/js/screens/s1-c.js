@@ -175,7 +175,7 @@
       const n = k + 1;
       return `<li><span class="chip chip-${k % 3}">${esc(ex.value(`criterion${n}`))}</span><p>« ${kit.part(argBloc, ex.value(`argument${n}`))} »</p></li>`;
     }).join('');
-    return `<section class="an-review compare-review"><div class="opening-cards compare-openings">${content.openings.map((text, index) => {
+    return `<section class="an-review compare-review">${kit.head(result)}<div class="opening-cards compare-openings">${content.openings.map((text, index) => {
         const n = String(index + 1);
         const selected = choice === n;
         const isExpected = n === expected;
@@ -185,7 +185,6 @@
           ${ex.verdictMark(isExpected, isExpected ? (selected ? 'Votre choix, celui attendu' : 'Choix attendu') : (selected ? 'Votre choix' : 'Moins efficace'))}
         </article>`;
       }).join('')}</div>
-      ${kit.head(result)}
       ${kit.rows([
         kit.row({ n: 1, title: 'Vos arguments', bloc: argBloc, yours: `<ol class="compare-arguments">${args}</ol>`, model: [notes[0], notes[1]] }),
         kit.row({ n: 2, title: 'Ce que vous emprunteriez à l’autre', bloc: borrowBloc, text: ex.value('borrow'), model: notes[2] })

@@ -400,7 +400,7 @@ test('S4 1.1 : l’ordre correct est reconnu comme complet', () => {
   cards.forEach((card, i) => place.place(i, card.position));
   engine.submit();
   assert.ok(core.isDone('s4-1.1'), 'les 5 phrases placées terminent l’exercice');
-  assert.match(sandbox.document.querySelector('#main').innerHTML, /result-score">5 \/ 5 à la place attendue/, 'le corrigé doit montrer l’ordre');
+  assert.match(sandbox.document.querySelector('#main').innerHTML, /result-score">5 \/ 5</, 'le corrigé doit montrer l’ordre');
 });
 
 test('S4 1.2 : moins de 4 maladresses bloque, 4 ouvrent la réécriture', () => {

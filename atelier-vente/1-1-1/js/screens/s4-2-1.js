@@ -56,8 +56,7 @@
       <header class="sorter-head">
         <h1>Vos six associations</h1>
         <p class="subtitle">Regardez ce qui distingue chaque attitude.</p>
-        <p class="result-score">${right} / ${cards.length} ${right > 1 ? 'correctes' : 'correcte'}</p>
-      </header>
+      </header>${window.AtelierKit ? window.AtelierKit.result(right, cards.length, 'attitudes bien reconnues') : `<p class="result-score">${right} / ${cards.length}</p>`}
 
       <ol class="result-list">${cards.map((card, i) => {
         const ok = list[i] === card.answer;
