@@ -295,3 +295,18 @@
 .vf-offer-lines b { white-space: nowrap; }
 .vf-offer-total { display: flex; justify-content: space-between; margin: 8px 0 0; font-weight: 800; font-size: 1rem; }
 .vf-offer-stamp { display: inline-block; margin: 12px 0 0; padding: 4px 10px; border-radius: 99px; background: #f8edf3; color: #a83d74; font-weight: 700; font-size: .78rem; }
+/* 4.3 · Corrigé (format validé en 4.7) : une ligne par idée. */
+.vf-review h2 { margin: 0 0 14px; }
+.vf-rv { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 4px 12px; padding: 14px 0; border-top: 1px solid #eef1f7; }
+.vf-rv-n { grid-row: span 2; display: grid; place-items: center; width: 30px; height: 30px; margin: 0; border-radius: 50%; background: #eef3fb; color: var(--navy); font-weight: 800; }
+.vf-rv-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.vf-rv-pair p { margin: 0; padding: 10px 14px; border-radius: 10px; color: var(--navy); line-height: 1.5; }
+.vf-rv-you { background: #f6f8fd; }
+.vf-rv-model { background: #e9f6ef; }
+.vf-rv-pair small { display: block; margin-bottom: 2px; color: #5a6890; font-weight: 800; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; }
+.vf-rv-verdict { display: flex; align-items: center; gap: 8px; margin: 4px 0 0; color: #46577d; }
+.vf-rv-verdict span { display: grid; place-items: center; flex: none; width: 20px; height: 20px; border-radius: 50%; color: #fff; }
+.vf-rv-verdict.is-ok { color: #2a8f8f; font-weight: 700; } .vf-rv-verdict.is-ok span { background: #2a8f8f; }
+.vf-rv-verdict.is-ko span { background: #a83d74; }
+.vf-rv-more { margin: 6px 0 0; padding-top: 12px; border-top: 1px solid #eef1f7; color: #5a6890; }
+@media (max-width: 900px) { .vf-rv-pair { grid-template-columns: 1fr; } }

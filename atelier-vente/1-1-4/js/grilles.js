@@ -776,16 +776,16 @@
     's4-4.3': { integre: true, blocs: ['Idée 1', 'Idée 2', 'Idée 3'].map((titre, i) => ({
       titre, champs: [`c0_v${i + 1}`],
       criteres: [
-        { nom: 'Un élément nouveau ou utile', points: 3, mots: VALEUR_RELANCE, conseil: 'Apportez du neuf : un résultat client, une option, une échéance, une aide…' },
+        { nom: 'Quelque chose de nouveau ou d’utile', points: 3, mots: VALEUR_RELANCE, conseil: 'Apportez du neuf : un résultat client, une option, une échéance, une aide…' },
         { nom: 'Relié à la cliente', mots: ['dos', 'mal de dos', 'douleurs', 'équipes', 'vos équipes', 'ses équipes', 'salariés', 'collaborateurs', 'direction',
           'sa direction', 'votre direction', 'budget', 'dépense', 'convaincre', 'justifier', 'rh', 'ressources humaines', 'absences', 'arrêts', 'confort',
           'santé', 'bien-être', 'pme', '80 salariés', 'décision', 'décider', 'avancer', 'vous', 'votre', 'vos', 'elle', 'son', 'sa', 'ses', 'madame riveau',
           'riveau', 'projet', 'besoin', 'besoins', 'enjeu', 'priorité', 'priorités', 'trésorerie', 'investissement', 'coût', 'postes', '10 postes',
           'entreprise', 'secteur', 'locaux', 'déploiement', 'installation', 'aider', 'aide', 'rassurer', 'lever', 'frein'],
-          conseil: 'Reliez l’élément à son enjeu : le dos de ses équipes, ou sa direction.' }
+          conseil: 'Reliez votre idée à son enjeu : le dos de ses équipes, ou sa direction.' }
       ],
       phrases: { points: 0 },
-      regles: [{ regle: 'minMots:5', nom: 'Une idée développée', points: 1 }],
+      regles: [{ regle: 'minMots:5', nom: 'Une idée développée', points: 1, conseil: 'Développez votre idée en une phrase complète, telle que vous la diriez.' }],
       pieges: [PIEGE_PRESSION, PIEGE_VIDE, PIEGE_REMISE]
     })) },
 

@@ -68,12 +68,24 @@
   }
 
   function reviewScreen() {
+    // Format validé (4.7) : votre idée et une piste possible côte à côte, puis « Au point » ou un seul conseil.
+    const verdict = i => {
+      const b = ouvert ? ouvert.blocOf('s4-4.3', i) : null;
+      const miss = b ? (b.lines || []).filter(l => l.kind !== 'ok') : [];
+      const ok = b ? miss.length === 0 : kit.filled(ex.value(key(fields[i])));
+      return { ok, tip: miss[0] ? (miss[0].conseil || miss[0].nom) : '' };
+    };
     return `${ouvert.head('s4-4.3')}<section class="k-panel vf-review">
-      <h2>Vos trois idées</h2>
-      <p class="k-muted">Comparez chacune de vos idées à une piste possible.</p>
-      ${fields.map((f, i) => `<div class="vf-review-row"><p class="k-label">${esc(f.label)}</p>
-        ${ouvert.answer('s4-4.3', i, { title: 'Votre idée', text: ex.value(key(f)), model: f.model })}</div>`).join('')}
-      ${kase.lesson ? ex.inlineNote(kase.lesson, 'neutral') : ''}
+      <h2>Vos trois idées, face à une piste possible</h2>
+      ${fields.map((f, i) => { const v = verdict(i); return `<div class="vf-rv">
+        <p class="vf-rv-n">${i + 1}</p>
+        <div class="vf-rv-pair">
+          <p class="vf-rv-you"><small>Votre idée</small>${esc(ex.value(key(f)) || '')}</p>
+          <p class="vf-rv-model"><small>Une piste possible</small>${esc(f.model)}</p>
+        </div>
+        <p class="vf-rv-verdict ${v.ok ? 'is-ok' : 'is-ko'}"><span>${icon(v.ok ? 'check' : 'close', { size: 12, strokeWidth: 3 })}</span>${v.ok ? 'Au point' : esc(v.tip)}</p>
+      </div>`; }).join('')}
+      ${kase.lesson ? `<p class="vf-rv-more">${esc(kase.lesson)}</p>` : ''}
     </section>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
   }
