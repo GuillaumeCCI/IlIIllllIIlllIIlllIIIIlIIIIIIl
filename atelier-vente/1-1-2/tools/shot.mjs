@@ -54,7 +54,7 @@ try {
   const target = join(out, `${file}-${step}.png`);
   execFileSync(browser, [
     '--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
-    `--window-size=${width},${height}`, '--virtual-time-budget=8000',
+    `--window-size=${width},${height}`, '--virtual-time-budget=12000',
     `--screenshot=${target}`, `${base}/exercices/_shot.html`
   ], { stdio: ['ignore', 'ignore', 'ignore'], timeout: 40000 });
   console.log(target);

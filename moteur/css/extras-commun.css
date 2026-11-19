@@ -1197,3 +1197,18 @@ html { background-color: #fbf8f2; }
 #main .k-steps:not(.is-compact) .k-step.is-active { background: #1b2370; color: #fff; box-shadow: 0 6px 16px rgb(27 35 112 / 22%); }
 #main .k-steps:not(.is-compact) .k-step.is-active .k-step-dot { background: #fff; color: #1b2370; }
 .k-step-check { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #2a8f8f; color: #fff; }
+
+/* Un e-mail dessiné (mounts.js, mailView) : fenêtre, De / À / Objet, corps, signature. */
+.mail-view { display: block; border-radius: 12px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 9%), 0 0 0 1px rgb(20 40 100 / 5%); overflow: hidden; text-align: left; color: var(--navy); }
+.mail-bar { display: flex; align-items: center; gap: 5px; padding: 8px 14px; background: #1b2370; color: #fff; font-size: .82rem; font-weight: 700; }
+.mail-bar i { width: 8px; height: 8px; border-radius: 50%; background: rgb(255 255 255 / 35%); }
+.mail-bar span { margin-left: 8px; }
+.mail-head { display: grid; gap: 2px; padding: 10px 16px; background: #f6f8fd; border-bottom: 1px solid #e6ebf5; font-size: .92rem; }
+.mail-head > span { display: flex; gap: 10px; }
+.mail-head b { flex: none; width: 46px; color: #7a86a8; font-weight: 600; }
+.mail-subject { font-weight: 700; }
+.mail-body { display: grid; gap: 10px; padding: 16px 18px 18px; font-size: 1rem; line-height: 1.55; }
+.mail-p, .mail-sign span { display: block; }
+.mail-sign { margin-top: 4px; }
+.mail-sign span + span { font-weight: 700; }
+#main .cmp-text:has(.mail-view) { display: block; margin-top: 10px; }

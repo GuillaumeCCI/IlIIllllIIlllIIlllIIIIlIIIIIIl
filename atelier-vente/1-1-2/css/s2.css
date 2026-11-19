@@ -352,3 +352,18 @@
 .rec-review .rec-listen { gap: 10px; }
 .rec-review .rec-listen li { display: flex; align-items: center; gap: 10px; }
 .rec-review .rec-listen li span { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%; background: #edf6f6; color: #2a8f8f; font-weight: 800; font-size: .85rem; }
+/* 2.6 · Corrigé : durées en pastilles, auto-évaluation en lignes. */
+.pitch-facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.pitch-facts span { padding: 4px 12px; border-radius: 99px; background: #eef3fb; color: var(--navy); font-weight: 600; font-size: .9rem; }
+.pitch-self { margin-top: 26px; }
+.pitch-self h2 { margin: 0 0 2px; }
+.pitch-self-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
+.pitch-self-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 10px 14px; border-radius: 12px; background: #f6f8fd; }
+.pitch-self-text strong { display: block; color: var(--navy); }
+.pitch-self-text small { display: block; color: #5a6890; font-size: .9rem; }
+.pitch-self-note { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 5px; border-radius: 99px; background: #fff; color: #5a6890; font-weight: 700; font-size: .9rem; white-space: nowrap; }
+.pitch-self-note b { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; color: #fff; }
+.pitch-self-note.is-ko { background: #f8edf3; color: #a83d74; } .pitch-self-note.is-ko b { background: #a83d74; }
+.pitch-self-note.is-mid { background: #eef0fa; color: #5a67b8; } .pitch-self-note.is-mid b { background: #5a67b8; }
+.pitch-self-note.is-ok { background: #edf6f6; color: #2a8f8f; } .pitch-self-note.is-ok b { background: #2a8f8f; }
+.pitch-self-next { margin: 14px 0 0; padding: 12px 16px; border-radius: 12px; background: #edf6f6; color: var(--navy); font-weight: 600; }

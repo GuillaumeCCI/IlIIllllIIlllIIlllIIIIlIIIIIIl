@@ -264,14 +264,32 @@
     </div>`;
   }
 
+  // Les notes que l'apprenant s'est données, dites clairement, puis ce qu'il reprend en premier.
+  function selfReview() {
+    const rows = criteria.map((c, i) => {
+      const v = ex.value(`score${i}`);
+      const level = LEVELS.find(([id]) => id === v);
+      return `<li><span class="pitch-self-text"><strong>${esc(c.title)}</strong><small>${esc(c.text)}</small></span>
+        ${level ? `<span class="pitch-self-note is-${NOTE_TONES[Number(v)]}"><b>${v}</b>${level[1]}</span>` : '<span class="pitch-self-note">non noté</span>'}</li>`;
+    }).join('');
+    const weak = criteria.filter((_, i) => ex.value(`score${i}`) === '0').map(c => c.title);
+    const next = weak.length
+      ? `À reprendre en premier : ${weak.join(', ')}. Puis refaites une prise : le chrono reste le meilleur juge.`
+      : 'Aucun critère à 0 : reprenez ceux à 1, puis refaites une prise pour gagner en aisance.';
+    return `<section class="pitch-self">
+      <h2>Votre auto-évaluation, critère par critère</h2>
+      <p class="k-muted">Les notes que vous vous êtes données en réécoutant votre prise.</p>
+      <ol class="pitch-self-list">${rows}</ol>
+      <p class="pitch-self-next">${esc(next)}</p>
+    </section>`;
+  }
+
   function reviewScreen() {
     return `<section class="k-panel">
-      ${ouvert.head('s2-2.6')}
-      ${kit.result(total() ?? 0, max, 'votre auto-évaluation')}
+      ${ouvert.head('s2-2.6', undefined, [{ n: total() ?? 0, total: max, label: 'votre auto-évaluation' }]) || kit.result(total() ?? 0, max, 'votre auto-évaluation')}
       ${ouvert.answer('s2-2.6', 0, { title: 'Votre pitch', text: pitch(), model: content.example })}
-      <p class="pitch-words">${esc(wordsLine())}${Number(ex.value('recorded')) ? ` · prise de ${ex.value('recorded')} s` : ''}</p>
-      <ul class="pitch-score-list">${criteria.map((c, i) => `<li><span>${esc(c.title)}</span><strong>${ex.value(`score${i}`) == null ? 'non noté' : `${ex.value(`score${i}`)} / 2`}</strong></li>`).join('')}</ul>
-      ${ex.inlineNote('Pour progresser, retravaillez en priorité les critères notés 0, puis refaites une prise : le chrono reste le meilleur juge de la concision.', 'neutral')}
+      <p class="pitch-facts"><span>Votre texte : ≈ ${kit.seconds(pitch())} s à l’oral</span>${Number(ex.value('recorded')) ? `<span>Votre prise : ${ex.value('recorded')} s</span>` : ''}</p>
+      ${selfReview()}
     </section>
     ${core.feedbackBox()}
     <div class="k-utility">${kit.reset()}</div>`;

@@ -541,11 +541,37 @@
    * whyLabel, whyHelp, hint, model ; criteria [{ id, label, symbol }]
    * (au moins deux à cocher) ou criteriaFields (nombre de critères à
    * rédiger) remplacent ou complètent la justification libre. */
+  /* Un e-mail dessiné : barre de fenêtre, De / À / Objet, corps, signature.
+   * `lines` : la formule d'appel, les paragraphes, puis la signature
+   * (« Bien cordialement, Thomas » se coupe en deux lignes). */
+  function mailView({ from = '', to = '', subject = '', title = 'Message' } = {}, lines = []) {
+    const body = lines.slice();
+    const last = body.length > 1 ? body.pop() : '';
+    const cut = last.lastIndexOf(', ');
+    const sign = cut > 0 ? [last.slice(0, cut + 1), last.slice(cut + 2)] : [last];
+    const greet = body.length > 1 && /,$/.test(body[0]) ? body.shift() : '';
+    return `<span class="mail-view">
+      <span class="mail-bar"><i></i><i></i><i></i><span>${esc(title)}</span></span>
+      <span class="mail-head">
+        ${from ? `<span><b>De</b>${esc(from)}</span>` : ''}
+        ${to ? `<span><b>À</b>${esc(to)}</span>` : ''}
+        ${subject ? `<span class="mail-subject"><b>Objet</b>${esc(subject)}</span>` : ''}
+      </span>
+      <span class="mail-body">
+        ${greet ? `<span class="mail-p">${esc(greet)}</span>` : ''}
+        ${body.map(line => `<span class="mail-p">${esc(line)}</span>`).join('')}
+        ${last ? `<span class="mail-sign">${sign.map(s => `<span>${esc(s)}</span>`).join('')}</span>` : ''}
+      </span>
+    </span>`;
+  }
+
   function mountCompare(key, content) {
     const chosen = () => ex().value('pick');
     const ticked = () => (Array.isArray(ex().value('criteria')) ? ex().value('criteria') : []);
     const fields = content.criteriaFields || 0;
-    const optionText = option => (option.lines ? option.lines.map(line => `<span class="cmp-line">${esc(line)}</span>`).join('') : `« ${esc(option.text)} »`);
+    // `content.mail` ({ from, to, subject }) : chaque réponse se lit dans une vraie fenêtre d'e-mail.
+    const optionText = option => (content.mail && option.lines ? mailView({ ...content.mail, ...(option.mail || {}) }, option.lines)
+      : option.lines ? option.lines.map(line => `<span class="cmp-line">${esc(line)}</span>`).join('') : `« ${esc(option.text)} »`);
 
     function sceneBlock() {
       if (content.image) return `<section class="cmp-scene">${scene({ image: content.image, alt: content.imageAlt, wide: true })}</section>`;
@@ -1390,5 +1416,5 @@
     ex().mount(key, { screen, validate, intercept, feedback, compactFeedback: true });
   }
 
-  root.AtelierMounts = Object.freeze({ scene, mountDeck, mountMatch, mountCompare, mountForm });
+  root.AtelierMounts = Object.freeze({ scene, mailView, mountDeck, mountMatch, mountCompare, mountForm });
 })(globalThis);

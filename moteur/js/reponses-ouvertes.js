@@ -47,9 +47,10 @@
   }
 
   /* Le score global, en tête du corrigé. */
-  function head(key, values) {
+  // `more` : d'autres anneaux dans le même bilan (ex. l'auto-évaluation), pour n'en afficher qu'un.
+  function head(key, values, more = []) {
     const scored = result(key, values);
-    return scored ? `<section class="ana-score is-head open-score" aria-label="Votre score">${engine().head(scored)}</section>` : '';
+    return scored ? `<section class="ana-score is-head open-score" aria-label="Votre score">${engine().head(scored, more)}</section>` : '';
   }
 
   /* La réponse possible, toujours affichée : un texte, ou du HTML déjà prêt (`html`). */

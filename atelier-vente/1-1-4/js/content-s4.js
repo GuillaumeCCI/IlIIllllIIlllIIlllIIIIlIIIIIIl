@@ -207,6 +207,7 @@ window.ATELIER_S4 = {
         ] }
     ],
     listTitle: 'Quelle relance choisissez-vous ?',
+    mail: { from: 'Thomas · Ergolys', to: 'Madame Riveau', subject: 'Notre proposition du 3 juin', title: 'Message envoyé' },
     options: [
       { id: 'A', label: 'Relance A', lines: [
         'Bonjour Madame Riveau,',
