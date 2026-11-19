@@ -29,12 +29,26 @@
     return first === -1 ? 0 : first;
   };
 
+  // L'offre envoyée, dessinée comme une proposition commerciale (elle dit la cliente et l'offre).
+  const offer = () => `<figure class="vf-offer" aria-label="L’offre envoyée à Madame Riveau">
+      <div class="vf-offer-top"><strong>Ergolys</strong><span>Proposition commerciale</span></div>
+      <p class="vf-offer-to"><small>Pour</small>Madame Riveau, responsable des ressources humaines<br>Entreprise de 80 salariés</p>
+      <ul class="vf-offer-lines">
+        <li><span>10 postes de travail ergonomiques complets</span><b>17 000 €</b></li>
+        <li><span>Installation sur place</span><b>incluse</b></li>
+        <li><span>Garantie 5 ans</span><b>incluse</b></li>
+      </ul>
+      <p class="vf-offer-total"><span>Total</span><b>17 000 €</b></p>
+      <p class="vf-offer-stamp">Envoyée il y a une semaine · pas de réponse</p>
+    </figure>`;
+
   function contextPanel() {
     const c = content.context;
+    const rest = c.rows.filter(r => !/cliente|offre/i.test(r.label));
     return `<aside class="k-panel vf-context">
       <h2>Contexte</h2>
-      <p class="vf-info">${icon('mail', { size: 30 })}<span>${esc(c.info)}</span></p>
-      <ul class="vf-facts">${c.rows.map(r => `<li><span class="vf-fact-icon tone-${esc(r.tone)}">${icon(r.symbol, { size: 20 })}</span><span><small>${esc(r.label)}</small>${esc(r.text)}</span></li>`).join('')}</ul>
+      ${offer()}
+      <ul class="vf-facts">${rest.map(r => `<li><span class="vf-fact-icon tone-${esc(r.tone)}">${icon(r.symbol, { size: 20 })}</span><span><small>${esc(r.label)}</small>${esc(r.text)}</span></li>`).join('')}</ul>
     </aside>`;
   }
 

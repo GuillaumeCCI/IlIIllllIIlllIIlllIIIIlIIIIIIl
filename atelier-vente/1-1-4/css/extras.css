@@ -283,3 +283,15 @@
 .vf-item.is-open { background: none; border: 0; padding: 4px 0 0; }
 .vf-item.is-open .counter { display: none; }
 .vf-main .k-ask { margin-bottom: 4px; }
+/* 4.3 · L'offre dessinée : une feuille de proposition commerciale. */
+.vf-offer { margin: 0; padding: 18px 20px 16px; border-radius: 6px; background: #fff; box-shadow: 0 8px 22px rgb(20 40 100 / 12%), 0 0 0 1px rgb(20 40 100 / 6%); color: var(--navy); font-size: .9rem; transform: rotate(-1deg); }
+.vf-offer-top { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 10px; border-bottom: 2px solid #1b2370; }
+.vf-offer-top strong { font-size: 1.05rem; letter-spacing: .02em; }
+.vf-offer-top span { color: #7a86a8; font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; font-weight: 700; }
+.vf-offer-to { margin: 10px 0 8px; line-height: 1.4; }
+.vf-offer-to small { display: block; color: #7a86a8; font-weight: 700; font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; }
+.vf-offer-lines { list-style: none; margin: 0; padding: 0; }
+.vf-offer-lines li { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px dashed #dfe5f2; }
+.vf-offer-lines b { white-space: nowrap; }
+.vf-offer-total { display: flex; justify-content: space-between; margin: 8px 0 0; font-weight: 800; font-size: 1rem; }
+.vf-offer-stamp { display: inline-block; margin: 12px 0 0; padding: 4px 10px; border-radius: 99px; background: #f8edf3; color: #a83d74; font-weight: 700; font-size: .78rem; }
