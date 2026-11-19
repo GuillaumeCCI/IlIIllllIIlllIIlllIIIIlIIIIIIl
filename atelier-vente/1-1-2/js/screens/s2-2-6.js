@@ -99,25 +99,56 @@
   }
 
   /* ── Étape 1 : rédiger ─────────────────────────────────────────────── */
+  // Le temps conseillé pour chaque partie de la structure (60 s en tout).
+  const BUDGET = [10, 20, 20, 10];
+  const TONES = ['indigo', 'teal', 'teal2', 'navy'];
+
+  // Un chronomètre dessiné : cadran, graduations, poussoir, aiguille.
+  const stopwatch = () => `<svg class="pitch-watch" viewBox="0 0 120 136" aria-hidden="true">
+      <rect x="51" y="2" width="18" height="10" rx="3" class="pw-crown"/>
+      <rect x="56" y="10" width="8" height="10" class="pw-crown"/>
+      <rect x="96" y="22" width="12" height="7" rx="2" transform="rotate(45 102 25)" class="pw-crown"/>
+      <circle cx="60" cy="76" r="54" class="pw-case"/>
+      <circle cx="60" cy="76" r="46" class="pw-face"/>
+      ${Array.from({ length: 60 }, (_, i) => { const a = i * 6 * Math.PI / 180; const r1 = i % 5 ? 41 : 36; return `<line x1="${(60 + Math.sin(a) * r1).toFixed(1)}" y1="${(76 - Math.cos(a) * r1).toFixed(1)}" x2="${(60 + Math.sin(a) * 44).toFixed(1)}" y2="${(76 - Math.cos(a) * 44).toFixed(1)}" class="${i % 5 ? 'pw-tick' : 'pw-tick is-major'}"/>`; }).join('')}
+      <line x1="60" y1="76" x2="60" y2="40" class="pw-hand"/>
+      <circle cx="60" cy="76" r="4" class="pw-pin"/>
+      <text x="60" y="100" class="pw-label">60 s</text>
+    </svg>`;
+
   function contractPanel() {
     return `<aside class="k-panel pitch-contract">
-      <p class="k-label">Le contrat des 60 s</p>
-      <p class="pitch-clock">${icon('clock', { size: 64 })}<strong>60 s</strong></p>
-      <p>Prospect : très attentif à la sécurité</p>
-      <p class="k-label">Structure attendue</p>
-      <ol class="pitch-structure">${content.structure.map(item => `<li>${esc(item)}</li>`).join('')}</ol>
-      <p class="pitch-tone">Ton affirmatif · Orienté client</p>
+      <div class="pitch-prospect">
+        <span class="pitch-lock" aria-hidden="true"></span>
+        <p><small>Votre prospect</small><strong>Très attentif à la sécurité de ses données</strong></p>
+      </div>
+      <div class="pitch-minute">
+        ${stopwatch()}
+        <p><strong>Une minute, pas plus</strong><span>soit 150 mots environ, à voix posée.</span></p>
+      </div>
+      <p class="k-label">Votre minute, en quatre temps</p>
+      <div class="pitch-bar" aria-hidden="true">${BUDGET.map((s, i) => `<i class="is-${TONES[i]}" style="flex:${s}"></i>`).join('')}</div>
+      <ol class="pitch-structure">${content.structure.map((item, i) => `<li><span class="pitch-dot is-${TONES[i]}"></span><span>${esc(item)}</span><b>≈ ${BUDGET[i]} s</b></li>`).join('')}</ol>
+      <p class="pitch-tone"><span>Ton affirmatif</span><span>Orienté client</span></p>
     </aside>`;
+  }
+
+  // La jauge du temps estimé, qui se remplit pendant l'écriture.
+  function gauge() {
+    const s = kit.seconds(pitch());
+    const tone = s > LIMIT ? 'is-over' : s > 50 ? 'is-near' : '';
+    return `<span class="pitch-gauge ${tone}"><i style="width:${Math.min(100, s / LIMIT * 100).toFixed(1)}%"></i></span>
+      <span class="pitch-gauge-text"><strong>≈ ${s} s</strong> sur 60 · ${esc(kit.plural(kit.words(pitch()), 'mot'))}${s > LIMIT ? ' · trop long, raccourcissez' : ''}</span>`;
   }
 
   function writeStep() {
     return `<div class="k-columns pitch-layout">
       ${contractPanel()}
       <form class="k-panel" novalidate>
-        <h2>1. Rédigez votre discours</h2>
-        <p class="k-instruction">Préparez un texte suffisamment court pour être prononcé en moins d’une minute.</p>
+        <p class="k-ask">Que dites-vous à ce prospect, en une minute ?</p>
+        <p class="k-instruction">Écrivez votre pitch tel que vous le prononcerez : une accroche, deux bénéfices prouvés, une conclusion.</p>
         ${ex.field('pitch', 'Votre pitch', { placeholder: 'Votre pitch…', max: 1200, rows: 8, hideLabel: true })}
-        <p class="pitch-words" data-live="words">${esc(wordsLine())}</p>
+        <div class="pitch-time" data-live="gauge">${gauge()}</div>
         ${core.errorsBox()}
         ${kit.bar({ left: kit.reset(), right: `${kit.dialogButton('example', 'Voir un exemple', 'secondary', '')}${kit.submit('Enregistrer mon texte et continuer')}` })}
       </form>
@@ -241,7 +272,7 @@
     'to-stage-back': () => { if (recorder?.state === 'recording') recorder.stop(); kit.setStage(Math.max(1, stage() - 1)); kit.commit(); },
     'skip-record': () => { kit.setStage(3); kit.commit(); }
   });
-  kit.live(() => ({ words: esc(wordsLine()), total: esc(totalText()) }));
+  kit.live(() => ({ words: esc(wordsLine()), gauge: gauge(), total: esc(totalText()) }));
   kit.dialogs({ example: { title: 'Un exemple de pitch en 60 secondes', html: `<p>${esc(content.example)}</p><p class="k-muted">Environ 70 mots, soit une trentaine de secondes à l’oral : il reste de la marge pour respirer.</p>` } });
 
   window.addEventListener('pagehide', () => { if (recorder?.state === 'recording') { recorder.onstop = null; recorder.stop(); } stopStream(); if (takeUrl) URL.revokeObjectURL(takeUrl); });
