@@ -20,14 +20,14 @@ window.ATELIER_BRIEFINGS = {
 
   's1-A': {
     lede: { key: "Une accroche à la loupe.", rest: "Écoutez, diagnostiquez, puis réécrivez-la." },
-    mission: "Relevez ce qui fonctionne, deux à trois axes d’amélioration, puis proposez votre version.",
+    mission: "Dites ce que Camille réussit, ce qu’elle devrait changer, puis proposez votre version.",
     method: "Écoutez l’accroche avant de commencer.",
-    situation: 'Vous êtes en boutique. Un client entre d’un pas pressé, jette des coups d’œil à sa montre et évite le contact visuel. Une conseillère l’accueille par une accroche que vous allez écouter.',
-    task: 'Écoutez l’accroche, puis relevez ce qui fonctionne, deux à trois axes d’amélioration précis, et réécrivez-la à votre façon.',
+    situation: 'Camille Martin, conseillère en assurance professionnelle chez Novéa, a rendez-vous avec le gérant d’une petite entreprise, dans son bureau. Elle ouvre l’entretien par une accroche que vous allez écouter.',
+    task: 'Écoutez l’accroche, puis relevez ce que Camille réussit, deux ou trois choses précises à changer, et réécrivez-la à votre façon.',
     criteria: [
-      'La finesse du diagnostic : des points d’amélioration réels, pas des erreurs inventées',
-      'Une version réécrite qui corrige effectivement les points relevés',
-      'Un ton et une concision adaptés à un client pressé'
+      'Des points à changer qui existent vraiment dans l’accroche, pas des erreurs inventées',
+      'Une version réécrite qui corrige ces points',
+      'Un ton et une longueur adaptés à un gérant qui reçoit une conseillère pour la première fois'
     ]
   },
 

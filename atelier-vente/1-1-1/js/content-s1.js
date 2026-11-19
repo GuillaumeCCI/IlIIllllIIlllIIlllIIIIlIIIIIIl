@@ -31,12 +31,12 @@ window.ATELIER_S1 = {
 
   /* Grille commune « Mon ouverture est-elle réussie ? », reprise de la fiche. */
   rubric: [
-    ['Accueil et climat', 'Salutation soignée, mise à l’aise, registre professionnel dès les premiers mots (4 × 20).'],
-    ['Présentation', 'J’annonce clairement qui je suis, ma fonction et mon entreprise, de façon concise.'],
-    ['Cadrage', 'J’annonce l’objet de l’échange, le déroulé et, si pertinent, la durée.'],
-    ['Transition vers l’écoute', 'Je bascule vers le client avant de parler produit ou offre.'],
-    ['Posture centrée client', 'Ton, formulation et rythme sont orientés client ; je ne monopolise pas la parole.'],
-    ['Adaptation', 'Mon ouverture est ajustée au client, au canal et à la situation.']
+    ['Accueil et climat', 'Saluez-vous, remerciez-vous et mettez-vous le client à l’aise, avec un ton professionnel, dès les premiers mots ?'],
+    ['Présentation', 'Dites-vous clairement, en quelques mots, qui vous êtes, votre fonction et votre entreprise ?'],
+    ['Cadrage', 'Annoncez-vous l’objet de l’échange, son déroulé et, si besoin, sa durée ? C’est ce qu’on appelle cadrer l’échange.'],
+    ['Transition vers l’écoute', 'Donnez-vous la parole au client, par une question, avant de parler de vos produits ou de vos offres ?'],
+    ['Posture centrée client', 'Parlez-vous de lui plus que de vous, sans garder la parole trop longtemps ?'],
+    ['Adaptation', 'Votre ouverture tient-elle compte de ce client, de la situation et du moyen d’échange (face à face, téléphone, e-mail) ?']
   ],
 
   hints: {

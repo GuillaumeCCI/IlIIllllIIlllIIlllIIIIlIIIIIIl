@@ -10,10 +10,10 @@ window.ATELIER_CONTEXTES = {
   's1-A': {
     title: 'Analyser',
     rows: [
-      ['users', 'La situation', 'Vous êtes en boutique. Un client entre d’un pas pressé, jette des coups d’œil à sa montre et évite le contact visuel. Une conseillère l’accueille par une accroche que vous allez écouter.'],
-      ['pencil', 'Ce qui vous est demandé', 'Relevez ce qui fonctionne, deux à trois axes d’amélioration, puis proposez votre version.'],
-      ['list', 'Comment faire', 'Écoutez l’accroche, puis relevez ce qui fonctionne, deux à trois axes d’amélioration précis, et réécrivez-la à votre façon.'],
-      ['target', 'Ce qui compte', ['La finesse du diagnostic : des points d’amélioration réels, pas des erreurs inventées', 'Une version réécrite qui corrige effectivement les points relevés', 'Un ton et une concision adaptés à un client pressé']]
+      ['users', 'La situation', 'Camille Martin, conseillère en assurance professionnelle chez Novéa, a rendez-vous avec le gérant d’une petite entreprise, dans son bureau. Elle ouvre l’entretien par une accroche que vous allez écouter.'],
+      ['pencil', 'Ce qui vous est demandé', 'Dites ce que Camille réussit, ce qu’elle devrait changer, puis proposez votre version.'],
+      ['list', 'Comment faire', 'Écoutez l’accroche (la transcription est à côté), puis relevez ce qu’elle réussit, deux ou trois choses précises à changer, et réécrivez-la à votre façon.'],
+      ['target', 'Ce qui compte', ['Des points à changer qui existent vraiment dans l’accroche, pas des erreurs inventées', 'Une version réécrite qui corrige ces points', 'Un ton et une longueur adaptés à un gérant qui reçoit une conseillère pour la première fois']]
     ]
   },
   's1-C': {

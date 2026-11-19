@@ -15,26 +15,26 @@
    * grand numéro, le champ, puis « Continuer » (ou la validation à la fin).
    * `context` : ce que l'étape demande, dans la fenêtre « Le contexte ». */
   const STEPS = [
-    { key: 'strengths', title: 'Ce qui fonctionne',
+    { key: 'strengths', title: 'Qu’est-ce que Camille réussit dans son accroche ?', hint: 'Citez ses mots, puis dites pourquoi ils fonctionnent : une ou deux phrases par point fort.',
       context: [
-        ['target', 'Le but de l’étape', 'Relever ce que la conseillère réussit dans son accroche.'],
+        ['target', 'Le but de l’étape', 'Relever ce que Camille réussit dans son accroche.'],
         ['pencil', 'Comment faire', 'Pour chaque point fort, citez ses mots et dites pourquoi ils fonctionnent.']
       ],
-      body: () => ex.field('strengths', 'Ce qui fonctionne', { placeholder: 'Notez les points forts de l’accroche…', rows: 6, hideLabel: true }) },
-    { key: 'improvements', title: 'Axes d’amélioration', hint: 'Ajoutez 2 à 3 points précis',
+      body: () => ex.field('strengths', 'Ce qui fonctionne', { placeholder: 'Par exemple : elle commence par…', rows: 6, hideLabel: true }) },
+    { key: 'improvements', title: 'Qu’est-ce que Camille devrait changer ?', hint: 'Relevez deux ou trois points précis : citez le passage qui gêne, puis dites ce que vous feriez à la place. Pensez à la clarté de son message et à ce que ce client attend.',
       context: [
-        ['target', 'Le but de l’étape', 'Un axe d’amélioration, c’est ce qui gêne dans l’accroche et ce qu’il faudrait changer.'],
+        ['target', 'Le but de l’étape', 'Repérer ce qui gêne dans l’accroche et ce qu’il faudrait changer : on appelle cela des axes d’amélioration.'],
         ['pencil', 'Comment faire', 'Pour chaque axe, citez le passage concerné et dites ce que vous feriez à la place.'],
-        ['lightbulb', 'À quoi penser', 'La clarté du message et l’adaptation à ce client pressé et distant.']
+        ['lightbulb', 'À quoi penser', 'La clarté de son message, et ce qu’attend un gérant qui reçoit une conseillère pour la première fois.']
       ],
-      body: () => core.chips(['Clarté', 'Adaptation au client']) + ex.field('improvements', 'Axes d’amélioration', { placeholder: 'Vos axes d’amélioration…', rows: 6, hideLabel: true }) },
-    { key: 'rewrite', title: 'Votre version améliorée',
+      body: () => ex.field('improvements', 'Ce que Camille devrait changer', { placeholder: 'Par exemple : quand elle dit « … », elle devrait plutôt…', rows: 6, hideLabel: true }) },
+    { key: 'rewrite', title: 'À sa place, comment ouvririez-vous ce rendez-vous ?', hint: 'Réécrivez l’accroche telle que vous la diriez au client, en trois ou quatre phrases : gardez ce qui fonctionne, corrigez ce que vous avez relevé.',
       context: [
-        ['target', 'Le but de l’étape', 'Réécrire l’accroche comme si vous étiez la conseillère.'],
+        ['target', 'Le but de l’étape', 'Réécrire l’accroche comme si vous étiez Camille.'],
         ['pencil', 'Comment faire', 'Gardez ce qui fonctionne et corrigez les axes d’amélioration que vous avez relevés.'],
         ['list', 'Une ouverture réussie', ['Accueil et climat : saluer, remercier, mettre à l’aise.', 'Présentation : dire qui vous êtes, votre fonction, votre entreprise.', 'Cadrage : annoncer l’objet, le déroulé ou la durée.', 'Transition vers l’écoute : donner la parole au client.', 'Posture centrée client : parler de lui, sans monopoliser la parole.', 'Adaptation : ajuster au client, au canal et à la situation.']]
       ],
-      body: () => ex.field('rewrite', 'Votre version améliorée', { placeholder: 'Réécrivez l’accroche ici…', max: 800, rows: 6, hideLabel: true }) }
+      body: () => ex.field('rewrite', 'Votre version de l’accroche', { placeholder: 'Bonjour, …', max: 800, rows: 6, hideLabel: true }) }
   ];
 
   function analysisStep() {
@@ -63,7 +63,7 @@
   function selfScreen() {
     return `<section class="self-eval">
       ${window.AtelierKit ? `<div class="tour-corner">${window.AtelierKit.contextButton()}</div>` : ''}
-      ${core.pageTitle('Autoévaluation', 'Votre version améliorée est-elle une ouverture réussie ?', 'Vous évaluez votre version améliorée (n° 3 à gauche). Pour chacun des six critères d’une ouverture réussie, dites si elle y répond.')}
+      ${core.pageTitle('Autoévaluation', 'Votre version de l’accroche est-elle une ouverture réussie ?', 'Relisez votre version (n° 3, à gauche). Pour chacun des six critères, dites si elle y répond : oui, en partie ou non.')}
       <div class="self-layout">
         <aside class="panel self-recap">
           <h2>Votre analyse</h2>
@@ -84,9 +84,9 @@
    * retour, teinté selon le verdict. La mise en situation reste à portée
    * dans une fenêtre. */
   const VERDICTS = [
-    { key: 'strengths', title: 'Ce qui fonctionne', tone: 'good', label: 'Une réponse possible', symbol: 'lightbulb' },
-    { key: 'improvements', title: 'Axes d’amélioration', tone: 'bad', label: 'Une réponse possible', symbol: 'lightbulb' },
-    { key: 'rewrite', title: 'Votre version améliorée', tone: 'neutral', label: 'Une réponse possible', symbol: 'lightbulb' }
+    { key: 'strengths', title: 'Ce que Camille réussit', tone: 'good', label: 'Une réponse possible', symbol: 'lightbulb' },
+    { key: 'improvements', title: 'Ce qu’elle devrait changer', tone: 'bad', label: 'Une réponse possible', symbol: 'lightbulb' },
+    { key: 'rewrite', title: 'Votre version de l’accroche', tone: 'neutral', label: 'Une réponse possible', symbol: 'lightbulb' }
   ];
 
   /* L'autoévaluation face au score : pour chaque critère de la grille, ce
@@ -117,7 +117,7 @@
     const toneOf = bloc => { const lines = bloc.lines.filter(l => l.kind !== 'warn'); const ok = lines.filter(l => l.kind === 'ok').length; return ok === lines.length ? 'good' : ok === 0 ? 'bad' : 'neutral'; };
     return `<section class="an-review">
       <header class="an-head">
-        ${core.pageTitle('Corrigé', 'Votre analyse', 'Voici l’analyse de votre réponse, point par point, avec un retour sur chacun.')}
+        ${core.pageTitle('Corrigé', 'Votre analyse de l’accroche', 'Vos trois réponses, chacune face à une réponse possible.')}
         ${core.button(`${icon('document', { size: 20 })}<span>Voir la mise en situation</span>`, 'scenario', 'subtle with-icon')}
       </header>
       ${window.AtelierCorrige.head(result, { rubric: content.rubric, selfKey, bloc: result ? result.blocs[VERDICTS.findIndex(row => row.key === 'rewrite')] : null, what: 'votre version améliorée' })}
@@ -141,8 +141,8 @@
     if (selfShown()) return selfScreen();
     return `<div class="two-columns">
       <section class="scenario">
-        ${core.pageTitle('Mise en situation', 'Vente en boutique · le client pressé et distant')}
-        ${core.callout('Écoutez l’accroche, puis identifiez ce qui fonctionne, 2 à 3 axes d’amélioration et proposez une nouvelle version.')}
+        ${core.pageTitle('Mise en situation', 'Rendez-vous chez un client · l’accroche de Camille')}
+        ${core.callout('Camille ouvre un rendez-vous chez un client. Écoutez son accroche : vous direz ce qu’elle réussit, ce qu’elle devrait changer, puis vous la réécrirez.')}
         <div class="media-scene">
           ${core.illustration(current)}
           ${core.button(icon('play', { size: 30 }), 'listen', 'play-button', 'aria-label="Écouter l’accroche"')}
@@ -151,8 +151,8 @@
           ${core.button(`${icon('play', { size: 18 })}<span data-audio-label>Écouter l’accroche</span>`, 'listen', 'primary')}
           ${core.button('Voir la transcription', 'transcript', 'subtle')}
         </div>
-        <p class="asset-note">${content.audio.demo ? 'Accroche de démonstration · lecture vocale de votre navigateur.' : 'Écoutez l’accroche et appuyez votre analyse sur des exemples précis.'}</p>
-        ${core.note('Concentrez-vous sur la formulation, le ton et l’adaptation au contexte.')}
+        ${content.audio.demo ? '<p class="asset-note">Accroche de démonstration · lecture vocale de votre navigateur.</p>' : ''}
+        ${core.note('Appuyez chaque réponse sur ses mots exacts : la transcription est là pour les relire.')}
       </section>
       ${analysisStep()}
     </div>`;
@@ -204,8 +204,8 @@
       `${transcript()}
        ${content.audio.demo ? '<p class="muted">Aucun enregistrement n’était joint aux maquettes. Cet exemple sert de support à l’exercice.</p>' : ''}`));
     core.$('[data-action="scenario"]')?.addEventListener('click', () => {
-      core.openDialog('Vente en boutique · le client pressé et distant',
-        `${core.callout('Écoutez l’accroche, puis identifiez ce qui fonctionne, 2 à 3 axes d’amélioration et proposez une nouvelle version.')}
+      core.openDialog('Rendez-vous chez un client · l’accroche de Camille',
+        `${core.callout('Camille ouvre un rendez-vous chez un client. Écoutez son accroche : vous direz ce qu’elle réussit, ce qu’elle devrait changer, puis vous la réécrirez.')}
          ${transcript()}
          <div class="media-actions">${core.button(`${icon('play', { size: 18 })}<span data-audio-label>Écouter l’accroche</span>`, 'listen', 'primary')}</div>`);
       core.$('#dialog-body [data-action="listen"]')?.addEventListener('click', () => media.listen(content.audio));
@@ -223,7 +223,7 @@
 
   // À l'arrivée sur l'autoévaluation : ce qu'on a sous les yeux.
   if (window.AtelierKit) window.AtelierKit.selfContext('.self-eval', [
-    ['eye', 'Ce que vous évaluez', 'Votre version améliorée de l’accroche (n° 3 à gauche).'],
+    ['eye', 'Ce que vous évaluez', 'Votre version de l’accroche (n° 3, à gauche).'],
     ['list', 'Une ouverture réussie', ['Accueil et climat : saluer, remercier, mettre à l’aise.', 'Présentation : dire qui vous êtes, votre fonction, votre entreprise.', 'Cadrage : annoncer l’objet, le déroulé ou la durée.', 'Transition vers l’écoute : donner la parole au client.', 'Posture centrée client : parler de lui, sans monopoliser la parole.', 'Adaptation : ajuster au client, au canal et à la situation.']],
     ['list', 'Ce qui vous est demandé', 'Pour chaque critère, dites si votre version y répond : « Oui », « En partie » ou « Non ».'],
     ['checkCircle', 'Ensuite', 'Le corrigé s’affiche. Vous comparez votre regard avec le sien.']
@@ -231,11 +231,11 @@
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   if (window.AtelierKit) window.AtelierKit.tour('s1-A', [
-    { target: '.scenario .callout', title: 'La consigne', text: 'Vous analysez l’accroche d’une vendeuse en boutique, en trois temps :',
+    { target: '.scenario .callout', title: 'La consigne', text: 'Vous analysez l’accroche de Camille, conseillère en assurance, en trois temps :',
       items: [
-        { key: '1', tone: 'green', text: 'ce qui fonctionne ;' },
-        { key: '2', tone: 'coral', text: '2 à 3 axes d’amélioration ;' },
-        { key: '3', tone: 'blue', text: 'votre nouvelle version de l’accroche.' }
+        { key: '1', tone: 'green', text: 'ce qu’elle réussit ;' },
+        { key: '2', tone: 'coral', text: 'deux ou trois choses à changer ;' },
+        { key: '3', tone: 'blue', text: 'votre version de l’accroche.' }
       ] },
     { target: '.media-scene, .media-actions', title: 'L’accroche', text: 'Commencez par écouter l’accroche.',
       items: [
@@ -244,9 +244,9 @@
       ] },
     { target: '.step-pill', title: 'Trois étapes', text: 'Vous répondez à une question à la fois :',
       items: [
-        { key: '1', tone: 'green', text: 'Ce qui fonctionne : les points forts de l’accroche.' },
-        { key: '2', tone: 'coral', text: 'Axes d’amélioration : 2 à 3 points précis à corriger.' },
-        { key: '3', tone: 'blue', text: 'Votre version améliorée : vous réécrivez l’accroche.' }
+        { key: '1', tone: 'green', text: 'Ce que Camille réussit.' },
+        { key: '2', tone: 'coral', text: 'Ce qu’elle devrait changer : deux ou trois points précis.' },
+        { key: '3', tone: 'blue', text: 'Votre version : vous réécrivez l’accroche.' }
       ],
       after: 'La pastille montre l’étape en cours.' },
     { target: '.wiz-panel .field', title: 'Votre réponse', text: 'Écrivez ici votre réponse à l’étape en cours, avec des exemples précis tirés de l’accroche.' },
