@@ -132,3 +132,17 @@ FAIT (18/11, en attente de son avis) : 4.2 « Les signaux » refait en « une ca
 Ensuite : 1-2-1 série 5 (5.1, 5.2), grilles s1/s9, puis 1-2-2 séries 2 à 5.
 
 Mise à jour du 19/11 : les points 1 à 3 de 4.2 sont faits (libellés lisibles, grille sur `c8_verifier`, `reviewRows` dans mounts.js) ; avis de l'utilisateur sur 4.2 toujours attendu. Le 19/11, les règles ont aussi été appliquées à M1.1 (voir `git log` du 19/11) : 1-1-1 (S1 A à F, S2, S3, S4 : questions en bandeau, situations en une phrase, cartes blanches), bilan à anneau en tête des corrigés (99 exercices), corrigés sans contours colorés, « À retenir » en bande de fin, trieur carte par carte (cartes décorées, fondu), kit 1-1-2 / 1-1-3 / 1-1-4 au corrigé en lignes. Reste toujours : 1-2-1 série 5, grilles s1/s9, puis 1-2-2 séries 2 à 5.
+
+## Journée du 19/11 (après-midi) : reprise de M1.1 (atelier-vente) avec nos règles
+
+Fait et envoyé (détail dans `git log` du 19/11) :
+- 1-1-2 · 2.4 : écran du logiciel RelaCosy dessiné à côté du pitch (validé). 2.5 : téléphone dessiné (« GÉNIAL »), notation en lignes à trois boutons colorés. 2.6 : chronomètre dessiné, minute en quatre temps, jauge du temps, enregistreur à anneau, auto-évaluation en lignes, corrigé à un seul bilan.
+- 1-1-4 · 4.5 : relances dans de vraies fenêtres d'e-mail (moteur `mailView`, `content.mail`), corrigé allégé (fond vert / rouge pâle, e-mail replié). 4.6 : refonte « frise du temps » REJETÉE et annulée ; puis allégé par retraits (`content.lean`) : situation + question en bandeau, cartes d'étapes à droite, une question par champ, habillage du canal discret. 4.7 : question en bandeau, on écrit dans l'e-mail (`content.mailSteps`), corrigé côte à côte (VALIDÉ). 4.2 : trieur carte par carte (`content.ask` dans mountMatch). 4.3 : allégé, offre Ergolys dessinée, « idées » au lieu d'« éléments », corrigé côte à côte (« bien mieux »).
+- Moteur : étapes `kit.steps` en petites cartes ; fondu enchaîné à tout changement d'étape (règle commune) ; décor fixé dès que la page dépasse l'écran ; un seul bilan dans le comparateur et en 2.6.
+- Outil de capture `tools/shot.mjs` (1-1-2, 1-1-4) : `SHOT_URL` (serveur racine : `node server.mjs --port 4180` à la racine du site) et `SHOT_JS` (script joué après fermeture des fenêtres).
+
+Reste à faire (proposé, en attente de son feu vert) :
+1. 1-1-4 · 2.2 et 3.2 : passer au trieur carte par carte (`ask`), comme 4.2.
+2. Objets à dessiner (liste complète dans la passe du 19/11 : 23 cas) : S5 4.2 « Rédigez votre relance » (fenêtre d'e-mail), 1-1-3 · 2.4 (téléphone « Appel en cours »), 1-1-2 · 1.3 (fiche produit RelaCosy), puis devis / grilles Ergolys, visio de M. Vidal (1-2-2 · 6.2), appel entrant (1-2-2 · 6.3)…
+3. Corrigé de 4.3 : afficher le conseil le plus utile (le critère qui vaut le plus de points) plutôt que le premier manquant.
+4. Toujours : 1-2-1 série 5, grilles s1/s9, puis 1-2-2 séries 2 à 5 ; avis attendu sur 1-2-1 · 4.2.
