@@ -71,10 +71,11 @@
     const at = open();
     return `<div class="k-page vf-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `${reviewing ? '' : kit.tourButton()}<p class="k-count" data-live="vf-count">${countLine()}</p>` })}
+        aside: reviewing ? '' : kit.tourButton() })}
       ${reviewing ? reviewScreen() : `<div class="vf-layout">
         ${contextPanel()}
         <form class="k-panel vf-main" novalidate>
+          <p class="k-ask">Qu’apportez-vous de nouveau ou d’utile à Madame Riveau ? Trouvez trois idées.</p>
           <ol class="vf-acc">${fields.map((f, i) => item(f, i, at)).join('')}</ol>
           ${core.errorsBox()}
           <div class="vf-actions">${kit.dialogButton('hint', 'Voir un indice', 'secondary', 'lightbulb')}${kit.submit(doneCount() >= n - 1 && !done(at) || doneCount() === n ? content.submitLabel : 'Enregistrer et passer au suivant')}</div>

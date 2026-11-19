@@ -272,3 +272,14 @@
 .rva-open .result-answer-text { margin: 0; color: var(--navy); font-size: .95rem; font-weight: 600; line-height: 1.5; }
 .rva-open mark { padding: 0 2px; border-radius: 4px; background: #fff0a8; color: inherit; }
 .rva-open .ana-line { font-size: .85rem; }
+
+/* 4.3 allégé (19/11) : contexte sans encadré crème ni cadres, élément ouvert sans case dans la case, sans compteur. */
+.vf-info { padding: 0; background: none; border-radius: 0; font-size: 1rem; }
+.vf-info .icon { color: #2a8f8f; }
+.vf-facts, .vf-facts li { border: 0; background: none; }
+.vf-facts { gap: 4px; }
+.vf-facts li { padding: 6px 0; }
+.vf-item { border: 0; background: #f6f8fd; }
+.vf-item.is-open { background: none; border: 0; padding: 4px 0 0; }
+.vf-item.is-open .counter { display: none; }
+.vf-main .k-ask { margin-bottom: 4px; }
