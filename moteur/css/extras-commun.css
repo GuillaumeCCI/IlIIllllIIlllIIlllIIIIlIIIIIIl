@@ -1212,3 +1212,10 @@ html { background-color: #fbf8f2; }
 .mail-sign { margin-top: 4px; }
 .mail-sign span + span { font-weight: 700; }
 #main .cmp-text:has(.mail-view) { display: block; margin-top: 10px; }
+/* Corrigé du comparateur d'e-mails : l'analyse d'abord, le message replié derrière « Relire ». */
+.cmp-reread { margin-top: 12px; }
+.cmp-reread > summary { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 99px; background: #eef3fb; color: var(--navy); font-weight: 700; font-size: .92rem; cursor: var(--cursor-hand, pointer); list-style: none; }
+.cmp-reread > summary::-webkit-details-marker { display: none; }
+.cmp-reread > summary::before { content: '›'; font-size: 1.2rem; line-height: 1; transition: transform .2s; }
+.cmp-reread[open] > summary::before { transform: rotate(90deg); }
+.cmp-reread .mail-view { margin-top: 10px; }

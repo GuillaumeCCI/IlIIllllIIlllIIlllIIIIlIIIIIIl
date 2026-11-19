@@ -588,10 +588,15 @@
       if (reviewing) {
         const ok = accepted().includes(option.id);
         const okLabel = both() ? (isChosen ? 'Votre choix, pertinent' : 'Pertinente aussi') : isChosen ? 'Votre choix, le plus efficace' : 'Le plus efficace';
-        return `<section class="cmp-option is-static ${ok ? 'is-answer' : ''}">
+        // Un e-mail entier se replie au corrigé (« Relire ») : l'analyse passe devant.
+        const text = content.mail && option.lines
+          ? `<details class="cmp-reread"><summary>Relire la ${esc(option.label.charAt(0).toLowerCase() + option.label.slice(1))}</summary>${optionText(option)}</details>`
+          : `<p class="cmp-text">${optionText(option)}</p>`;
+        return `<section class="cmp-option is-static ${ok ? 'is-answer' : ''} ${content.mail ? 'is-mail' : ''}">
           <header><span class="cmp-review-radio ${isChosen ? 'is-on' : ''}" aria-hidden="true"></span><strong>${esc(option.label)}</strong>${ok ? kit().mark(true, okLabel) : isChosen ? kit().mark(false, 'Votre choix') : ''}</header>
-          <p class="cmp-text">${optionText(option)}</p>
+          ${content.mail ? '' : text}
           <ul class="cmp-analysis ${ok ? 'is-good' : 'is-bad'}">${option.analysis.map(line => { const at = line.indexOf(' : '); return at > 0 && at < 40 ? `<li><strong>${esc(line.slice(0, at))}</strong> : ${esc(line.slice(at + 3))}</li>` : `<li>${esc(line)}</li>`; }).join('')}</ul>
+          ${content.mail ? text : ''}
         </section>`;
       }
       return `<label class="cmp-option ${isChosen ? 'is-chosen' : ''}">
@@ -611,6 +616,16 @@
       }).join('')}</div>`;
     }
 
+    /* En tête du corrigé, UN seul bilan : le choix, et le score estimé de la
+     * justification s'il y en a un, chacun dans son anneau (plus de second bilan plus bas). */
+    function reviewHead(ok) {
+      const rings = [{ n: ok ? 1 : 0, total: 1, label: both() ? 'les deux réponses peuvent convenir' : ok ? 'vous avez choisi la plus efficace' : 'la plus efficace était l’autre' }];
+      const scored = ouvert() && blocOf(key, fields ? 'crit0' : 'why') >= 0 ? ouvert().result(key) : null;
+      if (scored) rings.push({ n: scored.points, total: scored.total, label: 'le score estimé de votre justification' });
+      const intro = scored ? 'Le score de la justification est estimé d’après les mots repérés : une réponse juste, dite autrement, peut être sous-estimée.' : '';
+      return kit().bilan({ rings, intro });
+    }
+
     function screen() {
       const reviewing = ex().reviewing();
       const ok = accepted().includes(chosen());
@@ -620,15 +635,15 @@
           aside: `${content.badge ? `<p class="cmp-badge">${esc(content.badge)}</p>` : ''}${content.tour && !reviewing ? introButton(content) + kit().tourButton() : ''}` })}
         ${sceneBlock()}
         <form novalidate class="cmp-form">
-          ${content.listTitle ? `<h2 class="cmp-list-title">${esc(content.listTitle)}</h2>` : ''}
-          ${reviewing ? kit().result(ok ? 1 : 0, 1, both() ? 'les deux réponses peuvent convenir' : ok ? 'vous avez choisi la réponse la plus efficace' : 'la réponse la plus efficace était l’autre') : ''}
+          ${content.listTitle && !reviewing ? `<h2 class="cmp-list-title">${esc(content.listTitle)}</h2>` : ''}
+          ${reviewing ? reviewHead(ok) : ''}
           <div class="cmp-options" ${reviewing ? '' : 'role="radiogroup"'}>${content.options.map(option => optionCard(option, reviewing)).join('')}</div>
           <section class="k-panel cmp-why">
             <header class="cmp-why-head"><span class="cmp-why-symbol">${icon('pencil', { size: 22 })}</span><div><h2>${esc(content.whyLabel)}</h2><p class="k-muted">${esc(content.whyHelp)}</p></div>${reviewing ? '' : minNote}</header>
             ${criteriaBlock(reviewing)}
             ${reviewing
               ? (blocOf(key, fields ? 'crit0' : 'why') >= 0
-                ? `${scoreHead(key)}${fields
+                ? `${fields
                     ? `<div class="open-answer">${Array.from({ length: fields }, (_, i) => `<p class="open-answer-title">Votre critère ${i + 1}</p>${ouvert().quote(key, blocOf(key, `crit${i}`), ex().value(`crit${i}`), undefined, [`crit${i}`])}`).join('')}${ouvert().expected(key, blocOf(key, 'crit0'))}${ouvert().model(content.model)}</div>`
                     : ouvert().answer(key, blocOf(key, 'why'), { title: 'Votre justification', text: ex().value('why'), model: content.model })}`
                 : `${fields ? Array.from({ length: fields }, (_, i) => kit().yours(`Votre critère ${i + 1}`, ex().value(`crit${i}`))).join('') : kit().yours('Votre justification', ex().value('why'))}${kit().model('Corrigé', content.model)}`)
