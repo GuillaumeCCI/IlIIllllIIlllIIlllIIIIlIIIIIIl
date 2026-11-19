@@ -27,7 +27,7 @@
   /* Le gabarit validé le 19/11 (S1 E1) : à droite, dans une carte blanche,
    * la question en titre, une phrase qui dit quoi écrire, le champ. */
   function writePanel() {
-    return `<div class="e1-ask"><h2>Que lui dites-vous pendant ces 40 secondes ?</h2>${core.hintBlock(content.hints.E2)}</div>
+    return `<div class="e1-ask"><h2>Que lui dites-vous pendant ces 40 secondes&nbsp;?</h2>${core.hintBlock(content.hints.E2)}</div>
         <p class="e1-help">Écrivez votre ouverture telle que vous la diriez, en 90 mots au plus : qui vous êtes, ce qu’elle peut y gagner, et ce que vous lui proposez pour la suite. Testez-la ensuite à voix haute avec le chrono.</p>
         ${ex.field('proposal', 'Votre ouverture', { placeholder: 'Votre ouverture…', wordLimit: '90', max: 2000, rows: 6, hideLabel: true })}
         ${media.timerWidget()}
@@ -36,7 +36,7 @@
   }
 
   function selfPanel() {
-    return `<div class="e1-ask"><h2>Votre ouverture contient-elle ces trois éléments ?</h2></div>
+    return `<div class="e1-ask"><h2>Votre ouverture contient-elle ces trois éléments&nbsp;?</h2></div>
         <p class="e1-help">Relisez-la, puis répondez pour chaque élément : oui, en partie ou pas encore.</p>
         <blockquote class="self-reread">« ${esc(ex.value('proposal'))} »</blockquote>
         ${kit.matrix({ key: 'self', rows: SELF, columns: SCALE, head: 'Ce qu’elle doit contenir', round: true })}

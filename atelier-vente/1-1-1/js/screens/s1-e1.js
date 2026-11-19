@@ -54,7 +54,7 @@
       </section>
       <form class="e1-answer" data-bar-stays novalidate>
         <div class="e1-ask">
-          <h2>Que lui dites-vous maintenant, pour garder le lien ?</h2>
+          <h2>Que lui dites-vous maintenant, pour garder le lien&nbsp;?</h2>
           ${core.hintBlock(content.hints.E1)}
         </div>
         <p class="e1-help">Écrivez ce que vous lui diriez, en deux ou trois phrases : reconnaissez ce qui vient de se passer, rassurez-le, puis relancez l’échange par une question.</p>

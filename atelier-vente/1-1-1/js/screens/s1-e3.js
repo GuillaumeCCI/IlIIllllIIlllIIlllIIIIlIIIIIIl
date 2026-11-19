@@ -6,7 +6,6 @@
   'use strict';
   const core = window.AtelierCore;
   const ex = window.AtelierExercise;
-  const { icon } = core;
   const content = window.ATELIER_S1;
   const { required, text } = window.ExerciseRules;
   // Le bouton « Visite guidée », en haut à droite de l'écran (kit.js chargé par la page).
@@ -34,23 +33,20 @@
   function screen() {
     if (ex.reviewing()) return reviewScreen();
     const current = core.findExercise('s1-E3');
-    return `${corner()}<div class="two-columns affirmative">
-      <section class="panel scenario">
-        <span class="tag coral">Approche affirmative</span>
-        ${core.pageTitle('', 'Entrez en matière avec assurance', 'Rédigez une première phrase sans poser de question.')}
-        ${core.illustration(current)}
-        <div class="objective">
-          <span class="mission-symbol">${icon('target', { size: 26 })}</span>
-          <div><h3>Objectif</h3><ul class="objective-list"><li>${icon('check', { size: 16 })}<span>Prendre l’initiative</span></li><li>${icon('check', { size: 16 })}<span>Créer un climat positif</span></li></ul></div>
-        </div>
+    /* Gabarit validé le 19/11 (S1 E1) : la scène à gauche, la situation en
+     * une phrase ; à droite, dans une carte blanche, la question en titre,
+     * une phrase qui dit quoi écrire, le champ. */
+    return `${corner()}<div class="e1-layout">
+      <section class="e1-scene">
+        ${core.pageTitle('Mise en situation', 'Entrez en matière avec assurance', 'Une cliente vient refaire son salon dans votre agence de décoration. Elle s’assoit en face de vous et attend que vous lanciez l’échange.')}
+        <div class="e2-art">${core.illustration(current)}</div>
       </section>
-      <form class="panel answer-panel" novalidate data-bar-stays>
-        ${core.panelTitle('Votre ouverture')}
-        <p class="panel-intro">Une cliente vient refaire son salon dans votre agence de décoration. Elle s’assoit et attend que vous lanciez l’échange. Formulez une entrée en matière naturelle et directe.</p>
-        ${ex.field('opening', 'Votre ouverture', { placeholder: 'Ex. Je vous propose de commencer par…', max: 280, rows: 12, hideLabel: true })}
-        ${core.hintBlock(content.hints.E3)}
+      <form class="e1-answer" data-bar-stays novalidate>
+        <div class="e1-ask"><h2>Que lui dites-vous pour lancer l’échange, sans lui poser de question&nbsp;?</h2>${core.hintBlock(content.hints.E3)}</div>
+        <p class="e1-help">Écrivez votre première phrase telle que vous la diriez : prenez l’initiative et installez un climat positif, sans point d’interrogation. 280 caractères au plus.</p>
+        ${ex.field('opening', 'Votre première phrase', { placeholder: 'Je vous propose de…', max: 280, rows: 5, hideLabel: true })}
         ${core.errorsBox()}
-        ${ex.actions()}
+        ${ex.actions('Valider ma réponse')}
         ${core.feedbackBox()}
       </form>
     </div>`;
@@ -64,7 +60,7 @@
   }
 
   /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
-  const feedback = () => [];
+  const feedback = () => ['À retenir : lancer l’échange par une proposition (« Je vous propose de… ») montre votre assurance et laisse le client répondre librement.'];
 
   // À l'arrivée : pourquoi on est là, ce qui se passe, ce qui est demandé.
   if (kit) kit.context([
@@ -73,8 +69,8 @@
     ['pencil', 'Ce qui vous est demandé', 'Écrire votre première phrase, sans aucune question. Elle doit rassurer la cliente et lui donner envie de parler.']
   ]);
   if (kit) kit.tour('s1-E3', [
-    { target: '.objective', title: 'L’objectif', text: 'Gardez-le en tête : vous ouvrez l’échange vous-même, dans un climat positif.' },
-    { target: '.answer-panel .field', title: 'Votre ouverture', text: 'Une entrée en matière affirmative : aucune question, pas de point d’interrogation.',
+    { target: '.e1-ask, .e1-help', title: 'La question', text: 'Vous ouvrez l’échange vous-même, dans un climat positif, sans poser de question.' },
+    { target: '.e1-answer .field', title: 'Votre ouverture', text: 'Une entrée en matière affirmative : aucune question, pas de point d’interrogation.',
       items: [
         { symbol: 'lightbulb', tone: 'gold', text: '« Voir un indice » donne un exemple de tournure.' }
       ] },
