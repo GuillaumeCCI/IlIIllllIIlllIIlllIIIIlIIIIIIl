@@ -592,7 +592,7 @@
         const text = content.mail && option.lines
           ? `<details class="cmp-reread"><summary>Relire la ${esc(option.label.charAt(0).toLowerCase() + option.label.slice(1))}</summary>${optionText(option)}</details>`
           : `<p class="cmp-text">${optionText(option)}</p>`;
-        return `<section class="cmp-option is-static ${ok ? 'is-answer' : ''} ${content.mail ? 'is-mail' : ''}">
+        return `<section class="cmp-option is-static ${ok ? 'is-answer' : isChosen ? 'is-wrong' : ''} ${content.mail ? 'is-mail' : ''}">
           <header><span class="cmp-review-radio ${isChosen ? 'is-on' : ''}" aria-hidden="true"></span><strong>${esc(option.label)}</strong>${ok ? kit().mark(true, okLabel) : isChosen ? kit().mark(false, 'Votre choix') : ''}</header>
           ${content.mail ? '' : text}
           <ul class="cmp-analysis ${ok ? 'is-good' : 'is-bad'}">${option.analysis.map(line => { const at = line.indexOf(' : '); return at > 0 && at < 40 ? `<li><strong>${esc(line.slice(0, at))}</strong> : ${esc(line.slice(at + 3))}</li>` : `<li>${esc(line)}</li>`; }).join('')}</ul>

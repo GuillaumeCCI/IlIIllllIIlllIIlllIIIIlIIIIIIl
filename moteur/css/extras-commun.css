@@ -1219,3 +1219,8 @@ html { background-color: #fbf8f2; }
 .cmp-reread > summary::before { content: '›'; font-size: 1.2rem; line-height: 1; transition: transform .2s; }
 .cmp-reread[open] > summary::before { transform: rotate(90deg); }
 .cmp-reread .mail-view { margin-top: 10px; }
+/* Corrigé du comparateur : juste / faux se lisent au FOND de la carte (vert pâle, rouge pâle), sans contour. */
+#main .cmp-option.is-static.is-answer { border-color: transparent; background: #e9f6ef; box-shadow: 0 6px 18px rgb(20 40 100 / 7%); }
+#main .cmp-option.is-static.is-wrong { border-color: transparent; background: #fbeceb; box-shadow: 0 6px 18px rgb(20 40 100 / 7%); }
+#main .cmp-option.is-static:is(.is-answer, .is-wrong) header { border-bottom-color: rgb(20 40 100 / 8%); }
+#main .cmp-option.is-static:is(.is-answer, .is-wrong) .cmp-reread > summary { background: #fff; }
