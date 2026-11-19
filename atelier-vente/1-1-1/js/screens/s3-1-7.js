@@ -47,11 +47,11 @@
     return `<form class="an-review s317-review" novalidate data-bar-stays>
       ${ex.caseBar(caseList(), i, { noun: 'carte', feminine: true }, { dots: false })}
       ${core.pageTitle('Corrigé', `Objection ${i + 1}`, `Le client vous dit : « ${card.objection} »`)}
+      ${corrige.head(result)}
       <section class="panel">${core.panelTitle('Décoder : la nature de l’objection')}
         ${ex.reviewOptions(natureOptions, ex.value(natureKey(i)), card.answer)}
         ${ex.inlineNote(card.why, 'neutral')}
       </section>
-      ${corrige.head(result)}
       ${corrige.rows([
         corrige.row({ n: 1, title: 'Creuser : votre question', bloc: digBloc, text: ex.value(digKey(i)), model: card.question }),
         corrige.row({ n: 2, title: 'Répondre : votre réponse avec une preuve', bloc: replyBloc, text: ex.value(replyKey(i)), model: card.reply })

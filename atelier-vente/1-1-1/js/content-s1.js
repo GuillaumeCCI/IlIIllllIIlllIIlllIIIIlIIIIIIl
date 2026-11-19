@@ -59,8 +59,8 @@ window.ATELIER_S1 = {
     // Exercice A de la fiche, contexte 1 : boutique, client pressé (B2C).
     B: [
       '« Bonjour ! Je vous laisse regarder à votre rythme. Je suis [Prénom], conseiller ici : au moindre besoin, je suis juste à côté. Vous cherchez quelque chose de précis, ou je vous laisse d’abord faire un tour ? »',
-      'Une ouverture courte et non intrusive, qui respecte le rythme du client et lui laisse le choix.',
-      'Critère spécifique à vérifier : l’adaptation au contexte. Le réglage que vous annoncez doit être cohérent avec la situation et réellement présent dans votre formulation.'
+      'Vous pouviez écrire : « J’ai fait court et je l’ai laissé libre de regarder seul : il voit que je respecte son rythme, et c’est lui qui choisit s’il a besoin de moi. »',
+      'À vérifier vous-même : ce que vous dites avoir adapté doit aller avec la situation, et se voir vraiment dans vos phrases.'
     ],
 
     // Exercice C de la fiche : comparer deux ouvertures et argumenter.

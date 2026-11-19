@@ -581,3 +581,7 @@
 #main .step-rail .case-atouts ul { gap: 7px; }
 #main .step-rail .case-atouts li { align-items: baseline; gap: 10px; font-size: .98rem; line-height: 1.45; }
 #main .step-rail .case-atouts-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #9db6f5; transform: translateY(-2px); }
+
+/* S1 B : ce que vous remarquez chez le client, en une phrase (plus d’étiquettes nues). */
+#main .signals-line { margin: 14px 2px 18px; color: var(--navy); font-size: 1rem; line-height: 1.55; }
+#main .signals-line strong { font-weight: 800; }

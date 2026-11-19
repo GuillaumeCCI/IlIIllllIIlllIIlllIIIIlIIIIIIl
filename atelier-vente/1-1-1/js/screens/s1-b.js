@@ -13,11 +13,11 @@
   /* L'exercice en deux étapes, une question à la fois ; le client illustré
    * reste à droite. Le corrigé, lui, montre les deux étapes ensemble. */
   const STEPS = [
-    { key: 'opening', title: 'Montrez rapidement au client que vous avez compris son rythme et son besoin d’autonomie.', hint: 'Votre entrée en matière · 3 à 4 phrases',
+    { key: 'opening', title: 'Que lui dites-vous pour l’accueillir ?', hint: 'Écrivez ce que vous lui diriez, en trois ou quatre phrases courtes : montrez-lui que vous respectez son rythme et qu’il peut regarder seul.',
       indice: ['Une ouverture réussie tient en six points :', ['Accueil et climat : saluer, remercier, mettre à l’aise.', 'Présentation : dire qui vous êtes, votre fonction, votre entreprise.', 'Cadrage : annoncer l’objet, le déroulé ou la durée.', 'Transition vers l’écoute : donner la parole au client.', 'Posture centrée client : parler de lui, sans monopoliser la parole.', 'Adaptation : ajuster au client, au canal et à la situation.']],
-      body: () => ex.field('opening', 'Votre entrée en matière', { placeholder: 'Écrivez ce que vous diriez au client…', max: 600, rows: 5, hideLabel: true }) },
-    { key: 'adjustment', title: 'Précisez le réglage majeur effectué pour vous synchroniser avec le client.', hint: 'Une phrase suffit · par exemple le rythme, le ton, la distance ou la précision',
-      body: () => ex.field('adjustment', 'Votre réglage majeur', { placeholder: 'Expliquez le principal ajustement effectué…', max: 250, rows: 4, hideLabel: true }) }
+      body: () => ex.field('opening', 'Votre accueil', { placeholder: 'Bonjour, …', max: 600, rows: 5, hideLabel: true }) },
+    { key: 'adjustment', title: 'Qu’avez-vous changé dans votre façon de parler, pour ce client pressé ?', hint: 'En une phrase, nommez le principal ajustement de votre accueil : le rythme, le ton, la distance ou la précision. C’est ce qu’on appelle votre réglage.',
+      body: () => ex.field('adjustment', 'Ce que vous avez adapté', { placeholder: 'J’ai surtout…', max: 250, rows: 4, hideLabel: true }) }
   ];
 
   function wizard(current) {
@@ -27,8 +27,7 @@
     return `<form class="wiz-layout" novalidate>
       <section class="wiz-main">
         ${core.pageTitle('Mise en situation', 'Vente en boutique · le client pressé et distant')}
-        ${core.callout('Un client entre dans votre magasin d’un pas rapide. Il jette des coups d’œil réguliers à sa montre, se montre particulièrement sur la réserve et évite le contact visuel prolongé. Il a manifestement un besoin précis, mais craint d’être accaparé par un discours commercial trop lourd.')}
-        <div class="signals"><strong>Signaux observés</strong>${core.chips(['Pressé', 'Réservé', 'Besoin précis'])}</div>
+        ${core.callout('Un client entre dans votre magasin d’un pas rapide. Il regarde sa montre, évite votre regard et cherche visiblement quelque chose de précis. Il n’a pas envie d’un long discours commercial.')}
         <div class="wiz-step is-step-${at + 1}">
           <div class="wiz-prompt ${step.indice ? 'has-hint' : ''}"><span class="wiz-bulb" aria-hidden="true">${icon('lightbulb', { size: 30 })}</span><div><h2>${esc(step.title)}</h2><p>${esc(step.hint)}</p></div>${step.indice ? core.hintBlock(step.indice[0], step.indice[1]) : ''}</div>
           ${step.body()}
@@ -54,7 +53,7 @@
   function selfScreen() {
     return `<section class="self-eval">
       ${window.AtelierKit ? `<div class="tour-corner">${window.AtelierKit.contextButton()}</div>` : ''}
-      ${core.pageTitle('Autoévaluation', 'Votre approche est-elle une ouverture réussie ?', 'Vous évaluez votre approche (à gauche). Pour chacun des six critères d’une ouverture réussie, dites si elle y répond.')}
+      ${core.pageTitle('Autoévaluation', 'Votre approche est-elle une ouverture réussie ?', 'Relisez votre accueil (à gauche). Pour chacun des six critères, dites s’il y répond : oui, en partie ou non.')}
       <div class="self-layout">
         <aside class="panel self-recap">
           <h2>Votre approche</h2>
@@ -74,8 +73,8 @@
    * par étape, la réponse à gauche, le retour teinté à droite. La mise en
    * situation reste à portée dans une fenêtre. Styles : extras.css (.an-*). */
   const VERDICTS = [
-    { key: 'opening', title: 'Votre entrée en matière', tone: 'neutral', label: 'Une réponse possible', symbol: 'lightbulb' },
-    { key: 'adjustment', title: 'Votre réglage majeur', tone: 'good', label: 'Un réglage possible', symbol: 'lightbulb' }
+    { key: 'opening', title: 'Votre accueil', tone: 'neutral', label: 'Une réponse possible', symbol: 'lightbulb' },
+    { key: 'adjustment', title: 'Ce que vous avez adapté', tone: 'good', label: 'Une réponse possible', symbol: 'lightbulb' }
   ];
 
   /* L'autoévaluation face au score : pour chaque critère de la grille, ce
@@ -106,7 +105,7 @@
     const toneOf = bloc => { const lines = bloc.lines.filter(l => l.kind !== 'warn'); const ok = lines.filter(l => l.kind === 'ok').length; return ok === lines.length ? 'good' : ok === 0 ? 'bad' : 'neutral'; };
     return `<section class="an-review">
       <header class="an-head">
-        ${core.pageTitle('Corrigé', 'Votre approche', 'Voici votre approche, étape par étape, avec un retour sur chacune.')}
+        ${core.pageTitle('Corrigé', 'Votre accueil du client pressé', 'Vos deux réponses, chacune face à une réponse possible.')}
         ${core.button(`${icon('document', { size: 20 })}<span>Voir la mise en situation</span>`, 'scenario', 'subtle with-icon')}
       </header>
       ${window.AtelierCorrige.head(result, { rubric: content.rubric, selfKey, bloc: result ? { lines: result.blocs.flatMap(b => b.lines) } : null, what: 'votre approche' })}
@@ -131,8 +130,8 @@
   }
 
   const answerErrors = values => [
-    required(values, 'opening', 'Votre entrée en matière', 600),
-    required(values, 'adjustment', 'Votre réglage majeur', 250)
+    required(values, 'opening', 'Votre accueil', 600),
+    required(values, 'adjustment', 'Ce que vous avez adapté', 250)
   ].filter(Boolean);
 
   // Sur la grille, chaque critère attend sa réponse.
@@ -152,9 +151,8 @@
   function onMount() {
     core.$('[data-action="scenario"]')?.addEventListener('click', () => core.openDialog(
       'Vente en boutique · le client pressé et distant',
-      `${core.callout('Un client entre dans votre magasin d’un pas rapide. Il jette des coups d’œil réguliers à sa montre, se montre particulièrement sur la réserve et évite le contact visuel prolongé. Il a manifestement un besoin précis, mais craint d’être accaparé par un discours commercial trop lourd.')}
-       <div class="signals"><strong>Signaux observés</strong>${core.chips(['Pressé', 'Réservé', 'Besoin précis'])}</div>
-       ${core.note('Montrez rapidement au client que vous avez compris son rythme et son besoin d’autonomie.')}`));
+      `${core.callout('Un client entre dans votre magasin d’un pas rapide. Il regarde sa montre, évite votre regard et cherche visiblement quelque chose de précis. Il n’a pas envie d’un long discours commercial.')}
+       ${core.note('Accueillez-le en lui montrant que vous respectez son rythme et qu’il peut regarder seul.')}`));
     core.$('[data-action="self-back"]')?.addEventListener('click', () => {
       ex.setValue('selfCheck', false);
       core.persist();
@@ -164,7 +162,7 @@
 
   // À l'arrivée sur l'autoévaluation : ce qu'on a sous les yeux.
   if (window.AtelierKit) window.AtelierKit.selfContext('.self-eval', [
-    ['eye', 'Ce que vous évaluez', 'Votre approche : votre entrée en matière et votre réglage majeur (à gauche).'],
+    ['eye', 'Ce que vous évaluez', 'Votre accueil et ce que vous avez adapté (à gauche).'],
     ['list', 'Une ouverture réussie', ['Accueil et climat : saluer, remercier, mettre à l’aise.', 'Présentation : dire qui vous êtes, votre fonction, votre entreprise.', 'Cadrage : annoncer l’objet, le déroulé ou la durée.', 'Transition vers l’écoute : donner la parole au client.', 'Posture centrée client : parler de lui, sans monopoliser la parole.', 'Adaptation : ajuster au client, au canal et à la situation.']],
     ['list', 'Ce qui vous est demandé', 'Pour chaque critère, dites si votre approche y répond : « Oui », « En partie » ou « Non ».'],
     ['checkCircle', 'Ensuite', 'Le corrigé s’affiche. Vous comparez votre regard avec le sien.']
@@ -174,17 +172,17 @@
   // ouverture réussie sont dans l'indice de l'étape 1 (« Voir un indice »).
   if (window.AtelierKit) window.AtelierKit.context([
     ['users', 'La situation', 'En boutique, un client pressé veut regarder seul, à son rythme.'],
-    ['pencil', 'Ce qui vous est demandé', 'Écrire votre entrée en matière, puis dire ce que vous avez adapté à ce client.']
+    ['pencil', 'Ce qui vous est demandé', 'Écrire ce que vous lui dites pour l’accueillir, puis, en une phrase, ce que vous avez adapté pour lui.']
   ]);
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   if (window.AtelierKit) window.AtelierKit.tour('s1-B', [
-    { target: '.wiz-main .callout, .wiz-main .signals', title: 'La situation', text: 'Lisez la situation et les signaux du client.' },
+    { target: '.wiz-main .callout', title: 'La situation', text: 'Lisez la situation : regardez bien ce que montre le client.' },
     { target: '.wiz-step .field', show: '.wiz-step.is-step-1', title: 'Votre réponse', text: 'Écrivez ici ce que vous diriez au client.' },
     { target: '.step-pill', title: 'Deux étapes', text: 'Vous répondez à une question à la fois :',
       items: [
-        { key: '1', tone: 'blue', text: 'votre entrée en matière, en 3 à 4 phrases ;' },
-        { key: '2', tone: 'coral', text: 'votre réglage majeur, en une phrase.' }
+        { key: '1', tone: 'blue', text: 'votre accueil, en trois ou quatre phrases ;' },
+        { key: '2', tone: 'coral', text: 'ce que vous avez adapté, en une phrase.' }
       ] },
     { target: '.wiz-step .wiz-actions', show: '.wiz-step.is-step-1', title: 'Continuer',
       items: [
@@ -193,8 +191,8 @@
         { symbol: 'document', tone: 'blue', text: 'Le corrigé s’affiche ensuite.' }
       ] },
     // Second temps, à l'arrivée sur l'étape 2 : ce qui est nouveau par rapport à l'étape 1.
-    { later: true, target: '.wiz-step.is-step-2', title: 'Étape 2 : le réglage majeur',
-      text: 'Votre entrée en matière est écrite. Dites maintenant, en une phrase, ce que vous avez adapté pour suivre ce client.' }
+    { later: true, target: '.wiz-step.is-step-2', title: 'Étape 2 : ce que vous avez adapté',
+      text: 'Votre accueil est écrit. Dites maintenant, en une phrase, ce que vous avez adapté pour ce client.' }
   ]);
 
   ex.mount('s1-B', { screen, validate, intercept, feedback, onMount, compactFeedback: true });

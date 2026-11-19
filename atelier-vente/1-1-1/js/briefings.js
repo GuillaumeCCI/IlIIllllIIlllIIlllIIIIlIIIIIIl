@@ -33,14 +33,14 @@ window.ATELIER_BRIEFINGS = {
 
   's1-B': {
     lede: { key: "Un client pressé.", rest: "Trouvez les mots qui respectent son rythme." },
-    mission: "Rédigez votre entrée en matière en trois à quatre phrases, puis nommez votre réglage principal.",
-    method: "Observez les signaux avant de rédiger.",
-    situation: 'Même boutique, même client pressé. Il a un besoin précis mais craint d’être accaparé par un discours commercial trop lourd.',
-    task: 'Rédigez votre entrée en matière en trois à quatre phrases, puis nommez en une phrase le réglage principal que vous avez fait pour vous synchroniser avec lui.',
+    mission: "Écrivez ce que vous dites pour l’accueillir, puis ce que vous avez adapté pour lui.",
+    method: "Regardez bien ce qu’il montre avant d’écrire.",
+    situation: 'En boutique, un client entre d’un pas pressé. Il regarde sa montre, évite votre regard et cherche quelque chose de précis, sans vouloir d’un long discours commercial.',
+    task: 'Écrivez ce que vous lui dites pour l’accueillir, en trois ou quatre phrases, puis dites en une phrase ce que vous avez adapté pour lui : le rythme, le ton, la distance ou la précision.',
     criteria: [
       'Une ouverture courte, qui respecte son rythme et lui laisse le choix',
-      'Un réglage annoncé cohérent avec la situation',
-      'Ce réglage doit être réellement perceptible dans votre formulation'
+      'Ce que vous dites avoir adapté va bien avec la situation',
+      'Cela se voit vraiment dans vos phrases'
     ]
   },
 

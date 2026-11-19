@@ -46,8 +46,8 @@
     return `<form class="an-review s2a-review" novalidate>
       ${ex.caseBar(cases(), i, 'client')}
       ${core.pageTitle('Corrigé', client.label, `Le client vous dit : « ${client.quote} »`)}
-      <section class="panel">${core.panelTitle('Votre choix')}${ex.reviewOptions(options, ex.value(choiceKey(i)), client.answer)}</section>
       ${corrige.head(result, { rubric, selfKey: selfKey(i), bloc, what: 'votre réponse' })}
+      <section class="panel">${core.panelTitle('Votre choix')}${ex.reviewOptions(options, ex.value(choiceKey(i)), client.answer)}</section>
       ${corrige.rows([
         corrige.row({ n: 1, title: 'Votre justification', bloc, text: ex.value(whyKey(i)), model: client.model })
       ])}
