@@ -877,3 +877,5 @@ button.crash-passage:hover { background: #fff1d6; }
 .fs-layout.is-mail .fs-tip { background: none; padding: 0 2px; color: #5a6890; }
 .fs-layout.is-mail .fs-tip .icon { color: #2a8f8f; }
 #main .fs-mail textarea:focus-visible { outline: none; }
+/* Partie suivante d'un cas rempli partie par partie : le fondu enchaîné validé, plus aucun glissement. */
+.fs-step.is-next, .fs-step.is-prev, .fm-one.is-next, .fm-one.is-prev { animation: fm-in .6s ease-in-out .4s both; }
