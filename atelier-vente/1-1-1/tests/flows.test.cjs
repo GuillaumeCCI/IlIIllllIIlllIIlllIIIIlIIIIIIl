@@ -497,7 +497,7 @@ const INLINE = {
   },
   's1-d': engine => {
     for (let i = 1; i <= 4; i++) engine.setValue(`line${i}`, `Phrase ${i}`);
-    engine.setValue('technique1', 'Accueil / 4 × 20');
+    engine.setValue('technique1', 'Accueil');
     engine.setValue('technique2', 'Présentation');
     engine.setValue('technique3', 'Cadrage');
     engine.setValue('technique4', 'Transition vers l’écoute');

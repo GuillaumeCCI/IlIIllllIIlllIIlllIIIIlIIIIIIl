@@ -27,7 +27,7 @@ window.ATELIER_S1 = {
   // Les critères d'un argument (Comparer) : les titres de la grille ci-dessous,
   // pour que l'apprenant retrouve les mêmes mots dans la fenêtre.
   criteria: ['Accueil et climat', 'Présentation', 'Cadrage', 'Transition vers l’écoute', 'Posture centrée client', 'Adaptation'],
-  techniques: ['Accueil / 4 × 20', 'Présentation', 'Cadrage', 'Transition vers l’écoute', 'Adaptation'],
+  techniques: ['Accueil', 'Présentation', 'Cadrage', 'Transition vers l’écoute', 'Adaptation'],
 
   /* Grille commune « Mon ouverture est-elle réussie ? », reprise de la fiche. */
   rubric: [
@@ -75,10 +75,10 @@ window.ATELIER_S1 = {
     // Corrigé structuré : l'écran place chaque élément sous la ligne concernée.
     D: {
       // Les quatre fonctions attendues dans toute ouverture complète.
-      requiredFunctions: ['Accueil / 4 × 20', 'Présentation', 'Cadrage', 'Transition vers l’écoute'],
+      requiredFunctions: ['Accueil', 'Présentation', 'Cadrage', 'Transition vers l’écoute'],
       // Ce que chaque fonction doit produire, pour juger sa propre ligne.
       guidance: {
-        'Accueil / 4 × 20': 'Les premiers mots et le ton installent le climat : saluez et remerciez avant toute chose.',
+        'Accueil': 'Les premiers mots et le ton installent le climat : saluez et remerciez avant toute chose.',
         'Présentation': 'Dites qui vous êtes et pour qui : prénom, nom, fonction, entreprise, en une phrase.',
         'Cadrage': 'Annoncez l’objet, le déroulé et, si c’est pertinent, la durée.',
         'Transition vers l’écoute': 'Donnez réellement la parole, par une question ouverte.',
@@ -86,7 +86,7 @@ window.ATELIER_S1 = {
       },
       // Le modèle annoté : une ligne, sa fonction, ce qu'elle sert.
       model: [
-        { line: 'Bonjour, merci de me recevoir.', fonction: 'Accueil / 4 × 20', intention: 'Premiers mots et ton : le climat se joue ici.' },
+        { line: 'Bonjour, merci de me recevoir.', fonction: 'Accueil', intention: 'Premiers mots et ton : le climat se joue ici.' },
         { line: 'Je suis [Prénom Nom], conseiller chez [Entreprise].', fonction: 'Présentation', intention: 'Qui je suis, pour qui.' },
         { line: 'Je vous propose qu’on prenne 20 minutes…', fonction: 'Cadrage', intention: 'La durée est annoncée.' },
         { line: '…d’abord pour vous écouter, ensuite pour vous proposer des pistes.', fonction: 'Cadrage', intention: 'Le déroulé est annoncé, et l’écoute avec lui.' },

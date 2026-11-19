@@ -244,7 +244,7 @@
       { titre: 'Votre ouverture', motif: 'line',
         // Les noms des fonctions, tels qu'on les choisit phrase par phrase.
         criteres: [
-          { ...accueil, nom: 'Accueil / 4 × 20 : saluer et remercier' },
+          { ...accueil, nom: 'Accueil : saluer et remercier' },
           { ...presentation, nom: 'Présentation : qui vous êtes, pour qui' },
           { ...cadrage, nom: 'Cadrage : objet, déroulé ou durée' },
           { ...ecoute, nom: 'Transition vers l’écoute : la parole au client' }

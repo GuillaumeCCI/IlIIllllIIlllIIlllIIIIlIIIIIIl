@@ -52,38 +52,36 @@
     }).join('');
   }
 
-  /* En relecture, la ligne et sa fonction deviennent du texte, suivis du
-   * repère propre à la fonction choisie. La pastille est verte quand la
-   * fonction fait partie des quatre attendues ; « Adaptation » reste un
-   * choix légitime, simplement pas une fonction clé. */
+  /* LE CORRIGÉ EN LIGNES (19/11 : l'ancien empilait cartes, encadrés et un
+   * conseil répété ; la coche à côté de la fonction laissait croire que la
+   * phrase était bonne). Une ligne par phrase : le numéro, la phrase, la
+   * fonction choisie en petite étiquette. Le nom « Accueil / 4 × 20 » se
+   * dit « Accueil ». */
+  const plain = fonction => String(fonction || '').replace(' / 4 × 20', '');
+
   function reviewedRows(bloc) {
-    return Array.from({ length: lineCount() }, (_, i) => {
+    return `<ol class="d-lines">${Array.from({ length: lineCount() }, (_, i) => {
       const n = i + 1;
-      const text = ex.value(lineKey(n));
       const fonction = ex.value(techniqueKey(n));
-      const isKey = correction.requiredFunctions.includes(fonction);
-      const guidance = correction.guidance[fonction];
-      return `<div class="review-row ${isKey ? 'is-key' : ''}">
-        <span class="step-number">${n}</span>
-        <div class="review-body">
-          <p class="review-line">« ${window.AtelierCorrige.part(bloc, text)} »</p>
-          ${guidance ? `<p class="inline-note tone-neutral">${esc(guidance)}</p>` : ''}
-        </div>
-        <span class="review-function">${ex.verdictMark(isKey)}<span>${esc(fonction)}</span></span>
-      </div>`;
-    }).join('');
+      return `<li><span class="d-n">${n}</span><p>« ${window.AtelierCorrige.part(bloc, ex.value(lineKey(n)))} »</p>${fonction ? `<span class="d-tag">${esc(plain(fonction))}</span>` : ''}</li>`;
+    }).join('')}</ol>`;
   }
 
-  /* Le modèle, présenté exactement comme la production de l'apprenant. */
+  /* Le modèle, construit de la même façon : la phrase, sa fonction, à quoi elle sert. */
   function modelRows() {
-    return `<div class="review-rows model-rows">${correction.model.map((row, i) => `<div class="review-row">
-      <span class="step-number">${i + 1}</span>
-      <div class="review-body">
-        <p class="review-line">« ${esc(row.line)} »</p>
-        <p class="inline-note tone-good">${esc(row.intention)}</p>
-      </div>
-      <span class="review-function"><span>${esc(row.fonction)}</span></span>
-    </div>`).join('')}</div>`;
+    return `<ol class="d-lines is-model">${correction.model.map((row, i) => `<li><span class="d-n">${i + 1}</span><p>« ${esc(row.line)} »<span class="d-why">${esc(row.intention)}</span></p><span class="d-tag">${esc(plain(row.fonction))}</span></li>`).join('')}</ol>`;
+  }
+
+  /* Le vrai retour : les quatre fonctions clés, chacune trouvée (dans quelle
+   * phrase) ou absente, avec une seule fois ce qu'elle doit faire. */
+  function keyFunctions() {
+    const where = fonction => Array.from({ length: lineCount() }, (_, i) => i + 1).filter(n => ex.value(techniqueKey(n)) === fonction);
+    return `<ul class="d-keys">${correction.requiredFunctions.map(fonction => {
+      const lines = where(fonction);
+      const found = lines.length > 0;
+      const said = found ? `dans votre phrase ${lines.join(' et ')}` : 'absente de votre ouverture';
+      return `<li class="${found ? 'is-ok' : 'is-miss'}"><span class="d-mark" aria-hidden="true">${found ? '✓' : '○'}</span><div><p><strong>${esc(plain(fonction))}</strong> · ${said}</p><p class="d-help">${esc(correction.guidance[fonction] || '')}</p></div></li>`;
+    }).join('')}</ul>`;
   }
 
   /* ── L'écran ─────────────────────────────────────────────────────────── */
@@ -120,18 +118,18 @@
     const result = corrige.score('s1-D', ex.values());
     const bloc = result ? result.blocs[0] : null;
     const missing = missingFunctions();
-    const many = missing.length > 1;
-    const yours = `<div class="review-rows">${reviewedRows(bloc)}</div>
-      ${missing.length
-        ? ex.inlineNote(`Fonction${many ? 's' : ''} clé${many ? 's' : ''} choisie${many ? 's' : ''} pour aucune de vos phrases : ${missing.join(', ')}.`, 'neutral')
-        : ex.inlineNote('Vous avez relié vos phrases aux quatre fonctions clés : accueil, présentation, cadrage et transition vers l’écoute.', 'neutral')}`;
+    const yours = reviewedRows(bloc);
+    const keysTitle = missing.length
+      ? `Il manque ${missing.length > 1 ? `${missing.length} fonctions clés` : 'une fonction clé'} à votre ouverture`
+      : 'Votre ouverture remplit les quatre fonctions clés';
 
     return `<section class="an-review writing-review">
-      ${core.pageTitle('Corrigé', 'Construisez votre ouverture', 'Voici votre ouverture relue, phrase par phrase, face à une réponse possible construite de la même façon.')}
+      ${core.pageTitle('Corrigé', 'Construisez votre ouverture', 'Votre ouverture, phrase par phrase, face à une réponse possible construite de la même façon, puis les quatre fonctions clés.')}
       ${corrige.head(result)}
       ${corrige.rows([
-        corrige.row({ n: 1, title: 'Votre ouverture', bloc, yours, modelHtml: modelRows(), half: true })
+        corrige.row({ n: 1, title: 'Votre ouverture, phrase par phrase', bloc, yours, modelHtml: modelRows(), half: true })
       ])}
+      <section class="panel d-keys-panel"><h2>${esc(keysTitle)}</h2><p class="d-keys-lead">Toute ouverture complète doit remplir ces quatre fonctions. Voici, pour chacune, la phrase où vous l’avez indiquée.</p>${keyFunctions()}</section>
       ${core.feedbackBox()}
     </section>`;
   }
@@ -148,7 +146,7 @@
   }
 
   /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
-  const feedback = () => [];
+  const feedback = () => ['À retenir : une ouverture complète accueille, présente, cadre l’échange, puis donne la parole au client.'];
 
   function removeLine(index) {
     const total = lineCount();
