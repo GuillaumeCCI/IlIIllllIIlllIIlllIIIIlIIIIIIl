@@ -679,3 +679,8 @@
 #main .f-check-title { margin: 6px 0 0; color: var(--navy); font-size: .92rem; font-weight: 700; }
 #main .e1-answer .field input { box-shadow: none; border-color: transparent; background: #f6f8fc; border-radius: 12px; }
 #main .e1-answer .field input:focus { background: #fff; box-shadow: 0 0 0 2px #c9d6f5; }
+
+/* S2 D : le choix final en petites cartes, deux colonnes ; aide sous la question. */
+#main .final-pick { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 6px 0 18px; }
+@media (max-width: 760px) { #main .final-pick { grid-template-columns: minmax(0, 1fr); } }
+#main .step-help { margin: -6px 0 12px; color: var(--muted); }

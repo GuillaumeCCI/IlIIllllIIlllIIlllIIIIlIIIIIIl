@@ -77,7 +77,7 @@
 
   /* Le détail est déjà dans l'écran de relecture : le pavé reste court. */
   // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
-  const feedback = () => [];
+  const feedback = () => ['À retenir : face à une objection, écoutez et comprenez avant de répondre ; ne bradez pas, et vérifiez avant d’avancer.'];
 
   ex.mount('s3-1.1', {
     screen, validate, feedback, compactFeedback: true,

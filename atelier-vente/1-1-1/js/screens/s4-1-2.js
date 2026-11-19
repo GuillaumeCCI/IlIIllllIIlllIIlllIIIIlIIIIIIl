@@ -107,7 +107,7 @@
   }
 
   /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
-  const feedback = () => [];
+  const feedback = () => ['À retenir : une ouverture fluide accueille, présente, cadre l’échange, puis donne la parole, sans parler produit trop tôt.'];
 
   function intercept() {
     if (stage() !== 1 || markedCount() < content.minimum) return false;

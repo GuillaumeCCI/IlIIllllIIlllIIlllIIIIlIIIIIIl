@@ -138,7 +138,7 @@
   }
 
   // Le score est déjà en tête du corrigé : le pavé final ne garde que « Continuer ».
-  const feedback = () => [];
+  const feedback = () => ['À retenir : accueillir, questionner, reformuler, traiter, contrôler, enchaîner : toujours dans cet ordre.'];
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   // À l'arrivée, avant la visite guidée : de quoi parle l'exercice et ce qui est demandé.

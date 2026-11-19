@@ -177,7 +177,7 @@
   }
 
   /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
-  const feedback = () => [];
+  const feedback = () => ['À retenir : une objection se traite : on l’accueille, on la creuse, on reformule, on apporte une preuve, puis on vérifie.'];
 
   /* Le retour à l'étape 1 conserve le choix : on vient le relire. */
   function onMount() {

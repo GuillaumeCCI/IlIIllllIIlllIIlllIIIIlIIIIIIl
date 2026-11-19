@@ -46,11 +46,11 @@
       </div>
       <div class="replica-cards">
         <section class="panel replica-card">
-          <h2><span class="replica-num">1</span>Identifiez l’attitude du vendeur</h2>
+          <h2><span class="replica-num">1</span>Quelle attitude le vendeur adopte-t-il ici&nbsp;?</h2>
           ${ex.radioCards(attitudeKey(at), attitudes.map(label => ({ id: label, label, symbol: SYMBOLS[label] })), 'attitude-tiles')}
         </section>
         <section class="panel replica-card">
-          <h2><span class="replica-num">2</span>Votre reformulation</h2>
+          <h2><span class="replica-num">2</span>À sa place, comment reformuleriez-vous, sans rien ajouter&nbsp;?</h2>
           ${ex.field(rewriteKey(at), `Votre reformulation de la réplique ${at + 1}`, { placeholder: 'Reformulez sans rien ajouter à ce que dit le client…', max: 300, rows: 7, hideLabel: true })}
         </section>
       </div>
@@ -97,7 +97,7 @@
   }
 
   /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
-  const feedback = () => [];
+  const feedback = () => ['À retenir : reformuler, c’est reprendre ses mots sans rien ajouter : ni jugement, ni interprétation, ni solution.'];
 
   // Visite guidée de l'écran, lancée d'elle-même la première fois.
   if (window.AtelierKit) window.AtelierKit.tour('s2-B', [

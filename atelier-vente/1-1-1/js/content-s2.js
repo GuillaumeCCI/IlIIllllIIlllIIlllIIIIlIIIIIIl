@@ -24,12 +24,12 @@ window.ATELIER_S2 = {
 
   /* Grille commune « Ma réponse d'écoute est-elle juste ? », reprise de la fiche. */
   rubric: [
-    ['Écoute réelle', 'Je pars de ce que le client a exprimé, pas de ce que je veux vendre.'],
-    ['Reformulation fidèle', 'Je reformule sans ajouter, déformer ni interpréter ses propos.'],
-    ['Absence de jugement', 'Je n’approuve ni ne désapprouve le client ; je ne me défends pas.'],
-    ['Pas de solution prématurée', 'Je ne saute pas au conseil ou à la solution avant d’avoir compris.'],
-    ['Attitude adaptée au moment', 'L’attitude choisie correspond à la situation et au périmètre : la prise de contact.'],
-    ['Relation qui reste ouverte', 'Ma réponse invite le client à poursuivre plutôt qu’elle ne referme l’échange.']
+    ['Écoute réelle', 'Partez-vous de ce que le client a dit, et non de ce que vous voulez vendre ?'],
+    ['Reformulation fidèle', 'Reprenez-vous ses mots sans rien ajouter, déformer ni interpréter ?'],
+    ['Absence de jugement', 'Évitez-vous de lui donner raison ou tort, et de vous défendre ?'],
+    ['Pas de solution prématurée', 'Attendez-vous d’avoir compris avant de proposer un conseil ou une solution ?'],
+    ['Attitude adaptée au moment', 'Votre façon de répondre convient-elle à ce moment : le début de l’échange ?'],
+    ['Relation qui reste ouverte', 'Votre réponse invite-t-elle le client à continuer, au lieu de clore l’échange ?']
   ],
 
   /* ── Écran A · Choisir la réponse la plus juste ───────────────────────── */

@@ -68,12 +68,12 @@
          <h3 class="self-case-title">Votre autoévaluation</h3>
          ${window.AtelierKit ? `<div class="tour-corner">${window.AtelierKit.contextButton()}</div>` : ''}
          ${ex.selfList(rubric, selfKey(i))}`
-      : `${core.step(1, 'Votre réponse d’écoute', ex.field(replyKey(i), 'Votre réponse d’écoute', {
-           placeholder: 'Écrivez votre réponse…', max: 320, rows: 4, hideLabel: true
-         }), 'Répondez sans contredire ni vous justifier.')}
-         ${core.step(2, 'Votre adaptation', ex.field(postureKey(i), 'Votre adaptation', {
-           placeholder: 'J’ai adapté ma posture en…', max: 180, rows: 3, hideLabel: true
-         }), 'En une phrase, expliquez votre posture.')}`;
+      : `${core.step(1, 'Que répondez-vous à ce client ?', ex.field(replyKey(i), 'Votre réponse d’écoute', {
+           placeholder: 'Votre réponse…', max: 320, rows: 4, hideLabel: true
+         }), 'Écrivez ce que vous lui diriez, sans le contredire ni vous justifier.')}
+         ${core.step(2, 'Qu’avez-vous adapté pour ce client ?', ex.field(postureKey(i), 'Votre adaptation', {
+           placeholder: 'J’ai surtout…', max: 180, rows: 3, hideLabel: true
+         }), 'En une phrase : ce que vous avez changé dans votre façon d’écouter ou de répondre, pour ce profil.')}`;
 
     return `<div class="two-columns">
       <section class="scenario">

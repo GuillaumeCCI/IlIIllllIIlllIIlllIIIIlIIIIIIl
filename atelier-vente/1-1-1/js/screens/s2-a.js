@@ -80,10 +80,11 @@
          <h3 class="self-case-title">Votre autoévaluation</h3>
          ${window.AtelierKit ? `<div class="tour-corner">${window.AtelierKit.contextButton()}</div>` : ''}
          ${ex.selfList(rubric, selfKey(i))}`
-      : `${ex.radioCards(choiceKey(i), options, 'answers')}
-         ${ex.field(whyKey(i), 'Votre justification', {
-           help: 'En une phrase, pourquoi les 3 autres réponses sont-elles moins adaptées ?',
-           placeholder: 'Expliquez votre choix…', max: 240, rows: 3
+      : `<p class="k-ask">Le client vous dit : « ${esc(client.quote)} » Que lui répondez-vous&nbsp;?</p>
+         ${ex.radioCards(choiceKey(i), options, 'answers')}
+         ${ex.field(whyKey(i), 'Pourquoi ce choix ?', {
+           help: 'En une phrase : pourquoi les trois autres réponses conviennent-elles moins à ce client ?',
+           placeholder: 'Les autres réponses…', max: 240, rows: 3
          })}`;
 
     return `<div class="two-columns">

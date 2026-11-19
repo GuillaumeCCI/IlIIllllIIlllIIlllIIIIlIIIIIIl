@@ -86,7 +86,7 @@
 
   /* Les deux repères sont posés sous les deux champs. */
   // Le corrigé est dans les deux réponses : le pavé du bas ne garde que la suite.
-  const feedback = () => ['Relisez votre hypothèse et votre question avec une réponse possible.'];
+  const feedback = () => ['À retenir : derrière « je vais réfléchir », cherchez le vrai frein par une question ouverte, au lieu d’accepter un report vague.'];
 
   // À l'arrivée : pourquoi on est là, ce qui se passe, ce qui est demandé.
   if (kit) kit.context([

@@ -51,9 +51,10 @@
         <h2 class="step-question">Que répondriez-vous au client, avec cette attitude ?</h2>
         ${ex.field(replyKey(i), 'Votre réponse', { placeholder: 'Votre réponse au client…', max: 300, rows: 6, hideLabel: true })}`
       : `<h1>Votre choix final</h1>
-        <p class="subtitle">Quelle attitude vous semble la plus appropriée lors d’une prise de contact ?</p>
-        ${ex.select('finalChoice', 'Attitude la plus appropriée', attitudes, 'Choisir une attitude')}
-        <h2 class="step-question">Pourquoi celle-ci ?</h2>
+        <h2 class="step-question">Pour une prise de contact, quelle attitude vous semble la plus juste&nbsp;?</h2>
+        ${ex.radioCards('finalChoice', attitudes.map(label => ({ id: label, label })), 'answers final-pick')}
+        <h2 class="step-question">Pourquoi celle-ci&nbsp;?</h2>
+        <p class="step-help">En deux ou trois phrases : ce qu’elle apporte au client, et pourquoi les autres conviennent moins à ce moment.</p>
         ${ex.field('justification', 'Justifiez votre choix', { placeholder: 'Justifiez votre choix…', max: 400, rows: 5, hideLabel: true })}`;
 
     return `<div class="step-layout porter-layout">
@@ -135,7 +136,7 @@
   }
 
   // Le corrigé est dans l'écran : le pavé du bas ne garde que la suite.
-  const feedback = () => [content.criterion];
+  const feedback = () => ['À retenir : au début de l’échange, la compréhension (reformuler) est l’attitude qui installe le mieux la confiance.'];
 
   function onMount() {
     core.$$('[data-action="goto-step"]').forEach(button => {
