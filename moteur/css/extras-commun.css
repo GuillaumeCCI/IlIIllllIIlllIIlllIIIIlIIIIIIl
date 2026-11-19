@@ -1040,3 +1040,12 @@ html { background-color: #fbf8f2; }
  * blanc, posée juste au-dessus des réponses, qu'elle distingue nettement. */
 #main .k-ask { margin: 0 0 12px; padding: 16px 20px; border-radius: 14px; background: #1b2370; color: #fff; font-size: 1.15rem; font-weight: 800; line-height: 1.35; text-align: left; }
 #main .sorter .k-ask { width: min(100%, 640px); margin: 18px auto 12px; }
+
+/* LES ACTIONS SECONDAIRES (retour, ajouter, supprimer) : de petits boutons
+ * doux, fond bleu très pâle, texte bleu nuit, sans soulignement ni contour,
+ * regroupés à gauche de la bande ; la suite à droite (19/11, S1 C). */
+#main .button.soft-button, #main button.soft-button { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 16px; border: 0; border-radius: 999px; background: #eef3fd; color: #1b2370; font-size: .92rem; font-weight: 700; text-decoration: none; box-shadow: none; cursor: pointer; transition: background .2s; }
+#main .soft-button:hover { background: #e1e9fb; }
+#main .soft-button:focus-visible { outline: 2px solid #5a67b8; outline-offset: 2px; }
+#main .soft-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+#main .soft-actions-left { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }

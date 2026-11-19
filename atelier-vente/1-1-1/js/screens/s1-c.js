@@ -145,16 +145,16 @@
             </label>`;
           }).join('')}</div>
         </fieldset>
-        <div class="compare-card-tools">
-          ${last && count < 5 ? core.button(`${icon('plus', { size: 15 })}<span>Ajouter un argument</span>`, 'add-argument', 'text-button with-icon') : ''}
-          ${i > 3 ? core.button(`${icon('close', { size: 15 })}<span>Supprimer cet argument</span>`, 'remove-argument', 'text-button with-icon') : ''}
-        </div>
       </section>
       ${core.errorsBox()}
-      <div class="form-actions">
-        ${i === 1
-          ? core.button(`${icon('arrowLeft', { size: 16 })}<span>Retour au choix</span>`, 'back-to-choice', 'text-button with-icon')
-          : core.button(`${icon('arrowLeft', { size: 16 })}<span>Argument précédent</span>`, 'previous-argument', 'text-button with-icon')}
+      <div class="form-actions soft-actions">
+        <div class="soft-actions-left">
+          ${i === 1
+            ? core.button(`${icon('arrowLeft', { size: 16 })}<span>Retour au choix</span>`, 'back-to-choice', 'soft-button with-icon')
+            : core.button(`${icon('arrowLeft', { size: 16 })}<span>Argument précédent</span>`, 'previous-argument', 'soft-button with-icon')}
+          ${last && count < 5 ? core.button(`${icon('plus', { size: 16 })}<span>Ajouter un argument</span>`, 'add-argument', 'soft-button with-icon') : ''}
+          ${i > 3 ? core.button(`${icon('close', { size: 15 })}<span>Supprimer cet argument</span>`, 'remove-argument', 'soft-button with-icon') : ''}
+        </div>
         <button type="submit" class="button primary"><span>${last ? 'Continuer vers la dernière étape' : `Enregistrer et passer à l’argument ${i + 1}`}</span>${icon('arrowRight', { size: 18 })}</button>
       </div>`;
   }
@@ -176,7 +176,7 @@
       </div>
       ${core.errorsBox()}
       <div class="form-actions">
-        ${core.button(`${icon('arrowLeft', { size: 16 })}<span>Retour à mes arguments</span>`, 'back-to-arguments', 'text-button with-icon')}
+        ${core.button(`${icon('arrowLeft', { size: 16 })}<span>Retour à mes arguments</span>`, 'back-to-arguments', 'soft-button with-icon')}
         <div class="form-meta">
           <span id="completion-status" class="completion-status"></span>
           ${core.button('Enregistrer le brouillon', 'save', 'text-button')}
