@@ -40,7 +40,7 @@
           ...common,
           eyebrow: content.eyebrow,
           title: 'Associer les attitudes',
-          intro: `Le client vous dit : « ${content.clientSays} » Voici six réponses possibles du vendeur, une par carte.`,
+          intro: `Le client vous dit : « ${content.clientSays} »`,
           ask: 'Avec cette réponse, quelle attitude le vendeur adopte-t-il ?',
           hint: 'Choisissez une attitude pour passer à la carte suivante.',
           lock: `Le corrigé apparaîtra après validation des ${cards.length} cartes.`

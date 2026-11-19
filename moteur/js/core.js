@@ -494,13 +494,14 @@
   }
 
   /* Page bien plus haute que l'écran : le décor s'arrêterait en cours de
-   * défilement. On passe alors à un fond beige uni (body.is-tall-page, styles :
+   * défilement (au-delà de 1,6 écran : 1,3 faisait perdre le décor à des
+   * pages à peine plus longues, 19/11). On passe alors à un fond beige uni (body.is-tall-page, styles :
    * extras-commun.css). La hauteur de l'écran, pas celle de la fenêtre :
    * intégrée au LMS, la page a la hauteur de son contenu. */
   function watchLength() {
     const check = () => {
       const screenHeight = Math.min(window.innerHeight, window.screen?.availHeight || window.innerHeight);
-      document.body.classList.toggle('is-tall-page', document.documentElement.scrollHeight > screenHeight * 1.3);
+      document.body.classList.toggle('is-tall-page', document.documentElement.scrollHeight > screenHeight * 1.6);
     };
     check();
     if (window.ResizeObserver) new ResizeObserver(check).observe(document.body);
