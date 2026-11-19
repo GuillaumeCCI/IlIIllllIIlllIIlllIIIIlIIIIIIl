@@ -1224,3 +1224,5 @@ html { background-color: #fbf8f2; }
 #main .cmp-option.is-static.is-wrong { border-color: transparent; background: #fbeceb; box-shadow: 0 6px 18px rgb(20 40 100 / 7%); }
 #main .cmp-option.is-static:is(.is-answer, .is-wrong) header { border-bottom-color: rgb(20 40 100 / 8%); }
 #main .cmp-option.is-static:is(.is-answer, .is-wrong) .cmp-reread > summary { background: #fff; }
+/* En-tête d'un écran à étapes allégé : les deux boutons côte à côte, les cartes d'étapes dessous, à droite. */
+#main .k-head-aside:has(> .fm-stepper.is-lean) { flex-direction: row; flex-wrap: wrap; justify-content: flex-end; }

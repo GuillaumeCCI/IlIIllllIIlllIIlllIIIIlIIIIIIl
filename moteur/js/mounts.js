@@ -1296,8 +1296,7 @@
       if (!reviewing && at < n && !seenList().includes(at)) ex().setValue('seen', [...seenList(), at]);
       return `<div class="k-page fm-page ${content.className || ''}">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? (content.lean ? '' : stepper(at)) : n > 1 || content.countLabel ? `<p class="k-count fm-count is-progress" data-live="fm-progress">${progressLine()}</p>` : ''}${content.reread && !reviewing ? `<button type="button" class="text-button with-icon tour-replay k-reread" data-act="dialog" data-dialog="reread">${icon('document', { size: 18 })}<span>${esc(content.reread.label || 'Relire le document')}</span></button>` : ''}${content.tour && !reviewing ? (introButton(content) || (at === SELF ? kit().contextButton() : '')) + kit().tourButton() : ''}` })}
-        ${content.stepper && content.lean && !reviewing ? stepper(at) : ''}
+          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count is-progress" data-live="fm-progress">${progressLine()}</p>` : ''}${content.reread && !reviewing ? `<button type="button" class="text-button with-icon tour-replay k-reread" data-act="dialog" data-dialog="reread">${icon('document', { size: 18 })}<span>${esc(content.reread.label || 'Relire le document')}</span></button>` : ''}${content.tour && !reviewing ? (introButton(content) || (at === SELF ? kit().contextButton() : '')) + kit().tourButton() : ''}` })}
         ${content.side && !reviewing && !content.stepper ? `<div class="k-panel fm-side">${scene(content.side)}</div>` : ''}
         ${reviewing ? reviewScreen() : `${tabs(at)}<form novalidate class="fm-form">${casePanel(at)}</form>`}
         ${reviewing ? '' : kit().utility(content.lock || 'Corrigé disponible après validation')}

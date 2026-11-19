@@ -241,7 +241,7 @@ window.ATELIER_S4 = {
   '4.6': {
     eyebrow: 'Exercice 4.6 · Relance',
     title: 'À vous de construire la stratégie !',
-    subtitle: 'Madame Riveau n’a pas répondu à votre offre du 3 juin. Prévoyez trois relances, puis un message de clôture.',
+    subtitle: 'Trois relances pour Madame Riveau, puis un message de clôture.',
     countLabel: 'étapes complétées',
     caseNoun: 'Étape',
     stepper: true,
