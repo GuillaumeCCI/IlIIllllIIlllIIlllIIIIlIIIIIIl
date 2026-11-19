@@ -284,12 +284,12 @@ window.ATELIER_S4 = {
     side: { strong: 'Madame Riveau, responsable des ressources humaines d’une entreprise de 80 salariés.', info: 'Le 3 juin, vous lui avez envoyé une proposition : du mobilier ergonomique pour équiper 10 postes de travail, c’est-à-dire 10 salariés. Elle est intéressée, mais doit d’abord consulter sa direction. Depuis l’envoi de l’offre, elle n’a pas répondu.', symbol: 'calendar' },
     tip: 'Espacez vos relances : laissez un peu plus de temps entre chacune. Et apportez à chaque fois une information utile, pas seulement une demande de nouvelles.',
     fields: [
-      { id: 'when', type: 'input', label: 'Quand ?', sub: 'Combien de jours après l’envoi de l’offre ?', placeholder: 'Ex. : J+3, soit trois jours après l’envoi', max: 40, half: true },
-      { id: 'channel', type: 'select', label: 'Quel canal ?', sub: 'Par quel moyen contactez-vous Madame Riveau ?', placeholder: 'Choisir un canal', half: true, options: [
+      { id: 'when', type: 'input', label: 'Combien de jours après l’envoi de l’offre ?', placeholder: 'Ex. : J+3', max: 40, half: true },
+      { id: 'channel', type: 'select', label: 'Par quel canal la contactez-vous ?', placeholder: 'Choisir un canal', half: true, options: [
         { id: 'email', label: 'E-mail' }, { id: 'phone', label: 'Téléphone' }, { id: 'visit', label: 'Rendez-vous sur place' }, { id: 'linkedin', label: 'Message LinkedIn' }, { id: 'mail', label: 'Courrier' }
       ] },
-      { id: 'value', label: 'Quelle valeur apportée ?', sub: 'Quelle information utile lui apportez-vous ?', placeholder: 'L’information utile à partager…', rows: 2, half: true },
-      { id: 'next', label: 'Quel prochain pas ?', sub: 'Quelle action concrète lui proposez-vous ?', placeholder: 'Ex. : un échange de 15 minutes, un rendez-vous…', rows: 2, half: true }
+      { id: 'value', label: 'Quelle information utile lui apportez-vous ?', placeholder: 'L’information utile à partager…', rows: 2, half: true },
+      { id: 'next', label: 'Quelle action concrète lui proposez-vous ?', placeholder: 'Ex. : un échange de 15 minutes, un rendez-vous…', rows: 2, half: true }
     ],
     resources: [
       'Un témoignage d’une entreprise du même secteur.',

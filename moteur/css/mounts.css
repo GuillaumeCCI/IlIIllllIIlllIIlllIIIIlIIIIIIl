@@ -829,3 +829,10 @@ button.crash-passage:hover { background: #fff1d6; }
 #main .fm-stepper.is-lean li.is-current .fm-stepper-dot { background: #fff; color: #1b2370; }
 #main .k-head-aside:has(> .fm-stepper.is-lean) { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 10px; }
 #main .k-head-aside > .fm-stepper.is-lean { order: 2; flex-basis: 100%; }
+/* Écran à étapes allégé : habillage du canal discret (bandeau pâle, sans décor de pied ni compteurs). */
+.fm-step-wrap.is-lean .fm-skin[data-skin] { background: #fff; border: 1px solid #e3e8f3; }
+.fm-step-wrap.is-lean .fm-skin[data-skin] > .sk-head { background: #f6f8fd; color: var(--navy); border-bottom: 1px solid #e3e8f3; }
+.fm-step-wrap.is-lean .fm-skin[data-skin] > .sk-head .sk-avatar { background: #1b2370; color: #fff; }
+.fm-step-wrap.is-lean .fm-skin[data-skin] > .sk-foot { display: none; }
+.fm-step-wrap.is-lean .counter { display: none; }
+.fm-step-wrap.is-lean .fm-skin[data-skin] > .sk-head .sk-call { background: #edf6f6; color: #2a8f8f; }
