@@ -93,7 +93,7 @@
       });
     }
 
-    return { list, map, history, place, undo, wire, placedCount, isComplete, remaining };
+    return { list, map, history, place, undo, wire, placedCount, isComplete, remaining, unique };
   }
 
   root.AtelierPlacement = Object.freeze({ create });

@@ -51,12 +51,19 @@
         aria-current="${i === index}"></button>`;
     }).join('');
 
-    const buttons = choices.map(choice => `
-      <button type="button" class="sorter-choice tone-${choice.tone || 'neutral'} ${String(chosen) === String(choice.id) ? 'is-chosen' : ''}"
+    /* Une réponse qui ne sert qu'une fois (placement « unique ») et déjà
+     * donnée à une autre carte le dit (19/11 : on était renvoyé sur une carte
+     * sans savoir pourquoi). */
+    const ownerOf = id => (placement.unique ? placement.list().findIndex((zone, i) => i !== index && String(zone) === String(id)) : -1);
+    const buttons = choices.map(choice => {
+      const owner = ownerOf(choice.id);
+      return `
+      <button type="button" class="sorter-choice tone-${choice.tone || 'neutral'} ${String(chosen) === String(choice.id) ? 'is-chosen' : ''} ${owner >= 0 ? 'is-used' : ''}"
         data-action="sort-card" data-zone="${esc(String(choice.id))}">
         ${choice.symbol ? `<span class="sorter-choice-symbol">${icon(choice.symbol, { size: 22 })}</span>` : ''}
-        <span class="sorter-choice-label">${esc(choice.label)}</span>
-      </button>`).join('');
+        <span class="sorter-choice-label">${esc(choice.label)}${owner >= 0 ? `<small>Déjà choisie pour la carte ${owner + 1}</small>` : ''}</span>
+      </button>`;
+    }).join('');
 
     void done; void hint;
     return `<div class="sorter is-card-screen">
@@ -171,14 +178,44 @@
    * Classer une carte avance à la suivante non classée ; une fois tout
    * classé, on bascule sur le récapitulatif.
    */
+  /* LE FONDU ENCHAÎNÉ entre deux cartes (validé en 1-2-1, 18/11 ; demandé
+   * ici le 19/11) : une copie exacte de l'écran se pose par-dessus, l'écran
+   * suivant se dessine dessous (les parties identiques au pixel près), la
+   * copie s'efface (0,45 s), puis le contenu de la nouvelle carte apparaît
+   * (0,6 s). Aucun mouvement, aucun flash. */
+  function crossfade(draw) {
+    const main = document.querySelector('#main');
+    const still = root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!main || still || typeof main.cloneNode !== 'function' || !root.requestAnimationFrame) { draw(); return; }
+    const ghost = main.cloneNode(true);
+    ghost.setAttribute('aria-hidden', 'true');
+    ghost.inert = true;
+    Object.assign(ghost.style, { position: 'absolute', left: `${main.offsetLeft}px`, top: `${main.offsetTop}px`,
+      width: `${main.offsetWidth}px`, height: `${main.offsetHeight}px`, margin: '0', boxSizing: 'border-box', pointerEvents: 'none', zIndex: '40' });
+    main.after(ghost);
+    setTimeout(() => ghost.remove(), 700);
+    draw();
+    document.querySelector('#main .sorter-card')?.classList.add('is-arriving');
+    requestAnimationFrame(() => {
+      ghost.style.transition = 'opacity .45s ease-in-out';
+      ghost.style.opacity = '0';
+    });
+  }
+
   function wire(placement, cards) {
     core().$$('[data-action="sort-card"]').forEach(button => {
       button.addEventListener('click', () => {
         const index = Math.min(ex().cursor(), cards.length - 1);
-        placement.place(index, button.dataset.zone);
+        const zone = button.dataset.zone;
+        const owner = placement.unique ? placement.list().findIndex((z, i) => i !== index && String(z) === String(zone)) : -1;
+        placement.place(index, zone);
+        if (owner >= 0) {
+          const label = button.querySelector('.sorter-choice-label')?.firstChild?.textContent?.trim() || 'Cette réponse';
+          core().toast(`« ${label} » était sur la carte ${owner + 1} : cette carte est à reclasser.`);
+        }
         if (placement.isComplete()) ex().setValue('recap', true);
         core().persist();
-        ex().render();
+        crossfade(() => ex().render());
       });
     });
 
@@ -187,7 +224,7 @@
         ex().setCursor(Number(button.dataset.index));
         ex().setValue('recap', false);
         core().persist();
-        ex().render();
+        crossfade(() => ex().render());
       });
     });
   }

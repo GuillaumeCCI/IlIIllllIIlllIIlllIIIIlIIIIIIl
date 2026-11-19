@@ -1139,3 +1139,16 @@ html { background-color: #fbf8f2; }
 #main .sorter-card-top .sorter-dots { display: inline-flex; gap: 6px; }
 #main .sorter-card-lock { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 14px 0 0; color: var(--muted, #6b7592); font-size: .82rem; }
 @media (max-width: 720px) { #main .sorter.is-card-screen .sorter-head .k-context-float { position: static; margin-top: 8px; } }
+
+/* Écran carte par carte : de l'air sous les cartes de réponse ; le contenu
+ * de la nouvelle carte apparaît en fondu (après l'effacement de l'ancienne). */
+#main .sorter.is-card-screen { padding-bottom: 64px; }
+#main .sorter-card.is-arriving > * { animation: k-card-in .6s ease-in-out .35s both; }
+@keyframes k-card-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { #main .sorter-card.is-arriving > * { animation: none; } }
+
+/* Une réponse déjà donnée à une autre carte (placement unique) : estompée,
+ * avec « Déjà choisie pour la carte N » sous son nom (19/11). */
+#main .sorter-choice.is-used:not(.is-chosen) { opacity: .62; }
+#main .sorter-choice.is-used:not(.is-chosen):hover { opacity: 1; }
+#main .sorter-choice-label small { display: block; margin-top: 2px; color: var(--muted, #6b7592); font-size: .8rem; font-weight: 600; }
