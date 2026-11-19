@@ -447,8 +447,12 @@
     /* `content.ask` : l'écran du trieur carte par carte validé (19/11) : la
      * carte décorée (« Extrait 1 sur 3 » + pastilles), la question en bandeau,
      * puis les réponses en cartes ; une réponse déjà donnée le dit. */
+    let shownCard = null;
     function sorterScreen() {
       const i = current();
+      // Extrait suivant : son contenu apparaît en fondu (la copie de l'écran s'efface par-dessus, exercise.js).
+      const fresh = shownCard !== null && shownCard !== i ? 'is-fresh' : '';
+      shownCard = i;
       const pastilles = cards.map((_, k) => `<button type="button" class="sorter-dot ${k === i ? 'current' : link(k) !== null ? 'filled' : ''}" data-act="mt-card" data-index="${k}" aria-label="${esc(content.cardLabel)} ${k + 1}" aria-current="${k === i}"></button>`).join('');
       const choices = zones.map((z, k) => {
         const by = owner(k);
@@ -456,7 +460,7 @@
           <span class="sorter-choice-label">${esc(z.label)}${by !== -1 && by !== i ? `<small>Déjà choisie pour l’${esc(content.cardLabel.toLowerCase())} ${by + 1}</small>` : z.sub ? `<small>${esc(z.sub)}</small>` : ''}</span>
         </button>`;
       }).join('');
-      return `<div class="sorter is-card-screen mt-sorter">
+      return `<div class="sorter is-card-screen mt-sorter ${fresh}">
         <article class="sorter-card" draggable="true" data-drag="${i}" tabindex="0">
           <div class="sorter-card-top"><span class="sorter-card-tag">${esc(content.cardLabel)} ${i + 1} sur ${n}</span><span class="sorter-dots">${pastilles}</span></div>
           <p class="sorter-card-text">${content.quoted === false ? esc(cards[i].text) : `« ${esc(cards[i].text)} »`}</p>

@@ -490,9 +490,9 @@
   }
   function render(focus = false) {
     // Le cas affiché, et la partie en cours d'un cas rempli partie par partie (fstep) : même fondu enchaîné.
-    const at = `${value('case')}|${value('fstep')}`;
+    const at = `${value('case')}|${value('fstep')}|${value('card')}`;
     const main = $('#main');
-    const ghost = !focus && main && $('.fm-panel, .fs-panel') && shownCase !== undefined && at !== shownCase && !stillMotion() ? ghostOf(main) : null;
+    const ghost = !focus && main && $('.fm-panel, .fs-panel, .mt-sorter') && shownCase !== undefined && at !== shownCase && !stillMotion() ? ghostOf(main) : null;
     shownCase = at;
     drawScreen(focus);
     if (ghost) {

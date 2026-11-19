@@ -895,3 +895,5 @@ button.crash-passage:hover { background: #fff1d6; }
 .mr-row.is-ok .mr-tip { color: #2a8f8f; font-weight: 700; }
 .mr-tip { color: #46577d; }
 @media (max-width: 900px) { .mr-pair { grid-template-columns: 1fr; } .mr-row { grid-template-columns: 22px 1fr; } .mr-tip { grid-column: 2; } }
+/* Extrait suivant (trieur des associations) : fondu enchaîné lent, rien ne bouge. */
+.mt-sorter.is-fresh .sorter-card-text, .mt-sorter.is-fresh .sorter-choice-label { animation: fm-in .6s ease-in-out .4s both; }
