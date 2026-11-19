@@ -656,3 +656,12 @@
 #main .e1-help { margin: 0 0 16px; color: var(--muted); font-size: 1.02rem; line-height: 1.55; max-width: 62ch; }
 #main .oral-practice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 14px; }
 #main .oral-practice .asset-note { margin: 0; }
+
+/* S1 E1 : la colonne de réponse dans une carte blanche « comme d'hab »
+ * (19/11) ; le champ, à l'intérieur, sans ombre ni contour, sur fond pâle. */
+#main .e1-answer { margin-top: clamp(40px, 8vh, 110px); padding: 26px 28px 24px; border-radius: 22px; background: #fff; box-shadow: 0 8px 24px rgb(20 40 100 / 8%), 0 1px 2px rgb(20 40 100 / 4%); gap: 14px; }
+#main .e1-answer .e1-ask { margin-top: 0; }
+#main .e1-answer .e1-help { margin-bottom: 4px; }
+#main .e1-answer .field, #main .e1-answer .field .field-shell, #main .e1-answer .field textarea { box-shadow: none; border-color: transparent; }
+#main .e1-answer .field textarea { background: #f6f8fc; border-radius: 14px; }
+#main .e1-answer .field textarea:focus { background: #fff; box-shadow: 0 0 0 2px #c9d6f5; }
