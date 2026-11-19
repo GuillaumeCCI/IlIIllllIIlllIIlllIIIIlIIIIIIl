@@ -67,7 +67,7 @@
   /* ── Étape 1 : choisir ─────────────────────────────────────────────── */
   function chooseScreen() {
     const choice = ex.value('choice');
-    return `<div class="wiz-note is-deco no-traits"><p>Les deux ouvertures sont acceptables. Choisissez celle qui prépare le mieux l’échange.</p></div>
+    return `<p class="k-ask">Les deux ouvertures sont acceptables. Laquelle prépare le mieux l’échange avec ce client ?</p>
       <fieldset class="opening-cards compare-openings" id="field-choice">
         <legend class="sr-only">Choisissez l’ouverture la plus efficace</legend>
         ${content.openings.map((text, index) => {
@@ -199,7 +199,7 @@
     const head = review
       ? { title: 'Quelle ouverture est la plus efficace ?', sub: 'Votre analyse et sa correction.' }
       : [
-          { title: 'Quelle ouverture est la plus efficace ?', sub: '' },
+          { title: 'Comparer deux ouvertures', sub: '' },
           { title: 'Pourquoi ce choix ?', sub: 'Expliquez votre choix avec au moins trois arguments, un à la fois.' },
           { title: 'Ce que j’emprunterais à l’autre', sub: 'Une bonne idée peut compléter votre ouverture sans changer votre choix.' }
         ][at - 1];

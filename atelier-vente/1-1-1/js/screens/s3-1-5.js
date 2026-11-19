@@ -63,6 +63,7 @@
     return `<div class="duo-layout">
       ${scene()}
       <div class="duo-answers">
+        <p class="k-ask">Le client vous dit : « ${esc(content.objection)} » Laquelle de ces deux réponses lui feriez-vous ?</p>
         ${ex.radioCards('choice', options, 'answers')}
         ${core.errorsBox()}
         <div class="form-actions">
@@ -143,7 +144,7 @@
   function screen() {
     if (ex.reviewing()) return reviewScreen();
     const at = stage();
-    const title = at === 1 ? 'Quelle réponse traite le mieux l’objection ?' : 'Expliquez votre choix';
+    const title = at === 1 ? 'La réponse la plus juste' : 'Expliquez votre choix';
 
     return `<div class="duo-page">
       <header class="duo-head">

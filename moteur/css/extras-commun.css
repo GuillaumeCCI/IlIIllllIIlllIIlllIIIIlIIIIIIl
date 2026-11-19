@@ -1035,3 +1035,8 @@ html { background-color: #fbf8f2; }
 /* Les mots repérés : vert pâle (validé), jamais le jaune du navigateur. */
 #main :is(.an-yours, .ana-text, .review-card, .result-answer-text) mark { padding: 0 2px; border-radius: 4px; background: #dcf1e4; color: inherit; }
 #main :is(.an-yours, .ana-text, .review-card, .result-answer-text) mark.is-warn { background: #ffd9d2; }
+
+/* LA QUESTION EN BANDEAU (validée en 1-2-1, 3.4 et 4.1) : bleu nuit, texte
+ * blanc, posée juste au-dessus des réponses, qu'elle distingue nettement. */
+#main .k-ask { margin: 0 0 12px; padding: 16px 20px; border-radius: 14px; background: #1b2370; color: #fff; font-size: 1.15rem; font-weight: 800; line-height: 1.35; text-align: left; }
+#main .sorter .k-ask { width: min(100%, 640px); margin: 18px auto 12px; }

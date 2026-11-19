@@ -36,8 +36,9 @@
           ...common,
           eyebrow: content.eyebrow,
           title: content.title,
-          intro: 'Pour chaque situation, choisissez le bon côté.',
-          hint: 'Choisissez un côté pour passer à la carte suivante.',
+          intro: 'Huit façons de réagir quand un client fait une objection. Triez-les une par une.',
+          ask: 'Face à une objection, cette façon de réagir est-elle un bon réflexe, ou est-elle à éviter ?',
+          hint: 'Choisissez une réponse pour passer à la carte suivante.',
           lock: `La correction apparaît après les ${cards.length} cartes.`
         });
   }

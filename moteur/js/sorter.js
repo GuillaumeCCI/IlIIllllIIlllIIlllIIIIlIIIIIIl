@@ -28,10 +28,11 @@
    *   placement                       l'état partagé
    *   eyebrow, title, intro           l'en-tête
    *   hint                            la ligne d'aide sous les boutons
+   *   ask                             la question en bandeau bleu nuit, face aux réponses (texte, ou fonction (carte, i))
    *   lock                            ce que la validation débloquera
    */
   function cardScreen(options) {
-    const { cards, choices, placement, eyebrow, title, intro, hint = '', lock = '' } = options;
+    const { cards, choices, placement, eyebrow, title, intro, hint = '', lock = '', ask = '' } = options;
     const { esc, icon } = core();
     const index = Math.min(ex().cursor(), cards.length - 1);
     const card = cards[index];
@@ -71,6 +72,7 @@
         <p class="sorter-card-text">${esc(card.text)}</p>
       </article>
 
+      ${ask ? `<p class="k-ask">${esc(typeof ask === 'function' ? ask(card, index) : ask)}</p>` : ''}
       <div class="sorter-choices count-${choices.length}">${buttons}</div>
       ${hint ? `<p class="sorter-hint">${esc(hint)}</p>` : ''}
       <div class="sorter-foot">

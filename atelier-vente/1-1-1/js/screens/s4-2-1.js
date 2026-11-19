@@ -39,9 +39,10 @@
       : sorter.cardScreen({
           ...common,
           eyebrow: content.eyebrow,
-          title: 'Quelle attitude reconnaissez-vous ?',
-          intro: `Le client dit : « ${content.clientSays} »`,
-          hint: 'Classez cette réponse parmi les six attitudes.',
+          title: 'Associer les attitudes',
+          intro: `Le client vous dit : « ${content.clientSays} » Voici six réponses possibles du vendeur, une par carte.`,
+          ask: 'Avec cette réponse, quelle attitude le vendeur adopte-t-il ?',
+          hint: 'Choisissez une attitude pour passer à la carte suivante.',
           lock: `Le corrigé apparaîtra après validation des ${cards.length} cartes.`
         });
   }
