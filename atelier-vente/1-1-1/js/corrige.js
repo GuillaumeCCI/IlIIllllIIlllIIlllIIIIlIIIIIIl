@@ -41,10 +41,32 @@
     return blocs.length && analyse() ? analyse().score({ blocs }, values) : null;
   }
 
-  // « Votre score estimatif », en tête du corrigé.
-  const head = result => (result
-    ? `<section class="panel an-score">${core().panelTitle('Votre score estimatif')}<section class="ana-score is-head" aria-label="Indicateur de points">${analyse().head(result)}</section></section>`
-    : '');
+  /* En tête du corrigé, « Le bilan de votre activité » (modèle validé) : un
+   * anneau pour le score ; avec `self` (les options de compare()), un
+   * second pour l'auto-évaluation, et le tableau critère par critère dans
+   * une fenêtre, derrière un bouton bleu nuit. */
+  const POINTS = { oui: 2, partie: 1, non: 0 };
+  function head(result, self) {
+    if (!result) return self ? compareTable(self) : '';
+    const more = [];
+    let band = '';
+    if (self) {
+      const grades = self.rubric.map((_, i) => gradeFn(self)(i));
+      more.push({ n: grades.reduce((sum, g) => sum + (POINTS[g.id] || 0), 0), total: self.rubric.length * 2, label: 'votre auto-évaluation' });
+      band = `<div class="an-detail-band"><p>Votre avis, critère par critère, face à ce que l’outil a repéré dans votre texte.</p>
+          <button type="button" class="button primary an-detail-open">${core().icon('document', { size: 18 })}<span>Voir mon auto-évaluation</span></button>
+          <template class="an-detail-body">${compareTable(self)}</template></div>`;
+    }
+    const bilan = analyse().head(result, more);
+    return band ? bilan.replace(/<\/section>\s*$/, `${band}</section>`) : bilan;
+  }
+  // Un seul écouteur pour la page : le bouton ouvre le tableau en fenêtre.
+  document.addEventListener('click', event => {
+    const button = event.target.closest && event.target.closest('.an-detail-open');
+    if (!button) return;
+    const body = button.parentElement.querySelector('.an-detail-body');
+    if (body) core().openDialog('Votre auto-évaluation, critère par critère', body.innerHTML);
+  });
 
   // La réponse de l'apprenant, mots repérés surlignés ; `text` sans score.
   const answer = (bloc, text) => (bloc ? analyse().answer(bloc) : esc(text));
@@ -89,9 +111,15 @@
    * dans le seul bloc évalué. `what` : ce qui est évalué (« votre réponse ») ;
    * `grade` : la réponse de l'apprenant au critère i, { id, label }, quand
    * l'écran n'emploie pas l'échelle commune Oui / En partie / Non. */
-  function compare({ rubric, selfKey, bloc, what, grade: gradeOf }) {
+  function gradeFn({ selfKey, grade: gradeOf }) {
     const ex = window.AtelierExercise;
-    const grade = gradeOf || (i => ex.selfGrades.find(g => g.id === ex.value(selfKey(i))) || { id: 'vide', label: 'Sans réponse' });
+    return gradeOf || (i => ex.selfGrades.find(g => g.id === ex.value(selfKey(i))) || { id: 'vide', label: 'Sans réponse' });
+  }
+  // Ancien appel (tableau posé dans la page) : désormais dans head(result, self).
+  const compare = opts => head(null, opts);
+  function compareTable(opts) {
+    const { rubric, bloc, what } = opts;
+    const grade = gradeFn(opts);
     const lines = bloc ? bloc.lines : [];
     const seen = title => {
       const same = lines.filter(l => l.nom === title || l.nom.startsWith(`${title} :`));
@@ -101,12 +129,11 @@
       if (same.every(l => l.kind === 'miss')) return '<span class="an-seen is-miss">○ Non</span>';
       return '<span class="an-seen is-part">◐ En partie</span>';
     };
-    return `<div class="an-rows-compare"><div class="an-compare">
-        <h3>Votre autoévaluation, critère par critère</h3>
+    return `<div class="an-compare is-dialog">
         <p class="muted">Ce que vous avez répondu pour ${esc(what)}, face à ce que l’outil a repéré dans votre texte.</p>
         <table><thead><tr><th>Critère</th><th>Votre avis</th><th>Repéré dans votre texte ?</th></tr></thead>
         <tbody>${rubric.map(([title], i) => `<tr><th>${esc(title)}</th><td><span class="self-pill is-${grade(i).id}">${esc(grade(i).label)}</span></td><td>${seen(title)}</td></tr>`).join('')}</tbody></table>
-      </div></div>`;
+      </div>`;
   }
 
   window.AtelierCorrige = Object.freeze({ score, scoreCase, toneOf, head, answer, part, expect, row, rows, compare });

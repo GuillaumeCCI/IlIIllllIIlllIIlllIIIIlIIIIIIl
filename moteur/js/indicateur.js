@@ -380,7 +380,7 @@
   }
 
   const SYMBOL = { ok: '✓', part: '◐', miss: '○', warn: '!' };
-  function line(item) {
+  function detailOf(item) {
     let detail = '';
     if (item.sentences !== undefined) {
       detail = item.wait ? ''
@@ -392,12 +392,28 @@
     else if (item.kind === 'warn') detail = `Repéré : ${item.found.map(f => `« ${f} »`).join(', ')}.${item.conseil ? ` ${item.conseil}` : ''}`;
     // Un critère rempli se passe de commentaire : ses mots sont surlignés dans la réponse.
     else if (item.kind !== 'ok' && item.conseil) detail = item.conseil;
+    return detail;
+  }
+
+  function line(item) {
+    const detail = detailOf(item);
     return `<li class="ana-line is-${item.kind}"><span class="ana-symbol" aria-hidden="true">${SYMBOL[item.kind]}</span>
       <span><strong>${esc(item.nom)}</strong>${detail ? `<span class="ana-detail">${esc(detail)}</span>` : ''}</span></li>`;
   }
 
-  // Le score en tête : les points et l'avertissement.
-  const head = result => `<div class="ana-head">
+  /* LE SCORE EN TÊTE : « Le bilan de votre activité » (kit.bilan, modèle
+   * validé), un anneau pour le score, plus ceux que l'écran ajoute
+   * (`more` : [{ n, total, label }], par exemple l'auto-évaluation).
+   * Sans le kit (tests), l'ancien encadré. */
+  const NOTE = 'Le score est estimé d’après les mots repérés dans votre réponse : une réponse juste, dite autrement, peut être sous-estimée. Comparez aussi avec la réponse possible.';
+  // Le verdict suit le score seul (l'auto-évaluation ne le relève pas).
+  const verdictOf = r => (r >= 0.8 ? 'Très bien : vous maîtrisez l’essentiel.'
+    : r >= 0.5 ? 'En bonne voie : relisez ce qui vous a échappé, plus bas.'
+      : 'À reprendre : relisez le corrigé ci-dessous, puis refaites l’exercice.');
+  const head = (result, more = []) => (root.AtelierKit && root.AtelierKit.bilan
+    ? root.AtelierKit.bilan({ rings: [{ n: result.points, total: result.total, label: 'le score estimé de votre réponse' }, ...more], intro: NOTE, verdict: verdictOf(result.total ? result.points / result.total : 0) })
+    : oldHead(result));
+  const oldHead = result => `<div class="ana-head">
         <p class="ana-points"><strong>${number(result.points)}</strong><span>/ ${result.total} points</span></p>
         <p class="ana-note">Un score estimatif, calculé automatiquement : il repère des mots et des tournures. Une réponse juste dite autrement peut être sous-estimée. Comparez aussi avec la réponse possible.</p>
         <p class="ana-legend"><span><span class="ana-symbol is-ok" aria-hidden="true">✓</span>Présent dans votre réponse</span><span><span class="ana-symbol is-miss" aria-hidden="true">○</span>Attendu, pas encore là</span><span><span class="ana-symbol is-warn" aria-hidden="true">!</span>À éviter</span></p>
@@ -407,9 +423,14 @@
   // montre lui-même la réponse (`withText: false`) ne garde que les coches.
   const met = bloc => bloc.lines.filter(item => item.kind === 'ok').length;
   const expected = bloc => bloc.lines.filter(item => item.kind !== 'warn').length;
-  const lines = (bloc, { withText = true } = {}) => `<p class="ana-expect">Ce qu’on attend dans votre réponse <span>· ${met(bloc)} sur ${expected(bloc)} repérés</span></p>
-        <ul class="ana-lines">${bloc.lines.map(line).join('')}</ul>
-        ${withText && bloc.marks.length ? `<p class="ana-text">${highlighted(bloc.text, bloc.marks)}</p>` : ''}`;
+  /* Ce qu'on attend : de petites pastilles (corrigé en lignes validé en
+   * 1-2-1), le conseil dans une bulle au survol ou au clavier. */
+  const pill = item => {
+    const tip = detailOf(item);
+    return `<li class="is-${item.kind}"${tip ? ` tabindex="0" data-tip="${esc(tip)}"` : ''}><span aria-hidden="true">${SYMBOL[item.kind]}</span>${esc(item.nom)}${tip ? `<span class="sr-only"> : ${esc(tip)}</span>` : ''}</li>`;
+  };
+  const lines = (bloc, { withText = true } = {}) => `${withText && bloc.marks.length ? `<p class="ana-text">${highlighted(bloc.text, bloc.marks)}</p>` : ''}
+        <ul class="ana-marks" aria-label="Ce qu’on attend dans votre réponse : ${met(bloc)} sur ${expected(bloc)} repérés">${bloc.lines.map(pill).join('')}</ul>`;
 
   // La réponse de l'apprenant, mots repérés surlignés (sans repère : telle quelle).
   const answer = bloc => highlighted(bloc.text, bloc.marks);
@@ -417,8 +438,7 @@
   function render(result) {
     if (!result) return '';
     const several = result.blocs.length > 1;
-    return `<section class="ana-score" aria-label="Indicateur de points">
-      ${head(result)}
+    return `${head(result)}<section class="ana-score is-detail" aria-label="Le détail de votre réponse">
       <div class="ana-blocs${several ? ' is-several' : ''}">${result.blocs.map(bloc => `<div class="ana-bloc">
         ${several && bloc.titre ? `<h4>${esc(bloc.titre)}</h4>` : ''}
         ${lines(bloc)}

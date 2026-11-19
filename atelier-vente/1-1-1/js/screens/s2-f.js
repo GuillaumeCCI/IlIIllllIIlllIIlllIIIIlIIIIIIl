@@ -41,8 +41,7 @@
     return `<form class="an-review s2f-review" novalidate>
       ${ex.caseBar(cases(), i, 'profil')}
       ${core.pageTitle('Corrigé', profile.label, `Le client vous dit : « ${profile.quote} »`)}
-      ${corrige.compare({ rubric, selfKey: selfKey(i), bloc: all, what: 'vos deux réponses' })}
-      ${corrige.head(result)}
+      ${corrige.head(result, { rubric, selfKey: selfKey(i), bloc: all, what: 'vos deux réponses' })}
       ${corrige.rows([
         corrige.row({ n: 1, title: 'Votre réponse d’écoute', bloc: replyBloc, text: ex.value(replyKey(i)), model: `Vous pouviez écrire : « ${profile.model} »` }),
         corrige.row({ n: 2, title: 'Votre adaptation', bloc: postureBloc, text: ex.value(postureKey(i)), model: profile.adaptation })

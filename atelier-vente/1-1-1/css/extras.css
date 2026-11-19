@@ -554,3 +554,19 @@
 
 /* Petits écrans : le repère « Repéré / Pas repéré » passe à la ligne au lieu de déborder. */
 @media (max-width: 600px) { .an-seen { white-space: normal; } }
+
+/* ── CORRIGÉ EN LIGNES (modèle validé en 1-2-1, repris le 19/11) ──
+ * Une ligne légère par réponse : à gauche le titre, votre réponse et ses
+ * pastilles ; à droite « Une réponse possible » en vert pâle, à sa
+ * hauteur (plus de grande zone grise), sans pictogramme. */
+#main .an-review .an-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; padding: 22px 26px; border-radius: 20px; box-shadow: 0 6px 20px rgb(20 40 100 / 7%); }
+#main .an-review .an-yours { gap: 14px; padding: 0; }
+#main .an-review .an-n { width: 30px; height: 30px; font-size: .95rem; }
+#main .an-review .an-yours h2 { margin: 2px 0 8px; font-size: 1.1rem; }
+#main .an-review .an-yours p { color: var(--navy); line-height: 1.55; }
+#main .an-review .an-verdict { display: block; align-self: start; padding: 0; background: none; }
+#main .an-review .an-verdict .an-mark { display: none; }
+#main .an-review .an-verdict h3 { margin: 4px 0 8px; color: var(--muted); font-size: .74rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+#main .an-review .an-verdict h3 ~ p, #main .an-review .an-verdict > div > :not(h3) { margin: 0; padding: 10px 14px; border-radius: 10px; background: #f3f9f5; color: #24533b; line-height: 1.55; }
+#main .an-review .an-verdict > div > :not(h3) + :not(h3) { margin-top: 8px; }
+@media (max-width: 900px) { #main .an-review .an-row { grid-template-columns: minmax(0, 1fr); gap: 14px; } }

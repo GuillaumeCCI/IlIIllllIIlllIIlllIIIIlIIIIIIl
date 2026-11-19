@@ -911,8 +911,9 @@
       // La réponse est déjà relue au-dessus : l'encadré devient celui du score.
       node.querySelector('.feedback-tag')?.remove();
       const title = node.querySelector('#feedback-title');
-      if (title) { title.textContent = 'Votre score estimatif'; title.insertAdjacentHTML('afterend', analysis); }
-      else node.insertAdjacentHTML('afterbegin', analysis);
+      // Le bilan (« Le bilan de votre activité ») porte son propre titre.
+      title?.remove();
+      node.insertAdjacentHTML('afterbegin', analysis);
     }
     if (focus) node.focus({ preventScroll: true });
     arrangeEnd();

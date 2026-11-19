@@ -120,8 +120,7 @@
         ${core.pageTitle('Corrigé', 'Votre analyse', 'Voici l’analyse de votre réponse, point par point, avec un retour sur chacun.')}
         ${core.button(`${icon('document', { size: 20 })}<span>Voir la mise en situation</span>`, 'scenario', 'subtle with-icon')}
       </header>
-      <div class="an-rows-compare">${compare(result, VERDICTS.findIndex(row => row.key === 'rewrite'))}</div>
-      ${result ? `<section class="panel an-score">${core.panelTitle('Votre score estimatif')}<section class="ana-score is-head" aria-label="Indicateur de points">${analyse.head(result)}</section></section>` : ''}
+      ${window.AtelierCorrige.head(result, { rubric: content.rubric, selfKey, bloc: result ? result.blocs[VERDICTS.findIndex(row => row.key === 'rewrite')] : null, what: 'votre version améliorée' })}
       <ol class="an-rows">${VERDICTS.map((row, i) => `<li class="an-row tone-${result ? toneOf(result.blocs[i]) : row.tone}">
         <div class="an-yours">
           <span class="an-n" aria-hidden="true">${i + 1}</span>

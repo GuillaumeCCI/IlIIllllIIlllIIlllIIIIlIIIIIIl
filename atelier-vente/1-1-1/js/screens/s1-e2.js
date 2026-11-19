@@ -60,8 +60,7 @@
     };
     return `<section class="an-review">
       ${core.pageTitle('Corrigé', 'L’ultimatum', 'Vous vendez des sièges de bureau ergonomiques. La gérante d’une entreprise de 40 salariés vous accorde 40 secondes, puis décide si elle vous donne un rendez-vous de 10 minutes.')}
-      ${corrige.compare({ rubric: SELF.map(s => [s.title]), bloc, what: 'votre ouverture', grade })}
-      ${corrige.head(result)}
+      ${corrige.head(result, { rubric: SELF.map(s => [s.title]), bloc, what: 'votre ouverture', grade })}
       ${corrige.rows([
         corrige.row({ n: 1, title: 'Votre ouverture', bloc, text: ex.value('proposal'), model: [notes[0], notes[1]] })
       ])}

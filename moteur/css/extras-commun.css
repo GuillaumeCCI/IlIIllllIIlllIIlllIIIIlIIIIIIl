@@ -993,3 +993,45 @@ html { background-color: #fbf8f2; }
 #main .k-bilan:has(> .k-rings.is-one) > .k-bilan-lead { grid-row: 4; margin-top: 2px; }
 #main .k-bilan:has(> .k-rings.is-one) > .k-rings { grid-row: 1 / span 5; }
 @media (max-width: 720px) { #main .k-bilan:has(> .k-rings.is-one) { grid-template-rows: none; } #main .k-bilan:has(> .k-rings.is-one) > * { grid-row: auto !important; } }
+
+/* ── LE SCORE EN BILAN (M1.1 rejoint le modèle validé en 1-2-1, 19/11) ──
+ * Le score estimatif devient « Le bilan de votre activité » (kit.bilan) :
+ * les anciens encadrés qui l'entouraient s'effacent (un seul cadre). */
+#main :is(.ana-score.is-head, .panel.an-score, .panel.review-score, .result-top, .open-score):has(> .k-bilan),
+#main :is(.panel.an-score, .panel.review-score):has(.k-bilan) { display: block; margin: 0; padding: 0; background: none; box-shadow: none; border: 0; }
+#main :is(.panel.an-score, .panel.review-score):has(.k-bilan) > :is(.panel-title, h2, h3):not(.k-bilan *) { display: none; }
+#main :is(.panel.an-score, .panel.review-score) .ana-score.is-head:has(.k-bilan) { display: block; margin: 0; padding: 0; background: none; box-shadow: none; }
+#main .feedback > .k-bilan { flex: 0 0 100%; width: 100%; margin: 0 0 6px; box-shadow: none; padding: 4px 0 8px; }
+.ana-score.is-detail { padding: 16px 20px; }
+
+/* Ce qu'on attend : de petites pastilles (comme « Votre réponse » du corrigé en lignes). */
+.ana-marks { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; }
+.ana-marks li { position: relative; display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 999px; background: #f1f3f8; color: #4c5f86; font-size: .8rem; font-weight: 600; line-height: 1.5; }
+.ana-marks li.is-ok { background: #e6f4ec; color: #1f6b43; }
+.ana-marks li.is-part { background: #fff3df; color: #8a5a12; }
+.ana-marks li.is-warn { background: #fde8e4; color: #a33a26; }
+.ana-marks li[data-tip] { cursor: help; }
+
+/* La bulle d'aide d'une pastille : au survol ou au clavier, par-dessus. */
+:is(.ana-marks, .fm-rv-marks) li[data-tip]:is(:hover, :focus-visible)::after { content: attr(data-tip); position: absolute; z-index: 30; left: 0; top: calc(100% + 8px); width: max-content; max-width: 300px; padding: 9px 12px; border-radius: 10px; background: #1b2370; color: #fff; font-size: .82rem; font-weight: 500; line-height: 1.45; white-space: normal; box-shadow: 0 8px 22px rgb(20 40 100 / 22%); pointer-events: none; }
+:is(.ana-marks, .fm-rv-marks) li[data-tip]:focus-visible { outline: 2px solid #5a67b8; outline-offset: 2px; }
+.fm-rv-marks li[data-tip] { position: relative; cursor: help; }
+
+/* Le bilan garde sa taille de titre, même dans les corrigés qui forcent leurs paragraphes. */
+#main .k-bilan .k-bilan-title { font-size: 1.35rem; font-weight: 800; color: var(--navy, #1b2370); }
+#main .k-bilan .k-bilan-lead { font-size: 1rem; }
+#main .k-bilan .k-ring-t { font-size: .95rem; }
+#main .k-bilan .k-ring-w { font-size: .78rem; }
+/* Le détail derrière un bouton (validé : bandeau bleu pâle centré, une phrase, bouton bleu nuit). */
+#main .k-bilan .an-detail-band { display: grid; justify-items: center; gap: 10px; margin-top: 16px; padding: 16px 20px; border-radius: 16px; background: #eef3fd; text-align: center; }
+#main .k-bilan .an-detail-band p { margin: 0; color: #24305a; font-size: 1rem; }
+#main .k-bilan .an-detail-open { background: #1b2370; border-color: #1b2370; color: #fff; }
+#main .k-bilan .an-detail-open:hover { background: #2a3590; }
+/* Le tableau d'auto-évaluation, dans sa fenêtre. */
+.an-compare.is-dialog table { width: 100%; border-collapse: collapse; }
+.an-compare.is-dialog :is(th, td) { padding: 10px 8px; border-top: 1px solid #e6eaf3; text-align: left; vertical-align: middle; }
+.an-compare.is-dialog thead th { border-top: 0; color: var(--muted, #6b7592); font-size: .74rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.an-compare.is-dialog .muted { margin: 0 0 12px; }
+/* Les mots repérés : vert pâle (validé), jamais le jaune du navigateur. */
+#main :is(.an-yours, .ana-text, .review-card, .result-answer-text) mark { padding: 0 2px; border-radius: 4px; background: #dcf1e4; color: inherit; }
+#main :is(.an-yours, .ana-text, .review-card, .result-answer-text) mark.is-warn { background: #ffd9d2; }

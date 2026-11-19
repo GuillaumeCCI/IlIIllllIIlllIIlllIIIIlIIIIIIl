@@ -29,8 +29,7 @@
     const all = result ? { lines: result.blocs.flatMap(b => b.lines) } : null;
     return `<section class="an-review">
       ${core.pageTitle('Corrigé', 'Adaptez votre ouverture à chaque canal', 'Vous deviez transformer une ouverture prévue pour un face-à-face en deux versions : au téléphone, puis par e-mail.')}
-      ${corrige.compare({ rubric: [...PHONE_CHECKS, ...EMAIL_CHECKS].map(t => [t]), bloc: all, what: 'vos deux versions', grade })}
-      ${corrige.head(result)}
+      ${corrige.head(result, { rubric: [...PHONE_CHECKS, ...EMAIL_CHECKS].map(t => [t]), bloc: all, what: 'vos deux versions', grade })}
       ${corrige.rows([
         corrige.row({ n: 1, title: 'Au téléphone', bloc: phoneBloc, text: ex.value('phone'), model: notes.phone }),
         corrige.row({ n: 2, title: 'L’objet de l’e-mail', bloc: subjectBloc, text: ex.value('subject'), model: notes.subject }),
