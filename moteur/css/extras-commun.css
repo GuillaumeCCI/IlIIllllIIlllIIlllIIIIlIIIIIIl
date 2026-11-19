@@ -1112,3 +1112,5 @@ html { background-color: #fbf8f2; }
 }
 #main :is(.form-actions, .wiz-actions, .wiz-back, .form-meta, .step-foot-actions, .case-actions, .compare-card-tools) .text-button:hover,
 #main .text-button.with-icon:not(.k-reset):hover { background: #e1e9fb; color: #1b2370; text-decoration: none; }
+#main :is(.form-actions, .wiz-actions, .wiz-back, .form-meta, .step-foot-actions, .case-actions, .compare-card-tools, .case-bar) .text-button *, #main .text-button.with-icon:not(.k-reset) * { text-decoration: none; }
+#main .case-bar .text-button.with-icon { padding: 7px 16px; }

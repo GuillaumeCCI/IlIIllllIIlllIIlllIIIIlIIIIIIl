@@ -28,7 +28,7 @@
     const situation = situations[i];
     const reviewed = caseDone(i);
 
-    const answer = ex.field(repairKey(i), 'Votre reformulation de compréhension', {
+    const answer = ex.field(repairKey(i), 'Ce que vous répondez à la place', {
       placeholder: 'Écrivez votre reformulation…', max: 240, rows: 4, hideLabel: true
     });
 
@@ -41,7 +41,7 @@
       ? `<form class="an-review repair-review" novalidate>
           ${corrige.head(result)}
           ${corrige.rows([
-            corrige.row({ n: 1, title: 'Votre reformulation de compréhension', bloc: result ? result.blocs[0] : null, text: ex.value(repairKey(i)), model: `Vous pouviez écrire : « ${situation.model} »` })
+            corrige.row({ n: 1, title: 'Ce que vous répondez à la place', bloc: result ? result.blocs[0] : null, text: ex.value(repairKey(i)), model: `Vous pouviez écrire : « ${situation.model} »` })
           ])}
           ${core.errorsBox()}
           ${ex.caseActions(cases(), i, 'Valider ma réponse')}
@@ -49,8 +49,8 @@
       : `<form class="panel repair-sheet" novalidate>
         <div class="rc-sheet-head">
           <span class="rc-pencil" aria-hidden="true">${icon('pencil', { size: 22 })}</span>
-          <div><h2>Votre reformulation de compréhension</h2>
-          <p>Reformulez ce que le client exprime, sans défendre l’offre immédiatement.</p></div>
+          <div><h2>Que lui répondez-vous à la place&nbsp;?</h2>
+          <p>Reprenez ce que le client vient de dire avec vos mots, pour lui montrer que vous l’avez compris, sans défendre tout de suite votre offre.</p></div>
         </div>
         ${answer}
         ${ex.lockNote('Un exemple de reformulation apparaîtra après validation.')}

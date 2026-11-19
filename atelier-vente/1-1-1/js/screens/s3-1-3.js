@@ -122,7 +122,7 @@
       <span class="case-step-dots"><span class="case-step-dot filled"></span><span class="case-step-dot ${at >= 2 ? 'filled' : ''}"></span></span></p>`;
 
     const body = at === 1
-      ? `<h2>Quelle est la nature probable de cette objection ?</h2>
+      ? `<p class="k-ask">D’après vous, de quel type d’objection s’agit-il&nbsp;?</p>
          <p class="muted">Choisissez la réponse la plus vraisemblable.</p>
          ${ex.radioCards(natureKey(i), content.natures, 'two')}
          <p class="muted asset-note">Le premier geste sera choisi à l’étape suivante.</p>`

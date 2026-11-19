@@ -69,8 +69,8 @@
 
     if (reviewed) return reviewScreen(i, card);
     const body = at === 1
-      ? `<h2>Quelle est la nature de cette objection ?</h2>
-         <p class="muted">Choisissez une réponse.</p>
+      ? `<p class="k-ask">D’après vous, de quel type d’objection s’agit-il&nbsp;?</p>
+         <p class="muted">Choisissez la réponse la plus vraisemblable.</p>
          ${ex.radioCards(natureKey(i), content.natures, 'two')}`
       : at === 2
       ? `<h2>Quelle question permet de creuser ?</h2>
