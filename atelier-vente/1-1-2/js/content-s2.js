@@ -139,7 +139,7 @@ window.ATELIER_S2 = {
     eyebrow: 'Exercice · Mise en situation',
     title: 'Le pitch de 60 secondes',
     badge: 'Spécial Sécurité',
-    subtitle: 'Rédigez, enregistrez puis auto-évaluez votre pitch de RelaCosy face à un prospect particulièrement soucieux de la sécurité.',
+    subtitle: 'Vous avez une minute pour présenter RelaCosy à un prospect très attentif à la sécurité de ses données.',
     structure: ['Une accroche', 'Un bénéfice + une preuve', 'Un bénéfice + une preuve', 'Une conclusion'],
     example: 'Votre priorité, c’est que les données de vos clients ne soient jamais en danger : c’est exactement ce que fait RelaCosy. Vos données sont chiffrées et sauvegardées toutes les 10 minutes, et le logiciel respecte la loi européenne sur les données. Plus de 5 000 entreprises l’utilisent déjà. Et vous n’avez rien à gérer côté technique : l’assistance répond en 2 minutes, 7 jours sur 7. Concrètement, vous gagnez en sérénité sans y consacrer de temps. Je vous propose qu’on regarde ensemble comment le mettre en place chez vous.',
     criteria: [
