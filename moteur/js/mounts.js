@@ -1021,7 +1021,7 @@
             ${content.side && !lean ? `<div class="fm-side-card">${scene(content.side)}</div>` : ''}
             ${lean && c.ask
               // Écran allégé : la vraie question en bandeau bleu nuit, puis une ligne qui dit quoi faire.
-              ? `<p class="k-ask">${esc(c.ask)}</p>${content.askSub ? `<p class="fm-ask-line">${esc(content.askSub)}</p>` : ''}`
+              ? `${content.situation ? `<p class="fm-situation">${esc(content.situation)}</p>` : ''}<p class="k-ask">${esc(c.ask)}</p>`
               : `<div class="fm-step-head"><span class="fm-step-n">${String(i + 1).padStart(2, '0')}</span><div><h2 class="fm-step-title">${esc(c.tab)}</h2>${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}</div></div>`}
             ${content.skin ? fieldRows(i, fields.filter(f => !content.skin.fields.includes(f.id))) + skinBlock(i, fields.filter(f => content.skin.fields.includes(f.id))) : fieldRows(i, fields)}${core().errorsBox()}</div>
           <div class="fm-actions"><button type="button" class="button secondary fm-prev" ${prev}>${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>
