@@ -29,6 +29,32 @@
     </div>`;
   }
 
+  // L'écran du logiciel présenté, dessiné (RelaCosy est inventé : pas de capture).
+  const CLIENTS = [
+    ['BM', 'Boulangerie Martin', 'Lyon', 'Rendez-vous', 'teal'],
+    ['GP', 'Garage Petit', 'Nantes', 'À relancer', 'indigo'],
+    ['AR', 'Atelier Roux', 'Lille', 'Devis envoyé', 'pale'],
+    ['FC', 'Fleurs & Co', 'Rennes', 'Rendez-vous', 'teal']
+  ];
+  function appScreen() {
+    return `<figure class="proof-app" aria-hidden="true">
+      <div class="proof-app-bar"><i></i><i></i><i></i><span>RelaCosy</span></div>
+      <div class="proof-app-body">
+        <ul class="proof-app-menu">
+          <li class="is-on">Clients</li><li>Rendez-vous</li><li>Relances</li><li>Statistiques</li>
+        </ul>
+        <div class="proof-app-main">
+          <div class="proof-app-top"><strong>Mes clients</strong><span class="proof-app-lock">Données protégées</span></div>
+          ${CLIENTS.map(([ini, name, city, tag, tone]) => `<div class="proof-app-row">
+            <span class="proof-app-ini">${ini}</span>
+            <span class="proof-app-name">${esc(name)}<small>${city}</small></span>
+            <span class="proof-app-tag is-${tone}">${tag}</span>
+          </div>`).join('')}
+        </div>
+      </div>
+    </figure>`;
+  }
+
   function screen() {
     const reviewing = ex.reviewing();
     if (reviewing) return reviewScreen();
@@ -36,8 +62,13 @@
     return `<div class="k-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle, aside: counter() + kit.tourButton() })}
       <form class="k-panel" novalidate>
-        <p class="k-label">Le pitch</p>
-        <p class="proof-pitch">« <strong>${esc(first)}</strong> ${esc(rest.join(' '))} »</p>
+        <div class="proof-intro">
+          ${appScreen()}
+          <div>
+            <p class="k-label">Le pitch</p>
+            <p class="proof-pitch">« <strong>${esc(first)}</strong> ${esc(rest.join(' '))} »</p>
+          </div>
+        </div>
         ${reviewing ? kit.result(kit.score('row', answers), rows.length, 'bonnes réponses') : '<p class="k-muted">Cochez une seule case par ligne.</p>'}
         ${kit.matrix({ key: 'row', rows, columns: content.columns, head: 'Affirmations extraites du pitch', answers: reviewing ? answers : null })}
         ${reviewing ? `${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`
