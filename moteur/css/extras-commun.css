@@ -1226,3 +1226,11 @@ html { background-color: #fbf8f2; }
 #main .cmp-option.is-static:is(.is-answer, .is-wrong) .cmp-reread > summary { background: #fff; }
 /* En-tête d'un écran à étapes allégé : les deux boutons côte à côte, les cartes d'étapes dessous, à droite. */
 #main .k-head-aside:has(> .fm-stepper.is-lean) { flex-direction: row; flex-wrap: wrap; justify-content: flex-end; }
+
+/* 4.7 (mounts.css, mailSteps) : on écrit DANS l'e-mail. Ici, après les règles générales des champs, pour l'emporter. */
+#main .fs-layout.is-mail .fs-mail :is(textarea, input[type="text"]),
+#main .fs-layout.is-mail .fs-mail :is(textarea, input[type="text"]):focus { border: 0; border-radius: 0; background: transparent; box-shadow: none; outline: none; padding: 0; }
+#main .fs-layout.is-mail .fs-mail :is(textarea, input[type="text"])[aria-invalid="true"] { background: #fff6f4; box-shadow: none; }
+/* Les champs à insérer : pastilles sarcelle pâle, bien visibles sans ajouter de bleu. */
+#main .fs-layout.is-mail .fm-token { background: #e2f1f1; color: #1f6f6f; box-shadow: none; }
+#main .fs-layout.is-mail .fm-token:hover { background: #cfe8e8; }
