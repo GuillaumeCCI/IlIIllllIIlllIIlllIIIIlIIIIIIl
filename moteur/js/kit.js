@@ -68,11 +68,13 @@
     return `<ol class="k-steps ${compact ? 'is-compact' : ''}">${labels.map((label, i) => {
       const n = i + 1;
       const state = n < at ? 'is-done' : n === at ? 'is-active' : 'is-next';
-      const mark = n < at ? icon('check', { size: 16 }) : esc(letters ? letters[i] : n);
+      // Le numéro reste toujours visible ; une étape faite prend une coche verte à droite (petites cartes validées).
+      const mark = esc(letters ? letters[i] : n);
       return `<li class="k-step ${state}">
         <span class="k-step-dot">${mark}</span>
         ${locked && n > at ? `<span class="k-step-lock">${icon('lock', { size: 14 })}</span>` : ''}
         <span class="k-step-label">${esc(label)}</span>
+        ${n < at ? `<span class="k-step-check">${icon('check', { size: 14, label: 'faite' })}</span>` : ''}
       </li>`;
     }).join('')}</ol>`;
   }

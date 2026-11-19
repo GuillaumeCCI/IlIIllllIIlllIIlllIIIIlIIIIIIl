@@ -238,7 +238,7 @@
     const body = reviewing ? reviewScreen() : at === 1 ? writeStep() : at === 2 ? recordStep() : evaluateStep();
     return `<div class="k-page pitch-page">
       ${kit.head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-        aside: `${!reviewing && at === 3 ? kit.contextButton() : ''}<p class="k-count">${reviewing ? 'Terminé' : `Étape <strong>${at} sur 3</strong>`}</p><span class="pitch-badge">${esc(content.badge)}</span>` })}
+        aside: !reviewing && at === 3 ? kit.contextButton() : '' })}
       ${reviewing ? '' : kit.steps(['Rédiger', 'Enregistrer', 'S’évaluer'], at)}
       ${body}
       ${reviewing ? '' : kit.utility('L’enregistrement reste sur cet appareil et s’efface en quittant la page.')}

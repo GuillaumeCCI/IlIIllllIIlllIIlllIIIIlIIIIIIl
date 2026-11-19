@@ -1185,3 +1185,15 @@ html { background-color: #fbf8f2; }
 /* « Recommencer l'exercice » : un bouton doux partout, plus de lien souligné. */
 #main .k-reset { display: inline-flex; align-items: center; min-height: 38px; padding: 7px 16px; border: 0; border-radius: 999px; background: #eef3fd; color: #1b2370; font-size: .9rem; font-weight: 700; text-decoration: none; }
 #main .k-reset:hover { background: #e1e9fb; color: #1b2370; text-decoration: none; }
+
+/* Étapes d'un exercice (kit.steps) : plus de frise de ronds reliés par un trait (refusée).
+   Petites cartes validées (18/11) : numéro dans un petit rond bleu pâle, carte en cours
+   bleu nuit texte blanc (rond blanc), coche verte à droite une fois l'étape faite. */
+#main .k-steps:not(.is-compact) { gap: 10px; margin: 0 auto 18px; }
+#main .k-steps:not(.is-compact) .k-step + .k-step::before { display: none; }
+#main .k-steps:not(.is-compact) .k-step { gap: 10px; padding: 9px 20px 9px 9px; font-size: 1rem; border-radius: 12px; background: #fff; color: var(--navy); box-shadow: 0 3px 10px rgb(20 40 100 / 7%); }
+#main .k-steps:not(.is-compact) .k-step-dot { width: 30px; height: 30px; font-size: .95rem; background: #eef3fb; color: var(--navy); box-shadow: none; }
+#main .k-steps:not(.is-compact) .k-step.is-next { color: #6d7ca3; }
+#main .k-steps:not(.is-compact) .k-step.is-active { background: #1b2370; color: #fff; box-shadow: 0 6px 16px rgb(27 35 112 / 22%); }
+#main .k-steps:not(.is-compact) .k-step.is-active .k-step-dot { background: #fff; color: #1b2370; }
+.k-step-check { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #2a8f8f; color: #fff; }
