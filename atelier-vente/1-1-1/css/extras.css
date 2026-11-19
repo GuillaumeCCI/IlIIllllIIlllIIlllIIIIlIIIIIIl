@@ -570,3 +570,14 @@
 #main .an-review .an-verdict h3 ~ p, #main .an-review .an-verdict > div > :not(h3) { margin: 0; padding: 10px 14px; border-radius: 10px; background: #f3f9f5; color: #24533b; line-height: 1.55; }
 #main .an-review .an-verdict > div > :not(h3) + :not(h3) { margin-top: 8px; }
 @media (max-width: 900px) { #main .an-review .an-row { grid-template-columns: minmax(0, 1fr); gap: 14px; } }
+
+/* S3 1.6 · « Vos arguments » passe dans la colonne de gauche, avec le
+ * contexte (19/11 : le bloc gris sous la réponse surchargeait l'écran) :
+ * même habillage que « Le client » / « La situation », sans fond ni cadre,
+ * de simples pastilles. */
+#main .step-rail .case-atouts { gap: 6px; margin: 18px 0 0; padding: 0 4px; background: none; border-radius: 0; }
+#main .step-rail .case-atouts .ana-expect { margin: 0; color: var(--accent); font-size: .8rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+#main .step-rail .case-atouts-help { margin: 0 0 4px; color: var(--muted); font-size: .9rem; line-height: 1.45; }
+#main .step-rail .case-atouts ul { gap: 7px; }
+#main .step-rail .case-atouts li { align-items: baseline; gap: 10px; font-size: .98rem; line-height: 1.45; }
+#main .step-rail .case-atouts-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #9db6f5; transform: translateY(-2px); }

@@ -63,7 +63,7 @@
   const atouts = cas => `<div class="case-atouts">
       <p class="ana-expect">Vos arguments</p>
       <p class="case-atouts-help">Tous ne répondent pas à cette objection : choisissez ceux qui comptent pour ce client.</p>
-      <ul>${argumentsOf(cas).map(item => `<li>${icon('chevronRight', { size: 14 })}<span>${esc(item)}</span></li>`).join('')}</ul>
+      <ul>${argumentsOf(cas).map(item => `<li><span class="case-atouts-dot" aria-hidden="true"></span><span>${esc(item)}</span></li>`).join('')}</ul>
     </div>`;
 
   function screen() {
@@ -82,6 +82,7 @@
       ${core.button(`${icon('arrowLeft', { size: 16 })}<span>Tous les contextes</span>`, 'back-to-menu', 'text-button with-icon')}
       ${brief(cas)}
       ${core.clientCard(cas.objection, null, 'Objection client', c)}
+      ${i === 3 ? atouts(cas) : ''}
     </aside>`;
 
     return `<div class="step-layout">
@@ -104,7 +105,6 @@
           placeholder: item.placeholder, max: 300, rows: 7, hideLabel: true
         })}
         <p class="advice">${icon('lightbulb', { size: 19 })}<span>${esc(item.advice)}</span></p>
-        ${i === 3 ? atouts(cas) : ''}
 
         ${core.errorsBox()}
         <div class="step-foot">
