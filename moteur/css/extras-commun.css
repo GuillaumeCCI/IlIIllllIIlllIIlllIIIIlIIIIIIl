@@ -1234,3 +1234,4 @@ html { background-color: #fbf8f2; }
 /* Les champs à insérer : pastilles sarcelle pâle, bien visibles sans ajouter de bleu. */
 #main .fs-layout.is-mail .fm-token { background: #e2f1f1; color: #1f6f6f; box-shadow: none; }
 #main .fs-layout.is-mail .fm-token:hover { background: #cfe8e8; }
+#main .mt-sorter .sorter-foot { display: flex; justify-content: center; width: 100%; margin-top: 10px; }

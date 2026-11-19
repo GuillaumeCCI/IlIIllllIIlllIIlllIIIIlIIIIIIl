@@ -444,7 +444,31 @@
     }
 
     const slide = slideFrom();
+    /* `content.ask` : l'écran du trieur carte par carte validé (19/11) : la
+     * carte décorée (« Extrait 1 sur 3 » + pastilles), la question en bandeau,
+     * puis les réponses en cartes ; une réponse déjà donnée le dit. */
+    function sorterScreen() {
+      const i = current();
+      const pastilles = cards.map((_, k) => `<button type="button" class="sorter-dot ${k === i ? 'current' : link(k) !== null ? 'filled' : ''}" data-act="mt-card" data-index="${k}" aria-label="${esc(content.cardLabel)} ${k + 1}" aria-current="${k === i}"></button>`).join('');
+      const choices = zones.map((z, k) => {
+        const by = owner(k);
+        return `<button type="button" class="sorter-choice ${by === i ? 'is-chosen' : ''} ${by !== -1 && by !== i ? 'is-used' : ''}" data-drop="${k}" data-act="mt-zone" data-zone="${k}" aria-pressed="${by === i}">
+          <span class="sorter-choice-label">${esc(z.label)}${by !== -1 && by !== i ? `<small>Déjà choisie pour l’${esc(content.cardLabel.toLowerCase())} ${by + 1}</small>` : z.sub ? `<small>${esc(z.sub)}</small>` : ''}</span>
+        </button>`;
+      }).join('');
+      return `<div class="sorter is-card-screen mt-sorter">
+        <article class="sorter-card" draggable="true" data-drag="${i}" tabindex="0">
+          <div class="sorter-card-top"><span class="sorter-card-tag">${esc(content.cardLabel)} ${i + 1} sur ${n}</span><span class="sorter-dots">${pastilles}</span></div>
+          <p class="sorter-card-text">${content.quoted === false ? esc(cards[i].text) : `« ${esc(cards[i].text)} »`}</p>
+        </article>
+        <p class="k-ask">${esc(content.ask)}</p>
+        <div class="sorter-choices count-${zones.length}">${choices}</div>
+        ${hasIntro ? `<div class="sorter-foot">${kit().dialogButton('intro', content.intro.reread || 'Relire le document', 'text-button', 'document')}</div>` : ''}
+      </div>`;
+    }
+
     function playScreen() {
+      if (content.ask) return sorterScreen();
       const i = current();
       return `<div class="mt-board">
         <section class="mt-card-side">
@@ -494,12 +518,12 @@
       const intro = !reviewing && stage === 1;
       return `<div class="k-page mt-page">
         ${kit().head({ eyebrow: content.eyebrow, title: intro ? content.intro.title : content.title, subtitle: intro ? content.intro.subtitle : content.subtitle,
-          aside: intro ? (content.tour ? introButton(content) + kit().tourButton() : '') : `<p class="k-count"><strong>${count()} / ${n}</strong> associations</p>${reviewing ? '' : dots(current())}${content.tour && !reviewing ? introButton(content) + kit().tourButton() : ''}` })}
-        ${hasIntro && !intro && !reviewing ? `<p class="mt-reread">${kit().dialogButton('intro', content.intro.reread || 'Relire le document', 'text-button', 'document')}</p>` : ''}
+          aside: intro ? (content.tour ? introButton(content) + kit().tourButton() : '') : content.ask ? (content.tour && !reviewing ? introButton(content) + kit().tourButton() : '') : `<p class="k-count"><strong>${count()} / ${n}</strong> associations</p>${reviewing ? '' : dots(current())}${content.tour && !reviewing ? introButton(content) + kit().tourButton() : ''}` })}
+        ${hasIntro && !intro && !reviewing && !content.ask ? `<p class="mt-reread">${kit().dialogButton('intro', content.intro.reread || 'Relire le document', 'text-button', 'document')}</p>` : ''}
         <form novalidate class="mt-form">
           ${reviewing ? reviewScreen() : intro ? introScreen() : `${playScreen()}${core().errorsBox()}${kit().bar({
             left: kit().reset(),
-            center: `${count()} / ${n} associations faites`,
+            center: content.ask ? '' : `${count()} / ${n} associations faites`,
             right: kit().submit(content.submitLabel || 'Vérifier mes associations', count() === n ? '' : 'data-pending="true"')
           })}`}
         </form>
