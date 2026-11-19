@@ -20,9 +20,9 @@ window.ATELIER_CONTEXTES = {
     title: 'Comparer',
     rows: [
       ['users', 'La situation', 'Premier rendez-vous avec une petite entreprise, trente minutes prévues. Deux ouvertures vous sont proposées pour cette même situation. Les deux sont acceptables.'],
-      ['pencil', 'Ce qui vous est demandé', 'Choisissez la plus efficace, appuyez-vous sur trois arguments, puis identifiez un emprunt utile.'],
-      ['list', 'Comment faire', 'Choisissez la plus efficace, appuyez votre décision sur au moins trois arguments reliés aux critères, puis identifiez ce que vous emprunteriez à l’autre.'],
-      ['target', 'Ce qui compte', ['Au moins trois arguments explicitement reliés aux critères d’une bonne ouverture', 'Un emprunt pertinent identifié dans l’ouverture non retenue', 'Un raisonnement, pas une préférence : les deux choix restent défendables s’ils sont argumentés']]
+      ['pencil', 'Ce qui vous est demandé', 'Choisissez l’ouverture la plus efficace, justifiez votre choix par au moins trois arguments, puis dites ce que vous reprendriez à l’autre.'],
+      ['list', 'Comment faire', 'Lisez les deux ouvertures, choisissez-en une, puis écrivez vos arguments un par un, chacun relié à un critère d’une bonne ouverture. Terminez par ce que vous reprendriez à l’autre.'],
+      ['target', 'Ce qui compte', ['Au moins trois arguments, chacun relié à un critère d’une bonne ouverture', 'Une bonne idée reprise à l’ouverture que vous n’avez pas choisie', 'Un raisonnement, pas une préférence : les deux choix restent défendables s’ils sont argumentés']]
     ]
   },
   's1-D': {

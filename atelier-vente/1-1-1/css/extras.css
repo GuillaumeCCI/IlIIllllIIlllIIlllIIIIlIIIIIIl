@@ -585,3 +585,7 @@
 /* S1 B : ce que vous remarquez chez le client, en une phrase (plus d’étiquettes nues). */
 #main .signals-line { margin: 14px 2px 18px; color: var(--navy); font-size: 1rem; line-height: 1.55; }
 #main .signals-line strong { font-weight: 800; }
+
+/* S1 C : sous chaque question, ce qu’il faut écrire (texte normal). */
+#main .compare-card .explain-help { margin: 6px 0 14px; color: var(--muted); font-size: 1rem; line-height: 1.5; max-width: 62ch; }
+#main .compare-card .field:has(select) { margin-top: 18px; }

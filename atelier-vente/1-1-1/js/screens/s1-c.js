@@ -38,7 +38,7 @@
 
   /* Le fil des trois étapes, centré au-dessus du titre. */
   function stepper(at) {
-    const steps = ['Choisir', 'Argumenter', 'Emprunter'];
+    const steps = ['Choisir', 'Argumenter', 'Reprendre'];
     return `<ol class="duo-steps compare-steps">${steps.map((label, i) => {
       const n = i + 1;
       const done = n < at;
@@ -111,17 +111,18 @@
           <span class="tag">Argument ${i} sur ${count}</span>
           <span class="case-dots">${dots}</span>
         </div>
-        <h2 class="explain-question">Pourquoi cette ouverture vous paraît-elle plus efficace ?</h2>
+        <h2 class="explain-question">Pourquoi l’ouverture ${esc(ex.value('choice'))} vous paraît-elle plus efficace ?</h2>
+        <p class="explain-help">Citez un passage de l’ouverture que vous avez choisie, puis dites pourquoi il aide ce client. Un argument à la fois.</p>
+        ${ex.field(`argument${i}`, `Argument ${i}`, {
+          max: 400, rows: 6, hideLabel: true,
+          placeholder: 'Quand elle dit « … », le client…'
+        })}
         <div class="field">
-          <label for="field-criterion${i}">Critère mobilisé</label>
-          <p class="field-help" id="help-criterion${i}">Parmi les critères de la grille d’évaluation, lequel cet argument met-il en avant ?
+          <label for="field-criterion${i}">Sur quel critère d’une bonne ouverture porte cet argument ?</label>
+          <p class="field-help" id="help-criterion${i}">Choisissez-le dans la liste. « Voir la grille » rappelle ce que veut dire chaque critère.
             ${core.button(`${icon('list', { size: 15 })}<span>Voir la grille</span>`, 'rubric', 'text-button with-icon')}</p>
           ${ex.select(`criterion${i}`, `Critère de l’argument ${i}`, content.criteria, 'Choisir un critère').replace('<select ', `<select aria-describedby="help-criterion${i}" `)}
         </div>
-        ${ex.field(`argument${i}`, `Argument ${i}`, {
-          max: 400, rows: 6, hideLabel: true,
-          placeholder: 'Décrivez ce que vous observez dans les deux propositions et pourquoi cela compte…'
-        })}
         <div class="compare-card-tools">
           ${last && count < 5 ? core.button(`${icon('plus', { size: 15 })}<span>Ajouter un argument</span>`, 'add-argument', 'text-button with-icon') : ''}
           ${i > 3 ? core.button(`${icon('close', { size: 15 })}<span>Supprimer cet argument</span>`, 'remove-argument', 'text-button with-icon') : ''}
@@ -141,8 +142,9 @@
     return `<div class="borrow-layout">
       <section class="panel compare-card">
         <span class="tag">Dernière étape</span>
-        <h2 class="explain-question">Identifiez un élément pertinent dans l’autre ouverture et expliquez comment vous l’intégreriez à la vôtre.</h2>
-        ${ex.field('borrow', 'Ce que vous emprunteriez à l’autre', {
+        <h2 class="explain-question">Que reprendriez-vous de l’ouverture ${esc(other(ex.value('choice')))} ?</h2>
+        <p class="explain-help">Choisissez une bonne idée de l’ouverture que vous n’avez pas retenue, puis dites où et comment vous l’ajouteriez à la vôtre.</p>
+        ${ex.field('borrow', 'Ce que vous reprendriez à l’autre', {
           max: 500, rows: 6, hideLabel: true,
           placeholder: 'Je reprendrais… parce que… Je l’intégrerais ainsi…'
         })}
@@ -187,7 +189,7 @@
       }).join('')}</div>
       ${kit.rows([
         kit.row({ n: 1, title: 'Vos arguments', bloc: argBloc, yours: `<ol class="compare-arguments">${args}</ol>`, model: [notes[0], notes[1]] }),
-        kit.row({ n: 2, title: 'Ce que vous emprunteriez à l’autre', bloc: borrowBloc, text: ex.value('borrow'), model: notes[2] })
+        kit.row({ n: 2, title: 'Ce que vous reprendriez à l’autre', bloc: borrowBloc, text: ex.value('borrow'), model: notes[2] })
       ])}
       ${core.feedbackBox()}
     </section>`;
@@ -197,11 +199,11 @@
     const review = ex.reviewing();
     const at = stage();
     const head = review
-      ? { title: 'Quelle ouverture est la plus efficace ?', sub: 'Votre analyse et sa correction.' }
+      ? { title: 'Comparer deux ouvertures', sub: 'Votre choix, puis vos réponses, chacune face à une réponse possible.' }
       : [
           { title: 'Comparer deux ouvertures', sub: '' },
-          { title: 'Pourquoi ce choix ?', sub: 'Expliquez votre choix avec au moins trois arguments, un à la fois.' },
-          { title: 'Ce que j’emprunterais à l’autre', sub: 'Une bonne idée peut compléter votre ouverture sans changer votre choix.' }
+          { title: 'Vos arguments', sub: 'Au moins trois arguments, un à la fois, chacun relié à un critère d’une bonne ouverture.' },
+          { title: 'Ce que vous reprendriez à l’autre', sub: 'Une bonne idée peut compléter votre ouverture sans changer votre choix.' }
         ][at - 1];
     const body = review ? reviewScreen() : at === 1 ? chooseScreen() : at === 2 ? argueScreen() : borrowScreen();
 
