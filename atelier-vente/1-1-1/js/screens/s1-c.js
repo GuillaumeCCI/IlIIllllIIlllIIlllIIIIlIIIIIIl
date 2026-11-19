@@ -27,6 +27,16 @@
   const argIndex = () => Math.min(argumentCount(), Math.max(1, Number(ex.value('argIndex')) || 1));
   const other = choice => choice === '1' ? '2' : '1';
 
+  // Une ligne par critère, sous son nom, dans les petites cartes de l'étape 2.
+  const CRITERIA_HELP = {
+    'Accueil et climat': 'Saluer, remercier, mettre à l’aise.',
+    'Présentation': 'Dire qui l’on est, sa fonction, son entreprise.',
+    'Cadrage': 'Annoncer l’objet, le déroulé ou la durée.',
+    'Transition vers l’écoute': 'Donner la parole au client.',
+    'Posture centrée client': 'Parler de lui plus que de soi.',
+    'Adaptation': 'Tenir compte du client et de la situation.'
+  };
+
   /* Erreurs d'un argument : un critère de la liste et une explication. */
   function argumentErrors(values, i) {
     const errors = [];
@@ -117,12 +127,17 @@
           max: 400, rows: 6, hideLabel: true,
           placeholder: 'Quand elle dit « … », le client…'
         })}
-        <div class="field">
-          <label for="field-criterion${i}">Sur quel critère d’une bonne ouverture porte cet argument ?</label>
-          <p class="field-help" id="help-criterion${i}">Choisissez-le dans la liste. « Voir la grille » rappelle ce que veut dire chaque critère.
-            ${core.button(`${icon('list', { size: 15 })}<span>Voir la grille</span>`, 'rubric', 'text-button with-icon')}</p>
-          ${ex.select(`criterion${i}`, `Critère de l’argument ${i}`, content.criteria, 'Choisir un critère').replace('<select ', `<select aria-describedby="help-criterion${i}" `)}
-        </div>
+        <fieldset class="crit-pick" id="field-criterion${i}">
+          <legend>Sur quel critère d’une bonne ouverture porte cet argument ?</legend>
+          <div class="crit-grid">${content.criteria.map(name => {
+            const chosen = ex.value(`criterion${i}`) === name;
+            return `<label class="crit-card">
+              <input type="radio" name="criterion${i}" data-field="criterion${i}" value="${esc(name)}" ${chosen ? 'checked' : ''}>
+              <span class="crit-dot" aria-hidden="true">${icon('check', { size: 13, strokeWidth: 3 })}</span>
+              <span class="crit-text"><strong>${esc(name)}</strong><span>${esc(CRITERIA_HELP[name] || '')}</span></span>
+            </label>`;
+          }).join('')}</div>
+        </fieldset>
         <div class="compare-card-tools">
           ${last && count < 5 ? core.button(`${icon('plus', { size: 15 })}<span>Ajouter un argument</span>`, 'add-argument', 'text-button with-icon') : ''}
           ${i > 3 ? core.button(`${icon('close', { size: 15 })}<span>Supprimer cet argument</span>`, 'remove-argument', 'text-button with-icon') : ''}
