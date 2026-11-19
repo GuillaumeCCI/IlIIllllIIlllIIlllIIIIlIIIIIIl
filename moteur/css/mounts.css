@@ -865,3 +865,15 @@ button.crash-passage:hover { background: #fff1d6; }
 .fs-mail-body { display: grid; gap: 10px; padding: 14px 16px 16px; }
 .fs-mail-done { margin: 0; color: #5a6890; line-height: 1.55; white-space: pre-wrap; }
 #main .fs-mail textarea { border: 0; background: #f6f8fd; box-shadow: none; }
+/* 4.7, retouche : barre de la fenêtre pâle (le bleu nuit reste à la question) ; on écrit DANS l'e-mail, sans case dans la case. */
+.fs-mail-bar { background: #f1f4fa; color: var(--navy); border-bottom: 1px solid #e6ebf5; }
+.fs-mail-bar i { background: #c9d3e8; }
+#main .fs-mail textarea, #main .fs-mail textarea:focus { border: 0; border-radius: 0; background: transparent; box-shadow: none; outline: none; padding: 0; min-height: 0; resize: none; }
+#main .fs-mail .input-wrap { border: 0; box-shadow: none; background: none; padding: 0; }
+#main .fs-mail-line.is-field { align-items: baseline; }
+#main .fs-mail-line.is-field textarea { min-height: 1.6em; }
+#main .fs-mail-body textarea { min-height: 6em; }
+.fs-layout.is-mail .fm-token { background: #fff; color: var(--navy); box-shadow: 0 2px 8px rgb(20 40 100 / 8%); }
+.fs-layout.is-mail .fs-tip { background: none; padding: 0 2px; color: #5a6890; }
+.fs-layout.is-mail .fs-tip .icon { color: #2a8f8f; }
+#main .fs-mail textarea:focus-visible { outline: none; }
