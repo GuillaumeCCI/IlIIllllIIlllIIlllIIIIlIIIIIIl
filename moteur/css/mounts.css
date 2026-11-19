@@ -813,3 +813,7 @@ button.crash-passage:hover { background: #fff1d6; }
 .fm-review-intro.is-folded[open] > summary { margin-bottom: 12px; }
 /* Grille de choix d'un cas (matrix: true). */
 .fm-matrix .k-matrix-text { font-size: 1rem; font-weight: 700; color: var(--navy); }
+/* Écran à étapes allégé (content.lean) : pas de cadre en pointillés ni de phrase d'aide autour du message. */
+.fm-step-wrap.is-lean .fm-skin[data-skin="none"] { border: 0; }
+.fm-step-wrap.is-lean .fm-skin[data-skin="none"] > .sk-none { display: none; }
+.fm-actions-right { display: inline-flex; align-items: center; gap: 10px; }

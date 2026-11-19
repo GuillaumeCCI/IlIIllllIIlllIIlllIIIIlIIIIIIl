@@ -241,10 +241,11 @@ window.ATELIER_S4 = {
   '4.6': {
     eyebrow: 'Exercice 4.6 · Relance',
     title: 'À vous de construire la stratégie !',
-    subtitle: 'Quatre étapes, de la première relance à la clôture.',
+    subtitle: 'Madame Riveau n’a pas répondu à votre offre du 3 juin. Prévoyez trois relances, puis un message de clôture.',
     countLabel: 'étapes complétées',
     caseNoun: 'Étape',
     stepper: true,
+    lean: true,
     welcome: { title: 'Le plan de relance', rows: [
       ['target', 'La situation', 'Madame Riveau est intéressée, mais elle n’a pas répondu depuis l’envoi de l’offre.'],
       ['list', 'Un plan de relance', 'C’est une suite de prises de contact prévues à l’avance : trois relances, puis un message de clôture.'],
@@ -257,7 +258,6 @@ window.ATELIER_S4 = {
         { symbol: 'flag', tone: 'coral', text: 'puis un message de clôture.' }
       ],
       after: 'Une étape remplie se coche.' },
-      { target: '.fm-side-card', title: 'La situation', text: 'Madame Riveau est intéressée mais n’a pas répondu depuis l’envoi de l’offre. Gardez sa situation en tête à chaque étape.' },
       { target: '.fm-step .fm-row', title: 'Quand et par quel canal',
       items: [
         { symbol: 'calendar', tone: 'blue', text: 'Quand ? En jours après l’envoi de l’offre : J+3, J+10…' },
@@ -270,11 +270,7 @@ window.ATELIER_S4 = {
         { symbol: 'target', tone: 'coral', text: 'L’action concrète que vous proposez.' }
       ],
       after: 'La zone d’écriture prend l’apparence du canal choisi : e-mail, appel, rendez-vous…' },
-      { target: '.fm-side-col', title: 'Astuce et ressources',
-      items: [
-        { symbol: 'lightbulb', tone: 'gold', text: 'L’astuce rappelle la bonne pratique.' },
-        { symbol: 'stack', tone: 'blue', text: '« Voir mes 5 ressources » ouvre des idées pour donner de la valeur à chaque relance.' }
-      ] },
+      { target: '.fm-step [data-dialog="resources"]', title: 'Vos ressources', text: '« Voir mes 5 ressources » ouvre des idées pour donner de la valeur à chaque relance.' },
       { target: '.fm-step .fm-actions', title: 'Étape suivante',
       items: [
         { symbol: 'arrowRight', tone: 'blue', text: '« Étape suivante » passe à la relance d’après.' },

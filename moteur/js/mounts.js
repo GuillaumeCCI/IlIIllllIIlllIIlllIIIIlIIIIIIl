@@ -790,7 +790,8 @@
 
     /* La frise d'étapes de l'en-tête (content.stepper), à la place des onglets. */
     function stepper(at) {
-      return `<div class="fm-stepper"><p class="fm-stepper-now">${esc(content.caseNoun || 'Étape')} ${at + 1} sur ${n}</p><p class="fm-stepper-count" data-live="fm-count">${countLine()}</p>
+      // `lean` (écran allégé) : la frise seule, sans « Étape 1 sur 4 » ni le compteur.
+      return `<div class="fm-stepper">${content.lean ? '' : `<p class="fm-stepper-now">${esc(content.caseNoun || 'Étape')} ${at + 1} sur ${n}</p><p class="fm-stepper-count" data-live="fm-count">${countLine()}</p>`}
         <ol>${cases.map((c, i) => `<li class="${i === at ? 'is-current' : ''} ${tabState(i, at)}"><button type="button" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === at ? 'aria-current="step"' : ''} aria-label="${esc(c.tab)} · ${tabLabel(i, at)}"><span class="fm-stepper-dot">${complete(i) ? icon('check', { size: 16 }) : i + 1}</span><span class="fm-stepper-label">${esc(c.tab)}</span></button></li>`).join('')}</ol></div>`;
     }
 
@@ -1010,14 +1011,17 @@
       if (content.stepper) {
         const prev = i > 0 ? `data-act="fm-case" data-index="${i - 1}"` : 'disabled';
         // L'astuce se pose à côté du cadre blanc, sur le fond de la page.
-        return `<div class="fm-step-wrap ${content.tip || content.resources ? 'has-tip' : ''}"><section class="k-panel fm-panel fm-step ${move}">
+        // `lean` : ni carte de contexte, ni colonne d'astuce ; les ressources passent en bouton, en bas.
+        const lean = !!content.lean;
+        const resButton = lean && content.resources ? kit().dialogButton('resources', content.resourcesLabel || 'Mes ressources', 'secondary', 'stack') : '';
+        return `<div class="fm-step-wrap ${!lean && (content.tip || content.resources) ? 'has-tip' : ''} ${lean ? 'is-lean' : ''}"><section class="k-panel fm-panel fm-step ${move}">
           <div class="fm-main">
-            ${content.side ? `<div class="fm-side-card">${scene(content.side)}</div>` : ''}
+            ${content.side && !lean ? `<div class="fm-side-card">${scene(content.side)}</div>` : ''}
             <div class="fm-step-head"><span class="fm-step-n">${String(i + 1).padStart(2, '0')}</span><div><h2 class="fm-step-title">${esc(c.tab)}</h2>${c.intro ? `<p class="fm-intro">${esc(c.intro)}</p>` : ''}</div></div>
             ${content.skin ? fieldRows(i, fields.filter(f => !content.skin.fields.includes(f.id))) + skinBlock(i, fields.filter(f => content.skin.fields.includes(f.id))) : fieldRows(i, fields)}${core().errorsBox()}</div>
           <div class="fm-actions"><button type="button" class="button secondary fm-prev" ${prev}>${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>
-            ${kit().submit(label)}</div>
-        </section>${content.tip || content.resources ? `<aside class="fm-side-col">
+            <span class="fm-actions-right">${resButton}${kit().submit(label)}</span></div>
+        </section>${!lean && (content.tip || content.resources) ? `<aside class="fm-side-col">
           ${content.tip ? `<div class="fm-tip">${icon('lightbulb', { size: 30 })}<p><strong>Astuce :</strong> ${esc(content.tip)}</p></div>` : ''}
           ${content.resources ? `<div class="fm-res"><p class="fm-res-title">${icon('stack', { size: 22 })}<span>${esc(content.resourcesTitle || 'Vos ressources')}</span></p><p class="fm-res-text">${content.resources.length} idées à piocher pour donner de la valeur à chaque relance.</p>${kit().dialogButton('resources', content.resourcesLabel || 'Mes ressources', 'primary', '')}</div>` : ''}
         </aside>` : ''}</div>`;
