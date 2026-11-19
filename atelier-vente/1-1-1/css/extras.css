@@ -647,3 +647,12 @@
 #main .an-review .d-keys p.d-help { color: var(--muted); font-size: .9rem; }
 #main .d-mark { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #f1f3f8; color: #6b7592; font-size: .8rem; font-weight: 800; }
 #main .d-keys li.is-ok .d-mark { background: #e6f4ec; color: #1f6b43; }
+
+/* S1 E1 repris (19/11) : la question en titre, ce qu'il faut écrire dessous,
+ * l'indice en petit bouton à côté ; l'essai oral en bouton doux. */
+#main .e1-ask { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin: 6px 0 6px; }
+#main .e1-ask h2 { margin: 0; color: var(--navy); font-size: clamp(1.35rem, 2vw, 1.7rem); line-height: 1.25; }
+#main .e1-ask > :not(h2) { flex: none; }
+#main .e1-help { margin: 0 0 16px; color: var(--muted); font-size: 1.02rem; line-height: 1.55; max-width: 62ch; }
+#main .oral-practice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 14px; }
+#main .oral-practice .asset-note { margin: 0; }
