@@ -28,6 +28,7 @@
   const total = () => (notes().every(v => v !== '' && v != null) ? notes().reduce((sum, v) => sum + Number(v), 0) : null);
   const totalText = () => `Total : ${total() === null ? '-' : total()} / ${max}`;
   const clock = s => (s >= 60 ? '01:00' : `00:${String(s).padStart(2, '0')}`);
+  const RING = 2 * Math.PI * 88; // périmètre de l'anneau du chrono
 
   /* ── La prise, gardée en mémoire tant que la page est ouverte ──────── */
   let recorder = null;
@@ -81,6 +82,9 @@
       const elapsed = Math.floor((Date.now() - started) / 1000);
       const time = core.$('#rec-time');
       if (time) time.textContent = clock(elapsed);
+      // L'anneau se remplit au fil de la minute.
+      const ring = core.$('.rec-ring-fill');
+      if (ring) ring.style.strokeDashoffset = String(RING * (1 - Math.min(1, (Date.now() - started) / (LIMIT * 1000))));
     }, 250);
     stopper = setTimeout(() => { if (recorder?.state === 'recording') recorder.stop(); }, LIMIT * 1000);
   }
@@ -156,31 +160,47 @@
   }
 
   /* ── Étape 2 : enregistrer ─────────────────────────────────────────── */
+  // Le texte à dire, comme sur un prompteur, avec sa durée estimée et la minute en quatre temps.
+  function scriptPanel() {
+    return `<aside class="k-panel pitch-text">
+        <div class="pitch-text-head"><p class="k-label">Votre texte</p><button type="button" class="text-button with-icon" data-act="to-stage" data-stage="1">${icon('pencil', { size: 15 })}<span>Modifier</span></button></div>
+        <p class="pitch-text-body">${esc(pitch())}</p>
+        <div class="pitch-time">${gauge()}</div>
+        <div class="pitch-bar is-small" aria-hidden="true">${BUDGET.map((sec, i) => `<i class="is-${TONES[i]}" style="flex:${sec}"></i>`).join('')}</div>
+        <p class="pitch-legend">${content.structure.map((item, i) => `<span><i class="pitch-dot is-${TONES[i]}"></i>${esc(item.replace('Un bénéfice + une preuve', 'Bénéfice + preuve'))}</span>`).join('')}</p>
+      </aside>`;
+  }
+
   function recordStep() {
     const kind = format();
     const has = Boolean(takeUrl);
+    const done = has ? Math.min(1, (Number(ex.value('recorded')) || 0) / LIMIT) : 0;
     return `<div class="k-columns pitch-layout is-record">
-      <aside class="k-panel pitch-text">
-        <div class="pitch-text-head"><p class="k-label">Votre texte</p><button type="button" class="text-button with-icon" data-act="to-stage" data-stage="1">${icon('pencil', { size: 15 })}<span>Modifier</span></button></div>
-        <p class="pitch-text-body">${esc(pitch())}</p>
-        <p class="pitch-words">${esc(wordsLine())}</p>
-        <p class="pitch-tone">Accroche · 2 bénéfices prouvés · Conclusion</p>
-      </aside>
+      ${scriptPanel()}
       <form class="k-panel" novalidate>
-        <h2>2. Enregistrez votre pitch</h2>
-        <p class="k-instruction">Choisissez votre format, puis lancez une prise de 60 secondes maximum.</p>
+        <p class="k-ask">À vous : dites votre pitch à voix haute, en une minute.</p>
         <div class="rec-format" role="radiogroup" aria-label="Format">
-          <button type="button" class="rec-format-option ${kind === 'audio' ? 'is-on' : ''}" data-act="format" data-format="audio" role="radio" aria-checked="${kind === 'audio'}">${icon('microphone', { size: 20 })}<span>Audio</span></button>
-          <button type="button" class="rec-format-option ${kind === 'video' ? 'is-on' : ''}" data-act="format" data-format="video" role="radio" aria-checked="${kind === 'video'}">${icon('video', { size: 20 })}<span>Vidéo</span></button>
+          <span class="rec-format-label">Format</span>
+          <button type="button" class="rec-format-option ${kind === 'audio' ? 'is-on' : ''}" data-act="format" data-format="audio" role="radio" aria-checked="${kind === 'audio'}">${icon('microphone', { size: 18 })}<span>Audio</span></button>
+          <button type="button" class="rec-format-option ${kind === 'video' ? 'is-on' : ''}" data-act="format" data-format="video" role="radio" aria-checked="${kind === 'video'}">${icon('video', { size: 18 })}<span>Vidéo</span></button>
         </div>
         <div class="rec-stage">
-          <span class="rec-symbol">${icon(kind === 'video' ? 'video' : 'microphone', { size: 40 })}</span>
+          <div class="rec-dial">
+            <svg class="rec-ring" viewBox="0 0 200 200" aria-hidden="true">
+              <circle cx="100" cy="100" r="88" class="rec-ring-track"/>
+              <circle cx="100" cy="100" r="88" class="rec-ring-fill" style="stroke-dasharray:${RING.toFixed(1)};stroke-dashoffset:${(RING * (1 - done)).toFixed(1)}"/>
+            </svg>
+            <div class="rec-dial-in">
+              <span class="rec-symbol">${icon(kind === 'video' ? 'video' : 'microphone', { size: 24 })}</span>
+              <strong id="rec-time">${has ? clock(Number(ex.value('recorded')) || 0) : '00:00'}</strong>
+              <span class="rec-of">sur 01:00</span>
+            </div>
+          </div>
           <video id="rec-live" class="rec-live" muted playsinline hidden></video>
           <p id="rec-status" role="status">${has ? `Prise ${ex.value('take')} enregistrée` : 'Prêt à enregistrer'}</p>
-          <p class="rec-time"><strong id="rec-time">${has ? clock(Number(ex.value('recorded')) || 0) : '00:00'}</strong><span> / 01:00</span></p>
-          <span class="rec-wave" aria-hidden="true">${Array.from({ length: 48 }, (_, i) => `<i style="height:${6 + ((i * 37) % 22)}px"></i>`).join('')}</span>
+          <span class="rec-wave" aria-hidden="true">${Array.from({ length: 40 }, (_, i) => `<i style="height:${6 + ((i * 37) % 22)}px;animation-delay:${((i % 7) * 0.09).toFixed(2)}s"></i>`).join('')}</span>
           <button type="button" class="button primary rec-button" data-act="record"><span class="rec-dot"></span><span>${has ? 'Refaire une prise' : 'Démarrer l’enregistrement'}</span></button>
-          <p class="k-muted">Le chronomètre s’arrête automatiquement à 60 secondes.</p>
+          <p class="k-muted">L’enregistrement s’arrête de lui-même à 60 secondes.</p>
         </div>
         ${core.errorsBox()}
         ${kit.bar({
@@ -193,25 +213,50 @@
   }
 
   /* ── Étape 3 : s'évaluer ───────────────────────────────────────────── */
+  // Même grille que l'audit du pitch (2.5) : une ligne par critère, trois boutons de note.
+  const NOTE_TONES = ['ko', 'mid', 'ok'];
+  const LEVELS = [['0', 'À retravailler'], ['1', 'En bonne voie'], ['2', 'Maîtrisé']];
+  function scale() {
+    return `<div class="audit-dots" aria-hidden="true">${criteria.map((_, i) => `<i class="${kit.filled(ex.value(`score${i}`)) ? 'is-done' : ''}"></i>`).join('')}</div>
+      <ol class="audit-scale">${criteria.map((c, i) => {
+        const chosen = ex.value(`score${i}`);
+        return `<li class="audit-crit">
+          <span class="audit-crit-num">${i + 1}</span>
+          <span class="audit-crit-text"><strong>${esc(c.title)}</strong><small>${esc(c.text)}</small></span>
+          <span class="audit-notes" role="radiogroup" aria-label="${esc(c.title)}">${LEVELS.map(([id, label], k) => `<label class="audit-note-btn is-${NOTE_TONES[k]}">
+            <input type="radio" name="score${i}" data-field="score${i}" value="${id}" ${chosen === id ? 'checked' : ''}>
+            <b>${id}</b><span>${label}</span>
+          </label>`).join('')}</span>
+        </li>`;
+      }).join('')}</ol>`;
+  }
+  // Une note coche sa pastille, sans rien redessiner.
+  document.addEventListener('change', event => {
+    if (!(event.target.closest && event.target.closest('.audit-crit'))) return;
+    const dots = document.querySelectorAll('.audit-dots i');
+    document.querySelectorAll('.audit-crit').forEach((item, i) => { if (dots[i]) dots[i].classList.toggle('is-done', !!item.querySelector('input:checked')); });
+  });
+
   function evaluateStep() {
     const seconds = Number(ex.value('recorded')) || 0;
     const media = takeUrl
       ? (takeKind === 'video' ? `<video class="rec-player" src="${takeUrl}" controls playsinline></video>` : `<audio class="rec-player" src="${takeUrl}" controls></audio>`)
-      : `<p class="k-muted">${seconds ? 'La prise n’est plus en mémoire : elle s’efface en quittant la page.' : 'Aucune prise enregistrée : évaluez votre lecture à voix haute.'}</p>`;
+      : `<p class="rec-empty">${seconds ? 'La prise n’est plus en mémoire : elle s’efface en quittant la page.' : 'Aucune prise enregistrée : évaluez votre lecture à voix haute.'}</p>`;
     return `<div class="k-columns pitch-layout is-evaluate">
-      <aside class="k-panel">
+      <aside class="k-panel rec-review">
         <p class="k-label">Votre enregistrement</p>
-        ${seconds ? `<p class="k-muted">Prise ${ex.value('take') || 1} · ${ex.value('takeKind') === 'video' ? 'Vidéo' : 'Audio'}</p>` : ''}
-        ${media}
-        ${seconds ? `<p class="rec-duration">Durée : ${seconds} s · ${seconds <= LIMIT ? `<span class="is-ok">Limite respectée ${icon('check', { size: 16 })}</span>` : 'Limite dépassée'}</p>` : ''}
-        ${kit.act('to-stage', `${icon('refresh', { size: 18 })}<span>Refaire une prise</span>`, 'secondary', 'data-stage="2"')}
-        <p class="k-label rec-listen-title">À écouter attentivement</p>
-        <ul class="rec-listen">${content.listen.map(item => `<li>${esc(item)}</li>`).join('')}</ul>
+        <div class="rec-take">
+          ${seconds ? `<p class="rec-take-head"><span>Prise ${ex.value('take') || 1} · ${ex.value('takeKind') === 'video' ? 'Vidéo' : 'Audio'}</span><span class="rec-pill ${seconds <= LIMIT ? 'is-ok' : 'is-over'}">${seconds} s${seconds <= LIMIT ? ' · dans la minute' : ' · trop long'}</span></p>` : ''}
+          ${media}
+          ${kit.act('to-stage', `${icon('refresh', { size: 18 })}<span>${seconds ? 'Refaire une prise' : 'Enregistrer une prise'}</span>`, 'secondary', 'data-stage="2"')}
+        </div>
+        <p class="k-label rec-listen-title">En réécoutant, demandez-vous</p>
+        <ol class="rec-listen">${content.listen.map((item, i) => `<li><span>${i + 1}</span>${esc(item)}</li>`).join('')}</ol>
       </aside>
       <form class="k-panel" novalidate>
-        <h2>3. Auto-évaluez votre prestation</h2>
-        <p class="k-instruction">Réécoutez votre prise, puis attribuez de 0 à 2 points à chaque critère.</p>
-        ${kit.matrix({ key: 'score', rows: criteria, columns: [{ id: '0', label: '0', sub: 'À retravailler' }, { id: '1', label: '1', sub: 'En bonne voie' }, { id: '2', label: '2', sub: 'Maîtrisé' }], head: 'Critère et indicateur', round: true, numbered: false })}
+        <p class="k-ask">Comment jugez-vous votre prise ?</p>
+        <p class="k-instruction">Pour chaque critère, donnez-vous 0, 1 ou 2 points.</p>
+        ${scale()}
         <p class="audit-total" data-live="total">${esc(totalText())}</p>
         ${core.errorsBox()}
         ${kit.bar({ left: kit.back('to-stage-back', 'Réécouter'), right: kit.submit('Valider mon auto-évaluation') })}

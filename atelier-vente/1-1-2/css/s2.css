@@ -314,3 +314,41 @@
 .pitch-gauge-text { color: #5a6890; font-size: .95rem; text-align: right; }
 .pitch-gauge-text strong { color: var(--navy); }
 .pitch-gauge.is-over + .pitch-gauge-text { color: #a83d74; }
+/* 2.6 · Étape 2 : le texte comme sur un prompteur, l'enregistreur à anneau. */
+.pitch-layout.is-record .pitch-text-body { min-height: 200px; margin: 10px 0 4px; padding: 16px 18px; border: 0; border-radius: 12px; background: #f6f8fd; font-size: 1.08rem; line-height: 1.6; }
+.pitch-bar.is-small { height: 6px; margin-top: 14px; }
+.pitch-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 8px 0 0; color: #5a6890; font-size: .88rem; }
+.pitch-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.pitch-legend .pitch-dot { width: 9px; height: 9px; }
+.pitch-layout.is-record .rec-format { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 4px 0 14px; border: 0; overflow: visible; }
+.rec-format-label { color: #5a6890; font-weight: 600; margin-right: 4px; }
+.pitch-layout.is-record .rec-format-option { padding: 8px 18px; border-radius: 99px; background: #fff; box-shadow: 0 3px 10px rgb(20 40 100 / 8%); }
+.pitch-layout.is-record .rec-format-option.is-on { background: #1b2370; color: #fff; }
+.pitch-layout.is-record .rec-stage { gap: 10px; padding: 22px 18px 18px; border: 0; border-radius: 16px; background: #f6f8fd; }
+.rec-dial { position: relative; width: 190px; height: 190px; }
+.rec-ring { width: 100%; height: 100%; transform: rotate(-90deg); }
+.rec-ring-track { fill: #fff; stroke: #e1e7f3; stroke-width: 10; }
+.rec-ring-fill { fill: none; stroke: #2a8f8f; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset .25s linear; }
+.rec-stage.is-recording .rec-ring-fill { stroke: #a83d74; }
+.rec-dial-in { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 2px; }
+.rec-dial-in strong { font-size: 2.3rem; color: var(--navy); font-variant-numeric: tabular-nums; line-height: 1; }
+.rec-of { color: #7a86a8; font-size: .9rem; }
+.pitch-layout.is-record .rec-symbol { width: 44px; height: 44px; margin-bottom: 4px; background: #eef3fb; animation: none; transform: none; }
+.rec-stage.is-recording .rec-symbol { background: #f8edf3; color: #a83d74; }
+#rec-status { margin: 0; color: var(--navy); font-weight: 600; }
+.rec-stage.is-recording #rec-status { color: #a83d74; }
+.rec-stage.is-recording .rec-wave i { background: #a83d74; animation: rec-bar .7s ease-in-out infinite alternate; }
+@keyframes rec-bar { to { transform: scaleY(.35); } }
+.pitch-layout.is-record .rec-dot { background: #fff; box-shadow: inset 0 0 0 4px #a83d74; }
+/* 2.6 · Étape 3 : la prise à réécouter, les questions, la grille en lignes. */
+.rec-take { display: grid; gap: 10px; padding: 14px; border-radius: 14px; background: #f6f8fd; }
+.rec-take-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 0; color: var(--navy); font-weight: 600; }
+.rec-pill { padding: 3px 10px; border-radius: 99px; font-size: .85rem; font-weight: 700; }
+.rec-pill.is-ok { background: #edf6f6; color: #2a8f8f; }
+.rec-pill.is-over { background: #f8edf3; color: #a83d74; }
+.rec-review .rec-player { margin: 0; }
+.rec-empty { margin: 0; color: #5a6890; }
+.rec-review .rec-listen-title { border-top: 0; padding-top: 0; margin-top: 20px; }
+.rec-review .rec-listen { gap: 10px; }
+.rec-review .rec-listen li { display: flex; align-items: center; gap: 10px; }
+.rec-review .rec-listen li span { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%; background: #edf6f6; color: #2a8f8f; font-weight: 800; font-size: .85rem; }
