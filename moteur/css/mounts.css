@@ -839,3 +839,4 @@ button.crash-passage:hover { background: #fff1d6; }
 /* Barres de fenêtre (e-mail, messagerie) : bleu nuit, comme l'e-mail dessiné (mailView) ; pastilles blanches translucides. */
 .fm-step-wrap.is-lean .fm-skin[data-skin] .sk-bar { background: #1b2370; color: #fff; }
 .fm-step-wrap.is-lean .fm-skin[data-skin] .sk-bar i, .fm-step-wrap.is-lean .fm-skin[data-skin] .sk-bar i:nth-child(n) { background: rgb(255 255 255 / 35%); }
+#main .fm-ask-line { margin: 0 0 6px; color: #5a6890; }
