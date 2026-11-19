@@ -69,10 +69,10 @@
 
   function reviewScreen() {
     return `${ouvert.head('s4-4.3')}<section class="k-panel vf-review">
-      <h2>Vos éléments de valeur</h2>
-      <p class="k-muted">Comparez chacun de vos éléments à une piste possible.</p>
+      <h2>Vos trois idées</h2>
+      <p class="k-muted">Comparez chacune de vos idées à une piste possible.</p>
       ${fields.map((f, i) => `<div class="vf-review-row"><p class="k-label">${esc(f.label)}</p>
-        ${ouvert.answer('s4-4.3', i, { title: 'Votre élément', text: ex.value(key(f)), model: f.model })}</div>`).join('')}
+        ${ouvert.answer('s4-4.3', i, { title: 'Votre idée', text: ex.value(key(f)), model: f.model })}</div>`).join('')}
       ${kase.lesson ? ex.inlineNote(kase.lesson, 'neutral') : ''}
     </section>
     ${core.feedbackBox()}<div class="k-utility">${kit.reset()}</div>`;
@@ -89,13 +89,13 @@
       ${reviewing ? reviewScreen() : `<div class="vf-layout">
         ${contextPanel()}
         <form class="k-panel vf-main" novalidate>
-          <p class="k-ask">Qu’apportez-vous de nouveau ou d’utile à Madame Riveau ? Trouvez trois idées.</p>
+          <p class="k-ask">Qu’apportez-vous de nouveau ou d’utile à Madame Riveau ?</p>
           <ol class="vf-acc">${fields.map((f, i) => item(f, i, at)).join('')}</ol>
           ${core.errorsBox()}
           <div class="vf-actions">${kit.dialogButton('hint', 'Voir un indice', 'secondary', 'lightbulb')}${kit.submit(doneCount() >= n - 1 && !done(at) || doneCount() === n ? content.submitLabel : 'Enregistrer et passer au suivant')}</div>
         </form>
       </div>`}
-      ${reviewing ? '' : kit.utility('Pistes possibles après les 3 éléments')}
+      ${reviewing ? '' : kit.utility('Pistes possibles après les 3 idées')}
     </div>`;
   }
 

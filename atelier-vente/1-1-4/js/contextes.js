@@ -125,11 +125,11 @@ window.ATELIER_CONTEXTES = {
     ]
   },
   's4-4.3': {
-    title: 'Trouver l’élément de valeur',
+    title: 'Une bonne raison de répondre',
     rows: [
-      ['users', 'La situation', 'L’offre Ergolys pour 10 postes complets a été envoyée il y a une semaine. Le client n’a pas répondu.'],
-      ['pencil', 'Ce qui vous est demandé', 'Trouvez trois éléments de valeur à apporter dans une relance.'],
-      ['list', 'Comment faire', 'Chaque élément apporte quelque chose de nouveau ou d’utile au client.'],
+      ['users', 'La situation', 'L’offre Ergolys pour 10 postes complets a été envoyée il y a une semaine. Madame Riveau n’a pas répondu.'],
+      ['pencil', 'Ce qui vous est demandé', 'Écrire trois idées à dire à Madame Riveau dans une relance : à chaque fois, quelque chose de nouveau ou d’utile pour elle, pas une simple demande de nouvelles.'],
+      ['list', 'Par exemple', 'Un résultat obtenu chez un client de son secteur, une option qui allège le budget, une aide pour convaincre sa direction.'],
       ['target', 'Ce qui compte', ['Trois idées distinctes', 'Utiles du point de vue du client']]
     ]
   },

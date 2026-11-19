@@ -91,9 +91,9 @@ window.ATELIER_S4 = {
   /* ── 4.3 · Trouver l'élément de valeur ──────────────────────────────── */
   '4.3': {
     eyebrow: 'Exercice 4.3 · Relance',
-    title: 'Trouver l’élément de valeur',
-    subtitle: 'Pour chaque idée, apportez quelque chose de nouveau ou d’utile au client.',
-    countLabel: 'éléments rédigés',
+    title: 'Une bonne raison de répondre',
+    subtitle: 'Trois idées pour relancer Madame Riveau sans simplement lui demander des nouvelles.',
+    countLabel: 'idées écrites',
     // Écran propre (js/screens/s4-4-3.js) : le contexte à gauche, les trois
     // éléments en accordéon à droite.
     context: {
@@ -107,9 +107,9 @@ window.ATELIER_S4 = {
       ]
     },
     subs: [
-      'Une information concrète que le client n’a pas encore.',
-      'Une autre raison, différente de la première, de reprendre l’échange.',
-      'Une idée qui l’aide à avancer dans sa décision.'
+      'Écrivez la phrase que vous lui diriez : une information concrète qu’elle n’a pas encore.',
+      'Une autre raison de reprendre l’échange, différente de la première.',
+      'Quelque chose qui l’aide à décider, par exemple à convaincre sa direction.'
     ],
     // L'indice : des amorces de phrases concrètes, puis la règle d'or.
     hint: {
@@ -123,24 +123,24 @@ window.ATELIER_S4 = {
       rule: 'Ne relancez pas « juste pour prendre des nouvelles ». Apportez une information nouvelle (un chiffre, une évolution) qui aide le client à avancer.'
     },
     tour: [
-      { target: '.vf-context', title: 'Le contexte', text: 'Gardez-le en tête : chaque élément doit donner à ce client une bonne raison de reprendre l’échange.' },
-      { target: '.vf-item.is-open', title: 'Un élément à la fois', text: 'Rédigez l’élément ouvert, comme une phrase que vous écririez au client.',
+      { target: '.vf-context', title: 'Le contexte', text: 'Gardez-le en tête : chaque idée doit donner à Madame Riveau une bonne raison de vous répondre.' },
+      { target: '.vf-item.is-open', title: 'Une idée à la fois', text: 'Écrivez votre idée telle que vous la diriez à Madame Riveau : une information nouvelle ou utile pour elle, par exemple un résultat obtenu chez un client comme elle.',
         items: [
-          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur un autre élément pour l’ouvrir.' },
-          { symbol: 'check', tone: 'green', text: 'Un élément rédigé est coché.' }
+          { symbol: 'pointer', tone: 'blue', text: 'Cliquez sur l’idée 2 ou 3 pour l’ouvrir.' },
+          { symbol: 'check', tone: 'green', text: 'Une idée écrite est cochée.' }
         ] },
-      { target: '.vf-actions .k-dialog-button', title: 'Un indice', text: 'À court d’idées ? Ce bouton propose des pistes et un repère pour trouver un élément qui compte pour le client.' },
-      { target: '.vf-actions .k-submit', title: 'Enregistrer', text: 'Il passe à l’élément suivant. Après le troisième, des pistes possibles s’affichent dans le corrigé.' }
+      { target: '.vf-actions .k-dialog-button', title: 'Un indice', text: 'À court d’idées ? Ce bouton propose des pistes et un repère pour trouver ce qui compte pour elle.' },
+      { target: '.vf-actions .k-submit', title: 'Enregistrer', text: 'Il passe à l’idée suivante. Après la troisième, des pistes possibles s’affichent dans le corrigé.' }
     ],
     cases: [
-      { tab: 'Mes 3 éléments de valeur', fields: [
-        { id: 'v1', label: 'Élément 1', placeholder: 'Rédigez votre premier élément de valeur…', rows: 2, model: 'Une entreprise de votre secteur nous a donné ses chiffres : ses arrêts liés au mal de dos ont baissé depuis qu’elle est équipée.' },
-        { id: 'v2', label: 'Élément 2', placeholder: 'Rédigez votre deuxième élément de valeur…', rows: 2, model: 'L’essai gratuit de 30 jours prolongé se termine à la fin du mois, et il nous reste un créneau d’installation avant cette date.' },
-        { id: 'v3', label: 'Élément 3', placeholder: 'Rédigez votre troisième élément de valeur…', rows: 2, model: 'Bonne nouvelle : le siège existe maintenant dans un nouveau coloris, la location est possible pour étaler le budget, et nous offrons l’étude ergonomique.' }
+      { tab: 'Mes 3 idées', fields: [
+        { id: 'v1', label: 'Idée 1', placeholder: 'Ex. : Un client de votre secteur a constaté…', rows: 2, model: 'Une entreprise de votre secteur nous a donné ses chiffres : ses arrêts liés au mal de dos ont baissé depuis qu’elle est équipée.' },
+        { id: 'v2', label: 'Idée 2', placeholder: 'Votre deuxième idée…', rows: 2, model: 'L’essai gratuit de 30 jours prolongé se termine à la fin du mois, et il nous reste un créneau d’installation avant cette date.' },
+        { id: 'v3', label: 'Idée 3', placeholder: 'Votre troisième idée…', rows: 2, model: 'Bonne nouvelle : le siège existe maintenant dans un nouveau coloris, la location est possible pour étaler le budget, et nous offrons l’étude ergonomique.' }
       ], lesson: 'Autre piste du corrigé : une proposition d’aide, comme un diagnostic gratuit de 2 ou 3 postes pour objectiver le besoin. Toute proposition pertinente est valable.' }
     ],
-    submitLabel: 'Enregistrer mes 3 éléments',
-    feedback: 'Chacun de vos éléments donne-t-il au client une raison nouvelle de reprendre l’échange ?'
+    submitLabel: 'Enregistrer mes 3 idées',
+    feedback: 'Chacune de vos idées donne-t-elle au client une raison nouvelle de reprendre l’échange ?'
   },
 
   /* ── 4.4 · Analyser une relance à jeter ─────────────────────────────── */

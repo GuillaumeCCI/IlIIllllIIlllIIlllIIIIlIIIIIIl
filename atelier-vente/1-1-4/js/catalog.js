@@ -81,7 +81,7 @@ window.ATELIER_CATALOG = {
       exercises: [
         { id: '4.1', file: 's4-4-1', label: 'Le Vrai / Faux de la relance', thumb: 'assets/illustrations/s4/accueil/4-1.webp', theme: 'blue', mount: 'deck', background: 'assets/backgrounds/s4/1-1-4-S4-4-1.webp' },
         { id: '4.2', file: 's4-4-2', label: 'L’anatomie d’une relance', thumb: 'assets/illustrations/s4/accueil/4-2.webp', theme: 'blue', mount: 'match', background: 'assets/backgrounds/s4/1-1-4-S4-4-2.webp' },
-        { id: '4.3', file: 's4-4-3', label: 'Trouver l’élément de valeur', thumb: 'assets/illustrations/s4/accueil/4-3.webp', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s4/1-1-4-S4-4-3.webp' },
+        { id: '4.3', file: 's4-4-3', label: 'Une bonne raison de répondre', thumb: 'assets/illustrations/s4/accueil/4-3.webp', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s4/1-1-4-S4-4-3.webp' },
         { id: '4.4', file: 's4-4-4', label: 'Analyser une relance à jeter', thumb: 'assets/illustrations/s4/accueil/4-4.webp', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s4/1-1-4-S4-4-4.webp' },
         { id: '4.5', file: 's4-4-5', label: 'À vous de trancher !', thumb: 'assets/illustrations/s4/accueil/4-5.webp', theme: 'blue', mount: 'compare', background: 'assets/backgrounds/s4/1-1-4-S4-4-5.webp' },
         { id: '4.6', file: 's4-4-6', label: 'Construire la stratégie', thumb: 'assets/illustrations/s4/accueil/4-6.webp', theme: 'blue', mount: 'form', background: 'assets/backgrounds/s4/1-1-4-S4-4-6.webp' },

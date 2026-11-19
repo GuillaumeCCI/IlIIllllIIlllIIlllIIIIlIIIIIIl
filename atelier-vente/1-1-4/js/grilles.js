@@ -773,7 +773,7 @@
 
     // S4 4.3 · Trois éléments de valeur pour relancer Madame Riveau.
     // Une idée notée suffit : on ne compte pas les phrases complètes.
-    's4-4.3': { integre: true, blocs: ['Élément 1', 'Élément 2', 'Élément 3'].map((titre, i) => ({
+    's4-4.3': { integre: true, blocs: ['Idée 1', 'Idée 2', 'Idée 3'].map((titre, i) => ({
       titre, champs: [`c0_v${i + 1}`],
       criteres: [
         { nom: 'Un élément nouveau ou utile', points: 3, mots: VALEUR_RELANCE, conseil: 'Apportez du neuf : un résultat client, une option, une échéance, une aide…' },
