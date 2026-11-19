@@ -181,7 +181,7 @@
   const timerWidget = () => `<div class="timer-widget">
     <div class="timer-face" role="timer" aria-label="Temps restant">${icon('clock', { size: 19 })}<strong id="timer-value">00:40</strong></div>
     <div class="timer-description"><h3>Test oral</h3><p class="muted" id="timer-description">Lancez le chrono lorsque vous êtes prêt.</p><small>Lecture à voix haute, sans enregistrement.</small></div>
-    <div class="timer-actions">${core.button('Tester à voix haute', 'timer', 'secondary', 'id="timer-button"')}${core.button('Recommencer', 'reset-timer', 'text-button small')}</div>
+    <div class="timer-actions">${core.button('Tester à voix haute', 'timer', 'secondary', 'id="timer-button"')}${core.button('Recommencer', 'reset-timer', 'soft-button')}</div>
     <span id="timer-announcement" class="sr-only" role="status"></span>
   </div>`;
 

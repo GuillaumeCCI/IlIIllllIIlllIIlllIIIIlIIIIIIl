@@ -1062,3 +1062,7 @@ html { background-color: #fbf8f2; }
 #main .ana-marks-legend, #main .an-review p.ana-marks-legend { display: block; margin: 0; color: var(--muted, #6b7592); font-size: .82rem; line-height: 1.5; }
 #main .an-review p.ana-marks-title { font-size: .76rem; }
 #main .an-review p.ana-marks-title b { font-size: .84rem; }
+
+/* Le chrono posé dans une carte de réponse : à plat, sur fond pâle (un seul cadre). */
+#main .e1-answer .timer-widget { box-shadow: none; border: 0; background: #f6f8fc; }
+#main .timer-actions .soft-button { min-height: 34px; padding: 6px 14px; font-size: .86rem; }

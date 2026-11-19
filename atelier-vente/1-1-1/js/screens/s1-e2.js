@@ -24,23 +24,23 @@
   const SCALE = [{ id: '2', label: 'Oui' }, { id: '1', label: 'En partie' }, { id: '0', label: 'Pas encore' }];
   const selfStage = () => ex.value('stage') === 'self';
 
+  /* Le gabarit validé le 19/11 (S1 E1) : à droite, dans une carte blanche,
+   * la question en titre, une phrase qui dit quoi écrire, le champ. */
   function writePanel() {
-    return `${core.panelTitle('Votre proposition')}
-        <p class="muted">Rédigez votre ouverture, puis testez-la à voix haute.</p>
-        <div class="k-field-head"><p class="k-field-label" aria-hidden="true">Votre ouverture · 90 mots maximum</p>${core.hintBlock(content.hints.E2)}</div>
-        ${ex.field('proposal', 'Votre ouverture', { placeholder: 'Écrivez ici votre ouverture…', wordLimit: '90', max: 2000, rows: 6, hideLabel: true })}
+    return `<div class="e1-ask"><h2>Que lui dites-vous pendant ces 40 secondes ?</h2>${core.hintBlock(content.hints.E2)}</div>
+        <p class="e1-help">Écrivez votre ouverture telle que vous la diriez, en 90 mots au plus : qui vous êtes, ce qu’elle peut y gagner, et ce que vous lui proposez pour la suite. Testez-la ensuite à voix haute avec le chrono.</p>
+        ${ex.field('proposal', 'Votre ouverture', { placeholder: 'Votre ouverture…', wordLimit: '90', max: 2000, rows: 6, hideLabel: true })}
         ${media.timerWidget()}
         ${core.errorsBox()}
         ${ex.actions('Passer à l’auto-évaluation')}`;
   }
 
   function selfPanel() {
-    return `${core.panelTitle('Auto-évaluation')}
-        <p class="muted">Relisez votre ouverture.</p>
+    return `<div class="e1-ask"><h2>Votre ouverture contient-elle ces trois éléments ?</h2></div>
+        <p class="e1-help">Relisez-la, puis répondez pour chaque élément : oui, en partie ou pas encore.</p>
         <blockquote class="self-reread">« ${esc(ex.value('proposal'))} »</blockquote>
-        <p class="self-question">Votre ouverture contient-elle ces trois éléments ?</p>
-        ${kit.matrix({ key: 'self', rows: SELF, columns: SCALE, head: 'Critère', round: true })}
-        <p><button type="button" class="text-button with-icon" data-act="e2-back">${icon('arrowLeft', { size: 16 })}<span>Revenir à mon ouverture</span></button></p>
+        ${kit.matrix({ key: 'self', rows: SELF, columns: SCALE, head: 'Ce qu’elle doit contenir', round: true })}
+        <p>${core.button(`${icon('arrowLeft', { size: 16 })}<span>Revenir à mon ouverture</span>`, '', 'soft-button with-icon', 'data-act="e2-back"').replace(' data-action=""', '')}</p>
         ${core.errorsBox()}
         ${ex.actions('Valider mon auto-évaluation')}`;
   }
@@ -71,16 +71,12 @@
   function screen() {
     if (ex.reviewing()) return reviewScreen();
     const current = core.findExercise('s1-E2');
-    return `${corner()}${core.pageTitle('', 'L’ultimatum', 'Vous avez 40 secondes pour donner envie au client de poursuivre.')}
-    ${core.mission('Votre défi', 'Allez à l’essentiel sans sacrifier le climat, le cadrage ni l’écoute.')}
-    <div class="two-columns ultimatum">
-      <section class="panel context-panel">
-        ${core.illustration(current)}
-        <span class="tag rose">Ouverture orale</span>
-        <h2>Le contexte</h2>
-        <p class="panel-intro">Vous êtes commercial chez Ergolys, qui vend des sièges de bureau ergonomiques. La gérante d’une entreprise de 40 salariés vous reçoit entre deux réunions. Après 40 secondes, elle choisit : vous accorder un rendez-vous de 10 minutes, ou s’arrêter là.</p>
+    return `${corner()}<div class="e1-layout">
+      <section class="e1-scene">
+        ${core.pageTitle('Mise en situation', 'L’ultimatum', 'Vous êtes commercial chez Ergolys, qui vend des sièges de bureau ergonomiques. La gérante d’une entreprise de 40 salariés vous reçoit entre deux réunions : après 40 secondes, elle vous accorde un rendez-vous de 10 minutes, ou elle s’arrête là.')}
+        <div class="e2-art">${core.illustration(current)}</div>
       </section>
-      <form class="panel answer-panel" novalidate>
+      <form class="e1-answer" data-bar-stays novalidate>
         ${selfStage() ? selfPanel() : writePanel()}
         ${core.feedbackBox()}
       </form>
@@ -103,7 +99,7 @@
   }
 
   /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
-  const feedback = () => [];
+  const feedback = () => ['À retenir : quand le temps manque, gardez l’essentiel : qui vous êtes, ce que le client y gagne, et la suite que vous proposez.'];
 
   function onMount() {
     media.resetTimer();
@@ -126,7 +122,7 @@
       ['checkCircle', 'Ensuite', 'Le corrigé s’affiche, avec votre score. Vous pouvez encore revenir à votre ouverture avant de valider.']
     ]);
     kit.tour('s1-E2', [
-      { target: '.answer-panel .field', title: 'Votre ouverture', text: 'Écrivez-la comme vous la diriez : 90 mots au plus, soit environ 40 secondes à l’oral.',
+      { target: '.e1-answer .field', title: 'Votre ouverture', text: 'Écrivez-la comme vous la diriez : 90 mots au plus, soit environ 40 secondes à l’oral.',
         items: [
           { symbol: 'lightbulb', tone: 'gold', text: '« Voir un indice » rappelle ce qu’elle doit contenir.' }
         ] },

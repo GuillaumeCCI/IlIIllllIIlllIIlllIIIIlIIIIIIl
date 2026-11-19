@@ -665,3 +665,6 @@
 #main .e1-answer .field, #main .e1-answer .field .field-shell, #main .e1-answer .field textarea { box-shadow: none; border-color: transparent; }
 #main .e1-answer .field textarea { background: #f6f8fc; border-radius: 14px; }
 #main .e1-answer .field textarea:focus { background: #fff; box-shadow: 0 0 0 2px #c9d6f5; }
+
+/* S1 E2 : l’image de la scène, entière, coins arrondis. */
+#main .e2-art img { display: block; width: 100%; border-radius: 22px; }
