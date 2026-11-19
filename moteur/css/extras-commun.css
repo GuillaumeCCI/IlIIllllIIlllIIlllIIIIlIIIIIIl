@@ -1118,3 +1118,11 @@ html { background-color: #fbf8f2; }
 /* Le bandeau du trieur, serré : la page doit garder son décor (au-delà de
  * 1,3 écran, le moteur passe au fond uni). */
 #main .sorter .k-ask { margin: 10px auto 10px; padding: 12px 18px; font-size: 1.05rem; }
+
+/* LES CARTES DU TRIEUR DÉCORÉES (19/11, comme les cartes validées en
+ * 1-2-2) : la carte à classer avec les taches d'aquarelle dans les coins,
+ * les cartes de réponse avec le feuillage en bas à droite. */
+#main .sorter-card { overflow: hidden; padding-left: 96px; padding-right: 96px; background: url('../assets/illustrations/fenetre-coin-hg.webp') left top / auto 70px no-repeat, url('../assets/illustrations/fenetre-coin-bd.webp') right bottom / auto 96px no-repeat, #fff; }
+@media (max-width: 720px) { #main .sorter-card { padding-left: 28px; padding-right: 28px; background-size: auto 46px, auto 60px; } }
+#main .sorter-choices:not(.count-2) .sorter-choice:not(.tone-good):not(.tone-bad) { padding-right: 84px; background: url('../assets/illustrations/carte-deco-droite.webp') right bottom / auto 56px no-repeat, #fbfaf7; }
+#main .sorter-choices:not(.count-2) .sorter-choice.is-chosen:not(.tone-good):not(.tone-bad) { background: url('../assets/illustrations/carte-deco-droite.webp') right bottom / auto 56px no-repeat, #eef3ff; }
