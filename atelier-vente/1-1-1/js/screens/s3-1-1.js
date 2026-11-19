@@ -39,7 +39,7 @@
           intro: 'Huit façons de réagir à une objection, une par carte.',
           ask: 'Face à une objection, cette façon de réagir est-elle un bon réflexe, ou est-elle à éviter ?',
           hint: 'Choisissez une réponse pour passer à la carte suivante.',
-          lock: `La correction apparaît après les ${cards.length} cartes.`
+          lock: 'Le corrigé s’affiche après la dernière carte.'
         });
   }
 

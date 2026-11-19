@@ -1126,3 +1126,16 @@ html { background-color: #fbf8f2; }
 @media (max-width: 720px) { #main .sorter-card { padding-left: 28px; padding-right: 28px; background-size: auto 46px, auto 60px; } }
 #main .sorter-choices:not(.count-2) .sorter-choice:not(.tone-good):not(.tone-bad) { padding-right: 84px; background: url('../assets/illustrations/carte-deco-droite.webp') right bottom / auto 56px no-repeat, #fbfaf7; }
 #main .sorter-choices:not(.count-2) .sorter-choice.is-chosen:not(.tone-good):not(.tone-bad) { background: url('../assets/illustrations/carte-deco-droite.webp') right bottom / auto 56px no-repeat, #eef3ff; }
+
+/* L'ÉCRAN CARTE PAR CARTE, en-tête et pied repris (19/11) : « Le contexte »
+ * en haut à droite ; la parole du client en bulle ; l'avancement sur la
+ * carte (étiquette + pastilles) ; le corrigé annoncé en petit sur la carte. */
+#main .sorter.is-card-screen .sorter-head { position: relative; margin-bottom: 18px; }
+#main .sorter.is-card-screen .sorter-head .k-context-float { position: absolute; top: 0; right: 0; margin: 0; }
+#main .sorter-quote { display: inline-block; max-width: 760px; margin: 12px auto 0; padding: 12px 22px; border-radius: 18px 18px 18px 4px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 8%); color: var(--navy, #1b2370); font-size: 1.05rem; font-weight: 600; line-height: 1.45; text-align: left; }
+#main .sorter-quote-who { display: block; margin-bottom: 2px; color: var(--muted, #6b7592); font-size: .74rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+#main .sorter-card-top { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px; }
+#main .sorter-card-top .sorter-card-tag { margin: 0; }
+#main .sorter-card-top .sorter-dots { display: inline-flex; gap: 6px; }
+#main .sorter-card-lock { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 14px 0 0; color: var(--muted, #6b7592); font-size: .82rem; }
+@media (max-width: 720px) { #main .sorter.is-card-screen .sorter-head .k-context-float { position: static; margin-top: 8px; } }

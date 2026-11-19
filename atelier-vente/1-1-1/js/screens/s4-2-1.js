@@ -40,10 +40,11 @@
           ...common,
           eyebrow: content.eyebrow,
           title: 'Associer les attitudes',
-          intro: `Le client vous dit : « ${content.clientSays} »`,
+          intro: '',
+          quote: { who: 'Le client vous dit', text: content.clientSays },
           ask: 'Avec cette réponse, quelle attitude le vendeur adopte-t-il ?',
           hint: 'Choisissez une attitude pour passer à la carte suivante.',
-          lock: `Le corrigé apparaîtra après validation des ${cards.length} cartes.`
+          lock: 'Le corrigé s’affiche après la dernière carte.'
         });
   }
 

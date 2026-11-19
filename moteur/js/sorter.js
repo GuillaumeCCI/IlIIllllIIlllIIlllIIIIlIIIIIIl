@@ -29,10 +29,13 @@
    *   eyebrow, title, intro           l'en-tête
    *   hint                            la ligne d'aide sous les boutons
    *   ask                             la question en bandeau bleu nuit, face aux réponses (texte, ou fonction (carte, i))
-   *   lock                            ce que la validation débloquera
+   *   lock                            ce que la validation débloquera (dit en petit sur la carte)
+   *   quote    { who, text }          une parole, dans une bulle sous le titre
+   * Repris le 19/11 : plus de compteur ni de lignes d'aide isolées ;
+   * l'avancement (« Carte 1 sur 6 » et ses pastilles) est sur la carte.
    */
   function cardScreen(options) {
-    const { cards, choices, placement, eyebrow, title, intro, hint = '', lock = '', ask = '' } = options;
+    const { cards, choices, placement, eyebrow, title, intro, hint = '', lock = '', ask = '', quote = null } = options;
     const { esc, icon } = core();
     const index = Math.min(ex().cursor(), cards.length - 1);
     const card = cards[index];
@@ -55,30 +58,27 @@
         <span class="sorter-choice-label">${esc(choice.label)}</span>
       </button>`).join('');
 
-    return `<div class="sorter">
+    void done; void hint;
+    return `<div class="sorter is-card-screen">
       <header class="sorter-head">
         <p class="eyebrow">${esc(eyebrow)}</p>
         <h1>${esc(title)}</h1>
         ${intro ? `<p class="subtitle">${esc(intro)}</p>` : ''}
-        <div class="sorter-progress">
-          <span class="sorter-dots">${dots}</span>
-          <span class="sorter-count">${String(index + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}</span>
-          <span class="sorter-done">${done} classée${done > 1 ? 's' : ''}</span>
-        </div>
+        ${quote ? `<blockquote class="sorter-quote"><span class="sorter-quote-who">${esc(quote.who || 'Le client vous dit')}</span>« ${esc(quote.text)} »</blockquote>` : ''}
       </header>
 
       <article class="sorter-card">
-        <span class="sorter-card-tag">Carte ${String(index + 1).padStart(2, '0')}</span>
+        <div class="sorter-card-top">
+          <span class="sorter-card-tag">Carte ${index + 1} sur ${cards.length}</span>
+          <span class="sorter-dots">${dots}</span>
+        </div>
         <p class="sorter-card-text">${esc(card.text)}</p>
+        ${lock ? `<p class="sorter-card-lock">${icon('lock', { size: 13 })}<span>${esc(lock)}</span></p>` : ''}
       </article>
 
       ${ask ? `<p class="k-ask">${esc(typeof ask === 'function' ? ask(card, index) : ask)}</p>` : ''}
       <div class="sorter-choices count-${choices.length}">${buttons}</div>
-      ${hint ? `<p class="sorter-hint">${esc(hint)}</p>` : ''}
-      <div class="sorter-foot">
-        ${briefLink()}
-        ${lock ? `<p class="sorter-lock">${icon('lock', { size: 15 })}<span>${esc(lock)}</span></p>` : ''}
-      </div>
+      ${briefLink() ? `<div class="sorter-foot">${briefLink()}</div>` : ''}
     </div>`;
   }
 
