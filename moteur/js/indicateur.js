@@ -423,16 +423,18 @@
   // montre lui-même la réponse (`withText: false`) ne garde que les coches.
   const met = bloc => bloc.lines.filter(item => item.kind === 'ok').length;
   const expected = bloc => bloc.lines.filter(item => item.kind !== 'warn').length;
-  /* Ce qu'on attend : de petites pastilles (corrigé en lignes validé en
-   * 1-2-1), le conseil dans une bulle au survol ou au clavier. */
-  const pill = item => {
+  /* Ce qu'on attend : une liste, une ligne par élément, un rond vert ✓ ou
+   * gris ○, et le conseil écrit en gris sous chaque élément manquant
+   * (choisie par l'utilisateur le 19/11 parmi trois maquettes ; les
+   * pastilles avec conseil au survol n'étaient « pas assez claires »). */
+  const KIND_SAID = { ok: 'trouvé', part: 'en partie', miss: 'pas trouvé', warn: 'à éviter' };
+  const check = item => {
     const tip = detailOf(item);
-    return `<li class="is-${item.kind}"${tip ? ` tabindex="0" data-tip="${esc(tip)}"` : ''}><span aria-hidden="true">${SYMBOL[item.kind]}</span>${esc(item.nom)}${tip ? `<span class="sr-only"> : ${esc(tip)}</span>` : ''}</li>`;
+    return `<li class="is-${item.kind}"><span class="ana-check-mark" aria-hidden="true">${SYMBOL[item.kind]}</span><div><p class="ana-check-name">${esc(item.nom)}<span class="sr-only"> : ${KIND_SAID[item.kind] || ''}</span></p>${tip ? `<p class="ana-check-tip">${esc(tip)}</p>` : ''}</div></li>`;
   };
   const lines = (bloc, { withText = true } = {}) => `${withText && bloc.marks.length ? `<p class="ana-text">${highlighted(bloc.text, bloc.marks)}</p>` : ''}
         <p class="ana-marks-title">Ce qu’on attendait dans votre réponse <b>· ${met(bloc)} sur ${expected(bloc)} trouvé${met(bloc) > 1 ? 's' : ''}</b></p>
-        <p class="ana-marks-legend"><span class="is-ok">✓ trouvé</span> · <span class="is-miss">○ pas trouvé</span>${bloc.lines.some(item => item.kind === 'warn') ? ' · <span class="is-warn">! à éviter</span>' : ''} · <span>un conseil au survol</span></p>
-        <ul class="ana-marks" aria-label="Ce qu’on attendait dans votre réponse : ${met(bloc)} sur ${expected(bloc)} trouvés">${bloc.lines.map(pill).join('')}</ul>`;
+        <ul class="ana-checks">${bloc.lines.map(check).join('')}</ul>`;
 
   // La réponse de l'apprenant, mots repérés surlignés (sans repère : telle quelle).
   const answer = bloc => highlighted(bloc.text, bloc.marks);

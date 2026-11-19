@@ -1073,3 +1073,28 @@ html { background-color: #fbf8f2; }
 #main .k-matrix .k-box-input:not(:checked) + .k-box { border: 0; background: #fff; box-shadow: inset 0 0 0 2px #b4bfd8; }
 #main .k-matrix .k-box-label:hover .k-box-input:not(:checked) + .k-box { box-shadow: inset 0 0 0 2px #5a67b8; background: #f4f7ff; }
 #main .k-matrix.is-review .k-box:not(.is-answer):not(.is-wrong) { box-shadow: inset 0 0 0 2px #d3d9e6; }
+
+/* CE QU'ON ATTENDAIT : une liste, une ligne par élément, un rond, et le
+ * conseil écrit sous chaque élément manquant (maquette choisie le 19/11). */
+#main .ana-checks { display: grid; gap: 8px; margin: 8px 0 0; padding: 0; list-style: none; }
+#main .ana-checks li { display: flex; align-items: flex-start; gap: 10px; }
+#main .ana-check-mark { flex: none; display: grid; place-items: center; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 2px #c5cee3; color: #8a95b3; font-size: .72rem; font-weight: 800; }
+#main .ana-checks li.is-ok .ana-check-mark { background: #23955f; box-shadow: none; color: #fff; }
+#main .ana-checks li.is-part .ana-check-mark { background: #fff3df; box-shadow: inset 0 0 0 2px #e3b46a; color: #8a5a12; }
+#main .ana-checks li.is-warn .ana-check-mark { background: #d8452f; box-shadow: none; color: #fff; }
+#main .ana-checks p, #main .an-review .ana-checks p { margin: 0; line-height: 1.45; }
+#main .an-review .ana-checks p.ana-check-name, #main .ana-check-name { color: var(--navy, #1b2370); font-size: .95rem; font-weight: 700; }
+#main .ana-checks li.is-ok .ana-check-name { font-weight: 600; color: #24533b; }
+#main .an-review .ana-checks p.ana-check-tip, #main .ana-check-tip { color: var(--muted, #6b7592); font-size: .88rem; font-weight: 400; }
+
+/* LA PHRASE À RETENIR dans la bande de fin (19/11) : un repère à gauche
+ * (pastille ampoule, petit libellé, la phrase), le bouton de suite à droite ;
+ * « Recommencer l'exercice » en bouton doux. */
+#main .k-endbar .feedback.is-compact:has(.k-retain):not([hidden]) { justify-content: space-between; }
+#main .k-retain { display: flex; align-items: center; gap: 12px; flex: 1 1 320px; max-width: 760px; padding: 10px 16px; border-radius: 14px; background: #fff7e6; text-align: left; }
+#main .k-retain-icon { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #fff; color: #c98a12; box-shadow: 0 2px 6px rgb(160 110 20 / 15%); }
+#main .k-endbar .feedback.is-compact .k-retain p { margin: 0; padding: 0; background: none; text-align: left; }
+#main .k-endbar .feedback.is-compact .k-retain .k-retain-label { color: #a06a0c; font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+#main .k-endbar .feedback.is-compact .k-retain .k-retain-text { color: #1b2370; font-size: 1rem; font-weight: 600; line-height: 1.4; }
+#main .k-endbar-side .k-reset { display: inline-flex; align-items: center; min-height: 38px; padding: 7px 16px; border: 0; border-radius: 999px; background: #eef3fd; color: #1b2370; font-size: .9rem; font-weight: 700; text-decoration: none; }
+#main .k-endbar-side .k-reset:hover { background: #e1e9fb; color: #1b2370; text-decoration: none; }

@@ -897,7 +897,14 @@
     node.classList.toggle('is-compact', compactFeedback);
     node.innerHTML = `${compactFeedback ? '' : `<span class="feedback-tag">${icon('check', { size: 16 })}<span>Réponse complétée</span></span>
       <h3 id="feedback-title">Pour relire votre réponse</h3>`}
-      ${body.filter(paragraph => !compactFeedback || /\d/.test(paragraph) || !/compar|relise/i.test(paragraph)).map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}
+      ${body.filter(paragraph => !compactFeedback || /\d/.test(paragraph) || !/compar|relise/i.test(paragraph)).map(paragraph => {
+        /* « À retenir : … » se présente comme un repère (19/11) : pastille
+         * ampoule, petit libellé, la phrase dessous, calée à gauche. */
+        const retain = /^À retenir\s*:\s*/.exec(paragraph);
+        if (!retain) return `<p>${esc(paragraph)}</p>`;
+        const rest = paragraph.slice(retain[0].length);
+        return `<div class="k-retain"><span class="k-retain-icon" aria-hidden="true">${icon('lightbulb', { size: 18 })}</span><div><p class="k-retain-label">À retenir</p><p class="k-retain-text">${esc(rest.charAt(0).toUpperCase() + rest.slice(1))}</p></div></div>`;
+      }).join('')}
       <span class="feedback-anchor" hidden></span>
       ${core.linkButton(isLast ? 'Voir mon bilan' : 'Continuer', core.nextUrl(current), 'primary')}`;
     // L'écran peut insérer sa fiche de corrigé détaillée avant l'avertissement.
