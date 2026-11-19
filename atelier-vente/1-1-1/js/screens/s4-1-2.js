@@ -60,22 +60,21 @@
       <div class="stepper-item ${at === 2 ? 'active' : ''}"><span class="stepper-dot">2</span><span class="stepper-label">RÉÉCRIRE</span></div>
     </div>`;
 
-    const repair = `<p class="muted" style="text-align:center">Cliquez sur les passages qui vous semblent maladroits.</p>
+    const repair = `<h2 class="s412-ask">Quels passages de cette ouverture sont maladroits&nbsp;?</h2>
+      <p class="s412-help">Cliquez sur au moins ${content.minimum} passages pour les surligner. Cliquez à nouveau sur un passage pour le retirer.</p>
       <div class="highlight-text">
         <span class="quote-mark">${icon('quote', { size: 22 })}</span>
         ${segments.map((segment, i) =>
           `<button type="button" class="segment ${flags[i] ? 'marked' : ''}" data-segment="${i}" aria-pressed="${flags[i]}">${esc(segment.text)}</button>`
-        ).join('')}
+        ).join(' ')}
       </div>
-      <div class="highlighter-status">
-        <span class="highlighter-symbol">${icon('highlighter', { size: 22 })}</span>
-        <span><strong>Surligneur actif</strong><small>Cliquez à nouveau pour retirer une sélection.</small></span>
-      </div>`;
+`;
 
-    const rewrite = `${ex.field('rewrite', 'Votre ouverture réécrite', {
-           placeholder: 'Bonjour, merci de me recevoir. Je suis…', max: 900, rows: 8
-         })}
-         <div class="advice">${icon('lightbulb', { size: 19 })}<span>Reprenez les quatre temps : accueil, présentation, cadrage de la durée, puis une question ouverte.</span></div>`;
+    const rewrite = `<h2 class="s412-ask">À sa place, comment ouvririez-vous cet entretien&nbsp;?</h2>
+         <p class="s412-help">Réécrivez l’ouverture telle que vous la diriez, en corrigeant ce que vous avez repéré : accueil, présentation, durée de l’échange, puis une question ouverte.</p>
+         ${ex.field('rewrite', 'Votre ouverture réécrite', {
+           placeholder: 'Bonjour, …', max: 900, rows: 8, hideLabel: true
+         })}`;
 
     return `<div class="writing-workshop">
       ${core.pageTitle(content.eyebrow, content.title, content.intro)}
@@ -86,10 +85,9 @@
           ${window.AtelierKit ? window.AtelierKit.tourButton() : ''}
         </div>
         ${at === 1 ? repair : rewrite}
-        <div class="case-progress" style="margin-top:18px">
-          ${core.button('Effacer ma sélection', 'clear-marks', 'secondary small', count ? '' : 'disabled')}
-          ${ex.caseProgress(content.minimum, Math.min(count, content.minimum), 'maladresse')}
-        </div>
+        ${at === 1 ? `<div class="case-progress" style="margin-top:18px">
+          ${core.button('Effacer ma sélection', 'clear-marks', 'soft-button', count ? '' : 'disabled')}
+        </div>` : ''}
         ${ex.lockNote('Corrigé disponible après votre tentative')}
         ${core.errorsBox()}
         ${ex.actions(at === 1 ? 'Passer à la réécriture' : 'Valider ma réécriture')}
