@@ -836,3 +836,6 @@ button.crash-passage:hover { background: #fff1d6; }
 .fm-step-wrap.is-lean .fm-skin[data-skin] > .sk-foot { display: none; }
 .fm-step-wrap.is-lean .counter { display: none; }
 .fm-step-wrap.is-lean .fm-skin[data-skin] > .sk-head .sk-call { background: #edf6f6; color: #2a8f8f; }
+/* Barres de fenêtre (e-mail, messagerie) : bleu nuit, comme l'e-mail dessiné (mailView) ; pastilles blanches translucides. */
+.fm-step-wrap.is-lean .fm-skin[data-skin] .sk-bar { background: #1b2370; color: #fff; }
+.fm-step-wrap.is-lean .fm-skin[data-skin] .sk-bar i, .fm-step-wrap.is-lean .fm-skin[data-skin] .sk-bar i:nth-child(n) { background: rgb(255 255 255 / 35%); }
