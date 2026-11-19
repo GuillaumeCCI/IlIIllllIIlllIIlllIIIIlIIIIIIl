@@ -1098,3 +1098,7 @@ html { background-color: #fbf8f2; }
 #main .k-endbar .feedback.is-compact .k-retain .k-retain-text { color: #1b2370; font-size: 1rem; font-weight: 600; line-height: 1.4; }
 #main .k-endbar-side .k-reset { display: inline-flex; align-items: center; min-height: 38px; padding: 7px 16px; border: 0; border-radius: 999px; background: #eef3fd; color: #1b2370; font-size: .9rem; font-weight: 700; text-decoration: none; }
 #main .k-endbar-side .k-reset:hover { background: #e1e9fb; color: #1b2370; text-decoration: none; }
+/* La phrase à retenir, dans la famille du bilan (19/11 : « les couleurs sont moches » en crème et ocre). */
+#main .k-retain { background: #edf6f6; }
+#main .k-retain-icon { color: #2a8f8f; box-shadow: 0 2px 6px rgb(20 90 90 / 12%); }
+#main .k-endbar .feedback.is-compact .k-retain .k-retain-label { color: #2a8f8f; }
