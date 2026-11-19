@@ -319,7 +319,7 @@ test('S1 C : choisir, argumenter un à un avec un critère, puis emprunter', () 
   assert.ok(!core.isDone('s1-C'), 'argumenter ne termine pas l’exercice');
 
   // Étape 3 : l'emprunt, avec le rappel des deux ouvertures.
-  assert.match(main(), /Autre proposition/);
+  assert.match(main(), /Celle que vous n’avez pas choisie/);
   engine.submit();
   assert.ok(!core.isDone('s1-C'), 'sans emprunt, l’exercice n’est pas validé');
   engine.setValue('borrow', 'La preuve de crédibilité, glissée après le cadrage.');

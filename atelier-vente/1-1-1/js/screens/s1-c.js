@@ -62,11 +62,18 @@
 
   /* Le rappel du choix, avec la relecture des ouvertures en fenêtre. */
   function recall(withOther = false) {
+    /* Les ouvertures elles-mêmes, sous les yeux (19/11, à la place d'une
+     * barre « Votre choix · Autre proposition · Relire ») : à l'étape 2, celle
+     * choisie ; à l'étape 3, les deux, l'autre mise en avant puisque la
+     * question porte sur elle. */
     const choice = ex.value('choice');
-    return `<div class="compare-recall">
-      <span>${icon('document', { size: 18 })}<span>Votre choix · <strong>Ouverture ${esc(choice)}</strong></span></span>
-      ${withOther ? `<span>${icon('document', { size: 18 })}<span>Autre proposition · <strong>Ouverture ${esc(other(choice))}</strong></span></span>` : ''}
-      ${core.button(`${icon('refresh', { size: 16 })}<span>${withOther ? 'Relire les deux ouvertures' : 'Relire les ouvertures'}</span>`, 'reread-openings', 'text-button with-icon')}
+    const card = (n, tag, focus) => `<figure class="recall-card ${focus ? 'is-focus' : ''}">
+        <figcaption><span class="recall-tag">${esc(tag)}</span><strong>Ouverture ${esc(n)}</strong></figcaption>
+        <blockquote>« ${esc(content.openings[Number(n) - 1] || '')} »</blockquote>
+      </figure>`;
+    return `<div class="compare-recall-cards ${withOther ? 'is-two' : ''}">
+      ${card(choice, 'Votre choix', false)}
+      ${withOther ? card(other(choice), 'Celle que vous n’avez pas choisie', true) : ''}
     </div>`;
   }
 
