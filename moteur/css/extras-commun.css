@@ -1157,3 +1157,12 @@ html { background-color: #fbf8f2; }
  * « je n'aime pas les légers contours ») ; une carte blanche, ombre douce ;
  * la pastille ✓ / ✗ suffit. */
 #main .result-row, #main .result-row.is-ok, #main .result-row.is-ko { border: 0; box-shadow: 0 4px 14px rgb(20 40 100 / 7%), 0 1px 2px rgb(20 40 100 / 4%); }
+
+/* PLUS AUCUN CONTOUR COLORÉ dans les corrigés (19/11) : juste / faux se
+ * lisent au fond pâle et à la pastille ✓ / ✗, jamais à une bordure. */
+#main :is(.option-row.is-answer, .option-row.is-wrong, .opening-card.card-ok, .opening-card.card-ko, .deck-recap li.is-ok, .deck-recap li.is-ko,
+  .mt-review li.is-ok, .mt-review li.is-ko, .cmp-option.is-static.is-answer, .k-choice.is-answer, .k-choice.is-wrong) {
+  border-color: transparent; box-shadow: 0 4px 14px rgb(20 40 100 / 7%), 0 1px 2px rgb(20 40 100 / 4%);
+}
+#main .crash-review li.is-ok { border-left-color: transparent; }
+#main .option-review .option-row { border-color: transparent; }
