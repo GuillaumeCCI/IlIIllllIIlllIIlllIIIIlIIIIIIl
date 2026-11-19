@@ -488,14 +488,25 @@
     setTimeout(() => ghost.remove(), 600);
     return ghost;
   }
+  /* RÈGLE COMMUNE (19/11 : « dès qu'il y a un enchaînement d'étape, il faut
+   * l'animation ») : tout passage d'une étape à l'autre, dans n'importe quel
+   * exercice, se fait en fondu enchaîné lent. Une copie de l'écran est prise
+   * avant chaque rendu ; si l'étape a changé (cas, partie, carte, étape,
+   * curseur, corrigé, ou un repère de progression de l'écran qui a bougé),
+   * elle s'efface par-dessus le nouvel écran ; sinon elle disparaît aussitôt. */
+  const stepSig = () => current ? `${current.key}|${value('case')}|${value('fstep')}|${value('card')}|${value('stage')}|${cursor()}|${wizardAt()}|${value('openCase')}|${reviewing()}|${showingMenu}` : '';
+  const markerSig = () => { try { return JSON.stringify(Object.entries(positions()).map(([k, v]) => [k, v.index])); } catch { return ''; } };
   function render(focus = false) {
-    // Le cas affiché, et la partie en cours d'un cas rempli partie par partie (fstep) : même fondu enchaîné.
-    const at = `${value('case')}|${value('fstep')}|${value('card')}`;
+    const at = stepSig();
     const main = $('#main');
-    const ghost = !focus && main && $('.fm-panel, .fs-panel, .mt-sorter') && shownCase !== undefined && at !== shownCase && !stillMotion() ? ghostOf(main) : null;
+    const sameExercise = shownCase !== undefined && String(shownCase).split('|')[0] === at.split('|')[0];
+    const ghost = !focus && main && typeof main.cloneNode === 'function' && typeof main.after === 'function' && revealed && !showingBriefing && sameExercise && !stillMotion() ? ghostOf(main) : null;
+    const markersBefore = ghost ? markerSig() : '';
+    const before = shownCase;
     shownCase = at;
     drawScreen(focus);
-    if (ghost) {
+    if (ghost && (showingBriefing || (before === at && markerSig() === markersBefore))) ghost.remove();
+    else if (ghost) {
       requestAnimationFrame(() => {
         ghost.style.transition = 'opacity .45s ease-in-out';
         ghost.style.opacity = '0';
