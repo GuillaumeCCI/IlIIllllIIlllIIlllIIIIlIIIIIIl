@@ -207,7 +207,7 @@ test('une réponse fausse est bien marquée fausse dans le corrigé', () => {
   const sandbox = load('js/screens/s2-2-1.js');
   const items = sandbox.window.ATELIER_S2['2.1'].items;
   complete(sandbox, engine => items.forEach((it, i) => engine.setValue(`item${i}`, it.answer === 'O' ? 'B' : 'O')));
-  assert.match(main(sandbox), /arv-cell is-yours is-ko/, 'les erreurs doivent apparaître');
+  assert.match(main(sandbox), /arv-cell is-yours is-ko|arl-item is-ko/, 'les erreurs doivent apparaître');
 });
 
 console.log('\nSauvegarde');

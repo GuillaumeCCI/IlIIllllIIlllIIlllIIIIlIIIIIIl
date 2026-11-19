@@ -100,28 +100,35 @@
       ${note ? `<div class="corrige-note">${icon('lightbulb', { size: 38 })}<p>${esc(note)}</p></div>` : ''}
     </section>`;
 
-  /* LE CORRIGÉ RÉPONSE PAR RÉPONSE : pastille « Corrigé », grand titre,
-   * lecteur illustré en haut à droite, puis une carte par question :
-   * numéro, étiquette, énoncé, et trois cases « Votre réponse » (rouge si
-   * fausse, verte si juste), « Bonne réponse », « Explication ».
-   * items : [{ tag?, text, yours, expected, ok, why }]. Styles : extras.css. */
-  const answerReview = ({ title = 'Le corrigé', subtitle = '', aside = '', items }) => `<div class="k-page ar-review">
-      <header class="arv-head">
-        <div class="arv-head-text"><p class="corrige-tag">Corrigé</p><h1>${esc(title)}</h1>${subtitle ? `<p class="arv-subtitle">${esc(subtitle)}</p>` : ''}${aside}</div>
+  /* LE CORRIGÉ RÉPONSE PAR RÉPONSE, en lignes (19/11 : les trois cases
+   * « Votre réponse / Bonne réponse / Explication » par question étaient le
+   * format jugé « très chargé » en 1-2-1). En tête, le bilan à anneau ; puis
+   * une ligne par question : pastille ✓ / ✗, l'énoncé, la bonne réponse en
+   * gras avec sa raison, et « Vous aviez répondu : … » seulement si faux.
+   * items : [{ tag?, text, yours, expected, ok, why }]. Le compte passé dans
+   * `aside` (« <p class="arv-score">… ») devient l'anneau, avec son libellé. */
+  const answerReview = ({ title = 'Le corrigé', subtitle = '', aside = '', items, ringLabel = '' }) => {
+    const scoreLabel = (/<\/strong>\s*([^<]+)<\/p>/.exec(aside) || [])[1];
+    const keptAside = /arv-score/.test(aside) ? '' : aside;
+    const right = items.filter(item => item.ok).length;
+    const head = `<header class="arv-head">
+        <div class="arv-head-text"><p class="corrige-tag">Corrigé</p><h1>${esc(title)}</h1>${subtitle ? `<p class="arv-subtitle">${esc(subtitle)}</p>` : ''}${keptAside}</div>
         <img class="arv-art" src="${esc(core().asset('assets/illustrations/corrige-lecteur.webp'))}" alt="" decoding="async">
-      </header>
-      <ol class="arv-list">${items.map((item, i) => `<li class="arv-item ${item.ok ? 'is-ok' : 'is-ko'}">
-        <span class="arv-n" aria-hidden="true">${i + 1}</span>
-        <div class="arv-body">
-          ${item.tag ? `<p class="arv-tag">${esc(item.tag)}</p>` : ''}
-          <p class="arv-text">${esc(item.text)}</p>
-          <div class="arv-cells">
-            <div class="arv-cell is-yours ${item.ok ? 'is-ok' : 'is-ko'}"><span class="arv-mark">${icon(item.ok ? 'check' : 'close', { size: 16, strokeWidth: 3 })}</span><div><strong>Votre réponse</strong><span>${esc(item.yours || 'Aucune réponse')}</span></div></div>
-            <div class="arv-cell is-expected ${item.ok ? 'is-quiet' : ''}"><span class="arv-mark">${icon('check', { size: 16, strokeWidth: 3 })}</span><div><strong>Bonne réponse</strong><span>${esc(item.expected)}</span></div></div>
-            <div class="arv-cell is-why">${icon('lightbulb', { size: 26 })}<div><strong>Explication</strong><span>${esc(item.why || '')}</span></div></div>
-          </div>
+      </header>`;
+    if (!items.length) return `<div class="k-page ar-review">${head}<ol class="arv-list"></ol>`;
+    return `<div class="k-page ar-review">${head}
+      ${bilan({ rings: [{ n: right, total: items.length, label: ringLabel || (scoreLabel || 'bonnes réponses').trim() }] })}
+      <ol class="arl-list">${items.map(item => `<li class="arl-item ${item.ok ? 'is-ok' : 'is-ko'}">
+        <span class="arl-mark" aria-hidden="true">${icon(item.ok ? 'check' : 'close', { size: 14, strokeWidth: 3 })}</span>
+        <div class="arl-body">
+          ${item.tag ? `<p class="arl-tag">${esc(item.tag)}</p>` : ''}
+          <p class="arl-text">${esc(item.text)}</p>
+          <p class="arl-answer"><strong>${item.ok ? 'Vous aviez vu juste' : 'La bonne réponse'} : ${esc(item.expected)}.</strong> ${esc(item.why || '')}</p>
+          ${item.ok ? '' : `<p class="arl-yours">Vous aviez répondu : ${esc(item.yours || 'aucune réponse')}</p>`}
         </div>
+        <span class="sr-only">${item.ok ? 'Bonne réponse' : 'Réponse à revoir'}</span>
       </li>`).join('')}</ol>`;
+  };
 
   /* La carte « citation client » : celle du moteur (core.js). */
   const clientCard = (...args) => core().clientCard(...args);

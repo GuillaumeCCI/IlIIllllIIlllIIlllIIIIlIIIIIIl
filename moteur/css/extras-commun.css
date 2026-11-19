@@ -1166,3 +1166,22 @@ html { background-color: #fbf8f2; }
 }
 #main .crash-review li.is-ok { border-left-color: transparent; }
 #main .option-review .option-row { border-color: transparent; }
+
+/* LE CORRIGÉ RÉPONSE PAR RÉPONSE EN LIGNES (kit.answerReview, 19/11). */
+#main .arl-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+#main .arl-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 20px; border-radius: 16px; background: #fff; box-shadow: 0 4px 14px rgb(20 40 100 / 7%), 0 1px 2px rgb(20 40 100 / 4%); }
+#main .arl-mark { flex: none; display: grid; place-items: center; width: 26px; height: 26px; margin-top: 1px; border-radius: 50%; background: #23955f; color: #fff; }
+#main .arl-item.is-ko .arl-mark { background: #fbe4e0; color: #b8392a; }
+#main .arl-body { display: grid; gap: 4px; min-width: 0; }
+#main .arl-body p { margin: 0; line-height: 1.5; }
+#main .arl-tag { color: var(--accent); font-size: .74rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+#main .arl-text { color: var(--navy, #1b2370); font-size: 1rem; font-weight: 700; }
+#main .arl-answer { color: #3a4a7a; font-size: .95rem; }
+#main .arl-answer strong { color: #1f6b43; }
+#main .arl-item.is-ko .arl-answer strong { color: var(--navy, #1b2370); }
+#main .arl-yours { color: #a33a26; font-size: .9rem; }
+#main .ar-review .k-bilan { margin-top: 4px; }
+
+/* « Recommencer l'exercice » : un bouton doux partout, plus de lien souligné. */
+#main .k-reset { display: inline-flex; align-items: center; min-height: 38px; padding: 7px 16px; border: 0; border-radius: 999px; background: #eef3fd; color: #1b2370; font-size: .9rem; font-weight: 700; text-decoration: none; }
+#main .k-reset:hover { background: #e1e9fb; color: #1b2370; text-decoration: none; }
