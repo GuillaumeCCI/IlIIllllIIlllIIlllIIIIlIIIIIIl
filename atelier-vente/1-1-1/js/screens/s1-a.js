@@ -181,7 +181,7 @@
 
   /* Les trois constats sont posés dans le corrigé : le bilan ne garde que
    * le bouton de suite. */
-  const feedback = () => [];
+  const feedback = () => ['À retenir : une bonne accroche salue, dit qui l’on est, annonce le déroulé, puis donne la parole au client.'];
 
   const transcript = () =>
     `<p class="tag">${content.audio.demo ? 'Texte de démonstration' : 'Accroche de l’exercice'}</p>

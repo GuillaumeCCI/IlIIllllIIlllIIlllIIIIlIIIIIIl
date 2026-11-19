@@ -1049,3 +1049,16 @@ html { background-color: #fbf8f2; }
 #main .soft-button:focus-visible { outline: 2px solid #5a67b8; outline-offset: 2px; }
 #main .soft-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 #main .soft-actions-left { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+
+/* Le titre et la légende des pastilles (19/11 : « à quoi sert ça ? »). */
+#main .ana-marks-title { margin: 14px 0 2px; color: var(--navy, #1b2370); font-size: .78rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+#main .ana-marks-title b { color: var(--muted, #6b7592); font-weight: 700; letter-spacing: 0; text-transform: none; font-size: .88rem; }
+#main .ana-marks-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0 0 2px; color: var(--muted, #6b7592); font-size: .84rem; }
+#main .ana-marks-legend .is-ok { color: #1f6b43; font-weight: 700; }
+#main .ana-marks-legend .is-warn { color: #a33a26; font-weight: 700; }
+#main .ana-marks-legend .is-miss { font-weight: 700; }
+#main .ana-marks-title + .ana-marks-legend + .ana-marks { margin-top: 8px; }
+/* Légende sur une ligne, discrète, même dans les corrigés qui forcent leurs paragraphes. */
+#main .ana-marks-legend, #main .an-review p.ana-marks-legend { display: block; margin: 0; color: var(--muted, #6b7592); font-size: .82rem; line-height: 1.5; }
+#main .an-review p.ana-marks-title { font-size: .76rem; }
+#main .an-review p.ana-marks-title b { font-size: .84rem; }

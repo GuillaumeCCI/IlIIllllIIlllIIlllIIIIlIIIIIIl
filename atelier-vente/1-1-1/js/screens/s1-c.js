@@ -298,7 +298,7 @@
   }
 
   /* Tout le corrigé est posé au-dessus : le bilan ne garde que le bouton de suite. */
-  const feedback = () => [];
+  const feedback = () => ['À retenir : une ouverture efficace cadre l’échange et donne vite la parole au client.'];
 
   /* Supprime l'argument affiché en décalant les suivants. */
   function removeArgument(index) {

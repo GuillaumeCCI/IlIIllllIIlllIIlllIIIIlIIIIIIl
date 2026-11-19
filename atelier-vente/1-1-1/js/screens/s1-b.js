@@ -146,7 +146,7 @@
 
   /* Le corrigé modèle et le réglage attendu sont posés dans le corrigé : le
    * bilan ne garde que le bouton de suite. */
-  const feedback = () => [];
+  const feedback = () => ['À retenir : face à un client pressé, faites court, sans pression, et laissez-le choisir.'];
 
   function onMount() {
     core.$('[data-action="scenario"]')?.addEventListener('click', () => core.openDialog(

@@ -430,7 +430,9 @@
     return `<li class="is-${item.kind}"${tip ? ` tabindex="0" data-tip="${esc(tip)}"` : ''}><span aria-hidden="true">${SYMBOL[item.kind]}</span>${esc(item.nom)}${tip ? `<span class="sr-only"> : ${esc(tip)}</span>` : ''}</li>`;
   };
   const lines = (bloc, { withText = true } = {}) => `${withText && bloc.marks.length ? `<p class="ana-text">${highlighted(bloc.text, bloc.marks)}</p>` : ''}
-        <ul class="ana-marks" aria-label="Ce qu’on attend dans votre réponse : ${met(bloc)} sur ${expected(bloc)} repérés">${bloc.lines.map(pill).join('')}</ul>`;
+        <p class="ana-marks-title">Ce qu’on attendait dans votre réponse <b>· ${met(bloc)} sur ${expected(bloc)} trouvé${met(bloc) > 1 ? 's' : ''}</b></p>
+        <p class="ana-marks-legend"><span class="is-ok">✓ trouvé</span> · <span class="is-miss">○ pas trouvé</span>${bloc.lines.some(item => item.kind === 'warn') ? ' · <span class="is-warn">! à éviter</span>' : ''} · <span>un conseil au survol</span></p>
+        <ul class="ana-marks" aria-label="Ce qu’on attendait dans votre réponse : ${met(bloc)} sur ${expected(bloc)} trouvés">${bloc.lines.map(pill).join('')}</ul>`;
 
   // La réponse de l'apprenant, mots repérés surlignés (sans repère : telle quelle).
   const answer = bloc => highlighted(bloc.text, bloc.marks);

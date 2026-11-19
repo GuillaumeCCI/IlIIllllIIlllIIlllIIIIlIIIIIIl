@@ -934,6 +934,8 @@
     side.className = 'k-endbar-side';
     if (keyRow) side.append(...keyRow.childNodes);
     if (utility) side.append(...utility.childNodes);
+    // Une bande jamais vide à gauche : « Recommencer l'exercice » (19/11).
+    if (!side.querySelector('.k-reset') && root.AtelierKit && root.AtelierKit.reset) side.insertAdjacentHTML('beforeend', root.AtelierKit.reset());
     feedback.replaceWith(bar);
     if (side.childNodes.length) bar.append(side);
     bar.append(feedback);
