@@ -79,12 +79,12 @@
 /* ── 2.4 · La chasse aux preuves ──────────────────────────────────────── */
 .proof-pitch { font-size: clamp(1.1rem, 1.5vw, 1.4rem); color: var(--navy); margin: 6px 0 14px; line-height: 1.5; }
 /* L'écran du logiciel, dessiné à gauche du pitch. */
-.proof-intro { display: grid; grid-template-columns: minmax(300px, 400px) minmax(0, 1fr); gap: 28px; align-items: center; margin-bottom: 18px; }
-.proof-app { margin: 0; border-radius: 12px; background: #fff; box-shadow: 0 10px 28px rgba(22, 36, 82, .16); overflow: hidden; font-size: .78rem; color: #1d2a5a; }
+.proof-intro { display: grid; grid-template-columns: minmax(270px, 340px) minmax(0, 1fr); gap: 28px; align-items: center; margin-bottom: 18px; }
+.proof-app { margin: 0; border-radius: 12px; background: #fff; box-shadow: 0 10px 28px rgba(22, 36, 82, .16); overflow: hidden; font-size: .7rem; color: #1d2a5a; }
 .proof-app-bar { display: flex; align-items: center; gap: 5px; padding: 7px 12px; background: #1d2a5a; color: #fff; }
 .proof-app-bar i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, .35); }
 .proof-app-bar span { margin-left: 8px; font-weight: 800; letter-spacing: .02em; }
-.proof-app-body { display: grid; grid-template-columns: 104px 1fr; }
+.proof-app-body { display: grid; grid-template-columns: 92px 1fr; }
 .proof-app-menu { list-style: none; margin: 0; padding: 10px 0; background: #eef3fb; }
 .proof-app-menu li { padding: 6px 12px; color: #5a6890; white-space: nowrap; }
 .proof-app-menu li.is-on { color: #1d2a5a; font-weight: 700; background: #fff; border-left: 3px solid #2a8f8f; }
@@ -214,3 +214,6 @@
 
 /* Petits écrans : le verdict de l’échelle passe à la ligne. */
 @media (max-width: 600px) { .ladder-verdict { white-space: normal; } }
+/* Les affirmations, un peu plus grandes pour aller avec le pitch. */
+.k-panel:has(.proof-intro) .k-matrix tbody th { font-size: 1.15rem; }
+.k-panel:has(.proof-intro) .k-matrix thead th { font-size: .86rem; }
