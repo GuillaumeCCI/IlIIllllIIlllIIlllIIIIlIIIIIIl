@@ -790,9 +790,11 @@
 
     /* La frise d'étapes de l'en-tête (content.stepper), à la place des onglets. */
     function stepper(at) {
-      // `lean` (écran allégé) : la frise seule, sans « Étape 1 sur 4 » ni le compteur.
-      return `<div class="fm-stepper">${content.lean ? '' : `<p class="fm-stepper-now">${esc(content.caseNoun || 'Étape')} ${at + 1} sur ${n}</p><p class="fm-stepper-count" data-live="fm-count">${countLine()}</p>`}
-        <ol>${cases.map((c, i) => `<li class="${i === at ? 'is-current' : ''} ${tabState(i, at)}"><button type="button" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === at ? 'aria-current="step"' : ''} aria-label="${esc(c.tab)} · ${tabLabel(i, at)}"><span class="fm-stepper-dot">${complete(i) ? icon('check', { size: 16 }) : i + 1}</span><span class="fm-stepper-label">${esc(c.tab)}</span></button></li>`).join('')}</ol></div>`;
+      // `lean` (écran allégé) : sous le titre, en petites cartes validées (numéro toujours visible,
+      // carte en cours bleu nuit, coche sarcelle une fois faite), sans « Étape 1 sur 4 » ni compteur.
+      const lean = !!content.lean;
+      return `<div class="fm-stepper ${lean ? 'is-lean' : ''}">${lean ? '' : `<p class="fm-stepper-now">${esc(content.caseNoun || 'Étape')} ${at + 1} sur ${n}</p><p class="fm-stepper-count" data-live="fm-count">${countLine()}</p>`}
+        <ol>${cases.map((c, i) => `<li class="${i === at ? 'is-current' : ''} ${tabState(i, at)}"><button type="button" data-act="fm-case" data-index="${i}" ${reachable(i) ? '' : 'disabled'} ${i === at ? 'aria-current="step"' : ''} aria-label="${esc(c.tab)} · ${tabLabel(i, at)}"><span class="fm-stepper-dot">${complete(i) && !lean ? icon('check', { size: 16 }) : i + 1}</span><span class="fm-stepper-label">${esc(c.tab)}</span>${lean && complete(i) ? `<span class="k-step-check">${icon('check', { size: 14 })}</span>` : ''}</button></li>`).join('')}</ol></div>`;
     }
 
     function tabs(at) {
@@ -1294,7 +1296,8 @@
       if (!reviewing && at < n && !seenList().includes(at)) ex().setValue('seen', [...seenList(), at]);
       return `<div class="k-page fm-page ${content.className || ''}">
         ${kit().head({ eyebrow: content.eyebrow, title: content.title, subtitle: content.subtitle,
-          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? stepper(at) : n > 1 || content.countLabel ? `<p class="k-count fm-count is-progress" data-live="fm-progress">${progressLine()}</p>` : ''}${content.reread && !reviewing ? `<button type="button" class="text-button with-icon tour-replay k-reread" data-act="dialog" data-dialog="reread">${icon('document', { size: 18 })}<span>${esc(content.reread.label || 'Relire le document')}</span></button>` : ''}${content.tour && !reviewing ? (introButton(content) || (at === SELF ? kit().contextButton() : '')) + kit().tourButton() : ''}` })}
+          aside: `${content.fieldSteps ? '' : content.stepper && !reviewing ? (content.lean ? '' : stepper(at)) : n > 1 || content.countLabel ? `<p class="k-count fm-count is-progress" data-live="fm-progress">${progressLine()}</p>` : ''}${content.reread && !reviewing ? `<button type="button" class="text-button with-icon tour-replay k-reread" data-act="dialog" data-dialog="reread">${icon('document', { size: 18 })}<span>${esc(content.reread.label || 'Relire le document')}</span></button>` : ''}${content.tour && !reviewing ? (introButton(content) || (at === SELF ? kit().contextButton() : '')) + kit().tourButton() : ''}` })}
+        ${content.stepper && content.lean && !reviewing ? stepper(at) : ''}
         ${content.side && !reviewing && !content.stepper ? `<div class="k-panel fm-side">${scene(content.side)}</div>` : ''}
         ${reviewing ? reviewScreen() : `${tabs(at)}<form novalidate class="fm-form">${casePanel(at)}</form>`}
         ${reviewing ? '' : kit().utility(content.lock || 'Corrigé disponible après validation')}

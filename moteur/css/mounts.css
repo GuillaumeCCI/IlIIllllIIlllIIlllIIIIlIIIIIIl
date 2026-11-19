@@ -817,3 +817,13 @@ button.crash-passage:hover { background: #fff1d6; }
 .fm-step-wrap.is-lean .fm-skin[data-skin="none"] { border: 0; }
 .fm-step-wrap.is-lean .fm-skin[data-skin="none"] > .sk-none { display: none; }
 .fm-actions-right { display: inline-flex; align-items: center; gap: 10px; }
+/* Frise allégée (content.lean) : les petites cartes validées, centrées sous le titre. */
+#main .fm-stepper.is-lean { display: flex; justify-content: center; margin: 0 0 18px; }
+#main .fm-stepper.is-lean ol { display: flex; gap: 10px; margin: 0; padding: 0; list-style: none; }
+#main .fm-stepper.is-lean li::before, #main .fm-stepper.is-lean li::after { display: none; }
+#main .fm-stepper.is-lean button { display: inline-flex; align-items: center; gap: 10px; padding: 9px 20px 9px 9px; border: 0; border-radius: 12px; background: #fff; color: var(--navy); font: inherit; font-weight: 650; box-shadow: 0 3px 10px rgb(20 40 100 / 7%); cursor: var(--cursor-hand, pointer); }
+#main .fm-stepper.is-lean button:disabled { color: #6d7ca3; cursor: default; }
+#main .fm-stepper.is-lean .fm-stepper-dot { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #eef3fb; color: var(--navy); font-weight: 800; box-shadow: none; border: 0; }
+#main .fm-stepper.is-lean .fm-stepper-label { position: static; transform: none; margin: 0; color: inherit; font-size: 1rem; white-space: nowrap; }
+#main .fm-stepper.is-lean li.is-current button { background: #1b2370; color: #fff; box-shadow: 0 6px 16px rgb(27 35 112 / 22%); }
+#main .fm-stepper.is-lean li.is-current .fm-stepper-dot { background: #fff; color: #1b2370; }
