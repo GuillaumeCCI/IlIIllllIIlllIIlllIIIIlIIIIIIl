@@ -841,3 +841,27 @@ button.crash-passage:hover { background: #fff1d6; }
 .fm-step-wrap.is-lean .fm-skin[data-skin] .sk-bar i, .fm-step-wrap.is-lean .fm-skin[data-skin] .sk-bar i:nth-child(n) { background: rgb(255 255 255 / 35%); }
 #main .fm-ask-line { margin: 0 0 6px; color: #5a6890; }
 #main .fm-situation { margin: 0 0 12px; color: var(--navy); font-size: 1.05rem; line-height: 1.5; }
+
+/* Parties d'un e-mail (content.mailSteps) : liste en petites cartes validées, champ dans une fenêtre d'e-mail. */
+.fs-layout.is-mail .fs-nav { gap: 10px; }
+.fs-layout.is-mail .fs-nav li { padding: 0; }
+.fs-layout.is-mail .fs-nav li::before { display: none; }
+.fs-layout.is-mail .fs-nav button { align-items: center; gap: 12px; padding: 10px 14px 10px 10px; border-radius: 12px; background: #fff; box-shadow: 0 3px 10px rgb(20 40 100 / 7%); }
+.fs-layout.is-mail .fs-n { width: 30px; height: 30px; border: 0; background: #eef3fb; color: var(--navy); font-size: .95rem; }
+.fs-layout.is-mail .fs-nav li.is-done .fs-n { background: #2a8f8f; color: #fff; }
+.fs-layout.is-mail .fs-nav li .fs-text, .fs-layout.is-mail .fs-nav li.is-current .fs-text { padding: 0; background: none; }
+.fs-layout.is-mail .fs-nav li.is-current button { background: #1b2370; color: #fff; box-shadow: 0 6px 16px rgb(27 35 112 / 22%); }
+.fs-layout.is-mail .fs-nav li.is-current .fs-n { background: #fff; color: #1b2370; }
+.fs-layout.is-mail .fs-nav li.is-current .fs-text strong, .fs-layout.is-mail .fs-nav li.is-current .fs-text small { color: #fff; }
+.fs-layout.is-mail .counter { display: none; }
+.fs-mail { margin: 4px 0 14px; border-radius: 12px; background: #fff; box-shadow: 0 6px 18px rgb(20 40 100 / 9%), 0 0 0 1px rgb(20 40 100 / 5%); overflow: hidden; }
+.fs-mail-bar { display: flex; align-items: center; gap: 5px; margin: 0; padding: 8px 14px; background: #1b2370; color: #fff; font-size: .82rem; font-weight: 700; }
+.fs-mail-bar i { width: 8px; height: 8px; border-radius: 50%; background: rgb(255 255 255 / 35%); }
+.fs-mail-bar span { margin-left: 8px; }
+.fs-mail-line { display: flex; align-items: center; gap: 10px; margin: 0; padding: 8px 16px; border-bottom: 1px solid #eef1f7; color: var(--navy); }
+.fs-mail-line b { flex: none; width: 46px; color: #7a86a8; font-weight: 600; }
+.fs-mail-line.is-field { align-items: flex-start; }
+.fs-mail-line.is-field .fm-field, .fs-mail-body .fm-field { flex: 1; margin: 0; }
+.fs-mail-body { display: grid; gap: 10px; padding: 14px 16px 16px; }
+.fs-mail-done { margin: 0; color: #5a6890; line-height: 1.55; white-space: pre-wrap; }
+#main .fs-mail textarea { border: 0; background: #f6f8fd; box-shadow: none; }

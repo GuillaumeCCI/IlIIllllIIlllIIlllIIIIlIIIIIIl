@@ -957,14 +957,31 @@
       if (!ex().reviewing() && ex().value('fstep') !== at) ex().setValue('fstep', at);
       const entering = shownField !== null && shownField !== at ? (at > shownField ? 'is-next' : 'is-prev') : '';
       shownField = at;
-      return `<div class="fs-layout">
+      // `mailSteps` : la question en bandeau, et le champ dans une fenêtre d'e-mail
+      // où les parties déjà écrites apparaissent au-dessus (l'e-mail se construit).
+      const mail = content.mailSteps;
+      const head = mail && f.ask
+        ? `<p class="k-ask">${esc(f.ask)}</p>`
+        : `<div class="fs-head"><span class="fs-symbol">${icon(f.symbol || 'pencil', { size: 26 })}</span><div><h2>${at + 1}. ${esc(f.label)}</h2>${f.intro ? `<p>${esc(f.intro)}</p>` : ''}</div></div>`;
+      const input = fieldBlock(0, Object.assign({}, f, { label: '' }));
+      const before = fields.slice(0, at).filter(g => g.id !== 'subject' && kit().filled(val(0, g)));
+      const subject = fields.find(g => g.id === 'subject');
+      const body = mail
+        ? `<div class="fs-mail"><p class="fs-mail-bar"><i></i><i></i><i></i><span>${esc(mail.title || 'Nouveau message')}</span></p>
+            <p class="fs-mail-line"><b>À</b><span>${esc(mail.to || '')}</span></p>
+            ${f.id === 'subject' ? `<div class="fs-mail-line is-field"><b>Objet</b>${input}</div>`
+              : `<p class="fs-mail-line"><b>Objet</b><span>${esc((subject && val(0, subject)) || '')}</span></p>
+                 <div class="fs-mail-body">${before.map(g => `<p class="fs-mail-done">${esc(val(0, g))}</p>`).join('')}${input}</div>`}
+          </div>`
+        : input;
+      return `<div class="fs-layout ${mail ? 'is-mail' : ''}">
         <ol class="fs-nav">${fields.map((g, j) => `<li class="${j === at ? 'is-current' : ''} ${filledField(0, g) ? 'is-done' : ''}"><button type="button" data-act="fm-field" data-index="${j}" ${fieldOpen(j) ? '' : 'disabled'} ${j === at ? 'aria-current="step"' : ''}>
           <span class="fs-n">${filledField(0, g) && j !== at ? icon('check', { size: 16 }) : j + 1}</span><span class="fs-text"><strong>${esc(g.label)}</strong>${g.stepSub ? `<small>${esc(g.stepSub)}</small>` : ''}</span></button></li>`).join('')}</ol>
         <section class="k-panel fs-panel">
           <div class="fs-step ${entering}">
-            <div class="fs-head"><span class="fs-symbol">${icon(f.symbol || 'pencil', { size: 26 })}</span><div><h2>${at + 1}. ${esc(f.label)}</h2>${f.intro ? `<p>${esc(f.intro)}</p>` : ''}</div></div>
+            ${head}
             ${tokens()}
-            ${fieldBlock(0, Object.assign({}, f, { label: '' }))}
+            ${body}
             ${f.tip ? `<p class="fs-tip">${icon('lightbulb', { size: 24 })}<span>${esc(f.tip)}</span></p>` : ''}
           </div>
           ${core().errorsBox()}
