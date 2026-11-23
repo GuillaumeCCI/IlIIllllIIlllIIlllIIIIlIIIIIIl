@@ -1268,9 +1268,10 @@ body.is-fin #main { display: none; }
 .fin-ring p { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 4px; margin: 0; text-align: center; }
 .fin-ring b { color: var(--navy); font-size: clamp(2.3rem, 3.4vw, 3rem); font-weight: 800; line-height: 1; }
 .fin-ring span { max-width: 9em; color: var(--text); font-size: .78rem; font-weight: 700; letter-spacing: .08em; line-height: 1.3; text-transform: uppercase; }
-.fin-image { grid-area: image; position: relative; display: grid; place-items: center; margin: 0; padding: 7%; }
+.fin-image { grid-area: image; position: relative; display: grid; place-items: center; justify-self: center; margin: 0; padding: 36px; }
 .fin-image::before { content: ''; position: absolute; inset: 0; border-radius: 46% 54% 52% 48% / 55% 45% 55% 45%; background: radial-gradient(circle at 30% 30%, #fde3d6 0 40%, transparent 70%), radial-gradient(circle at 75% 70%, #e4e6fb 0 45%, transparent 75%); }
-.fin-image img { position: relative; width: min(100%, 360px); aspect-ratio: 1; object-fit: cover; border-radius: 50%; box-shadow: 0 12px 34px rgb(20 40 100 / 14%); animation: k-ring-in .6s ease-out .2s both; }
+/* 280 px au plus : l'image fait 320 px, plus grande elle devient floue. */
+.fin-image img { position: relative; width: min(100%, 280px); aspect-ratio: 1; object-fit: cover; border-radius: 50%; box-shadow: 0 12px 34px rgb(20 40 100 / 14%); animation: k-ring-in .6s ease-out .2s both; }
 .fin-actions { grid-area: actions; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
 .fin-actions .button { min-height: 52px; padding: 14px 26px; font-size: 1rem; }
 .fin-activite .button.secondary { border-color: transparent; box-shadow: 0 6px 16px rgb(20 40 100 / 12%); }
@@ -1279,6 +1280,6 @@ body.is-fin #main { display: none; }
   .fin-texte { justify-items: center; text-align: center; }
   .fin-texte h1::before { left: 50%; translate: -50% 0; }
   .fin-ring { margin-left: 0; }
-  .fin-image img { width: min(70vw, 260px); }
+  .fin-image img { width: min(70vw, 240px); }
 }
 @media (prefers-reduced-motion: reduce) { .fin-activite, .fin-ring, .fin-ring-fg, .fin-image img, #main.is-back { animation: none; } #main.is-leaving { transition: none; } }
