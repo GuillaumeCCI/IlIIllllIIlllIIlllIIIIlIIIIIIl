@@ -27,5 +27,11 @@ if (!only) {
   const check = spawnSync(process.execPath, [join(root, 'outils/verif-contextes.mjs')], { stdio: 'inherit' });
   if (check.status !== 0) failed++;
 }
+// Contrôle commun, toujours : aucun fond refusé ne revient, sous aucun nom
+// (outils/fonds-interdits.json).
+{
+  const check = spawnSync(process.execPath, [join(root, 'outils/verif-fonds-interdits.mjs')], { stdio: 'inherit' });
+  if (check.status !== 0) failed++;
+}
 console.log(failed ? `\n${failed} module(s) en échec.` : '\nTous les tests passent.');
 process.exit(failed ? 1 : 0);

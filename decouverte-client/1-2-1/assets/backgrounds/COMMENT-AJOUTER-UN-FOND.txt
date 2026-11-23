@@ -77,3 +77,8 @@ REGLAGES FINS
 
 SITE PUBLIE
   Envoyez le fichier modifie sur GitHub, puis rechargez la page en ligne.
+
+FONDS INTERDITS : un fond refusé est enregistré dans outils/fonds-interdits.json
+(node outils/verif-fonds-interdits.mjs --ajouter <image> "<raison>").
+« npm test » échoue si une image de ce dessin revient, sous n importe quel nom,
+même redimensionnée ou convertie.
