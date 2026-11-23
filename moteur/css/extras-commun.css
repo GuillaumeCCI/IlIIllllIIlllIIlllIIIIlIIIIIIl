@@ -437,6 +437,9 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 /* Dans le lecteur du paquet SCORM, le logo est dans sa barre, à droite de
  * « Sommaire » : pas de second logo ici (embed.js, &hote=lecteur). */
 html[data-hote="lecteur"] .topbar::before { display: none; }
+/* Accueil réduit à une série (&theme=) : la rangée des séries n'en montre
+ * qu'une, déjà nommée par le grand titre et son avancement : masquée. */
+html[data-embed-theme] .series-bar { display: none; }
 
 @media (max-width: 720px) {
   .topbar::before { width: 124px; height: 24px; }

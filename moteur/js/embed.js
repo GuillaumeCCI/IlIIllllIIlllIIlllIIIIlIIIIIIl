@@ -109,10 +109,13 @@
           value.intro = `${n} exercice${n > 1 ? 's' : ''} · ${serie.label}.`;
           document.documentElement.dataset.embedTheme = serie.id;
           /* L'en-tête de l'accueil annonce tout le module (« Série 1-1-1 ·
-           * 4 séries, … ») : il ne nomme plus que le thème, en gras. */
+           * 4 séries, … »). Réduit à un thème, le grand titre de l'accueil
+           * le nomme déjà, avec son avancement : l'en-tête ne le répète pas
+           * (la rangée des séries, inutile avec une seule, est masquée dans
+           * extras-commun.css). */
           document.addEventListener('DOMContentLoaded', () => {
             const label = document.querySelector('.course-label');
-            if (label && /séries/.test(label.textContent)) label.textContent = serie.label;
+            if (label && /séries/.test(label.textContent)) label.style.display = 'none';
           });
         }
         catalog = value;
