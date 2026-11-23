@@ -120,7 +120,7 @@
     addEventListener('message', function (event) {
       var data = event.data;
       if (!data) return;
-      if (event.source === frame.contentWindow && (data.type === 'atelier-vente:height' || data.type === 'atelier-vente:suivi' || data.type === 'atelier-vente:plein-ecran')) {
+      if (event.source === frame.contentWindow && (data.type === 'atelier-vente:height' || data.type === 'atelier-vente:suivi' || data.type === 'atelier-vente:plein-ecran' || data.type === 'atelier-vente:voir')) {
         if (data.type === 'atelier-vente:suivi') lastSuivi = data;
         if (parent !== window) parent.postMessage(data, '*');
       } else if (event.source === parent && parent !== window && data.type === 'atelier-vente:hote-plein') {

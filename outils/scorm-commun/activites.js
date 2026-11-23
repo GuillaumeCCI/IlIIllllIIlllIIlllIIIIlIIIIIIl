@@ -31,7 +31,20 @@
     document.getElementById('suivi-alerte').hidden = false;
   }
 
-  frame.style.height = '900px';
+  /* LE CADRE À LA HAUTEUR DE L'ÉCRAN, les exercices défilent dedans. Ainsi
+   * une fenêtre qui s'ouvre (présentation, contexte…) se centre sur ce que
+   * l'on voit, et non au milieu d'un cadre plus haut que l'écran. Quand une
+   * fenêtre s'ouvre (`atelier-vente:voir`) ou qu'on clique dans les
+   * exercices, la page se place pour les montrer en entier. */
+  var ajuster = function () { frame.style.height = Math.max(480, window.innerHeight) + 'px'; };
+  ajuster();
+  window.addEventListener('resize', ajuster);
+  var voir = function () {
+    var haut = frame.getBoundingClientRect().top;
+    if (Math.abs(haut) > 2) window.scrollTo({ top: window.scrollY + haut, behavior: 'smooth' });
+  };
+  // Un clic dans les exercices : le cadre prend le focus, la page le perd.
+  window.addEventListener('blur', function () { setTimeout(function () { if (document.activeElement === frame) voir(); }, 0); });
 
   /* Les brouillons au nom de l'apprenant : un code tiré de son identifiant
    * sur la plateforme (SHA-256, jamais l'identifiant en clair) est ajouté à
@@ -151,10 +164,9 @@
   addEventListener('message', function (event) {
     var data = event.data;
     if (event.origin !== origine || event.source !== frame.contentWindow || !data) return;
-    if (data.type === 'atelier-vente:height' && data.height > 0) {
-      frame.style.height = Math.max(600, Math.min(20000, Math.ceil(data.height))) + 'px';
-      return;
-    }
+    // La hauteur annoncée ne sert plus : le cadre suit l'écran (plus haut).
+    if (data.type === 'atelier-vente:height') return;
+    if (data.type === 'atelier-vente:voir') { voir(); return; }
     if (data.type !== 'atelier-vente:suivi' || typeof data.module !== 'string' || !data.exercises) return;
     var total = Math.max(0, Math.min(500, +data.total || 0));
 
