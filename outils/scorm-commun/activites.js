@@ -44,6 +44,27 @@
     bloc.classList.toggle('is-fini', fait >= total);
   }
 
+  /* Totara garde 4 096 caractères par activité (cmi.suspend_data). Le suivi
+   * (fait, score) passe toujours ; les réponses écrites aussi tant qu'il y a
+   * la place : sinon on retire d'abord les plus longues, qui restent alors
+   * dans le navigateur de l'apprenant. */
+  var MAX = 4096;
+  function compacter(module, tout) {
+    var copie = {}, cles = [];
+    for (var k in tout) if (Object.prototype.hasOwnProperty.call(tout, k)) {
+      copie[k] = { values: tout[k].values || {}, done: !!tout[k].done };
+      if (typeof tout[k].score === 'number') copie[k].score = tout[k].score;
+      cles.push(k);
+    }
+    cles.sort(function (a, b) { return JSON.stringify(copie[b].values).length - JSON.stringify(copie[a].values).length; });
+    var texte = JSON.stringify({ m: module, e: copie });
+    for (var i = 0; texte.length > MAX && i < cles.length; i++) {
+      copie[cles[i]].values = {};
+      texte = JSON.stringify({ m: module, e: copie });
+    }
+    return texte.length > MAX ? JSON.stringify({ m: module, e: {} }) : texte;
+  }
+
   function enregistrer(module, exercices, total) {
     // Les réponses de la plateforme s'ajoutent à celles du navigateur : un
     // exercice fait ailleurs reste fait tant que la page ne l'a pas repris.
@@ -52,7 +73,13 @@
     for (var key in exercices) {
       if (!Object.prototype.hasOwnProperty.call(exercices, key)) continue;
       var nouveau = exercices[key], ancien = tout[key];
-      if (!ancien || !ancien.done || nouveau.done) tout[key] = nouveau;
+      if (!ancien || !ancien.done || nouveau.done) {
+        // Le score ne baisse jamais : on garde le meilleur bilan.
+        if (ancien && typeof ancien.score === 'number' && !(nouveau.score >= ancien.score)) {
+          nouveau = { values: nouveau.values, done: nouveau.done, score: ancien.score };
+        }
+        tout[key] = nouveau;
+      }
     }
     saved = { m: module, e: tout };
 
@@ -66,13 +93,7 @@
     afficher(fait, total);
     if (!lms) return;
 
-    if (!SCO.set('cmi.suspend_data', JSON.stringify(saved))) {
-      // Place limitée sur la plateforme : on garde au moins le suivi (fait,
-      // score), les réponses restent alors dans le navigateur.
-      var court = {};
-      for (var c in tout) if (Object.prototype.hasOwnProperty.call(tout, c)) court[c] = { values: {}, done: !!tout[c].done, score: tout[c].score };
-      SCO.set('cmi.suspend_data', JSON.stringify({ m: module, e: court }));
-    }
+    SCO.set('cmi.suspend_data', compacter(module, tout));
     if (notes.length) {
       var moyenne = notes.reduce(function (a, b) { return a + b; }, 0) / notes.length;
       SCO.set('cmi.core.score.min', '0');
@@ -102,13 +123,17 @@
     if (!rendu) {
       rendu = true;
       if (saved.m === data.module) {
-        var manque = false;
+        // Seulement les exercices dont les réponses ont tenu dans la place de
+        // la plateforme : un exercice « fait » sans ses réponses afficherait
+        // un corrigé vide (il reste compté comme fait ici).
+        var rendre = {}, manque = false;
         for (var k in saved.e) {
           if (!Object.prototype.hasOwnProperty.call(saved.e, k)) continue;
-          var ici = data.exercises[k];
-          if (!ici || (saved.e[k].done && !ici.done)) { manque = true; break; }
+          var ici = data.exercises[k], la = saved.e[k];
+          if (!la || !la.values || !Object.keys(la.values).length) continue;
+          if (!ici || (la.done && !ici.done)) { rendre[k] = la; manque = true; }
         }
-        if (manque) frame.contentWindow.postMessage({ type: 'atelier-vente:etat', module: data.module, exercises: saved.e }, origine);
+        if (manque) frame.contentWindow.postMessage({ type: 'atelier-vente:etat', module: data.module, exercises: rendre }, origine);
       }
     }
     enregistrer(data.module, data.exercises, total);
