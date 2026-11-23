@@ -20,8 +20,16 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
-const [src, out] = process.argv.slice(2);
-if (!src || !out) { console.error('usage : node outils/scorm-depuis-mbz.mjs <dossier-mbz> <sortie.zip>'); process.exit(1); }
+const args = process.argv.slice(2);
+/* Deux formes de paquet :
+ *   · par défaut, LE LECTEUR : un seul élément pour la plateforme, avec notre
+ *     sommaire (menu burger) ; chaque activité s'ouvre dedans et le lecteur
+ *     suit tout (commun/lecteur.js) ;
+ *   · --multi : un élément par activité, suivi ligne par ligne par la
+ *     plateforme, avec son propre sommaire. */
+const MULTI = args.includes('--multi');
+const [src, out] = args.filter(a => !a.startsWith('--'));
+if (!src || !out) { console.error('usage : node outils/scorm-depuis-mbz.mjs [--multi] <dossier-mbz> <sortie.zip>'); process.exit(1); }
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const RACINE = path.resolve(ICI, '..');
 const SITE = 'https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/';
@@ -74,7 +82,14 @@ const copier = (de, rel) => { const f = path.join(tmp, rel); fs.mkdirSync(path.d
 
 // Les fichiers communs : liaison SCORM, page d'exercices, styles, polices.
 const COMMUN = path.join(ICI, 'scorm-commun');
-for (const f of fs.readdirSync(COMMUN)) copier(path.join(COMMUN, f), `commun/${f}`);
+for (const f of fs.readdirSync(COMMUN)) {
+  if (/^lecteur\./.test(f) && MULTI) continue;
+  copier(path.join(COMMUN, f), f === 'lecteur.html' ? f : `commun/${f}`);
+}
+// L'image du parcours (en tête du sommaire).
+const coursCtx = (/contextid="(\d+)"/.exec(lire('course/course.xml')) || [])[1];
+const imageCours = fichiers.find(f => f.contextid === coursCtx && f.component === 'course' && f.filearea === 'images' && /^image\//.test(f.mimetype));
+if (imageCours && !MULTI) copier(blob(imageCours), `commun/parcours${path.extname(imageCours.filename).toLowerCase() || '.png'}`);
 for (const g of ['400', '700', '800']) copier(path.join(RACINE, `moteur/assets/fonts/fira-sans-${g}.woff2`), `commun/fira-sans-${g}.woff2`);
 
 /* Les images et fichiers d'un texte (@@PLUGINFILE@@) sont copiés à côté. */
@@ -98,7 +113,7 @@ function page({ titre, corps, script = '', tete = '' }) {
 </head>
 <body>
 <main class="wrap">
-<h1 class="titre">${esc(titre)}</h1>
+${MULTI ? `<h1 class="titre">${esc(titre)}</h1>` : '<!-- titre : dans la barre du lecteur -->'}
 ${corps}
 </main>
 ${script}
@@ -110,6 +125,8 @@ const boutonTermine = `<div class="mc" id="mc"><button class="btn" type="button"
 const achevement = manuel => manuel ? '<script>SCO.manualComplete("mc");</script>' : '<script>SCO.completeOnView();</script>';
 
 const items = [];
+const parcours = [];   // le sommaire du lecteur : sections et éléments
+const sommaire = [];   // les éléments de la section en cours
 const ressources = [];
 let n = 0;
 for (const section of sections) {
@@ -128,6 +145,7 @@ for (const section of sections) {
     const manuel = champ(modXml, 'completion') === '1';
     const dossier = `${String(++n).padStart(2, '0')}_${type}`;
     let href;
+    let genre = type; // pour le lecteur : scorm, exercices, page, resource…
 
     if (type === 'scorm') {
       // Le module tel qu'il a été déposé : ses fichiers, et sa page de lancement.
@@ -146,6 +164,7 @@ for (const section of sections) {
       const iframe = /<iframe[^>]*src="([^"]+)"[^>]*><\/iframe>/i.exec(contenu);
       const exercices = iframe && dec(iframe[1]).startsWith(SITE);
       if (exercices) {
+        genre = 'exercices';
         // Nos exercices : la page suit l'apprenant (commun/activites.js).
         const texte = contenu.replace(iframe[0], '');
         const adresse = dec(iframe[1]);
@@ -195,9 +214,20 @@ for (const section of sections) {
     // Une ressource par SCO, avec ses fichiers (les SCORM repris gardent leur
     // propre liste : on ne la répète pas, la plateforme décompresse tout).
     ressources.push(`    <resource identifier="RES_${id}" type="webcontent" adlcp:scormtype="sco" href="${escXml(href)}">\n      <file href="${escXml(href)}"/>\n    </resource>`);
-    console.log(`  ✓ ${dossier} · ${type} · ${nom}`);
+    sommaire.push({ id, titre: nom, href, type: genre });
+    console.log(`  ✓ ${dossier} · ${genre} · ${nom}`);
   }
   if (enfants.length) items.push(`      <item identifier="SEC_${section.numero}">\n        <title>${escXml(section.nom || `Section ${section.numero}`)}</title>\n${enfants.join('\n')}\n      </item>`);
+  if (sommaire.length) parcours.push({ nom: section.nom || `Section ${section.numero}`, items: sommaire.splice(0) });
+}
+
+if (!MULTI) {
+  // Le lecteur : son sommaire (commun/parcours.js), et un seul élément pour
+  // la plateforme.
+  const image = fs.readdirSync(path.join(tmp, 'commun')).find(f => /^parcours\.(png|jpe?g|gif|webp|svg)$/.test(f));
+  ecrire('commun/parcours.js', `window.PARCOURS = ${JSON.stringify({ titre: titreCours, image: image ? `commun/${image}` : '', sections: parcours }, null, 1)};\n`);
+  items.splice(0, items.length, `      <item identifier="IT_LECTEUR" identifierref="RES_LECTEUR" isvisible="true">\n        <title>${escXml(titreCours)}</title>\n      </item>`);
+  ressources.splice(0, ressources.length, `    <resource identifier="RES_LECTEUR" type="webcontent" adlcp:scormtype="sco" href="lecteur.html">\n      <file href="lecteur.html"/>\n    </resource>`);
 }
 
 ecrire('imsmanifest.xml', `<?xml version="1.0" encoding="UTF-8"?>

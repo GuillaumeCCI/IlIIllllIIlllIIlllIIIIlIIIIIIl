@@ -1,0 +1,62 @@
+/* Le lecteur du parcours : une barre, le sommaire (menu burger), le contenu. */
+@font-face { font-family: 'Fira Sans'; font-weight: 400; src: url('fira-sans-400.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Fira Sans'; font-weight: 700; src: url('fira-sans-700.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Fira Sans'; font-weight: 800; src: url('fira-sans-800.woff2') format('woff2'); font-display: swap; }
+:root { --navy: #13205c; --pale: #e8eefb; --ring: #b4bfd8; --teal: #2a8f8f; --muted: #5b6a8f; --barre: 60px; }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { font-family: 'Fira Sans', system-ui, sans-serif; color: var(--navy); background: #fff; overflow: hidden; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* La barre */
+.barre { position: relative; z-index: 3; height: var(--barre); display: flex; align-items: center; gap: 16px; padding: 0 16px; background: #fff; box-shadow: 0 1px 0 #dde3f0, 0 4px 14px rgb(20 40 100 / 5%); }
+.burger { display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 14px 0 12px; border: 0; border-radius: 10px; background: var(--pale); color: var(--navy); font: inherit; font-weight: 700; cursor: pointer; }
+.burger:hover, .burger[aria-expanded="true"] { background: #d9e3f8; }
+.burger-ico { display: grid; gap: 4px; width: 18px; }
+.burger-ico i { display: block; height: 2.2px; border-radius: 2px; background: currentColor; }
+.barre-titre { flex: 1; min-width: 0; margin: 0; font-weight: 800; font-size: 1.08rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.barre-avance { margin: 0; color: var(--muted); font-size: .92rem; white-space: nowrap; }
+.barre-avance b { color: var(--teal); }
+.barre-avance .hors { color: #b0305a; }
+.fleches { display: flex; gap: 6px; }
+.fleche { display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 10px; background: var(--pale); color: var(--navy); cursor: pointer; }
+.fleche:hover { background: #d9e3f8; }
+.fleche:disabled { opacity: .35; cursor: default; }
+.plein .ico-fermer, .is-plein .plein .ico-ouvrir { display: none; }
+.is-plein .plein .ico-fermer { display: block; }
+button:focus-visible, a:focus-visible { outline: 3px solid #7fa2f0; outline-offset: 2px; }
+
+/* Le contenu */
+.scene { position: absolute; inset: var(--barre) 0 0 0; }
+.contenu { display: block; width: 100%; height: 100%; border: 0; }
+
+/* Le sommaire, par-dessus le contenu */
+.voile { position: fixed; inset: var(--barre) 0 0 0; z-index: 1; background: rgb(19 32 92 / 18%); }
+.sommaire { position: fixed; z-index: 2; top: var(--barre); bottom: 0; left: 0; width: min(360px, 88vw); overflow-y: auto; scrollbar-width: none; padding: 18px 16px 28px; background: #fff; box-shadow: 8px 0 28px rgb(20 40 100 / 14%); opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility 0s linear .35s; }
+.sommaire::-webkit-scrollbar { display: none; }
+.som-ouvert .sommaire { opacity: 1; visibility: visible; transition: opacity .35s ease; }
+.som-tete { display: flex; align-items: center; gap: 12px; padding: 14px 16px; margin-bottom: 18px; border-radius: 14px; background: var(--pale); }
+.som-tete img { order: 2; width: 84px; height: auto; margin-left: auto; }
+.som-titre { margin: 0; font-weight: 800; font-size: 1.08rem; line-height: 1.3; }
+.som-section { margin-bottom: 14px; }
+.som-sec-titre { display: flex; align-items: flex-start; gap: 10px; width: 100%; padding: 6px 4px; border: 0; background: none; color: var(--navy); font: inherit; font-weight: 700; font-size: 1.02rem; line-height: 1.35; text-align: left; cursor: pointer; }
+.som-sec-titre svg { flex: none; margin-top: 3px; color: var(--muted); transition: transform .25s ease; }
+.som-section:not(.is-ouverte) .som-sec-titre svg { transform: rotate(180deg); }
+.som-section ul { list-style: none; margin: 6px 0 0; padding: 0; }
+.som-section:not(.is-ouverte) ul { display: none; }
+.som-item { display: flex; align-items: center; gap: 12px; padding: 9px 12px 9px 8px; margin: 2px 0; border-radius: 10px; color: #2a46b8; text-decoration: none; line-height: 1.35; }
+.som-item:hover { background: #f3f6fd; }
+.som-item.is-actif { background: var(--navy); color: #fff; }
+.som-nom { min-width: 0; }
+
+/* Les ronds : à faire (anneau), en cours (à moitié plein), fait (coche sarcelle). */
+.rond { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 2px var(--ring); }
+.rond.is-encours { background: linear-gradient(90deg, var(--navy) 50%, #fff 50%); box-shadow: inset 0 0 0 2px var(--navy); }
+.rond.is-fait { background: var(--teal); box-shadow: none; color: #fff; }
+.is-actif .rond { box-shadow: inset 0 0 0 2px #fff; }
+.is-actif .rond.is-encours { background: linear-gradient(90deg, #fff 50%, var(--navy) 50%); }
+.is-actif .rond.is-fait { box-shadow: 0 0 0 2px #fff; }
+
+@media (max-width: 640px) {
+  .burger-txt, .barre-avance { display: none; }
+}

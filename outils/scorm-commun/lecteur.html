@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parcours</title>
+<link rel="stylesheet" href="commun/lecteur.css">
+<script src="commun/scorm.js"></script>
+<script src="commun/parcours.js"></script>
+</head>
+<body>
+<header class="barre">
+  <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="sommaire" aria-label="Ouvrir le sommaire du parcours">
+    <span class="burger-ico" aria-hidden="true"><i></i><i></i><i></i></span><span class="burger-txt">Sommaire</span>
+  </button>
+  <p class="barre-titre" id="barre-titre"></p>
+  <p class="barre-avance" id="barre-avance"></p>
+  <nav class="fleches" aria-label="Élément précédent ou suivant">
+    <button type="button" class="fleche" id="prec" aria-label="Élément précédent"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="fleche" id="suiv" aria-label="Élément suivant"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </nav>
+  <button type="button" class="fleche plein" id="plein" aria-label="Passer en plein écran" title="Plein écran" hidden>
+    <svg class="ico-ouvrir" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg class="ico-fermer" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</header>
+<div class="voile" id="voile" hidden></div>
+<aside class="sommaire" id="sommaire" aria-label="Sommaire du parcours" aria-hidden="true">
+  <div class="som-tete" id="som-tete"></div>
+  <nav id="som-liste"></nav>
+</aside>
+<main class="scene" id="scene"></main>
+<script src="commun/lecteur.js"></script>
+</body>
+</html>
