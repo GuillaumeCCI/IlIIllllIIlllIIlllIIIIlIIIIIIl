@@ -66,6 +66,13 @@
   }
 
   if (raw === null) return;
+  /* &apprenant=… (paquet SCORM) : un code tiré de l'identifiant de
+   * l'apprenant sur la plateforme (jamais l'identifiant lui-même). Les
+   * brouillons du navigateur sont rangés à son nom (core.js) : sur un
+   * ordinateur partagé, personne ne voit les réponses d'un autre, et le
+   * SCORM ne reprend pas un vieux brouillon tapé hors de lui. */
+  const apprenant = /^[a-f0-9]{16,64}$/.test(params.get('apprenant') || '') ? params.get('apprenant') : null;
+  if (apprenant) root.ATELIER_APPRENANT = apprenant;
   const preview = raw === 'apercu';
   const mode = raw === 'solo' || preview ? 'solo' : 'module';
   document.documentElement.dataset.embed = mode;
@@ -119,6 +126,7 @@
     url.searchParams.set('embed', mode);
     if (theme) url.searchParams.set('theme', theme);
     if (only) url.searchParams.set('ex', only.join(','));
+    if (apprenant) url.searchParams.set('apprenant', apprenant);
     link.href = url.pathname + url.search + url.hash;
   }, true);
 

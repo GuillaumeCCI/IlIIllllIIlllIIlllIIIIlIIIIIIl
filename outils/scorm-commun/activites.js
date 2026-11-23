@@ -32,7 +32,28 @@
   }
 
   frame.style.height = '900px';
-  frame.src = src;
+
+  /* Les brouillons au nom de l'apprenant : un code tiré de son identifiant
+   * sur la plateforme (SHA-256, jamais l'identifiant en clair) est ajouté à
+   * l'adresse des exercices. Chacun les siens, même sur un ordinateur
+   * partagé ; un vieux brouillon tapé hors du SCORM ne revient pas. */
+  function hexa(buf) { return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); }
+  function code(id) {
+    var texte = 'atelier-vente:' + id;
+    if (window.crypto && crypto.subtle && window.TextEncoder) {
+      return crypto.subtle.digest('SHA-256', new TextEncoder().encode(texte)).then(function (b) { return hexa(b).slice(0, 32); });
+    }
+    // Secours (page non sécurisée) : deux empreintes FNV-1a de 32 bits.
+    var h1 = 0x811c9dc5, h2 = 0x01000193;
+    for (var i = 0; i < texte.length; i++) { h1 = Math.imul(h1 ^ texte.charCodeAt(i), 16777619) >>> 0; h2 = Math.imul(h2 ^ texte.charCodeAt(i), 2246822519) >>> 0; }
+    return Promise.resolve(('0000000' + h1.toString(16)).slice(-8) + ('0000000' + h2.toString(16)).slice(-8));
+  }
+  var ident = lms ? SCO.get('cmi.core.student_id') : '';
+  (ident ? code(ident) : Promise.resolve('')).then(function (c) {
+    var url = new URL(src, location.href);
+    if (c) url.searchParams.set('apprenant', c);
+    frame.src = url.href;
+  }, function () { frame.src = src; });
 
   function afficher(fait, total) {
     var bloc = document.getElementById('suivi');

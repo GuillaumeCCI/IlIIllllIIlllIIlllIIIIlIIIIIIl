@@ -72,11 +72,16 @@
     return clean;
   }
 
+  /* Dans un paquet SCORM, les brouillons sont rangés au nom de l'apprenant
+   * connecté (code posé par embed.js) : chacun les siens, même sur un
+   * ordinateur partagé. Ailleurs (site, page de cours), la clé du module. */
+  const storeKey = catalog.storageKey + (root.ATELIER_APPRENANT ? `-${root.ATELIER_APPRENANT}` : '');
+
   /* Les exercices du module hors de cette page (une page réduite à une
    * série) : gardés tels quels, pour que l'enregistrement ne les efface pas. */
   let others = {};
   try {
-    const saved = JSON.parse(localStorage.getItem(catalog.storageKey) || 'null');
+    const saved = JSON.parse(localStorage.getItem(storeKey) || 'null');
     if (saved && saved.version === 2 && saved.exercises && typeof saved.exercises === 'object') {
       for (const [key, raw] of Object.entries(saved.exercises)) {
         if (!allKeys.includes(key)) { if (/^[\w.-]+$/.test(key)) others[key] = raw; continue; }
@@ -138,7 +143,7 @@
     report();
     const status = $('#save-status');
     try {
-      localStorage.setItem(catalog.storageKey, JSON.stringify({ version: 2, exercises: { ...others, ...state.exercises } }));
+      localStorage.setItem(storeKey, JSON.stringify({ version: 2, exercises: { ...others, ...state.exercises } }));
       storageAvailable = true;
       if (status) { status.textContent = 'Sauvegardé ici'; status.classList.remove('save-warning'); }
       if (notify) toast('Brouillon enregistré dans ce navigateur.');

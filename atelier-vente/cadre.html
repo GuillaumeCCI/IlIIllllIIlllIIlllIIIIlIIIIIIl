@@ -46,7 +46,9 @@
       var theme = params.get('theme') || '';
       var ex = params.get('ex') || '';
       if (!/^\d+-\d+-\d+$/.test(module) || (theme && !/^s\d+$/.test(theme)) || (ex && !/^\d+\.\d+(,\d+\.\d+)*$/.test(ex))) return null;
-      return module + '/index.html?embed=module' + (theme ? '&theme=' + theme : '') + (theme && ex ? '&ex=' + ex : '');
+      // &apprenant : le code de l'apprenant du paquet SCORM (voir embed.js).
+      var apprenant = /^[a-f0-9]{16,64}$/.test(params.get('apprenant') || '') ? params.get('apprenant') : '';
+      return module + '/index.html?embed=module' + (theme ? '&theme=' + theme : '') + (theme && ex ? '&ex=' + ex : '') + (apprenant ? '&apprenant=' + apprenant : '');
     }
 
     var src = target();
