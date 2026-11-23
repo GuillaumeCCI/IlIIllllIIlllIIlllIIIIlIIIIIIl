@@ -113,12 +113,18 @@
     // la page intérieure remontent au LMS ; les réponses que la plateforme
     // rend (suivi SCORM) redescendent vers la page intérieure.
     var lastSuivi = null;
+    var lastHote = null;
+    frame.addEventListener('load', function () { if (lastHote) frame.contentWindow.postMessage(lastHote, location.origin); });
     addEventListener('message', function (event) {
       var data = event.data;
       if (!data) return;
-      if (event.source === frame.contentWindow && (data.type === 'atelier-vente:height' || data.type === 'atelier-vente:suivi')) {
+      if (event.source === frame.contentWindow && (data.type === 'atelier-vente:height' || data.type === 'atelier-vente:suivi' || data.type === 'atelier-vente:plein-ecran')) {
         if (data.type === 'atelier-vente:suivi') lastSuivi = data;
         if (parent !== window) parent.postMessage(data, '*');
+      } else if (event.source === parent && parent !== window && data.type === 'atelier-vente:hote-plein') {
+        // Le plein écran du lecteur SCORM : son état descend vers l'exercice.
+        lastHote = data;
+        frame.contentWindow.postMessage(data, location.origin);
       } else if (event.source === parent && parent !== window && data.type === 'atelier-vente:etat') {
         frame.contentWindow.postMessage(data, location.origin);
       } else if (event.source === parent && parent !== window && data.type === 'atelier-vente:demande' && lastSuivi) {

@@ -235,6 +235,28 @@
     };
     document.addEventListener('fullscreenchange', suivre);
     document.addEventListener('webkitfullscreenchange', suivre);
+
+    /* Nos exercices ont leur propre bouton plein écran : dans le lecteur, il
+     * commande CE plein écran (un seul, jamais un second dans le premier :
+     * en sortir ferait tout quitter). Le lecteur leur annonce son état à
+     * chaque changement et à chaque élément ouvert. */
+    var annoncer = function () {
+      var f = scene.querySelector('iframe');
+      if (f && f.contentWindow) f.contentWindow.postMessage({ type: 'atelier-vente:hote-plein', actif: enPlein() }, location.origin === 'null' ? '*' : location.origin);
+    };
+    document.addEventListener('fullscreenchange', annoncer);
+    document.addEventListener('webkitfullscreenchange', annoncer);
+    scene.addEventListener('load', annoncer, true); // le chargement de chaque élément
+    window.addEventListener('message', function (event) {
+      var f = scene.querySelector('iframe');
+      if (!f || event.source !== f.contentWindow || !event.data || event.data.type !== 'atelier-vente:plein-ecran') return;
+      var voulu = !!event.data.actif;
+      if (voulu === enPlein()) return annoncer();
+      try {
+        var p = voulu ? (docEl.requestFullscreen || docEl.webkitRequestFullscreen).call(docEl) : (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+        if (p && p.catch) p.catch(annoncer);
+      } catch (e) { annoncer(); }
+    });
   }
 
   // On reprend là où l'on s'était arrêté, sinon au premier élément pas fait.

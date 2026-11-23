@@ -508,8 +508,11 @@
     return document;
   })();
   const canFullscreen = Boolean(host.fullscreenEnabled || host.webkitFullscreenEnabled);
-  const isFullscreen = () => Boolean(host.fullscreenElement || host.webkitFullscreenElement);
+  // Dans le lecteur SCORM, le plein écran est le sien (embed.js).
+  const hostScreen = () => (root.AtelierPleinEcran && root.AtelierPleinEcran.delegue ? root.AtelierPleinEcran : null);
+  const isFullscreen = () => (hostScreen() ? hostScreen().actif : Boolean(host.fullscreenElement || host.webkitFullscreenElement));
   function enterFullscreen() {
+    if (hostScreen()) { if (!hostScreen().actif) hostScreen().basculer(); return; }
     if (!canFullscreen || isFullscreen()) return;
     const page = host.documentElement;
     try {
@@ -580,6 +583,14 @@
     </div>`;
     entrance.appendChild(style);
     document.body.appendChild(entrance);
+    // Le lecteur SCORM annonce qu'il est déjà en plein écran (souvent juste
+    // après l'apparition de l'écran) : on saute alors cette étape.
+    if (root.AtelierPleinEcran) root.AtelierPleinEcran.suivre(actif => {
+      const step = entrance && entrance.querySelector('[data-step="screen"]');
+      if (!actif || !step || step.hidden) return;
+      step.hidden = true;
+      entrance.querySelector('[data-step="music"]').hidden = false;
+    });
     requestAnimationFrame(() => requestAnimationFrame(() => entrance.classList.add('is-shown')));
     // « Avec » : le geste a déjà lancé la musique (écoute en capture, plus
     // haut). « Sans » : la musique est coupée et le choix mémorisé.

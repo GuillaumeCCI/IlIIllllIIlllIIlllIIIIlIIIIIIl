@@ -108,6 +108,21 @@
     envoi = setTimeout(SCO.commit, 3000);
   }
 
+  /* Le plein écran du lecteur : son état descend vers les exercices (et
+   * leur est redonné à chaque chargement), leur commande remonte. */
+  var hote = null;
+  frame.addEventListener('load', function () { if (hote) frame.contentWindow.postMessage(hote, origine); });
+  addEventListener('message', function (event) {
+    var data = event.data;
+    if (!data || window.parent === window) return;
+    if (event.source === window.parent && data.type === 'atelier-vente:hote-plein') {
+      hote = { type: data.type, actif: !!data.actif };
+      frame.contentWindow.postMessage(hote, origine);
+    } else if (event.source === frame.contentWindow && event.origin === origine && data.type === 'atelier-vente:plein-ecran') {
+      window.parent.postMessage({ type: data.type, actif: !!data.actif }, location.origin === 'null' ? '*' : location.origin);
+    }
+  });
+
   addEventListener('message', function (event) {
     var data = event.data;
     if (event.origin !== origine || event.source !== frame.contentWindow || !data) return;

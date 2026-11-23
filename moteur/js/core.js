@@ -654,7 +654,10 @@
     try { if (window.parent !== window && window.parent.document.documentElement.hasAttribute('data-cadre')) return window.parent.document; } catch { /* autre origine */ }
     return document;
   })();
-  const isFullscreen = () => Boolean(fullscreenHost.fullscreenElement || fullscreenHost.webkitFullscreenElement);
+  /* Dans le lecteur SCORM, le plein écran est le sien (embed.js) : le bouton
+   * le commande et suit son état. */
+  const hostScreen = () => (root.AtelierPleinEcran && root.AtelierPleinEcran.delegue ? root.AtelierPleinEcran : null);
+  const isFullscreen = () => (hostScreen() ? hostScreen().actif : Boolean(fullscreenHost.fullscreenElement || fullscreenHost.webkitFullscreenElement));
 
   function paintFullscreen() {
     const control = $('[data-action="fullscreen"]');
@@ -667,6 +670,7 @@
   }
 
   async function toggleFullscreen() {
+    if (hostScreen()) { hostScreen().basculer(); return; }
     try {
       if (isFullscreen()) await (fullscreenHost.exitFullscreen?.() ?? fullscreenHost.webkitExitFullscreen?.());
       else await (fullscreenHost.documentElement.requestFullscreen?.() ?? fullscreenHost.documentElement.webkitRequestFullscreen?.());
@@ -682,6 +686,7 @@
     control.addEventListener('click', toggleFullscreen);
     fullscreenHost.addEventListener('fullscreenchange', paintFullscreen);
     fullscreenHost.addEventListener('webkitfullscreenchange', paintFullscreen);
+    if (root.AtelierPleinEcran) root.AtelierPleinEcran.suivre(paintFullscreen);
     paintFullscreen();
   }
 

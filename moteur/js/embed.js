@@ -40,6 +40,31 @@
     return;
   }
 
+  /* LE PLEIN ÉCRAN DE L'HÔTE. Dans le lecteur du paquet SCORM, c'est lui
+   * qui a le plein écran (barre, sommaire, Storyline, pages…). Il l'annonce
+   * (message `atelier-vente:hote-plein`, relayé par la page d'activités et le
+   * cadre) : nos boutons plein écran le commandent alors (message
+   * `atelier-vente:plein-ecran`) au lieu d'ouvrir un second plein écran
+   * dans le premier — en sortir ferait tout quitter. Le clic de l'apprenant
+   * vaut aussi pour les pages parentes : l'hôte a le droit de basculer. */
+  if (!root.AtelierPleinEcran && root.parent !== root) {
+    let delegue = false, actif = false;
+    const abonnes = [];
+    root.addEventListener('message', event => {
+      const data = event.data;
+      if (event.source !== root.parent || !data || data.type !== 'atelier-vente:hote-plein') return;
+      delegue = true;
+      actif = Boolean(data.actif);
+      abonnes.forEach(fn => { try { fn(actif); } catch { /* sans effet */ } });
+    });
+    root.AtelierPleinEcran = Object.freeze({
+      get delegue() { return delegue; },
+      get actif() { return actif; },
+      basculer() { root.parent.postMessage({ type: 'atelier-vente:plein-ecran', actif: !actif }, '*'); },
+      suivre(fn) { abonnes.push(fn); }
+    });
+  }
+
   if (raw === null) return;
   const preview = raw === 'apercu';
   const mode = raw === 'solo' || preview ? 'solo' : 'module';
