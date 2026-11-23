@@ -1,0 +1,38 @@
+/* Pages du paquet SCORM : sobres, dans les couleurs du site (bleu nuit,
+ * bleu très pâle, sarcelle). */
+@font-face { font-family: 'Fira Sans'; font-weight: 400; src: url('fira-sans-400.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Fira Sans'; font-weight: 700; src: url('fira-sans-700.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Fira Sans'; font-weight: 800; src: url('fira-sans-800.woff2') format('woff2'); font-display: swap; }
+:root { --navy: #13205c; --pale: #e8eefb; --teal: #2a8f8f; --teal-pale: #edf6f6; --muted: #5b6a8f; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font-family: 'Fira Sans', system-ui, sans-serif; color: var(--navy); background: #fff; line-height: 1.55; font-size: 16px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 28px clamp(16px, 3vw, 40px) 48px; }
+.titre { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; line-height: 1.15; margin: 0 0 18px; }
+.intro { margin-bottom: 20px; }
+.intro img { max-width: 100%; height: auto; }
+.intro h3, .intro h4 { margin: 18px 0 8px; }
+.intro iframe { max-width: 100%; }
+a { color: #1249d8; }
+
+.btns { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 10px; border: 0; background: var(--navy); color: #fff; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+.btn.sec { background: var(--pale); color: var(--navy); }
+.btn:disabled { cursor: default; }
+.btn.mc-done { background: var(--teal-pale); color: var(--teal); }
+
+.doc { margin: 22px 0; padding: 20px 22px; border-radius: 14px; background: var(--pale); }
+.doc-nom { margin: 0; font-weight: 700; }
+.pdf { width: 100%; height: 80vh; border: 0; margin-top: 12px; border-radius: 10px; background: #fff; }
+
+.mc { margin-top: 28px; }
+.mc-msg { color: var(--muted); margin: 8px 0 0; }
+
+/* La progression des exercices, au-dessus du cadre. */
+.suivi { display: flex; align-items: center; gap: 18px; margin: 0 0 14px; padding: 12px 18px; border-radius: 12px; background: var(--pale); }
+.suivi-texte { margin: 0; flex: 1; }
+.suivi-barre { flex: 0 0 min(260px, 35%); height: 8px; border-radius: 4px; background: #fff; overflow: hidden; }
+.suivi-barre span { display: block; height: 100%; width: 0; border-radius: 4px; background: var(--teal); transition: width .6s ease; }
+.suivi.is-fini { background: var(--teal-pale); }
+.suivi-alerte { margin: 0 0 14px; color: var(--muted); }
+.exercices { display: block; width: 100%; border: 0; }

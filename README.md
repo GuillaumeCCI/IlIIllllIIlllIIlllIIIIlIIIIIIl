@@ -37,3 +37,7 @@ Un fichier de `moteur/` sert à tous les modules de tous les parcours : le modif
 
 - Carte « citation client » : variables `--client-card-*` en fin de `css/extras.css` ; portraits page par page dans `js/catalog.js` (rubrique `portraits`).
 - Les captures de contrôle (`captures/`) et les maquettes (`references/`) restent sur l’ordinateur, jamais publiées.
+
+## Paquet SCORM depuis une sauvegarde de la plateforme
+
+`node outils/scorm-depuis-mbz.mjs <sauvegarde .mbz décompressée> <sortie.zip>` fabrique un paquet SCORM 1.2 : un élément suivi par activité, dans l'ordre des sections (SCORM repris tels quels, pages, fichiers à télécharger, achèvement manuel quand la sauvegarde le prévoit, temps passé). Une page qui affiche nos exercices devient une page suivie (`outils/scorm-commun/activites.js`) : les exercices lui envoient leur état (`atelier-vente:suivi`, depuis `moteur/js/core.js`, relayé par `cadre.html`), elle le transmet à la plateforme (exercices faits, « terminé » quand toute la série est faite, score moyen des bilans, réponses rendues sur un autre ordinateur par `atelier-vente:etat`).

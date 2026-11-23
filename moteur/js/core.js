@@ -50,27 +50,38 @@
   let lastDialogTrigger;
 
   /* Ne restaure que le schéma attendu : un brouillon endommagé ne bloque pas
-   * l'application, il est simplement ignoré. */
+   * l'application, il est simplement ignoré. Sert aussi aux réponses rendues
+   * par la plateforme (suivi SCORM, plus bas). */
+  function cleanEntry(entry) {
+    if (!entry || typeof entry !== 'object') return null;
+    const values = {};
+    for (const [field, value] of Object.entries(entry.values || {})) {
+      if (!/^[a-zA-Z][a-zA-Z0-9_]*$/.test(field) || field === '__proto__' || field === 'constructor') continue;
+      if (typeof value === 'string') values[field] = value.slice(0, 4000);
+      else if (typeof value === 'boolean' || (typeof value === 'number' && Number.isFinite(value))) values[field] = value;
+      // Les tableaux servent aux exercices de manipulation : placements
+      // (chaînes ou nombres) et marquages (booléens).
+      else if (Array.isArray(value)) values[field] = value.slice(0, 64).map(item =>
+        typeof item === 'string' ? item.slice(0, 400)
+        : typeof item === 'boolean' ? item
+        : typeof item === 'number' && Number.isFinite(item) ? item
+        : null);
+    }
+    const clean = { values, done: entry.done === true };
+    if (typeof entry.score === 'number' && entry.score >= 0 && entry.score <= 1) clean.score = entry.score;
+    return clean;
+  }
+
+  /* Les exercices du module hors de cette page (une page réduite à une
+   * série) : gardés tels quels, pour que l'enregistrement ne les efface pas. */
+  let others = {};
   try {
     const saved = JSON.parse(localStorage.getItem(catalog.storageKey) || 'null');
     if (saved && saved.version === 2 && saved.exercises && typeof saved.exercises === 'object') {
-      for (const key of allKeys) {
-        const entry = saved.exercises[key];
-        if (!entry || typeof entry !== 'object') continue;
-        const values = {};
-        for (const [field, value] of Object.entries(entry.values || {})) {
-          if (!/^[a-zA-Z][a-zA-Z0-9_]*$/.test(field) || field === '__proto__' || field === 'constructor') continue;
-          if (typeof value === 'string') values[field] = value.slice(0, 4000);
-          else if (typeof value === 'boolean' || (typeof value === 'number' && Number.isFinite(value))) values[field] = value;
-          // Les tableaux servent aux exercices de manipulation : placements
-          // (chaînes ou nombres) et marquages (booléens).
-          else if (Array.isArray(value)) values[field] = value.slice(0, 64).map(item =>
-            typeof item === 'string' ? item.slice(0, 400)
-            : typeof item === 'boolean' ? item
-            : typeof item === 'number' && Number.isFinite(item) ? item
-            : null);
-        }
-        state.exercises[key] = { values, done: entry.done === true };
+      for (const [key, raw] of Object.entries(saved.exercises)) {
+        if (!allKeys.includes(key)) { if (/^[\w.-]+$/.test(key)) others[key] = raw; continue; }
+        const clean = cleanEntry(raw);
+        if (clean) state.exercises[key] = clean;
       }
     }
   } catch { storageAvailable = false; }
@@ -80,11 +91,54 @@
   const hasDraft = key => Object.keys(entry(key).values).length > 0;
   const completedCount = () => allKeys.filter(isDone).length;
 
+  /* LE SUIVI (paquet SCORM). Quand la page est affichée dans une autre
+   * (cadre, puis page SCORM de la plateforme), elle lui dit où en est
+   * l'apprenant : exercices faits, score de chaque bilan, réponses. La page
+   * SCORM le transmet à la plateforme. En retour, la plateforme peut rendre
+   * des réponses enregistrées ailleurs (autre ordinateur) : elles s'ajoutent
+   * à celles du navigateur, sans jamais rien effacer, puis la page se
+   * recharge une fois pour les afficher. */
+  const embedded = (() => { try { return root.parent !== root; } catch { return true; } })();
+  function report() {
+    if (!embedded || document.documentElement.dataset.preview) return;
+    const exercises = {};
+    for (const key of allKeys) if (state.exercises[key]) exercises[key] = state.exercises[key];
+    try {
+      root.parent.postMessage({
+        type: 'atelier-vente:suivi',
+        module: catalog.storageKey,
+        total: allKeys.length,
+        done: allKeys.filter(isDone),
+        exercises
+      }, '*');
+    } catch { /* page hôte injoignable : rien à suivre */ }
+  }
+  root.addEventListener('message', event => {
+    const data = event.data;
+    if (!embedded || event.source !== root.parent || !data || data.type !== 'atelier-vente:etat') return;
+    if (data.module !== catalog.storageKey || !data.exercises || typeof data.exercises !== 'object') return;
+    let changed = false;
+    for (const key of allKeys) {
+      const incoming = cleanEntry(data.exercises[key]);
+      if (!incoming) continue;
+      const mine = state.exercises[key];
+      const mineEmpty = !mine || (!mine.done && !Object.keys(mine.values).length);
+      if (mineEmpty && (incoming.done || Object.keys(incoming.values).length)) { state.exercises[key] = incoming; changed = true; }
+      else if (mine && !mine.done && incoming.done) { state.exercises[key] = incoming; changed = true; }
+    }
+    if (!changed) return;
+    persist();
+    root.location.reload();
+  });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', report);
+  else root.setTimeout(report, 0);
+
   function persist(notify = false) {
     clearTimeout(saveTimeout);
+    report();
     const status = $('#save-status');
     try {
-      localStorage.setItem(catalog.storageKey, JSON.stringify({ version: 2, exercises: state.exercises }));
+      localStorage.setItem(catalog.storageKey, JSON.stringify({ version: 2, exercises: { ...others, ...state.exercises } }));
       storageAvailable = true;
       if (status) { status.textContent = 'Sauvegardé ici'; status.classList.remove('save-warning'); }
       if (notify) toast('Brouillon enregistré dans ce navigateur.');

@@ -109,11 +109,21 @@
     };
     frame.addEventListener('load', function () { if (waiting) uncover(); });
 
-    // La hauteur annoncée par la page intérieure remonte au LMS.
+    // La hauteur et le suivi (exercices faits, scores, réponses) annoncés par
+    // la page intérieure remontent au LMS ; les réponses que la plateforme
+    // rend (suivi SCORM) redescendent vers la page intérieure.
+    var lastSuivi = null;
     addEventListener('message', function (event) {
       var data = event.data;
-      if (event.source !== frame.contentWindow || !data || data.type !== 'atelier-vente:height') return;
-      if (parent !== window) parent.postMessage(data, '*');
+      if (!data) return;
+      if (event.source === frame.contentWindow && (data.type === 'atelier-vente:height' || data.type === 'atelier-vente:suivi')) {
+        if (data.type === 'atelier-vente:suivi') lastSuivi = data;
+        if (parent !== window) parent.postMessage(data, '*');
+      } else if (event.source === parent && parent !== window && data.type === 'atelier-vente:etat') {
+        frame.contentWindow.postMessage(data, location.origin);
+      } else if (event.source === parent && parent !== window && data.type === 'atelier-vente:demande' && lastSuivi) {
+        parent.postMessage(lastSuivi, '*');
+      }
     });
   })();
   </script>

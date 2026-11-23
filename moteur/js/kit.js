@@ -495,6 +495,16 @@
     const R = 34;
     const C = 2 * Math.PI * R;
     const ratio = rings.reduce((sum, x) => sum + (x.total ? x.n / x.total : 0), 0) / rings.length;
+    /* Le suivi SCORM : le résultat du bilan devient le score de l'exercice
+     * en cours (de 0 à 1), gardé avec ses réponses et envoyé à la plateforme. */
+    try {
+      const key = ex() && ex().current && ex().current.key;
+      const score = Math.round(Math.max(0, Math.min(1, ratio)) * 1000) / 1000;
+      if (key && Number.isFinite(score) && core().entry(key).score !== score) {
+        core().entry(key).score = score;
+        core().persist();
+      }
+    } catch { /* hors d'un exercice : pas de score à garder */ }
     const say = verdict || (ratio >= 0.8 ? 'Très bien : vous maîtrisez l’essentiel.'
       : ratio >= 0.5 ? 'En bonne voie : relisez ce qui vous a échappé, plus bas.'
         : 'À reprendre : relisez le corrigé ci-dessous, puis refaites l’exercice.');
