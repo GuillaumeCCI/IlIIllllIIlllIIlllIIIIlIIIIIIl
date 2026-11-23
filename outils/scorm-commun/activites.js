@@ -117,6 +117,8 @@
     if (!data || window.parent === window) return;
     if (event.source === window.parent && data.type === 'atelier-vente:hote-plein') {
       hote = { type: data.type, actif: !!data.actif };
+      // Le plein écran de l'activité : les exercices prennent toute la page.
+      document.body.classList.toggle('mode-activite', hote.actif);
       frame.contentWindow.postMessage(hote, origine);
     } else if (event.source === frame.contentWindow && event.origin === origine && data.type === 'atelier-vente:plein-ecran') {
       window.parent.postMessage({ type: data.type, actif: !!data.actif }, location.origin === 'null' ? '*' : location.origin);

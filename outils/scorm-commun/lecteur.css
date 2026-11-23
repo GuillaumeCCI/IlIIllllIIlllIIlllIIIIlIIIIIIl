@@ -57,6 +57,10 @@ button:focus-visible, a:focus-visible { outline: 3px solid #7fa2f0; outline-offs
 .is-actif .rond.is-encours { background: linear-gradient(90deg, #fff 50%, var(--navy) 50%); }
 .is-actif .rond.is-fait { box-shadow: 0 0 0 2px #fff; }
 
+/* Le plein écran de l'activité : la barre se cache, l'activité prend tout. */
+.mode-activite .barre, .mode-activite .sommaire, .mode-activite .voile { display: none; }
+.mode-activite .scene { inset: 0; }
+
 @media (max-width: 640px) {
   .burger-txt, .barre-avance { display: none; }
 }

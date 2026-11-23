@@ -189,6 +189,7 @@
   var scene = document.getElementById('scene');
   function ouvrir(it) {
     if (!it) return;
+    if (window.__quitterActivite) window.__quitterActivite();
     // L'ancien élément se ferme d'abord (il enregistre sa reprise sous son
     // nom), puis le nouveau prend la main sur l'API.
     var ancien = scene.querySelector('iframe');
@@ -236,27 +237,54 @@
     document.addEventListener('fullscreenchange', suivre);
     document.addEventListener('webkitfullscreenchange', suivre);
 
-    /* Nos exercices ont leur propre bouton plein écran : dans le lecteur, il
-     * commande CE plein écran (un seul, jamais un second dans le premier :
-     * en sortir ferait tout quitter). Le lecteur leur annonce son état à
-     * chaque changement et à chaque élément ouvert. */
+    /* LE PLEIN ÉCRAN DE L'ACTIVITÉ, distinct de celui du SCORM. Nos exercices
+     * ont leur propre bouton : dans le lecteur, il demande ce « mode
+     * activité » (la barre se cache, les exercices prennent tout l'écran).
+     * Un seul vrai plein écran, celui du lecteur : jamais un second dans le
+     * premier, dont la sortie ferait tout quitter.
+     *   · SCORM déjà en plein écran : quitter l'activité ramène au plein
+     *     écran du SCORM (barre et sommaire) ;
+     *   · SCORM en fenêtre : le lecteur passe en plein écran pour l'activité,
+     *     et en sort avec elle.
+     * Les exercices reçoivent l'état du MODE ACTIVITÉ (leur bouton dit si
+     * l'activité est en plein écran, pas le SCORM). */
+    var modeActivite = false, natifPourActivite = false;
     var annoncer = function () {
+      document.body.classList.toggle('mode-activite', modeActivite);
       var f = scene.querySelector('iframe');
-      if (f && f.contentWindow) f.contentWindow.postMessage({ type: 'atelier-vente:hote-plein', actif: enPlein() }, location.origin === 'null' ? '*' : location.origin);
+      if (f && f.contentWindow) f.contentWindow.postMessage({ type: 'atelier-vente:hote-plein', actif: modeActivite }, location.origin === 'null' ? '*' : location.origin);
     };
-    document.addEventListener('fullscreenchange', annoncer);
-    document.addEventListener('webkitfullscreenchange', annoncer);
+    var quitterActivite = function () {
+      modeActivite = false;
+      if (natifPourActivite && enPlein()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      natifPourActivite = false;
+      annoncer();
+    };
+    var natifChange = function () {
+      // Échap ou bouton du lecteur : le navigateur quitte tout plein écran.
+      if (!enPlein()) { natifPourActivite = false; if (modeActivite) { modeActivite = false; } }
+      annoncer();
+    };
+    document.addEventListener('fullscreenchange', natifChange);
+    document.addEventListener('webkitfullscreenchange', natifChange);
     scene.addEventListener('load', annoncer, true); // le chargement de chaque élément
     window.addEventListener('message', function (event) {
       var f = scene.querySelector('iframe');
       if (!f || event.source !== f.contentWindow || !event.data || event.data.type !== 'atelier-vente:plein-ecran') return;
       var voulu = !!event.data.actif;
-      if (voulu === enPlein()) return annoncer();
-      try {
-        var p = voulu ? (docEl.requestFullscreen || docEl.webkitRequestFullscreen).call(docEl) : (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-        if (p && p.catch) p.catch(annoncer);
-      } catch (e) { annoncer(); }
+      if (!voulu) return quitterActivite();
+      modeActivite = true;
+      if (!enPlein()) {
+        natifPourActivite = true;
+        try {
+          var p = (docEl.requestFullscreen || docEl.webkitRequestFullscreen).call(docEl);
+          if (p && p.catch) p.catch(function () { natifPourActivite = false; annoncer(); });
+        } catch (e) { natifPourActivite = false; }
+      }
+      annoncer();
     });
+    // Changer d'élément quitte le mode activité.
+    window.__quitterActivite = function () { if (modeActivite) quitterActivite(); };
   }
 
   // On reprend là où l'on s'était arrêté, sinon au premier élément pas fait.
