@@ -52,6 +52,8 @@
   (ident ? code(ident) : Promise.resolve('')).then(function (c) {
     var url = new URL(src, location.href);
     if (c) url.searchParams.set('apprenant', c);
+    // Dans le lecteur (même origine, il porte PARCOURS) : le logo est dans sa barre.
+    try { if (window.parent !== window && window.parent.PARCOURS) url.searchParams.set('hote', 'lecteur'); } catch (e) { /* autre origine */ }
     frame.src = url.href;
   }, function () { frame.src = src; });
 

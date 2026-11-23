@@ -86,6 +86,8 @@ for (const f of fs.readdirSync(COMMUN)) {
   if (/^lecteur\./.test(f) && MULTI) continue;
   copier(path.join(COMMUN, f), f === 'lecteur.html' ? f : `commun/${f}`);
 }
+// Le logo CCI de la barre du lecteur.
+if (!MULTI) copier(path.join(RACINE, 'moteur/assets/logo-cci.webp'), 'commun/logo-cci.webp');
 // L'image du parcours (en tête du sommaire).
 const coursCtx = (/contextid="(\d+)"/.exec(lire('course/course.xml')) || [])[1];
 const imageCours = fichiers.find(f => f.contextid === coursCtx && f.component === 'course' && f.filearea === 'images' && /^image\//.test(f.mimetype));

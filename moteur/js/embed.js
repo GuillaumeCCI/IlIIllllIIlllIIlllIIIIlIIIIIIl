@@ -73,6 +73,10 @@
    * SCORM ne reprend pas un vieux brouillon tapé hors de lui. */
   const apprenant = /^[a-f0-9]{16,64}$/.test(params.get('apprenant') || '') ? params.get('apprenant') : null;
   if (apprenant) root.ATELIER_APPRENANT = apprenant;
+  /* &hote=lecteur : affiché dans le lecteur du paquet SCORM, qui porte déjà
+   * le logo CCI dans sa barre (le logo de l'en-tête se masque, extras-commun.css). */
+  const hote = params.get('hote') === 'lecteur' ? 'lecteur' : null;
+  if (hote) document.documentElement.dataset.hote = hote;
   const preview = raw === 'apercu';
   const mode = raw === 'solo' || preview ? 'solo' : 'module';
   document.documentElement.dataset.embed = mode;
@@ -127,6 +131,7 @@
     if (theme) url.searchParams.set('theme', theme);
     if (only) url.searchParams.set('ex', only.join(','));
     if (apprenant) url.searchParams.set('apprenant', apprenant);
+    if (hote) url.searchParams.set('hote', hote);
     link.href = url.pathname + url.search + url.hash;
   }, true);
 

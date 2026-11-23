@@ -434,6 +434,9 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
    recadrée sur le logo (assets/logo-cci.webp, 497 × 96) : sans marge vide,
    la hauteur fixée ici est celle du logo lui-même. */
 .topbar::before { content: ''; flex: none; width: 207px; height: 40px; background: url('../assets/logo-cci.webp') left center / contain no-repeat; }
+/* Dans le lecteur du paquet SCORM, le logo est dans sa barre, à droite de
+ * « Sommaire » : pas de second logo ici (embed.js, &hote=lecteur). */
+html[data-hote="lecteur"] .topbar::before { display: none; }
 
 @media (max-width: 720px) {
   .topbar::before { width: 124px; height: 24px; }

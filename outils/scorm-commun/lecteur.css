@@ -14,6 +14,8 @@ body { font-family: 'Fira Sans', system-ui, sans-serif; color: var(--navy); back
 .burger:hover, .burger[aria-expanded="true"] { background: #d9e3f8; }
 .burger-ico { display: grid; gap: 4px; width: 18px; }
 .burger-ico i { display: block; height: 2.2px; border-radius: 2px; background: currentColor; }
+/* Le logo CCI, à droite de « Sommaire » (celui des exercices se masque). */
+.barre-logo { flex: none; height: 34px; width: auto; }
 .barre-titre { flex: 1; min-width: 0; margin: 0; font-weight: 800; font-size: 1.08rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .barre-avance { margin: 0; color: var(--muted); font-size: .92rem; white-space: nowrap; }
 .barre-avance b { color: var(--teal); }
@@ -63,4 +65,5 @@ button:focus-visible, a:focus-visible { outline: 3px solid #7fa2f0; outline-offs
 
 @media (max-width: 640px) {
   .burger-txt, .barre-avance { display: none; }
+  .barre-logo { height: 24px; }
 }
