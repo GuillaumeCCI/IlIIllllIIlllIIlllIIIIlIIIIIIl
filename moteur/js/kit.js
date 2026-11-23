@@ -1141,7 +1141,8 @@
       const tryOpen = () => {
         const doc = root.document;
         if (!ex().reviewing()) { clearInterval(wait); return true; }
-        if (doc.querySelector('dialog[open], .tour, .launch-veil, .page-transition') || !doc.querySelector('#main .k-keypoint-open')) return false;
+        // Pas par-dessus l'écran de fin d'activité (exercise.js) : on attend le retour au corrigé.
+        if (doc.querySelector('dialog[open], .tour, .launch-veil, .page-transition') || doc.body.classList.contains('is-fin') || !doc.querySelector('#main .k-keypoint-open')) return false;
         clearInterval(wait);
         openKeyPoint();
         return true;

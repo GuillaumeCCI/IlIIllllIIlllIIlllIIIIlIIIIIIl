@@ -242,11 +242,11 @@
       </div>
       ${next === -1
         ? (allDone
-            ? core.linkButton(`<span>${core.allKeys.indexOf(current.key) === core.allKeys.length - 1 ? 'Voir mon bilan' : 'Exercice suivant'}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary')
+            ? core.linkButton(`<span>${core.allKeys.indexOf(current.key) === core.allKeys.length - 1 ? 'Voir mon bilan' : 'Exercice suivant'}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary', 'data-fin-activite')
             : core.button('Revenir au menu', 'back-to-menu', 'primary'))
         : core.isDone(current.key)
           // Exercice déjà terminé (allDone) : la suite en premier, le cas suivant en option.
-          ? `${core.button(`<span>Autre cas : ${esc(cases[next].label || `cas ${next + 1}`)}</span>`, 'open-case', 'text-button', `data-index="${next}"`)}${core.linkButton(`<span>${core.allKeys.indexOf(current.key) === core.allKeys.length - 1 ? 'Voir mon bilan' : 'Exercice suivant'}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary')}`
+          ? `${core.button(`<span>Autre cas : ${esc(cases[next].label || `cas ${next + 1}`)}</span>`, 'open-case', 'text-button', `data-index="${next}"`)}${core.linkButton(`<span>${core.allKeys.indexOf(current.key) === core.allKeys.length - 1 ? 'Voir mon bilan' : 'Exercice suivant'}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary', 'data-fin-activite')}`
           : core.button(`<span>Cas suivant : ${esc(cases[next].label || `cas ${next + 1}`)}</span>${icon('arrowRight', { size: 18 })}`, 'open-case', 'primary', `data-index="${next}"`)}
     </div>`;
   }
@@ -402,7 +402,7 @@
         <div class="case-menu-foot">
           ${ex_caseProgressLine(done, cases.length)}
           ${all
-            ? core.linkButton(`<span>${core.allKeys.indexOf(current.key) === core.allKeys.length - 1 ? 'Voir mon bilan' : 'Exercice suivant'}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary')
+            ? core.linkButton(`<span>${core.allKeys.indexOf(current.key) === core.allKeys.length - 1 ? 'Voir mon bilan' : 'Exercice suivant'}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary', 'data-fin-activite')
             : core.button('Revoir la consigne', 'show-briefing', 'text-button')}
         </div>
       </div>`;
@@ -439,7 +439,7 @@
       <div class="case-menu-foot">
         ${ex_caseProgressLine(done, cases.length)}
         ${all
-          ? core.linkButton(`<span>${core.allKeys.indexOf(current.key) === core.allKeys.length - 1 ? 'Voir mon bilan' : 'Exercice suivant'}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary')
+          ? core.linkButton(`<span>${core.allKeys.indexOf(current.key) === core.allKeys.length - 1 ? 'Voir mon bilan' : 'Exercice suivant'}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary', 'data-fin-activite')
           : core.button('Revoir la consigne', 'show-briefing', 'text-button')}
       </div>
     </div>`;
@@ -951,7 +951,7 @@
         return `<div class="k-retain"><span class="k-retain-icon" aria-hidden="true">${icon('lightbulb', { size: 18 })}</span><div><p class="k-retain-label">À retenir</p><p class="k-retain-text">${esc(rest.charAt(0).toUpperCase() + rest.slice(1))}</p></div></div>`;
       }).join('')}
       <span class="feedback-anchor" hidden></span>
-      ${core.linkButton(isLast ? 'Voir mon bilan' : 'Continuer', core.nextUrl(current), 'primary')}`;
+      ${core.linkButton(isLast ? 'Voir mon bilan' : 'Continuer', core.nextUrl(current), 'primary', 'data-fin-activite')}`;
     // L'écran peut insérer sa fiche de corrigé détaillée avant l'avertissement.
     if (answerKeyFn) {
       const html = answerKeyFn(values(), current);
@@ -970,6 +970,75 @@
     if (focus) node.focus({ preventScroll: true });
     arrangeEnd();
   }
+
+  /* L'ÉCRAN DE FIN D'ACTIVITÉ (23/11) : entre le corrigé et l'exercice
+   * suivant. « Continuer » ne change plus de page : l'écran du corrigé
+   * s'efface, puis viennent le titre, le score de l'exercice dans un anneau
+   * (quand il en a un), la formatrice, « Exercice suivant : <nom> » et
+   * « Revoir l'activité » (retour au corrigé). Posé à côté de #main, pas
+   * dedans : un écran redessiné ne l'efface pas. Rien n'est répété : pas
+   * de pastille « Activité terminée » sous un titre qui le dit déjà, ni le
+   * nom de l'exercice, déjà dans l'en-tête. */
+  function finActivite() {
+    if (document.body.classList.contains('is-fin')) return;
+    const main = $('#main');
+    const index = core.allKeys.indexOf(current.key);
+    const next = core.catalog.all[index + 1];
+    const raw = core.entry(current.key).score;
+    const score = typeof raw === 'number' && raw >= 0 && raw <= 1 ? Math.round(raw * 100) : null;
+    const tone = score === null || score >= 80 ? 'ok' : score >= 50 ? 'mid' : 'ko';
+    const title = tone === 'ok' ? 'Bravo, vous avez terminé l’activité'
+      : tone === 'mid' ? 'Activité terminée : vous êtes en bonne voie'
+        : 'Activité terminée : elle mérite d’être reprise';
+    const face = tone === 'ko' ? 'formatrice-presque' : 'formatrice-oui';
+    const R = 52;
+    const C = 2 * Math.PI * R;
+    const ring = score === null ? '' : `<div class="fin-ring tone-${tone}" role="img" aria-label="${score} % de bonnes réponses">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="${R}" class="fin-ring-bg"/><circle cx="60" cy="60" r="${R}" class="fin-ring-fg" style="--c:${C.toFixed(1)};--o:${(C * (1 - score / 100)).toFixed(1)}"/></svg>
+        <p aria-hidden="true"><b>${score} %</b><span>de bonnes réponses</span></p>
+      </div>`;
+    const go = next
+      ? core.linkButton(`<span>Exercice suivant : ${esc(next.label)}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary fin-next')
+      : core.linkButton(`<span>Voir mon bilan</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary fin-next');
+    const section = document.createElement('section');
+    section.className = 'fin-activite';
+    section.setAttribute('aria-labelledby', 'fin-titre');
+    section.tabIndex = -1;
+    section.innerHTML = `<div class="fin-texte">
+        <h1 id="fin-titre">${title}</h1>
+        ${ring}
+      </div>
+      <figure class="fin-image tone-${tone}"><img src="${esc(core.asset(`../../moteur/assets/illustrations/retours/${face}.webp`))}" alt=""></figure>
+      <div class="fin-actions">
+        <button type="button" class="button secondary fin-revoir">${icon('refresh', { size: 18 })}<span>Revoir l’activité</span></button>
+        ${go}
+      </div>`;
+    const show = () => {
+      main.classList.remove('is-leaving');
+      document.body.classList.add('is-fin');
+      main.after(section);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      section.focus({ preventScroll: true });
+    };
+    if (stillMotion()) show();
+    else { main.classList.add('is-leaving'); setTimeout(show, 350); }
+    section.querySelector('.fin-revoir').addEventListener('click', () => {
+      section.remove();
+      document.body.classList.remove('is-fin');
+      main.classList.add('is-back');
+      setTimeout(() => main.classList.remove('is-back'), 700);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      main.focus({ preventScroll: true });
+    });
+  }
+  // Avant le lien du moteur (core.js, transition vers la page suivante).
+  document.addEventListener('click', event => {
+    const link = event.target.closest && event.target.closest('#main a[data-fin-activite]');
+    if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    finActivite();
+  }, true);
 
   /* LA BARRE DE FIN : « À retenir », « Recommencer l'exercice », la phrase
    * de suite et « Continuer » étaient posés chacun ailleurs. Quand le message

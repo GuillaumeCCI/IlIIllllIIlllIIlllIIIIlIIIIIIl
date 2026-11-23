@@ -139,14 +139,14 @@
   }, true);
 
   /* UNE FENÊTRE S'OUVRE (présentation, contexte, visite guidée, écran
-   * d'accueil…) : la page qui accueille les exercices est prévenue
+   * d'accueil, écran de fin d'activité…) : la page qui accueille les exercices est prévenue
    * (`atelier-vente:voir`), pour les montrer en entier. Sans cela, dans un
    * cadre plus haut que l'écran, la fenêtre se centre hors de la vue. */
   if (root.parent !== root && root.MutationObserver) {
     const voir = () => { try { root.parent.postMessage({ type: 'atelier-vente:voir' }, '*'); } catch { /* hôte injoignable */ } };
     const watch = () => new MutationObserver(records => {
       if (records.some(r => (r.type === 'attributes' && r.target.open)
-        || [...r.addedNodes].some(n => n.nodeType === 1 && (n.matches('dialog[open], .av-entrance') || n.querySelector?.('dialog[open]'))))) voir();
+        || [...r.addedNodes].some(n => n.nodeType === 1 && (n.matches('dialog[open], .av-entrance, .fin-activite') || n.querySelector?.('dialog[open]'))))) voir();
     }).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['open'] });
     if (document.body) watch(); else document.addEventListener('DOMContentLoaded', watch);
   }

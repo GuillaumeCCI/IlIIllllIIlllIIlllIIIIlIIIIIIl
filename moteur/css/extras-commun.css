@@ -1248,3 +1248,37 @@ html { background-color: #fbf8f2; }
 .step-in { animation: step-in .6s ease-in-out .4s both; }
 @keyframes step-in { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .step-in { animation: none; } }
+
+/* L'ÉCRAN DE FIN D'ACTIVITÉ (exercise.js, finActivite) : entre le corrigé et
+ * l'exercice suivant. À gauche le titre et l'anneau du score, à droite la
+ * formatrice sur une tache de couleur douce ; les deux boutons dessous. */
+body.is-fin #main { display: none; }
+#main.is-leaving { opacity: 0; transition: opacity .35s ease-in-out; }
+#main.is-back { animation: step-in .6s ease-in-out both; }
+.fin-activite { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "texte image" "actions actions"; align-items: center; gap: 28px 48px; width: min(1080px, calc(100% - 48px)); margin: 0 auto; padding: clamp(28px, 6vh, 64px) 0 48px; outline: none; animation: step-in .6s ease-in-out both; }
+.fin-texte { grid-area: texte; display: grid; justify-items: start; gap: 30px; }
+.fin-texte h1 { position: relative; padding-top: 22px; font-size: clamp(2rem, 3.6vw, 3.1rem); font-weight: 800; line-height: 1.08; }
+.fin-texte h1::before { content: ''; position: absolute; top: 0; left: 0; width: 52px; height: 4px; border-radius: 4px; background: #f08a6c; }
+.fin-ring { --tone: #2f9a5e; --tone-bg: #e8f5ec; position: relative; width: clamp(190px, 22vw, 250px); aspect-ratio: 1; margin-left: clamp(0px, 4vw, 60px); border-radius: 50%; background: #fff; box-shadow: 0 10px 30px rgb(20 40 100 / 10%); animation: k-ring-in .5s ease-out .3s both; }
+.fin-ring.tone-mid { --tone: #5a67b8; --tone-bg: #eceefa; }
+.fin-ring.tone-ko { --tone: #c9692f; --tone-bg: #fdf0e6; }
+.fin-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.fin-ring-bg { fill: var(--tone-bg); stroke: #e3e8f2; stroke-width: 10; }
+.fin-ring-fg { fill: none; stroke: var(--tone); stroke-width: 10; stroke-linecap: round; stroke-dasharray: var(--c); stroke-dashoffset: var(--o); animation: k-ring 1.3s cubic-bezier(.3, .7, .3, 1) .5s both; }
+.fin-ring p { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 4px; margin: 0; text-align: center; }
+.fin-ring b { color: var(--navy); font-size: clamp(2.3rem, 3.4vw, 3rem); font-weight: 800; line-height: 1; }
+.fin-ring span { max-width: 9em; color: var(--text); font-size: .78rem; font-weight: 700; letter-spacing: .08em; line-height: 1.3; text-transform: uppercase; }
+.fin-image { grid-area: image; position: relative; display: grid; place-items: center; margin: 0; padding: 7%; }
+.fin-image::before { content: ''; position: absolute; inset: 0; border-radius: 46% 54% 52% 48% / 55% 45% 55% 45%; background: radial-gradient(circle at 30% 30%, #fde3d6 0 40%, transparent 70%), radial-gradient(circle at 75% 70%, #e4e6fb 0 45%, transparent 75%); }
+.fin-image img { position: relative; width: min(100%, 360px); aspect-ratio: 1; object-fit: cover; border-radius: 50%; box-shadow: 0 12px 34px rgb(20 40 100 / 14%); animation: k-ring-in .6s ease-out .2s both; }
+.fin-actions { grid-area: actions; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.fin-actions .button { min-height: 52px; padding: 14px 26px; font-size: 1rem; }
+.fin-activite .button.secondary { border-color: transparent; box-shadow: 0 6px 16px rgb(20 40 100 / 12%); }
+@media (max-width: 760px) {
+  .fin-activite { grid-template-columns: 1fr; grid-template-areas: "texte" "image" "actions"; }
+  .fin-texte { justify-items: center; text-align: center; }
+  .fin-texte h1::before { left: 50%; translate: -50% 0; }
+  .fin-ring { margin-left: 0; }
+  .fin-image img { width: min(70vw, 260px); }
+}
+@media (prefers-reduced-motion: reduce) { .fin-activite, .fin-ring, .fin-ring-fg, .fin-image img, #main.is-back { animation: none; } #main.is-leaving { transition: none; } }

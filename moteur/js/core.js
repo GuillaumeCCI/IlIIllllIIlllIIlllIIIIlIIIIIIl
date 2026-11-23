@@ -401,7 +401,7 @@
     // atelier-vente/cadre.html) ; hors cadre (page ouverte seule, fichier
     // local), la page joue elle-même la même transition.
     document.addEventListener('click', event => {
-      const link = event.target.closest('.av-menu-list a[href], #main a[href]');
+      const link = event.target.closest('.av-menu-list a[href], #main a[href], .fin-activite a[href]');
       if (!link || link.getAttribute('aria-current') || link.target === '_blank' || event.ctrlKey || event.metaKey || event.shiftKey || event.button) return;
       // Seulement les pages du site (exercice, accueil), pas un lien externe.
       if (!/^[^:]*\.html(#.*)?$/.test(link.getAttribute('href'))) return;
