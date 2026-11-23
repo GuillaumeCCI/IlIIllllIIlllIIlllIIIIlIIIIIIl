@@ -404,7 +404,9 @@
       const link = event.target.closest('.av-menu-list a[href], #main a[href], .fin-activite a[href]');
       if (!link || link.getAttribute('aria-current') || link.target === '_blank' || event.ctrlKey || event.metaKey || event.shiftKey || event.button) return;
       // Seulement les pages du site (exercice, accueil), pas un lien externe.
-      if (!/^[^:]*\.html(#.*)?$/.test(link.getAttribute('href'))) return;
+      // Intégrée (SCORM, LMS), la page ajoute ses paramètres au lien au moment
+      // du clic (embed.js : ?embed=module&theme=…) : ils ne l'excluent pas.
+      if (!/^[^:]*\.html(\?[^#]*)?(#.*)?$/.test(link.getAttribute('href'))) return;
       let transition = null;
       try { transition = window.parent !== window && window.parent.atelierTransition; } catch { /* autre origine */ }
       if (typeof transition !== 'function') {
