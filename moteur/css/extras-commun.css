@@ -1235,3 +1235,10 @@ html { background-color: #fbf8f2; }
 #main .fs-layout.is-mail .fm-token { background: #e2f1f1; color: #1f6f6f; box-shadow: none; }
 #main .fs-layout.is-mail .fm-token:hover { background: #cfe8e8; }
 #main .mt-sorter .sorter-foot { display: flex; justify-content: center; width: 100%; margin-top: 10px; }
+
+/* Le second temps du fondu enchaîné entre deux étapes (exercise.js, stepIn) :
+ * après l'effacement de l'ancien écran, ce qui a changé apparaît en fondu,
+ * sans aucun mouvement (même rythme que fm-in, mounts.css). */
+.step-in { animation: step-in .6s ease-in-out .4s both; }
+@keyframes step-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .step-in { animation: none; } }

@@ -507,6 +507,7 @@
     drawScreen(focus);
     if (ghost && (showingBriefing || (before === at && markerSig() === markersBefore))) ghost.remove();
     else if (ghost) {
+      stepIn(ghost);
       requestAnimationFrame(() => {
         ghost.style.transition = 'opacity .45s ease-in-out';
         ghost.style.opacity = '0';
@@ -517,6 +518,36 @@
     // Un écran redessiné pendant son apparition (minuterie, image chargée…)
     // reprend l'apparition là où elle en était, au lieu de tout montrer.
     else if (revealClock && Date.now() < revealClock.end) revealScreen(revealClock);
+  }
+
+  /* LE SECOND TEMPS DU FONDU ENCHAÎNÉ (validé le 18/11) : l'ancien écran
+   * s'efface (la copie, plus haut), PUIS le nouveau contenu apparaît en
+   * fondu. Les cartes restent en place ; seul ce qui a changé apparaît : un
+   * bloc identique à celui d'avant (question, consigne, image) ne bouge pas.
+   * Les formulaires à cas et le trieur ont déjà le leur (fm-in, mounts.css) ;
+   * le corrigé a sa propre apparition en cascade. */
+  function stepIn(ghost) {
+    const main = $('#main');
+    if (!main || reviewing() || main.querySelector('.fm-panel, .fs-step, .fm-one, .mt-sorter')) return;
+    // Les éléments fixes (en-tête, repères d'avancement, boutons du bas).
+    const FIXED = '.k-head, .k-bar, header, h1, .eyebrow, .k-subtitle, nav, script, style, .form-actions, [class*="rail"], [class*="stepper"], [class*="steps"], [class*="dots"], [class*="tabs"], [role="tablist"]';
+    // On descend dans les blocs (formulaire, carte, champ…) tant que la
+    // structure est la même qu'avant ; là où elle diffère, le bloc entier
+    // apparaît. Un bloc identique reste immobile.
+    // « Identique » = même texte, mêmes images, mêmes cases cochées (les
+    // marques d'apparition de l'ancien écran ne comptent pas).
+    const sig = el => `${el.tagName}|${el.textContent.replace(/\s+/g, ' ').trim()}|${[...el.querySelectorAll('img, input, textarea, select')].map(x => `${x.getAttribute('src') || ''}:${x.checked ? 1 : 0}:${x.value || ''}`).join(',')}`;
+    const walk = (now, before, depth) => {
+      [...now.children].forEach((el, i) => {
+        if (el.matches(FIXED) || el.matches('.screen-ghost')) return;
+        const was = before ? before.children[i] : null;
+        if (was && sig(was) === sig(el)) return;
+        const same = was && was.tagName === el.tagName && was.children.length === el.children.length;
+        if (same && el.children.length && depth < 5) walk(el, was, depth + 1);
+        else el.classList.add('step-in');
+      });
+    };
+    walk(main, ghost, 0);
   }
 
   function drawScreen(focus) {
