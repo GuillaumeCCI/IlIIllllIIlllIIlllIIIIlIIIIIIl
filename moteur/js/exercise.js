@@ -994,8 +994,8 @@
     const R = 52;
     const C = 2 * Math.PI * R;
     const ring = score === null ? '' : `<div class="fin-ring tone-${tone}" role="img" aria-label="${score} % de bonnes réponses">
-        <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="${R}" class="fin-ring-bg"/><circle cx="60" cy="60" r="${R}" class="fin-ring-fg" style="--c:${C.toFixed(1)};--o:${(C * (1 - score / 100)).toFixed(1)}"/></svg>
-        <p aria-hidden="true"><b>${score} %</b><span>de bonnes réponses</span></p>
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="${R}" class="fin-ring-bg"/><circle cx="60" cy="60" r="${R}" class="fin-ring-fg" style="--c:${C.toFixed(1)};--o:${C.toFixed(1)}"/></svg>
+        <p aria-hidden="true"><b>0 %</b><span>de bonnes réponses</span></p>
       </div>`;
     const go = next
       ? core.linkButton(`<span>Exercice suivant : ${esc(next.label)}</span>${icon('arrowRight', { size: 18 })}`, core.nextUrl(current), 'primary fin-next')
@@ -1019,7 +1019,29 @@
       main.after(section);
       window.scrollTo({ top: 0, behavior: 'instant' });
       section.focus({ preventScroll: true });
+      fill();
     };
+    /* LE REMPLISSAGE : l'anneau part de zéro et se remplit jusqu'au score,
+     * le chiffre monte avec lui (même durée, même rythme). */
+    function fill() {
+      const fg = section.querySelector('.fin-ring-fg');
+      const label = section.querySelector('.fin-ring b');
+      if (!fg || !label) return;
+      const target = C * (1 - score / 100);
+      if (stillMotion()) { fg.style.setProperty('--o', target.toFixed(1)); label.textContent = `${score} %`; return; }
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      setTimeout(() => {
+        fg.getBoundingClientRect();
+        fg.style.setProperty('--o', target.toFixed(1));
+        const start = performance.now();
+        const step = now => {
+          const t = Math.min(1, (now - start) / 1600);
+          label.textContent = `${Math.round(score * ease(t))} %`;
+          if (t < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }, 500);
+    }
     if (stillMotion()) show();
     else { main.classList.add('is-leaving'); setTimeout(show, 350); }
     section.querySelector('.fin-revoir').addEventListener('click', () => {

@@ -1262,9 +1262,10 @@ body.is-fin #main { display: none; }
 .fin-ring { --tone: #2f9a5e; --tone-bg: #e8f5ec; position: relative; width: clamp(190px, 22vw, 250px); aspect-ratio: 1; margin-left: clamp(0px, 4vw, 60px); border-radius: 50%; background: #fff; box-shadow: 0 10px 30px rgb(20 40 100 / 10%); animation: k-ring-in .5s ease-out .3s both; }
 .fin-ring.tone-mid { --tone: #5a67b8; --tone-bg: #eceefa; }
 .fin-ring.tone-ko { --tone: #c9692f; --tone-bg: #fdf0e6; }
-.fin-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+/* Le dessin occupe tout le disque, sans marge de ligne dessous : l'anneau reste centré. */
+.fin-ring svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; transform: rotate(-90deg); }
 .fin-ring-bg { fill: var(--tone-bg); stroke: #e3e8f2; stroke-width: 10; }
-.fin-ring-fg { fill: none; stroke: var(--tone); stroke-width: 10; stroke-linecap: round; stroke-dasharray: var(--c); stroke-dashoffset: var(--o); animation: k-ring 1.3s cubic-bezier(.3, .7, .3, 1) .5s both; }
+.fin-ring-fg { fill: none; stroke: var(--tone); stroke-width: 10; stroke-linecap: round; stroke-dasharray: var(--c); stroke-dashoffset: var(--o); transition: stroke-dashoffset 1.6s cubic-bezier(.3, .7, .3, 1); }
 .fin-ring p { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 4px; margin: 0; text-align: center; }
 .fin-ring b { color: var(--navy); font-size: clamp(2.3rem, 3.4vw, 3rem); font-weight: 800; line-height: 1; }
 .fin-ring span { max-width: 9em; color: var(--text); font-size: .78rem; font-weight: 700; letter-spacing: .08em; line-height: 1.3; text-transform: uppercase; }
@@ -1282,4 +1283,4 @@ body.is-fin #main { display: none; }
   .fin-ring { margin-left: 0; }
   .fin-image img { width: min(70vw, 240px); }
 }
-@media (prefers-reduced-motion: reduce) { .fin-activite, .fin-ring, .fin-ring-fg, .fin-image img, #main.is-back { animation: none; } #main.is-leaving { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .fin-activite, .fin-ring, .fin-image img, #main.is-back { animation: none; } #main.is-leaving, .fin-ring-fg { transition: none; } }
