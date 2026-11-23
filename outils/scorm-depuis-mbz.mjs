@@ -1,6 +1,8 @@
 /* SCORM DEPUIS UNE SAUVEGARDE TOTARA / MOODLE (.mbz)
  *
  *   node outils/scorm-depuis-mbz.mjs <dossier-mbz-décompressé> <sortie.zip>
+ *   … --sans "Fiche jeu de rôle - Prise de contact"   (activité écartée, par
+ *     son nom exact ; l'option peut se répéter)
  *
  * Fabrique un paquet SCORM 1.2 (un SCO par activité, dans l'ordre des
  * sections) à partir d'une sauvegarde de cours décompressée :
@@ -28,8 +30,11 @@ const args = process.argv.slice(2);
  *   · --multi : un élément par activité, suivi ligne par ligne par la
  *     plateforme, avec son propre sommaire. */
 const MULTI = args.includes('--multi');
-const [src, out] = args.filter(a => !a.startsWith('--'));
-if (!src || !out) { console.error('usage : node outils/scorm-depuis-mbz.mjs [--multi] <dossier-mbz> <sortie.zip>'); process.exit(1); }
+/* --sans "<nom>" : une activité de la sauvegarde laissée hors du paquet. */
+const SANS = args.flatMap((a, i) => (a === '--sans' && args[i + 1] ? [args[i + 1].trim()] : []));
+const ecartees = new Set();
+const [src, out] = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--sans');
+if (!src || !out) { console.error('usage : node outils/scorm-depuis-mbz.mjs [--multi] [--sans "<nom d’activité>"] <dossier-mbz> <sortie.zip>'); process.exit(1); }
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const RACINE = path.resolve(ICI, '..');
 const SITE = 'https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/';
@@ -143,6 +148,7 @@ for (const section of sections) {
     const actXml = lire(`activities/${dir}/${type}.xml`);
     const ctx = (/contextid="(\d+)"/.exec(actXml) || [])[1];
     const nom = champ(actXml, 'name');
+    if (SANS.includes(nom.trim())) { console.log(`  écartée : ${nom}`); ecartees.add(nom.trim()); continue; }
     const intro = propre(nul(champ(actXml, 'intro')));
     const manuel = champ(modXml, 'completion') === '1';
     const dossier = `${String(++n).padStart(2, '0')}_${type}`;
@@ -222,6 +228,9 @@ for (const section of sections) {
   if (enfants.length) items.push(`      <item identifier="SEC_${section.numero}">\n        <title>${escXml(section.nom || `Section ${section.numero}`)}</title>\n${enfants.join('\n')}\n      </item>`);
   if (sommaire.length) parcours.push({ nom: section.nom || `Section ${section.numero}`, items: sommaire.splice(0) });
 }
+// Un nom demandé avec --sans mais absent de la sauvegarde : on arrête (faute de frappe).
+const introuvables = SANS.filter(x => !ecartees.has(x));
+if (introuvables.length) { console.error(`Activité introuvable (--sans) : ${introuvables.join(' ; ')}`); process.exit(1); }
 
 if (!MULTI) {
   // Le lecteur : son sommaire (commun/parcours.js), et un seul élément pour
