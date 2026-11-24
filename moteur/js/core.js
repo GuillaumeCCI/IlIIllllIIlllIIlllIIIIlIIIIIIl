@@ -603,7 +603,14 @@
    * la suivante : on le range à part du brouillon des réponses. */
   const A11Y_KEY = 'atelier-vente-affichage-clavier';
 
+  /* Dans le lecteur d'un paquet SCORM (&hote=lecteur), le bouton des
+   * commandes clavier est masqué (extras-commun.css) : l'aide reste donc
+   * éteinte, sinon on ne pourrait plus la retirer. */
+  const inScormPlayer = (() => {
+    try { return document.documentElement.dataset.hote === 'lecteur' || new URLSearchParams(location.search).get('hote') === 'lecteur'; } catch { return false; }
+  })();
   let keyboardHelpOn = (() => {
+    if (inScormPlayer) return false;
     try { return localStorage.getItem(A11Y_KEY) === 'on'; } catch { return false; }
   })();
 
