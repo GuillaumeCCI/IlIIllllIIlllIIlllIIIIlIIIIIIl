@@ -223,3 +223,11 @@ button:not(:disabled), [role="button"], label[for], summary { cursor: var(--curs
  * cerclée de blanc ; la bulle au-dessus de la barre du bas, pointe en bas. */
 .visite-aussi { position: fixed; border-radius: 14px; box-shadow: 0 0 0 3px #fff, 0 0 0 7px rgb(255 255 255 / 25%); pointer-events: none; }
 .visite-bulle.is-dessus::before { top: auto; bottom: -8px; }
+
+/* La fenêtre « Quitter la capsule ? », au milieu de l'écran. */
+.confirmer { position: fixed; inset: 0; z-index: 25; display: grid; place-items: center; padding: 20px; background: rgb(11 19 50 / 55%); animation: accueil-in .25s ease-out both; }
+.confirmer-carte { width: min(440px, 100%); padding: 26px 28px 22px; border-radius: 18px; background: #fff; color: var(--navy); box-shadow: 0 20px 50px rgb(11 19 50 / 30%); }
+.confirmer-carte:focus { outline: none; }
+.confirmer-carte h2 { margin: 0 0 10px; font-size: 1.35rem; line-height: 1.2; }
+.confirmer-carte p { margin: 0; line-height: 1.5; }
+.confirmer-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 22px; }

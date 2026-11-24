@@ -264,6 +264,71 @@
     scene.appendChild(f);
     // Une capsule : sa visite, la première fois que sa barre de lecture paraît.
     if (it.type === 'scorm' && window.__guetterCapsule) window.__guetterCapsule(f);
+    if (it.type === 'scorm') f.addEventListener('load', function () { surveillerSortie(f, it); });
+  }
+
+  /* ── La sortie d'une capsule ─────────────────────────────────────────
+   * La croix « Quitter » d'une capsule Storyline la ferme et affiche sa page
+   * « Vous avez parcouru tout le contenu. Vous pouvez fermer la fenêtre. »
+   * (lms/goodbye.html) : l'apprenant restait devant une page vide.
+   *   · Le clic sur « Quitter » est d'abord retenu : une fenêtre demande
+   *     confirmation (la vidéo est en pause le temps de répondre).
+   *   · Confirmé, on laisse la capsule se fermer normalement (elle enregistre
+   *     ce qu'elle doit, l'achèvement compris), puis sa page d'au revoir est
+   *     remplacée par l'accueil de la capsule (objectifs, « Lancer »).
+   *   · Toute autre fermeture (flèche de la dernière diapositive…) mène
+   *     aussi à l'accueil. */
+  var estQuitter = function (el) { return el && el.closest && el.closest('[data-acc-text="Quitter"], [aria-label="Quitter"]'); };
+  function surveillerSortie(f, it) {
+    var w, doc;
+    try { w = f.contentWindow; doc = f.contentDocument; } catch (e) { return; }
+    if (!w || !doc) return;
+    if (/\/goodbye\.html$/i.test(w.location.pathname)) { if (courant === it && f.isConnected) ouvrir(it); return; }
+    var permis = false;
+    var retenir = function (ev) {
+      if (permis) return;
+      var cible = ev.type === 'keydown' ? ((ev.key === 'Enter' || ev.key === ' ') && estQuitter(doc.activeElement)) : estQuitter(ev.target);
+      if (!cible) return;
+      ev.preventDefault(); ev.stopImmediatePropagation();
+      if (ev.type === 'click' || ev.type === 'keydown') confirmerSortie(doc, function () {
+        permis = true;
+        // La capsule se ferme comme prévu : on rejoue son bouton « Quitter ».
+        var b = doc.querySelector('button[aria-label="Quitter"]');
+        if (b) b.click(); else ouvrir(it);
+        // Si elle ne se ferme pas d'elle-même, on revient quand même à l'accueil.
+        setTimeout(function () { if (courant === it && f.isConnected && !/\/goodbye\.html$/i.test(f.contentWindow.location.pathname)) ouvrir(it); }, 2500);
+      });
+    };
+    ['pointerdown', 'mousedown', 'touchstart', 'pointerup', 'mouseup', 'touchend', 'click', 'keydown'].forEach(function (t) { w.addEventListener(t, retenir, true); });
+  }
+  function confirmerSortie(doc, quitter) {
+    if (document.querySelector('.confirmer')) return;
+    var pp = doc.getElementById('play-pause');
+    var enLecture = pp && /arr[êe]t|pause/i.test(pp.getAttribute('aria-label') || '');
+    if (enLecture) pp.click();
+    var voile = document.createElement('div');
+    voile.className = 'confirmer';
+    voile.innerHTML = '<div class="confirmer-carte" role="alertdialog" aria-modal="true" aria-labelledby="confirmer-titre" aria-describedby="confirmer-texte" tabindex="-1">' +
+      '<h2 id="confirmer-titre">Quitter la capsule ?</h2>' +
+      '<p id="confirmer-texte">Vous reviendrez à sa page d’accueil, d’où vous pourrez la relancer.</p>' +
+      '<div class="confirmer-actions"><button type="button" class="visite-btn is-second" data-c="rester">Continuer la capsule</button>' +
+      '<button type="button" class="visite-btn" data-c="quitter">Quitter la capsule</button></div></div>';
+    document.body.appendChild(voile);
+    var carte = voile.querySelector('.confirmer-carte');
+    carte.focus();
+    function fermer(q) {
+      voile.remove();
+      document.removeEventListener('keydown', echap, true);
+      if (q) quitter();
+      else if (enLecture) { try { var b = doc.getElementById('play-pause'); if (b && !/arr[êe]t|pause/i.test(b.getAttribute('aria-label') || '')) b.click(); } catch (e) { /* capsule fermée */ } }
+    }
+    function echap(ev) { if (ev.key === 'Escape') { ev.stopPropagation(); fermer(false); } }
+    document.addEventListener('keydown', echap, true);
+    voile.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-c]');
+      if (b) fermer(b.getAttribute('data-c') === 'quitter');
+      else if (ev.target === voile) fermer(false);
+    });
   }
   document.getElementById('prec').addEventListener('click', function () { if (courant) ouvrir(items[courant.index - 1]); });
   document.getElementById('suiv').addEventListener('click', function () { if (courant) ouvrir(items[courant.index + 1]); });

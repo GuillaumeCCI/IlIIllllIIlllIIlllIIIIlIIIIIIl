@@ -67,6 +67,16 @@ const boutons = await L(`(function(){
   return out;
 })()`);
 console.log(JSON.stringify(boutons, null, 1));
+// Ce qui se trouve sous la croix « Quitter » (chaîne d'éléments au point cliqué).
+const sous = await L(`(function(){
+  var f = d.querySelector('#scene iframe'), c = f.contentDocument;
+  var q = Array.prototype.find.call(c.querySelectorAll('[aria-label]'), function (x) { return /quitter/i.test(x.getAttribute('aria-label')); });
+  if (!q) return 'pas de « Quitter »';
+  var r = q.getBoundingClientRect(), el = c.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2), out = [];
+  for (var n = el; n && n !== c.body && out.length < 8; n = n.parentElement) out.push(n.tagName.toLowerCase() + (n.id ? '#' + n.id : '') + ' [' + String(n.className && n.className.baseVal !== undefined ? n.className.baseVal : n.className).slice(0, 40) + '] ' + (n.getAttribute('data-acc-text') || n.getAttribute('aria-label') || ''));
+  return out;
+})()`);
+console.log('sous la croix :', JSON.stringify(sous, null, 1));
 if (CAPTURE) { const r = await cdp('Page.captureScreenshot', { format: 'png' }); writeFileSync(CAPTURE, Buffer.from(r.result.data, 'base64')); }
 proc.kill(); serveur.close(); ws.close();
 process.exit(0);
