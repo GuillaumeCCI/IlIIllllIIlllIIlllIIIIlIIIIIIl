@@ -347,4 +347,112 @@
   // On reprend là où l'on s'était arrêté, sinon au premier élément pas fait.
   ouvrir(byId[etat.c] || items.filter(function (it) { return !fait(it.id); })[0] || items[0]);
   if (!reel) document.getElementById('barre-avance').insertAdjacentHTML('beforeend', ' · <span class="hors">suivi non enregistré</span>');
+
+  /* ── La visite guidée du lecteur ──────────────────────────────────────
+   * Au tout premier lancement : un projecteur présente la barre, zone par
+   * zone (le sommaire, les flèches, le plein écran), comme la visite guidée
+   * des exercices. Vue une fois par apprenant (mémorisée sur la plateforme,
+   * ou dans le navigateur hors plateforme) ; « Revoir la visite guidée »,
+   * en bas du sommaire, la relance. */
+  // Le nom d'un contenu sans son émoji ni « Activités - », et son type pour l'apprenant.
+  var nomCourt = function (it) { return it.titre.replace(/^[^\p{L}\p{N}]+/u, '').replace(/^Activités\s*-\s*/i, ''); };
+  var genreDe = function (it) { return it.type === 'scorm' ? 'Capsule' : it.type === 'exercices' ? 'Entraînement' : ''; };
+  /* Le schéma des flèches : un extrait du sommaire, dessiné comme lui (ronds,
+   * ligne en cours bleu nuit), avec ← sur la ligne d'avant et → sur celle
+   * d'après : on voit que les flèches suivent le sommaire. */
+  var ligneChemin = function (it, fleche, ici) {
+    return '<li class="chemin-ligne' + (ici ? ' is-ici' : '') + '">' + rond(it) +
+      '<span class="chemin-nom"><b>' + esc(nomCourt(it)) + '</b>' + (genreDe(it) ? '<small>' + genreDe(it) + (ici ? ' · vous êtes ici' : '') + '</small>' : (ici ? '<small>vous êtes ici</small>' : '')) + '</span>' +
+      (fleche ? '<span class="visite-fleche" aria-label="' + (fleche === '→' ? 'flèche de droite' : 'flèche de gauche') + '">' + fleche + '</span>' : '') + '</li>';
+  };
+  function chemin(c) {
+    return '<ul class="chemin">' +
+      (c.avant ? ligneChemin(c.avant, '←', false) : '') +
+      ligneChemin(c.ici, '', true) +
+      (c.apres ? ligneChemin(c.apres, '→', false) : '') + '</ul>';
+  }
+  function etapesVisite() {
+    var i = courant ? courant.index : 0;
+    var avant = items[i - 1], apres = items[i + 1];
+    var etapes = [
+      { cible: '#burger', titre: 'Le sommaire',
+        texte: 'Il présente tout le parcours : les capsules et les entraînements, dans l’ordre. Cliquez sur l’un d’eux pour l’ouvrir.',
+        liste: [
+          { rond: '', texte: 'à faire' },
+          { rond: 'is-encours', texte: 'en cours' },
+          { rond: 'is-fait', texte: 'terminé' }
+        ] },
+      { cible: '#prec, #suiv', titre: 'Les flèches',
+        texte: 'Elles suivent l’ordre du sommaire.',
+        chemin: { ici: courant, apres: apres, avant: avant } }
+    ];
+    if (!document.getElementById('plein').hidden) etapes.push({ cible: '#plein', titre: 'Le plein écran',
+      texte: 'Pour profiter de tout l’écran. Le même bouton, ou la touche Échap, vous ramène à la fenêtre.' });
+    return etapes;
+  }
+  function visite() {
+    if (document.querySelector('.visite')) return;
+    menu(false);
+    var etapes = etapesVisite(), at = 0;
+    var calque = document.createElement('div');
+    calque.className = 'visite';
+    calque.innerHTML = '<div class="visite-trou"></div><div class="visite-bulle" role="dialog" aria-modal="true" aria-labelledby="visite-titre" tabindex="-1"></div>';
+    document.body.appendChild(calque);
+    var trou = calque.querySelector('.visite-trou'), bulle = calque.querySelector('.visite-bulle');
+    var zone = function (sel) {
+      var r = Array.prototype.map.call(document.querySelectorAll(sel), function (el) { return el.getBoundingClientRect(); });
+      return { left: Math.min.apply(0, r.map(function (x) { return x.left; })), top: Math.min.apply(0, r.map(function (x) { return x.top; })),
+        right: Math.max.apply(0, r.map(function (x) { return x.right; })), bottom: Math.max.apply(0, r.map(function (x) { return x.bottom; })) };
+    };
+    function placer() {
+      var z = zone(etapes[at].cible), pad = 7;
+      Object.assign(trou.style, { left: (z.left - pad) + 'px', top: (z.top - pad) + 'px', width: (z.right - z.left + 2 * pad) + 'px', height: (z.bottom - z.top + 2 * pad) + 'px' });
+      // La bulle sous la zone, alignée sur elle sans sortir de l'écran.
+      var bw = bulle.offsetWidth, vw = window.innerWidth;
+      var x = Math.min(Math.max(12, (z.left + z.right) / 2 - bw / 2), vw - bw - 12);
+      bulle.style.left = x + 'px';
+      bulle.style.top = (z.bottom + 22) + 'px';
+      // La pointe de la bulle vise le milieu de la zone.
+      bulle.style.setProperty('--pointe', Math.min(Math.max(22, (z.left + z.right) / 2 - x), bw - 22) + 'px');
+    }
+    function montrer(i) {
+      at = i;
+      var e = etapes[at], dernier = at === etapes.length - 1;
+      bulle.innerHTML = '<p class="visite-compte">' + (at + 1) + ' / ' + etapes.length + '</p>' +
+        '<h2 id="visite-titre">' + esc(e.titre) + '</h2><p>' + esc(e.texte) + '</p>' +
+        (e.liste ? '<ul class="visite-liste">' + e.liste.map(function (l) { return '<li><span class="rond ' + l.rond + '">' + (l.rond === 'is-fait' ? COCHE : '') + '</span>' + esc(l.texte) + '</li>'; }).join('') + '</ul>' : '') +
+        (e.chemin ? chemin(e.chemin) : '') +
+        '<div class="visite-actions"><button type="button" class="visite-passer" data-v="fin">' + (dernier ? '' : 'Passer') + '</button><span>' +
+        (at ? '<button type="button" class="visite-btn is-second" data-v="prec">Précédent</button>' : '') +
+        '<button type="button" class="visite-btn" data-v="suiv">' + (dernier ? 'C’est parti !' : 'Suivant') + '</button></span></div>';
+      bulle.classList.remove('is-in'); void bulle.offsetWidth; bulle.classList.add('is-in');
+      placer();
+      bulle.focus();
+    }
+    function finir() {
+      calque.remove();
+      removeEventListener('resize', placer);
+      document.removeEventListener('keydown', clavier, true);
+      etat.v = 1;
+      try { localStorage.setItem('lecteur-visite-' + (P.titre || ''), '1'); } catch (e) { /* navigateur fermé à la mémoire */ }
+      enregistrer();
+    }
+    function clavier(ev) { if (ev.key === 'Escape') { ev.stopPropagation(); finir(); } }
+    bulle.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-v]');
+      if (!b) return;
+      var v = b.getAttribute('data-v');
+      if (v === 'fin' || (v === 'suiv' && at === etapes.length - 1)) finir();
+      else montrer(at + (v === 'suiv' ? 1 : -1));
+    });
+    addEventListener('resize', placer);
+    document.addEventListener('keydown', clavier, true);
+    montrer(0);
+  }
+  // Revoir la visite : en bas du sommaire.
+  document.getElementById('sommaire').insertAdjacentHTML('beforeend', '<button type="button" class="som-revoir" id="revoir-visite"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16.8" r="1.1" fill="currentColor"/></svg>Revoir la visite guidée</button>');
+  document.getElementById('revoir-visite').addEventListener('click', visite);
+  var dejaVue = etat.v === 1;
+  try { if (!reel && localStorage.getItem('lecteur-visite-' + (P.titre || ''))) dejaVue = true; } catch (e) { /* idem */ }
+  if (!dejaVue) setTimeout(visite, 600);
 })();
