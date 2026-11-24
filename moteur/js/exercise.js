@@ -1385,7 +1385,7 @@
     menuIntro = options.menuIntro || '';
     menuLayout = options.menuLayout || 'cards';
     allDoneFn = options.allDone || null;
-    document.title = `${current.label} · ${current.seriesLabel} · L’Atelier Vente`;
+    document.title = `${current.label} · ${current.seriesLabel} · ${((window.ATELIER_CATALOG && window.ATELIER_CATALOG.brand) || 'L’Atelier Vente')}`;
     wire();
     render();
     core.wireFullscreen();

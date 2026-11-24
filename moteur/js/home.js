@@ -29,7 +29,7 @@
     const resume = resumeTarget();
 
     return `<div class="home-hero">
-      ${core.pageTitle(catalog.title, 'L’Atelier Vente', catalog.intro)}
+      ${core.pageTitle(catalog.title, catalog.brand || 'L’Atelier Vente', catalog.intro)}
       <p class="muted">${done} exercice${done > 1 ? 's' : ''} terminé${done > 1 ? 's' : ''} sur ${total}. Vos réponses restent dans ce navigateur.</p>
       <div class="home-actions">
         ${core.linkButton(done ? 'Reprendre où je me suis arrêté' : 'Commencer le parcours', core.pageUrl(resume.file), 'primary')}
@@ -122,7 +122,7 @@
     const atSummary = location.hash === '#bilan';
     const theme = catalog.theme && catalog.series.length === 1 ? catalog.series[0] : null;
     $('#main').innerHTML = atSummary ? summary() : theme ? themeHome(theme) : home();
-    document.title = atSummary ? 'Votre bilan · L’Atelier Vente' : `L’Atelier Vente · ${catalog.title}`;
+    document.title = atSummary ? `Votre bilan · ${catalog.brand || 'L’Atelier Vente'}` : `${catalog.brand || 'L’Atelier Vente'} · ${catalog.title}`;
     core.renderChrome(null);
     // L'accueil n'appartient à aucune série : pas de fond d'exercice.
     document.body.style.backgroundImage = `url(${JSON.stringify(core.asset(catalog.commonBackground))})`;

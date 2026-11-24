@@ -565,7 +565,7 @@
     entrance.setAttribute('aria-labelledby', 'av-entrance-title');
     const askScreen = canFullscreen && !isFullscreen();
     entrance.innerHTML = `<div class="av-entrance-card" data-step="screen"${askScreen ? '' : ' hidden'}>
-      <h1 id="av-entrance-title">L’Atelier Vente</h1>
+      <h1 id="av-entrance-title">${((window.ATELIER_CATALOG && window.ATELIER_CATALOG.brand) || 'L’Atelier Vente')}</h1>
       ${svg(SCREEN)}
       <p>Les exercices sont plus confortables en plein écran,<br>pour profiter de toute la place.</p>
       <div class="av-entrance-actions">
@@ -574,7 +574,7 @@
       </div>
     </div>
     <div class="av-entrance-card" data-step="music"${askScreen ? ' hidden' : ''}>
-      <h1>L’Atelier Vente</h1>
+      <h1>${((window.ATELIER_CATALOG && window.ATELIER_CATALOG.brand) || 'L’Atelier Vente')}</h1>
       <p>Souhaitez-vous une musique de fond pendant les exercices ?<br>Vous pourrez changer d’avis à tout moment avec le bouton&nbsp;«&nbsp;Musique&nbsp;».</p>
       <div class="av-entrance-actions">
         <button type="button" data-entrance="on">${svg(NOTE)}Avec musique</button>
