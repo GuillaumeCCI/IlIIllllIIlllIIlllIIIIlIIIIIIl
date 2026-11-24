@@ -262,6 +262,8 @@
     f.setAttribute('allowfullscreen', '');
     f.src = it.href;
     scene.appendChild(f);
+    // Une capsule : sa visite, la première fois que sa barre de lecture paraît.
+    if (it.type === 'scorm' && window.__guetterCapsule) window.__guetterCapsule(f);
   }
   document.getElementById('prec').addEventListener('click', function () { if (courant) ouvrir(items[courant.index - 1]); });
   document.getElementById('suiv').addEventListener('click', function () { if (courant) ouvrir(items[courant.index + 1]); });
@@ -390,28 +392,50 @@
       texte: 'Pour profiter de tout l’écran. Le même bouton, ou la touche Échap, vous ramène à la fenêtre.' });
     return etapes;
   }
-  function visite() {
+  /* Le rectangle qui englobe des éléments, dans la page du lecteur ; `doc`
+   * et `cadre` : ceux d'une capsule (on ajoute la place de son cadre). */
+  function zoneDe(sel, doc, cadre) {
+    var o = cadre ? cadre.getBoundingClientRect() : { left: 0, top: 0 };
+    var r = Array.prototype.map.call((doc || document).querySelectorAll(sel), function (el) { return el.getBoundingClientRect(); })
+      .filter(function (x) { return x.width || x.height; });
+    if (!r.length) return null;
+    return { left: o.left + Math.min.apply(0, r.map(function (x) { return x.left; })), top: o.top + Math.min.apply(0, r.map(function (x) { return x.top; })),
+      right: o.left + Math.max.apply(0, r.map(function (x) { return x.right; })), bottom: o.top + Math.max.apply(0, r.map(function (x) { return x.bottom; })) };
+  }
+  function visite() { projecteur(etapesVisite(), function () {
+    etat.v = 1;
+    try { localStorage.setItem('lecteur-visite-' + (P.titre || ''), '1'); } catch (e) { /* navigateur fermé à la mémoire */ }
+    enregistrer();
+  }); }
+  /* Le projecteur : tout s'assombrit sauf la zone de l'étape (`cible`, un
+   * sélecteur du lecteur ou une fonction qui rend un rectangle) ; `aussi` :
+   * une seconde zone simplement cerclée de blanc. La bulle se pose sous la
+   * zone, ou au-dessus quand la place manque (barre du bas d'une capsule). */
+  function projecteur(etapes, fin) {
     if (document.querySelector('.visite')) return;
     menu(false);
-    var etapes = etapesVisite(), at = 0;
+    var at = 0;
     var calque = document.createElement('div');
     calque.className = 'visite';
-    calque.innerHTML = '<div class="visite-trou"></div><div class="visite-bulle" role="dialog" aria-modal="true" aria-labelledby="visite-titre" tabindex="-1"></div>';
+    calque.innerHTML = '<div class="visite-trou"></div><div class="visite-aussi" hidden></div><div class="visite-bulle" role="dialog" aria-modal="true" aria-labelledby="visite-titre" tabindex="-1"></div>';
     document.body.appendChild(calque);
-    var trou = calque.querySelector('.visite-trou'), bulle = calque.querySelector('.visite-bulle');
-    var zone = function (sel) {
-      var r = Array.prototype.map.call(document.querySelectorAll(sel), function (el) { return el.getBoundingClientRect(); });
-      return { left: Math.min.apply(0, r.map(function (x) { return x.left; })), top: Math.min.apply(0, r.map(function (x) { return x.top; })),
-        right: Math.max.apply(0, r.map(function (x) { return x.right; })), bottom: Math.max.apply(0, r.map(function (x) { return x.bottom; })) };
-    };
+    var trou = calque.querySelector('.visite-trou'), aussi = calque.querySelector('.visite-aussi'), bulle = calque.querySelector('.visite-bulle');
+    var zone = function (c) { return typeof c === 'function' ? c() : zoneDe(c); };
+    var cadrer = function (el, z, pad) { Object.assign(el.style, { left: (z.left - pad) + 'px', top: (z.top - pad) + 'px', width: (z.right - z.left + 2 * pad) + 'px', height: (z.bottom - z.top + 2 * pad) + 'px' }); };
     function placer() {
       var z = zone(etapes[at].cible), pad = 7;
-      Object.assign(trou.style, { left: (z.left - pad) + 'px', top: (z.top - pad) + 'px', width: (z.right - z.left + 2 * pad) + 'px', height: (z.bottom - z.top + 2 * pad) + 'px' });
-      // La bulle sous la zone, alignée sur elle sans sortir de l'écran.
-      var bw = bulle.offsetWidth, vw = window.innerWidth;
+      if (!z) return;
+      cadrer(trou, z, pad);
+      var z2 = etapes[at].aussi ? zone(etapes[at].aussi) : null;
+      aussi.hidden = !z2;
+      if (z2) cadrer(aussi, z2, pad);
+      // La bulle sous la zone (ou au-dessus), alignée sur elle sans sortir de l'écran.
+      var bw = bulle.offsetWidth, bh = bulle.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
       var x = Math.min(Math.max(12, (z.left + z.right) / 2 - bw / 2), vw - bw - 12);
+      var dessus = z.bottom + 22 + bh > vh - 8;
+      bulle.classList.toggle('is-dessus', dessus);
       bulle.style.left = x + 'px';
-      bulle.style.top = (z.bottom + 22) + 'px';
+      bulle.style.top = (dessus ? z.top - 22 - bh : z.bottom + 22) + 'px';
       // La pointe de la bulle vise le milieu de la zone.
       bulle.style.setProperty('--pointe', Math.min(Math.max(22, (z.left + z.right) / 2 - x), bw - 22) + 'px');
     }
@@ -433,9 +457,7 @@
       calque.remove();
       removeEventListener('resize', placer);
       document.removeEventListener('keydown', clavier, true);
-      etat.v = 1;
-      try { localStorage.setItem('lecteur-visite-' + (P.titre || ''), '1'); } catch (e) { /* navigateur fermé à la mémoire */ }
-      enregistrer();
+      if (fin) fin();
     }
     function clavier(ev) { if (ev.key === 'Escape') { ev.stopPropagation(); finir(); } }
     bulle.addEventListener('click', function (ev) {
@@ -455,4 +477,56 @@
   var dejaVue = etat.v === 1;
   try { if (!reel && localStorage.getItem('lecteur-visite-' + (P.titre || ''))) dejaVue = true; } catch (e) { /* idem */ }
   if (!dejaVue) setTimeout(visite, 600);
+
+  /* ── La visite de la capsule ──────────────────────────────────────────
+   * La première fois qu'une barre de lecture de capsule (Storyline) apparaît,
+   * après « Démarrer » : pause et lecture, rejouer, sous-titres, puis les
+   * flèches de la capsule (sans parler de celles du haut, à sa demande).
+   * La vidéo est mise en pause le temps de la visite, puis relancée.
+   * Vue UNE fois pour toutes les capsules : mémorisée sur la plateforme pour
+   * ce paquet (etat.vc) et dans le navigateur pour les autres paquets. Le
+   * lecteur d'une capsule e-doceo n'a pas ces boutons : pas de visite. */
+  var CLE_CAPSULE = 'lecteur-visite-capsule';
+  var capsuleVue = function () {
+    if (etat.vc === 1) return true;
+    try { return !!localStorage.getItem(CLE_CAPSULE); } catch (e) { return false; }
+  };
+  function guetterCapsule(f) {
+    if (capsuleVue()) return;
+    var essais = 0;
+    var t = setInterval(function () {
+      // Le cadre a changé (autre contenu ouvert) ou la visite a été vue : on arrête.
+      if (!f.isConnected || capsuleVue() || ++essais > 1200) { clearInterval(t); return; }
+      var doc; try { doc = f.contentDocument; } catch (e) { clearInterval(t); return; }
+      var pp = doc && doc.getElementById('play-pause');
+      if (!pp || !pp.getBoundingClientRect().width || document.querySelector('.visite')) return;
+      clearInterval(t);
+      setTimeout(function () { if (f.isConnected) visiteCapsule(f, doc); }, 700);
+    }, 500);
+  }
+  window.__guetterCapsule = guetterCapsule;
+  // Une capsule déjà ouverte au lancement (sans écran d'accueil) : on la guette aussi.
+  var deja = scene.querySelector('iframe');
+  if (deja && courant && courant.type === 'scorm') guetterCapsule(deja);
+  function visiteCapsule(f, doc) {
+    var dans = function (sel) { return function () { return zoneDe(sel, doc, f); }; };
+    var existe = function (sel) { var el = doc.querySelector(sel); return el && el.getBoundingClientRect().width; };
+    var pp = doc.getElementById('play-pause');
+    // En lecture, le bouton propose « Arrêter » (pause) : on met en pause.
+    var enLecture = /arr[êe]t|pause/i.test(pp.getAttribute('aria-label') || '');
+    if (enLecture) pp.click();
+    var etapes = [
+      { cible: dans('#play-pause'), titre: 'Pause et lecture', texte: 'Ce bouton met la capsule en pause, puis la relance quand vous êtes prêt.' }
+    ];
+    if (existe('#reset')) etapes.push({ cible: dans('#reset'), titre: 'Rejouer', texte: 'Il reprend la diapositive depuis son début.' });
+    if (existe('#captions')) etapes.push({ cible: dans('#captions'), titre: 'Les sous-titres', texte: 'Ils affichent à l’écran le texte de ce qui est dit. Cliquez de nouveau pour les masquer.' });
+    if (existe('#prev, #next')) etapes.push({ cible: dans('#prev, #next'), titre: 'Les flèches de la capsule',
+      texte: 'Elles passent d’une diapositive à l’autre, à l’intérieur de cette capsule.' });
+    projecteur(etapes, function () {
+      etat.vc = 1;
+      try { localStorage.setItem(CLE_CAPSULE, '1'); } catch (e) { /* idem */ }
+      enregistrer();
+      if (enLecture && f.isConnected) { try { var b = doc.getElementById('play-pause'); if (b && !/arr[êe]t|pause/i.test(b.getAttribute('aria-label') || '')) b.click(); } catch (e) { /* capsule fermée */ } }
+    });
+  }
 })();

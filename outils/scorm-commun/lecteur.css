@@ -218,3 +218,8 @@ input:not([type="radio"]):not([type="checkbox"]):not([type="range"]), textarea, 
 a[href] { cursor: var(--cursor-hand, pointer); }
 button:not(:disabled), [role="button"], label[for], summary { cursor: var(--cursor-hand, pointer); }
 /* ── fin des pointeurs ── */
+
+/* Visite de la capsule : la seconde zone (les flèches du haut) simplement
+ * cerclée de blanc ; la bulle au-dessus de la barre du bas, pointe en bas. */
+.visite-aussi { position: fixed; border-radius: 14px; box-shadow: 0 0 0 3px #fff, 0 0 0 7px rgb(255 255 255 / 25%); pointer-events: none; }
+.visite-bulle.is-dessus::before { top: auto; bottom: -8px; }
