@@ -175,7 +175,17 @@ for (const section of sections) {
         genre = 'exercices';
         // Nos exercices : la page suit l'apprenant (commun/activites.js).
         const texte = contenu.replace(iframe[0], '');
-        const adresse = dec(iframe[1]);
+        // Un lien direct vers un module (…/<parcours>/<module>/index.html?embed=module&theme=…)
+        // passe par le cadre, comme les autres : transition avec le logo entre
+        // deux exercices, plein écran et suivi relayés de la même façon.
+        let adresse = dec(iframe[1]);
+        const direct = /^([^?#]+\/)([^/?#]+)\/(?:index\.html)?\?([^#]*)$/.exec(adresse.slice(SITE.length - 1));
+        if (direct && /(^|&)embed=module(&|$)/.test(direct[3])) {
+          const params = new URLSearchParams(direct[3]);
+          params.delete('embed');
+          const suite = params.toString();
+          adresse = `${SITE.slice(0, -1)}${direct[1]}cadre.html?module=${direct[2]}${suite ? '&' + suite : ''}`;
+        }
         ecrire(`${dossier}/index.html`, page({
           titre: nom,
           corps: `<div class="intro">${texte}</div>
