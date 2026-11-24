@@ -437,8 +437,9 @@ body .topbar, body.is-briefing .topbar { margin: 0; border: 0; border-bottom: 1p
 /* Dans le lecteur du paquet SCORM, le logo est dans sa barre, à droite de
  * « Sommaire » : pas de second logo ici (embed.js, &hote=lecteur). */
 html[data-hote="lecteur"] .topbar::before { display: none; }
-/* Dans le lecteur SCORM, pas de bouton des commandes clavier (demande du 24/11). */
-html[data-hote="lecteur"] .topbar [data-action="keyboard-help"] { display: none !important; }
+/* Plus de bouton des commandes clavier, nulle part (demande du 24/11). Il
+ * reste dans le HTML (le bouton « taille des exercices » se place avant lui). */
+.topbar [data-action="keyboard-help"] { display: none !important; }
 /* Accueil réduit à une série (&theme=) : la rangée des séries n'en montre
  * qu'une, déjà nommée par le grand titre et son avancement : masquée. */
 html[data-embed-theme] .series-bar { display: none; }
