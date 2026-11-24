@@ -93,6 +93,11 @@ for (const f of fs.readdirSync(COMMUN)) {
 }
 // Le logo CCI de la barre du lecteur.
 if (!MULTI) copier(path.join(RACINE, 'moteur/assets/logo-cci.webp'), 'commun/logo-cci.webp');
+// L'accueil des SCORM : la formatrice et les décors aquarelle des coins.
+if (!MULTI) {
+  copier(path.join(RACINE, 'moteur/assets/illustrations/retours/formatrice-oui.webp'), 'commun/formatrice.webp');
+  for (const c of ['hg', 'hd', 'bg', 'bd']) copier(path.join(RACINE, `moteur/assets/illustrations/fenetre-coin-${c}.webp`), `commun/fenetre-coin-${c}.webp`);
+}
 // L'image du parcours (en tête du sommaire).
 const coursCtx = (/contextid="(\d+)"/.exec(lire('course/course.xml')) || [])[1];
 const imageCours = fichiers.find(f => f.contextid === coursCtx && f.component === 'course' && f.filearea === 'images' && /^image\//.test(f.mimetype));
