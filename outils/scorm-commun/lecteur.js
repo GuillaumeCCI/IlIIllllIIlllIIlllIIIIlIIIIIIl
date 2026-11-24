@@ -216,18 +216,28 @@
     // Un objectif se lit comme une ligne de liste : sans « ; » ni point final.
     var net = function (o) { return String(o).replace(/\s*[;.]\s*$/, ''); };
     var objectifs = a.objectifs || [];
+    /* Pour l'apprenant, un SCORM de la plateforme est une « capsule » (nos
+     * exercices sont des « entraînements ») : ce n'est qu'une capsule de la
+     * partie, on le dit (« Capsule 1 sur 2 »), en ne comptant que les capsules. */
+    var sec = P.sections[it.section];
+    var capsules = sec.items.filter(function (x) { return x.type === 'scorm'; });
+    var rang = capsules.indexOf(it) + 1;
+    var annonce = String(a.annonce || '').replace(/\bce module/i, 'cette capsule').replace(/\bdu module/i, 'de la capsule');
     var carte = document.createElement('section');
     carte.className = 'accueil';
     carte.setAttribute('aria-labelledby', 'accueil-titre');
     carte.innerHTML =
       '<div class="accueil-texte">' +
-        (a.duree ? '<p class="accueil-duree"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 7v5l3.2 2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Durée estimée : ' + esc(a.duree) + '</p>' : '') +
+        '<div class="accueil-reperes">' +
+          '<p class="accueil-capsule"><b>Capsule ' + rang + ' sur ' + capsules.length + '</b>' + (sec.nom ? ' · ' + esc(sec.nom) : '') + '</p>' +
+          (a.duree ? '<p class="accueil-duree"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 7v5l3.2 2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Durée estimée : ' + esc(a.duree) + '</p>' : '') +
+        '</div>' +
         '<h1 id="accueil-titre">' + (objectifs.length ? 'Ce que vous allez apprendre' : 'Avant de commencer') + '</h1>' +
         (objectifs.length
-          ? '<p class="accueil-annonce">' + esc(a.annonce) + '</p>' +
+          ? '<p class="accueil-annonce">' + esc(annonce) + '</p>' +
             '<ol class="accueil-objectifs">' + objectifs.map(function (o, i) { return '<li>' + (objectifs.length > 1 ? '<span class="accueil-num" aria-hidden="true">' + (i + 1) + '</span>' : '') + '<span>' + esc(net(o)) + '</span></li>'; }).join('') + '</ol>'
           : '') +
-        '<button type="button" class="accueil-entrer"><span>Entrer dans le module</span><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+        '<button type="button" class="accueil-entrer"><span>Lancer la capsule</span><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
       '</div>' +
       '<figure class="accueil-image"><img src="commun/formatrice.webp" alt=""></figure>';
     var cadre = document.createElement('div');

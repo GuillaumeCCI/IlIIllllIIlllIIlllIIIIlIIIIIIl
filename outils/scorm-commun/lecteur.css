@@ -44,7 +44,11 @@ button:focus-visible, a:focus-visible { outline: 3px solid #7fa2f0; outline-offs
 .accueil { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); align-items: center; gap: 56px; width: min(1180px, 100%); margin: auto; animation: accueil-in .6s ease-in-out both; }
 @keyframes accueil-in { from { opacity: 0; } to { opacity: 1; } }
 .accueil-texte { display: grid; justify-items: start; }
-.accueil-duree { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 26px; padding: 7px 14px 7px 11px; border-radius: 999px; background: var(--pale); color: var(--navy); font-weight: 700; font-size: .95rem; }
+/* Les repères : la capsule dans sa partie, puis la durée. */
+.accueil-reperes { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 0 0 26px; }
+.accueil-capsule { margin: 0; color: var(--muted); font-size: 1rem; }
+.accueil-capsule b { color: var(--navy); }
+.accueil-duree { display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 7px 14px 7px 11px; border-radius: 999px; background: var(--pale); color: var(--navy); font-weight: 700; font-size: .95rem; }
 .accueil h1 { position: relative; margin: 0 0 14px; padding-top: 22px; font-size: clamp(2rem, 3vw, 3.1rem); font-weight: 800; line-height: 1.1; }
 .accueil h1::before { content: ''; position: absolute; top: 0; left: 0; width: 52px; height: 4px; border-radius: 4px; background: #f08a6c; }
 .accueil-annonce { margin: 0 0 18px; color: var(--muted); font-size: clamp(1.05rem, 1.05vw, 1.25rem); }
@@ -64,7 +68,16 @@ button:focus-visible, a:focus-visible { outline: 3px solid #7fa2f0; outline-offs
   .accueil-image { order: -1; justify-self: center; padding: 20px; }
   .accueil-image img { width: min(50vw, 170px); }
 }
-@media (prefers-reduced-motion: reduce) { .accueil { animation: none; } }
+/* La tache derrière la formatrice respire : elle change lentement de forme
+ * et tourne un peu, en boucle (la formatrice, elle, ne bouge pas). */
+.accueil-image::before { animation: tache 14s ease-in-out infinite alternate; }
+@keyframes tache {
+  0%   { border-radius: 46% 54% 52% 48% / 55% 45% 55% 45%; transform: rotate(0deg) scale(1); }
+  33%  { border-radius: 58% 42% 45% 55% / 48% 58% 42% 52%; transform: rotate(8deg) scale(1.03); }
+  66%  { border-radius: 42% 58% 60% 40% / 56% 44% 58% 42%; transform: rotate(-5deg) scale(.98); }
+  100% { border-radius: 52% 48% 40% 60% / 44% 56% 46% 54%; transform: rotate(4deg) scale(1.02); }
+}
+@media (prefers-reduced-motion: reduce) { .accueil, .accueil-image::before { animation: none; } }
 
 /* Le sommaire, par-dessus le contenu */
 .voile { position: fixed; inset: var(--barre) 0 0 0; z-index: 1; background: rgb(19 32 92 / 18%); }
