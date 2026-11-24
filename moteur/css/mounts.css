@@ -897,3 +897,21 @@ button.crash-passage:hover { background: #fff1d6; }
 @media (max-width: 900px) { .mr-pair { grid-template-columns: 1fr; } .mr-row { grid-template-columns: 22px 1fr; } .mr-tip { grid-column: 2; } }
 /* Extrait suivant (trieur des associations) : fondu enchaîné lent, rien ne bouge. */
 .mt-sorter.is-fresh .sorter-card-text, .mt-sorter.is-fresh .sorter-choice-label { animation: fm-in .6s ease-in-out .4s both; }
+
+/* LE DOCUMENT DESSINÉ (bloc de scène « sheet ») : une fiche de poste ou un
+ * dossier. Un en-tête (petite mention du document, pastille, nom), une
+ * phrase d'usage, puis les rubriques en colonnes, séparées par des traits
+ * fins : ni pictogrammes, ni cadres dans le cadre. */
+.sc-sheet { color: #13205c; }
+.sc-sheet-kind { margin: 0 0 12px; color: #2a8f8f; font-size: .74rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.sc-sheet-head { display: flex; align-items: center; gap: 14px; padding-bottom: 14px; border-bottom: 1px solid #e6ebf5; }
+.sc-sheet-logo { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; background: #13205c; color: #fff; font-size: 1.25rem; font-weight: 800; }
+.sc-sheet-head p { margin: 0; }
+.sc-sheet-head strong { display: block; font-size: 1.15rem; }
+.sc-sheet-head p span { display: block; color: #5b6a8f; font-size: .92rem; }
+.sc-sheet-help { margin: 12px 0 4px; color: #5b6a8f; font-size: .94rem; }
+/* Trois colonnes au plus quand la place le permet, une seule dans une colonne étroite. */
+.sc-sheet-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(max(240px, 30%), 1fr)); gap: 0 28px; margin: 0; }
+.sc-sheet-field { padding: 12px 0; border-bottom: 1px solid #eef1f7; }
+.sc-sheet-field dt { margin: 0 0 4px; color: #5b6a8f; font-size: .76rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.sc-sheet-field dd { margin: 0; line-height: 1.5; }

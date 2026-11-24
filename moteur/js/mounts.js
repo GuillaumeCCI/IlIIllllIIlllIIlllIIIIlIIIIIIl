@@ -53,7 +53,7 @@
       if (!b || typeof b !== 'object') return [];
       const out = [b.quote, b.say, b.info, b.intro].filter(t => typeof t === 'string');
       [].concat(b.said || []).forEach(t => out.push(t));
-      [].concat(b.bubbles || [], b.dialogue || [], (b.script && b.script.lines) || [], b.facts || []).forEach(x => x && x.text && out.push(x.text));
+      [].concat(b.bubbles || [], b.dialogue || [], (b.script && b.script.lines) || [], b.facts || [], (b.sheet && b.sheet.fields) || []).forEach(x => x && x.text && out.push(x.text));
       if (b.email) [].concat(b.email.lines || []).forEach(t => out.push(t));
       return out;
     });
@@ -83,6 +83,9 @@
    *   { email: { to, subject, lines } }            un e-mail ;
    *   { info, symbol, strong }        une phrase de contexte (strong : début en gras) ;
    *   { facts: [{ symbol, text }], title }         une liste de repères ;
+   *   { sheet: { kind, logo, name, tagline, help, fields: [{ label, text }] } }
+   *                                   un document dessiné (fiche de poste…) :
+   *                                   en-tête, phrase d'usage, rubriques ;
    *   { person: { portrait, name, role }, intro, said: [texte] }
    *                                   une personne, puis ses paroles numérotées. */
   const MEDIA = [];
@@ -257,6 +260,15 @@
           <div class="sc-person-head">${p.portrait ? `<img src="${esc(core().asset(core().portraitFor(p.portrait)))}" alt="" decoding="async">` : ''}<p><strong>${esc(p.name || '')}</strong>${p.role ? `<span>${esc(p.role)}</span>` : ''}</p></div>
           ${block.intro ? `<p class="sc-person-intro">${esc(block.intro)}</p>` : ''}
           ${block.said ? `<ol class="sc-said">${block.said.map((text, i) => `<li><span class="sc-said-n">${i + 1}</span><span>«&nbsp;${esc(text)}&nbsp;»</span></li>`).join('')}</ol>` : ''}
+        </div>`;
+      }
+      if (block.sheet) {
+        const s = block.sheet;
+        return `<div class="sc-sheet">
+          ${s.kind ? `<p class="sc-sheet-kind">${esc(s.kind)}</p>` : ''}
+          <div class="sc-sheet-head">${s.logo ? `<span class="sc-sheet-logo" aria-hidden="true">${esc(s.logo)}</span>` : ''}<p><strong>${esc(s.name || '')}</strong>${s.tagline ? `<span>${esc(s.tagline)}</span>` : ''}</p></div>
+          ${s.help ? `<p class="sc-sheet-help">${esc(s.help)}</p>` : ''}
+          <dl class="sc-sheet-fields">${(s.fields || []).map(f => `<div class="sc-sheet-field ${f.wide ? 'is-wide' : ''}"><dt>${esc(f.label)}</dt><dd>${esc(f.text)}</dd></div>`).join('')}</dl>
         </div>`;
       }
       if (block.facts) {
