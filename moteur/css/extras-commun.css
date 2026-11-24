@@ -684,6 +684,8 @@ body .topbar, body.is-briefing .topbar { position: sticky; top: 0; z-index: 40; 
    le logo CCI en fondu, comme dans atelier-vente/cadre.html. */
 .page-transition { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; background: #f8f5f0; opacity: 0; pointer-events: none; transition: opacity .35s ease; }
 .page-transition.is-on { opacity: 1; pointer-events: auto; }
+/* Transition douce (catalog.transition = "douce") : un simple fondu sur le fond crème, sans logo. */
+.page-transition.is-soft { transition: opacity .4s ease-in-out; }
 .page-transition img { width: min(340px, 62vw); height: auto; mix-blend-mode: multiply; opacity: 0; transform: scale(.96); transition: opacity .45s ease .1s, transform .6s ease .1s; }
 .page-transition.is-on img { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .page-transition, .page-transition img { transition: none; transform: none; } }

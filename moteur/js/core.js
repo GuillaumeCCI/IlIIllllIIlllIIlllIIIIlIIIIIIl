@@ -498,11 +498,15 @@
    * Même rendu que atelier-vente/cadre.html. */
   const COVER_KEY = 'atelier-vente-transition';
   const logoUrl = () => `${inSubfolder ? '../' : ''}../../moteur/assets/logo-cci.webp`;
+  /* catalog.transition = 'douce' : les pages d'une même séquence se suivent
+   * en simple fondu, sans logo ni bruit de page : on reste dans le même
+   * cours. Sans réglage, la transition au logo CCI. */
+  const softTransition = () => Boolean(catalog && catalog.transition === 'douce');
   function coverLayer(on) {
     const cover = document.createElement('div');
-    cover.className = `page-transition${on ? ' is-on' : ''}`;
+    cover.className = `page-transition${on ? ' is-on' : ''}${softTransition() ? ' is-soft' : ''}`;
     cover.setAttribute('aria-hidden', 'true');
-    cover.innerHTML = `<img src="${esc(logoUrl())}" alt="">`;
+    cover.innerHTML = softTransition() ? '' : `<img src="${esc(logoUrl())}" alt="">`;
     document.body.appendChild(cover);
     return cover;
   }
@@ -512,7 +516,7 @@
     requestAnimationFrame(() => requestAnimationFrame(() => cover.classList.add('is-on')));
     let muted = false;
     try { muted = localStorage.getItem('atelier-vente-sons') === 'off'; } catch { /* son actif */ }
-    if (!muted) {
+    if (!muted && !softTransition()) {
       try {
         const sound = new Audio(`${inSubfolder ? '../' : ''}../../moteur/assets/audio/transition-page.mp3`);
         sound.volume = 0.22;
@@ -521,7 +525,7 @@
       } catch { /* pas de son */ }
     }
     try { sessionStorage.setItem(COVER_KEY, String(Date.now())); } catch { /* sans stockage */ }
-    setTimeout(() => { window.location.href = url; }, 900);
+    setTimeout(() => { window.location.href = url; }, softTransition() ? 420 : 900);
   }
   // À l'arrivée par la transition : la page s'ouvre sous le logo, qui s'efface.
   function coverOnArrival() {
@@ -529,7 +533,8 @@
     try { at = Number(sessionStorage.getItem(COVER_KEY)) || 0; sessionStorage.removeItem(COVER_KEY); } catch { /* sans stockage */ }
     if (!at || Date.now() - at > 8000) return;
     const cover = coverLayer(true);
-    setTimeout(() => { cover.classList.remove('is-on'); setTimeout(() => cover.remove(), 500); }, Math.max(600, at + 1900 - Date.now()));
+    const hold = softTransition() ? 150 : Math.max(600, at + 1900 - Date.now());
+    setTimeout(() => { cover.classList.remove('is-on'); setTimeout(() => cover.remove(), 700); }, hold);
   }
   if (document.body) coverOnArrival();
   else document.addEventListener('DOMContentLoaded', coverOnArrival);
