@@ -38,6 +38,7 @@ if (!src || !out) { console.error('usage : node outils/scorm-depuis-mbz.mjs [--m
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const RACINE = path.resolve(ICI, '..');
 const SITE = 'https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/';
+const ACCUEILS = (() => { try { return JSON.parse(fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'scorm-accueils.json'), 'utf8')); } catch { return {}; } })();
 
 /* ── Lecture des XML de la sauvegarde ─────────────────────────────── */
 const lire = f => fs.readFileSync(path.join(src, f), 'utf8');
@@ -186,6 +187,9 @@ for (const section of sections) {
       for (const f of fs.readdirSync(path.join(tmp, dossier))) if (f === 'imsmanifest.xml' || /\.xsd$/.test(f)) fs.rmSync(path.join(tmp, dossier, f));
       href = `${dossier}/${lancement}`;
       accueil = accueilDe(intro);
+      // Description vide sur la plateforme : objectifs écrits à part (outils/scorm-accueils.json).
+      const ecrit = ACCUEILS[nom.trim()];
+      if (!accueil && ecrit) accueil = { annonce: 'À l’issue de ce module, vous serez capable de :', objectifs: ecrit.objectifs || [], duree: ecrit.duree || '' };
     } else if (type === 'page') {
       const contenu = avecFichiers(propre(champ(actXml, 'content')), ctx, 'mod_page', 'content', dossier);
       const iframe = /<iframe[^>]*src="([^"]+)"[^>]*><\/iframe>/i.exec(contenu);

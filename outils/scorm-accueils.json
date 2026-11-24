@@ -1,0 +1,11 @@
+{
+  "_lisezmoi": "Objectifs et durée des capsules (SCORM de la plateforme) dont la description Totara n'en donne pas. Clé = nom exact de l'activité. Utilisé par scorm-depuis-mbz.mjs seulement quand la description est vide.",
+  "Répondre efficacement aux objections": {
+    "objectifs": [
+      "Distinguer une objection d'une fuite ;",
+      "Traiter une objection avec la méthode en 6 temps, du rebond jusqu'à la validation ;",
+      "Cibler le vrai point de blocage pour y répondre avec des arguments adaptés."
+    ],
+    "duree": "10 minutes"
+  }
+}
