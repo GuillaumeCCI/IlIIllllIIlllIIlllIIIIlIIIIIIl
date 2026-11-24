@@ -1057,6 +1057,11 @@
   document.addEventListener('click', event => {
     const link = event.target.closest && event.target.closest('#main a[data-fin-activite]');
     if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.button) return;
+    // catalog.finActivite = 'derniere' : l'écran de fin seulement après la
+    // dernière page du module (une séquence d'un seul tenant) ; sinon, la
+    // page suivante s'ouvre directement.
+    const isLast = core.allKeys.indexOf(current.key) === core.allKeys.length - 1;
+    if (core.catalog.finActivite === 'derniere' && !isLast) return;
     event.preventDefault();
     event.stopPropagation();
     finActivite();
