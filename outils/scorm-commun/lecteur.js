@@ -54,32 +54,54 @@
     for (var n = 0; texte().length > MAX && n < longues.length; n++) delete copie.i[longues[n]].d;
     return texte();
   }
-  var attente = 0;
+  /* L'ENVOI À LA PLATEFORME. Sur Totara, chaque envoi (LMSCommit) est une
+   * requête qui BLOQUE la page jusqu'à la réponse du serveur : l'écran se
+   * fige (fenêtres et animations des exercices saccadées). On n'envoie donc
+   * que ce qui a changé, et :
+   *   · tout de suite quand ça compte : un contenu devient terminé, le score
+   *     change, le parcours est terminé, ou l'on quitte la page ;
+   *   · sinon (réponses, reprises), regroupé : un envoi 15 s au plus tard,
+   *     et dès que la page est masquée (onglet changé, fenêtre fermée). */
+  var attente = 0, envoye = '', enAttente = false;
+  var DELAI = 15000;
+  function envoyer() { clearTimeout(attente); attente = 0; enAttente = false; SCO.commit(); }
   function enregistrer(tout_de_suite) {
     dessiner();
     if (!reel) return;
-    SCO.set('cmi.suspend_data', compacter());
+    var sd = compacter();
     var tous = items.every(function (it) { return fait(it.id); });
     var notes = items.map(function (it) { return (etat.i[it.id] || {}).r; }).filter(function (r) { return typeof r === 'number'; });
-    if (notes.length) {
+    var score = notes.length ? String(Math.round(notes.reduce(function (a, b) { return a + b; }, 0) / notes.length)) : '';
+    var deja = SCO.get('cmi.core.lesson_status');
+    var statut = tous || deja === 'completed' ? 'completed' : 'incomplete';
+    var faits = items.map(function (it) { return fait(it.id) ? 1 : 0; }).join('');
+    var important = statut + '|' + score + '|' + faits;
+    var signature = important + '|' + sd;
+    if (signature === envoye) { if (tout_de_suite && enAttente) envoyer(); return; }
+    var urgent = tout_de_suite || envoye.indexOf(important + '|') !== 0;
+    envoye = signature;
+    SCO.set('cmi.suspend_data', sd);
+    if (score) {
       SCO.set('cmi.core.score.min', '0');
       SCO.set('cmi.core.score.max', '100');
-      SCO.set('cmi.core.score.raw', String(Math.round(notes.reduce(function (a, b) { return a + b; }, 0) / notes.length)));
+      SCO.set('cmi.core.score.raw', score);
     }
-    var deja = SCO.get('cmi.core.lesson_status');
-    SCO.set('cmi.core.lesson_status', tous || deja === 'completed' ? 'completed' : 'incomplete');
+    SCO.set('cmi.core.lesson_status', statut);
     SCO.set('cmi.core.exit', tous ? '' : 'suspend');
-    clearTimeout(attente);
-    if (tout_de_suite) SCO.commit(); else attente = setTimeout(SCO.commit, 2000);
+    if (urgent) envoyer();
+    else { enAttente = true; if (!attente) attente = setTimeout(envoyer, DELAI); }
   }
+  // Page masquée (autre onglet, fenêtre réduite ou fermée) : ce qui attend part.
+  document.addEventListener('visibilitychange', function () { if (document.hidden && enAttente) envoyer(); });
 
   /* ── L'API vue par l'élément en cours ─────────────────────────────── */
   var courant = null;
   var nombre = function (v) { var n = parseFloat(v); return isFinite(n) ? n : undefined; };
   window.API = {
     LMSInitialize: function () { if (courant && !commence(courant.id)) { de(courant.id).s = 'incomplete'; enregistrer(); } return 'true'; },
-    LMSFinish: function () { enregistrer(true); return 'true'; },
-    LMSCommit: function () { enregistrer(true); return 'true'; },
+    // Le contenu demande un envoi : regroupé (voir enregistrer), jamais un gel à chaque fois.
+    LMSFinish: function () { enregistrer(); return 'true'; },
+    LMSCommit: function () { enregistrer(); return 'true'; },
     LMSGetValue: function (k) {
       var e = courant ? (etat.i[courant.id] || {}) : {};
       switch (k) {
