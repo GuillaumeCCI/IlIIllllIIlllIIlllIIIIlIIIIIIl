@@ -239,7 +239,11 @@
           : '') +
         '<button type="button" class="accueil-entrer"><span>Lancer la capsule</span><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
       '</div>' +
-      '<figure class="accueil-image"><img src="commun/formatrice.webp" alt=""></figure>';
+      // La couverture de la capsule, sinon la formatrice.
+      (a.image
+        ? '<figure class="accueil-image is-couverture"><img src="' + esc(a.image) + '" alt=""></figure>'
+        : '<figure class="accueil-image"><img src="commun/formatrice.webp" alt=""></figure>');
+    if (a.image) carte.classList.add('avec-couverture');
     var cadre = document.createElement('div');
     cadre.className = 'accueil-fond';
     cadre.appendChild(carte);

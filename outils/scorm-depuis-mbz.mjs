@@ -32,9 +32,13 @@ const args = process.argv.slice(2);
 const MULTI = args.includes('--multi');
 /* --sans "<nom>" : une activité de la sauvegarde laissée hors du paquet. */
 const SANS = args.flatMap((a, i) => (a === '--sans' && args[i + 1] ? [args[i + 1].trim()] : []));
+/* --images <dossier> : couvertures faites à part, « <nom exact de l'activité>.png »
+ * (pour une capsule qui n'en a pas sur la plateforme). Elles prennent le pas
+ * sur l'image de la description. Ce dossier reste hors du dépôt. */
+const IMAGES = (() => { const i = args.indexOf('--images'); return i >= 0 ? args[i + 1] : ''; })();
 const ecartees = new Set();
-const [src, out] = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--sans');
-if (!src || !out) { console.error('usage : node outils/scorm-depuis-mbz.mjs [--multi] [--sans "<nom d’activité>"] <dossier-mbz> <sortie.zip>'); process.exit(1); }
+const [src, out] = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--sans' && args[i - 1] !== '--images');
+if (!src || !out) { console.error('usage : node outils/scorm-depuis-mbz.mjs [--multi] [--sans "<nom d’activité>"] [--images <dossier>] <dossier-mbz> <sortie.zip>'); process.exit(1); }
 const ICI = path.dirname(fileURLToPath(import.meta.url));
 const RACINE = path.resolve(ICI, '..');
 const SITE = 'https://guillaumecci.github.io/IlIIllllIIlllIIlllIIIIlIIIIIIl/';
@@ -190,6 +194,14 @@ for (const section of sections) {
       // Description vide sur la plateforme : objectifs écrits à part (outils/scorm-accueils.json).
       const ecrit = ACCUEILS[nom.trim()];
       if (!accueil && ecrit) accueil = { annonce: 'À l’issue de ce module, vous serez capable de :', objectifs: ecrit.objectifs || [], duree: ecrit.duree || '' };
+      // La couverture de la capsule (à la place de la formatrice sur l'accueil) :
+      // celle faite à part (--images), sinon l'image de la description.
+      if (accueil) {
+        const aPart = IMAGES && fs.existsSync(path.join(IMAGES, `${nom.trim()}.png`)) ? path.join(IMAGES, `${nom.trim()}.png`) : '';
+        const deLaPlateforme = fichiersDe(ctx, 'mod_scorm', 'intro').find(f => /^image\//.test(f.mimetype));
+        if (aPart) { copier(aPart, `${dossier}/couverture.png`); accueil.image = `${dossier}/couverture.png`; }
+        else if (deLaPlateforme) { const ext = path.extname(deLaPlateforme.filename).toLowerCase() || '.png'; copier(blob(deLaPlateforme), `${dossier}/couverture${ext}`); accueil.image = `${dossier}/couverture${ext}`; }
+      }
     } else if (type === 'page') {
       const contenu = avecFichiers(propre(champ(actXml, 'content')), ctx, 'mod_page', 'content', dossier);
       const iframe = /<iframe[^>]*src="([^"]+)"[^>]*><\/iframe>/i.exec(contenu);
@@ -256,7 +268,7 @@ for (const section of sections) {
     // propre liste : on ne la répète pas, la plateforme décompresse tout).
     ressources.push(`    <resource identifier="RES_${id}" type="webcontent" adlcp:scormtype="sco" href="${escXml(href)}">\n      <file href="${escXml(href)}"/>\n    </resource>`);
     sommaire.push(accueil ? { id, titre: nom, href, type: genre, accueil } : { id, titre: nom, href, type: genre });
-    console.log(`  ✓ ${dossier} · ${genre} · ${nom}${type === 'scorm' ? (accueil ? ` (accueil : ${accueil.objectifs.length} objectif(s), ${accueil.duree || 'durée ?'})` : ' (pas d’objectifs ni de durée dans sa description : pas d’écran d’accueil)') : ''}`);
+    console.log(`  ✓ ${dossier} · ${genre} · ${nom}${type === 'scorm' ? (accueil ? ` (accueil : ${accueil.objectifs.length} objectif(s), ${accueil.duree || 'durée ?'}, ${accueil.image ? 'couverture' : 'formatrice'})` : ' (pas d’objectifs ni de durée dans sa description : pas d’écran d’accueil)') : ''}`);
   }
   if (enfants.length) items.push(`      <item identifier="SEC_${section.numero}">\n        <title>${escXml(section.nom || `Section ${section.numero}`)}</title>\n${enfants.join('\n')}\n      </item>`);
   if (sommaire.length) parcours.push({ nom: section.nom || `Section ${section.numero}`, items: sommaire.splice(0) });
