@@ -1,5 +1,5 @@
 // Essai du paquet dans une fausse plateforme SCORM 1.2 (Edge sans fenêtre).
-//   site (exercices) : http://127.0.0.1:4173  (server.mjs du dépôt, déjà lancé)
+//   exercices : dans le paquet (site/), plus besoin du site local
 //   plateforme       : http://localhost:4174  (ce script)
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
@@ -47,7 +47,7 @@ createServer(async (req, res) => {
 
 const edge = ['C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', 'C:/Program Files/Microsoft/Edge/Application/msedge.exe'].find(existsSync);
 const port = 9333;
-const proc = spawn(edge, ['--headless=new', '--disable-gpu', '--disable-site-isolation-trials', '--disable-features=IsolateOrigins,site-per-process', `--remote-debugging-port=${port}`, `--user-data-dir=${mkdtempSync(join(tmpdir(), 'scormtest-'))}`, 'about:blank'], { stdio: 'ignore' });
+const proc = spawn(edge, ['--headless=new', '--disable-gpu', '--host-resolver-rules=MAP guillaumecci.github.io 127.0.0.1:9', '--disable-site-isolation-trials', '--disable-features=IsolateOrigins,site-per-process', `--remote-debugging-port=${port}`, `--user-data-dir=${mkdtempSync(join(tmpdir(), 'scormtest-'))}`, 'about:blank'], { stdio: 'ignore' });
 let targets;
 for (let i = 0; i < 50; i++) { try { targets = await (await fetch(`http://127.0.0.1:${port}/json`)).json(); break; } catch { await new Promise(r => setTimeout(r, 200)); } }
 const ws = new WebSocket(targets.find(t => t.type === 'page').webSocketDebuggerUrl);
@@ -66,7 +66,7 @@ const lmsEtat = async () => JSON.parse(await ev(`JSON.stringify({ st: __data['cm
 async function dedans(expr) {
   const tree = (await cdp('Page.getFrameTree')).result.frameTree;
   const all = []; (function walk(n) { all.push(n.frame); (n.childFrames || []).forEach(walk); })(tree);
-  const f = all.find(x => x.url.startsWith(SITE));
+  const f = all.find(x => /\/site\//.test(x.url));
   if (!f) return 'PAS DE CADRE';
   const w = await cdp('Page.createIsolatedWorld', { frameId: f.id, worldName: 'essai' });
   const r = await cdp('Runtime.evaluate', { expression: expr, contextId: w.result.executionContextId, returnByValue: true });

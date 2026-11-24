@@ -154,6 +154,7 @@ const boutonTermine =`<div class="mc" id="mc"><button class="btn" type="button">
 const achevement = manuel => manuel ? '<script>SCO.manualComplete("mc");</script>' : '<script>SCO.completeOnView();</script>';
 
 const items = [];
+const A_COPIER = new Set(); // modules d'exercices à mettre dans le paquet (« atelier-vente/1-1-1 »)
 const parcours = [];   // le sommaire du lecteur : sections et éléments
 const sommaire = [];   // les éléments de la section en cours
 const ressources = [];
@@ -221,6 +222,14 @@ for (const section of sections) {
           const suite = params.toString();
           adresse = `${SITE.slice(0, -1)}${direct[1]}cadre.html?module=${direct[2]}${suite ? '&' + suite : ''}`;
         }
+        // Nos exercices DANS le paquet (indépendant du site) : la page pointe
+        // vers leur copie, site/<parcours>/cadre.html?module=…, copiée à la fin.
+        const surSite = /^([^/?#]+)\/cadre\.html\?([^#]*)$/.exec(adresse.slice(SITE.length));
+        const mod = surSite && new URLSearchParams(surSite[2]).get('module');
+        if (!surSite || !mod || !/^[\w-]+$/.test(mod)) throw new Error(`${nom} : adresse d'exercices non reconnue (${adresse}) — impossible de les mettre dans le paquet`);
+        if (!fs.existsSync(path.join(RACINE, surSite[1], mod))) throw new Error(`${nom} : module ${surSite[1]}/${mod} introuvable dans le dépôt`);
+        A_COPIER.add(`${surSite[1]}/${mod}`);
+        adresse = `../site/${surSite[1]}/cadre.html?${surSite[2]}`;
         ecrire(`${dossier}/index.html`, page({
           titre: nom,
           corps: `<div class="intro">${texte}</div>
@@ -284,6 +293,29 @@ if (!MULTI) {
   ecrire('commun/parcours.js', `window.PARCOURS = ${JSON.stringify({ titre: titreCours, image: image ? `commun/${image}` : '', sections: parcours }, null, 1)};\n`);
   items.splice(0, items.length, `      <item identifier="IT_LECTEUR" identifierref="RES_LECTEUR" isvisible="true">\n        <title>${escXml(titreCours)}</title>\n      </item>`);
   ressources.splice(0, ressources.length, `    <resource identifier="RES_LECTEUR" type="webcontent" adlcp:scormtype="sco" href="lecteur.html">\n      <file href="lecteur.html"/>\n    </resource>`);
+}
+
+/* Nos exercices copiés dans le paquet (site/) : le moteur commun, et pour
+ * chaque module utilisé, son dossier et le cadre de son parcours. Le paquet
+ * ne dépend plus du site en ligne. Les outils, essais et notes du module
+ * restent dehors. */
+if (A_COPIER.size) {
+  const HORS = new Set(['tests', 'tools', 'node_modules', 'README.md', 'package.json', 'package-lock.json', 'server.mjs', '.git']);
+  const copierDossier = (de, vers) => {
+    for (const e of fs.readdirSync(de, { withFileTypes: true })) {
+      if (HORS.has(e.name) || e.name.startsWith('.')) continue;
+      const a = path.join(de, e.name), b = path.join(vers, e.name);
+      if (e.isDirectory()) copierDossier(a, b);
+      else { fs.mkdirSync(vers, { recursive: true }); fs.copyFileSync(a, b); }
+    }
+  };
+  copierDossier(path.join(RACINE, 'moteur'), path.join(tmp, 'site', 'moteur'));
+  for (const m of A_COPIER) {
+    const parcoursDir = m.split('/')[0];
+    copier(path.join(RACINE, parcoursDir, 'cadre.html'), `site/${parcoursDir}/cadre.html`);
+    copierDossier(path.join(RACINE, m), path.join(tmp, 'site', m));
+  }
+  console.log(`  exercices dans le paquet : moteur + ${[...A_COPIER].join(', ')}`);
 }
 
 ecrire('imsmanifest.xml', `<?xml version="1.0" encoding="UTF-8"?>

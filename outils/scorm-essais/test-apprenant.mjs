@@ -42,7 +42,7 @@ createServer(async (req, res) => {
 
 const edge = ['C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', 'C:/Program Files/Microsoft/Edge/Application/msedge.exe'].find(existsSync);
 const port = 9337;
-const proc = spawn(edge, ['--headless=new', '--disable-gpu', '--autoplay-policy=no-user-gesture-required', '--disable-site-isolation-trials', '--disable-features=IsolateOrigins,site-per-process', '--window-size=1300,800', `--remote-debugging-port=${port}`, `--user-data-dir=${mkdtempSync(join(tmpdir(), 'plein-'))}`, 'about:blank'], { stdio: 'ignore' });
+const proc = spawn(edge, ['--headless=new', '--disable-gpu', '--host-resolver-rules=MAP guillaumecci.github.io 127.0.0.1:9', '--autoplay-policy=no-user-gesture-required', '--disable-site-isolation-trials', '--disable-features=IsolateOrigins,site-per-process', '--window-size=1300,800', `--remote-debugging-port=${port}`, `--user-data-dir=${mkdtempSync(join(tmpdir(), 'plein-'))}`, 'about:blank'], { stdio: 'ignore' });
 let targets;
 for (let i = 0; i < 50; i++) { try { targets = await (await fetch(`http://127.0.0.1:${port}/json`)).json(); break; } catch { await new Promise(r => setTimeout(r, 200)); } }
 const ws = new WebSocket(targets.find(t => t.type === 'page').webSocketDebuggerUrl);
@@ -59,7 +59,7 @@ const shot = async nom => { const r = await cdp('Page.captureScreenshot', { form
 async function dedans(expr) {
   const tree = (await cdp('Page.getFrameTree')).result.frameTree;
   const all = []; (function walk(n) { all.push(n.frame); (n.childFrames || []).forEach(walk); })(tree);
-  const f = all.find(x => x.url.startsWith(SITE));
+  const f = all.find(x => /\/site\//.test(x.url));
   if (!f) return 'PAS DE CADRE';
   const w = await cdp('Page.createIsolatedWorld', { frameId: f.id, worldName: 'essai' });
   const r = await cdp('Runtime.evaluate', { expression: expr, contextId: w.result.executionContextId, returnByValue: true });
@@ -82,7 +82,7 @@ async function dans(pred, expr) {
   return r.result.result ? r.result.result.value : r.result;
 }
 const RECT = sel => `(function(){var e=document.querySelector(${JSON.stringify(sel)}); if(!e) return null; var r=e.getBoundingClientRect(); return {x:r.left,y:r.top,w:r.width,h:r.height};})()`;
-const estLecteur = f => /lecteur\.html/.test(f.url), estPage = f => /04_page/.test(f.url), estCadre = f => /cadre\.html/.test(f.url), estExo = f => f.url.startsWith(SITE) && /1-1-1\//.test(f.url);
+const estLecteur = f => /lecteur\.html/.test(f.url), estPage = f => /04_page/.test(f.url), estCadre = f => /cadre\.html/.test(f.url), estExo = f => /\/site\//.test(f.url) && /1-1-1\//.test(f.url);
 async function clic(x, y) {
   await cdp('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', clickCount: 1 });
   await cdp('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', clickCount: 1 });
