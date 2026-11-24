@@ -73,6 +73,12 @@ await cdp('Page.enable'); await cdp('Runtime.enable');
 await go('http://localhost:4174/lms.html', 9000);
 ok(await L(`d.querySelectorAll('.som-item').length`) === 6, 'sommaire : 6 éléments');
 ok(/Prendre en main/.test(await L(`d.getElementById('barre-titre').textContent`)), 'barre : titre du Storyline');
+// L'accueil du Storyline : objectifs et durée ; il ne compte pas comme commencé.
+const accueil = await L(`(function(){ var a = d.querySelector('.accueil'); return a ? { li: a.querySelectorAll('li').length, duree: /Durée estimée : 10 minutes/.test(a.textContent), cadre: !!d.querySelector('#scene iframe') } : null; })()`);
+ok(accueil && accueil.li === 1 && accueil.duree && !accueil.cadre, 'accueil du Storyline : objectifs, durée, module pas encore ouvert');
+ok(!((await etat()).i.SCORM_3243 || {}).s, 'l’accueil ne compte pas comme commencé');
+await shot('lecteur-0-accueil.png');
+await L(`d.querySelector('.accueil-entrer').click()`); await pause(6000);
 let e = await etat();
 ok(e.c === 'SCORM_3243', 'élément en cours retenu');
 ok(e.i.SCORM_3243 && e.i.SCORM_3243.s === 'incomplete', 'le Storyline a trouvé l’API du lecteur (statut ' + (e.i.SCORM_3243 && e.i.SCORM_3243.s) + ')');

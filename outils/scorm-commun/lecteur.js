@@ -194,9 +194,38 @@
     // nom), puis le nouveau prend la main sur l'API.
     var ancien = scene.querySelector('iframe');
     if (ancien) ancien.remove();
+    scene.innerHTML = '';
     courant = it;
     window.API._max = '';
     etat.c = it.id;
+    // Un SCORM s'annonce d'abord : objectifs et durée, puis « Entrer ».
+    if (it.accueil) accueillir(it); else charger(it);
+    enregistrer();
+  }
+  function accueillir(it) {
+    var a = it.accueil;
+    var carte = document.createElement('section');
+    carte.className = 'accueil';
+    carte.setAttribute('aria-labelledby', 'accueil-titre');
+    carte.innerHTML =
+      '<h2 id="accueil-titre">Avant de commencer</h2>' +
+      (a.objectifs && a.objectifs.length
+        ? '<p>' + esc(a.annonce) + '</p><ul>' + a.objectifs.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>'
+        : '') +
+      (a.duree ? '<p><b>Durée estimée : ' + esc(a.duree) + '</b>.</p>' : '') +
+      '<p>Cliquez sur « Entrer » pour commencer.</p>' +
+      '<button type="button" class="accueil-entrer">Entrer</button>';
+    var cadre = document.createElement('div');
+    cadre.className = 'accueil-fond';
+    cadre.appendChild(carte);
+    scene.appendChild(cadre);
+    carte.querySelector('.accueil-entrer').addEventListener('click', function () {
+      if (courant !== it) return;
+      scene.innerHTML = '';
+      charger(it);
+    });
+  }
+  function charger(it) {
     var f = document.createElement('iframe');
     f.className = 'contenu';
     f.title = it.titre;
@@ -204,7 +233,6 @@
     f.setAttribute('allowfullscreen', '');
     f.src = it.href;
     scene.appendChild(f);
-    enregistrer();
   }
   document.getElementById('prec').addEventListener('click', function () { if (courant) ouvrir(items[courant.index - 1]); });
   document.getElementById('suiv').addEventListener('click', function () { if (courant) ouvrir(items[courant.index + 1]); });

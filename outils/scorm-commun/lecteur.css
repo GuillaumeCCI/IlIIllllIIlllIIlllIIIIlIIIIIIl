@@ -32,6 +32,18 @@ button:focus-visible, a:focus-visible { outline: 3px solid #7fa2f0; outline-offs
 .scene { position: absolute; inset: var(--barre) 0 0 0; }
 .contenu { display: block; width: 100%; height: 100%; border: 0; }
 
+/* L'accueil d'un SCORM : objectifs et durée, puis « Entrer » (comme la page
+ * d'entrée d'une activité sur la plateforme). */
+.accueil-fond { height: 100%; overflow-y: auto; padding: 40px 24px; }
+.accueil { max-width: 1000px; margin: 0 auto; padding: 30px 40px 34px; border: 1px solid #dfe3ea; border-radius: 8px; background: #fdf5f0; color: #1f2430; line-height: 1.55; }
+.accueil h2 { margin: 0 0 18px; font-size: 1.5rem; font-weight: 700; color: #1f2430; }
+.accueil p { margin: 0 0 14px; }
+.accueil ul { margin: -4px 0 16px; padding-left: 1.3em; }
+.accueil li { margin: 4px 0; }
+.accueil-entrer { margin-top: 8px; padding: 11px 28px; border: 0; border-radius: 10px; background: var(--navy); color: #fff; font: inherit; font-weight: 700; font-size: 1.02rem; cursor: pointer; }
+.accueil-entrer:hover { background: #1d2d7a; }
+@media (max-width: 640px) { .accueil-fond { padding: 20px 12px; } .accueil { padding: 22px 20px 26px; } }
+
 /* Le sommaire, par-dessus le contenu */
 .voile { position: fixed; inset: var(--barre) 0 0 0; z-index: 1; background: rgb(19 32 92 / 18%); }
 .sommaire { position: fixed; z-index: 2; top: var(--barre); bottom: 0; left: 0; width: min(360px, 88vw); overflow-y: auto; scrollbar-width: none; padding: 18px 16px 28px; background: #fff; box-shadow: 8px 0 28px rgb(20 40 100 / 14%); opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility 0s linear .35s; }

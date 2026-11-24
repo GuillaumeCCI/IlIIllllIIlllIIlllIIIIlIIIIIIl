@@ -128,7 +128,19 @@ ${script}
 </html>
 `;
 }
-const boutonTermine = `<div class="mc" id="mc"><button class="btn" type="button">Marquer comme terminé</button><p class="mc-msg">Cliquez quand vous avez terminé cette activité.</p></div>`;
+/* L'écran d'accueil d'un SCORM, tiré de sa description sur la plateforme :
+ * la phrase d'annonce (« À l'issue de ce module, vous serez capable de : »),
+ * les objectifs (la liste) et la durée (« Temps estimé : 10 minutes »).
+ * L'image de la description n'est pas reprise : elle redit titre et durée. */
+const texteSeul = h => dec(String(h).replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, ' ')).replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+function accueilDe(intro) {
+  const objectifs = [...String(intro).matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)].map(m => texteSeul(m[1])).filter(Boolean);
+  const annonce = texteSeul((/<h\d[^>]*>([^]*?capable de[^]*?)<\/h\d>/i.exec(intro) || [])[1] || '') || (objectifs.length ? 'À l’issue de ce module, vous serez capable de :' : '');
+  const duree = ((/Temps estimé\s*:?\s*([^.<]+)/i.exec(texteSeul(intro)) || [])[1] || '').trim();
+  return objectifs.length || duree ? { annonce, objectifs, duree } : null;
+}
+
+const boutonTermine =`<div class="mc" id="mc"><button class="btn" type="button">Marquer comme terminé</button><p class="mc-msg">Cliquez quand vous avez terminé cette activité.</p></div>`;
 const achevement = manuel => manuel ? '<script>SCO.manualComplete("mc");</script>' : '<script>SCO.completeOnView();</script>';
 
 const items = [];
@@ -154,6 +166,7 @@ for (const section of sections) {
     const dossier = `${String(++n).padStart(2, '0')}_${type}`;
     let href;
     let genre = type; // pour le lecteur : scorm, exercices, page, resource…
+    let accueil = null; // écran d'accueil d'un SCORM : objectifs et durée
 
     if (type === 'scorm') {
       // Le module tel qu'il a été déposé : ses fichiers, et sa page de lancement.
@@ -167,6 +180,7 @@ for (const section of sections) {
       // manifeste dans le paquet, à la racine.
       for (const f of fs.readdirSync(path.join(tmp, dossier))) if (f === 'imsmanifest.xml' || /\.xsd$/.test(f)) fs.rmSync(path.join(tmp, dossier, f));
       href = `${dossier}/${lancement}`;
+      accueil = accueilDe(intro);
     } else if (type === 'page') {
       const contenu = avecFichiers(propre(champ(actXml, 'content')), ctx, 'mod_page', 'content', dossier);
       const iframe = /<iframe[^>]*src="([^"]+)"[^>]*><\/iframe>/i.exec(contenu);
@@ -232,8 +246,8 @@ for (const section of sections) {
     // Une ressource par SCO, avec ses fichiers (les SCORM repris gardent leur
     // propre liste : on ne la répète pas, la plateforme décompresse tout).
     ressources.push(`    <resource identifier="RES_${id}" type="webcontent" adlcp:scormtype="sco" href="${escXml(href)}">\n      <file href="${escXml(href)}"/>\n    </resource>`);
-    sommaire.push({ id, titre: nom, href, type: genre });
-    console.log(`  ✓ ${dossier} · ${genre} · ${nom}`);
+    sommaire.push(accueil ? { id, titre: nom, href, type: genre, accueil } : { id, titre: nom, href, type: genre });
+    console.log(`  ✓ ${dossier} · ${genre} · ${nom}${type === 'scorm' ? (accueil ? ` (accueil : ${accueil.objectifs.length} objectif(s), ${accueil.duree || 'durée ?'})` : ' (pas d’objectifs ni de durée dans sa description : pas d’écran d’accueil)') : ''}`);
   }
   if (enfants.length) items.push(`      <item identifier="SEC_${section.numero}">\n        <title>${escXml(section.nom || `Section ${section.numero}`)}</title>\n${enfants.join('\n')}\n      </item>`);
   if (sommaire.length) parcours.push({ nom: section.nom || `Section ${section.numero}`, items: sommaire.splice(0) });
