@@ -136,11 +136,20 @@
   document.title = P.titre;
 
   var ouvertes = P.sections.map(function () { return true; });
+  var COCHE = '<svg viewBox="0 0 16 16" width="14" height="14"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  // Au survol d'un cercle, une bulle dit ce qu'il signifie.
   function rond(it) {
-    if (fait(it.id)) return '<span class="rond is-fait" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
-    if (commence(it.id)) return '<span class="rond is-encours" aria-hidden="true"></span>';
-    return '<span class="rond" aria-hidden="true"></span>';
+    if (fait(it.id)) return '<span class="rond is-fait" data-bulle="Terminé" aria-hidden="true">' + COCHE + '</span>';
+    if (commence(it.id)) return '<span class="rond is-encours" data-bulle="En cours" aria-hidden="true"></span>';
+    return '<span class="rond" data-bulle="À faire" aria-hidden="true"></span>';
   }
+  // La légende des cercles, sous l'en-tête du sommaire.
+  document.getElementById('som-tete').insertAdjacentHTML('afterend',
+    '<ul class="som-legende" aria-hidden="true">' +
+      '<li><span class="rond"></span>À faire</li>' +
+      '<li><span class="rond is-encours"></span>En cours</li>' +
+      '<li><span class="rond is-fait">' + COCHE + '</span>Terminé</li>' +
+    '</ul>');
   var etiquette = function (it) { return fait(it.id) ? 'fait' : commence(it.id) ? 'en cours' : 'à faire'; };
   function dessiner() {
     var n = items.filter(function (it) { return fait(it.id); }).length;

@@ -89,6 +89,21 @@ button:focus-visible, a:focus-visible { outline: 3px solid #7fa2f0; outline-offs
 .rond { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 2px var(--ring); }
 .rond.is-encours { background: linear-gradient(90deg, var(--navy) 50%, #fff 50%); box-shadow: inset 0 0 0 2px var(--navy); }
 .rond.is-fait { background: var(--teal); box-shadow: none; color: #fff; }
+/* La légende, sous l'en-tête : les trois cercles et leur sens. */
+.som-legende { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: -6px 4px 18px; padding: 0 0 14px; list-style: none; border-bottom: 1px solid #e6ebf5; color: var(--muted); font-size: .88rem; }
+.som-legende li { display: inline-flex; align-items: center; gap: 7px; }
+.som-legende .rond { width: 18px; height: 18px; }
+.som-legende .rond svg { width: 11px; height: 11px; }
+/* La bulle au survol d'un cercle (ou au clavier, sur l'élément). */
+.rond[data-bulle] { position: relative; }
+.rond[data-bulle]::after { content: attr(data-bulle); position: absolute; z-index: 5; left: 50%; bottom: calc(100% + 9px); padding: 6px 11px; border-radius: 8px; background: var(--navy); color: #fff; font-size: .82rem; font-weight: 700; line-height: 1.2; white-space: nowrap; box-shadow: 0 6px 16px rgb(19 32 92 / 22%); opacity: 0; transform: translate(-14px, 4px); pointer-events: none; transition: opacity .18s ease, transform .18s ease; }
+.rond[data-bulle]::before { content: ''; position: absolute; z-index: 5; left: 50%; bottom: calc(100% + 3px); border: 6px solid transparent; border-bottom: 0; border-top-color: var(--navy); opacity: 0; transform: translate(-50%, 4px); pointer-events: none; transition: opacity .18s ease, transform .18s ease; }
+.rond[data-bulle]:hover::after, .som-item:focus-visible .rond[data-bulle]::after { opacity: 1; transform: translate(-14px, 0); }
+.rond[data-bulle]:hover::before, .som-item:focus-visible .rond[data-bulle]::before { opacity: 1; transform: translate(-50%, 0); }
+.rond[data-bulle]:hover { box-shadow: inset 0 0 0 2px var(--navy), 0 0 0 4px rgb(19 32 92 / 12%); }
+.rond.is-fait[data-bulle]:hover { box-shadow: 0 0 0 4px rgb(42 143 143 / 22%); }
+.is-actif .rond[data-bulle]::after { background: #fff; color: var(--navy); }
+.is-actif .rond[data-bulle]::before { border-top-color: #fff; }
 .is-actif .rond { box-shadow: inset 0 0 0 2px #fff; }
 .is-actif .rond.is-encours { background: linear-gradient(90deg, #fff 50%, var(--navy) 50%); }
 .is-actif .rond.is-fait { box-shadow: 0 0 0 2px #fff; }
