@@ -1064,6 +1064,8 @@
       'k-context-go': () => root.document.querySelector('#info-dialog')?.close()
     });
     if (!root.document) return;
+    // catalog.contexteAuto = false : la fenêtre ne s'ouvre que par le bouton « Le contexte ».
+    if (root.ATELIER_CATALOG && root.ATELIER_CATALOG.contexteAuto === false) return;
     const wait = setInterval(() => {
       const doc = root.document;
       if (ex().reviewing() || (doc.body.classList.contains('is-briefing') && !doc.querySelector('#main .case-menu')) || doc.querySelector('.launch-veil, .page-transition') || !doc.querySelector('#main form, #main .k-page, #main .case-menu')) return;
@@ -1156,7 +1158,11 @@
   // et que l'écran ait fini d'apparaître.
   function tour(id, steps) {
     tourSteps = steps;
-    tourKey = `atelier-visite-${id}`;
+    // catalog.visiteParType : une visite par TYPE d'écran (mêmes zones montrées),
+    // vue une seule fois dans le module, au premier écran de ce type.
+    tourKey = root.ATELIER_CATALOG && root.ATELIER_CATALOG.visiteParType
+      ? `atelier-visite-type-${root.ATELIER_CATALOG.storageKey}-${steps.filter(s => !s.later).map(s => s.target).join('|')}`
+      : `atelier-visite-${id}`;
     handlers = Object.assign({}, handlers, { tour: () => tourStart() });
     if (!root.document) return;
     const seenOf = key => { try { return root.localStorage.getItem(key) === '1'; } catch { return false; } };

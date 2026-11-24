@@ -307,8 +307,12 @@
   // Arrivée par « Exercice suivant » (#consigne) : la page de consigne
   // s'affiche toujours, même pour un exercice déjà commencé.
   let askedBrief = root.location && root.location.hash === '#consigne';
+  let askedBriefByButton = false;
   function shouldBrief() {
     if (!briefingContent()) return false;
+    // catalog.pageContexte = false : une séquence d'un seul tenant, on arrive
+    // directement sur la page (la consigne reste derrière « Revoir la consigne »).
+    if (core.catalog && core.catalog.pageContexte === false && !askedBriefByButton) return false;
     if (askedBrief) return true;
     // Aperçu (survol du menu) : toujours la page de contexte.
     if (root.document && root.document.documentElement && root.document.documentElement.dataset.preview) return true;
@@ -1337,6 +1341,7 @@
           break;
         case 'show-briefing':
           // Relecture volontaire : on retire la marque, la consigne revient.
+          askedBriefByButton = true;
           setValue('briefed', false);
           core.persist();
           render(true);
