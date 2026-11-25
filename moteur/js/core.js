@@ -356,6 +356,13 @@
     back: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m14.5 6-6 6 6 6"/></svg>'
   };
   let menu = null;
+  /* catalog.sommaire = 'panneau' : le sommaire est une colonne, ouverte à
+   * l'arrivée et retenue d'une page à l'autre, qui décale la page au lieu de
+   * la couvrir (grand écran). En tête : le titre du module, le pourcentage
+   * terminé et sa barre ; puis une ligne par page, avec son état. */
+  const PANNEAU_KEY = 'atelier-sommaire-panneau';
+  const panneau = () => Boolean(catalog && catalog.sommaire === 'panneau');
+  const large = () => !window.matchMedia || window.matchMedia('(min-width: 1100px)').matches;
 
   function setMenuOpen(open, { focus = true } = {}) {
     if (!menu) return;
@@ -363,6 +370,7 @@
     const panel = menu.querySelector('.av-menu-panel');
     menu.classList.toggle('is-open', open);
     document.body.classList.toggle('menu-open', open);
+    if (panneau()) { try { localStorage.setItem(PANNEAU_KEY, open ? 'ouvert' : 'replie'); } catch { /* sans stockage */ } }
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
     panel.inert = !open;
@@ -414,12 +422,21 @@
         transition = ownTransition;
       }
       event.preventDefault();
-      if (link.closest('.av-menu-list')) setMenuOpen(false, { focus: false });
+      if (link.closest('.av-menu-list') && !(panneau() && large())) setMenuOpen(false, { focus: false });
       transition(link.href);
     });
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' && menu.classList.contains('is-open')) setMenuOpen(false);
     });
+    if (panneau()) {
+      menu.classList.add('is-panneau');
+      document.body.classList.add('has-panneau');
+      menu.querySelector('.av-menu-panel').insertAdjacentHTML('afterbegin', '<div class="av-menu-head"><p class="av-menu-head-title"></p><p class="av-menu-head-pct"></p><span class="av-menu-head-bar"><span></span></span></div>');
+      let ouvert = true;
+      try { ouvert = localStorage.getItem(PANNEAU_KEY) !== 'replie'; } catch { /* sans stockage */ }
+      setMenuOpen(ouvert && large(), { focus: false });
+      return true;
+    }
     setMenuOpen(false, { focus: false });
     return true;
   }
@@ -434,6 +451,11 @@
       const key = `${s.id}-${ex.id}`;
       const active = key === current.key;
       const done = isDone(key);
+      const started = !done && hasDraft(key);
+      if (panneau()) return `<li><a href="${esc(pageUrl(ex.file))}" class="${active ? 'active' : ''} ${done ? 'is-done' : ''} ${started ? 'is-started' : ''}" ${active ? 'aria-current="step"' : ''}>
+        <span class="av-menu-label">${esc(ex.label)}</span>
+        <span class="av-menu-state" title="${done ? 'Terminé' : started ? 'Commencé' : 'À faire'}">${done ? icon('check', { size: 14, strokeWidth: 3 }) : ''}<span class="sr-only">${done ? 'terminé' : started ? 'commencé' : 'à faire'}</span></span>
+      </a></li>`;
       return `<li><a href="${esc(pageUrl(ex.file))}" class="${active ? 'active' : ''} ${done ? 'is-done' : ''}" ${active ? 'aria-current="step"' : ''}>
         <span class="av-menu-label">${esc(ex.label)}</span>
         <span class="av-menu-check">${done ? icon('check', { size: 16, strokeWidth: 3, label: 'terminé' }) : '<span class="sr-only">à faire</span>'}</span>
@@ -455,6 +477,11 @@
       progress.title = `Module : ${done} exercice${done > 1 ? 's' : ''} sur ${keys.length}`;
       menu.querySelector('.av-menu-percent').textContent = `${percent} %`;
       menu.querySelector('.av-menu-fill').style.height = `${percent}%`;
+      if (panneau()) {
+        menu.querySelector('.av-menu-head-title').textContent = catalog.title || '';
+        menu.querySelector('.av-menu-head-pct').textContent = `${percent} % terminé`;
+        menu.querySelector('.av-menu-head-bar span').style.width = `${percent}%`;
+      }
       return;
     }
     // La progression du thème : les exercices de la série en cours.
@@ -467,6 +494,11 @@
     progress.title = `${serie.label} : ${done} exercice${done > 1 ? 's' : ''} sur ${keys.length}`;
     menu.querySelector('.av-menu-percent').textContent = `${percent} %`;
     menu.querySelector('.av-menu-fill').style.height = `${percent}%`;
+    if (panneau()) {
+      menu.querySelector('.av-menu-head-title').textContent = catalog.title || serie.label;
+      menu.querySelector('.av-menu-head-pct').textContent = `${percent} % terminé`;
+      menu.querySelector('.av-menu-head-bar span').style.width = `${percent}%`;
+    }
   }
 
   function revealActiveNav() {

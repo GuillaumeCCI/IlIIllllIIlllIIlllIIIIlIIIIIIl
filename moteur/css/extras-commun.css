@@ -1289,3 +1289,35 @@ body.is-fin #main { display: none; }
   .fin-image img { width: min(70vw, 240px); }
 }
 @media (prefers-reduced-motion: reduce) { .fin-activite, .fin-ring, .fin-image img, #main.is-back { animation: none; } #main.is-leaving, .fin-ring-fg { transition: none; } }
+
+/* ══ LE SOMMAIRE EN COLONNE (catalog.sommaire = 'panneau') ══════════════
+ * Une colonne claire, ouverte à côté de la page (grand écran) : en tête un
+ * bloc bleu nuit (titre du module, « X % terminé », barre sarcelle) ; puis
+ * une ligne haute par page ; la page en cours sur fond blanc avec un trait
+ * bleu nuit à gauche ; à droite son état : cercle vide (à faire), à moitié
+ * plein (commencé), coche sarcelle (terminé). Le rail garde le bouton du
+ * menu et l'accueil ; sa jauge verticale laisse la place à la barre. */
+.av-menu.is-panneau { --panneau: 300px; }
+.av-menu.is-panneau .av-menu-progress { display: none; }
+.av-menu.is-panneau .av-menu-panel { width: var(--panneau); padding: 0; background: #f4f6fb; color: #13205c; box-shadow: 6px 0 24px rgb(20 40 100 / 10%); }
+.av-menu.is-panneau .av-menu-title, .av-menu.is-panneau .av-menu-foot, .av-menu.is-panneau .av-menu-close { display: none; }
+.av-menu-head { padding: 22px 22px 20px; background: #13205c; color: #fff; }
+.av-menu-head-title { margin: 0 0 14px; font-size: 1.05rem; font-weight: 800; line-height: 1.3; }
+.av-menu-head-pct { margin: 0 0 8px; color: rgb(255 255 255 / 80%); font-size: .76rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.av-menu-head-bar { display: block; height: 6px; border-radius: 6px; background: rgb(255 255 255 / 22%); overflow: hidden; }
+.av-menu-head-bar span { display: block; height: 100%; width: 0; border-radius: 6px; background: #5ec4c4; transition: width .5s ease; }
+.av-menu.is-panneau .av-menu-nav { margin: 0; padding: 10px 0 18px; }
+.av-menu.is-panneau .av-menu-list { gap: 0; padding: 0; }
+.av-menu.is-panneau .av-menu-list a { position: relative; align-items: center; min-height: 64px; padding: 14px 18px 14px 22px; border-radius: 0; border-bottom: 1px solid #e3e8f2; color: #13205c; font-weight: 500; line-height: 1.35; background: transparent; }
+.av-menu.is-panneau .av-menu-list a:hover { background: #eaeff9; color: #13205c; }
+.av-menu.is-panneau .av-menu-list a.active { background: #fff; font-weight: 700; }
+.av-menu.is-panneau .av-menu-list a.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #13205c; }
+.av-menu-state { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 0 0 2px #b4bfd8; background: #fff; color: #fff; }
+.av-menu-list a.is-started .av-menu-state { background: linear-gradient(90deg, #13205c 50%, #fff 50%); box-shadow: inset 0 0 0 2px #13205c; }
+.av-menu-list a.is-done .av-menu-state { background: #2a8f8f; box-shadow: none; }
+@media (min-width: 1100px) {
+  .av-menu.is-panneau .av-menu-backdrop { display: none !important; }
+  body.has-panneau.menu-open { padding-left: calc(var(--menu-rail) + 300px); transition: padding-left .28s ease; }
+}
+/* Le module et la page sont déjà dans la colonne : la barre du haut ne les répète pas. */
+body.has-panneau .topbar .course-label { visibility: hidden; }
