@@ -1039,16 +1039,30 @@
      * À droite : la question, ce que dit la fiche pour cette rubrique
      * (champ `fact`), le conseil, l'avancement et les boutons. Pas de
      * colonne d'étapes : l'annonce elle-même montre où l'on en est. */
+    /* `adSteps.rows` (facultatif) : toutes les lignes de l'annonce, dans
+     * l'ordre ; { label, text } = une ligne déjà écrite, qu'on ne touche pas ;
+     * { field: 'id' } = la rubrique à écrire. Sans `rows` : les champs seuls.
+     * Un champ `was` (la phrase d'origine) s'affiche barré pendant l'écriture. */
     function adBody(fields, at, input, values) {
       const ad = content.adSteps;
+      const writing = input !== null;
+      const was = g => g.was && writing ? `<p class="ad-rub-was"><s>${esc(g.was)}</s></p>` : '';
+      const rub = (g, j) => {
+        const v = values(g);
+        if (j === at && input) return `<section class="ad-rub is-current"><p class="ad-rub-head">${esc(g.label)}</p>${was(g)}${input}</section>`;
+        if (kit().filled(v)) return `<section class="ad-rub is-done">${writing ? `<button type="button" class="ad-rub-go" data-act="fm-field" data-index="${j}" aria-label="Revenir à « ${esc(g.label)} »">` : '<div>'}<p class="ad-rub-head">${esc(g.label)}</p><p class="ad-rub-text">${esc(v)}</p>${writing ? '</button>' : '</div>'}</section>`;
+        return `<section class="ad-rub is-todo ${g.was && writing ? 'has-was' : ''}"><p class="ad-rub-head">${esc(g.label)}${g.was && writing ? '<span class="ad-rub-flag">À réécrire</span>' : ''}</p>${g.was && writing ? `<p class="ad-rub-text">${esc(g.was)}</p>` : `<p class="ad-rub-wait">${writing ? 'À écrire ensuite.' : 'Non rédigée.'}</p>`}</section>`;
+      };
+      const body = ad.rows
+        ? ad.rows.map(r => {
+            if (!r.field) return `<section class="ad-rub is-fixed"><p class="ad-rub-head">${esc(r.label)}</p><p class="ad-rub-text">${esc(r.text)}</p></section>`;
+            const j = fields.findIndex(g => g.id === r.field);
+            return j < 0 ? '' : rub(fields[j], j);
+          }).join('')
+        : fields.map(rub).join('');
       return `<div class="ad-sheet">
         <div class="ad-top"><span class="ad-logo" aria-hidden="true">${esc(ad.logo || '')}</span><p><strong>${esc(ad.title || 'Votre annonce')}</strong><small>${esc(ad.company || '')}</small></p></div>
-        ${fields.map((g, j) => {
-          const v = values(g);
-          if (j === at && input) return `<section class="ad-rub is-current"><p class="ad-rub-head">${esc(g.label)}</p>${input}</section>`;
-          if (kit().filled(v)) return `<section class="ad-rub is-done">${input !== null ? `<button type="button" class="ad-rub-go" data-act="fm-field" data-index="${j}" aria-label="Revenir à « ${esc(g.label)} »">` : '<div>'}<p class="ad-rub-head">${esc(g.label)}</p><p class="ad-rub-text">${esc(v)}</p>${input !== null ? '</button>' : '</div>'}</section>`;
-          return `<section class="ad-rub is-todo"><p class="ad-rub-head">${esc(g.label)}</p><p class="ad-rub-wait">${input === null ? 'Non rédigée.' : 'À écrire ensuite.'}</p></section>`;
-        }).join('')}
+        ${body}
       </div>`;
     }
     function adStepsPanel(fields, at, f, last, entering) {
@@ -1057,7 +1071,7 @@
         <div class="ad-col">${adBody(fields, at, input, g => val(0, g))}</div>
         <section class="k-panel fs-panel ad-side">
           <div class="fs-step ${entering}">
-            <p class="ad-count">Rubrique ${at + 1} sur ${fields.length}</p>
+            <p class="ad-count">${esc(content.adSteps.countNoun || 'Rubrique')} ${at + 1} sur ${fields.length}</p>
             <p class="k-ask">${nb(esc(f.ask || f.label))}</p>
             ${f.intro ? `<p class="ad-intro">${esc(f.intro)}</p>` : ''}
             ${f.fact ? `<div class="ad-fact"><p class="ad-fact-label">Dans la fiche de poste</p><p>${esc(f.fact)}</p></div>` : ''}

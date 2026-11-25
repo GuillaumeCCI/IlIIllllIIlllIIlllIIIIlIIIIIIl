@@ -934,7 +934,20 @@ button.crash-passage:hover { background: #fff1d6; }
 .ad-rub-text { margin: 0; line-height: 1.5; white-space: pre-line; }
 .ad-rub-wait { margin: 0; color: #b3bccf; font-style: italic; }
 .ad-rub.is-todo .ad-rub-head { color: #b3bccf; }
-.ad-rub.is-current { margin: 4px -14px; padding: 12px 14px; border-radius: 12px; background: #eef3fb; border-bottom: 0; }
+/* Rubrique en cours : fond blanc et halo doux (plus de fond bleu, 25/11). */
+.ad-rub.is-current { margin: 6px -14px; padding: 12px 14px; border-radius: 12px; background: #fff; border-bottom: 0; box-shadow: 0 0 0 2px #cfd8ee, 0 8px 22px rgb(20 40 100 / 8%); }
+.ad-rub.is-current:focus-within { box-shadow: 0 0 0 2px #13205c, 0 8px 22px rgb(20 40 100 / 10%); }
+.ad-rub.is-current .counter, .ad-rub.is-current .k-count { display: none; }
+.ad-rub-was { margin: 0 0 4px; color: #8a7d92; font-size: .92rem; }
+.ad-rub-was s { text-decoration-color: #c65b7c; text-decoration-thickness: 1.5px; }
+.ad-rub-flag { margin-left: 8px; padding: 2px 8px; border-radius: 999px; background: #fdf3f5; color: #b8456a; font-size: .68rem; letter-spacing: .04em; }
+.ad-rub.is-todo.has-was .ad-rub-head { color: #5b6a8f; }
+.ad-rub.is-todo.has-was .ad-rub-text { color: #5b6a8f; }
+.ad-rub.is-fixed .ad-rub-text { color: #3b4566; }
+/* À droite : la fiche et le conseil sans encadré coloré, un trait fin. */
+.ad-side .ad-fact { padding: 14px 0 0; border-radius: 0; background: none; border-top: 1px solid #edf0f6; }
+.ad-side .fs-tip { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0 0; padding: 14px 0 0; border-radius: 0; background: none; border-top: 1px solid #edf0f6; color: #13205c; }
+.ad-side .fs-tip svg { flex: none; color: #2a8f8f; }
 .ad-rub.is-current .ad-rub-head { color: #13205c; }
 .ad-rub.is-current textarea, .ad-rub.is-current input { border: 0 !important; box-shadow: none !important; background: transparent !important; padding-left: 0 !important; }
 .ad-rub-go { display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; border-radius: 8px; cursor: var(--cursor-hand, pointer); }
