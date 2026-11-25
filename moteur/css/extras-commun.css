@@ -1330,7 +1330,8 @@ body.has-panneau { --menu-rail: 64px; }
 /* Les icônes autocollant de la charte, inversées pour le fond clair : intérieur foncé, contour noir, liseré blanc. */
 .av-menu.is-panneau .av-menu-toggle, .av-menu.is-panneau .av-menu-home { background: transparent; }
 .av-menu.is-panneau .av-menu-toggle:hover, .av-menu.is-panneau .av-menu-home:hover { background: rgb(19 32 92 / 8%); }
-.av-menu.is-panneau .av-menu-icon { filter: invert(1); }
+/* Icônes au trait, comme celles de la barre du haut (même taille, même couleur, même liseré). */
+.av-menu.is-panneau .av-menu-toggle .header-icon, .av-menu.is-panneau .av-menu-home .header-icon { width: 30px; height: 30px; color: #0a0a0a; filter: drop-shadow(0 0 1px #fff); }
 .av-menu.is-panneau:not(.is-open) .av-menu-panel { width: 0; overflow: hidden; box-shadow: none; }
 /* Le menu et l'accueil sur la ligne de la barre du haut : côte à côte, sur
  * le même fond blanc et à la même hauteur, comme le début de la barre. */

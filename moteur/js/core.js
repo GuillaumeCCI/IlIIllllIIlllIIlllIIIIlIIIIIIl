@@ -431,6 +431,9 @@
     if (panneau()) {
       menu.classList.add('is-panneau');
       document.body.classList.add('has-panneau');
+      // Menu et accueil dessinés au trait, comme les icônes de la barre du haut (headerSvg).
+      menu.querySelector('.av-menu-toggle').innerHTML = headerSvg('<path d="M12 18H52"/><path d="M12 32H52"/><path d="M12 46H52"/>');
+      menu.querySelector('.av-menu-home').innerHTML = headerSvg('<path d="M9 29 32 10l23 19"/><path d="M15 25V50Q15 54 19 54H45Q49 54 49 50V25"/><path d="M27 54V40H37V54"/>');
       menu.querySelector('.av-menu-panel').insertAdjacentHTML('afterbegin', '<div class="av-menu-head"><p class="av-menu-head-title"></p><p class="av-menu-head-pct"></p><span class="av-menu-head-bar"><span></span></span></div>');
       let ouvert = true;
       try { ouvert = localStorage.getItem(PANNEAU_KEY) !== 'replie'; } catch { /* sans stockage */ }
