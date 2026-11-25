@@ -431,9 +431,9 @@
     if (panneau()) {
       menu.classList.add('is-panneau');
       document.body.classList.add('has-panneau');
-      // Menu et accueil dessinés au trait, comme les icônes de la barre du haut (headerSvg).
-      menu.querySelector('.av-menu-toggle').innerHTML = headerSvg('<path d="M12 18H52"/><path d="M12 32H52"/><path d="M12 46H52"/>');
-      menu.querySelector('.av-menu-home').innerHTML = headerSvg('<path d="M9 29 32 10l23 19"/><path d="M15 25V50Q15 54 19 54H45Q49 54 49 50V25"/><path d="M27 54V40H37V54"/>');
+      // Menu et accueil : les autocollants de la charte, inversés, en bleu nuit (choix de l'utilisateur, 25/11).
+      menu.querySelector('.av-menu-toggle').innerHTML = '<svg class="av-sticker" viewBox="0 0 64 60" aria-hidden="true" focusable="false"><g fill="#13205c" stroke="#13205c" stroke-width="10" stroke-linejoin="round"><rect x="7" y="6" width="50" height="11" rx="5.5"/><rect x="7" y="24.5" width="50" height="11" rx="5.5"/><rect x="7" y="43" width="50" height="11" rx="5.5"/></g><g fill="#13205c" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"><rect x="7" y="6" width="50" height="11" rx="5.5"/><rect x="7" y="24.5" width="50" height="11" rx="5.5"/><rect x="7" y="43" width="50" height="11" rx="5.5"/></g></svg>';
+      menu.querySelector('.av-menu-home').innerHTML = '<svg class="av-sticker" viewBox="0 0 64 60" aria-hidden="true" focusable="false"><g fill="#13205c" stroke="#13205c" stroke-width="10" stroke-linejoin="round"><path d="M32 6 57 28H51V53H13V28H7Z"/></g><g fill="#13205c" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"><path d="M32 6 57 28H51V53H13V28H7Z"/></g><path d="M26 53V38H38V53" fill="none" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/></svg>';
       menu.querySelector('.av-menu-panel').insertAdjacentHTML('afterbegin', '<div class="av-menu-head"><p class="av-menu-head-title"></p><p class="av-menu-head-pct"></p><span class="av-menu-head-bar"><span></span></span></div>');
       let ouvert = true;
       try { ouvert = localStorage.getItem(PANNEAU_KEY) !== 'replie'; } catch { /* sans stockage */ }
