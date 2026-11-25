@@ -431,9 +431,6 @@
     if (panneau()) {
       menu.classList.add('is-panneau');
       document.body.classList.add('has-panneau');
-      // Icônes dessinées, bleu nuit sur pastille blanche : visibles sur fond clair.
-      menu.querySelector('.av-menu-toggle').innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
-      menu.querySelector('.av-menu-home').innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg>';
       menu.querySelector('.av-menu-panel').insertAdjacentHTML('afterbegin', '<div class="av-menu-head"><p class="av-menu-head-title"></p><p class="av-menu-head-pct"></p><span class="av-menu-head-bar"><span></span></span></div>');
       let ouvert = true;
       try { ouvert = localStorage.getItem(PANNEAU_KEY) !== 'replie'; } catch { /* sans stockage */ }

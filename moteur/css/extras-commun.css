@@ -1327,6 +1327,18 @@ body.has-panneau .topbar .course-label { visibility: hidden; }
 body.has-panneau { --menu-rail: 64px; }
 .av-menu.is-panneau .av-menu-rail { order: 2; width: var(--menu-rail); padding: 14px 0 0; background: transparent; box-shadow: none; pointer-events: none; }
 .av-menu.is-panneau .av-menu-rail > * { pointer-events: auto; }
-.av-menu.is-panneau .av-menu-toggle, .av-menu.is-panneau .av-menu-home { width: 44px; height: 44px; border-radius: 12px; background: #fff; color: #13205c; box-shadow: 0 4px 14px rgb(20 40 100 / 14%); }
-.av-menu.is-panneau .av-menu-toggle:hover, .av-menu.is-panneau .av-menu-home:hover { background: #e8eefb; }
+/* Les icônes autocollant de la charte, inversées pour le fond clair : intérieur foncé, contour noir, liseré blanc. */
+.av-menu.is-panneau .av-menu-toggle, .av-menu.is-panneau .av-menu-home { background: transparent; }
+.av-menu.is-panneau .av-menu-toggle:hover, .av-menu.is-panneau .av-menu-home:hover { background: rgb(19 32 92 / 8%); }
+.av-menu.is-panneau .av-menu-icon { filter: invert(1); }
 .av-menu.is-panneau:not(.is-open) .av-menu-panel { width: 0; overflow: hidden; box-shadow: none; }
+/* Le menu et l'accueil sur la ligne de la barre du haut : côte à côte, sur
+ * le même fond blanc et à la même hauteur, comme le début de la barre. */
+body.has-panneau { --menu-rail: 112px; }
+.av-menu.is-panneau .av-menu-rail { flex-direction: row; justify-content: center; align-self: flex-start; gap: 6px; height: 64px; padding: 0 6px; background: #fff; box-shadow: 0 1px 0 #e6ebf5; }
+/* Pas de bande vide sous les icônes : la page ne réserve que la place du
+ * sommaire ; les icônes se posent au début de la barre du haut, qui leur
+ * laisse la place et a exactement leur hauteur. */
+body.has-panneau { padding-left: 0; }
+body.has-panneau .topbar { min-height: 64px; height: 64px; padding-left: calc(var(--menu-rail) + 12px) !important; }
+@media (min-width: 1100px) { body.has-panneau.menu-open { padding-left: 300px; } }
