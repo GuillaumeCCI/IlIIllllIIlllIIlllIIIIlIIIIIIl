@@ -958,6 +958,48 @@ button.crash-passage:hover { background: #fff1d6; }
 .ad-fact { margin: 14px 0 0; padding: 12px 14px; border-radius: 12px; background: #f5f7fc; }
 .ad-fact-label { margin: 0 0 4px; color: #5b6a8f; font-size: .74rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .ad-fact p:last-child { margin: 0; line-height: 1.5; }
+/* L'allure d'une vraie offre (25/11) : couverture aux décors de la charte,
+ * logo posé dessus, intitulé en grand, étiquettes, « Postuler », référence. */
+.ad-sheet { position: relative; overflow: visible; }
+.ad-cover { height: 92px; margin: -22px -26px 0; border-radius: 18px 18px 0 0; background: url('../assets/illustrations/fenetre-coin-hg.webp') left top / 120px auto no-repeat, url('../assets/illustrations/fenetre-coin-bd.webp') right bottom / 150px auto no-repeat, linear-gradient(120deg, #eef3fb, #f4f8f6); background-blend-mode: multiply, multiply, normal; }
+.ad-sheet .ad-top { align-items: flex-end; margin-top: -26px; padding-bottom: 12px; border-bottom: 0; }
+.ad-sheet .ad-logo { width: 62px; height: 62px; border-radius: 16px; font-size: 1.6rem; box-shadow: 0 0 0 4px #fff, 0 6px 16px rgb(20 40 100 / 18%); }
+.ad-id { flex: 1; min-width: 0; }
+.ad-id strong { display: block; font-size: 1.3rem; line-height: 1.25; }
+.ad-id small { display: block; color: #5b6a8f; font-size: .9rem; }
+.ad-id .ad-cap { color: #8590ad; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.ad-apply { flex: none; padding: 9px 18px; border-radius: 999px; background: #13205c; color: #fff; font-size: .9rem; font-weight: 800; }
+.ad-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; padding-bottom: 14px; border-bottom: 1px solid #e6ebf5; }
+.ad-tags span { padding: 5px 12px; border-radius: 999px; background: #f1f4fa; color: #13205c; font-size: .84rem; font-weight: 700; }
+.ad-sheet .ad-rub-head { color: #13205c; font-size: .98rem; font-weight: 800; letter-spacing: 0; text-transform: none; }
+.ad-sheet .ad-rub.is-todo:not(.has-was) .ad-rub-head { color: #b3bccf; }
+.ad-ref { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid #e6ebf5; color: #8590ad; font-size: .82rem; }
+/* Les étapes en petites cartes, au-dessus de l'annonce. */
+.ad-steps { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; padding: 0; list-style: none; }
+.ad-step { display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px 7px 8px; border: 0; border-radius: 12px; background: #fff; box-shadow: 0 3px 10px rgb(20 40 100 / 8%); color: #13205c; font: inherit; font-size: .86rem; font-weight: 700; cursor: var(--cursor-hand, pointer); }
+.ad-step i { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #e8eefb; font-style: normal; font-size: .76rem; }
+.ad-step.is-on { background: #13205c; color: #fff; cursor: default; } .ad-step.is-on i { background: #fff; color: #13205c; }
+.ad-step.is-done i { background: #2a8f8f; color: #fff; }
+/* La bulle de la formatrice, en marge de la rubrique en cours, reliée par un trait. */
+.fs-layout.is-ad.is-margin { display: block; padding-right: 390px; }
+.is-margin .ad-col { max-width: 760px; }
+.is-margin .ad-rub.is-current { position: relative; }
+.ad-note { position: absolute; top: -8px; left: calc(100% + 40px); width: 350px; display: grid; gap: 12px; padding: 18px 20px; border-radius: 4px 18px 18px 18px; background: #fff; box-shadow: 0 14px 34px rgb(20 40 100 / 14%); color: #13205c; z-index: 2; }
+.ad-note::before { content: ""; position: absolute; left: -28px; top: 26px; width: 28px; height: 2px; background: #13205c; }
+.ad-note-who { display: flex; align-items: center; gap: 10px; margin: 0; color: #5b6a8f; font-size: .85rem; font-weight: 700; }
+.ad-note-who img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; background: #e8eefb; }
+.ad-note-who span { margin-left: auto; color: #2a8f8f; font-size: .74rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.ad-note-q { margin: 0; font-size: 1.08rem; font-weight: 800; line-height: 1.35; }
+.ad-note .ad-intro { margin: 0; font-size: .94rem; line-height: 1.45; }
+.ad-note .ad-fact { margin: 0; padding: 12px 0 0; border-radius: 0; background: none; border-top: 1px solid #edf0f6; }
+.ad-note .fs-tip { display: flex; gap: 8px; align-items: flex-start; margin: 0; padding: 12px 0 0; border-radius: 0; background: none; border-top: 1px solid #edf0f6; color: #13205c; font-size: .94rem; }
+.ad-note .fs-tip svg { flex: none; color: #2a8f8f; }
+.ad-note .fm-actions { display: flex; justify-content: space-between; align-items: center; margin: 4px 0 0; padding: 0; border: 0; background: none; }
+@media (max-width: 1180px) {
+  .fs-layout.is-ad.is-margin { padding-right: 0; }
+  .ad-note { position: static; width: auto; margin-top: 14px; box-shadow: 0 8px 22px rgb(20 40 100 / 10%); }
+  .ad-note::before { display: none; }
+}
 .mr-pair .ad-sheet { box-shadow: 0 4px 14px rgb(20 40 100 / 7%); }
 .mr-pair .is-model .ad-sheet { background: #edf6f1; }
 @media (max-width: 980px) { .fs-layout.is-ad { grid-template-columns: 1fr; } .ad-side { position: static; } }

@@ -1043,13 +1043,18 @@
      * l'ordre ; { label, text } = une ligne déjà écrite, qu'on ne touche pas ;
      * { field: 'id' } = la rubrique à écrire. Sans `rows` : les champs seuls.
      * Un champ `was` (la phrase d'origine) s'affiche barré pendant l'écriture. */
-    function adBody(fields, at, input, values) {
+    /* L'annonce a l'allure d'une vraie offre (25/11, « ça ne fait pas très
+     * vraie fiche ») : bande de couverture aux décors de la charte, logo posé
+     * dessus, intitulé en grand (`job`), étiquettes (`tags`), bouton
+     * « Postuler » dessiné, référence en pied (`ref`). `note` : la bulle de la
+     * formatrice, posée en marge de la rubrique en cours. */
+    function adBody(fields, at, input, values, note) {
       const ad = content.adSteps;
       const writing = input !== null;
       const was = g => g.was && writing ? `<p class="ad-rub-was"><s>${esc(g.was)}</s></p>` : '';
       const rub = (g, j) => {
         const v = values(g);
-        if (j === at && input) return `<section class="ad-rub is-current"><p class="ad-rub-head">${esc(g.label)}</p>${was(g)}${input}</section>`;
+        if (j === at && input) return `<section class="ad-rub is-current"><p class="ad-rub-head">${esc(g.label)}</p>${was(g)}${input}${note || ''}</section>`;
         if (kit().filled(v)) return `<section class="ad-rub is-done">${writing ? `<button type="button" class="ad-rub-go" data-act="fm-field" data-index="${j}" aria-label="Revenir à « ${esc(g.label)} »">` : '<div>'}<p class="ad-rub-head">${esc(g.label)}</p><p class="ad-rub-text">${esc(v)}</p>${writing ? '</button>' : '</div>'}</section>`;
         return `<section class="ad-rub is-todo ${g.was && writing ? 'has-was' : ''}"><p class="ad-rub-head">${esc(g.label)}${g.was && writing ? '<span class="ad-rub-flag">À réécrire</span>' : ''}</p>${g.was && writing ? `<p class="ad-rub-text">${esc(g.was)}</p>` : `<p class="ad-rub-wait">${writing ? 'À écrire ensuite.' : 'Non rédigée.'}</p>`}</section>`;
       };
@@ -1061,26 +1066,38 @@
           }).join('')
         : fields.map(rub).join('');
       return `<div class="ad-sheet">
-        <div class="ad-top"><span class="ad-logo" aria-hidden="true">${esc(ad.logo || '')}</span><p><strong>${esc(ad.title || 'Votre annonce')}</strong><small>${esc(ad.company || '')}</small></p></div>
+        <div class="ad-cover" aria-hidden="true"></div>
+        <div class="ad-top"><span class="ad-logo" aria-hidden="true">${esc(ad.logo || '')}</span>
+          <div class="ad-id">${ad.job ? `<small class="ad-cap">${esc(ad.title || '')}</small><strong>${esc(ad.job)}</strong>` : `<strong>${esc(ad.title || 'Votre annonce')}</strong>`}<small>${esc(ad.company || '')}</small></div>
+          ${ad.job ? '<span class="ad-apply" aria-hidden="true">Postuler</span>' : ''}</div>
+        ${(ad.tags || []).length ? `<p class="ad-tags">${ad.tags.map(t => `<span>${esc(t)}</span>`).join('')}</p>` : ''}
         ${body}
+        ${ad.ref ? `<p class="ad-ref">${esc(ad.ref)}</p>` : ''}
       </div>`;
     }
+    /* Mise en page validée (maquette A, 25/11) : l'annonce seule, les étapes
+     * en petites cartes au-dessus, et la bulle de la formatrice en marge de
+     * la rubrique en cours (question, intention, fiche, conseil, boutons). */
     function adStepsPanel(fields, at, f, last, entering) {
       const input = fieldBlock(0, Object.assign({}, f, { label: '' }));
-      return `<div class="fs-layout is-ad">
-        <div class="ad-col">${adBody(fields, at, input, g => val(0, g))}</div>
-        <section class="k-panel fs-panel ad-side">
-          <div class="fs-step ${entering}">
-            <p class="ad-count">${esc(content.adSteps.countNoun || 'Rubrique')} ${at + 1} sur ${fields.length}</p>
-            <p class="k-ask">${nb(esc(f.ask || f.label))}</p>
-            ${f.intro ? `<p class="ad-intro">${esc(f.intro)}</p>` : ''}
-            ${f.fact ? `<div class="ad-fact"><p class="ad-fact-label">Dans la fiche de poste</p><p>${esc(f.fact)}</p></div>` : ''}
-            ${f.tip ? `<p class="fs-tip">${icon('lightbulb', { size: 24 })}<span>${esc(f.tip)}</span></p>` : ''}
-          </div>
+      const steps = `<ol class="ad-steps">${fields.map((g, j) => {
+        const done = kit().filled(val(0, g)) && j !== at;
+        const tag = j === at ? 'span' : 'button';
+        return `<li><${tag} ${tag === 'button' ? `type="button" data-act="fm-field" data-index="${j}"` : 'aria-current="step"'} class="ad-step ${j === at ? 'is-on' : done ? 'is-done' : ''}"><i>${done ? icon('check', { size: 12, strokeWidth: 3 }) : j + 1}</i>${esc(g.label)}</${tag}></li>`;
+      }).join('')}</ol>`;
+      const note = `<aside class="ad-note fs-step ${entering}">
+          <p class="ad-note-who"><img src="${esc(core().asset('../../moteur/assets/illustrations/retours/formatrice-attention.webp'))}" alt="">Votre formatrice<span>${esc(content.adSteps.countNoun || 'Rubrique')} ${at + 1} sur ${fields.length}</span></p>
+          <p class="ad-note-q">${nb(esc(f.ask || f.label))}</p>
+          ${f.intro ? `<p class="ad-intro">${esc(f.intro)}</p>` : ''}
+          ${f.fact ? `<div class="ad-fact"><p class="ad-fact-label">Dans la fiche de poste</p><p>${esc(f.fact)}</p></div>` : ''}
+          ${f.tip ? `<p class="fs-tip">${icon('lightbulb', { size: 20 })}<span>${esc(f.tip)}</span></p>` : ''}
           ${core().errorsBox()}
-          <div class="fm-actions">${at ? `<button type="button" class="button secondary" data-act="fm-field" data-index="${at - 1}">${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>` : '<span></span>'}
+          <div class="fm-actions">${at ? `<button type="button" class="soft-button" data-act="fm-field" data-index="${at - 1}">${icon('arrowLeft', { size: 16 })}<span>Précédent</span></button>` : '<span></span>'}
             ${kit().submit(last ? (content.submitLabel || 'Valider mon annonce') : (content.nextLabel || 'Rubrique suivante'))}</div>
-        </section>
+        </aside>`;
+      return `<div class="fs-layout is-ad is-margin">
+        ${steps}
+        <div class="ad-col">${adBody(fields, at, input, g => val(0, g), note)}</div>
       </div>`;
     }
 
