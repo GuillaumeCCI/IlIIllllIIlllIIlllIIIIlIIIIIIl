@@ -999,6 +999,7 @@
       shownField = at;
       // `mailSteps` : la question en bandeau, et le champ dans une fenêtre d'e-mail
       // où les parties déjà écrites apparaissent au-dessus (l'e-mail se construit).
+      if (content.adSteps) return adStepsPanel(fields, at, f, last, entering);
       const mail = content.mailSteps;
       const head = mail && f.ask
         ? `<p class="k-ask">${esc(f.ask)}</p>`
@@ -1027,6 +1028,44 @@
           ${core().errorsBox()}
           <div class="fm-actions">${at ? `<button type="button" class="button secondary" data-act="fm-field" data-index="${at - 1}">${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>` : '<span></span>'}
             ${kit().submit(last ? (content.submitLabel || 'Valider mes réponses') : (content.nextLabel || 'Passer à l’étape suivante'))}</div>
+        </section>
+      </div>`;
+    }
+
+    /* RÉDIGER UNE ANNONCE DANS L'ANNONCE (content.adSteps : { logo, company,
+     * title }) : à gauche, l'annonce dessinée, rubrique par rubrique ; la
+     * rubrique en cours est la zone d'écriture, les rubriques écrites
+     * s'affichent (cliquer pour y revenir), les suivantes sont en attente.
+     * À droite : la question, ce que dit la fiche pour cette rubrique
+     * (champ `fact`), le conseil, l'avancement et les boutons. Pas de
+     * colonne d'étapes : l'annonce elle-même montre où l'on en est. */
+    function adBody(fields, at, input, values) {
+      const ad = content.adSteps;
+      return `<div class="ad-sheet">
+        <div class="ad-top"><span class="ad-logo" aria-hidden="true">${esc(ad.logo || '')}</span><p><strong>${esc(ad.title || 'Votre annonce')}</strong><small>${esc(ad.company || '')}</small></p></div>
+        ${fields.map((g, j) => {
+          const v = values(g);
+          if (j === at && input) return `<section class="ad-rub is-current"><p class="ad-rub-head">${esc(g.label)}</p>${input}</section>`;
+          if (kit().filled(v)) return `<section class="ad-rub is-done">${input !== null ? `<button type="button" class="ad-rub-go" data-act="fm-field" data-index="${j}" aria-label="Revenir à « ${esc(g.label)} »">` : '<div>'}<p class="ad-rub-head">${esc(g.label)}</p><p class="ad-rub-text">${esc(v)}</p>${input !== null ? '</button>' : '</div>'}</section>`;
+          return `<section class="ad-rub is-todo"><p class="ad-rub-head">${esc(g.label)}</p><p class="ad-rub-wait">${input === null ? 'Non rédigée.' : 'À écrire ensuite.'}</p></section>`;
+        }).join('')}
+      </div>`;
+    }
+    function adStepsPanel(fields, at, f, last, entering) {
+      const input = fieldBlock(0, Object.assign({}, f, { label: '' }));
+      return `<div class="fs-layout is-ad">
+        <div class="ad-col">${adBody(fields, at, input, g => val(0, g))}</div>
+        <section class="k-panel fs-panel ad-side">
+          <div class="fs-step ${entering}">
+            <p class="ad-count">Rubrique ${at + 1} sur ${fields.length}</p>
+            <p class="k-ask">${nb(esc(f.ask || f.label))}</p>
+            ${f.intro ? `<p class="ad-intro">${esc(f.intro)}</p>` : ''}
+            ${f.fact ? `<div class="ad-fact"><p class="ad-fact-label">Dans la fiche de poste</p><p>${esc(f.fact)}</p></div>` : ''}
+            ${f.tip ? `<p class="fs-tip">${icon('lightbulb', { size: 24 })}<span>${esc(f.tip)}</span></p>` : ''}
+          </div>
+          ${core().errorsBox()}
+          <div class="fm-actions">${at ? `<button type="button" class="button secondary" data-act="fm-field" data-index="${at - 1}">${icon('arrowLeft', { size: 18 })}<span>Précédent</span></button>` : '<span></span>'}
+            ${kit().submit(last ? (content.submitLabel || 'Valider mon annonce') : (content.nextLabel || 'Rubrique suivante'))}</div>
         </section>
       </div>`;
     }
@@ -1271,9 +1310,30 @@
         </section>${kit().keyPoint(content.keyPoint)}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
     }
 
+    function adReview() {
+      const fields = fieldsOf(0);
+      const rows = fields.map(f => {
+        const i = blocOf(key, k(0, f));
+        const b = i >= 0 ? ouvert().blocOf(key, i) : null;
+        const miss = b ? (b.lines || []).filter(l => l.kind !== 'ok') : [];
+        const ok = b ? miss.length === 0 : kit().filled(val(0, f));
+        const tip = miss[0] ? (miss[0].conseil || miss[0].nom) : (ok ? '' : 'À écrire.');
+        return `<li class="mr-row ${ok ? 'is-ok' : 'is-ko'}"><span class="mr-mark">${icon(ok ? 'check' : 'close', { size: 12, strokeWidth: 3 })}</span><strong>${esc(f.label)}</strong><span class="mr-tip">${ok ? 'Au point' : esc(tip)}</span></li>`;
+      }).join('');
+      return `${reviewHead()}<section class="k-panel mr">
+          <div class="mr-pair">
+            <div><p class="mr-label">Votre annonce</p>${adBody(fields, -1, null, g => val(0, g))}</div>
+            <div class="is-model"><p class="mr-label">Une annonce possible</p>${adBody(fields, -1, null, g => g.model || '')}</div>
+          </div>
+          <h3 class="mr-h">Rubrique par rubrique</h3>
+          <ul class="mr-rows">${rows}</ul>
+        </section>${kit().keyPoint(content.keyPoint)}${core().feedbackBox()}<div class="k-utility">${kit().reset()}</div>`;
+    }
+
     function reviewScreen() {
       if (content.review) return accordionReview();
       if (content.mailSteps) return mailReview();
+      if (content.adSteps) return adReview();
       return reviewHead() + (content.reviewIntro && content.reviewLayout === 'rows' ? `<details class="fm-review-intro is-folded"><summary class="fm-review-intro-label">${icon('users', { size: 18 })}<span>Relire ${esc((content.reviewIntroTitle || 'la situation').toLowerCase().replace(/^l’/, 'l’'))}</span></summary>${scene(content.reviewIntro)}</details>` : '') + (content.reviewIntro && content.reviewLayout !== 'rows' ? `<section class="fm-review-intro">${content.reviewIntroTitle ? `<p class="fm-review-intro-label">${icon('users', { size: 18 })}<span>${esc(content.reviewIntroTitle)}</span></p>` : ''}${scene(content.reviewIntro)}</section>${content.reviewListTitle ? `<h2 class="fm-review-list-title">${esc(content.reviewListTitle)}</h2>` : ''}` : '') + cases.map((c, i) => {
         const fields = fieldsOf(i);
         if (!fields.length && !c.model && !c.lesson) return '';
