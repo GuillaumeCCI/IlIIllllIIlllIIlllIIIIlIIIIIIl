@@ -1560,7 +1560,10 @@
       return parts;
     });
     // Les textes de la situation (tous les cas) : une réponse qui les recopie est plafonnée.
+    // Les faits donnés à côté du champ (`fact`, « Dans la fiche de poste ») en
+    // font partie : recopier la fiche n'est pas rédiger (remarque du 25/11).
     root.AtelierSourceText = () => cases.flatMap(c => sceneTexts(c.scene))
+      .concat(cases.flatMap((c, i) => fieldsOf(i).map(f => f.fact).filter(Boolean)))
       .concat(sceneTexts(content.scene), sceneTexts(content.side), sceneTexts(content.reviewIntro), content.reread ? sceneTexts(content.reread.scene) : []);
     const dialogTable = {};
     // `reread` : le document entier (un entretien…), relu dans une fenêtre.

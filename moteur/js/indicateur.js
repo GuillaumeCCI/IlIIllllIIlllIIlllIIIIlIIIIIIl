@@ -340,8 +340,10 @@
      * le score est plafonné au cinquième, et la ligne le dit. */
     // Sans source propre au bloc : les textes de la situation, relevés par l'écran (root.AtelierSourceText).
     // `copie: false` : une rubrique où citer les mots du client est demandé (le mot indice).
+    // `copieSeuil` : la part de copie tolérée (un tiers par défaut) ; plus haute
+    // là où des faits (salaire, horaires) se reprennent forcément tels quels.
     const copied = bloc.copie === false ? 0 : copyShare(list, bloc.source || root.AtelierSourceText);
-    if (copied >= 0.34) {
+    if (copied >= (bloc.copieSeuil ?? 0.34)) {
       earned = Math.min(earned, max * 0.2);
       lines.unshift({ kind: 'warn', nom: 'Ses phrases recopiées', found: [], conseil: bloc.copieConseil || 'Votre réponse recopie le texte de la situation : écrivez-la avec vos propres mots.' });
     }
