@@ -1321,3 +1321,12 @@ body.is-fin #main { display: none; }
 }
 /* Le module et la page sont déjà dans la colonne : la barre du haut ne les répète pas. */
 body.has-panneau .topbar .course-label { visibility: hidden; }
+/* Mode panneau : plus de rail bleu nuit. Le menu et l'accueil sont deux
+ * pastilles blanches à icône bleu nuit, collées au bord du sommaire (à
+ * gauche de l'écran quand il est replié), visibles sur fond clair. */
+body.has-panneau { --menu-rail: 64px; }
+.av-menu.is-panneau .av-menu-rail { order: 2; width: var(--menu-rail); padding: 14px 0 0; background: transparent; box-shadow: none; pointer-events: none; }
+.av-menu.is-panneau .av-menu-rail > * { pointer-events: auto; }
+.av-menu.is-panneau .av-menu-toggle, .av-menu.is-panneau .av-menu-home { width: 44px; height: 44px; border-radius: 12px; background: #fff; color: #13205c; box-shadow: 0 4px 14px rgb(20 40 100 / 14%); }
+.av-menu.is-panneau .av-menu-toggle:hover, .av-menu.is-panneau .av-menu-home:hover { background: #e8eefb; }
+.av-menu.is-panneau:not(.is-open) .av-menu-panel { width: 0; overflow: hidden; box-shadow: none; }
